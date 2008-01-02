@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            description="The action set with the actions for the Explode"
+            id="br.org.archimedes.polyline.explode.actionSet"
+            label="Explode action set"
+            visible="true">
+         <action
+               icon="icons/explode.png"
+               id="br.org.archimedes.polyline.explode.action"
+               label="%action.explode.label"
+               menubarPath="transform/complex0"
+               style="push"
+               class="br.org.archimedes.polyline.explode.ExplodeAction"
+               toolbarPath="transform/complex0"
+               tooltip="%action.explode.tooltip">
+            <enablement>
+               <objectClass name="br.org.archimedes.model.Drawing"/>
+            </enablement>
+         </action>
+      </actionSet>
+   </extension>
+   <extension
+         point="br.org.archimedes.factory">
+         <factory id="br.org.archimedes.polyline.explode"
+          class="br.org.archimedes.polyline.explode.ExplodeFactory">
+         	<shortcut id="x"/>
+         </factory>
+   </extension>
+
+</plugin>
