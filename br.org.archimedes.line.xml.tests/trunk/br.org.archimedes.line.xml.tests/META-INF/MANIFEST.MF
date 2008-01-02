@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Line XML Tests Plug-in
+Bundle-SymbolicName: br.org.archimedes.line.xml.tests
+Bundle-Version: 1.0.0
+Bundle-Localization: plugin
+Require-Bundle: br.org.archimedes,
+ br.org.archimedes.line,
+ br.org.archimedes.line.xml,
+ br.org.archimedes.io.xml,
+ br.org.archimedes.io.xml.tests,
+ br.org.archimedes.tests
