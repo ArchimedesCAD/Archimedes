@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Infinite Line XML Fragment
+Bundle-SymbolicName: br.org.archimedes.infiniteLine.xml;singleton:=true
+Bundle-Version: 0.52.0
+Bundle-Localization: plugin
+Export-Package: br.org.archimedes.infiniteLine.xml
+Require-Bundle: br.org.archimedes,
+ br.org.archimedes.infiniteline;resolution:=optional,
+ br.org.archimedes.io.xml
