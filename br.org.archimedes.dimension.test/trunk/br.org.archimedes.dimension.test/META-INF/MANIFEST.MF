@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Dimension Test Plug-in
+Bundle-SymbolicName: br.org.archimedes.dimension.test
+Bundle-Version: 1.0.0
+Bundle-Localization: plugin
+Require-Bundle: br.org.archimedes.dimension,
+ br.org.archimedes.tests,
+ br.org.archimedes,
+ br.org.archimedes.line,
+ br.org.archimedes.text.tests
+Eclipse-LazyStart: true
