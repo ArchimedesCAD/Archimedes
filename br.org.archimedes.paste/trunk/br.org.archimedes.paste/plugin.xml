@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            description="The action set containing the Paste from clipboard actions."
+            id="br.org.archimedes.paste.actionSet"
+            label="Paste Action Set"
+            visible="true">
+         <action
+               icon="icons/paste.png"
+               id="br.org.archimedes.action.paste"
+               class="br.org.archimedes.paste.PasteAction"
+               label="%action.paste.label"
+               menubarPath="edit/slot0"
+               style="push"
+               toolbarPath="edit/slot0"
+               tooltip="%action.paste.tooltip">
+            <enablement>
+               <objectClass name="br.org.archimedes.model.Drawing"/>
+            </enablement>
+         </action>
+      </actionSet>         
+   </extension>
+   <extension
+         point="br.org.archimedes.factory">
+         <factory id="br.org.archimedes.paste"
+          class="br.org.archimedes.paste.PasteFactory">
+         	<shortcut id="pa"/>
+         </factory>         
+   </extension>
+
+</plugin>
