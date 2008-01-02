@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <description url="http://arquimedes.sourceforge.net/update/">
+      This is Archimedes&apos; official update site. It contains mostly releases either made by the original development team or approved by them. You will find all the bases of Archimedes&apos; features here.
+   </description>
+   <feature url="features/br.org.archimedes.xml.feature_0.52.0.jar" id="br.org.archimedes.xml.feature" version="0.52.0"/>
+   <feature url="features/br.org.archimedes.operations.workspace.feature_0.52.0.jar" id="br.org.archimedes.operations.workspace.feature" version="0.52.0"/>
+   <feature url="features/br.org.archimedes.operations.edit.feature_0.52.0.jar" id="br.org.archimedes.operations.edit.feature" version="0.52.0"/>
+   <feature url="features/br.org.archimedes.lines.feature_0.52.0.jar" id="br.org.archimedes.lines.feature" version="0.52.0"/>
+   <feature url="features/br.org.archimedes.langpack.feature_0.50.0.jar" id="br.org.archimedes.langpack.feature" version="0.50.0"/>
+   <feature url="features/br.org.archimedes.feature_0.52.0.jar" id="br.org.archimedes.feature" version="0.52.0" os="linux,macosx,win32" ws="carbon,gtk,win32" arch="ppc,x86"/>
+   <feature url="features/br.org.archimedes.curves.feature_0.52.0.jar" id="br.org.archimedes.curves.feature" version="0.52.0"/>
+   <feature url="features/br.org.archimedes.comunication.feature_0.52.0.jar" id="br.org.archimedes.comunication.feature" version="0.52.0"/>
+   <feature url="features/br.org.archimedes.calculus.feature_0.52.0.jar" id="br.org.archimedes.calculus.feature" version="0.52.0"/>
+</site>
