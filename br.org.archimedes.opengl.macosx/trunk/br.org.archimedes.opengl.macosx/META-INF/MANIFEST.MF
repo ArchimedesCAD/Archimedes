@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Macosx Fragment
+Bundle-SymbolicName: br.org.archimedes.opengl.macosx
+Bundle-Version: 1.0.0
+Bundle-Vendor: LWJGL
+Fragment-Host: br.org.archimedes.opengl;bundle-version="1.0.0"
+Bundle-Localization: plugin
