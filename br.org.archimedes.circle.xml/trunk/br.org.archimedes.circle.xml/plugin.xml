@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="br.org.archimedes.elementExporter">
+	  <exporter id="br.org.archimedes.circle.xml.exporter"
+	   extension="xml" 
+	   elementId="br.org.archimedes.circle"
+	   class="br.org.archimedes.circle.xml.CircleXMLExporter"/>
+   </extension>
+
+</plugin>
