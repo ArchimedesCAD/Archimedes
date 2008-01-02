@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Offset Tests Plug-in
+Bundle-SymbolicName: br.org.archimedes.offset.tests
+Bundle-Version: 0.50.0
+Bundle-Vendor: Tarantulus Corp.
+Bundle-Localization: plugin
+Require-Bundle: br.org.archimedes,
+ br.org.archimedes.offset,
+ br.org.archimedes.tests
