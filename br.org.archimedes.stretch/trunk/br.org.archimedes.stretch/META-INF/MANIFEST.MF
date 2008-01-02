@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Stretch Plug-in
+Bundle-SymbolicName: br.org.archimedes.stretch;singleton:=true
+Bundle-Version: 1.0.0
+Bundle-Activator: br.org.archimedes.stretch.Activator
+Bundle-Vendor: Tarantulus Corporation
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ br.org.archimedes,
+ br.org.archimedes.move
+Eclipse-LazyStart: true
+Export-Package: br.org.archimedes.stretch
