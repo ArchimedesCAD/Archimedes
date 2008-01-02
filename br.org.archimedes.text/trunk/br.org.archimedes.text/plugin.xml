@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            description="The action set with the actions for the Text"
+            id="br.org.archimedes.text.actionSet"
+            label="Text action set"
+            visible="true">
+         <action
+               icon="icons/text.png"
+               id="br.org.archimedes.text.action"
+               label="%action.text.label"
+               menubarPath="create/complex0"
+               style="push"
+               class="br.org.archimedes.text.TextAction"
+               toolbarPath="create/complex0"
+               tooltip="%action.text.tooltip">
+            <enablement>
+               <objectClass name="br.org.archimedes.model.Drawing"/>
+            </enablement>
+         </action>
+      </actionSet>
+   </extension>
+   <extension
+         point="br.org.archimedes.element">
+         <element
+               class="br.org.archimedes.text.Text"
+               factory="br.org.archimedes.text.TextFactory"
+               id="br.org.archimedes.text"
+               shortcut="t"/>
+   </extension>
+</plugin>
