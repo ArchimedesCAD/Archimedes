@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Explode Tests Plug-in
+Bundle-SymbolicName: br.org.archimedes.polyline.explode.tests
+Bundle-Version: 1.0.0
+Bundle-Vendor: Tarantulus Corp.
+Bundle-Localization: plugin
+Require-Bundle: br.org.archimedes,
+ br.org.archimedes.polyline,
+ br.org.archimedes.polyline.explode,
+ br.org.archimedes.tests
