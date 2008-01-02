@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="br.org.archimedes.factory">
+         <factory id="br.org.archimedes.scale"
+          class="br.org.archimedes.scale.ScaleFactory">
+         	<shortcut id="sc"/>
+         </factory>
+   </extension>
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            id="br.org.archimedes.scale.actionSet"
+            label="Scale action set"
+            visible="true">
+         <action
+               class="br.org.archimedes.scale.ScaleAction"
+               icon="icons/scale.png"
+               id="br.org.archimedes.scale.actionActivate"
+               label="%action.scale.label"
+               menubarPath="transform/simple0"
+               style="push"
+               toolbarPath="transform/simple0"
+               tooltip="%action.scale.tooltip">
+            <enablement>
+               <objectClass name="br.org.archimedes.model.Drawing"/>
+            </enablement>
+         </action>
+      </actionSet>
+   </extension>
+</plugin>

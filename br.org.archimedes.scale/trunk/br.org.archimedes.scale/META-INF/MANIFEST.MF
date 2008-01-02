@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Scale Plug-in
+Bundle-SymbolicName: br.org.archimedes.scale;singleton:=true
+Bundle-Version: 1.0.0
+Bundle-Activator: br.org.archimedes.scale.Activator
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ br.org.archimedes
+Eclipse-LazyStart: true
+Bundle-Vendor: Tarantulus Corporation
+Export-Package: br.org.archimedes.scale
