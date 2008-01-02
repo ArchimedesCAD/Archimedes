@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="br.org.archimedes.factory">
+         <factory id="br.org.archimedes.snap"
+          class="br.org.archimedes.snap.SnapFactory">
+         </factory>
+   </extension>
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            id="br.org.archimedes.snap.actionSet"
+            label="Snap action set"
+            visible="true">
+         <action
+               class="br.org.archimedes.snap.SnapAction"
+               id="br.org.archimedes.snap.actionActivate"
+               label="%action.snap.label"
+               menubarPath="edit/slot2"
+               style="push"
+               tooltip="%action.snap.tooltip"/>
+      </actionSet>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <widget
+            class="br.org.archimedes.snap.SnapButton"
+            id="br.org.archimedes.snap.button">
+         <location>
+            <bar
+                  path="br.org.archimedes.statusButtons"
+                  type="trim"/>
+         </location>
+      </widget>
+      <group
+            id="br.org.archimedes.statusButtons"
+            separatorsVisible="true">
+         <location>
+            <bar type="trim"/>
+            <order
+                  position="after"
+                  relativeTo="status"/>
+         </location>
+      </group>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="br.org.archimedes.snap.SnapHandler"
+            id="br.org.archimedes.snap.command"
+            name="snap"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="br.org.archimedes.snap.command"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="F3"/>
+   </extension>
+
+   
+</plugin>
