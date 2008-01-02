@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: XML IO Tests Plug-in
+Bundle-SymbolicName: br.org.archimedes.io.xml.tests
+Bundle-Version: 0.50.0
+Bundle-Localization: plugin
+Require-Bundle: br.org.archimedes,
+ br.org.archimedes.line,
+ br.org.archimedes.io.xml,
+ br.org.archimedes.tests,
+ br.org.archimedes.circle,
+ br.org.archimedes.curvedshape,
+ br.org.archimedes.infiniteline,
+ br.org.archimedes.arc,
+ br.org.archimedes.polyline,
+ br.org.archimedes.text
+Export-Package: br.org.archimedes.io.xml
