@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Line Pt_BR Fragment
+Bundle-SymbolicName: br.org.archimedes.line.pt_BR
+Bundle-Version: 0.50.0
+Bundle-Vendor: Tarantulus Corporation
+Fragment-Host: br.org.archimedes.line;bundle-version="0.50.0"
+Bundle-Localization: plugin
