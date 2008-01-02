@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="br.org.archimedes.factory">
+         <factory id="br.org.archimedes.polyline.rectangle"
+          	class="br.org.archimedes.polyline.rectangle.RectangleFactory"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            description="The rectangle&apos;s action set"
+            id="br.org.archimedes.polyline.rectangle.actionSet"
+            label="Rectangle Action Set"
+            visible="true">
+         <action
+               icon="icons/rectangle.png"
+               id="br.org.archimedes.polyline.rectangle.actionCreate"
+               label="%action.create.label"
+               style="push"
+               class="br.org.archimedes.polyline.rectangle.RectangleAction"
+               toolbarPath="create/complex0"
+               menubarPath="create/complex0"
+               tooltip="%action.create.tooltip">
+            <enablement>
+               <objectClass name="br.org.archimedes.model.Drawing"/>
+            </enablement>
+         </action>
+      </actionSet>
+   </extension>
+</plugin>
