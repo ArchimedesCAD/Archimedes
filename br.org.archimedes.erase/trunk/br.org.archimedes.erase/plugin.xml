@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            description="The action set to the Erase action"
+            id="br.org.archimedes.erase.actionSet"
+            label="Erase&apos;s Action set"
+            visible="true">
+         <action
+               icon="icons/delete.png"
+               id="br.org.archimedes.erase.action"
+               label="%action.erase.label"
+               menubarPath="transform/simplex0"
+               style="push"
+               class="br.org.archimedes.erase.EraseAction"
+               toolbarPath="transform/simplex0"
+               tooltip="%action.erase.tooltip">
+            <enablement>
+               <objectClass name="br.org.archimedes.model.Drawing"/>
+            </enablement>
+         </action>
+      </actionSet>
+   </extension>
+   <extension
+         point="br.org.archimedes.factory">
+         <factory id="br.org.archimedes.erase"
+          class="br.org.archimedes.erase.EraseFactory">
+         	<shortcut id="e"/>
+         	<shortcut id="d"/>
+         </factory>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="br.org.archimedes.erase.EraseHandler"
+            id="br.org.archimedes.erase.command"
+            name="orto"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="br.org.archimedes.erase.command"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="Del"/>
+   </extension>
+</plugin>
