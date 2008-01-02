@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Zoom Tests Plug-in
+Bundle-SymbolicName: br.org.archimedes.zoom.tests
+Bundle-Version: 1.0.0
+Bundle-Vendor: Tarantulus Corp.
+Bundle-Localization: plugin
+Require-Bundle: br.org.archimedes,
+ br.org.archimedes.tests,
+ br.org.archimedes.zoom
