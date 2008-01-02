@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Core Tests Plug-in
+Bundle-SymbolicName: br.org.archimedes.tests
+Bundle-Version: 0.50.0
+Bundle-Vendor: Tarantulus Corp.
+Bundle-Localization: plugin
+Require-Bundle: br.org.archimedes,
+ org.junit
+Export-Package: br.org.archimedes,
+ br.org.archimedes.element,
+ br.org.archimedes.factories
