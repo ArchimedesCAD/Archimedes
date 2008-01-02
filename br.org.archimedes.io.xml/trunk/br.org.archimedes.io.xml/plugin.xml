@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="br.org.archimedes.nativeFormat">
+         <nativeFormat id="xml" name="Archimedes XML" extension="xml"
+         	importer="br.org.archimedes.xml.XMLImporter"
+         	exporter="br.org.archimedes.xml.XMLExporter">
+         </nativeFormat>
+   </extension>
+   <extension
+         point="br.org.archimedes.exporter">
+         <exporter id="br.org.archimedes.xml.exporter" extension="xml" name="XML Exporter" class="br.org.archimedes.io.xml.XMLExporter"/>
+   </extension>
+   <extension
+         point="br.org.archimedes.importer">
+         <importer id="br.org.archimedes.xml.importer" extension="xml" name="XML Importer" class="br.org.archimedes.io.xml.XMLImporter"/>
+   </extension>  
+      <extension
+         point="org.eclipse.ui.exportWizards">
+      <wizard
+            class="br.org.archimedes.io.xml.XMLWizardExporter"
+            id="br.org.archimedes.io.xml.wizard"
+            name="A Test Export Wizard"/>
+   </extension>
+      <extension
+            point="org.eclipse.ui.importWizards">
+         <wizard
+               class="br.org.archimedes.io.xml.XMLWizardImporter"
+               id="br.org.archimedes.io.xml.importWizard"
+               name="XML Import Wizard">
+         </wizard>
+      </extension>
+</plugin>
