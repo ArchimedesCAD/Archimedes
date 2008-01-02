@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Tests Plug-in
+Bundle-SymbolicName: br.org.archimedes.scale.tests
+Bundle-Version: 1.0.0
+Bundle-Vendor: Tarantulus Corporation
+Bundle-Localization: plugin
+Require-Bundle: br.org.archimedes.tests,
+ br.org.archimedes,
+ br.org.archimedes.scale
+Eclipse-LazyStart: false
