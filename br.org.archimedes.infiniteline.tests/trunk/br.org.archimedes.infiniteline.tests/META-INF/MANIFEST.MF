@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Infinite Line Tests Plug-in
+Bundle-SymbolicName: br.org.archimedes.infiniteLine.tests
+Bundle-Version: 0.50.0
+Bundle-Localization: plugin
+Require-Bundle: br.org.archimedes,
+ br.org.archimedes.infiniteline,
+ br.org.archimedes.tests
