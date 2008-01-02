@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="br.org.archimedes.factory">
+         <factory id="br.org.archimedes.orto"
+          class="br.org.archimedes.orto.OrtoFactory">
+         	<shortcut id="o"/>
+         </factory>
+   </extension>
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            id="br.org.archimedes.orto.actionSet"
+            label="Orto action set"
+            visible="true">
+         <action
+               class="br.org.archimedes.orto.OrtoAction"
+               id="br.org.archimedes.orto.actionActivate"
+               label="%action.orto.label"
+               menubarPath="edit/slot2"
+               style="push"
+               tooltip="%action.orto.tooltip"/>
+      </actionSet>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <widget
+            class="br.org.archimedes.orto.OrtoButton"
+            id="br.org.archimedes.orto.button">
+         <location>
+            <bar
+                  path="br.org.archimedes.statusButtons"
+                  type="trim"/>
+         </location>
+      </widget>
+      <group
+            id="br.org.archimedes.statusButtons"
+            separatorsVisible="true">
+         <location>
+            <bar type="trim"/>
+            <order
+                  position="after"
+                  relativeTo="status"/>
+         </location>
+      </group>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="br.org.archimedes.orto.OrtoHandler"
+            id="br.org.archimedes.orto.command"
+            name="orto"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="br.org.archimedes.orto.command"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="F8"/>
+   </extension>
+</plugin>
