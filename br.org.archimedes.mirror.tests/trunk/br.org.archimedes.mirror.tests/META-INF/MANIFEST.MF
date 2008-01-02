@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Mirror Tests Plug-in
+Bundle-SymbolicName: br.org.archimedes.mirror.tests
+Bundle-Version: 0.50.0
+Bundle-Vendor: Tarantulus Corp.
+Bundle-Localization: plugin
+Require-Bundle: br.org.archimedes,
+ br.org.archimedes.tests,
+ br.org.archimedes.mirror
