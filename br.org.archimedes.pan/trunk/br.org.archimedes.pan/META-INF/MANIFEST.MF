@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Pan Plug-in
+Bundle-SymbolicName: br.org.archimedes.pan;singleton:=true
+Bundle-Version: 0.52.0
+Bundle-Activator: br.org.archimedes.pan.Activator
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ br.org.archimedes
+Eclipse-LazyStart: true
+Export-Package: br.org.archimedes.pan
+Bundle-Vendor: Tarantulus Corp.
