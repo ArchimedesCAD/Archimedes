@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Exporter XML para Text
+Bundle-SymbolicName: br.org.archimedes.text.xml;singleton:=true
+Bundle-Version: 1.0.0
+Bundle-Localization: plugin
+Export-Package: br.org.archimedes.text.xml
+Require-Bundle: br.org.archimedes,
+ br.org.archimedes.text;resolution:=optional,
+ br.org.archimedes.io.xml

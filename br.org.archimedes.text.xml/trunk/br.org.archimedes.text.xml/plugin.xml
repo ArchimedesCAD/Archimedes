@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="br.org.archimedes.elementExporter">
+         <exporter id="br.org.archimedes.text.xml.exporter"
+   extension="xml" 
+   elementId="br.org.archimedes.text"
+   class="br.org.archimedes.text.xml.TextXMLExporter"/>
+         
+   </extension>
+
+</plugin>
