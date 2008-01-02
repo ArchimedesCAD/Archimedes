@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            description="The action set for the line"
+            id="br.org.archimedes.line.actionSet"
+            label="Line action set"
+            visible="true">
+         <action
+               class="br.org.archimedes.line.NewLineAction"
+               icon="icons/line.png"
+               id="br.org.archimedes.line.actionCreate"
+               label="%action.create.label"
+               menubarPath="create/simple0"
+               style="push"
+               toolbarPath="create/simple0"
+               tooltip="%action.create.tooltip">
+            <enablement>
+               <objectClass name="br.org.archimedes.model.Drawing"/>
+            </enablement>
+         </action>
+      </actionSet>
+   </extension>
+   <extension
+         point="br.org.archimedes.element">
+         <element id="br.org.archimedes.line" name="Line" 
+         	class="br.org.archimedes.line.Line"
+         	factory="br.org.archimedes.line.LineFactory"
+         	shortcut="l" />
+   </extension>
+
+</plugin>
