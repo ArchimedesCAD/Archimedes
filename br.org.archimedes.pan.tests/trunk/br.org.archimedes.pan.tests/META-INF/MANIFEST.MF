@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Tests Plug-in
+Bundle-SymbolicName: br.org.archimedes.pan.tests
+Bundle-Version: 1.0.0
+Bundle-Activator: br.org.archimedes.pan.tests.Activator
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.core.runtime,
+ br.org.archimedes,
+ br.org.archimedes.pan,
+ br.org.archimedes.tests
+Eclipse-LazyStart: true
