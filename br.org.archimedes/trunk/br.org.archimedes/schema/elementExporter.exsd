@@ -1,0 +1,152 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Schema file written by PDE -->
+<schema targetNamespace="br.org.archimedes">
+<annotation>
+      <appInfo>
+         <meta.schema plugin="br.org.archimedes" id="elementExporter" name="Element Exporter"/>
+      </appInfo>
+      <documentation>
+         This extension point should be used to describe part of a fragment associated to plugins that define an element extension point.
+It was created to allow people to develop a specific exporter (associated to a specific file extension) for a specific element. With it, it is possible to create a new element, add it to a drawing and not break all the exports of this drawing.
+
+There are three important information within it:
+The id of the element it should export
+The extension it is associated to
+The class that will be encharged of exporting the element
+Be extremely carefull about the id of the element. If you are dealing with an unstable element, remember to keep the id you use here up to date with the element&apos;s.
+      </documentation>
+   </annotation>
+
+   <element name="extension">
+      <annotation>
+         <documentation>
+            Basical extension definition. This will be used by RCP to register this as an extension.
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="point" type="string" use="required">
+            <annotation>
+               <documentation>
+                  This point will be used by RCP to discover which .exsd defines the extension that will be used.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="id" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appInfo>
+                  <meta.attribute translatable="true"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="exporter">
+      <annotation>
+         <documentation>
+            The element exporter extension. Contains information usefull so that Archimedes can properly register the element exporter to the element&apos;s id and the file extension.
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="id" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The id of this exporter element.
+Not really important.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="extension" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The file extension to which this exporter will be registered under. Very important to ensure this exporter will be called at the right moment.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="elementId" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The id of the element that this exporter can export. This is very important because it will be used to map this exporter to the element it should export.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="class" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The class that extends ElementExporter and will be encharged of exporting this element when the exporter associated to the file extension is called.
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="java" basedOn="br.org.archimedes.interfaces.ElementExporter"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="since"/>
+      </appInfo>
+      <documentation>
+         This extension point exists since Archimedes was brought to RCP.
+It should be used only within fragments that refer to a plugin that defines an element extension.
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="examples"/>
+      </appInfo>
+      <documentation>
+         The first extension created using this point was the Line element exporter to XML.
+Here follows it&apos;s use:
+&lt;extension point=&quot;br.org.archimedes.elementExporter&quot;&gt;
+  &lt;exporter id=&quot;br.org.archimedes.line.xml.exporter&quot;
+  	extension=&quot;xml&quot; 
+  	elementId=&quot;br.org.archimedes.line&quot;
+  	class=&quot;br.org.archimedes.line.xml.LineExporter&quot;/&gt;
+&lt;/extension&gt;
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="apiInfo"/>
+      </appInfo>
+      <documentation>
+         There is no API information to use this point yet.
+If you believe there is one already, please check if there is some kind of Map associating String to ElementExporters in the Controller.
+If so, please remember the developing team to alter this information.
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="implementation"/>
+      </appInfo>
+      <documentation>
+         Please feel free to check the br.org.archimedes.line.xml plugin since this was the first implementation of this extension point.
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="copyright"/>
+      </appInfo>
+      <documentation>
+         For now, all content regarding Archimedes is licensed under GPL v.2.
+Therefore all that regards the extension points is copyleft.
+      </documentation>
+   </annotation>
+
+</schema>

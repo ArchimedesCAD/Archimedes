@@ -1,0 +1,167 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Schema file written by PDE -->
+<schema targetNamespace="br.org.archimedes">
+<annotation>
+      <appInfo>
+         <meta.schema plugin="br.org.archimedes" id="factory" name="Factory"/>
+      </appInfo>
+      <documentation>
+         This extension point should be used to define a factory that will produce something other than just a new element of any kind.
+For those kind of factories, the element extension point should be used.
+
+This extension point can be used to create factories that will modify or erase existing elements or creating more than one element at the same time.
+
+Extensions may provide the &quot;handlesDoubleClicks&quot; and &quot;handledElementId&quot; attributes. In that case, it is required that the implementing Factory extend from SelectorFactory. If the implementing Factory fails to do so it will not
+apply for registration as a double-click handler by the Archimedes platform.
+      </documentation>
+   </annotation>
+
+   <element name="extension">
+      <annotation>
+         <documentation>
+            Basical extension definition. This will be used by RCP to register this as an extension.
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="point" type="string" use="required">
+            <annotation>
+               <documentation>
+                  This point will be used by RCP to discover which .exsd defines the extension that will be used.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="id" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appInfo>
+                  <meta.attribute translatable="true"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="factory">
+      <annotation>
+         <documentation>
+            The factory extension. Contains information usefull so that Archimedes can properly register the factory with it&apos;s id, it&apos;s name and the shortcuts.
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="id" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The id of this factory.
+It is very important because it&apos;s the key that will be used to call this factory.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="class" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The class that extends CommandFactory and will be encharged of controlling the command factory.
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="java" basedOn="br.org.archimedes.interfaces.CommandFactory:"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+         <attribute name="handlesDoubleClick" type="boolean">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="handledElementId" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="shortcut">
+      <annotation>
+         <documentation>
+            The shortcut children. Contains information regarding what this factory should be associated with.
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="id" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The String that will be used to make the factory available to the users.
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="since"/>
+      </appInfo>
+      <documentation>
+         This extension point exists since Archimedes was brought to RCP.
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="examples"/>
+      </appInfo>
+      <documentation>
+         The first extension created using this point was the move factory.
+Here follows its use:
+&lt;extension point=&quot;br.org.archimedes.factory&quot;&gt;
+ &lt;factory id=&quot;br.org.archimedes.move&quot;
+  class=&quot;br.org.archimedes.move.MoveFactory&quot;
+  handlesDoubleClicks=&quot;false&quot;
+  handledElementId=&quot;&quot;&gt;
+  &lt;shortcut id=&quot;m&quot;/&gt;
+ &lt;/factory&gt;
+&lt;/extension&gt;
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="apiInfo"/>
+      </appInfo>
+      <documentation>
+         All factories are registered on the br.org.archimedes.parser.CommandParser in a Map from String to CommandFactory. It is there that the software will ask for a factory when needed and it is there, at startup, that all factories will be registered.
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="implementation"/>
+      </appInfo>
+      <documentation>
+         Please feel free to check the br.org.archimedes.move plugin since this was the first implementation of this extension point.
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="copyright"/>
+      </appInfo>
+      <documentation>
+         For now, all content regarding Archimedes is licensed under GPL v.2.
+Therefore all that regards the extension points is copyleft.
+      </documentation>
+   </annotation>
+
+</schema>

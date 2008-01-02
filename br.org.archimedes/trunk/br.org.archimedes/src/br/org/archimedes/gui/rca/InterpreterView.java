@@ -1,0 +1,168 @@
+
+package br.org.archimedes.gui.rca;
+
+import java.util.Observable;
+import java.util.Observer;
+
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
+import org.eclipse.swt.layout.FormAttachment;
+import org.eclipse.swt.layout.FormData;
+import org.eclipse.swt.layout.FormLayout;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.ISelectionListener;
+import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.part.ViewPart;
+
+import br.org.archimedes.controller.Controller;
+import br.org.archimedes.controller.InputController;
+import br.org.archimedes.gui.actions.SelectionCommand;
+import br.org.archimedes.gui.model.MouseClickHandler;
+import br.org.archimedes.gui.model.ParameterHandler;
+import br.org.archimedes.gui.model.Workspace;
+import br.org.archimedes.model.Drawing;
+import br.org.archimedes.model.Rectangle;
+
+public class InterpreterView extends ViewPart implements Observer,
+        ISelectionListener {
+
+    public static final String ID = "Archimedes.interpreterView"; //$NON-NLS-1$
+
+    private Text input;
+
+    private Text output;
+
+
+    public void createPartControl (Composite parent) {
+
+        getSite().getWorkbenchWindow().getSelectionService()
+                .addSelectionListener(this);
+        InputController.getInstance().addObserver(this);
+
+        final FormLayout layout = new FormLayout();
+        parent.setLayout(layout);
+        FormData layoutData;
+
+        input = new Text(parent, SWT.SINGLE | SWT.BORDER);
+        layoutData = new FormData();
+        layoutData.left = new FormAttachment(0);
+        layoutData.right = new FormAttachment(100);
+        layoutData.bottom = new FormAttachment(100);
+        input.setLayoutData(layoutData);
+
+        output = new Text(parent, SWT.MULTI | SWT.V_SCROLL | SWT.READ_ONLY
+                | SWT.BORDER);
+        layoutData = new FormData();
+        layoutData.left = new FormAttachment(0);
+        layoutData.right = new FormAttachment(100);
+        layoutData.top = new FormAttachment(0);
+        layoutData.bottom = new FormAttachment(input);
+        output.setLayoutData(layoutData);
+
+        input.addSelectionListener(new ParameterHandler(input, output));
+        input.addListener(SWT.MouseWheel, new Listener() {
+
+            // Used to make the mouse wheel work in Windows
+            // (only the widget on focus receives the event)
+            public void handleEvent (Event event) {
+
+                Rectangle rect = Workspace.getInstance().getWindowSize();
+                int outputHeight = output.getSize().y;
+                int canvasHeight = (int) rect.getHeight();
+                int marginsHeight = 10;
+                // Relocating the y position of the event to be relative to the
+                // canvas origin. This will cause problems if the user relocates
+                // the interpreter view.
+                event.y = event.y + outputHeight + canvasHeight + marginsHeight;
+                MouseClickHandler.getInstance().receiveMouseWheel(event);
+            }
+        });
+
+        input.addKeyListener(new KeyListener() {
+
+            public void keyPressed (KeyEvent e) {
+
+                InputController inputController = InputController.getInstance();
+                if (e.character == SWT.ESC) {
+                    if (SelectionCommand.isActive()) {
+                        SelectionCommand.getActive().cancel();
+                    }
+                    else if ( !(inputController.getCurrentFactory() == null || inputController
+                            .getCurrentFactory().isDone())) {
+                        inputController.cancelCurrentCommand();
+                    }
+                    else {
+                        Controller.getInstance().deselectAll();
+                    }
+                }
+                else if (Character.isWhitespace(e.character)
+                        && !inputController.wantsSpace()) {
+                    inputController.receiveText(input.getText());
+                    e.doit = false;
+                    input.setText(""); //$NON-NLS-1$
+                }
+            }
+
+            public void keyReleased (KeyEvent e) {
+
+                // Does nothing
+            }
+        });
+    }
+
+    public void setFocus () {
+
+        input.forceFocus();
+        input.setFocus();
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+     */
+    public void update (Observable arg0, Object arg1) {
+
+        if (arg0 == InputController.getInstance()
+                && (arg1 != null && arg1.getClass() == String.class)) {
+            output.append(arg1.toString());
+        }
+    }
+
+    /**
+     * @see org.eclipse.ui.ISelectionListener#selectionChanged(org.eclipse.ui.IWorkbenchPart,
+     *      org.eclipse.jface.viewers.ISelection)
+     */
+    public void selectionChanged (IWorkbenchPart part, ISelection selection) {
+
+        if (StructuredSelection.class.isAssignableFrom(selection.getClass())) {
+            IStructuredSelection structuredSelection = (IStructuredSelection) selection;
+            try {
+                InputController.getInstance().setDrawing(
+                        (Drawing) structuredSelection.getFirstElement());
+            }
+            catch (ClassCastException e) {
+                // This is a selection that does not regard drawings so I don't
+                // care
+            }
+        }
+    }
+
+    /**
+     * @see org.eclipse.ui.part.WorkbenchPart#dispose()
+     */
+    @Override
+    public void dispose () {
+
+        getSite().getWorkbenchWindow().getSelectionService()
+                .removeSelectionListener(this);
+        super.dispose();
+    }
+}

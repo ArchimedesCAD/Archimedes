@@ -1,0 +1,132 @@
+/*
+ * Created on 30/03/2006
+ */
+
+package br.org.archimedes.model;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import br.org.archimedes.exceptions.NullArgumentException;
+
+public class Rectangle {
+
+    private double x;
+
+    private double y;
+
+    private double width;
+
+    private double height;
+
+
+    /**
+     * Constructor.
+     * 
+     * @param x1
+     *            The x coordinate of one corner.
+     * @param y1
+     *            The y coordinate of one corner.
+     * @param x2
+     *            The x coordinate of the opposite corner.
+     * @param y2
+     *            The y coordinate of the opposite corner.
+     */
+    public Rectangle (double x1, double y1, double x2, double y2) {
+
+        this.x = Math.min(x1, x2);
+        this.y = Math.min(y1, y2);
+        this.width = Math.abs(x1 - x2);
+        this.height = Math.abs(y1 - y2);
+    }
+
+    /**
+     * @return A list of points of the rectangle in counter-clockwise order
+     *         starting from the lower left one.
+     */
+    public List<Point> getPoints () {
+
+        ArrayList<Point> points = new ArrayList<Point>();
+
+        Point lowerLeft = new Point(x, y);
+        Point upperLeft = new Point(x, y + height);
+        Point upperRight = new Point(x + width, y + height);
+        Point lowerRight = new Point(x + width, y);
+
+        points.add(lowerLeft);
+        points.add(lowerRight);
+        points.add(upperRight);
+        points.add(upperLeft);
+
+        return points;
+    }
+
+    /**
+     * @return The string containing the rectangle starting point and dimensions
+     */
+    public String toString () {
+
+        String s = "(x,y,w,h) = (" + this.x + ", " + this.y + ", " + this.width //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                + ", " + this.height + ")"; //$NON-NLS-1$ //$NON-NLS-2$
+
+        return s;
+    }
+
+    public boolean equals (Object object) {
+
+        boolean equal = (object == this);
+        if ( !equal && object != null && object.getClass() == this.getClass()) {
+            Rectangle rectangle = (Rectangle) object;
+            equal = getPoints().equals(rectangle.getPoints());
+        }
+        return equal;
+    }
+
+    public boolean isInside (Rectangle rectangle) {
+
+        boolean inside = x >= rectangle.x && y >= rectangle.y;
+        inside = inside && ((x - rectangle.x) + width <= rectangle.width);
+        inside = inside && ((y - rectangle.y) + height <= rectangle.height);
+
+        return inside;
+    }
+
+    public boolean intersects (Rectangle rectangle)
+            throws NullArgumentException {
+        // TODO interseção de retângulo
+        return false;
+    }
+
+    /**
+     * @return The point that is in the lower left corner of the Rectangle.
+     */
+    public Point getLowerLeft () {
+
+        return new Point(x, y);
+    }
+
+    /**
+     * @return The point that is in the upper right corner of the Rectangle.
+     */
+    public Point getUpperRight () {
+
+        return new Point(x + width, y + height);
+    }
+
+    /**
+     * @return The width of the rectangle.
+     */
+    public double getWidth () {
+
+        return width;
+    }
+
+    /**
+     * @return The height of the rectangle.
+     */
+    public double getHeight () {
+
+        return height;
+    }
+
+}

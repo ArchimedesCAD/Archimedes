@@ -1,0 +1,151 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Schema file written by PDE -->
+<schema targetNamespace="br.org.archimedes">
+<annotation>
+      <appInfo>
+         <meta.schema plugin="br.org.archimedes" id="element" name="Element"/>
+      </appInfo>
+      <documentation>
+         This extension point defines a new element to Archimedes&apos; drawings. The only reason this point exists is to enable saving/loading this element.
+The elementExporter and elementImporter related to this element will be forced to use the id defined in this extension point.
+If no extension point is defined for an element, it will be impossible to save/export or load/import it since no exporter/importer will be associated to it.
+
+If your element has another persistence system or should not be persisted with the rest of the drawing, you do not need to create an extension to register it. A creation factory is enough although we do not recommend you to do so.
+      </documentation>
+   </annotation>
+
+   <element name="extension">
+      <annotation>
+         <documentation>
+            Basical extension definition. This will be used by RCP to register this as an extension.
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="point" type="string" use="required">
+            <annotation>
+               <documentation>
+                  This point will be used by RCP to discover which .exsd defines the extension that will be used.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="id" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appInfo>
+                  <meta.attribute translatable="true"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="element">
+      <annotation>
+         <documentation>
+            The element extension. Contains information usefull so that Archimedes can properly register the element so that it can be loaded, saved and created.
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="id" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The id of this element. Will be used as key in several maps to define uniquely the element. Be sure of its spelling!
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="class" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The class that represents this element. It must extend, at some level, br.org.archimedes.model.Element and implement its abstract methods. Those will be used for most of Archimedes work.
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="java" basedOn="br.org.archimedes.model.elements.Element"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+         <attribute name="factory" type="string">
+            <annotation>
+               <documentation>
+                  The class that defines a factory to create this element. This factory will be associated with the element&apos;s id and name. It will also be associated to the defined shortcut (although this might be overwrite by some other element or factory).
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="java" basedOn="br.org.archimedes.interfaces.CommandFactory"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+         <attribute name="shortcut" type="string">
+            <annotation>
+               <documentation>
+                  A shortcut that may be used to refer to the factory.
+This is not guaranteed because other elements or factory may conflict with it.
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="since"/>
+      </appInfo>
+      <documentation>
+         This extension point exists since Archimedes was brought to RCP and it&apos;s only objective is to allow elements to be referenced by their id.
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="examples"/>
+      </appInfo>
+      <documentation>
+         The first extension created using this point was the Line element.
+Here follows its use:
+&lt;extension point=&quot;br.org.archimedes.element&quot;&gt;
+  &lt;element id=&quot;br.org.archimedes.line&quot; name=&quot;Line&quot; 
+        class=&quot;br.org.archimedes.line.Line&quot;
+        factory=&quot;br.org.archimedes.line.LineFactory&quot;
+        shortcut=&quot;l&quot; /&gt;
+&lt;/extension&gt;
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="apiInfo"/>
+      </appInfo>
+      <documentation>
+         There is no API information to use this point yet.
+If you believe there is one already, please check if there is some kind of Map associating String to Elements in the Controller.
+If so, please remember the developing team to alter this information.
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="implementation"/>
+      </appInfo>
+      <documentation>
+         Please feel free to check the br.org.archimedes.line plugin since this was the first implementation of this extension point.
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="copyright"/>
+      </appInfo>
+      <documentation>
+         For now, all content regarding Archimedes is licensed under GPL v.2.
+Therefore all that regards the extension points is copyleft.
+      </documentation>
+   </annotation>
+
+</schema>

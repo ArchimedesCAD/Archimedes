@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension-point id="factory" name="Factory" schema="schema/factory.exsd"/>
+   <extension-point id="importer" name="Importer" schema="schema/importer.exsd"/>
+   <extension-point id="exporter" name="Exporter" schema="schema/exporter.exsd"/>
+   <extension-point id="nativeFormat" name="Native Format" schema="schema/nativeFormat.exsd"/>
+   <extension-point id="element" name="Element" schema="schema/element.exsd"/>
+   <extension-point id="elementExporter" name="Element Exporter" schema="schema/elementExporter.exsd"/>
+   <extension-point id="elementImporter" name="Element Importer" schema="schema/elementImporter.exsd"/>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="br.org.archimedes.gui.rca.Perspective"
+            icon="icons/small.png"
+            id="Archimedes.perspective"
+            name="%perspective">
+      </perspective>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            name="%interpreterView"
+            allowMultiple="false"
+            icon="icons/small.png"
+            class="br.org.archimedes.gui.rca.InterpreterView"
+            id="Archimedes.interpreterView">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="org.eclipse.ui.file.exit"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="CTRL+Q">
+      </key>
+   </extension>
+   <extension
+         id="archimedes"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="br.org.archimedes.application"
+            name="Archimedes">
+         <property
+               name="aboutImage"
+               value="icons/logo128.gif"/>
+         <property
+               name="aboutText"
+               value="This is a test about Archimedes using the RCP."/>
+         <property
+               name="windowImages"
+               value="icons/logo16.gif,icons/logo32.gif,icons/logo48.gif,icons/logo64.gif,icons/logo128.gif"/>
+         <property
+               name="preferenceCustomization"
+               value="help/preferences.ini"/>
+         <property
+               name="startupProgressRect"
+               value="0,0,300,30"/>
+         <property
+               name="startupMessageRect"
+               value="30,0,300,50"/>
+         <property
+               name="startupForegroundColor"
+               value="000000"/>
+      </product>
+   </extension>
+   <extension
+         id="application"
+         point="org.eclipse.core.runtime.applications">
+      <application>
+         <run class="br.org.archimedes.gui.rca.Archimedes"/>
+      </application>
+   </extension>
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            description="The action set with the elements for the help menu"
+            id="Archimedes.actionSet"
+            label="Help Action set"
+            visible="true">
+			<menu
+               id="update"
+               label="%update"
+               path="help/begin">
+            <groupMarker name="begin"/>
+         </menu>
+         <action
+               class="br.org.archimedes.gui.rca.update.SearchUpdateAction"
+               icon="icons/update.gif"
+               id="br.org.archimedes.update.search"
+               label="%action.update.search.label"
+               menubarPath="help/update/begin"
+               style="push"
+               tooltip="%action.update.search.tooltip"/>
+         <action
+               class="br.org.archimedes.gui.rca.update.ManageConfigAction"
+               icon="icons/manage.gif"
+               id="br.org.archimedes.update.manage"
+               label="%action.update.manage.label"
+               menubarPath="help/update/begin"
+               style="push"
+               tooltip="%action.update.manage.tooltip"/>
+      </actionSet>
+      <actionSet
+            description="The action set with the elements for the edit menu and toolbar"
+            id="br.org.archimedes.action.edit"
+            label="Edit Action set"
+            visible="true">
+         <action
+               class="br.org.archimedes.gui.rca.actions.DeselectAction"
+               id="br.org.archimedes.action.selectnone"
+               label="%action.selectnone.label"
+               menubarPath="edit/slot2"
+               style="push"
+               tooltip="%action.selectnone.tooltip">
+            <enablement>
+               <objectClass name="br.org.archimedes.model.Drawing"/>
+            </enablement>
+         </action>
+         <action
+               class="br.org.archimedes.gui.rca.actions.SelectAllAction"
+               id="br.org.archimedes.action.selectall"
+               label="%action.selectall.label"
+               menubarPath="edit/slot2"
+               style="push"
+               tooltip="%action.selectall.tooltip">
+            <enablement>
+               <objectClass name="br.org.archimedes.model.Drawing"/>
+            </enablement>
+         </action>
+<!--         <action
+               icon="icons/cut.png"
+               id="br.org.archimedes.action.cut"
+               label="%action.cut.label"
+               menubarPath="edit/slot0"
+               style="push"
+               toolbarPath="edit"
+               tooltip="%action.cut.tooltip"/>-->
+         <action
+               class="br.org.archimedes.gui.rca.actions.OpenLayersAction"
+               id="br.org.archimedes.layerEditor"
+               label="%action.layer.label"
+               menubarPath="edit/slot4"
+               style="push"
+               tooltip="%action.layer.tooltip"/>
+      </actionSet>
+      <actionSet
+            description="The action set with the elements for the file menu and toolbar"
+            id="br.org.archimedes.action.file"
+            label="File Action set"
+            visible="true">
+          <action
+                class="br.org.archimedes.gui.rca.actions.ImportAction"
+                icon="icons/import.png"
+                id="br.org.archimedes.action.import"
+                label="Importar..."
+                menubarPath="file/slot3"
+                style="push">
+          </action>
+         <action
+               class="br.org.archimedes.gui.rca.actions.ExportAction"
+               enablesFor="1"
+               icon="icons/export.png"
+               id="br.org.archimedes.action.export"
+               label="%action.export.label"
+               menubarPath="file/slot3"
+               style="push"
+               tooltip="%action.export.tooltip">
+            <enablement>
+               <objectClass name="br.org.archimedes.model.Drawing"/>
+            </enablement>
+         </action>
+<!--         <action
+               class="br.org.archimedes.gui.rca.actions.ImportDrawing"
+               icon="icons/import.png"
+               id="br.org.archimedes.action.import"
+               label="%action.import.label"
+               menubarPath="file/slot3"
+               style="push"
+               tooltip="%action.import.tooltip"/>
+         <action
+               id="br.org.archimedes.action.prefs"
+               label="%action.prefs.label"
+               menubarPath="file/slot4"
+               style="push"
+               tooltip="%action.prefs.tooltip"/>
+         <action
+               icon="icons/print.png"
+               id="br.org.archimedes.action.print"
+               label="%action.print.label"
+               menubarPath="file/slot2"
+               style="push"
+               toolbarPath="file"
+               tooltip="%action.print.tooltip"/> -->
+         <action
+               class="br.org.archimedes.gui.rca.actions.CloseAllAction"
+               enablesFor="+"
+               icon="icons/closeall.png"
+               id="br.org.archimedes.action.closeall"
+               label="%action.closeall.label"
+               menubarPath="file/slot0"
+               style="push"
+               tooltip="%action.closeall.tooltip">
+            <enablement>
+               <objectClass name="br.org.archimedes.model.Drawing"/>
+            </enablement>
+         </action>
+         <action
+               class="br.org.archimedes.gui.rca.actions.CloseAction"
+               enablesFor="*"
+               icon="icons/close.png"
+               id="br.org.archimedes.action.close"
+               label="%action.close.label"
+               menubarPath="file/slot0"
+               style="push"
+               toolbarPath="file"
+               tooltip="%action.close.tooltip">
+            <enablement>
+               <objectClass name="br.org.archimedes.model.Drawing"/>
+            </enablement>
+         </action>
+<!--         <action
+               icon="icons/saveall.png"
+               id="br.org.archimedes.action.saveall"
+               label="%action.saveall.label"
+               menubarPath="file/slot1"
+               style="push"
+               tooltip="%action.saveall.tooltip"/>
+         <action
+               icon="icons/saveas.png"
+               id="br.org.archimedes.action.saveas"
+               label="%action.saveas.label"
+               menubarPath="file/slot1"
+               style="push"
+               tooltip="%action.saveas.tooltip"/>
+         <action
+               icon="icons/save.png"
+               id="br.org.archimedes.action.save"
+               label="%action.save.label"
+               menubarPath="file/slot1"
+               style="push"
+               toolbarPath="file"
+               tooltip="%action.save.tooltip"/>
+          <action
+                icon="icons/open.png"
+                id="br.org.archimedes.action.open"
+                label="%action.open.label"
+                menubarPath="file/begin"
+                style="push"
+                toolbarPath="file"
+                tooltip="%action.open.tooltip"/> -->
+          <action
+                allowLabelUpdate="false"
+                class="br.org.archimedes.gui.rca.actions.OpenDrawing"
+                icon="icons/new.png"
+                id="br.org.archimedes.action.newDrawing"
+                label="%action.newDrawing.label"
+                menubarPath="file/begin"
+                style="push"
+                toolbarPath="file"
+                tooltip="%action.newDrawing.tooltip"/>
+      </actionSet>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="br.org.archimedes.gui.rca.editor.DrawingEditor"
+            contributorClass="br.org.archimedes.gui.rca.editor.Contributor"
+            extensions="arc"
+            icon="icons/small.png"
+            id="br.org.archimedes.gui.rca.editor.DrawingEditor"
+            name="%editor"/>
+   </extension>
+   <extension
+         point="org.eclipse.help.toc">
+      <toc file="help/toc.xml" primary="true"/>
+      <toc file="help/tocgettingstarted.xml"/>
+      <toc file="help/tocreference.xml"/>
+      <toc file="help/toctasks.xml"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.exportWizards">
+      <wizard
+            class="br.org.archimedes.gui.rca.exporter.DrawingExporterTest"
+            id="br.org.archimedes.wizardTest"
+            name="A Test Export Wizard"/>
+            
+      <wizard
+            class="br.org.archimedes.gui.rca.exporter.DrawingExporterTest2"
+            id="br.org.archimedes.wizardTest2"
+            name="Another Test Export Wizard"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.importWizards">
+      <wizard
+            class="br.org.archimedes.gui.rca.importer.DrawingImporterTest"
+            id="br.org.archimedes.testImportWizard"
+            name="Importador teste">
+      </wizard>
+   </extension>
+
+</plugin>

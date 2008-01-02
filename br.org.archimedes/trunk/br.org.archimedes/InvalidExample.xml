@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<drawing xmlns="http://www.tarantulus.com/archimedes/FileXMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.tarantulus.com/archimedes/FileXMLSchema FileXMLSchema.xsd ">
+<zoom>0.25418658283290013</zoom>
+<viewport><point x="-142.85173245210717" y="-11.837661945181253" />
+</viewport>
+<container>
+<line>
+<point x="-395.0" y="-42.0" />
+<point x="136.0" y="212.0" />
+</line>
+<line>
+<point x="173.0" y="-117.0" />
+<point x="-291.0" y="172.0" />
+</line>
+<infiniteLine>
+<point x="-228.0" y="-199.0" />
+<point x="40.0" y="29.0" />
+</infiniteLine>
+<circle>
+<point x="-53.0" y="-183.0" />
+<radius>269.1189328159578</radius>
+</circle>
+<semiLine>
+<point x="-200.88158043235143" y="63.14569033621636" />
+<point x="-606.7631608647029" y="249.29138067243275" />
+</semiLine>
+<arc>
+<point x="-152.0" y="-96.0" />
+<point x="-244.0" y="53.0" />
+<point x="88.0" y="184.0" />
+</arc>
+<polyLine>
+<point x="-182.0" y="-184.0" />
+<point x="-513.0" y="56.0" />
+<point x="62.0" y="157.0" />
+<point x="220.0" y="-143.0" />
+<point x="56.0" y="-211.0" />
+<point x="395.0" y="-86.0" />
+</polyLine>
+<line>
+<point x="-395.0" y="-42.0" />
+<point x="136.0" y="212.0" />
+</line>
+<line>
+<point x="173.0" y="-117.0" />
+<point x="-291.0" y="172.0" />
+</line>
+<infiniteLine>
+<point x="-228.0" y="-199.0" />
+<point x="40.0" y="29.0" />
+</infiniteLine>
+<circle>
+<point x="-53.0" y="-183.0" />
+<radius>269.1189328159578</radius>
+</circle>
+<semiLine>
+<point x="-200.88158043235143" y="63.14569033621636" />
+<point x="-606.7631608647029" y="249.29138067243275" />
+</semiLine>
+<arc>
+<point x="-152.0" y="-96.0" />
+<point x="-244.0" y="53.0" />
+<point x="88.0" y="184.0" />
+</arc>
+<polyLine>
+<point x="-182.0" y="-184.0" />
+<point x="-513.0" y="56.0" />
+<point x="62.0" y="157.0" />
+<point x="220.0" y="-143.0" />
+<point x="56.0" y="-211.0" />
+<point x="395.0" y="-86.0" />
+</polyLine>
+<line>
+<point x="-395.0" y="-42.0" />
+<point x="136.0" y="212.0" />
+</line>
+<line>
+<point x="173.0" y="-117.0" />
+<point x="-291.0" y="172.0" />
+</line>
+<infiniteLine>
+<point x="-228.0" y="-199.0" />
+<point x="40.0" y="29.0" />
+</infiniteLine>
+<circle>
+<point x="-53.0" y="-183.0" />
+<radius>269.1189328159578</radius>
+</circle>
+<semiLine>
+<point x="-200.88158043235143" y="63.14569033621636" />
+<point x="-606.7631608647029" y="249.29138067243275" />
+</semiLine>
+<arc>
+<point x="-152.0" y="-96.0" />
+<point x="-244.0" y="53.0" />
+<point x="88.0" y="184.0" />
+</arc>
+<polyLine>
+<point x="-182.0" y="-184.0" />
+<point x="-513.0" y="56.0" />
+<point x="62.0" y="157.0" />
+<point x="220.0" y="-143.0" />
+<point x="56.0" y="-211.0" />
+<point x="395.0" y="-86.0" />
+</polyLine>
+<line>
+<point x="-395.0" y="-42.0" />
+<point x="136.0" y="212.0" />
+</line>
+<line>
+<point x="173.0" y="-117.0" />
+<point x="-291.0" y="172.0" />
+</line>
+<infiniteLine>
+<point x="-228.0" y="-199.0" />
+<point x="40.0" y="29.0" />
+</infiniteLine>
+<circle>
+<point x="-53.0" y="-183.0" />
+<radius>269.1189328159578</radius>
+</circle>
+<semiLine>
+<point x="-200.88158043235143" y="63.14569033621636" />
+<point x="-606.7631608647029" y="249.29138067243275" />
+</semiLine>
+<arc>
+<point x="-152.0" y="-96.0" />
+<point x="-244.0" y="53.0" />
+<point x="88.0" y="184.0" />
+</arc>
+<polyLine>
+<point x="-182.0" y="-184.0" />
+<point x="-513.0" y="56.0" />
+<point x="62.0" y="157.0" />
+<point x="220.0" y="-143.0" />
+<point x="56.0" y="-211.0" />
+<point x="395.0" y="-86.0" />
+</polyLine>
+<line>
+<point x="-395.0" y="-42.0" />
+<point x="136.0" y="212.0" />
+</line>
+<line>
+<point x="173.0" y="-117.0" />
+<point x="-291.0" y="172.0" />
+</line>
+<infiniteLine>
+<point x="-228.0" y="-199.0" />
+<point x="40.0" y="29.0" />
+</infiniteLine>
+<circle>
+<point x="-53.0" y="-183.0" />
+<radius>269.1189328159578</radius>
+</circle>
+<semiLine>
+<point x="-200.88158043235143" y="63.14569033621636" />
+<point x="-606.7631608647029" y="249.29138067243275" />
+</semiLine>
+<arc>
+<point x="-152.0" y="-96.0" />
+<point x="-244.0" y="53.0" />
+<point x="88.0" y="184.0" />
+</arc>
+<polyLine>
+<point x="-182.0" y="-184.0" />
+<point x="-513.0" y="56.0" />
+<point x="62.0" y="157.0" />
+<point x="220.0" y="-143.0" />
+<point x="56.0" y="-211.0" />
+<point x="395.0" y="-86.0" />
+</polyLine>
+<line>
+<point x="-395.0" y="-42.0" />
+<point x="136.0" y="212.0" />
+</line>
+<line>
+<point x="173.0" y="-117.0" />
+<point x="-291.0" y="172.0" />
+</line>
+<infiniteLine>
+<point x="-228.0" y="-199.0" />
+<point x="40.0" y="29.0" />
+</infiniteLine>
+<circle>
+<point x="-53.0" y="-183.0" />
+<radius>269.1189328159578</radius>
+</circle>
+<semiLine>
+<point x="-200.88158043235143" y="63.14569033621636" />
+<point x="-606.7631608647029" y="249.29138067243275" />
+</semiLine>
+<arc>
+<point x="-152.0" y="-96.0" />
+<point x="-244.0" y="53.0" />
+<point x="88.0" y="184.0" />
+</arc>
+<polyLine>
+<point x="-182.0" y="-184.0" />
+<point x="-513.0" y="56.0" />
+<point x="62.0" y="157.0" />
+<point x="220.0" y="-143.0" />
+<point x="56.0" y="-211.0" />
+<point x="395.0" y="-86.0" />
+</polyLine>
+<line>
+<point x="-395.0" y="-42.0" />
+<point x="136.0" y="212.0" />
+</line>
+<line>
+<point x="173.0" y="-117.0" />
+<point x="-291.0" y="172.0" />
+</line>
+<infiniteLine>
+<point x="-228.0" y="-199.0" />
+<point x="40.0" y="29.0" />
+</infiniteLine>
+<circle>
+<point x="-53.0" y="-183.0" />
+<radius>269.1189328159578</radius>
+</circle>
+<semiLine>
+<point x="-200.88158043235143" y="63.14569033621636" />
+<point x="-606.7631608647029" y="249.29138067243275" />
+</semiLine>
+<arc>
+<point x="-152.0" y="-96.0" />
+</arc>
+<polyLine>
+<point x="-182.0" y="-184.0" />
+<point x="-513.0" y="56.0" />
+<point x="62.0" y="157.0" />
+<point x="220.0" y="-143.0" />
+<point x="56.0" y="-211.0" />
+<point x="395.0" y="-86.0" />
+</polyLine>
+</container>
+</drawing>
