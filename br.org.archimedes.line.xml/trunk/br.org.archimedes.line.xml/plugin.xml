@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="br.org.archimedes.elementImporter">
+         <importer id="br.org.archimedes.line.xml.importer" extension="xml" elementId="br.org.archimedes.line" class="br.org.archimedes.line.xml.LineImporter"/>
+   </extension>
+   <extension
+         point="br.org.archimedes.elementExporter">
+         <exporter 
+         	id="br.org.archimedes.line.xml.exporter" 
+         	extension="xml" 
+         	elementId="br.org.archimedes.line" 
+         	class="br.org.archimedes.line.xml.LineExporter"/>
+   </extension>
+
+</plugin>

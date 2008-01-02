@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Line Xml Plugin
+Bundle-SymbolicName: br.org.archimedes.line.xml;singleton:=true
+Bundle-Version: 0.52.0
+Bundle-Vendor: Tarantulus Corporation
+Bundle-Localization: plugin
+Export-Package: br.org.archimedes.line.xml
+Require-Bundle: br.org.archimedes,
+ br.org.archimedes.line;resolution:=optional,
+ br.org.archimedes.io.xml
