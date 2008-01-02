@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="br.org.archimedes.factory">
+         <factory id="br.org.archimedes.rotate"
+          class="br.org.archimedes.rotate.RotateFactory">
+         	<shortcut id="ro"/>
+         </factory>
+   </extension>
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            id="br.org.archimedes.rotate.actionSet"
+            label="Rotate action set"
+            visible="true">
+         <action
+               id="br.org.archimedes.rotate.actionActivate"
+               class="br.org.archimedes.rotate.RotateAction"
+               icon="icons/rotate.png"
+               menubarPath="transform/simple0"
+               label="%action.rotate.label"
+               style="push"
+               toolbarPath="transform/simple0"
+               tooltip="%action.rotate.tooltip">
+            <enablement>
+               <objectClass name="br.org.archimedes.model.Drawing"/>
+            </enablement>
+         </action>
+      </actionSet>
+   </extension>
+</plugin>
