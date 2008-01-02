@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Romenian Translation
+Bundle-SymbolicName: br.org.archimedes.ro
+Bundle-Version: 0.50.0
+Bundle-Vendor: Cristian Balan
+Fragment-Host: br.org.archimedes;bundle-version="0.50.0"
+Bundle-Localization: plugin
