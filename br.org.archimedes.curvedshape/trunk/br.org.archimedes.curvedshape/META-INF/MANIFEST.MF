@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Curved Shape Plug-in
+Bundle-SymbolicName: br.org.archimedes.curvedshape;singleton:=true
+Bundle-Version: 0.52.0
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ br.org.archimedes
+Eclipse-LazyStart: false
+Export-Package: br.org.archimedes.curvedshape
