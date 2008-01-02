@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Dimension XML Tests Plug-in
+Bundle-SymbolicName: br.org.archimedes.dimension.xml.tests
+Bundle-Version: 1.0.0
+Bundle-Localization: plugin
+Require-Bundle: br.org.archimedes,
+ br.org.archimedes.dimension,
+ br.org.archimedes.dimension.xml,
+ br.org.archimedes.io.xml
