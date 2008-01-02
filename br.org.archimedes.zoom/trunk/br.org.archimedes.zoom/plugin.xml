@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            description="The action set for Zoom actions"
+            id="br.org.archimedes.zoom.actionSet"
+            label="Zoom Action Set"
+            visible="true">
+         <action
+               icon="icons/zoomarea.png"
+               id="br.org.archimedes.zoom.zoomArea"
+               label="%action.zoomarea.label"
+               menubarPath="zoom/absolute0"
+               style="push"
+               class="br.org.archimedes.zoom.ZoomAreaAction"
+               toolbarPath="zoom/absolute0"
+               tooltip="%action.zoomarea.tooltip">
+            <enablement>
+               <objectClass name="br.org.archimedes.model.Drawing"/>
+            </enablement>
+         </action>
+         <action
+               icon="icons/zoomextents.png"
+               id="br.org.archimedes.zoom.zoomExtents"
+               label="%action.zoomextents.label"
+               menubarPath="zoom/absolute1"
+               style="push"
+               class="br.org.archimedes.zoom.ZoomExtentsAction"
+               toolbarPath="zoom/absolute1"
+               tooltip="%action.zoomextents.tooltip">
+            <enablement>
+               <objectClass name="br.org.archimedes.model.Drawing"/>
+            </enablement>
+         </action>
+         <action
+               class="br.org.archimedes.zoom.ZoomPreviousAction"
+               icon="icons/zoomprev.png"
+               id="br.org.archimedes.zoom.zoomPrevious"
+               label="%action.zoomprev.label"
+               menubarPath="zoom/relative0"
+               state="false"
+               style="push"
+               toolbarPath="zoom/relative0"
+               tooltip="%action.zoomprev.tooltip">
+            <enablement>
+               <objectClass name="br.org.archimedes.model.Drawing"/>
+            </enablement>
+         </action>
+      </actionSet>
+   </extension>
+   <extension
+         point="br.org.archimedes.factory">
+         <factory id="br.org.archimedes.zoom"
+          class="br.org.archimedes.zoom.ZoomFactory">
+         	<shortcut id="z"/>
+         </factory>
+   </extension>
+</plugin>
