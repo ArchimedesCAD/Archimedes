@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="br.org.archimedes.factory">
+         <factory id="br.org.archimedes.move"
+          class="br.org.archimedes.move.MoveFactory">
+         	<shortcut id="m"/>
+         </factory>
+   </extension>
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            id="br.org.archimedes.move.actionSet"
+            label="Move action set"
+            visible="true">
+         <action
+               id="br.org.archimedes.move.actionActivate"
+               class="br.org.archimedes.move.MoveAction"
+               icon="icons/move.png"
+               menubarPath="transform/simple1"
+               label="%action.transform.label"
+               style="push"
+               toolbarPath="transform/simple1"
+               tooltip="%action.transform.tooltip">
+            <enablement>
+               <objectClass name="br.org.archimedes.model.Drawing"/>
+            </enablement>
+         </action>
+      </actionSet>
+   </extension>
+</plugin>
