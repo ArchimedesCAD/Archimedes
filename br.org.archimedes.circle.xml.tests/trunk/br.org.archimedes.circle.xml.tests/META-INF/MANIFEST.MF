@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Circle XML Tests Plug-in
+Bundle-SymbolicName: br.org.archimedes.circle.xml.tests
+Bundle-Version: 1.0.0
+Bundle-Localization: plugin
+Require-Bundle: br.org.archimedes,
+ br.org.archimedes.curvedshape,
+ br.org.archimedes.circle,
+ br.org.archimedes.io.xml.tests,
+ br.org.archimedes.circle.xml,
+ br.org.archimedes.tests
