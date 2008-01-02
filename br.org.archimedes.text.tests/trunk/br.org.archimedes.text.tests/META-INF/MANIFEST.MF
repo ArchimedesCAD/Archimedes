@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Text Tests Plug-in
+Bundle-SymbolicName: br.org.archimedes.text.tests
+Bundle-Version: 1.0.0
+Bundle-Localization: plugin
+Require-Bundle: br.org.archimedes.text,
+ br.org.archimedes,
+ br.org.archimedes.tests
