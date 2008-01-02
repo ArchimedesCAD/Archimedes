@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            description="The action set containing the Copy and paste actions."
+            id="br.org.archimedes.copypaste.actionSet"
+            label="Copy/Paste Action Set"
+            visible="true">
+         <action
+               icon="icons/copy_co.png"
+               id="br.org.archimedes.copypaste.action"
+               label="%action.copypaste.label"
+               menubarPath="transform/simple0"
+               style="push"
+               class="br.org.archimedes.copypaste.CopyPasteAction"
+               toolbarPath="transform/simple0"
+               tooltip="%action.copypaste.tooltip">
+            <enablement>
+               <objectClass name="br.org.archimedes.model.Drawing"/>
+            </enablement>
+         </action>
+      </actionSet>
+   </extension>
+   <extension
+         point="br.org.archimedes.factory">
+         <factory id="br.org.archimedes.copypaste"
+          class="br.org.archimedes.copypaste.CopyPasteFactory">
+         	<shortcut id="co"/>
+         </factory>
+   </extension>
+</plugin>
