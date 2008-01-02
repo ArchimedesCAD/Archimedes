@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Traduction para el Español
+Bundle-SymbolicName: br.org.archimedes.es
+Bundle-Version: 0.50.0
+Bundle-Vendor: José Fco. Soriano
+Fragment-Host: br.org.archimedes;bundle-version="0.50.0"
+Bundle-Localization: plugin
