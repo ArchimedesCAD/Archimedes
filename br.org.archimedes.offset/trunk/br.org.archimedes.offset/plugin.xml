@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="br.org.archimedes.factory">
+         <factory id="br.org.archimedes.offset"
+          class="br.org.archimedes.offset.OffsetFactory">
+         	<shortcut id="o"/>
+         </factory>
+   </extension>
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            id="br.org.archimedes.offset.actionSet"
+            label="Offset action set"
+            visible="true">
+         <action
+               class="br.org.archimedes.offset.OffsetAction"
+               icon="icons/offset.png"
+               id="br.org.archimedes.offset.actionActivate"
+               label="%action.offset.label"
+               menubarPath="transform/simple1"
+               style="push"
+               toolbarPath="transform/simple1"
+               tooltip="%action.offset.tooltip">
+            <enablement>
+               <objectClass name="br.org.archimedes.model.Drawing"/>
+            </enablement>
+         </action>
+      </actionSet>
+   </extension>
+
+</plugin>
