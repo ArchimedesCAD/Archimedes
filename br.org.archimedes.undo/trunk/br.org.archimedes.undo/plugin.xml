@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            description="The action set for Undo actions"
+            id="br.org.archimedes.undo.actionSet"
+            label="Undo Action Set"
+            visible="true">
+         <action
+               icon="icons/undo.png"
+               id="br.org.archimedes.undo.undoAction"
+               label="%action.undo.label"
+               menubarPath="edit/simplex0"
+               style="push"
+               class="br.org.archimedes.undo.UndoAction"
+               toolbarPath="edit/simplex0"
+               tooltip="%action.undo.tooltip">
+            <enablement>
+               <objectClass name="br.org.archimedes.model.Drawing"/>
+            </enablement>
+         </action>
+      </actionSet>
+   </extension>
+   <extension
+         point="br.org.archimedes.factory">
+         <factory id="br.org.archimedes.undo"
+          class="br.org.archimedes.undo.UndoFactory">
+         	<shortcut id="u"/>
+         </factory>
+   </extension>
+</plugin>
