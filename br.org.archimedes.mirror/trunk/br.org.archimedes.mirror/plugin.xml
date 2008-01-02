@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            description="The action set to the Mirror action"
+            id="br.org.archimedes.mirror.actionSet"
+            label="Mirror&apos;s Action set"
+            visible="true">
+         <action
+               icon="icons/mirror.png"
+               id="br.org.archimedes.mirror.action"
+               label="%action.mirror.label"
+               menubarPath="transform/simple1"
+               style="push"
+               class="br.org.archimedes.mirror.MirrorAction"
+               toolbarPath="transform/simple1"
+               tooltip="%action.mirror.tooltip">
+            <enablement>
+               <objectClass name="br.org.archimedes.model.Drawing"/>
+            </enablement>
+         </action>
+      </actionSet>
+   </extension>
+   <extension
+         point="br.org.archimedes.factory">
+         <factory id="br.org.archimedes.mirror"
+          class="br.org.archimedes.mirror.MirrorFactory">
+         	<shortcut id="mi"/>
+         </factory>
+   </extension>
+</plugin>

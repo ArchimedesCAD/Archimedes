@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Mirror Plug-in
+Bundle-SymbolicName: br.org.archimedes.mirror;singleton:=true
+Bundle-Version: 0.50.0
+Bundle-Activator: br.org.archimedes.mirror.Activator
+Bundle-Vendor: Tarantulus Coporation
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ br.org.archimedes
+Eclipse-LazyStart: true
+Export-Package: br.org.archimedes.mirror
