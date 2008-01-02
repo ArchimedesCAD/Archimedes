@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+<extension point="br.org.archimedes.factory">
+ <factory id="br.org.archimedes.factoryexample"
+  class="br.org.archimedes.factoryexample.FactoryExampleFactory">
+  <shortcut id="f"/>
+ </factory>
+</extension>
+<extension
+      point="org.eclipse.ui.actionSets">
+   <actionSet
+         id="br.org.archimedes.factoryexample.actionSet"
+         label="br.org.archimedes.factoryexample.actionSet"
+                     visible="true">
+            <menu
+               id="wsl"
+               label="%menu.factoryexample.label"
+               path="additions">
+            <groupMarker name="slot0"/>
+            </menu>
+      <action
+            class="br.org.archimedes.factoryexample.FactoryExampleAction"
+            id="br.org.archimedes.factoryexample.action"
+            label="%action.factoryexample.label"
+            menubarPath="factoryexample/slot0"
+            style="push"
+            toolbarPath="additions"
+            tooltip="%action.factoryexample.tooltip"/>
+   </actionSet>
+</extension>
+</plugin>

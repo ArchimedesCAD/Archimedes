@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Factory Example Plug-in
+Bundle-SymbolicName: br.org.archimedes.factoryexample;singleton:=true
+Bundle-Version: 1.0.0
+Bundle-Activator: br.org.archimedes.factoryexample.Activator
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ br.org.archimedes,
+ br.org.archimedes.line
+Eclipse-LazyStart: true
