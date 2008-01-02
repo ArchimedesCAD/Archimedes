@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+
+<shortcuts>
+
+	<skipIfNotSupported />
+	<!--
+		Our shortcut section. Here we define where will be the shortcuts.
+	-->
+	<programGroup defaultName="Tarantulus\Archimedes"
+		location="applications||startMenu" />
+
+	<shortcut name="Archimedes" programGroup="yes" desktop="yes"
+		applications="no" startMenu="no" startup="no"
+		target="$INSTALL_PATH\Archimedes.exe" workingDirectory="$INSTALL_PATH"
+		commandLine="" description="Starts Archimedes"
+		initialState="noShow">
+
+		<createForPack name="Core" />
+	</shortcut>
+
+	<shortcut name="Uninstaller" programGroup="yes" desktop="no"
+		applications="no" startMenu="no" startup="no"
+		target="$JAVA_HOME/bin/java.exe" workingDirectory="$INSTALL_PATH\Uninstaller\"
+		commandLine="-jar uninstaller.jar"
+		iconFile="%SystemRoot%\system32\SHELL32.dll" iconIndex="31"
+		description="Uninstalls Archimedes">
+
+		<createForPack name="Core" />
+	</shortcut>
+
+</shortcuts>

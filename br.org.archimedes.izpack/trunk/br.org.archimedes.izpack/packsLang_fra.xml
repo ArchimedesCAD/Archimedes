@@ -1,0 +1,41 @@
+<langpack>
+	<str id="core" txt="Coeur d'Archimedes" />
+	<str id="core.description"
+		txt="Les fichiers essenciels pour pouvoir exécuter." />
+
+	<str id="operations" txt="Opérations" />
+	<str id="operations.description"
+		txt="Les opérations basiques qui permettent à l'utilisateur de travailler les éléments." />
+				
+	<str id="lines" txt="Lignes" />
+	<str id="lines.description"
+		txt="Module qui permet la création et addition de lignes au dessins." />
+		
+	<str id="curves" txt="Courbes" />
+	<str id="curves.description"
+		txt="Module qui permet la création et addition de lignes courbes et cercles au dessins." />
+		
+	<str id="texts" txt="Textes" />
+	<str id="texts.description"
+		txt="Module qui permet l'addition d'éléments de textes dans le dessin et/ou la création d'autres éléments qui contiennent du texte comme les quotas." />
+		
+	<str id="translator.name" txt="Hugo Corbucci" />
+	<str id="translator.email" txt="nightao@gmail.com" />
+
+	<str id="core-es" txt="Traduction du coeur en es" />
+	<str id="core-es.description"
+		txt="Traduction du coeur d'Archimedes en Espagnol faite par
+		 José Fco. Soriano." />
+	<str id="core-fr" txt="Traduction du coeur en fr" />
+	<str id="core-fr.description"
+		txt="Traduction du coeur d'Archimedes en Français faite par
+		 Hugo Corbucci." />		
+	<str id="core-pt_BR" txt="Traduction du coeur en pt-BR" />
+	<str id="core-pt_BR.description"
+		txt="Traduction du coeur d'Archimedes en Portuguais du Brésil faite par
+		 Hugo Corbucci." />
+	<str id="core-ro" txt="Traduction du coeur en ro" />
+	<str id="core-ro.description"
+		txt="Traduction du coeur d'Archimedes en Romain faite par
+		 Cristian Balan." />
+</langpack>

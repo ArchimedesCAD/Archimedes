@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+
+<!-- 
+	To compile it :
+	- replace the @VERSION@ tag with the version number and
+	save it as archimedes-installer.xml.
+	- go in the bin directory where you installed IzPack
+	- call "compile $ARCHIMEDES/archimedes-installer.xml -b $ARCHIMEDES"
+	where $ARCHIMEDES is the base dir of br.org.archimedes.izpack.
+-->
+<installation version="1.0">
+
+	<properties>
+		<property
+			file="install.properties" />
+	</properties>
+
+	<variables>
+		<variable name="DesktopShortcutCheckboxEnabled" value="true" />
+	</variables>
+
+	<!-- The native libraries to add -->
+	<native type="izpack" name="ShellLink.dll" />
+
+	<!-- 
+		The info section.
+	-->
+	<info>
+		<appname>Archimedes - The Open CAD</appname>
+		<appversion>@{version}</appversion>
+		<authors>
+			<author name="Tarantulus Corp."
+				email="archimedesproject@googlegroups.com" />
+			<author name="Translations - Archimedes' Translator team"
+				email="arquimedes-translators@lists.sourceforge.net" />
+		</authors>
+		<url>http://www.archimedes.org.br/</url>
+		<webdir>http://arquimedes.sf.net/update</webdir>
+	</info>
+
+	<!-- 
+		The gui preferences indication.
+	-->
+	<guiprefs width="640" height="480" resizable="no">
+		<modifier key="useButtonIcons" value="yes" />
+		<modifier key="useLabelIcons" value="yes" />
+		<modifier key="langDisplayType" value="native" />
+		<modifier key="layoutAnchor" value="CENTER" />
+		<modifier key="headingPanelCounter" value="progressbar" />
+		<modifier key="headingPanelCounterPos"
+			value="inNavigationPanel" />
+	</guiprefs>
+
+	<!-- 
+		The locale section.
+	-->
+	<locale>
+		<langpack iso3="eng" />
+		<langpack iso3="por" />
+		<langpack iso3="fra" />
+	</locale>
+
+	<!-- 
+		The resources section.
+	-->
+	<resources>
+		<res id="installer.langsel.img" src="installer.png" />
+		<res id="LicencePanel.licence" src="license.txt" />
+		<res id="shortcutSpec.xml" src="shortcutSpec.xml" />
+		<res id="Unix_shortcutSpec.xml" src="Unix_shortcutSpec.xml" />
+		<res id="packsLang.xml_eng" src="packsLang_eng.xml" />
+		<res id="packsLang.xml_fra" src="packsLang_fra.xml" />
+		<res id="packsLang.xml_por" src="packsLang_por.xml" />
+	</resources>
+
+	<!-- 
+		The panels section.
+		We indicate here which panels we want to use. The order will be respected.
+	-->
+	<panels>
+		<panel classname="HelloPanel" />
+		<panel classname="LicencePanel" />
+		<panel classname="PacksPanel" />
+		<panel classname="TargetPanel" />
+		<panel classname="InstallPanel" />
+		<panel classname="ShortcutPanel" />
+		<panel classname="FinishPanel" />
+	</panels>
+
+	<!-- 
+		The packs section.
+		We specify here our packs.
+	-->
+	<packs>
+		<pack name="Core" id="core" required="yes">
+			<description>The core of Archimedes.</description>
+			<fileset dir="@{deployDir}/win32.win32.x86/Archimedes/"
+				targetdir="$INSTALL_PATH">
+				<include name="startup.jar" />
+				<include name="configuration/config.ini" />
+				<include name="features/org.eclipse.rcp*/**/*" />
+				<include
+					name="features/br.org.archimedes.feature*/**/*" />
+				<include name="plugins/**/*" />
+				<exclude name="plugins/br.org.archimedes.*.jar" />
+				<exclude name="plugins/org.eclipse.swt.*win32*.jar" />
+				<exclude name="plugins/br.org.archimedes.opengl.*win32*/**/*" />
+				<exclude name="plugins/br.org.archimedes.opengl.*win32*" />
+				<include name="plugins/br.org.archimedes.batik*.jar"  />
+			</fileset>
+			<fileset dir="@{deployDir}/linux.gtk.x86/Archimedes/"
+				targetdir="$INSTALL_PATH">
+				<include name="icon.xpm" />
+				<include name="Archimedes" />
+				<include name="about.html" />
+				<include name="libcairo-swt.so" />
+				<include name="about_files/**/*" />
+				<include name="plugins/br.org.archimedes.opengl.*linux*/**/*" />
+				<include name="plugins/org.eclipse.swt.*linux*" />
+				<os name="linux" />
+			</fileset>
+			<fileset dir="@{deployDir}/macosx.carbon.x86/Archimedes/"
+				targetdir="$INSTALL_PATH">
+				<include name="Archimedes.app/**/*" />
+				<include name="plugins/br.org.archimedes.opengl.macosx*/**/*" />
+				<include name="plugins/org.eclipse.swt.*macosx*" />
+				<os family="osx" />
+			</fileset>
+			<fileset dir="@{deployDir}/win32.win32.x86/Archimedes/"
+				targetdir="$INSTALL_PATH">
+				<include name="Archimedes.exe" />
+				<include name="plugins/br.org.archimedes.opengl.*win32*/**/*" />
+				<include name="plugins/org.eclipse.swt.*win32*" />
+				<os family="windows" />
+			</fileset>
+
+			<!-- The windows scripts -->
+			<executable targetfile="$INSTALL_PATH/Archimedes.exe"
+				stage="never">
+				<os family="windows" />
+			</executable>
+
+			<!-- The Linux scripts -->
+			<executable targetfile="$INSTALL_PATH/Archimedes"
+				stage="never">
+				<os name="linux" />
+			</executable>
+			
+			<!-- The MacOSX scripts -->
+			<executable targetfile="$INSTALL_PATH/Archimedes.app/Contents/MacOS/Archimedes"
+				stage="never">
+				<os family="osx" />
+			</executable>
+		</pack>
+
+		<pack name="Operations" id="operations" required="no">
+			<description>The basic operations feature for Archimedes.</description>
+			<fileset dir="@{deployDir}/win32.win32.x86/Archimedes/"
+				targetdir="$INSTALL_PATH">
+				<include name="plugins/br.org.archimedes.*.jar" />
+				<exclude name="plugins/br.org.archimedes.line*.jar" />
+				<exclude name="plugins/br.org.archimedes.polyline*.jar" />
+				<exclude name="plugins/br.org.archimedes.circle*.jar" />
+				<exclude name="plugins/br.org.archimedes.opengl*.jar" />
+				<exclude name="plugins/br.org.archimedes.*.es.*.jar" />
+				<exclude name="plugins/br.org.archimedes.*.fr.*.jar" />
+				<exclude name="plugins/br.org.archimedes.*.ro.*.jar" />
+				<exclude name="plugins/br.org.archimedes.*.pt_BR.*.jar" />
+			</fileset>
+		</pack>
+
+		<pack name="Lines" id="lines" required="no">
+			<description>The lines feature for Archimedes.</description>
+			<fileset dir="@{deployDir}/win32.win32.x86/Archimedes/"
+				targetdir="$INSTALL_PATH">
+				<include
+					name="features/br.org.archimedes.lines.feature*/**/*" />
+				<include name="plugins/br.org.archimedes.line*.jar" />
+				<include name="plugins/br.org.archimedes.infiniteline*.jar" />
+				<include name="plugins/br.org.archimedes.polyline*.jar" />
+			</fileset>
+		</pack>
+
+		<pack name="Curves" id="curves" required="no">
+			<description>The curves feature for Archimedes.</description>
+			<fileset dir="@{deployDir}/win32.win32.x86/Archimedes/"
+				targetdir="$INSTALL_PATH">
+				<include
+					name="features/br.org.archimedes.curves.feature*/**/*" />
+				<include name="plugins/br.org.archimedes.curvedshape*.jar" />
+				<include name="plugins/br.org.archimedes.arc*.jar" />
+				<include name="plugins/br.org.archimedes.circle*.jar" />
+			</fileset>
+		</pack>
+	
+		<pack name="Texts" id="texts" required="no">
+			<description>The text feature for Archimedes.</description>
+			<fileset dir="@{deployDir}/win32.win32.x86/Archimedes/"
+				targetdir="$INSTALL_PATH">
+				<include
+					name="features/br.org.archimedes.comunication.feature*/**/*" />
+				<include name="plugins/br.org.archimedes.dimension*.jar" />
+				<include name="plugins/br.org.archimedes.text*.jar" />
+			</fileset>
+		</pack>	
+		<pack name="Core Translation es" id="core-es"
+			required="no">
+			<description>
+				The core's translation in Spanish.
+			</description>
+			<fileset dir="@{deployDir}/win32.win32.x86/Archimedes/"
+				targetdir="$INSTALL_PATH">
+				<include name="plugins/br.org.archimedes*.es_*jar" />
+			</fileset>
+		</pack>
+		
+		<pack name="Core Translation fr" id="core-fr"
+			required="no">
+			<description>
+				The core's translation in French.
+			</description>
+			<fileset dir="@{deployDir}/win32.win32.x86/Archimedes/"
+				targetdir="$INSTALL_PATH">
+				<include name="plugins/br.org.archimedes*.fr_*jar" />
+			</fileset>
+		</pack>
+
+		<pack name="Core Translation pt-BR" id="core-pt_BR"
+			required="no">
+			<description>
+				The core's translation in Portuguese(Brazil).
+			</description>
+			<fileset dir="@{deployDir}/win32.win32.x86/Archimedes/"
+				targetdir="$INSTALL_PATH">
+				<include name="plugins/br.org.archimedes*.pt_BR_*jar" />
+			</fileset>
+		</pack>
+
+		<pack name="Core Translation ro" id="core-ro"
+			required="no">
+			<description>
+				The core's translation in Romanian.
+			</description>
+			<fileset dir="@{deployDir}/win32.win32.x86/Archimedes/"
+				targetdir="$INSTALL_PATH">
+				<include name="plugins/br.org.archimedes*.ro_*jar" />
+			</fileset>
+		</pack>
+	</packs>
+</installation>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+
+<!-- 
+	Notes: 
+	Since there is no dtd (yet), here is a short explanation
+	of the last change.
+	- Each Shortcut has now a optional attribute
+	
+	createForAll 
+	
+	As root you can create Shortcuts for all users or even only for yourself.
+	This can be the case i.e. for the uninstaller.
+	If you whant to do so, set createForAll to true otherwise to false, which is the default.
+	
+	! If not explicite set or present the default is false.	
+-->
+
+<shortcuts>
+	<programGroup defaultName="Archimedes"
+		location="applications" />
+	<shortcut name="Archimedes" programGroup="yes" desktop="yes"
+		applications="no" startMenu="yes" startup="no"
+		target="$INSTALL_PATH/Archimedes" iconFile="$INSTALL_PATH/icon.xpm"
+		iconIndex="0" workingDirectory="$INSTALL_PATH/"
+		description="Starts Archimedes" type="Application" encoding="UTF-8"
+		terminal="false" KdeSubstUID="false" initialState="normal"
+		categories="" createForAll="true">
+		<createForPack name="Core" />
+	</shortcut>
+
+	<shortcut name="Archimedes Uninstaller" programGroup="yes"
+		desktop="no" applications="no" startMenu="yes" startup="no"
+		target="$JAVA_HOME/bin/java"
+		commandLine="-jar uninstaller.jar"
+		iconFile="trashcan_empty" iconIndex="0"
+		workingDirectory="$INSTALL_PATH/Uninstaller/" description="Starts Archimedes"
+		type="Application" encoding="UTF-8" terminal="false"
+		KdeSubstUID="false" initialState="normal" categories=""
+		createForAll="true">
+		<createForPack name="Core" />
+	</shortcut>
+</shortcuts>
