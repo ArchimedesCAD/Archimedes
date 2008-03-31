@@ -249,12 +249,12 @@ public class Line extends Element implements Offsetable, Trimmable,
     /**
      * @see com.tarantulus.archimedes.model.elements.Element#getIntersection(com.tarantulus.archimedes.model.elements.Element)
      */
-    public Collection<Point> getIntersection (Element element)
-            throws NullArgumentException {
-
-        // TODO
-        return Collections.emptyList();
-    }
+//    public Collection<Point> getIntersection (Element element)
+//            throws NullArgumentException {
+//
+//        // TODO
+//        return Collections.emptyList();
+//    }
 
     /**
      * @param distance
