@@ -1,6 +1,6 @@
 package br.org.archimedes.model;
 
-import java.util.List;
+import java.util.Collection;
 
 public interface Intersector {
 	
@@ -14,6 +14,6 @@ public interface Intersector {
      * @return The collection of points of intersection.
      */
 	
-	public List<Point> getIntersections(Element element, Element otherElement);
+	public Collection<Point> getIntersections(Element element, Element otherElement);
 	
 }
