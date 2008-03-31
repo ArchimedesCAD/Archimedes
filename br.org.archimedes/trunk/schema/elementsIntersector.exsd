@@ -6,7 +6,9 @@
          <meta.schema plugin="br.org.archimedes" id="elementsIntersector" name="Elements Intersector"/>
       </appInfo>
       <documentation>
-         [Enter description of this extension point.]
+         This extension point defines a new intersection to Archimedes&apos; elements. Each extension from this extension point calculates the collection of intersection points of two classes of elements. These elements must previously exist as an extension of the Element extension point.
+
+Every combination of two classes of elements should have an intersector so if you create a new element, please take some time to create the intersectors for it.
       </documentation>
    </annotation>
 
@@ -15,7 +17,7 @@
          <attribute name="point" type="string" use="required">
             <annotation>
                <documentation>
-                  
+                  This point will be used by RCP to discover which .exsd defines the extension that will be used.
                </documentation>
             </annotation>
          </attribute>
@@ -40,6 +42,13 @@
    </element>
 
    <element name="elementsIntersector">
+      <annotation>
+         <documentation>
+            The elementsIntersector extension has the information needed to identify both element classes and find out which intersector to use.
+
+The order of the elements is irrelevant.
+         </documentation>
+      </annotation>
       <complexType>
          <attribute name="id" type="string" use="required">
             <annotation>
@@ -51,21 +60,21 @@
          <attribute name="element" type="string" use="required">
             <annotation>
                <documentation>
-                  
+                  The id of this element. Will be used to determine which intersector Archimedes should use. Be sure of its spelling!
                </documentation>
             </annotation>
          </attribute>
          <attribute name="otherElement" type="string" use="required">
             <annotation>
                <documentation>
-                  
+                  The id of the other element. Will also be used to determine which intersector Archimedes should use. Be sure of its spelling!
                </documentation>
             </annotation>
          </attribute>
          <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
-                  
+                  The intersector class. It must implement the Intersector interface.
                </documentation>
                <appInfo>
                   <meta.attribute kind="java" basedOn="br.org.archimedes.model.Intersector"/>
@@ -80,7 +89,7 @@
          <meta.section type="since"/>
       </appInfo>
       <documentation>
-         [Enter the first release in which this extension point appears.]
+         This extension point exists since Archimedes&apos; first implementation of intersections (release 0.53 most likely).
       </documentation>
    </annotation>
 
@@ -89,7 +98,9 @@
          <meta.section type="examples"/>
       </appInfo>
       <documentation>
-         [Enter extension point usage example here.]
+         The first extension created using this point was the LineLineIntersector.
+
+The code will be posted here soon.
       </documentation>
    </annotation>
 
@@ -98,7 +109,7 @@
          <meta.section type="apiInfo"/>
       </appInfo>
       <documentation>
-         [Enter API information here.]
+         The extensions to this point should implement the Intersector interface.
       </documentation>
    </annotation>
 
@@ -107,7 +118,7 @@
          <meta.section type="implementation"/>
       </appInfo>
       <documentation>
-         [Enter information about supplied implementation of this extension point.]
+         Please check br.org.archimedes.intersector.lineLineIntersector plugin since this was the first implementation of this extension point.
       </documentation>
    </annotation>
 
@@ -116,7 +127,8 @@
          <meta.section type="copyright"/>
       </appInfo>
       <documentation>
-         
+         For now, all content regarding Archimedes is licensed under GPL v.2.
+Therefore all that regards the extension points is copyleft.
       </documentation>
    </annotation>
 

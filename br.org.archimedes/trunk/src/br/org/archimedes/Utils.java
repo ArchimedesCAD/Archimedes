@@ -86,8 +86,8 @@ public class Utils {
 	}
 
 	/**
-	 * Fills the intersector maps with the infos found on this element tag. If there is an
-	 * error, just does nothing.
+	 * Fills the intersector maps with the infos found on this element tag. If
+	 * there is an error, just does nothing.
 	 * 
 	 * @param elementTag
 	 *            The tag that contains infos
@@ -107,8 +107,14 @@ public class Utils {
 					.forName(intersectorClass);
 			elementsToIntersectorMap.put(new PairOfElementClasses(element,
 					otherElement), eClass);
-			intersectorToElementsMap.put(eClass, new PairOfElementClasses(element,
-					otherElement));
+			intersectorToElementsMap.put(eClass, new PairOfElementClasses(
+					element, otherElement));
+			if (element != otherElement) {
+				elementsToIntersectorMap.put(new PairOfElementClasses(
+						otherElement, element), eClass);
+				intersectorToElementsMap.put(eClass, new PairOfElementClasses(
+						otherElement, element));
+			}
 		} catch (ClassNotFoundException e) {
 			// If this happens, ignores the element and move on.
 			// Printing the stack trace might help developers to
