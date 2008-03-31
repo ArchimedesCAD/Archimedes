@@ -6,6 +6,6 @@
 			id="br.org.archimedes.intersector.lineline"
 			element="br.org.archimedes.line"
 			otherElement="br.org.archimedes.line"
-			class=""/>
+			class="br.org.archimedes.intersector.lineline.LineLineIntersector"/>
 	</extension>
 </plugin>
