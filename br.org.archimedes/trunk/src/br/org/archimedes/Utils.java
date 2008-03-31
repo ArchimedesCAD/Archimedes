@@ -124,6 +124,22 @@ public class Utils {
 
 	}
 
+	public static Intersector getIntersectorFor(Element element,
+			Element otherElement) {
+		Class<? extends Element> e1Class = element.getClass();
+		Class<? extends Element> e2Class = otherElement.getClass();
+
+		try {
+			return elementsToIntersectorMap.get(
+					new PairOfElementClasses(e1Class, e2Class)).newInstance();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 	/**
 	 * Finds a Factory that registered as a double click handler for elements of
 	 * this type.

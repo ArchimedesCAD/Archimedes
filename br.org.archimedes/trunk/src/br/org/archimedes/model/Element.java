@@ -10,6 +10,7 @@ import java.util.List;
 import br.org.archimedes.exceptions.IllegalActionException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.gui.opengl.OpenGLWrapper;
+import br.org.archimedes.Utils;
 
 /**
  * Belongs to package br.org.archimedes.model.
@@ -79,8 +80,13 @@ public abstract class Element {
      * @throws NullArgumentException
      *             thrown if the element is null.
      */
-    public abstract Collection<Point> getIntersection (Element element)
-            throws NullArgumentException;
+    public Collection<Point> getIntersection (Element element)
+            throws NullArgumentException {
+    	if (element == null)
+    		throw new NullArgumentException();
+    	Intersector intersector = Utils.getIntersectorFor(this, element);
+    	return intersector.getIntersections(this, element);
+    }
 
     /**
      * Moves the element's points by the given vector.
