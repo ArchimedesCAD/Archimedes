@@ -5,5 +5,4 @@ Bundle-SymbolicName: br.org.archimedes.intersector.lineline;singleton:=true
 Bundle-Version: 1.0.0
 Bundle-Localization: plugin
 Require-Bundle: br.org.archimedes,
- br.org.archimedes.infiniteline,
  br.org.archimedes.line
