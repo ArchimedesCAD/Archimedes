@@ -11,6 +11,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Scanner;
 
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IExtensionPoint;
@@ -40,16 +41,13 @@ public class Utils {
 
 	private final static Map<Class<? extends Element>, Class<? extends SelectorFactory>> elementToDoubleClickHandler;
 
-	private final static Map<PairOfElementClasses, Class<Intersector>> elementsToIntersectorMap;
-
-	private final static Map<Class<Intersector>, PairOfElementClasses> intersectorToElementsMap;
+	private final static Map<PairOfElementClasses, Intersector> elementsToIntersectorMap;
 
 	static {
 		elementToIdMap = new HashMap<Class<? extends Element>, String>();
 		idToElementClassMap = new HashMap<String, Class<? extends Element>>();
 		elementToDoubleClickHandler = new HashMap<Class<? extends Element>, Class<? extends SelectorFactory>>();
-		elementsToIntersectorMap = new HashMap<PairOfElementClasses, Class<Intersector>>();
-		intersectorToElementsMap = new HashMap<Class<Intersector>, PairOfElementClasses>();
+		elementsToIntersectorMap = new HashMap<PairOfElementClasses, Intersector>();
 
 		fillMaps();
 	}
@@ -97,25 +95,16 @@ public class Utils {
 
 		String elementId = elementTag.getAttribute("element"); //$NON-NLS-1$
 		String otherElementId = elementTag.getAttribute("otherElement"); //$NON-NLS-1$
-		String intersectorClass = elementTag.getAttribute("class"); //$NON-NLS-1$
 		Class<? extends Element> element = getElementClass(elementId);
 		Class<? extends Element> otherElement = getElementClass(otherElementId);
+		Intersector inter = null;
 		if (element == null || otherElement == null)
 			return;
 		try {
-			Class<Intersector> eClass = (Class<Intersector>) Class
-					.forName(intersectorClass);
+			inter = (Intersector) elementTag.createExecutableExtension("class");
 			elementsToIntersectorMap.put(new PairOfElementClasses(element,
-					otherElement), eClass);
-			intersectorToElementsMap.put(eClass, new PairOfElementClasses(
-					element, otherElement));
-			if (element != otherElement) {
-				elementsToIntersectorMap.put(new PairOfElementClasses(
-						otherElement, element), eClass);
-				intersectorToElementsMap.put(eClass, new PairOfElementClasses(
-						otherElement, element));
-			}
-		} catch (ClassNotFoundException e) {
+					otherElement), inter);
+		} catch (CoreException e) {
 			// If this happens, ignores the element and move on.
 			// Printing the stack trace might help developers to
 			// create their elements correctly.
@@ -129,15 +118,8 @@ public class Utils {
 		Class<? extends Element> e1Class = element.getClass();
 		Class<? extends Element> e2Class = otherElement.getClass();
 
-		try {
-			return elementsToIntersectorMap.get(
-					new PairOfElementClasses(e1Class, e2Class)).newInstance();
-		} catch (InstantiationException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		}
-		return null;
+		PairOfElementClasses pair = new PairOfElementClasses(e1Class, e2Class);
+		return elementsToIntersectorMap.get(pair);
 	}
 
 	/**
