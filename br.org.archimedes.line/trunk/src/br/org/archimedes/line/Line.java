@@ -449,9 +449,11 @@ public class Line extends Element implements Offsetable, Trimmable,
      */
     public Point getProjectionOf (Point point) throws NullArgumentException {
 
-        // TODO Corrigir
-
-        return point;
+        Vector direction = new Vector(initialPoint, endingPoint);
+        Vector distance = new Vector(initialPoint, point);
+        direction = direction.multiply(1.0 / direction.getNorm());
+        direction = direction.multiply(direction.dotProduct(distance));
+        return initialPoint.addVector(direction);
     }
 
     public Element fillet (Point intersection, Point direction) {
