@@ -2,6 +2,7 @@ package br.org.archimedes.intersector.lineline;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import br.org.archimedes.Constant;
@@ -20,7 +21,7 @@ public class LineLineIntersector implements Intersector {
             return null;
         }
 
-        List<Point> intersectionPoints = null;
+        List<Point> intersectionPoints = new LinkedList<Point>();
 
         // The first line will be represented by a1x + b1y + c1 = 0
         // The second line will be represented by a2x + b2y + c2 = 0
