@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Circleline intersector Plug-in
+Bundle-SymbolicName: br.org.archimedes.intersector.circleline;singleton:=true
+Bundle-Version: 1.0.0
+Bundle-Activator: br.org.archimedes.intersector.circleline.Activator
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ br.org.archimedes,
+ br.org.archimedes.line,
+ br.org.archimedes.circle
+Eclipse-LazyStart: true
+Export-Package: br.org.archimedes.intersector.circleline
