@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Circle Polyline Intersector Tests Plug-in
+Bundle-SymbolicName: br.org.archimedes.intersector.circlepolyline.tests
+Bundle-Version: 1.0.0
+Require-Bundle: br.org.archimedes,
+ br.org.archimedes.circle,
+ br.org.archimedes.intersector.circlepolyline,
+ br.org.archimedes.polyline,
+ br.org.archimedes.tests
