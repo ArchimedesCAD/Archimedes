@@ -59,8 +59,9 @@ public class CircleLineIntersector implements Intersector {
 			lineVector = lineVector.multiply(-1);
 			Point intersection2 = projection.addVector(lineVector);
 
-			intersections.add(intersection1);
-			if (!intersection2.equals(intersection1)) {
+			if (line.contains(intersection1))
+				intersections.add(intersection1);
+			if (!intersection2.equals(intersection1) && line.contains(intersection2)) {
 				intersections.add(intersection2);
 			}
 		}
