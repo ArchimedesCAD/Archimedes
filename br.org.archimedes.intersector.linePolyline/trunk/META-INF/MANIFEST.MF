@@ -6,4 +6,6 @@ Bundle-Version: 1.0.0
 Bundle-Localization: plugin
 Require-Bundle: br.org.archimedes,
  br.org.archimedes.line,
- br.org.archimedes.polyline
+ br.org.archimedes.polyline,
+ br.org.archimedes.intersector.lineline
+Export-Package: br.org.archimedes.intersector.linePolyline

@@ -1,5 +1,8 @@
 package br.org.archimedes.intersector.linepolyline.test;
 
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -35,5 +38,91 @@ public class LinePolylineIntersectorTest extends Tester {
 
 		assertCollectionTheSame(Collections.singleton(point), intersections);
 
+	}
+	
+	@Test
+	public void testLineIntersectsPolylineReturnsManyIntersectionPoints()
+			throws InvalidArgumentException, NullArgumentException {
+		
+		Line line = new Line(0.0, 1.0, 0.0, -1.0);
+		List<Point> list = new ArrayList<Point>();
+		list.add(new Point(-1.0, 0.0));
+		list.add(new Point(1.0, 0.0));
+		list.add(new Point(1.0, 1.0));
+		list.add(new Point(-1.0, 1.0));
+		
+		Polyline polyline = new Polyline(list);
+
+		Intersector intersector = new LinePolylineIntersector();
+
+		Collection<Point> intersections = intersector.getIntersections(line,
+				polyline);
+		
+		List<Point> intersectionPoints = new ArrayList<Point>();
+		intersectionPoints.add(new Point(0.0, 0.0));
+		intersectionPoints.add(new Point(0.0, 1.0));
+
+		assertCollectionTheSame(intersectionPoints, intersections);
+
+	}
+	
+	@Test
+	public void testLineIntersectsPolylineReturnsNoIntersectionPoints()
+			throws InvalidArgumentException, NullArgumentException {
+		
+		Line line = new Line(0.0, 1.0, 0.0, -1.0);
+		List<Point> list = new ArrayList<Point>();
+		
+		list.add(new Point(1.0, 0.0));
+		list.add(new Point(1.0, 1.0));
+		
+		
+		Polyline polyline = new Polyline(list);
+
+		Intersector intersector = new LinePolylineIntersector();
+
+		Collection<Point> intersections = intersector.getIntersections(line,
+				polyline);
+		
+		assertTrue(intersections.isEmpty());
+
+	}
+	
+	@Test
+	public void testLinePolylineIntersectorNullArgument() throws NullArgumentException, InvalidArgumentException{
+		
+		Line line = new Line(0.0, 1.0, 0.0, -1.0);
+		
+		List<Point> list = new ArrayList<Point>();
+		list.add(new Point(-1.0, 0.0));
+		list.add(new Point(1.0, 0.0));
+		list.add(new Point(1.0, 1.0));
+		list.add(new Point(-1.0, 1.0));
+		
+		Polyline polyline = new Polyline(list);
+		
+		Intersector intersector = new LinePolylineIntersector();
+		
+		try{
+			intersector.getIntersections(line,null);
+			fail("Should throw exception because of null polyline argument");			
+		} catch (NullArgumentException e){
+			// Passed
+		}
+		
+		try{
+			intersector.getIntersections(null,polyline);
+			fail("Should throw exception because of null line argument");			
+		} catch (NullArgumentException e){
+			// Passed
+		}
+		
+		try{
+			intersector.getIntersections(null,null);
+			fail("Should throw exception because of null polyline and line argument");			
+		} catch (NullArgumentException e){
+			// Passed
+		}		
+			
 	}
 }
