@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -101,22 +100,6 @@ public class Polyline extends Element {
             }
         }
         return lines;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.tarantulus.archimedes.model.Element#getIntersection(com.tarantulus.archimedes.model.Element)
-     */
-    public Collection<Point> getIntersection (Element element)
-            throws NullArgumentException {
-
-        Collection<Point> intersections = new LinkedList<Point>();
-        for (Line line : getLines()) {
-            intersections.addAll(element.getIntersection(line));
-        }
-
-        return intersections;
     }
 
     /*
