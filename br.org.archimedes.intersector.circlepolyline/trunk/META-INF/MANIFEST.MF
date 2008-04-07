@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Circle Polyline Intersection Plug-in
+Bundle-SymbolicName: br.org.archimedes.intersector.circlepolyline;singleton:=true
+Bundle-Version: 1.0.0
+Require-Bundle: br.org.archimedes.circle,
+ br.org.archimedes.intersector.circleline,
+ br.org.archimedes.polyline,
+ br.org.archimedes,
+ br.org.archimedes.line
+Export-Package: br.org.archimedes.intersector.circlepolyline
