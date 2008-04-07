@@ -16,7 +16,7 @@ public class CommandParserTest extends TestCase {
      * Tests: the recognization of the commands (String).
      */
     @Test
-    public void test () {
+    public void testInvalidCommandReturnsNull () {
 
         CommandParser cp = new CommandParser();
 
