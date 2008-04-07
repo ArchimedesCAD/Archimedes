@@ -60,9 +60,8 @@ public class CircleLineIntersector implements Intersector {
 			if (!intersection2.equals(intersection1)) {
 				intersections.add(intersection2);
 			}
-			return intersections;
 		}
-		return null;
+		return intersections;
 	}
 
 }
