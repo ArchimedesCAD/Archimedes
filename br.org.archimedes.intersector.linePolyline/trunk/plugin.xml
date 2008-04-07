@@ -3,8 +3,11 @@
 <plugin>
 	<extension point="br.org.archimedes.elementsIntersector">
 		<elementsIntersector
-			id="linePolylineIntersector"
-			name="Line Polyline Intersector"
-			point="br.org.archimedes.elementsIntersector" />
+        class="br.org.archimedes.intersector.linePolyline.LinePolylineIntersector"
+        element="br.org.archimedes.line"
+        id="linePolylineIntersector"
+        name="Line Polyline Intersector"
+        otherElement="br.org.archimedes.polyline"
+        point="br.org.archimedes.elementsIntersector"/>
 	</extension>
 </plugin>
