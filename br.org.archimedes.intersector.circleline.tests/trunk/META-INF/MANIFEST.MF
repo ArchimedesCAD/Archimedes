@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: CircleLine Tests Plug-in
+Bundle-SymbolicName: br.org.archimedes.intersector.circleline.tests
+Bundle-Version: 1.0.0
+Require-Bundle: br.org.archimedes,
+ br.org.archimedes.circle,
+ br.org.archimedes.intersector.circleline,
+ br.org.archimedes.line,
+ br.org.archimedes.tests
