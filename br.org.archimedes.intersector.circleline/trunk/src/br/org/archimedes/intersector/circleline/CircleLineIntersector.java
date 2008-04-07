@@ -16,8 +16,11 @@ import br.org.archimedes.model.Vector;
 public class CircleLineIntersector implements Intersector {
 
 	public Collection<Point> getIntersections(Element element,
-			Element otherElement) {
+			Element otherElement) throws NullArgumentException {
 
+		if (element == null || otherElement == null)
+			throw new NullArgumentException();
+		
 		Collection<Point> intersections = new ArrayList<Point>();
 
 		Line line;
