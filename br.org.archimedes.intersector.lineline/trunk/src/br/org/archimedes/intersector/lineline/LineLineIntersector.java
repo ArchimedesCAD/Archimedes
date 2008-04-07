@@ -3,9 +3,9 @@ package br.org.archimedes.intersector.lineline;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.List;
 
 import br.org.archimedes.Constant;
+import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.line.Line;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Intersector;
@@ -13,15 +13,23 @@ import br.org.archimedes.model.Point;
 
 public class LineLineIntersector implements Intersector {
 
-	public List<Point> getIntersections(Element element, Element otherElement) {
+	/*
+	 * If the lines are parallels, including cases of same lines or containing lines, 
+	 * this method returns a empty LinkedList
+	 *  
+	 * */
+	public Collection<Point> getIntersections(Element element, Element otherElement) throws NullArgumentException {
 		Line firstLine = (Line) element;
 		Line secondLine = (Line) otherElement;
 		
+		if (element == null || otherElement == null)
+			throw new NullArgumentException();
+		
 		if (isParallelTo(firstLine, secondLine)) {
-            return null;
+            return new LinkedList<Point>();
         }
 
-        List<Point> intersectionPoints = new LinkedList<Point>();
+		Collection<Point> intersectionPoints = new LinkedList<Point>();
 
         // The first line will be represented by a1x + b1y + c1 = 0
         // The second line will be represented by a2x + b2y + c2 = 0
@@ -90,7 +98,7 @@ public class LineLineIntersector implements Intersector {
         return intersectionPoints;
 	}
 	
-    public static boolean isParallelTo (Element element1, Element element2) {
+    public boolean isParallelTo (Element element1, Element element2) {
 
         boolean isParallel = false;
 
