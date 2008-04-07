@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Test Plug-in
+Bundle-SymbolicName: br.org.archimedes.intersector.linePolyline.test
+Bundle-Version: 1.0.0
+Bundle-Vendor: Archimedes
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ br.org.archimedes.intersector.linePolyline,
+ br.org.archimedes.tests,
+ br.org.archimedes.line,
+ br.org.archimedes.polyline,
+ br.org.archimedes
+Eclipse-LazyStart: true
