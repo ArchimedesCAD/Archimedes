@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Line Line Intersector Tests Plug-in
+Bundle-SymbolicName: br.org.archimedes.intersector.lineline.tests
+Bundle-Version: 1.0.0
+Require-Bundle: br.org.archimedes.intersector.lineline,
+ br.org.archimedes,
+ br.org.archimedes.tests,
+ br.org.archimedes.line
