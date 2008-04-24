@@ -25,11 +25,19 @@ public class LineLineIntersector implements Intersector {
 		if (element == null || otherElement == null)
 			throw new NullArgumentException();
 		
-		if (isParallelTo(firstLine, secondLine)) {
-            return new LinkedList<Point>();
-        }
-
 		Collection<Point> intersectionPoints = new LinkedList<Point>();
+		
+		if (isParallelTo(firstLine, secondLine)) {
+			if (firstLine.getEndingPoint().equals(secondLine.getInitialPoint()) &&
+					!(secondLine.contains(firstLine.getInitialPoint()) ||
+							firstLine.contains(secondLine.getEndingPoint())))
+				intersectionPoints.add(firstLine.getEndingPoint());
+			else if (firstLine.getInitialPoint().equals(secondLine.getEndingPoint()) &&
+					!(secondLine.contains(firstLine.getEndingPoint()) ||
+							firstLine.contains(secondLine.getInitialPoint())))
+				intersectionPoints.add(secondLine.getInitialPoint());
+            return intersectionPoints;
+        }
 
         // The first line will be represented by a1x + b1y + c1 = 0
         // The second line will be represented by a2x + b2y + c2 = 0
@@ -92,7 +100,9 @@ public class LineLineIntersector implements Intersector {
                         / ((b2 * a1) - (b1 * a2));
                 xIntersection = -(c1 / a1) - (b1 / a1) * yIntersection;
             }
-            intersectionPoints.add(new Point(xIntersection, yIntersection));
+            Point intersection = new Point(xIntersection, yIntersection);
+            if (firstLine.contains(intersection) && secondLine.contains(intersection))
+            	intersectionPoints.add(intersection);
         }
 
         return intersectionPoints;
