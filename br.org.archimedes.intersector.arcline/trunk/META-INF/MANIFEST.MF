@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Arc Line Intersector Plug-in
+Bundle-SymbolicName: br.org.archimedes.intersector.arcline;singleton:=true
+Bundle-Version: 1.0.0
+Bundle-Localization: plugin
+Require-Bundle: br.org.archimedes.arc,
+ br.org.archimedes.circle,
+ br.org.archimedes.intersector.circleline,
+ br.org.archimedes.line,
+ br.org.archimedes
