@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Dimension Line Intersector Plug-in
+Bundle-SymbolicName: br.org.archimedes.intersector.dimensionline;singleton:=true
+Bundle-Version: 1.0.0
+Bundle-Localization: plugin
+Require-Bundle: br.org.archimedes,
+ br.org.archimedes.dimension,
+ br.org.archimedes.intersector.lineline,
+ br.org.archimedes.line
+Export-Package: br.org.archimedes.intersector.dimensionline
