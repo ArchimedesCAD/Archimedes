@@ -6,4 +6,6 @@ Bundle-Version: 1.0.0
 Require-Bundle: br.org.archimedes.intersector.lineline,
  br.org.archimedes,
  br.org.archimedes.tests,
- br.org.archimedes.line
+ br.org.archimedes.line,
+ org.junit4
+Bundle-RequiredExecutionEnvironment: J2SE-1.5

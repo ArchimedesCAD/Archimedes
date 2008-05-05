@@ -1,11 +1,12 @@
 /**
- * This file was created on 2007/05/14, 11:07:35, by nitao.
- * It is part of br.org.archimedes.infiniteLine on the br.org.archimedes.infiniteline.tests project.
- *
+ * This file was created on 2007/05/14, 11:07:35, by nitao. It is part of
+ * br.org.archimedes.infiniteLine on the br.org.archimedes.infiniteline.tests
+ * project.
  */
+
 package br.org.archimedes.infiniteLine;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.fail;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -14,19 +15,19 @@ import org.junit.Test;
 import br.org.archimedes.infiniteline.InfiniteLine;
 import br.org.archimedes.model.Element;
 
-
 /**
  * Belongs to package br.org.archimedes.infiniteLine.
- *
+ * 
  * @author nitao
- *
  */
 public abstract class InfiniteLineTestCase extends infiniteLineTest {
-    
+
     protected InfiniteLine testedLine;
 
+
     @Before
-    public void setUp() throws Exception {
+    public void setUp () throws Exception {
+
         testedLine = makeLine();
     }
 
@@ -36,12 +37,14 @@ public abstract class InfiniteLineTestCase extends infiniteLineTest {
     protected abstract InfiniteLine makeLine () throws Exception;
 
     /**
-     * Test method for {@link br.org.archimedes.infiniteline.InfiniteLine#clone()}.
-     * @throws Exception fails the test with an error
+     * Test method for
+     * {@link br.org.archimedes.infiniteline.InfiniteLine#clone()}.
+     * 
+     * @throws Exception
+     *             fails the test with an error
      */
     @Test
     public void testClone () throws Exception {
-
 
         Element clone = testedLine.clone();
         Assert.assertEquals("The clone should be the equal to the original",
@@ -49,10 +52,15 @@ public abstract class InfiniteLineTestCase extends infiniteLineTest {
         Assert.assertFalse(
                 "The clone reference should not be the same as the original",
                 clone == testedLine);
+
+        clone.move( -12, 23);
+        Assert.assertTrue("The clone should NOT be the equal to the original",
+                !testedLine.equals(clone));
     }
 
     /**
-     * Test method for {@link br.org.archimedes.infiniteline.InfiniteLine#isInside(br.org.archimedes.model.Rectangle)}.
+     * Test method for
+     * {@link br.org.archimedes.infiniteline.InfiniteLine#isInside(br.org.archimedes.model.Rectangle)}.
      */
     @Test
     public void testIsInside () {
@@ -61,7 +69,8 @@ public abstract class InfiniteLineTestCase extends infiniteLineTest {
     }
 
     /**
-     * Test method for {@link br.org.archimedes.infiniteline.InfiniteLine#intersects(br.org.archimedes.model.Rectangle)}.
+     * Test method for
+     * {@link br.org.archimedes.infiniteline.InfiniteLine#intersects(br.org.archimedes.model.Rectangle)}.
      */
     @Test
     public void testIntersects () {
@@ -70,7 +79,8 @@ public abstract class InfiniteLineTestCase extends infiniteLineTest {
     }
 
     /**
-     * Test method for {@link br.org.archimedes.infiniteline.InfiniteLine#getIntersection(br.org.archimedes.model.Element)}.
+     * Test method for
+     * {@link br.org.archimedes.infiniteline.InfiniteLine#getIntersection(br.org.archimedes.model.Element)}.
      */
     @Test
     public void testGetIntersection () {
@@ -79,7 +89,8 @@ public abstract class InfiniteLineTestCase extends infiniteLineTest {
     }
 
     /**
-     * Test method for {@link br.org.archimedes.infiniteline.InfiniteLine#equals(java.lang.Object)}.
+     * Test method for
+     * {@link br.org.archimedes.infiniteline.InfiniteLine#equals(java.lang.Object)}.
      */
     @Test
     public void testEqualsObject () {
@@ -88,7 +99,8 @@ public abstract class InfiniteLineTestCase extends infiniteLineTest {
     }
 
     /**
-     * Test method for {@link br.org.archimedes.infiniteline.InfiniteLine#getBoundaryRectangle()}.
+     * Test method for
+     * {@link br.org.archimedes.infiniteline.InfiniteLine#getBoundaryRectangle()}.
      */
     @Test
     public void testGetBoundaryRectangle () {
@@ -97,7 +109,8 @@ public abstract class InfiniteLineTestCase extends infiniteLineTest {
     }
 
     /**
-     * Test method for {@link br.org.archimedes.infiniteline.InfiniteLine#getReferencePoints(br.org.archimedes.model.Rectangle)}.
+     * Test method for
+     * {@link br.org.archimedes.infiniteline.InfiniteLine#getReferencePoints(br.org.archimedes.model.Rectangle)}.
      */
     @Test
     public void testGetReferencePoints () {
@@ -106,8 +119,10 @@ public abstract class InfiniteLineTestCase extends infiniteLineTest {
     }
 
     /**
-     * Test method for {@link br.org.archimedes.infiniteline.InfiniteLine#getProjectionOf(br.org.archimedes.model.Point)}.
-     * @throws Exception 
+     * Test method for
+     * {@link br.org.archimedes.infiniteline.InfiniteLine#getProjectionOf(br.org.archimedes.model.Point)}.
+     * 
+     * @throws Exception
      */
     @Test
     public void testGetProjectionOf () throws Exception {
@@ -116,7 +131,8 @@ public abstract class InfiniteLineTestCase extends infiniteLineTest {
     }
 
     /**
-     * Test method for {@link br.org.archimedes.infiniteline.InfiniteLine#contains(br.org.archimedes.model.Point)}.
+     * Test method for
+     * {@link br.org.archimedes.infiniteline.InfiniteLine#contains(br.org.archimedes.model.Point)}.
      */
     @Test
     public void testContains () {
@@ -125,7 +141,8 @@ public abstract class InfiniteLineTestCase extends infiniteLineTest {
     }
 
     /**
-     * Test method for {@link br.org.archimedes.infiniteline.InfiniteLine#isCollinearWith(br.org.archimedes.model.Element)}.
+     * Test method for
+     * {@link br.org.archimedes.infiniteline.InfiniteLine#isCollinearWith(br.org.archimedes.model.Element)}.
      */
     @Test
     public void testIsCollinearWith () {
@@ -134,7 +151,8 @@ public abstract class InfiniteLineTestCase extends infiniteLineTest {
     }
 
     /**
-     * Test method for {@link br.org.archimedes.infiniteline.InfiniteLine#isParallelTo(br.org.archimedes.model.Element)}.
+     * Test method for
+     * {@link br.org.archimedes.infiniteline.InfiniteLine#isParallelTo(br.org.archimedes.model.Element)}.
      */
     @Test
     public void testIsParallelTo () {
@@ -143,7 +161,8 @@ public abstract class InfiniteLineTestCase extends infiniteLineTest {
     }
 
     /**
-     * Test method for {@link br.org.archimedes.infiniteline.InfiniteLine#getPoints()}.
+     * Test method for
+     * {@link br.org.archimedes.infiniteline.InfiniteLine#getPoints()}.
      */
     @Test
     public void testGetPoints () {
@@ -152,7 +171,8 @@ public abstract class InfiniteLineTestCase extends infiniteLineTest {
     }
 
     /**
-     * Test method for {@link br.org.archimedes.infiniteline.InfiniteLine#getNearestExtremePoint(br.org.archimedes.model.Point)}.
+     * Test method for
+     * {@link br.org.archimedes.infiniteline.InfiniteLine#getNearestExtremePoint(br.org.archimedes.model.Point)}.
      */
     @Test
     public void testGetNearestExtremePoint () {
@@ -161,7 +181,8 @@ public abstract class InfiniteLineTestCase extends infiniteLineTest {
     }
 
     /**
-     * Test method for {@link br.org.archimedes.infiniteline.InfiniteLine#draw(br.org.archimedes.gui.opengl.OpenGLWrapper)}.
+     * Test method for
+     * {@link br.org.archimedes.infiniteline.InfiniteLine#draw(br.org.archimedes.gui.opengl.OpenGLWrapper)}.
      */
     @Test
     public void testDraw () {
@@ -170,7 +191,8 @@ public abstract class InfiniteLineTestCase extends infiniteLineTest {
     }
 
     /**
-     * Test method for {@link br.org.archimedes.infiniteline.InfiniteLine#InfiniteLine(double, double, double, double)}.
+     * Test method for
+     * {@link br.org.archimedes.infiniteline.InfiniteLine#InfiniteLine(double, double, double, double)}.
      */
     @Test
     public void testInfiniteLineDoubleDoubleDoubleDouble () {
@@ -179,7 +201,8 @@ public abstract class InfiniteLineTestCase extends infiniteLineTest {
     }
 
     /**
-     * Test method for {@link br.org.archimedes.infiniteline.InfiniteLine#InfiniteLine(br.org.archimedes.model.Point, br.org.archimedes.model.Point)}.
+     * Test method for
+     * {@link br.org.archimedes.infiniteline.InfiniteLine#InfiniteLine(br.org.archimedes.model.Point, br.org.archimedes.model.Point)}.
      */
     @Test
     public void testInfiniteLinePointPoint () {
@@ -188,7 +211,8 @@ public abstract class InfiniteLineTestCase extends infiniteLineTest {
     }
 
     /**
-     * Test method for {@link br.org.archimedes.infiniteline.InfiniteLine#InfiniteLine(br.org.archimedes.model.Point, br.org.archimedes.model.Vector)}.
+     * Test method for
+     * {@link br.org.archimedes.infiniteline.InfiniteLine#InfiniteLine(br.org.archimedes.model.Point, br.org.archimedes.model.Vector)}.
      */
     @Test
     public void testInfiniteLinePointVector () {
@@ -197,7 +221,8 @@ public abstract class InfiniteLineTestCase extends infiniteLineTest {
     }
 
     /**
-     * Test method for {@link br.org.archimedes.infiniteline.InfiniteLine#getAngle()}.
+     * Test method for
+     * {@link br.org.archimedes.infiniteline.InfiniteLine#getAngle()}.
      */
     @Test
     public void testGetAngle () {
@@ -206,7 +231,8 @@ public abstract class InfiniteLineTestCase extends infiniteLineTest {
     }
 
     /**
-     * Test method for {@link br.org.archimedes.infiniteline.InfiniteLine#equals(br.org.archimedes.infiniteline.InfiniteLine)}.
+     * Test method for
+     * {@link br.org.archimedes.infiniteline.InfiniteLine#equals(br.org.archimedes.infiniteline.InfiniteLine)}.
      */
     @Test
     public void testEqualsInfiniteLine () {
@@ -215,7 +241,8 @@ public abstract class InfiniteLineTestCase extends infiniteLineTest {
     }
 
     /**
-     * Test method for {@link br.org.archimedes.infiniteline.InfiniteLine#getInitialPoint()}.
+     * Test method for
+     * {@link br.org.archimedes.infiniteline.InfiniteLine#getInitialPoint()}.
      */
     @Test
     public void testGetInitialPoint () {
@@ -224,7 +251,8 @@ public abstract class InfiniteLineTestCase extends infiniteLineTest {
     }
 
     /**
-     * Test method for {@link br.org.archimedes.infiniteline.InfiniteLine#setInitialPoint(br.org.archimedes.model.Point)}.
+     * Test method for
+     * {@link br.org.archimedes.infiniteline.InfiniteLine#setInitialPoint(br.org.archimedes.model.Point)}.
      */
     @Test
     public void testSetInitialPoint () {
@@ -233,7 +261,8 @@ public abstract class InfiniteLineTestCase extends infiniteLineTest {
     }
 
     /**
-     * Test method for {@link br.org.archimedes.infiniteline.InfiniteLine#getPointsCrossing(br.org.archimedes.model.Rectangle)}.
+     * Test method for
+     * {@link br.org.archimedes.infiniteline.InfiniteLine#getPointsCrossing(br.org.archimedes.model.Rectangle)}.
      */
     @Test
     public void testGetPointsCrossing () {
@@ -242,8 +271,10 @@ public abstract class InfiniteLineTestCase extends infiniteLineTest {
     }
 
     /**
-     * Test method for {@link br.org.archimedes.infiniteline.InfiniteLine#cloneWithDistance(double)}.
-     * @throws Exception 
+     * Test method for
+     * {@link br.org.archimedes.infiniteline.InfiniteLine#cloneWithDistance(double)}.
+     * 
+     * @throws Exception
      */
     @Test
     public void testCloneWithDistance () throws Exception {
@@ -252,7 +283,8 @@ public abstract class InfiniteLineTestCase extends infiniteLineTest {
     }
 
     /**
-     * Test method for {@link br.org.archimedes.infiniteline.InfiniteLine#isPositiveDirection(br.org.archimedes.model.Point)}.
+     * Test method for
+     * {@link br.org.archimedes.infiniteline.InfiniteLine#isPositiveDirection(br.org.archimedes.model.Point)}.
      */
     @Test
     public void testIsPositiveDirection () {
@@ -261,7 +293,8 @@ public abstract class InfiniteLineTestCase extends infiniteLineTest {
     }
 
     /**
-     * Test method for {@link br.org.archimedes.infiniteline.InfiniteLine#trim(java.util.Collection, br.org.archimedes.model.Point)}.
+     * Test method for
+     * {@link br.org.archimedes.infiniteline.InfiniteLine#trim(java.util.Collection, br.org.archimedes.model.Point)}.
      */
     @Test
     public void testTrim () {
@@ -270,7 +303,8 @@ public abstract class InfiniteLineTestCase extends infiniteLineTest {
     }
 
     /**
-     * Test method for {@link br.org.archimedes.infiniteline.InfiniteLine#getSortedPointSet(br.org.archimedes.model.Point, java.util.Collection)}.
+     * Test method for
+     * {@link br.org.archimedes.infiniteline.InfiniteLine#getSortedPointSet(br.org.archimedes.model.Point, java.util.Collection)}.
      */
     @Test
     public void testGetSortedPointSet () {
@@ -279,43 +313,8 @@ public abstract class InfiniteLineTestCase extends infiniteLineTest {
     }
 
     /**
-     * Test method for {@link br.org.archimedes.infiniteline.InfiniteLine#getEndingPoint()}.
-     */
-    @Test
-    public void testGetEndingPoint () {
-
-        fail("Not yet implemented"); // TODO
-    }
-
-    /**
-     * Test method for {@link br.org.archimedes.infiniteline.InfiniteLine#setEndingPoint(br.org.archimedes.model.Point)}.
-     */
-    @Test
-    public void testSetEndingPoint () {
-
-        fail("Not yet implemented"); // TODO
-    }
-
-    /**
-     * Test method for {@link br.org.archimedes.model.Element#getLayer()}.
-     */
-    @Test
-    public void testGetLayer () {
-
-        fail("Not yet implemented"); // TODO
-    }
-
-    /**
-     * Test method for {@link br.org.archimedes.model.Element#setLayer(br.org.archimedes.model.Layer)}.
-     */
-    @Test
-    public void testSetLayer () {
-
-        fail("Not yet implemented"); // TODO
-    }
-
-    /**
-     * Test method for {@link br.org.archimedes.model.Element#move(java.util.Collection, br.org.archimedes.model.Vector)}.
+     * Test method for
+     * {@link br.org.archimedes.model.Element#move(java.util.Collection, br.org.archimedes.model.Vector)}.
      */
     @Test
     public void testMoveCollectionOfPointVector () {
@@ -324,7 +323,8 @@ public abstract class InfiniteLineTestCase extends infiniteLineTest {
     }
 
     /**
-     * Test method for {@link br.org.archimedes.model.Element#move(double, double)}.
+     * Test method for
+     * {@link br.org.archimedes.model.Element#move(double, double)}.
      */
     @Test
     public void testMoveDoubleDouble () {
@@ -333,7 +333,8 @@ public abstract class InfiniteLineTestCase extends infiniteLineTest {
     }
 
     /**
-     * Test method for {@link br.org.archimedes.model.Element#rotate(br.org.archimedes.model.Point, double)}.
+     * Test method for
+     * {@link br.org.archimedes.model.Element#rotate(br.org.archimedes.model.Point, double)}.
      */
     @Test
     public void testRotate () {
@@ -342,7 +343,8 @@ public abstract class InfiniteLineTestCase extends infiniteLineTest {
     }
 
     /**
-     * Test method for {@link br.org.archimedes.model.Element#scale(br.org.archimedes.model.Point, double)}.
+     * Test method for
+     * {@link br.org.archimedes.model.Element#scale(br.org.archimedes.model.Point, double)}.
      */
     @Test
     public void testScale () {
@@ -360,7 +362,8 @@ public abstract class InfiniteLineTestCase extends infiniteLineTest {
     }
 
     /**
-     * Test method for {@link br.org.archimedes.model.Element#mirror(br.org.archimedes.model.Point, br.org.archimedes.model.Point)}.
+     * Test method for
+     * {@link br.org.archimedes.model.Element#mirror(br.org.archimedes.model.Point, br.org.archimedes.model.Point)}.
      */
     @Test
     public void testMirror () {

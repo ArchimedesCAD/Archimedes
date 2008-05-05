@@ -3,7 +3,8 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Text XML Tests Plug-in
 Bundle-SymbolicName: br.org.archimedes.text.xml.tests
 Bundle-Version: 1.0.0
-Bundle-Localization: plugin
 Require-Bundle: br.org.archimedes,
  br.org.archimedes.text,
- br.org.archimedes.text.xml
+ br.org.archimedes.text.xml,
+ org.junit4
+Bundle-RequiredExecutionEnvironment: J2SE-1.5

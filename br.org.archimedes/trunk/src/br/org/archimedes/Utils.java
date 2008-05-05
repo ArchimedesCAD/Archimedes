@@ -90,7 +90,6 @@ public class Utils {
 	 * @param elementTag
 	 *            The tag that contains infos
 	 */
-	@SuppressWarnings("unchecked")
 	private static void fillIntersectorMaps(IConfigurationElement elementTag) {
 
 		String elementId = elementTag.getAttribute("element"); //$NON-NLS-1$

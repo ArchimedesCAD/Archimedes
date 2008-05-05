@@ -4,8 +4,9 @@ Bundle-Name: Tests Plug-in
 Bundle-SymbolicName: br.org.archimedes.scale.tests
 Bundle-Version: 1.0.0
 Bundle-Vendor: Tarantulus Corporation
-Bundle-Localization: plugin
 Require-Bundle: br.org.archimedes.tests,
  br.org.archimedes,
- br.org.archimedes.scale
+ br.org.archimedes.scale,
+ org.junit4
 Eclipse-LazyStart: false
+Bundle-RequiredExecutionEnvironment: J2SE-1.5

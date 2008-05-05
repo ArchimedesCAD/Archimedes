@@ -19,9 +19,7 @@
                toolbarPath="create/simple0"
                tooltip="%action.create.tooltip">
             <enablement>
-               <and>
-                  <objectClass name="br.org.archimedes.model.Drawing"/>
-               </and>
+               <objectClass name="br.org.archimedes.model.Drawing"/>
             </enablement>
          </action>
       </actionSet>

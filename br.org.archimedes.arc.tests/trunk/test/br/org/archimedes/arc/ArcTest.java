@@ -39,10 +39,10 @@ public class ArcTest {
 
         // They are all the same arc.
         arc1 = new Arc(initial, middle, ending);
-        arc2 = new Arc(initial.clone(), ending.clone(), center, true);
-        arc3 = new Arc(initial.clone(), ending.clone(), center, middle);
+        arc2 = new Arc(initial, ending, center, false);
+        arc3 = new Arc(initial, ending, center, middle);
         // This is different
-        arc = new Arc(initial.clone(), ending.clone(), center, false);
+        arc = new Arc(initial, ending, center, true);
     }
 
     @Test
@@ -58,18 +58,15 @@ public class ArcTest {
         Assert.assertEquals(arc3, arc3);
         Assert.assertEquals(arc3.hashCode(), arc3.hashCode());
 
-        // TODO Verificar o teste abaixo.
         Assert.assertEquals(arc1, arc2);
-        // Assert.assertEquals(arc1.hashCode(), arc2.hashCode());
+        Assert.assertEquals(arc1.hashCode(), arc2.hashCode());
 
         Assert.assertEquals(arc1, arc3);
-        // TODO corrigir hashCode
-        // Assert.assertEquals(arc1.hashCode(), arc3.hashCode());
+        Assert.assertEquals(arc1.hashCode(), arc3.hashCode());
 
-        // TODO Verificar o teste abaixo.
         Assert.assertEquals(arc2, arc3);
-        // Assert.assertEquals(arc2.hashCode(), arc3.hashCode());
-        
+        Assert.assertEquals(arc2.hashCode(), arc3.hashCode());
+
         Assert.assertFalse(arc2.equals(arc));
     }
 

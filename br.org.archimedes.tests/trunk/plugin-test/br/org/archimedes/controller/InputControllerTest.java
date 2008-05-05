@@ -4,6 +4,9 @@
 
 package br.org.archimedes.controller;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -12,6 +15,35 @@ import org.junit.Test;
 import br.org.archimedes.model.Drawing;
 
 public class InputControllerTest {
+
+    
+    /**
+     * Belongs to package br.org.archimedes.controller.
+     *
+     * @author night
+     *
+     */
+    public class InnerObserver implements Observer {
+
+        private String returnValue = null;
+
+        /* (non-Javadoc)
+         * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+         */
+        public void update (Observable o, Object arg) {
+            
+                returnValue = arg.toString();
+        }
+
+        /**
+         * @return The return value received or null if none
+         */
+        public String getReturnValue () {
+
+            return returnValue;
+        }
+
+    }
 
     private InputController interpreter;
 
@@ -36,7 +68,7 @@ public class InputControllerTest {
         controller.setActiveDrawing(null);
     }
 
-    // TODO Descobrir pq essa desgraca nao roda
+    // TODO Descobrir pq essa desgraca nao passa
 
     /**
      * Here we test the getInstance method from the class Interpreter. We also
@@ -70,7 +102,7 @@ public class InputControllerTest {
         controller.setActiveDrawing(drawing);
         interpreter.setDrawing(drawing);
 
-        String answer = runCommand("l", new String[] {"0.0;0.0", "1.0;1.0"});
+        String answer = runCommand("xl", new String[] {"0.0;0.0", "1.0;1.0"});
         Assert.assertNotNull("The answer should be that the line is ok.",
                 answer);
         answer = runCommand("", new String[] {"1.0;0.0", "-1.0;-1.0"});
@@ -80,18 +112,18 @@ public class InputControllerTest {
         Assert.assertNotNull("The answer should be that the line is ok.",
                 answer);
 
-        answer = runCommand("xl", new String[] {"1.0;0.0", "0.0;0.0"});
+        answer = runCommand("c", new String[] {"1.0;0.0", "0.0;0.0"});
         Assert.assertNotNull(
-                "The answer should be that the infinite line is ok.", answer);
+                "The answer should be that the circle is ok.", answer);
         answer = runCommand("", new String[] {"0.0;0.0", "0.0;1.0"});
         Assert.assertNotNull(
-                "The answer should be that the infinite line is ok.", answer);
+                "The answer should be that the circle is ok.", answer);
         answer = runCancelledCommand("", new String[] {"1.0;0.0"});
         Assert.assertNotNull(
-                "The answer should be that the infinite line is canceled.",
+                "The answer should be that the circle is canceled.",
                 answer);
 
-        answer = runCommand("", new String[] {"0.0;0.0", "1.0;1.0"});
+        answer = runCommand("c", new String[] {"0.0;0.0", "1.0;1.0"});
         Assert.assertNotNull(
                 "The answer should be that the infinite line is ok.", answer);
 
@@ -100,24 +132,24 @@ public class InputControllerTest {
 
     private String runCancelledCommand (String command, String[] parameters) {
 
-        String returnValue = null;
-        interpreter.receiveText(command);
-        for (String parameter : parameters) {
-            interpreter.receiveText(parameter);
-        }
+        runCommand(command, parameters);
+        InnerObserver resultObserver = new InnerObserver();
+        interpreter.addObserver(resultObserver);
         interpreter.cancelCurrentCommand();
+        interpreter.deleteObserver(resultObserver);
 
-        return returnValue;
+        return resultObserver.getReturnValue();
     }
 
     private String runCommand (String command, String[] parameters) {
 
-        String returnValue = null;
+        InnerObserver resultObserver = new InnerObserver();
+        interpreter.addObserver(resultObserver);
         interpreter.receiveText(command);
         for (String parameter : parameters) {
             interpreter.receiveText(parameter);
         }
-
-        return returnValue;
+        interpreter.deleteObserver(resultObserver);
+        return resultObserver.getReturnValue();
     }
 }

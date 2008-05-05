@@ -11,21 +11,18 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.Set;
 
-import org.eclipse.jface.action.IStatusLineManager;
-
 import br.org.archimedes.Utils;
 import br.org.archimedes.controller.Controller;
 import br.org.archimedes.controller.InputController;
 import br.org.archimedes.exceptions.NoActiveDrawingException;
 import br.org.archimedes.exceptions.NullArgumentException;
-import br.org.archimedes.gui.rca.Activator;
 import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Rectangle;
 import br.org.archimedes.model.ReferencePoint;
-import br.org.archimedes.model.references.XPoint;
 import br.org.archimedes.model.references.OrthogonalPoint;
+import br.org.archimedes.model.references.XPoint;
 
 /**
  * Belongs to package br.org.archimedes.gui.model.
@@ -212,15 +209,6 @@ public class MousePositionManager implements Observer {
     public void setMousePosition (Point mousePosition) {
 
         this.mousePosition = mousePosition;
-        IStatusLineManager statusLineManager = Activator.getDefault()
-                .getWorkbench().getActiveWorkbenchWindow().getActivePage()
-                .getActiveEditor().getEditorSite().getActionBars()
-                .getStatusLineManager();
-        // TODO Achar um jeito melhor de acessar esse negocio 
-        String position = String.format("X: %.2f Y:%.2f", new Object[] { //$NON-NLS-1$
-                mousePosition.getX(), mousePosition.getY()});
-        statusLineManager.setMessage(position);
-
     }
 
     /**

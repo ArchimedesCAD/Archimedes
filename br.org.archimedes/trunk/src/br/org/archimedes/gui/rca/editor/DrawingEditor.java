@@ -164,7 +164,6 @@ public class DrawingEditor extends EditorPart implements Observer,
 
                     public void partActivated (IWorkbenchPart part) {
 
-                        System.out.println("Ativando");
                         if (part == DrawingEditor.this) {
                             System.out.println("Ativando: " + getDrawing().getTitle());
                             lastActivated = part;
@@ -202,7 +201,6 @@ public class DrawingEditor extends EditorPart implements Observer,
 
                     public void partDeactivated (IWorkbenchPart part) {
 
-                        System.out.println("Desativando");
                         if(part == DrawingEditor.this) {
                             System.out.println("Desativando: " + getDrawing().getTitle());
                             lastActivated = null;

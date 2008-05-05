@@ -7,10 +7,10 @@ package br.org.archimedes.model;
 import java.util.Collection;
 import java.util.List;
 
+import br.org.archimedes.Utils;
 import br.org.archimedes.exceptions.IllegalActionException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.gui.opengl.OpenGLWrapper;
-import br.org.archimedes.Utils;
 
 /**
  * Belongs to package br.org.archimedes.model.
@@ -91,7 +91,7 @@ public abstract class Element {
     /**
      * Moves the element's points by the given vector.
      * 
-     * @param pointsToMove
+     * @param pointsToBeMoved
      *            A collection with the points of this element that should be
      *            moved.
      * @param vector
@@ -99,14 +99,14 @@ public abstract class Element {
      * @throws NullArgumentException
      *             Thrown if any argument is null.
      */
-    public void move (Collection<Point> pointsToMove, Vector vector)
+    public void move (Collection<Point> pointsToBeMoved, Vector vector)
             throws NullArgumentException {
 
-        if (pointsToMove == null || vector == null) {
+        if (pointsToBeMoved == null || vector == null) {
             throw new NullArgumentException();
         }
 
-        for (Point point : pointsToMove) {
+        for (Point point : pointsToBeMoved) {
             point.move(vector.getX(), vector.getY());
         }
     }

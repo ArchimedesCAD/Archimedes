@@ -103,10 +103,9 @@ public class Vector {
      */
     public Vector getOrthogonalVector () {
 
-        Point zero = new Point(0, 0);
         Point point = new Point( -getY(), getX());
 
-        return new Vector(zero, point);
+        return new Vector(point);
     }
 
     public String toString () {

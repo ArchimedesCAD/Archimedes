@@ -975,8 +975,8 @@ public class Arc extends CurvedShape {
     }
 
     /**
-     * Este método foi reescrito pois, apesar de o mirror ter sido feito, o arco ainda guardava
-     * as referências inalteradas para o ending point e initialPoint. Logo, para que o mirror 
+     * Este mï¿½todo foi reescrito pois, apesar de o mirror ter sido feito, o arco ainda guardava
+     * as referï¿½ncias inalteradas para o ending point e initialPoint. Logo, para que o mirror 
      * funcionasse corretamente, havia a necessidade de trocar o initialPoint com o endingPoint.
      * 
      * @author Victor

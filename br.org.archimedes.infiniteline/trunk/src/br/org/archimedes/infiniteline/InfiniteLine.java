@@ -65,8 +65,8 @@ public class InfiniteLine extends Element implements Offsetable, Trimmable {
             throw new InvalidArgumentException();
         }
 
-        this.initialPoint = initialPoint;
-        this.endingPoint = endingPoint;
+        this.initialPoint = initialPoint.clone();
+        this.endingPoint = endingPoint.clone();
     }
 
     /**
@@ -423,6 +423,7 @@ public class InfiniteLine extends Element implements Offsetable, Trimmable {
             throws InvalidParameterException {
 
         Vector direction = new Vector(getInitialPoint(), getEndingPoint());
+        
         direction = Geometrics.normalize(direction);
         direction = direction.getOrthogonalVector();
         direction = direction.multiply(distance);

@@ -4,7 +4,8 @@ Bundle-Name: Move Tests Plug-in
 Bundle-SymbolicName: br.org.archimedes.move.tests
 Bundle-Version: 0.50.0
 Bundle-Vendor: Tarantulus Corp.
-Bundle-Localization: plugin
 Require-Bundle: br.org.archimedes,
  br.org.archimedes.tests,
- br.org.archimedes.move
+ br.org.archimedes.move,
+ org.junit4
+Bundle-RequiredExecutionEnvironment: J2SE-1.5

@@ -3,9 +3,9 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Exportador XML para o elemento Dimension
 Bundle-SymbolicName: br.org.archimedes.dimension.xml;singleton:=true
 Bundle-Version: 1.0.0
-Bundle-Localization: plugin
 Export-Package: br.org.archimedes.dimension.xml
 Require-Bundle: br.org.archimedes,
  br.org.archimedes.dimension;resolution:=optional,
  br.org.archimedes.io.xml,
  br.org.archimedes.text.xml;resolution:=optional
+Bundle-RequiredExecutionEnvironment: J2SE-1.5

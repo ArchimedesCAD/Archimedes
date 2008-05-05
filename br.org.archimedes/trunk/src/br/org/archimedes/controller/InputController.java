@@ -135,7 +135,10 @@ public class InputController extends Observable {
      * @return The message that should be printed.
      */
     public String setCurrentFactory (CommandFactory factory) {
-
+        if (factory == null) {
+            cancelCurrentCommand();
+            return null;
+        }
         return currentState.setCurrentFactory(factory);
     }
 

@@ -4,8 +4,9 @@ Bundle-Name: Arc Tests Plug-in
 Bundle-SymbolicName: br.org.archimedes.arc.tests
 Bundle-Version: 0.50.0
 Bundle-Vendor: Tarantulus Corp.
-Bundle-Localization: plugin
 Require-Bundle: br.org.archimedes,
  br.org.archimedes.tests,
  br.org.archimedes.arc,
- br.org.archimedes.curvedshape
+ br.org.archimedes.curvedshape,
+ org.junit4
+Bundle-RequiredExecutionEnvironment: J2SE-1.5

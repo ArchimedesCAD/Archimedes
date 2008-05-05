@@ -3,7 +3,7 @@
 <plugin>
    <extension
          point="br.org.archimedes.nativeFormat">
-         <nativeFormat id="xml" name="Archimedes XML" extension="xml"
+         <nativeFormat id="xml" name="%extensionName" extension="xml"
          	importer="br.org.archimedes.xml.XMLImporter"
          	exporter="br.org.archimedes.xml.XMLExporter">
          </nativeFormat>

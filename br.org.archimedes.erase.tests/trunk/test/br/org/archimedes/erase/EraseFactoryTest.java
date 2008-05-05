@@ -15,6 +15,7 @@ import br.org.archimedes.factories.CommandFactory;
 import br.org.archimedes.factories.FactoryTester;
 import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Element;
+import br.org.archimedes.model.Point;
 
 public class EraseFactoryTest extends FactoryTester {
 
@@ -44,7 +45,7 @@ public class EraseFactoryTest extends FactoryTester {
         // Arguments
         Element element1 = new MockElement();
         putSafeElementOnDrawing(element1, drawing);
-        Element element2 = new MockElement();
+        Element element2 = new MockElement(new Point(1, 1));
         putSafeElementOnDrawing(element2, drawing);
         Set<Element> selection = new HashSet<Element>();
         selection.add(element2);

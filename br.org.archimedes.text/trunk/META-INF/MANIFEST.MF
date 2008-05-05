@@ -13,3 +13,4 @@ Eclipse-LazyStart: true
 Export-Package: br.org.archimedes.text
 Bundle-Vendor: Tarantulus Corp.
 Eclipse-RegisterBuddy: br.org.archimedes
+Bundle-RequiredExecutionEnvironment: J2SE-1.5

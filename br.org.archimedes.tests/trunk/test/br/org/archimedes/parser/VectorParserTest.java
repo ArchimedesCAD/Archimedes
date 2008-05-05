@@ -66,7 +66,7 @@ public class VectorParserTest extends Tester {
 				0), p2), vp.getParameter());
 	}
 
-	public void testVectorByPoint(Class name) {
+	public void testVectorByPoint(Class<?> name) {
 		Point p1, p2;
 
 		p1 = new Point(0, 0);
@@ -99,7 +99,7 @@ public class VectorParserTest extends Tester {
 				vp.getParameter());
 	}
 
-    public void testVectorByRelativePoint(Class name) {
+    public void testVectorByRelativePoint(Class<?> name) {
         Point p1, p2;
 
         p1 = new Point(0, 0);
@@ -139,10 +139,10 @@ public class VectorParserTest extends Tester {
 	 *            The initial point for the vector parser to be used.
 	 * @return The parser created
 	 */
-	private Parser createNewParser(Class classObject, Point p1) {
+	private Parser createNewParser(Class<?> classObject, Point p1) {
 		Parser parser = null;
 		try {
-			Constructor c = classObject.getConstructor(Point.class);
+			Constructor<?> c = classObject.getConstructor(Point.class);
 			parser = (Parser) c.newInstance(new Object[] { p1 });
 		}
 		catch (Exception e) {
@@ -156,7 +156,7 @@ public class VectorParserTest extends Tester {
 		return parser;
 	}
 
-	public void testVectorByDistanceAndPoint(Class name) {
+	public void testVectorByDistanceAndPoint(Class<?> name) {
 		Point p1 = new Point(10, 10);
 		Parser vp = createNewParser(name, p1);
 		Assert.assertFalse("Should not be done yet.", vp.isDone());
@@ -201,7 +201,7 @@ public class VectorParserTest extends Tester {
 				new Point(35, 10)), vp.getParameter());
 	}
 
-    public void testVectorByDistanceAndPointDown(Class name) {
+    public void testVectorByDistanceAndPointDown(Class<?> name) {
         Point p1 = new Point(10, 10);
         Parser vp = createNewParser(name, p1);
         Assert.assertFalse("Should not be done yet.", vp.isDone());
@@ -230,7 +230,7 @@ public class VectorParserTest extends Tester {
                 new Point(10, -15)), vp.getParameter());
     }
 
-    public void testVectorByDistanceAndAngle(Class name) {
+    public void testVectorByDistanceAndAngle(Class<?> name) {
 		Point p1 = new Point(10, 10);
 		Parser vp = createNewParser(name, p1);
 		Assert.assertFalse("Should not be done yet.", vp.isDone());
@@ -258,7 +258,7 @@ public class VectorParserTest extends Tester {
 				new Point(10, 35)), vp.getParameter());
 	}
 
-	public void testVectorByDistanceAndReturn(Class name) {
+	public void testVectorByDistanceAndReturn(Class<?> name) {
 		Controller controller = Controller.getInstance();
 		Drawing dr = new Drawing("Drawing");
 		controller.setActiveDrawing(dr);

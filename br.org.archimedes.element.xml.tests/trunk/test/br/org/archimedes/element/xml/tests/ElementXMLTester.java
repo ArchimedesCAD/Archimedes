@@ -1,7 +1,5 @@
 package br.org.archimedes.element.xml.tests;
 
-import static org.junit.Assert.fail;
-
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.io.StringReader;
@@ -9,6 +7,7 @@ import java.io.StringReader;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.junit.Assert;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 
@@ -17,7 +16,7 @@ import br.org.archimedes.Tester;
 import br.org.archimedes.interfaces.ElementExporter;
 
 /**
- * Classe básica para testes de exportação de XML.
+ * Classe bï¿½sica para testes de exportaï¿½ï¿½o de XML.
  * 
  * @author eclipse
  */
@@ -48,7 +47,7 @@ public class ElementXMLTester extends Tester {
 
 			return doc;
 		} catch (Exception ex) {
-			fail("Should not throw IOException");
+			Assert.fail("Should not throw IOException");
 		}
 		return null;
 	}

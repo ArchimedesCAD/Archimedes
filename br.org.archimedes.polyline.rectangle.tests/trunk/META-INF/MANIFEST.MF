@@ -4,7 +4,8 @@ Bundle-Name: Tests Plug-in
 Bundle-SymbolicName: br.org.archimedes.polyline.rectangle.tests
 Bundle-Version: 1.0.0
 Bundle-Vendor: Tarantulus Corp.
-Bundle-Localization: plugin
 Require-Bundle: br.org.archimedes,
  br.org.archimedes.tests,
- br.org.archimedes.polyline.rectangle
+ br.org.archimedes.polyline.rectangle,
+ org.junit4
+Bundle-RequiredExecutionEnvironment: J2SE-1.5

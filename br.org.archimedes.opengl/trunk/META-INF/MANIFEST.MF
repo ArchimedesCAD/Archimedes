@@ -4,8 +4,8 @@ Bundle-Name: Opengl Plug-in
 Bundle-SymbolicName: br.org.archimedes.opengl
 Bundle-Version: 1.0.0
 Bundle-Vendor: LWJGL
-Bundle-Localization: plugin
 Bundle-ClassPath: lwjgl.jar
 Export-Package: org.lwjgl,
  org.lwjgl.opengl,
  org.lwjgl.opengl.glu
+Bundle-RequiredExecutionEnvironment: J2SE-1.5

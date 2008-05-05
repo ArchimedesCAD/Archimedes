@@ -80,8 +80,6 @@ public class VerticalInfiniteLine extends InfiniteLineTestCase {
     @Test
     public void testIsPositiveDirection () {
 
-        fail("Not yet implemented"); // TODO
-
         // Vertical line
         InfiniteLine xLine = createSafeInfiniteLine(1.0, 1.0, 1.0, 2.0);
         Point point1 = new Point(1.0, 3.0);
@@ -171,8 +169,6 @@ public class VerticalInfiniteLine extends InfiniteLineTestCase {
      */
     @Test
     public void testEqualsInfiniteLine () {
-
-        fail("Not yet implemented"); // TODO
 
         // Vertical line
         InfiniteLine xLine = createSafeInfiniteLine(1.0, 1.0, 1.0, 2.0);

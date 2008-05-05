@@ -7,4 +7,7 @@ Require-Bundle: br.org.archimedes,
  br.org.archimedes.circle,
  br.org.archimedes.intersector.circlepolyline,
  br.org.archimedes.polyline,
- br.org.archimedes.tests
+ br.org.archimedes.tests,
+ br.org.archimedes.curvedshape;bundle-version="0.52.0",
+ org.junit4
+Bundle-RequiredExecutionEnvironment: J2SE-1.5

@@ -3,7 +3,8 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Infinite Line Tests Plug-in
 Bundle-SymbolicName: br.org.archimedes.infiniteLine.tests
 Bundle-Version: 0.50.0
-Bundle-Localization: plugin
 Require-Bundle: br.org.archimedes,
  br.org.archimedes.infiniteline,
- br.org.archimedes.tests
+ br.org.archimedes.tests,
+ org.junit4
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
