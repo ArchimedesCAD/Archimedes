@@ -23,6 +23,8 @@ public class DimensionTest extends Tester {
     private Point point2;
 
     private Point distance;
+    
+    private double ddistance;
 
 
     @Before
@@ -31,6 +33,7 @@ public class DimensionTest extends Tester {
         point1 = new Point(50, 50);
         point2 = new Point(50, 70);
         distance = new Point(70, 50);
+        ddistance = 20.0;
     }
 
     @Test
@@ -82,6 +85,53 @@ public class DimensionTest extends Tester {
 
         try {
             new Dimension(point1, point2, distance, FONT_SIZE);
+        }
+        catch (NullArgumentException e) {
+            Assert.fail("Should not throw NullArgumentException");
+        }
+        catch (InvalidArgumentException e) {
+            Assert.fail("Should not throw InvalidArgumentException");
+        }
+    }
+    
+    @Test
+    public void testDimensionConstructorWithDouble () {
+
+        try {
+            new Dimension(null, point1, ddistance, FONT_SIZE);
+            Assert.fail("Should throw NullArgumentException");
+        }
+        catch (NullArgumentException e) {
+            // Ok
+        }
+        catch (InvalidArgumentException e) {
+            Assert.fail("Should throw NullArgumentException");
+        }
+
+        try {
+            new Dimension(point1, null, ddistance, FONT_SIZE);
+            Assert.fail("Should throw NullArgumentException");
+        }
+        catch (NullArgumentException e) {
+            // Ok
+        }
+        catch (InvalidArgumentException e) {
+            Assert.fail("Should throw NullArgumentException");
+        }
+
+        try {
+            new Dimension(point1, point1.clone(), ddistance, FONT_SIZE);
+            Assert.fail("Should throw InvalidArgumentException");
+        }
+        catch (NullArgumentException e) {
+            Assert.fail("Should throw NullArgumentException");
+        }
+        catch (InvalidArgumentException e) {
+            // Ok
+        }
+
+        try {
+            new Dimension(point1, point2, ddistance, FONT_SIZE);
         }
         catch (NullArgumentException e) {
             Assert.fail("Should not throw NullArgumentException");
