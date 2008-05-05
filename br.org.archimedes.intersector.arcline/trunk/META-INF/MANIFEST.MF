@@ -9,3 +9,4 @@ Require-Bundle: br.org.archimedes.arc,
  br.org.archimedes.intersector.circleline,
  br.org.archimedes.line,
  br.org.archimedes
+Export-Package: br.org.archimedes.intersector.arcline

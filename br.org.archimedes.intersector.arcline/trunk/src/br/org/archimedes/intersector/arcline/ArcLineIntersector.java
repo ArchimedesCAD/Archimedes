@@ -18,6 +18,9 @@ public class ArcLineIntersector implements Intersector {
 	public Collection<Point> getIntersections(Element element,
 			Element otherElement) throws NullArgumentException {
 		
+		if (element == null || otherElement == null)
+			throw new NullArgumentException();
+		
 		CircleLineIntersector intersector = new CircleLineIntersector();
 		Arc arc = null;
 		Line line = null;
