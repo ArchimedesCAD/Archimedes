@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Arc Line Intersector Tests Plug-in
+Bundle-SymbolicName: br.org.archimedes.intersector.arcline.tests
+Bundle-Version: 1.0.0
+Bundle-Localization: plugin
+Require-Bundle: br.org.archimedes.arc,
+ br.org.archimedes.intersector.arcline,
+ br.org.archimedes.line,
+ br.org.archimedes.tests,
+ br.org.archimedes
