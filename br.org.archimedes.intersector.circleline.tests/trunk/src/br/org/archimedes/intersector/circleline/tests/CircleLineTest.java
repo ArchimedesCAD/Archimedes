@@ -12,9 +12,9 @@ import br.org.archimedes.Tester;
 import br.org.archimedes.circle.Circle;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
+import br.org.archimedes.interfaces.Intersector;
 import br.org.archimedes.intersector.circleline.CircleLineIntersector;
 import br.org.archimedes.line.Line;
-import br.org.archimedes.model.Intersector;
 import br.org.archimedes.model.Point;
 
 public class CircleLineTest extends Tester {

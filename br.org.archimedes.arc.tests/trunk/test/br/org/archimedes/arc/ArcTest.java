@@ -111,7 +111,7 @@ public class ArcTest {
         Rectangle rect = new Rectangle( -1, 0, 1, 1);
 
         Assert.assertEquals(rect, arc1.getBoundaryRectangle());
-        // Assert.assertEquals (rect, arc2.getBoundaryRectangle());
+        Assert.assertEquals(rect, arc2.getBoundaryRectangle());
         Assert.assertEquals(rect, arc3.getBoundaryRectangle());
     }
 }

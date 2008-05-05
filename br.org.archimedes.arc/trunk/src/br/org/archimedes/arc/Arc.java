@@ -9,8 +9,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 import br.org.archimedes.Constant;
 import br.org.archimedes.Geometrics;
@@ -19,8 +17,6 @@ import br.org.archimedes.exceptions.IllegalActionException;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.gui.opengl.OpenGLWrapper;
-import br.org.archimedes.model.ComparablePoint;
-import br.org.archimedes.model.DoubleKey;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Rectangle;
@@ -600,198 +596,6 @@ public class Arc extends CurvedShape {
         return arc;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.tarantulus.archimedes.model.Trimmable#trim(java.util.Collection,
-     *      com.tarantulus.archimedes.model.Point)
-     */
-    public Collection<Element> trim (Collection<Element> references, Point click) {
-
-        Collection<Element> trimResult = new ArrayList<Element>();
-        Collection<Point> intersectionPoints = getIntersectionPoints(references);
-        SortedSet<ComparablePoint> sortedPointSet = getSortedPointSet(
-                initialPoint, intersectionPoints);
-
-        ComparablePoint clickPoint = null;
-        ComparablePoint initial = null;
-        try {
-            double key = getArcAngle(click);
-            clickPoint = new ComparablePoint(click, new DoubleKey(key));
-            initial = new ComparablePoint(initialPoint, new DoubleKey(0.0));
-        }
-        catch (NullArgumentException e) {
-            // Should never reach
-            e.printStackTrace();
-        }
-
-        // Consider only point within the arc
-        sortedPointSet = sortedPointSet.tailSet(initial);
-
-        SortedSet<ComparablePoint> negativeIntersections = sortedPointSet
-                .headSet(clickPoint);
-        SortedSet<ComparablePoint> positiveIntersections = sortedPointSet
-                .tailSet(clickPoint);
-
-        try {
-            if (negativeIntersections.size() == 0
-                    && positiveIntersections.size() > 0) {
-                Point firstPositive = positiveIntersections.first().getPoint();
-                Collection<Point> points = new ArrayList<Point>();
-                points.add(firstPositive);
-                points.add(endingPoint);
-                Element arc = new Arc(firstPositive, endingPoint, centerPoint,
-                        true);
-                arc.setLayer(getLayer());
-
-                trimResult.add(arc);
-            }
-            else if (positiveIntersections.size() == 0
-                    && negativeIntersections.size() > 0) {
-                Point lastNegative = negativeIntersections.last().getPoint();
-                Collection<Point> points = new ArrayList<Point>();
-                points.add(lastNegative);
-                points.add(initialPoint);
-                Element arc = new Arc(initialPoint, lastNegative, centerPoint,
-                        true);
-                arc.setLayer(getLayer());
-
-                trimResult.add(arc);
-            }
-            else if (negativeIntersections.size() > 0
-                    && positiveIntersections.size() > 0) {
-                Point firstPositive = positiveIntersections.first().getPoint();
-                Point lastNegative = negativeIntersections.last().getPoint();
-                Collection<Point> points = new ArrayList<Point>();
-                points.add(lastNegative);
-                points.add(initialPoint);
-                Element arc1 = new Arc(initialPoint, lastNegative, centerPoint,
-                        true);
-                arc1.setLayer(getLayer());
-
-                trimResult.add(arc1);
-
-                points = new ArrayList<Point>();
-                points.add(firstPositive);
-                points.add(endingPoint);
-                Element arc2 = new Arc(firstPositive, endingPoint, centerPoint,
-                        true);
-                arc2.setLayer(getLayer());
-
-                trimResult.add(arc2);
-            }
-        }
-        catch (NullArgumentException e) {
-            // Should not catch this exception
-            e.printStackTrace();
-        }
-        catch (InvalidArgumentException e) {
-            // Should not catch this exception
-            e.printStackTrace();
-        }
-
-        return trimResult;
-
-    }
-
-    /**
-     * Gets all the proper intersections of the collection of references with
-     * this element. The initial point and the ending point are not considered
-     * intersections.
-     * 
-     * @param references
-     *            A collection of references
-     * @return A collection of proper intersections points
-     */
-    private Collection<Point> getIntersectionPoints (
-            Collection<Element> references) {
-
-        Collection<Point> intersectionPoints = new ArrayList<Point>();
-
-        for (Element element : references) {
-            try {
-                if (element != this) {
-                    Collection<Point> inter = element.getIntersection(this);
-                    for (Point point : inter) {
-                        if (this.contains(point) && element.contains(point)
-                                && !this.initialPoint.equals(point)
-                                && !this.endingPoint.equals(point)) {
-                            intersectionPoints.add(point);
-                        }
-                    }
-                }
-            }
-            catch (NullArgumentException e) {
-                // Should never catch this exception
-                e.printStackTrace();
-            }
-        }
-
-        return intersectionPoints;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.tarantulus.archimedes.model.PointSortable#getSortedPointSet(com.tarantulus.archimedes.model.Point,
-     *      java.util.Collection)
-     */
-    public SortedSet<ComparablePoint> getSortedPointSet (Point referencePoint,
-            Collection<Point> points) {
-
-        SortedSet<ComparablePoint> sortedSet = new TreeSet<ComparablePoint>();
-
-        boolean invertOrder = referencePoint.equals(endingPoint);
-        for (Point point : points) {
-            try {
-                double key = getArcAngle(point);
-                if (Math.abs(key) > Constant.EPSILON && invertOrder) {
-                    key = 1 / key;
-                }
-                ComparablePoint orderedPoint = new ComparablePoint(point,
-                        new DoubleKey(key));
-                sortedSet.add(orderedPoint);
-            }
-            catch (NullArgumentException e) {
-                // Should not catch this exception
-                e.printStackTrace();
-            }
-
-        }
-
-        return sortedSet;
-    }
-
-    /**
-     * @param point
-     *            The point whose angle is to be calculated
-     * @return The angle relative to the initial Point. The angle is between
-     *         -2*PI and 2*PI.
-     */
-    private double getArcAngle (Point point) {
-
-        double arc = 0;
-        boolean contained = true;
-        try {
-            contained = contains(point);
-        }
-        catch (NullArgumentException e) {
-            // Should not happen
-            e.printStackTrace();
-        }
-        if (contained) {
-            arc = Geometrics.calculateRelativeAngle(centerPoint, initialPoint,
-                    point);
-        }
-        else {
-            arc = Geometrics.calculateRelativeAngle(centerPoint, endingPoint,
-                    point);
-            arc -= Geometrics.calculateRelativeAngle(centerPoint, endingPoint,
-                    initialPoint);
-        }
-        return arc;
-    }
-
     public boolean isCollinearWith (Element element) {
 
         return false;
@@ -884,75 +688,6 @@ public class Arc extends CurvedShape {
     /*
      * (non-Javadoc)
      * 
-     * @see com.tarantulus.archimedes.model.Extendable#getNearestIntersection(java.util.Collection,
-     *      com.tarantulus.archimedes.model.Point)
-     */
-    public Point getNearestIntersection (Collection<Element> references,
-            Point toExtend) {
-
-        Point nearestIntersection = null;
-
-        Collection<Point> intersectionPoints = getIntersectionPoints(references);
-        SortedSet<ComparablePoint> sortedPointSet = getSortedPointSet(toExtend,
-                intersectionPoints);
-
-        ComparablePoint extendPoint = null;
-        try {
-            extendPoint = new ComparablePoint(toExtend, new DoubleKey(0.0));
-        }
-        catch (NullArgumentException e) {
-            // Should never reach
-            e.printStackTrace();
-        }
-
-        SortedSet<ComparablePoint> negativeIntersections = sortedPointSet
-                .headSet(extendPoint);
-
-        if (negativeIntersections.size() > 0) {
-            nearestIntersection = negativeIntersections.first().getPoint();
-        }
-
-        return nearestIntersection;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.tarantulus.archimedes.model.elements.Element#getNearestExtremePoint(com.tarantulus.archimedes.model.Point)
-     */
-    @Override
-    public Point getNearestExtremePoint (Point point)
-            throws NullArgumentException {
-
-        double distanceToInitial = Geometrics.calculateDistance(point,
-                getInitialPoint());
-        double distanceToEnding = Geometrics.calculateDistance(point,
-                getEndingPoint());
-
-        Point returnPoint = null;
-        if (distanceToEnding < distanceToInitial) {
-            returnPoint = getEndingPoint();
-        }
-        else {
-            returnPoint = getInitialPoint();
-        }
-        return returnPoint;
-    }
-
-    /**
-     * @see br.org.archimedes.model.Element#intersects(br.org.archimedes.model.Rectangle)
-     */
-    @Override
-    public boolean intersects (Rectangle rectangle)
-            throws NullArgumentException {
-
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
      * @see com.tarantulus.archimedes.model.Element#move(Collection<Point>,
      *      Vector)
      */
@@ -984,7 +719,6 @@ public class Arc extends CurvedShape {
      */
 	@Override
 	public void mirror(Point p1, Point p2) throws NullArgumentException, IllegalActionException {
-		// TODO Auto-generated method stub
 		super.mirror(p1, p2);
 		
 		Point auxiliarPoint = initialPoint;

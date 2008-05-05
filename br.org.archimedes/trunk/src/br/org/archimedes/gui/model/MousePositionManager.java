@@ -16,6 +16,8 @@ import br.org.archimedes.controller.Controller;
 import br.org.archimedes.controller.InputController;
 import br.org.archimedes.exceptions.NoActiveDrawingException;
 import br.org.archimedes.exceptions.NullArgumentException;
+import br.org.archimedes.interfaces.IntersectionManager;
+import br.org.archimedes.interfaces.Intersector;
 import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
@@ -120,9 +122,11 @@ public class MousePositionManager implements Observer {
             Set<Element> closeElements = new HashSet<Element>();
 
             for (Element element : drawing.getUnlockedContents()) {
-                if (element.intersects(modelDrawingArea)
-                        || element.isInside(modelDrawingArea)) {
-                    closeElements.add(element);
+                Set<Element> intersection = drawing
+                        .getSelectionIntersection(modelDrawingArea);
+
+                if ( !intersection.isEmpty()) {
+                    closeElements.addAll(intersection);
                 }
                 else if (element.getBoundaryRectangle() != null
                         && mousePosition.isInside(element
@@ -144,9 +148,13 @@ public class MousePositionManager implements Observer {
                 // Intersection points
                 for (Element otherElement : closeElements) {
                     if (element != otherElement) {
-                        Collection<Point> intersection = element
-                                .getIntersection(otherElement);
-                        for (Point p : intersection) {
+                        IntersectionManager manager = Utils
+                                .getIntersectionManager();
+                        Intersector intersector = manager.getIntersectorFor(
+                                element, otherElement);
+                        Collection<Point> intersections = intersector
+                                .getIntersections(element, otherElement);
+                        for (Point p : intersections) {
                             if (p.isInside(mouseArea) && element.contains(p)
                                     && otherElement.contains(p)) {
                                 closePoints.add(new XPoint(p));

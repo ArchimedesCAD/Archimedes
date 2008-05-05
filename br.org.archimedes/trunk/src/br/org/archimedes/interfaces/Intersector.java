@@ -1,8 +1,10 @@
-package br.org.archimedes.model;
+package br.org.archimedes.interfaces;
 
 import java.util.Collection;
 
 import br.org.archimedes.exceptions.NullArgumentException;
+import br.org.archimedes.model.Element;
+import br.org.archimedes.model.Point;
 
 public interface Intersector {
 	

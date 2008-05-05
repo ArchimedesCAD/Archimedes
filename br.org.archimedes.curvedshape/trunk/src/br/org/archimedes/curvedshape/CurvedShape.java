@@ -9,7 +9,6 @@ import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.gui.opengl.OpenGLWrapper;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
-import br.org.archimedes.model.Rectangle;
 
 /**
  * @author vidlopes
@@ -150,16 +149,5 @@ public abstract class CurvedShape extends Element {
             // Should never reach this block.
             e.printStackTrace();
         }
-    }
-
-    /**
-     * @see br.org.archimedes.model.Element#intersects(br.org.archimedes.model.Rectangle)
-     */
-    @Override
-    public boolean intersects (Rectangle rectangle)
-            throws NullArgumentException {
-
-        // TODO Auto-generated method stub
-        return false;
     }
 }

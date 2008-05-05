@@ -3,7 +3,6 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Batik Plug-in
 Bundle-SymbolicName: br.org.archimedes.batik
 Bundle-Version: 0.52.0
-Bundle-Activator: br.org.archimedes.batik.Activator
 Require-Bundle: org.eclipse.core.runtime
 Eclipse-LazyStart: true
 Export-Package: org.apache.batik.svggen.font,

@@ -13,7 +13,6 @@ import br.org.archimedes.exceptions.IllegalActionException;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.model.Point;
-import br.org.archimedes.model.Rectangle;
 
 /**
  * Belongs to package com.tarantulus.archimedes.tests.model.
@@ -150,114 +149,6 @@ public class LineTest extends Tester {
         try {
             Assert.assertFalse("The point " + point.toString()
                     + " belongs to the line", line.contains(point));
-        }
-        catch (NullArgumentException e) {
-            Assert.fail();
-        }
-    }
-
-    /**
-     * Tests all rectangle cases.
-     */
-    @Test
-    public void testRectangleCase () {
-
-        Rectangle rect = new Rectangle(0.0, 0.0, 1.0, 1.0);
-        testIntersects(rect);
-
-        rect = new Rectangle(1.0, 1.0, 0.0, 0.0);
-        testIntersects(rect);
-
-        rect = new Rectangle(1.0, 0.0, 0.0, 1.0);
-        testIntersects(rect);
-
-        rect = new Rectangle(0.0, 1.0, 1.0, 0.0);
-        testIntersects(rect);
-    }
-
-    /**
-     * Tests all possible line-rectangle intersections
-     * 
-     * @param rect
-     */
-    private void testIntersects (Rectangle rect) {
-
-        /*
-         * Two points inside the rectangle.
-         */
-        Line line = createSafeLine(0.5, 0.5, 0.51, 0.51);
-        testNotIntersectsWithLine(rect, line);
-
-        /*
-         * Two points outside the rectangle.
-         */
-        line = createSafeLine( -0.1, -0.1, -0.3, -0.3);
-        testNotIntersectsWithLine(rect, line);
-
-        /*
-         * Two points outside the rectangle. One point that is not the initial
-         * or ending point. The point intersects the corner of the rectangle.
-         */
-        line = createSafeLine( -0.5, 0.5, 0.5, -0.5);
-        testIntersectsWithLine(rect, line);
-
-        /*
-         * One poitn inside and other outside the rectangle.
-         */
-        line = createSafeLine(0.5, 0.5, -0.5, -0.5);
-        testIntersectsWithLine(rect, line);
-
-        /*
-         * The segment is passing through the rectangle.
-         */
-        line = createSafeLine( -0.5, 0.5, 1.5, 0.5);
-        testIntersectsWithLine(rect, line);
-
-        /*
-         * One point in a segment from the rectangle, and the rest of the
-         * segment out from the rectangle.
-         */
-        line = createSafeLine(0.5, 0.0, -0.5, -0.5);
-        testIntersectsWithLine(rect, line);
-
-        /*
-         * Segment is all in a segment of the rectangle.
-         */
-        line = createSafeLine(0.5, 0.0, 0.8, 0.0);
-        testIntersectsWithLine(rect, line);
-
-        /*
-         * One point in a segment of the rectangle, and the rest inside the
-         * rectangle.
-         */
-        line = createSafeLine(0.5, 0.0, 0.5, 0.5);
-        testIntersectsWithLine(rect, line);
-    }
-
-    /**
-     * @param rect
-     * @param line
-     */
-    private void testIntersectsWithLine (Rectangle rect, Line line) {
-
-        try {
-            Assert.assertTrue("The line should intersect the rectangle !"
-                    + rect.toString(), line.intersects(rect));
-        }
-        catch (NullArgumentException e) {
-            Assert.fail();
-        }
-    }
-
-    /**
-     * @param rect
-     * @param line
-     */
-    private void testNotIntersectsWithLine (Rectangle rect, Line line) {
-
-        try {
-            Assert.assertFalse("The line should not intersect the rectangle !"
-                    + rect.toString(), line.intersects(rect));
         }
         catch (NullArgumentException e) {
             Assert.fail();

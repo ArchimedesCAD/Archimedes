@@ -7,26 +7,18 @@ package br.org.archimedes.line;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 import br.org.archimedes.Constant;
 import br.org.archimedes.Geometrics;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.gui.opengl.OpenGLWrapper;
-import br.org.archimedes.model.ComparablePoint;
-import br.org.archimedes.model.DoubleKey;
 import br.org.archimedes.model.Element;
-import br.org.archimedes.model.FilletableElement;
-import br.org.archimedes.model.JoinableElement;
 import br.org.archimedes.model.Layer;
 import br.org.archimedes.model.Offsetable;
 import br.org.archimedes.model.Point;
-import br.org.archimedes.model.PointSortable;
 import br.org.archimedes.model.Rectangle;
 import br.org.archimedes.model.ReferencePoint;
-import br.org.archimedes.model.Trimmable;
 import br.org.archimedes.model.Vector;
 import br.org.archimedes.model.references.SquarePoint;
 import br.org.archimedes.model.references.TrianglePoint;
@@ -34,8 +26,7 @@ import br.org.archimedes.model.references.TrianglePoint;
 /**
  * Belongs to package com.tarantulus.archimedes.model.
  */
-public class Line extends Element implements Offsetable, Trimmable,
-        PointSortable, FilletableElement, JoinableElement {
+public class Line extends Element implements Offsetable {
 
     private Point initialPoint;
 
@@ -181,79 +172,6 @@ public class Line extends Element implements Offsetable, Trimmable,
         return Geometrics.calculateAngle(initialPoint.getX(), initialPoint
                 .getY(), endingPoint.getX(), endingPoint.getY());
     }
-
-    /**
-     * This method verify if this line intersects the parameter rectangle.
-     * 
-     * @param rectangle
-     *            The rectangle to be tested.
-     * @return True if the line intersects the parameter rectangle.
-     * @throws NullArgumentException
-     *             In case the rectangle is null.
-     */
-    public boolean intersects (Rectangle rect) throws NullArgumentException {
-
-        boolean intersects = false;
-        // TODO Implementar
-        // if (rect != null) {
-        // Collection<Line> edges = rect.getEdges();
-        // for (Line edge : edges) {
-        // intersects = this.intersectsLine(edge);
-        // if (intersects) {
-        // break;
-        // }
-        // }
-        // }
-        // else {
-        // throw new NullArgumentException();
-        // }
-
-        return intersects;
-
-    }
-
-    /**
-     * This method verify if this line intersects the parameter line.
-     * 
-     * @param line
-     *            The line to be tested.
-     * @return True if the line intersects the parameter line.
-     * @throws NullArgumentException
-     *             In case the line is null.
-     */
-    // private boolean intersectsLine (Line line) throws NullArgumentException {
-    //
-    // if (line != null) {
-    // Point a1 = getInitialPoint();
-    // Point b1 = getEndingPoint();
-    // Point a2 = line.getInitialPoint();
-    // Point b2 = line.getEndingPoint();
-    //
-    // if (this.contains(a2) || this.contains(b2) || line.contains(a1)
-    // || line.contains(b1)) {
-    // return true;
-    // }
-    //
-    // // TODO implementar corretamente
-    // if (true) {
-    // return true;
-    // }
-    // }
-    // else {
-    // throw new NullArgumentException();
-    // }
-    //
-    // return false;
-    // }
-    /**
-     * @see com.tarantulus.archimedes.model.elements.Element#getIntersection(com.tarantulus.archimedes.model.elements.Element)
-     */
-//    public Collection<Point> getIntersection (Element element)
-//            throws NullArgumentException {
-//
-//        // TODO
-//        return Collections.emptyList();
-//    }
 
     /**
      * @param distance
@@ -448,6 +366,10 @@ public class Line extends Element implements Offsetable, Trimmable,
      */
     public Point getProjectionOf (Point point) throws NullArgumentException {
 
+        if(point == null) {
+            throw new NullArgumentException();
+        }
+        
         Vector direction = new Vector(initialPoint, endingPoint);
         Vector distance = new Vector(initialPoint, point);
         direction = direction.multiply(1.0 / direction.getNorm());
@@ -455,203 +377,9 @@ public class Line extends Element implements Offsetable, Trimmable,
         return initialPoint.addVector(direction);
     }
 
-    public Element fillet (Point intersection, Point direction) {
-
-        Line result = (Line) this.clone();
-        if ( !(intersection == null || intersection.equals(initialPoint) || intersection
-                .equals(endingPoint))) {
-            Point extremePoint;
-            try {
-                extremePoint = result.getNearestExtremePoint(direction);
-                extremePoint.setX(intersection.getX());
-                extremePoint.setY(intersection.getY());
-            }
-            catch (NullArgumentException e) {
-                // Ignores when it happens
-            }
-        }
-        return result;
-    }
-
     public Line getSegment () {
 
         return this;
-    }
-
-    public Element join (Element element) {
-
-        // JoinableElement joinableElement = (JoinableElement) element;
-        // TODO implementar
-        return this;
-    }
-
-    public Element joinWithLine (Line line) {
-
-        Element element = null;
-        Line line1 = this;
-        Line line2 = (Line) line;
-        try {
-            if (line1.contains(line2.getInitialPoint())
-                    && line1.contains(line2.getEndingPoint())) {
-                element = line1;
-            }
-            else if (line2.contains(line1.getInitialPoint())
-                    && line2.contains(line1.getEndingPoint())) {
-                element = line2;
-            }
-            else {
-                double dist1 = Geometrics.calculateDistance(line1
-                        .getInitialPoint(), line2.getInitialPoint());
-                double dist2 = Geometrics.calculateDistance(line1
-                        .getInitialPoint(), line2.getEndingPoint());
-                double dist3 = Geometrics.calculateDistance(line1
-                        .getEndingPoint(), line2.getInitialPoint());
-                double dist4 = Geometrics.calculateDistance(line1
-                        .getEndingPoint(), line2.getEndingPoint());
-
-                double max = Math.max(Math.max(dist1, dist2), Math.max(dist3,
-                        dist4));
-
-                Point initialPoint = null, endingPoint = null;
-                if (max == dist1) {
-                    initialPoint = line1.getInitialPoint();
-                    endingPoint = line2.getInitialPoint();
-                }
-                else if (max == dist2) {
-                    initialPoint = line1.getInitialPoint();
-                    endingPoint = line2.getEndingPoint();
-                }
-                else if (max == dist3) {
-                    initialPoint = line1.getEndingPoint();
-                    endingPoint = line2.getInitialPoint();
-                }
-                else if (max == dist4) {
-                    initialPoint = line1.getEndingPoint();
-                    endingPoint = line2.getEndingPoint();
-                }
-
-                element = new Line(initialPoint, endingPoint);
-            }
-        }
-        catch (Exception e) {
-            // Should never happen
-            e.printStackTrace();
-        }
-
-        return element;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.tarantulus.archimedes.model.JoinableElement#isJoinableWith(com.tarantulus.archimedes.model.Element)
-     */
-    public boolean isJoinableWith (Element element) {
-
-        boolean result = false;
-        /*
-         * TODO Implementar if (Utils.isInterfaceOf(element,
-         * JoinableElement.class)) { JoinableElement joinableElement =
-         * (JoinableElement) element; result =
-         * joinableElement.isJoinableWithLine(this); }
-         */
-
-        return result;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.tarantulus.archimedes.model.Trimmable#trim(java.util.Set,
-     *      com.tarantulus.archimedes.model.Point)
-     */
-    public Collection<Element> trim (Collection<Element> references, Point click) {
-
-        Collection<Element> trimResult = new ArrayList<Element>();
-        Collection<Point> intersectionPoints = getIntersectionPoints(references);
-        SortedSet<ComparablePoint> sortedPointSet = getSortedPointSet(
-                initialPoint, intersectionPoints);
-
-        Vector direction = new Vector(initialPoint, endingPoint);
-        Vector clickVector = new Vector(initialPoint, click);
-        double key = direction.dotProduct(clickVector);
-        ComparablePoint clickPoint = null;
-        try {
-            clickPoint = new ComparablePoint(click, new DoubleKey(key));
-        }
-        catch (NullArgumentException e) {
-            // Should never reach
-            e.printStackTrace();
-        }
-
-        SortedSet<ComparablePoint> headSet = sortedPointSet.headSet(clickPoint);
-        SortedSet<ComparablePoint> tailSet = sortedPointSet.tailSet(clickPoint);
-
-        try {
-            if (headSet.size() == 0 && tailSet.size() > 0) {
-                Element line = new Line(tailSet.first().getPoint(), endingPoint);
-                line.setLayer(getLayer());
-
-                trimResult.add(line);
-            }
-            else if (tailSet.size() == 0 && headSet.size() > 0) {
-                Element line = new Line(initialPoint, headSet.last().getPoint());
-                line.setLayer(getLayer());
-
-                trimResult.add(line);
-            }
-            else if (headSet.size() > 0 && tailSet.size() > 0) {
-                Element line1 = new Line(initialPoint, headSet.last()
-                        .getPoint());
-                Element line2 = new Line(tailSet.first().getPoint(),
-                        endingPoint);
-                line1.setLayer(getLayer());
-                line2.setLayer(getLayer());
-
-                trimResult.add(line1);
-                trimResult.add(line2);
-            }
-        }
-        catch (Exception e) {
-            // Should not catch any exception
-            e.printStackTrace();
-        }
-
-        return trimResult;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.tarantulus.archimedes.model.PointSortable#getSortedPointSet(com.tarantulus.archimedes.model.Point,
-     *      java.util.Collection)
-     */
-    public SortedSet<ComparablePoint> getSortedPointSet (Point referencePoint,
-            Collection<Point> intersectionPoints) {
-
-        SortedSet<ComparablePoint> sortedPointSet = new TreeSet<ComparablePoint>();
-
-        Point otherPoint = initialPoint;
-        if (referencePoint.equals(initialPoint)) {
-            otherPoint = endingPoint;
-        }
-
-        Vector direction = new Vector(referencePoint, otherPoint);
-        for (Point point : intersectionPoints) {
-            Vector pointVector = new Vector(referencePoint, point);
-            double key = direction.dotProduct(pointVector);
-            ComparablePoint element;
-            try {
-                element = new ComparablePoint(point, new DoubleKey(key));
-                sortedPointSet.add(element);
-            }
-            catch (NullArgumentException e) {
-                // Should never reach
-                e.printStackTrace();
-            }
-        }
-
-        return sortedPointSet;
     }
 
     /*
@@ -697,42 +425,6 @@ public class Line extends Element implements Offsetable, Trimmable,
         return references;
     }
 
-    /**
-     * Gets all the proper intersections of the collection of references with
-     * this element. The initial point and the ending point are not considered
-     * intersections.
-     * 
-     * @param references
-     *            A collection of references
-     * @return A collection of proper intersections points
-     */
-    private Collection<Point> getIntersectionPoints (
-            Collection<Element> references) {
-
-        Collection<Point> intersectionPoints = new ArrayList<Point>();
-
-        for (Element element : references) {
-            try {
-                if (element != this) {
-                    Collection<Point> inter = element.getIntersection(this);
-                    for (Point point : inter) {
-                        if (this.contains(point) && element.contains(point)
-                                && !this.initialPoint.equals(point)
-                                && !this.endingPoint.equals(point)) {
-                            intersectionPoints.add(point);
-                        }
-                    }
-                }
-            }
-            catch (NullArgumentException e) {
-                // Should never catch this exception
-                e.printStackTrace();
-            }
-        }
-
-        return intersectionPoints;
-    }
-
     public boolean isCollinearWith (Element element) {
 
         // TODO Implementar
@@ -762,24 +454,6 @@ public class Line extends Element implements Offsetable, Trimmable,
         points.add(getInitialPoint());
         points.add(getEndingPoint());
         return points;
-    }
-
-    public @Override
-    Point getNearestExtremePoint (Point point) throws NullArgumentException {
-
-        double distanceToInitial = Geometrics.calculateDistance(point,
-                getInitialPoint());
-        double distanceToEnding = Geometrics.calculateDistance(point,
-                getEndingPoint());
-
-        Point returnPoint = null;
-        if (distanceToEnding < distanceToInitial) {
-            returnPoint = getEndingPoint();
-        }
-        else {
-            returnPoint = getInitialPoint();
-        }
-        return returnPoint;
     }
 
     /*

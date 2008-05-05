@@ -7,7 +7,6 @@ package br.org.archimedes.model;
 import java.util.Collection;
 import java.util.List;
 
-import br.org.archimedes.Utils;
 import br.org.archimedes.exceptions.IllegalActionException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.gui.opengl.OpenGLWrapper;
@@ -56,36 +55,6 @@ public abstract class Element {
 
         Rectangle boundary = getBoundaryRectangle();
         return boundary.isInside(rectangle);
-    }
-
-    /**
-     * @param rectangle
-     *            The rectangle to test
-     * @return True if this element intersects the rectangle, false otherwise
-     *         (if it is inside it does not intersect).
-     * @throws NullArgumentException
-     *             thrown if the rectangle is null.
-     */
-    public abstract boolean intersects (Rectangle rectangle)
-            throws NullArgumentException;
-
-    /**
-     * Calculates the intersection points between the elements.
-     * 
-     * @param element
-     *            The other element.
-     * @return A collection with the intersection points. It's empty if there is
-     *         no intersection or if there are infinite intersections. The
-     *         intersections may not be contained in the elements.
-     * @throws NullArgumentException
-     *             thrown if the element is null.
-     */
-    public Collection<Point> getIntersection (Element element)
-            throws NullArgumentException {
-    	if (element == null)
-    		throw new NullArgumentException();
-    	Intersector intersector = Utils.getIntersectorFor(this, element);
-    	return intersector.getIntersections(this, element);
     }
 
     /**
@@ -269,17 +238,6 @@ public abstract class Element {
 
         return false;
     }
-
-    /**
-     * @param point
-     *            Point to find the nearest extreme point.
-     * @return The nearest extreme point to the passed point. If there are more
-     *         than one return any of them.
-     * @throws NullArgumentException
-     *             Thrown if the point is null.
-     */
-    public abstract Point getNearestExtremePoint (Point point)
-            throws NullArgumentException;
 
     /**
      * Mirrors this element relative to a given axis. This changes the element

@@ -70,26 +70,6 @@ public abstract class InfiniteLineTestCase extends infiniteLineTest {
 
     /**
      * Test method for
-     * {@link br.org.archimedes.infiniteline.InfiniteLine#intersects(br.org.archimedes.model.Rectangle)}.
-     */
-    @Test
-    public void testIntersects () {
-
-        fail("Not yet implemented"); // TODO
-    }
-
-    /**
-     * Test method for
-     * {@link br.org.archimedes.infiniteline.InfiniteLine#getIntersection(br.org.archimedes.model.Element)}.
-     */
-    @Test
-    public void testGetIntersection () {
-
-        fail("Not yet implemented"); // TODO
-    }
-
-    /**
-     * Test method for
      * {@link br.org.archimedes.infiniteline.InfiniteLine#equals(java.lang.Object)}.
      */
     @Test
@@ -169,17 +149,7 @@ public abstract class InfiniteLineTestCase extends infiniteLineTest {
 
         fail("Not yet implemented"); // TODO
     }
-
-    /**
-     * Test method for
-     * {@link br.org.archimedes.infiniteline.InfiniteLine#getNearestExtremePoint(br.org.archimedes.model.Point)}.
-     */
-    @Test
-    public void testGetNearestExtremePoint () {
-
-        fail("Not yet implemented"); // TODO
-    }
-
+    
     /**
      * Test method for
      * {@link br.org.archimedes.infiniteline.InfiniteLine#draw(br.org.archimedes.gui.opengl.OpenGLWrapper)}.
@@ -288,26 +258,6 @@ public abstract class InfiniteLineTestCase extends infiniteLineTest {
      */
     @Test
     public void testIsPositiveDirection () {
-
-        fail("Not yet implemented"); // TODO
-    }
-
-    /**
-     * Test method for
-     * {@link br.org.archimedes.infiniteline.InfiniteLine#trim(java.util.Collection, br.org.archimedes.model.Point)}.
-     */
-    @Test
-    public void testTrim () {
-
-        fail("Not yet implemented"); // TODO
-    }
-
-    /**
-     * Test method for
-     * {@link br.org.archimedes.infiniteline.InfiniteLine#getSortedPointSet(br.org.archimedes.model.Point, java.util.Collection)}.
-     */
-    @Test
-    public void testGetSortedPointSet () {
 
         fail("Not yet implemented"); // TODO
     }

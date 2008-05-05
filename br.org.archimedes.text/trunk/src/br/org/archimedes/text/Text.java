@@ -3,7 +3,6 @@ package br.org.archimedes.text;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import org.apache.batik.svggen.font.Font;
@@ -259,33 +258,6 @@ public class Text extends Element {
         return max = Math.max(max, d4);
     }
 
-    /**
-     * A text intersects nothing since no one should be able to grip text
-     * intersections.
-     * 
-     * @see br.org.archimedes.model.Element#getIntersection(br.org.archimedes.model.Element)
-     */
-    @SuppressWarnings("unchecked")//$NON-NLS-1$
-    @Override
-    public Collection<Point> getIntersection (Element element)
-            throws NullArgumentException {
-
-        return Collections.EMPTY_LIST;
-    }
-
-    /**
-     * A text has only one extreme point, the lower left, therefore, always
-     * returns this.
-     * 
-     * @see br.org.archimedes.model.Element#getNearestExtremePoint(br.org.archimedes.model.Point)
-     */
-    @Override
-    public Point getNearestExtremePoint (Point point)
-            throws NullArgumentException {
-
-        return originPoint;
-    }
-
     @Override
     public List<Point> getPoints () {
 
@@ -321,17 +293,6 @@ public class Text extends Element {
         }
 
         return references;
-    }
-
-    @Override
-    public boolean intersects (Rectangle rectangle)
-            throws NullArgumentException {
-
-        Rectangle boundary = getBoundaryRectangle();
-        boolean result = boundary.intersects(rectangle)
-                || rectangle.isInside(boundary);
-
-        return result;
     }
 
     /**

@@ -4,7 +4,6 @@ package br.org.archimedes.dimension;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import br.org.archimedes.Constant;
@@ -347,20 +346,6 @@ public class Dimension extends Element {
     /*
      * (non-Javadoc)
      * 
-     * @see br.org.archimedes.model.Element#getNearestExtremePoint(br.org.archimedes.model.Point)
-     */
-    @Override
-    public Point getNearestExtremePoint (Point point)
-            throws NullArgumentException {
-
-        // Dimension will not be used for trim, extend, fillet or intersection
-        // snap points.
-        return null;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
      * @see br.org.archimedes.model.Element#getPoints()
      */
     @Override
@@ -423,22 +408,6 @@ public class Dimension extends Element {
         if ( !pointsToMove.contains(text.getLowerLeft())) {
             text = makeText();
         }
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.model.Element#intersects(br.org.archimedes.model.Rectangle)
-     */
-    public boolean intersects (Rectangle rectangle)
-            throws NullArgumentException {
-
-        boolean inter = false;
-        Collection<Line> lines = getLinesToDraw();
-        for (Line line : lines) {
-            inter = inter || line.intersects(rectangle);
-        }
-        return inter;
     }
 
     /**
@@ -571,20 +540,6 @@ public class Dimension extends Element {
         return "Dimension: measures " + initialPoint.toString() + " and " //$NON-NLS-1$ //$NON-NLS-2$
                 + endingPoint.toString() + " at distance " //$NON-NLS-1$
                 + distance.toString();
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.model.Element#getIntersection(br.org.archimedes.model.Element)
-     */
-    @SuppressWarnings("unchecked")//$NON-NLS-1$
-    @Override
-    public Collection<Point> getIntersection (Element element)
-            throws NullArgumentException {
-
-        // TODO Auto-generated method stub
-        return Collections.EMPTY_LIST;
     }
 
     /*

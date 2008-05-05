@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.2"?>
 <plugin>
-	<extension point="br.org.archimedes.elementsIntersector">
+	<extension point="br.org.archimedes.intersections.elementsIntersector">
 		<elementsIntersector
         class="br.org.archimedes.intersector.linePolyline.LinePolylineIntersector"
         element="br.org.archimedes.line"

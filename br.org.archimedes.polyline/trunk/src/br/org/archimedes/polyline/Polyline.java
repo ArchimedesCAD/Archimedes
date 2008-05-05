@@ -7,7 +7,6 @@ package br.org.archimedes.polyline;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -20,7 +19,6 @@ import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.gui.opengl.OpenGLWrapper;
 import br.org.archimedes.line.Line;
 import br.org.archimedes.model.ComparablePoint;
-import br.org.archimedes.model.DoubleKey;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.JoinableElement;
 import br.org.archimedes.model.Layer;
@@ -225,28 +223,6 @@ public class Polyline extends Element {
         return clone;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.tarantulus.archimedes.model.Element#getIntersectionWithPolyline(com.tarantulus.archimedes.model.PolyLine)
-     */
-    public Collection<Point> getIntersectionWithPolyline (Polyline element)
-            throws NullArgumentException {
-
-        return getIntersection(element);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.tarantulus.archimedes.model.Element#getIntersectionWithLine(com.tarantulus.archimedes.model.Element)
-     */
-    public Collection<Point> getIntersectionWithLine (Element element)
-            throws NullArgumentException {
-
-        return getIntersection(element);
-    }
-
     public boolean equals (Object object) {
 
         boolean equal = (object == this);
@@ -347,7 +323,8 @@ public class Polyline extends Element {
                 Point helper = meanPoint.addVector(orthogonal);
 
                 Line ray = new Line(point, helper);
-                Collection<Point> crossings = this.getIntersectionWithLine(ray);
+                // TODO Resolver intersecção
+                Collection<Point> crossings = Collections.emptyList();
 
                 int numberOfCrossings = 0;
                 for (Point crossing : crossings) {
@@ -383,7 +360,6 @@ public class Polyline extends Element {
 
         Element result = null;
         List<Point> polyLine = new ArrayList<Point>();
-        List<Line> bissectors;
 
         List<Line> segments = getLines();
         if (segments.size() == 1) {
@@ -393,48 +369,38 @@ public class Polyline extends Element {
             polyLine.add(copy.getEndingPoint());
         }
         else {
-            bissectors = getBissectors();
-
-            Line segment = (Line) segments.get(0).cloneWithDistance(distance);
-
             Collection<Point> intersections;
-            try {
-                intersections = segment.getIntersection(bissectors.get(0));
-                Point lastPoint = intersections.iterator().next();
-                polyLine.add(lastPoint);
+            // TODO Resolver intersecção
+            intersections = Collections.emptyList();
+            Point lastPoint = intersections.iterator().next();
+            polyLine.add(lastPoint);
 
-                for (int i = 0; i < segments.size(); i++) {
-                    Line currentSegment = segments.get(i);
-                    currentSegment = (Line) currentSegment
-                            .cloneWithDistance(distance);
-                    // currentSegment = getCorrectOffset(lastPoint, distance,
-                    // currentSegment);
+            for (int i = 0; i < segments.size(); i++) {
+                Line currentSegment = segments.get(i);
+                currentSegment = (Line) currentSegment
+                        .cloneWithDistance(distance);
+                // currentSegment = getCorrectOffset(lastPoint, distance,
+                // currentSegment);
 
-                    intersections = currentSegment.getIntersection(bissectors
-                            .get(i + 1));
+                // TODO Resolver intersecção
+                intersections = Collections.emptyList();
 
-                    Point newPoint = intersections.iterator().next();
+                Point newPoint = intersections.iterator().next();
 
-                    Vector originalDirection = new Vector(currentSegment
-                            .getInitialPoint(), currentSegment.getEndingPoint());
-                    Vector newDirection = new Vector(lastPoint, newPoint);
+                Vector originalDirection = new Vector(currentSegment
+                        .getInitialPoint(), currentSegment.getEndingPoint());
+                Vector newDirection = new Vector(lastPoint, newPoint);
 
-                    double dotProduct = originalDirection
-                            .dotProduct(newDirection);
+                double dotProduct = originalDirection.dotProduct(newDirection);
 
-                    if (dotProduct > 0.0) {
+                if (dotProduct > 0.0) {
 
-                        lastPoint = newPoint;
-                        polyLine.add(lastPoint);
-                    }
-                    else {
-                        throw new InvalidParameterException();
-                    }
+                    lastPoint = newPoint;
+                    polyLine.add(lastPoint);
                 }
-            }
-            catch (NullArgumentException e) {
-                // Should never happen
-                e.printStackTrace();
+                else {
+                    throw new InvalidParameterException();
+                }
             }
         }
 
@@ -452,18 +418,7 @@ public class Polyline extends Element {
 
         return result;
     }
-
-    /**
-     * @return The list of bissectors (and orthogonal lines) of the
-     *         intersections of the polyline.
-     */
-    @SuppressWarnings("unchecked")//$NON-NLS-1$
-    private List<Line> getBissectors () {
-
-        // TODO Implementar
-        return Collections.EMPTY_LIST;
-    }
-
+    
     /**
      * @return True if the polyline is closed, false otherwise
      */
@@ -479,114 +434,6 @@ public class Polyline extends Element {
         }
 
         return closed;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.tarantulus.archimedes.model.Trimmable#trim(java.util.Collection,
-     *      com.tarantulus.archimedes.model.Point)
-     */
-    public Collection<Element> trim (Collection<Element> references, Point click) {
-
-        Collection<Element> trimResult = new ArrayList<Element>();
-        Collection<Point> intersectionPoints = getIntersectionPoints(references);
-        Point point = getPoints().get(0);
-        SortedSet<ComparablePoint> sortedPointSet = getSortedPointSet(point,
-                intersectionPoints);
-
-        int clickSegment = getNearestSegment(click);
-        Line line = getLines().get(clickSegment);
-        Vector direction = new Vector(line.getInitialPoint(), line
-                .getEndingPoint());
-        Vector clickVector = new Vector(line.getInitialPoint(), click);
-        PolyLinePointKey key = new PolyLinePointKey(clickSegment, direction
-                .dotProduct(clickVector));
-
-        ComparablePoint zero = null;
-        ComparablePoint clickPoint = null;
-        try {
-            clickPoint = new ComparablePoint(click, key);
-            zero = new ComparablePoint(point, new DoubleKey(0));
-        }
-        catch (NullArgumentException e) {
-            // Should never reach
-            e.printStackTrace();
-        }
-
-        sortedPointSet = sortedPointSet.tailSet(zero);
-        SortedSet<ComparablePoint> negativeIntersections = sortedPointSet
-                .headSet(clickPoint);
-        SortedSet<ComparablePoint> positiveIntersections = sortedPointSet
-                .tailSet(clickPoint);
-
-        Point firstCut = null;
-        Point secondCut = null;
-        if (negativeIntersections.size() == 0
-                && positiveIntersections.size() > 0) {
-            firstCut = positiveIntersections.first().getPoint();
-            secondCut = positiveIntersections.last().getPoint();
-        }
-        else if (positiveIntersections.size() == 0
-                && negativeIntersections.size() > 0) {
-            firstCut = negativeIntersections.first().getPoint();
-            secondCut = negativeIntersections.last().getPoint();
-        }
-        else if (negativeIntersections.size() > 0
-                && positiveIntersections.size() > 0) {
-            firstCut = positiveIntersections.first().getPoint();
-            secondCut = negativeIntersections.last().getPoint();
-        }
-
-        Collection<Polyline> polyLines = this.split(firstCut, secondCut);
-        for (Polyline polyLine : polyLines) {
-            boolean clicked = false;
-            try {
-                clicked = polyLine.contains(click);
-            }
-            catch (NullArgumentException e) {
-                // Should not happen
-                e.printStackTrace();
-            }
-            if ( !clicked) {
-                polyLine.setLayer(getLayer());
-                trimResult.add(polyLine);
-            }
-        }
-
-        if (trimResult.size() == 2) {
-            Iterator<Element> iterator = trimResult.iterator();
-            Polyline poly1 = (Polyline) iterator.next();
-            Polyline poly2 = (Polyline) iterator.next();
-            List<Point> poly1Points = poly1.getPoints();
-            List<Point> poly2Points = poly2.getPoints();
-            Point firstPoly2 = poly2Points.get(0);
-            Point lastPoly1 = poly1Points.get(poly1Points.size() - 1);
-            if (lastPoly1.equals(firstPoly2)) {
-                trimResult.clear();
-                List<Point> points = poly1Points;
-                points.remove(points.size() - 1);
-                Point last = points.get(points.size() - 1);
-                try {
-                    double determinant = Geometrics.calculateDeterminant(last,
-                            firstPoly2, poly2Points.get(1));
-                    if (Math.abs(determinant) < Constant.EPSILON) {
-                        poly2Points.remove(0);
-                    }
-                    points.addAll(poly2Points);
-                    trimResult.add(new Polyline(points));
-                }
-                catch (NullArgumentException e) {
-                    // Should not happen
-                    e.printStackTrace();
-                }
-                catch (InvalidArgumentException e) {
-                    // Ignores it
-                }
-            }
-        }
-
-        return trimResult;
     }
 
     /*
@@ -724,44 +571,6 @@ public class Polyline extends Element {
             e.printStackTrace();
         }
         return element;
-    }
-
-    /**
-     * Gets all the proper intersections of the collection of references with
-     * this element. The initial point and the ending point are not considered
-     * intersections.
-     * 
-     * @param references
-     *            A collection of references
-     * @return A collection of proper intersections points
-     */
-    private Collection<Point> getIntersectionPoints (
-            Collection<Element> references) {
-
-        Collection<Point> intersectionPoints = new ArrayList<Point>();
-
-        for (Element element : references) {
-            try {
-                if (element != this) {
-                    Collection<Point> inter = element.getIntersection(this);
-                    for (Point point : inter) {
-                        if (this.contains(point)
-                                && element.contains(point)
-                                && !this.points.get(0).equals(point)
-                                && !this.points.get(points.size() - 1).equals(
-                                        point)) {
-                            intersectionPoints.add(point);
-                        }
-                    }
-                }
-            }
-            catch (NullArgumentException e) {
-                // Should never catch this exception
-                e.printStackTrace();
-            }
-        }
-
-        return intersectionPoints;
     }
 
     /**
@@ -1197,58 +1006,6 @@ public class Polyline extends Element {
         return false;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.tarantulus.archimedes.model.elements.Element#getNearestExtremePoint(com.tarantulus.archimedes.model.Point)
-     */
-    @Override
-    public Point getNearestExtremePoint (Point point)
-            throws NullArgumentException {
-
-        int nearestSegmentIndex = getNearestSegment(point);
-        List<Line> lines = getLines();
-        Line nearestSegment = lines.get(nearestSegmentIndex);
-        Point projection = nearestSegment.getProjectionOf(point);
-        List<Point> perimetersPoints = new ArrayList<Point>();
-        for (int i = 0; i <= nearestSegmentIndex; i++) {
-            perimetersPoints.add(lines.get(i).getInitialPoint());
-        }
-        perimetersPoints.add(projection);
-
-        List<Point> secondPerimetersPoints = new ArrayList<Point>();
-        secondPerimetersPoints.add(projection);
-        for (int i = nearestSegmentIndex; i < lines.size(); i++) {
-            secondPerimetersPoints.add(lines.get(i).getEndingPoint());
-        }
-        double firstPerimeter = -1;
-        double secondPerimeter = -1;
-        Point initialPoint = points.get(0);
-        Point endingPoint = points.get(points.size() - 1);
-        try {
-            firstPerimeter = Geometrics.calculatePerimeter(perimetersPoints);
-        }
-        catch (Exception e) {
-            firstPerimeter = Geometrics.calculateDistance(initialPoint,
-                    projection);
-        }
-        try {
-            secondPerimeter = Geometrics
-                    .calculatePerimeter(secondPerimetersPoints);
-        }
-        catch (Exception e) {
-            secondPerimeter = Geometrics.calculateDistance(endingPoint,
-                    projection);
-        }
-
-        Point nearestPoint = initialPoint;
-        if (firstPerimeter > secondPerimeter) {
-            nearestPoint = endingPoint;
-        }
-
-        return nearestPoint;
-    }
-
     /**
      * Cuts the polyline in the specified points. Returns the resulting
      * polylines ordered from the initial point to the ending point.
@@ -1454,20 +1211,5 @@ public class Polyline extends Element {
         for (Line line : getLines()) {
             line.draw(wrapper);
         }
-    }
-
-    /**
-     * @see br.org.archimedes.model.Element#intersects(br.org.archimedes.model.Rectangle)
-     */
-    @Override
-    public boolean intersects (Rectangle rectangle)
-            throws NullArgumentException {
-
-        for (Line line : getLines()) {
-            if (line.intersects(rectangle)) {
-                return true;
-            }
-        }
-        return false;
     }
 }

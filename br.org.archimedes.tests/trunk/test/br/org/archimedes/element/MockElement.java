@@ -95,26 +95,6 @@ public class MockElement extends Element {
     }
 
     /**
-     * @see br.org.archimedes.model.Element#getIntersection(br.org.archimedes.model.Element)
-     */
-    @Override
-    public Collection<Point> getIntersection (Element element)
-            throws NullArgumentException {
-
-        return Collections.emptyList();
-    }
-
-    /**
-     * @see br.org.archimedes.model.Element#getNearestExtremePoint(br.org.archimedes.model.Point)
-     */
-    @Override
-    public Point getNearestExtremePoint (Point point)
-            throws NullArgumentException {
-
-        return null;
-    }
-
-    /**
      * @see br.org.archimedes.model.Element#getPoints()
      */
     @Override
@@ -139,16 +119,6 @@ public class MockElement extends Element {
     public Collection<ReferencePoint> getReferencePoints (Rectangle area) {
 
         return Collections.emptyList();
-    }
-
-    /**
-     * @see br.org.archimedes.model.Element#intersects(br.org.archimedes.model.Rectangle)
-     */
-    @Override
-    public boolean intersects (Rectangle rectangle)
-            throws NullArgumentException {
-
-        return false;
     }
 
     /**

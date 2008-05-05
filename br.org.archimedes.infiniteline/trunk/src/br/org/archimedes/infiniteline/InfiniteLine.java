@@ -5,27 +5,23 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.SortedSet;
 
 import br.org.archimedes.Constant;
 import br.org.archimedes.Geometrics;
-import br.org.archimedes.exceptions.IllegalActionException;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.InvalidParameterException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.gui.model.Workspace;
 import br.org.archimedes.gui.opengl.OpenGLWrapper;
-import br.org.archimedes.model.ComparablePoint;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Offsetable;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Rectangle;
 import br.org.archimedes.model.ReferencePoint;
-import br.org.archimedes.model.Trimmable;
 import br.org.archimedes.model.Vector;
 import br.org.archimedes.model.references.TrianglePoint;
 
-public class InfiniteLine extends Element implements Offsetable, Trimmable {
+public class InfiniteLine extends Element implements Offsetable {
 
     private Point initialPoint;
 
@@ -314,21 +310,6 @@ public class InfiniteLine extends Element implements Offsetable, Trimmable {
     }
 
     @Override
-    public Collection<Point> getIntersection (Element element)
-            throws NullArgumentException {
-
-        // TODO implementar quando tiver intersection
-        return new ArrayList<Point>();
-    }
-
-    @Override
-    public Point getNearestExtremePoint (Point point)
-            throws NullArgumentException {
-
-        return null;
-    }
-
-    @Override
     public List<Point> getPoints () {
 
         List<Point> points = new ArrayList<Point>();
@@ -393,14 +374,6 @@ public class InfiniteLine extends Element implements Offsetable, Trimmable {
     }
 
     @Override
-    public boolean intersects (Rectangle rectangle)
-            throws NullArgumentException {
-
-        // TODO fazer quando tivermos intersec��o
-        return false;
-    }
-
-    @Override
     public boolean isCollinearWith (Element element) {
 
         // TODO implementar
@@ -447,20 +420,6 @@ public class InfiniteLine extends Element implements Offsetable, Trimmable {
                 getEndingPoint(), point);
 
         return (determinant >= 0);
-    }
-
-    public Collection<Element> trim (Collection<Element> references, Point click)
-            throws IllegalActionException {
-
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    public SortedSet<ComparablePoint> getSortedPointSet (Point referencePoint,
-            Collection<Point> intersectionPoints) {
-
-        // TODO Auto-generated method stub
-        return null;
     }
 
     /**

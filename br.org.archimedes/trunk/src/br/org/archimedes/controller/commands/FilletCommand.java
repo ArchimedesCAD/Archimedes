@@ -229,39 +229,33 @@ public class FilletCommand implements UndoableCommand {
 
         List<Point> intersections = null;
         Point intersection = null;
-        try {
-            intersections = new ArrayList<Point>(element1
-                    .getIntersection(element2));
+        // TODO Resolver como achar intersecção
+        intersections = Collections.emptyList();
 
-            if (intersections.size() > 0) {
-                double[] distIntersection = new double[intersections.size()];
-                for (int i = 0; i < intersections.size(); i++) {
-                    double dist1 = 0;
-                    double dist2 = 0;
-                    // if (element1.getClass() == PolyLine.class) {
-                    // PolyLine polyline = (PolyLine) element1;
-                    // dist1 = calculateSegmentDistance(polyline, point1,
-                    // intersections, i);
-                    // }
-                    // if (element2.getClass() == PolyLine.class) {
-                    // PolyLine polyline = (PolyLine) element2;
-                    // dist2 = calculateSegmentDistance(polyline, point2,
-                    // intersections, i);
-                    // }
-                    distIntersection[i] = dist1 + dist2;
-                }
-                int currentPoint = 0;
-                for (int i = 1; i < intersections.size(); i++) {
-                    if (distIntersection[i] < distIntersection[currentPoint]) {
-                        currentPoint = i;
-                    }
-                }
-                intersection = intersections.get(currentPoint);
+        if (intersections.size() > 0) {
+            double[] distIntersection = new double[intersections.size()];
+            for (int i = 0; i < intersections.size(); i++) {
+                double dist1 = 0;
+                double dist2 = 0;
+                // if (element1.getClass() == PolyLine.class) {
+                // PolyLine polyline = (PolyLine) element1;
+                // dist1 = calculateSegmentDistance(polyline, point1,
+                // intersections, i);
+                // }
+                // if (element2.getClass() == PolyLine.class) {
+                // PolyLine polyline = (PolyLine) element2;
+                // dist2 = calculateSegmentDistance(polyline, point2,
+                // intersections, i);
+                // }
+                distIntersection[i] = dist1 + dist2;
             }
-        }
-        catch (NullArgumentException e) {
-            // Should never reach this block
-            e.printStackTrace();
+            int currentPoint = 0;
+            for (int i = 1; i < intersections.size(); i++) {
+                if (distIntersection[i] < distIntersection[currentPoint]) {
+                    currentPoint = i;
+                }
+            }
+            intersection = intersections.get(currentPoint);
         }
         return intersection;
     }

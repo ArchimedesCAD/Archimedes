@@ -122,24 +122,6 @@ public class Circle extends CurvedShape {
     /*
      * (non-Javadoc)
      * 
-     * @see com.tarantulus.archimedes.model.Element#getIntersection(com.tarantulus.archimedes.model.Element)
-     */
-    //TODO As soon as the way to intersect elements is (re)defined
-    //implement this method correctly
-    public Collection<Point> getIntersection (Element element)
-            throws NullArgumentException {
-
-        if (element == null) {
-            throw new NullArgumentException();
-        }
-
-        return new ArrayList<Point>();
-    }
-
-
-    /*
-     * (non-Javadoc)
-     * 
      * @see com.tarantulus.archimedes.model.Element#getBoundaryRectangle()
      */
     public Rectangle getBoundaryRectangle () {
@@ -364,125 +346,6 @@ public class Circle extends CurvedShape {
     /*
      * (non-Javadoc)
      * 
-     * @see com.tarantulus.archimedes.model.elements.Element#getNearestExtremePoint(com.tarantulus.archimedes.model.Point)
-     */
-    @Override
-    public Point getNearestExtremePoint (Point point)
-            throws NullArgumentException {
-
-        return null;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.tarantulus.archimedes.model.Trimmable#trim(java.util.Collection,
-     *      com.tarantulus.archimedes.model.Point)
-     */
-    public Collection<Element> trim (Collection<Element> references, Point click) {
-
-        Collection<Element> trimResult = new ArrayList<Element>();
-        Collection<Point> intersectionPoints = getIntersectionPoints(references);
-        Point initialPoint = center.clone();
-        initialPoint.move(getRadius(), 0);
-        SortedSet<ComparablePoint> sortedPointSet = getSortedPointSet(
-                initialPoint, intersectionPoints);
-
-        ComparablePoint clickPoint = null;
-
-        try {
-            double key = Geometrics.calculateRelativeAngle(center,
-                    initialPoint, click);
-            clickPoint = new ComparablePoint(click, new DoubleKey(key));
-        }
-        catch (NullArgumentException e) {
-            // Should never reach
-            e.printStackTrace();
-        }
-
-        SortedSet<ComparablePoint> negativeIntersections = sortedPointSet.headSet(clickPoint);
-        SortedSet<ComparablePoint> positiveIntersections = sortedPointSet.tailSet(clickPoint);
-
-//        try {
-            if (negativeIntersections.size() == 0
-                    && positiveIntersections.size() > 0) {
-//                Point firstPositive = positiveIntersections.first().getPoint();
-//                Point lastPositive = positiveIntersections.last().getPoint();
-                // TODO Trim
-//                Element arc = new Arc(firstPositive, lastPositive, center, true);
-//                arc.setLayer(getLayer());
-//
-//                trimResult.add(arc);
-            }
-            else if (positiveIntersections.size() == 0
-                    && negativeIntersections.size() > 0) {
-//                Point lastNegative = negativeIntersections.last().getPoint();
-//                Point firstNegative = negativeIntersections.first().getPoint();
-                // TODO Trim
-//                Element arc = new Arc(firstNegative, lastNegative, center, true);
-//                arc.setLayer(getLayer());
-//
-//                trimResult.add(arc);
-            }
-            else if (negativeIntersections.size() > 0
-                    && positiveIntersections.size() > 0) {
-//                Point firstPositive = positiveIntersections.first().getPoint();
-//                Point lastNegative = negativeIntersections.last().getPoint();
-                // TODO Trim
-//                Element arc = new Arc(firstPositive, lastNegative, center, true);
-//                arc.setLayer(getLayer());
-//
-//                trimResult.add(arc);
-            }
-//        }
-//        catch (NullArgumentException e) {
-//            // Should not catch this exception
-//            e.printStackTrace();
-//        }
-//        catch (InvalidArgumentException e) {
-//            // Should not catch this exception
-//            e.printStackTrace();
-//        }
-
-        return trimResult;
-    }
-
-    /**
-     * Gets all the proper intersections of the collection of references with
-     * this element.
-     * 
-     * @param references
-     *            A collection of references
-     * @return A collection of proper intersections points
-     */
-    private Collection<Point> getIntersectionPoints (
-            Collection<Element> references) {
-
-        Collection<Point> intersectionPoints = new ArrayList<Point>();
-
-        for (Element element : references) {
-            try {
-                if (element != this) {
-                    Collection<Point> inter = element.getIntersection(this);
-                    for (Point point : inter) {
-                        if (this.contains(point) && element.contains(point)) {
-                            intersectionPoints.add(point);
-                        }
-                    }
-                }
-            }
-            catch (NullArgumentException e) {
-                // Should never catch this exception
-                e.printStackTrace();
-            }
-        }
-
-        return intersectionPoints;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
      * @see com.tarantulus.archimedes.model.PointSortable#getSortedPointSet(com.tarantulus.archimedes.model.Point,
      *      java.util.Collection)
      */
@@ -515,11 +378,5 @@ public class Circle extends CurvedShape {
 		Point center = this.getCenter();
 
 		this.drawCurvedShape(wrapper, center, 0, 2 * Math.PI);		
-	}
-
-	@Override
-	public boolean intersects(Rectangle rectangle) throws NullArgumentException {
-		// TODO Auto-generated method stub
-		return false;
 	}
 }
