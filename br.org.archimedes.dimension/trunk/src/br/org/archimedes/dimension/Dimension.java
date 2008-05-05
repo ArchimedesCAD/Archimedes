@@ -99,6 +99,8 @@ public class Dimension extends Element {
             throw new InvalidArgumentException();
         }
 
+        this.initialPoint = initialPoint;
+        this.endingPoint = endingPoint;
         Vector vector = new Vector(initialPoint, endingPoint);
         vector = Geometrics.orthogonalize(vector);
         Line line = new Line(initialPoint, initialPoint.addVector(vector));
