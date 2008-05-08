@@ -7,5 +7,6 @@ Bundle-Localization: plugin
 Require-Bundle: br.org.archimedes,
  br.org.archimedes.dimension,
  br.org.archimedes.intersector.lineline,
- br.org.archimedes.line
+ br.org.archimedes.line,
+ br.org.archimedes.intersections
 Export-Package: br.org.archimedes.intersector.dimensionline

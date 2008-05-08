@@ -13,9 +13,9 @@ import br.org.archimedes.Tester;
 import br.org.archimedes.dimension.Dimension;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
+import br.org.archimedes.interfaces.Intersector;
 import br.org.archimedes.intersector.dimensionline.DimensionLineIntersector;
 import br.org.archimedes.line.Line;
-import br.org.archimedes.model.Intersector;
 import br.org.archimedes.model.Point;
 
 public class DimensionLineTests extends Tester {
