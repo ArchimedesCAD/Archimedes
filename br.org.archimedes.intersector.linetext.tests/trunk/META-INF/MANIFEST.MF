@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Line - Text Intersector Tests Plug-in
+Bundle-SymbolicName: br.org.archimedes.intersector.linetext.tests
+Bundle-Version: 1.0.0
+Require-Bundle: br.org.archimedes.line,
+ br.org.archimedes.text,
+ br.org.archimedes,
+ br.org.archimedes.tests,
+ br.org.archimedes.intersector.linetext
