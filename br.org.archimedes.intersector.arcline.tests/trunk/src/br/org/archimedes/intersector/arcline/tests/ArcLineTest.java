@@ -14,8 +14,8 @@ import br.org.archimedes.arc.Arc;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.line.Line;
-import br.org.archimedes.model.Intersector;
 import br.org.archimedes.model.Point;
+import br.org.archimedes.interfaces.Intersector;
 import br.org.archimedes.intersector.arcline.ArcLineIntersector;
 
 public class ArcLineTest extends Tester {
