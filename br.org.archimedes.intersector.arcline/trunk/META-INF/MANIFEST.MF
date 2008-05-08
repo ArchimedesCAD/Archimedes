@@ -8,5 +8,6 @@ Require-Bundle: br.org.archimedes.arc,
  br.org.archimedes.circle,
  br.org.archimedes.intersector.circleline,
  br.org.archimedes.line,
- br.org.archimedes
+ br.org.archimedes,
+ br.org.archimedes.intersections
 Export-Package: br.org.archimedes.intersector.arcline
