@@ -253,36 +253,6 @@ public class DimensionTest extends Tester {
                 boundary);
     }
 
-    @Test
-    public void testIntersects () {
-
-        Dimension dimension = createSafeDimension(point1, point2, distance);
-
-        try {
-            Rectangle area = new Rectangle(75, 45, 85, 55);
-            boolean intersects = dimension.intersects(area);
-            Assert.assertTrue("Should intersect", intersects);
-
-            area = new Rectangle(75, 55, 85, 65);
-            intersects = dimension.intersects(area);
-            Assert.assertFalse("Should not intersect", intersects);
-
-            area = new Rectangle(65, 55, 75, 65);
-            intersects = dimension.intersects(area);
-            Assert.assertTrue("Should intersect", intersects);
-        }
-        catch (NullArgumentException e) {
-            Assert.fail("Should not throw NullArgumentException");
-            e.printStackTrace();
-        }
-
-        try {
-            dimension.intersects(null);
-            Assert.fail("Should throw NullArgumentException");
-        }
-        catch (NullArgumentException e) {}
-    }
-
     /**
      * Test method for
      * {@link com.tarantulus.archimedes.model.elements.Dimension#getReferencePoints(com.tarantulus.archimedes.model.Rectangle)}.
