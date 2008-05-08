@@ -11,6 +11,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Scanner;
 
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IExtensionPoint;
@@ -34,31 +35,69 @@ import br.org.archimedes.model.Rectangle;
  */
 public class Utils {
 
+    private static final NullIntersectionManager NULL_INTERSECTION_MANAGER = new NullIntersectionManager();
+
     private final static Map<Class<? extends Element>, String> elementToIdMap;
 
     private final static Map<String, Class<? extends Element>> idToElementClassMap;
 
     private final static Map<Class<? extends Element>, Class<? extends SelectorFactory>> elementToDoubleClickHandler;
 
-    private static IntersectionManager intersectionManager;
+    private static IntersectionManager manager;
 
     static {
-        intersectionManager = new NullIntersectionManager();
         elementToIdMap = new HashMap<Class<? extends Element>, String>();
         idToElementClassMap = new HashMap<String, Class<? extends Element>>();
         elementToDoubleClickHandler = new HashMap<Class<? extends Element>, Class<? extends SelectorFactory>>();
 
-        fillMaps();
+        fillExtensions();
     }
 
 
-    private static void fillMaps () {
+    private static void fillExtensions () {
 
         IExtensionRegistry registry = Platform.getExtensionRegistry();
         if (registry != null) {
             fillElementVersusClassMaps(registry);
             fillDoubleClickHandlers(registry);
+
+            manager = getIntersectionManager(registry);
         }
+    }
+
+    /**
+     * @param registry
+     * @return The loaded intersectionManager or an instance of the
+     *         NullIntersectionManager if none was loaded
+     */
+    private static IntersectionManager getIntersectionManager (
+            IExtensionRegistry registry) {
+
+        IExtensionPoint extensionPoint = registry
+                .getExtensionPoint("br.org.archimedes.intersections"); //$NON-NLS-1$
+        if (extensionPoint != null) {
+            IExtension[] extensions = extensionPoint.getExtensions();
+            for (IExtension extension : extensions) {
+                IConfigurationElement[] configElements = extension
+                        .getConfigurationElements();
+                for (IConfigurationElement elementTag : configElements) {
+                    try {
+                        IntersectionManager manager = (IntersectionManager) elementTag
+                                .createExecutableExtension("class");
+                        if (manager != NULL_INTERSECTION_MANAGER) {
+                            return manager;
+                        }
+                    }
+                    catch (CoreException e) {
+                        // Then it cannot be loaded and something went really
+                        // wrong. Just printing for log reasons.
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+
+        return NULL_INTERSECTION_MANAGER;
     }
 
     /**
@@ -178,6 +217,15 @@ public class Utils {
     public static Class<? extends Element> getElementClass (String elementId) {
 
         return idToElementClassMap.get(elementId);
+    }
+
+    /**
+     * @return The loaded intersection manager or NullIntersectionManager if
+     *         none was loaded
+     */
+    public static IntersectionManager getIntersectionManager () {
+
+        return manager;
     }
 
     /**
@@ -468,26 +516,5 @@ public class Utils {
             return max;
         }
         return Double.NaN;
-    }
-
-    /**
-     * @return the manager
-     */
-    public static IntersectionManager getIntersectionManager () {
-
-        return intersectionManager;
-    }
-
-    /**
-     * @param manager
-     *            the manager to set
-     */
-    public static void setIntersectionManager (IntersectionManager manager) {
-
-        if (manager == null) {
-            manager = new NullIntersectionManager();
-        }
-        
-        Utils.intersectionManager = manager;
     }
 }

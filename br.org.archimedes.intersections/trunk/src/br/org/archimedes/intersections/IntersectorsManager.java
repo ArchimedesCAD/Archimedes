@@ -4,6 +4,7 @@
 
 package br.org.archimedes.intersections;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,10 +16,12 @@ import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
 
 import br.org.archimedes.Utils;
+import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.interfaces.IntersectionManager;
 import br.org.archimedes.interfaces.Intersector;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.PairOfElementClasses;
+import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Rectangle;
 
 /**
@@ -30,7 +33,7 @@ public class IntersectorsManager implements IntersectionManager {
 
     private final Map<PairOfElementClasses, Intersector> elementsToIntersectorMap;
 
-    private final Intersector nullIntersector;
+    private final static Intersector NULL_INTERSECTOR = new NullIntersector();
 
 
     /**
@@ -39,7 +42,6 @@ public class IntersectorsManager implements IntersectionManager {
     public IntersectorsManager () {
 
         elementsToIntersectorMap = new HashMap<PairOfElementClasses, Intersector>();
-        nullIntersector = new NullIntersector();
 
         IExtensionRegistry registry = Platform.getExtensionRegistry();
         if (registry != null) {
@@ -50,7 +52,7 @@ public class IntersectorsManager implements IntersectionManager {
     private void fillIntersectorVersusElementsMaps (IExtensionRegistry registry) {
 
         IExtensionPoint extensionPoint = registry
-                .getExtensionPoint("br.org.archimedes.elementsIntersector"); //$NON-NLS-1$
+                .getExtensionPoint("br.org.archimedes.intersections.elementsIntersector"); //$NON-NLS-1$
         if (extensionPoint != null) {
             IExtension[] extensions = extensionPoint.getExtensions();
             for (IExtension extension : extensions) {
@@ -102,7 +104,7 @@ public class IntersectorsManager implements IntersectionManager {
 
         PairOfElementClasses pair = new PairOfElementClasses(e1Class, e2Class);
         Intersector intersector = elementsToIntersectorMap.get(pair);
-        return intersector == null ? nullIntersector : intersector;
+        return intersector == null ? NULL_INTERSECTOR : intersector;
     }
 
     /*
@@ -115,5 +117,18 @@ public class IntersectorsManager implements IntersectionManager {
 
         // TODO Auto-generated method stub
         return false;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see br.org.archimedes.interfaces.IntersectionManager#getIntersectionsBetween(br.org.archimedes.model.Element,
+     *      br.org.archimedes.model.Element)
+     */
+    public Collection<Point> getIntersectionsBetween (Element element,
+            Element otherElement) throws NullArgumentException {
+
+        return getIntersectorFor(element, otherElement).getIntersections(
+                element, otherElement);
     }
 }

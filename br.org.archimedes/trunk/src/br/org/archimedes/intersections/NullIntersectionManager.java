@@ -4,9 +4,12 @@
 
 package br.org.archimedes.intersections;
 
+import java.util.Collection;
+import java.util.Collections;
+
 import br.org.archimedes.interfaces.IntersectionManager;
-import br.org.archimedes.interfaces.Intersector;
 import br.org.archimedes.model.Element;
+import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Rectangle;
 
 /**
@@ -15,20 +18,6 @@ import br.org.archimedes.model.Rectangle;
  * @author night
  */
 public class NullIntersectionManager implements IntersectionManager {
-
-    private static final Intersector NULL_INTERSECTOR = new NullIntersector();
-
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.interfaces.IntersectionManager#getIntersectorFor(br.org.archimedes.model.Element,
-     *      br.org.archimedes.model.Element)
-     */
-    public Intersector getIntersectorFor (Element element, Element otherElement) {
-
-        return NULL_INTERSECTOR;
-    }
 
     /*
      * (non-Javadoc)
@@ -39,5 +28,17 @@ public class NullIntersectionManager implements IntersectionManager {
     public boolean intersects (Rectangle rect, Element element) {
 
         return false;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see br.org.archimedes.interfaces.IntersectionManager#getIntersectionsBetween(br.org.archimedes.model.Element,
+     *      br.org.archimedes.model.Element)
+     */
+    public Collection<Point> getIntersectionsBetween (Element element,
+            Element otherElement) {
+
+        return Collections.emptyList();
     }
 }

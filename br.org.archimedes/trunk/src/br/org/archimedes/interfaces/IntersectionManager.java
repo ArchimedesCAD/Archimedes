@@ -4,7 +4,11 @@
 
 package br.org.archimedes.interfaces;
 
+import java.util.Collection;
+
+import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.model.Element;
+import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Rectangle;
 
 /**
@@ -19,10 +23,12 @@ public interface IntersectionManager {
      *            First element
      * @param otherElement
      *            Second element
-     * @return Returns the intersector responsible for finding the intersections
-     *         between the specified elements.
+     * @return Returns the list of intersections between the specified elements.
+     * @throws NullArgumentException
+     *             throw new null
      */
-    Intersector getIntersectorFor (Element element, Element otherElement);
+    Collection<Point> getIntersectionsBetween (Element element,
+            Element otherElement) throws NullArgumentException;
 
     /**
      * @param rect
@@ -31,6 +37,7 @@ public interface IntersectionManager {
      *            The element
      * @return true if the element intersects the rectangle, false otherwise
      */
-    boolean intersects (Rectangle rect, Element element);
+    boolean intersects (Rectangle rect, Element element)
+            throws NullArgumentException;
 
 }

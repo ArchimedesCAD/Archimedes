@@ -2,5 +2,11 @@
 <?eclipse version="3.2"?>
 <plugin>
    <extension-point id="elementsIntersector" name="Elements Intersector" schema="schema/elementsIntersector.exsd"/>
+   <extension
+         id="br.org.archimedes.intersection.default"
+         name="The default intersection finder"
+         point="br.org.archimedes.intersections">
+         <manager class="br.org.archimedes.intersections.IntersectorsManager"/>
+   </extension>
 
 </plugin>
