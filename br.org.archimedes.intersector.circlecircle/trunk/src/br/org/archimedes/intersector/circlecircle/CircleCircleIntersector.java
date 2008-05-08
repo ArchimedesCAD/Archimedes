@@ -7,10 +7,10 @@ import br.org.archimedes.Geometrics;
 import br.org.archimedes.circle.Circle;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
+import br.org.archimedes.interfaces.Intersector;
 import br.org.archimedes.intersector.circleline.CircleLineIntersector;
 import br.org.archimedes.line.Line;
 import br.org.archimedes.model.Element;
-import br.org.archimedes.model.Intersector;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Vector;
 
