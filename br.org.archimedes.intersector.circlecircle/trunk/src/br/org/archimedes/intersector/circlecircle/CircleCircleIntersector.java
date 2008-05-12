@@ -5,14 +5,12 @@ import java.util.Collection;
 
 import br.org.archimedes.Geometrics;
 import br.org.archimedes.circle.Circle;
-import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.interfaces.Intersector;
-import br.org.archimedes.intersector.circleline.CircleLineIntersector;
-import br.org.archimedes.line.Line;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Vector;
+
 
 public class CircleCircleIntersector implements Intersector {
 
@@ -36,6 +34,7 @@ public class CircleCircleIntersector implements Intersector {
 
 			if ((distance <= radius + otherRadius)
 					&& (distance >= Math.abs(radius - otherRadius))) {
+
 				Vector direction = new Vector(circle1.getCenter(), circle2
 						.getCenter());
 				direction = Geometrics.normalize(direction);
@@ -43,24 +42,19 @@ public class CircleCircleIntersector implements Intersector {
 				double otherDistance = (radius * radius)
 						- (otherRadius * otherRadius) + (distance * distance);
 				otherDistance /= 2 * distance;
-
-				direction = direction.multiply(otherDistance);
-				Point inTheMiddle = circle1.getCenter().addVector(direction);
-
+				
+				double h = Math.sqrt(radius*radius - otherDistance*otherDistance);
+				Point inTheMiddle = circle1.getCenter().addVector(direction.multiply(otherDistance));
+				
 				Vector orthogonalVector = direction.getOrthogonalVector();
+
+				Point pa = inTheMiddle.addVector(orthogonalVector.multiply(h));
+				Point pb = inTheMiddle.addVector(orthogonalVector.multiply(-h));
 				
-				Line line = null;
-				try {
-					line = new Line(inTheMiddle.addVector(orthogonalVector
-							.multiply(radius)), inTheMiddle
-							.addVector(orthogonalVector.multiply(-radius)));
-				} catch (InvalidArgumentException e) {
-					e.printStackTrace();
-				}
+				if(!pa.equals(pb))
+					intersections.add(pa);
 				
-				Intersector intersector = new CircleLineIntersector();
-				
-				intersections.addAll(intersector.getIntersections(circle1, line));
+				intersections.add(pb);
 			}
 		}
 
