@@ -496,10 +496,14 @@ public class Arc extends CurvedShape {
     public boolean contains (Point point) throws NullArgumentException {
 
         boolean result = false;
-
+        
+        // Special case where the code below doesn't work!!!!!
+        if(point.equals(initialPoint) || point.equals(endingPoint))
+        	return true;
+        
         double distance = Geometrics.calculateDistance(point, centerPoint);
         double radius = Geometrics.calculateDistance(initialPoint, centerPoint);
-
+        
         if (Math.abs(distance - radius) <= Constant.EPSILON) {
             double intermediateSign = Geometrics.calculateDeterminant(
                     initialPoint, endingPoint, intermediatePoint);
