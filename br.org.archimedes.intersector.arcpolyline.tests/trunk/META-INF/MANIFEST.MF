@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Arc Polyline Intersector Tests Plug-in
+Bundle-SymbolicName: br.org.archimedes.intersector.arcpolyline.tests
+Bundle-Version: 1.0.0
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Require-Bundle: br.org.archimedes;bundle-version="0.52.0",
+ br.org.archimedes.arc;bundle-version="0.52.0",
+ br.org.archimedes.intersector.arcpolyline;bundle-version="1.0.0",
+ br.org.archimedes.polyline;bundle-version="0.52.0",
+ br.org.archimedes.tests;bundle-version="0.50.0",
+ org.junit4
