@@ -3,9 +3,11 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Circlecircle Intersector Plug-in
 Bundle-SymbolicName: br.org.archimedes.intersector.circlecircle;singleton:=true
 Bundle-Version: 1.0.0
-Require-Bundle: br.org.archimedes,
+Require-Bundle: br.org.archimedes.curvedshape,
+ br.org.archimedes,
  br.org.archimedes.circle,
  br.org.archimedes.line,
  br.org.archimedes.intersector.circleline,
  br.org.archimedes.intersections
 Export-Package: br.org.archimedes.intersector.circlecircle
+Bundle-RequiredExecutionEnvironment: J2SE-1.5

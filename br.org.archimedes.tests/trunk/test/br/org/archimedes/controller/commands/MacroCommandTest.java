@@ -6,17 +6,18 @@ package br.org.archimedes.controller.commands;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.easymock.classextension.EasyMock;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import br.org.archimedes.Tester;
-import br.org.archimedes.element.MockElement;
 import br.org.archimedes.exceptions.IllegalActionException;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
@@ -32,7 +33,7 @@ public class MacroCommandTest extends Tester {
 
     private Drawing drawing;
 
-    private MockElement element;
+    private Element element;
 
 
     @Before
@@ -44,12 +45,16 @@ public class MacroCommandTest extends Tester {
 
     private void makeMacroCommand () {
 
-        element = new MockElement();
+        element = EasyMock.createMock(Element.class);
+        EasyMock.expect(element.getPoints()).andReturn(
+                Collections.singletonList(new Point(10, 10)));
+        EasyMock.replay(element);
+        
         List<UndoableCommand> cmds = new ArrayList<UndoableCommand>();
         try {
             cmds.add(new PutOrRemoveElementCommand(element, false));
             Collection<Point> points = new ArrayList<Point>();
-            points.add(element.getPoint());
+            points.addAll(element.getPoints());
             Map<Element, Collection<Point>> pointsToMove = new HashMap<Element, Collection<Point>>();
             pointsToMove.put(element, points);
             Vector vector = new Vector(new Point(10, 43));
@@ -117,7 +122,12 @@ public class MacroCommandTest extends Tester {
         safeDoIt();
 
         assertCollectionContains(drawing.getUnlockedContents(), element);
-        MockElement expected = new MockElement(new Point(10, 43));
+        
+        Element expected = EasyMock.createMock(Element.class);
+        EasyMock.expect(expected.getPoints()).andReturn(
+                Collections.singletonList(new Point(20, 53)));
+        EasyMock.replay(element);
+        
         Assert.assertEquals("The element should have been moved", expected,
                 this.element);
     }
@@ -149,9 +159,14 @@ public class MacroCommandTest extends Tester {
                     + e.getMessage());
         }
 
-        assertCollectionTheSame(drawing.getUnlockedContents(),
-                new ArrayList<Element>());
-        MockElement expected = new MockElement();
+        assertCollectionTheSame(drawing.getUnlockedContents(), Collections
+                .emptyList());
+        
+        Element expected = EasyMock.createMock(Element.class);
+        EasyMock.expect(expected.getPoints()).andReturn(
+                Collections.singletonList(new Point(10, 10)));
+        EasyMock.replay(element);
+        
         Assert.assertEquals("The element should have been moved", expected,
                 this.element);
     }

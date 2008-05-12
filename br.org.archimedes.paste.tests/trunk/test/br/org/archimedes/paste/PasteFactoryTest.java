@@ -3,12 +3,12 @@ package br.org.archimedes.paste;
 
 import java.util.Collection;
 
+import org.easymock.EasyMock;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import br.org.archimedes.controller.Controller;
-import br.org.archimedes.element.MockElement;
 import br.org.archimedes.factories.CommandFactory;
 import br.org.archimedes.factories.FactoryTester;
 import br.org.archimedes.gui.model.Workspace;
@@ -45,13 +45,13 @@ public class PasteFactoryTest extends FactoryTester {
     @Test
     public void testPaste () {
 
-        Element element = new MockElement();
+        Element element = EasyMock.createMock(Element.class);
         Collection<Element> clipboard = Workspace.getInstance().getClipboard();
         clipboard.add(element);
 
         assertBegin(factory, true);
 
-        Element element2 = new MockElement();
+        Element element2 = EasyMock.createMock(Element.class);
         clipboard.clear();
         clipboard.add(element2);
 

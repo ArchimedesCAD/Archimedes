@@ -6,12 +6,12 @@ package br.org.archimedes.scale;
 
 import java.util.HashSet;
 
+import org.easymock.classextension.EasyMock;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import br.org.archimedes.controller.Controller;
-import br.org.archimedes.element.MockElement;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.factories.CommandFactory;
 import br.org.archimedes.factories.FactoryTester;
@@ -39,8 +39,9 @@ public class ScaleFactoryTest extends FactoryTester {
     public void setUp () throws Exception {
 
         Drawing drawing = new Drawing("Teste");
-        Element element1 = new MockElement();
-        Element element2 = new MockElement(new Point(1, 1));
+        Element element1 = EasyMock.createMock(Element.class);
+        // TODO Usar o ponto new Point(1, 1)
+        Element element2 = EasyMock.createMock(Element.class);
         putSafeElementOnDrawing(element1, drawing);
         putSafeElementOnDrawing(element2, drawing);
 

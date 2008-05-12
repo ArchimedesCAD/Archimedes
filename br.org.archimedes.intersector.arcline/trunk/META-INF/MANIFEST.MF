@@ -3,11 +3,12 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Arc Line Intersector Plug-in
 Bundle-SymbolicName: br.org.archimedes.intersector.arcline;singleton:=true
 Bundle-Version: 1.0.0
-Bundle-Localization: plugin
-Require-Bundle: br.org.archimedes.arc,
+Require-Bundle: br.org.archimedes.curvedshape;bundle-version="0.52.0",
+ br.org.archimedes.arc,
  br.org.archimedes.circle,
  br.org.archimedes.intersector.circleline,
  br.org.archimedes.line,
  br.org.archimedes,
  br.org.archimedes.intersections
 Export-Package: br.org.archimedes.intersector.arcline
+Bundle-RequiredExecutionEnvironment: J2SE-1.5

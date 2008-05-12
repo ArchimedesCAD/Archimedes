@@ -3,12 +3,12 @@ package br.org.archimedes.move;
 
 import java.util.HashSet;
 
+import org.easymock.classextension.EasyMock;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import br.org.archimedes.controller.Controller;
-import br.org.archimedes.element.MockElement;
 import br.org.archimedes.factories.CommandFactory;
 import br.org.archimedes.factories.FactoryTester;
 import br.org.archimedes.model.Drawing;
@@ -39,9 +39,9 @@ public class MoveFactoryTest extends FactoryTester {
         controller.deselectAll();
         controller.setActiveDrawing(drawing);
 
-        Element element1 = new MockElement();
+        Element element1 = EasyMock.createMock(Element.class);
         putSafeElementOnDrawing(element1, drawing);
-        Element element2 = new MockElement();
+        Element element2 = EasyMock.createMock(Element.class);
         putSafeElementOnDrawing(element2, drawing);
 
         // Arguments

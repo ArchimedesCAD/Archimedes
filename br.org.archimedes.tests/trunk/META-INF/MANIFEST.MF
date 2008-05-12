@@ -8,6 +8,10 @@ Require-Bundle: br.org.archimedes,
  org.junit,
  org.junit4
 Export-Package: br.org.archimedes,
- br.org.archimedes.element,
- br.org.archimedes.factories
+ br.org.archimedes.factories,
+ org.easymock,
+ org.easymock.classextension
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-ClassPath: .,
+ libs/easymock2.3/easymock.jar,
+ libs/easymockclassextension2.3/easymockclassextension.jar

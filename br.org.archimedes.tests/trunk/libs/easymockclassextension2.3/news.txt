@@ -1,0 +1,32 @@
+New in EasyMock class extension 2.3:
+
+- French documentation
+- Be able to call constructor for partial mocking
+- Mock Objects can now be named
+- Switch to varargs the "mockedMethods" parameter for partial mocking  
+- Version in jar manifest
+- Objenesis 1.1 for Aonix partial support
+- Samples updated to JUnit 4
+- Update to JUnit 4.4
+- Maven pom more complete
+- Abstract methods are mocked by default for partial mocks
+
+New in EasyMock class extension 2.2.2:
+
+- Use cglib cache. Greatly improve performance and reduce used perm space
+- Class instantiation using objenesis for more portability
+- Update to JUnit 4.3.1
+- Possibility to use your own instantiator
+
+New in EasyMock class extension 2.2.1:
+
+- Varargs for record(), replay() and reset()
+
+New in EasyMock class extension 2.1:
+
+- Tests migrated to JUnit 4
+
+New in EasyMock class extension 2 (since 1.2):
+
+- New implementation compatible with easymock 2
+

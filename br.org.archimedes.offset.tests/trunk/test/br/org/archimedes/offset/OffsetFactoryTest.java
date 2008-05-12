@@ -7,6 +7,7 @@ package br.org.archimedes.offset;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.easymock.classextension.EasyMock;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -37,7 +38,8 @@ public class OffsetFactoryTest extends FactoryTester {
         drawing = new Drawing("Teste");
         controller.setActiveDrawing(drawing);
 
-        Element element = new MockOffsetableElement();
+        // TODO Fazer o mock ser offsetable
+        Element element = EasyMock.createMock(Element.class);
         putSafeElementOnDrawing(element, drawing);
 
         selection = new HashSet<Element>();

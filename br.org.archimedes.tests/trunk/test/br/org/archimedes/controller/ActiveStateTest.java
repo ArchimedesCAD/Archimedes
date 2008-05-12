@@ -5,18 +5,12 @@
 
 package br.org.archimedes.controller;
 
-import java.util.Collections;
-import java.util.List;
-
 import junit.framework.TestCase;
-import br.org.archimedes.exceptions.IllegalActionException;
-import br.org.archimedes.exceptions.InvalidParameterException;
-import br.org.archimedes.exceptions.NullArgumentException;
+
+import org.easymock.EasyMock;
+
 import br.org.archimedes.factories.CommandFactory;
-import br.org.archimedes.interfaces.Command;
-import br.org.archimedes.interfaces.Parser;
 import br.org.archimedes.model.Drawing;
-import br.org.archimedes.parser.PointParser;
 
 /**
  * Belongs to package br.org.archimedes.controller.
@@ -41,105 +35,8 @@ public class ActiveStateTest extends TestCase {
 
         super.setUp();
         drawing = new Drawing("hi");
-        state = new InputState() {
-
-            @Override
-            public String cancel () {
-
-                return null;
-            }
-
-            @Override
-            public InputState changedDrawing (Drawing currentDrawing) {
-
-                return null;
-            }
-
-            @Override
-            public InputState getNext () {
-
-                return null;
-            }
-
-            @Override
-            public boolean nextShouldHandle () {
-
-                return false;
-            }
-
-            @Override
-            public String receiveText (String text) {
-
-                return null;
-            }
-
-            @Override
-            protected String setCurrentFactory (CommandFactory factory) {
-
-                return null;
-            }
-
-        };
-        factory = new CommandFactory() {
-
-            private boolean finished = false;
-
-
-            public String begin () {
-
-                finished = false;
-                return null;
-            }
-
-            public String cancel () {
-
-                finished = true;
-                return null;
-            }
-
-            public void drawVisualHelper () {
-
-            }
-
-            public List<Command> getCommands () {
-
-                if ( !finished) {
-                    return null;
-                }
-                Command command = new Command() {
-
-                    public void doIt (Drawing drawing)
-                            throws IllegalActionException,
-                            NullArgumentException {
-
-                    }
-                };
-                return Collections.singletonList(command);
-            }
-
-            public String getName () {
-
-                return "mock";
-            }
-
-            public Parser getNextParser () {
-
-                return new PointParser();
-            }
-
-            public boolean isDone () {
-
-                return finished;
-            }
-
-            public String next (Object parameter)
-                    throws InvalidParameterException {
-
-                finished = true;
-                return null;
-            }
-
-        };
+        factory = EasyMock.createMock(CommandFactory.class);
+        state = EasyMock.createMock(IdleState.class);
         activeSate = new ActiveState(state, factory, drawing);
     }
 

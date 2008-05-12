@@ -11,15 +11,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
+import org.easymock.EasyMock;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import br.org.archimedes.MockCommand;
-import br.org.archimedes.UndoableMockCommand;
 import br.org.archimedes.controller.commands.PutOrRemoveElementCommand;
-import br.org.archimedes.element.MockElement;
 import br.org.archimedes.exceptions.IllegalActionException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.interfaces.Command;
@@ -52,7 +50,7 @@ public class UndoTest {
         commands = new ArrayList<Command>();
         Point p1 = new Point(0, 10);
         Point p2 = new Point(60, 48);
-        Element element = new MockElement();
+        Element element = EasyMock.createMock(Element.class);
         Collection<Point> points = new ArrayList<Point>();
         points.add(p1);
         points.add(p2);
@@ -60,8 +58,8 @@ public class UndoTest {
         commands.add(new PutOrRemoveElementCommand(element, false));
         Map<Element, Collection<Point>> pointsToMove = new HashMap<Element, Collection<Point>>();
         pointsToMove.put(element, points);
-        commands.add(new UndoableMockCommand());
-        commands.add(new MockCommand());
+        commands.add(EasyMock.createMock(UndoableCommand.class));
+        commands.add(EasyMock.createMock(Command.class));
         commands.add(new PutOrRemoveElementCommand(element, true));
 
         undo = new UndoCommand();

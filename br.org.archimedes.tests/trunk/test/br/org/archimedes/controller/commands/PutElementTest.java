@@ -6,11 +6,11 @@ package br.org.archimedes.controller.commands;
 
 import junit.framework.TestCase;
 
+import org.easymock.EasyMock;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import br.org.archimedes.element.MockElement;
 import br.org.archimedes.exceptions.IllegalActionException;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
@@ -60,7 +60,7 @@ public class PutElementTest extends TestCase {
 		} catch (NullArgumentException e) {
 		}
 
-		element = new MockElement();
+		element = EasyMock.createMock(Element.class);
 		try {
 			new PutOrRemoveElementCommand(element, false);
 		} catch (NullArgumentException e) {
@@ -75,7 +75,7 @@ public class PutElementTest extends TestCase {
     @Test
 	public void testDoIt() throws InvalidArgumentException {
 
-		Element element = new MockElement();
+		Element element = EasyMock.createMock(Element.class);
 		Command putElement = safeCommand(element);
 
 		try {
@@ -144,7 +144,7 @@ public class PutElementTest extends TestCase {
     @Test
 	public void testUndoIt() throws InvalidArgumentException {
 
-		Element element = new MockElement();
+		Element element = EasyMock.createMock(Element.class);
 		UndoableCommand putElement = safeCommand(element);
 
 		try {

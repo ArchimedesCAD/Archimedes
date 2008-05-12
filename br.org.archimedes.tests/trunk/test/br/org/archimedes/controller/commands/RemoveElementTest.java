@@ -4,13 +4,13 @@
 
 package br.org.archimedes.controller.commands;
 
+import org.easymock.EasyMock;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import br.org.archimedes.Tester;
-import br.org.archimedes.element.MockElement;
 import br.org.archimedes.exceptions.IllegalActionException;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
@@ -61,7 +61,7 @@ public class RemoveElementTest extends Tester {
         }
         catch (NullArgumentException e) {}
 
-        element = new MockElement();
+        element = EasyMock.createMock(Element.class);
         try {
             new PutOrRemoveElementCommand(element, true);
         }
@@ -77,7 +77,7 @@ public class RemoveElementTest extends Tester {
     @Test
     public void testDoIt () throws InvalidArgumentException {
 
-        Element element = new MockElement();
+        Element element = EasyMock.createMock(Element.class);
         Command removeElement = safeCommand(element);
 
         try {
@@ -159,7 +159,7 @@ public class RemoveElementTest extends Tester {
     @Test
     public void testUndoIt () throws InvalidArgumentException {
 
-        Element element = new MockElement();
+        Element element = EasyMock.createMock(Element.class);
         UndoableCommand removeElement = safeCommand(element);
         putSafeElementOnDrawing(element, drawing);
 

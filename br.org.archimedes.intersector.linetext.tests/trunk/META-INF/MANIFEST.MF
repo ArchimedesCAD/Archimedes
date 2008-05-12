@@ -7,4 +7,6 @@ Require-Bundle: br.org.archimedes.line,
  br.org.archimedes.text,
  br.org.archimedes,
  br.org.archimedes.tests,
- br.org.archimedes.intersector.linetext
+ br.org.archimedes.intersector.linetext,
+ org.junit4
+Bundle-RequiredExecutionEnvironment: J2SE-1.5

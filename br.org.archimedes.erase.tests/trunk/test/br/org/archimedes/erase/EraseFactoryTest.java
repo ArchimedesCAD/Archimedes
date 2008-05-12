@@ -4,18 +4,17 @@ package br.org.archimedes.erase;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.easymock.EasyMock;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import br.org.archimedes.controller.Controller;
-import br.org.archimedes.element.MockElement;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.factories.CommandFactory;
 import br.org.archimedes.factories.FactoryTester;
 import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Element;
-import br.org.archimedes.model.Point;
 
 public class EraseFactoryTest extends FactoryTester {
 
@@ -43,9 +42,10 @@ public class EraseFactoryTest extends FactoryTester {
     public void testErase () {
 
         // Arguments
-        Element element1 = new MockElement();
+        Element element1 = EasyMock.createMock(Element.class);
         putSafeElementOnDrawing(element1, drawing);
-        Element element2 = new MockElement(new Point(1, 1));
+        // TODO Usar o ponto new Point(1, 1)
+        Element element2 = EasyMock.createMock(Element.class);
         putSafeElementOnDrawing(element2, drawing);
         Set<Element> selection = new HashSet<Element>();
         selection.add(element2);
@@ -70,7 +70,7 @@ public class EraseFactoryTest extends FactoryTester {
 
     public void testCancel () throws InvalidArgumentException {
 
-        Element element = new MockElement();
+        Element element = EasyMock.createMock(Element.class);
         putSafeElementOnDrawing(element, drawing);
 
         assertBegin(factory, false);

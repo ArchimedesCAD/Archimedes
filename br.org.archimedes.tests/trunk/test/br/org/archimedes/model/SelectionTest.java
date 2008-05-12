@@ -7,12 +7,12 @@ package br.org.archimedes.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.easymock.EasyMock;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import br.org.archimedes.Tester;
-import br.org.archimedes.element.MockElement;
 import br.org.archimedes.exceptions.NullArgumentException;
 
 public class SelectionTest extends Tester {
@@ -62,7 +62,7 @@ public class SelectionTest extends Tester {
         Assert.assertTrue("Selection should be empty", selection.isEmpty());
         Assert.assertTrue("Selection should be empty", selectionRect.isEmpty());
 
-        Element element = new MockElement();
+        Element element = EasyMock.createMock(Element.class);
         selection.add(element);
         selectionRect.add(element);
 
@@ -88,8 +88,8 @@ public class SelectionTest extends Tester {
         Assert.assertTrue("Selection should be empty", selectionRect.isEmpty());
 
         Set<Element> elements = new HashSet<Element>();
-        elements.add(new MockElement());
-        elements.add(new MockElement());
+        elements.add(EasyMock.createMock(Element.class));
+        elements.add(EasyMock.createMock(Element.class));
 
         selection.addAll(elements);
         selectionRect.addAll(elements);
@@ -102,13 +102,13 @@ public class SelectionTest extends Tester {
     @Test
     public void testRemove () {
 
-        Element line = new MockElement();
+        Element line = EasyMock.createMock(Element.class);
         Assert.assertFalse("Should not remove", selection.remove(line));
         Assert.assertFalse("Should not remove", selectionRect.remove(line));
 
         Set<Element> elements = new HashSet<Element>();
         elements.add(line);
-        elements.add(new MockElement());
+        elements.add(EasyMock.createMock(Element.class));
 
         selection.addAll(elements);
         selectionRect.addAll(elements);
@@ -155,7 +155,7 @@ public class SelectionTest extends Tester {
         Assert.assertTrue("Selection should be empty", selection.isEmpty());
         Assert.assertTrue("Selection should be empty", selectionRect.isEmpty());
 
-        Element element = new MockElement();
+        Element element = EasyMock.createMock(Element.class);
 
         selection.add(element);
         selectionRect.add(element);
@@ -179,15 +179,15 @@ public class SelectionTest extends Tester {
     public void testRemoveAll () {
 
         Set<Element> elements = new HashSet<Element>();
-        elements.add(new MockElement());
-        elements.add(new MockElement());
+        elements.add(EasyMock.createMock(Element.class));
+        elements.add(EasyMock.createMock(Element.class));
 
         selection.removeAll(elements);
         selectionRect.removeAll(elements);
 
         selection.addAll(elements);
         selectionRect.addAll(elements);
-        Element circle = new MockElement();
+        Element circle = EasyMock.createMock(Element.class);
         selection.add(circle);
         selectionRect.add(circle);
 
@@ -198,7 +198,7 @@ public class SelectionTest extends Tester {
         catch (NullPointerException e) {
             Assert.fail("Should not reach this");
         }
-        elements.add(new MockElement());
+        elements.add(EasyMock.createMock(Element.class));
 
         selection.removeAll(elements);
         selectionRect.removeAll(elements);

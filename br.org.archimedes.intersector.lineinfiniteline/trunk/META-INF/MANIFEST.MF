@@ -7,3 +7,4 @@ Require-Bundle: br.org.archimedes,
  br.org.archimedes.line,
  br.org.archimedes.infiniteline
 Export-Package: br.org.archimedes.intersector.lineinfiniteline
+Bundle-RequiredExecutionEnvironment: J2SE-1.5

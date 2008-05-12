@@ -7,6 +7,7 @@ package br.org.archimedes.model;
 import java.util.Collection;
 import java.util.Set;
 
+import org.easymock.EasyMock;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -14,320 +15,339 @@ import org.junit.Test;
 
 import br.org.archimedes.Constant;
 import br.org.archimedes.Tester;
-import br.org.archimedes.element.MockElement;
 import br.org.archimedes.exceptions.IllegalActionException;
 import br.org.archimedes.exceptions.NullArgumentException;
 
 public class DrawingTest extends Tester {
 
-	Drawing drawing;
+    Drawing drawing;
 
-	@Before
-	public void setUp() {
+    private Element element;
 
-		drawing = new Drawing(null);
-	}
 
-	@After
-	public void tearDown() {
+    @Before
+    public void setUp () {
 
-		drawing = null;
-	}
+        drawing = new Drawing(null);
+        element = EasyMock.createMock(Element.class);
+    }
 
-	@Test
-	public void testInitialState() {
+    @After
+    public void tearDown () {
 
-		Collection<Element> contents = drawing.getUnlockedContents();
-		Assert.assertTrue("The drawing should be empty.", contents.isEmpty());
+        drawing = null;
+    }
 
-		Rectangle boundary = drawing.getBoundary();
-		Assert.assertNull("The boundary should be null.", boundary);
-	}
+    @Test
+    public void testInitialState () {
 
-	@Test
-	public void testPutElement() {
+        Collection<Element> contents = drawing.getUnlockedContents();
+        Assert.assertTrue("The drawing should be empty.", contents.isEmpty());
 
-		Element element = null;
+        Rectangle boundary = drawing.getBoundary();
+        Assert.assertNull("The boundary should be null.", boundary);
+    }
 
-		/* Null element */
-		try {
-			drawing.putElement(element);
-			Assert.fail("Should not accept a null element.");
-		} catch (NullArgumentException e) {
-			/* Should catch this exception */
-			Assert.assertTrue(true);
-		} catch (IllegalActionException e) {
-			e.printStackTrace();
-			Assert.fail("Should not throw this excepion.");
-		}
+    @Test
+    public void testPutElement () {
 
-		/* Simple element */
-		element = new MockElement();
-		try {
-			drawing.putElement(element);
-			Collection<Element> contents = drawing.getUnlockedContents();
-			Assert.assertTrue("The line should be in the drawing!", contents
-					.contains(element));
-		} catch (NullArgumentException e) {
-			e.printStackTrace();
-			Assert.fail("Should not throw this excepion.");
-		} catch (IllegalActionException e) {
-			e.printStackTrace();
-			Assert.fail("Should not throw this excepion.");
-		}
+        /* Null element */
+        try {
+            drawing.putElement(null);
+            Assert.fail("Should not accept a null element.");
+        }
+        catch (NullArgumentException e) {
+            /* Should catch this exception */
+            Assert.assertTrue(true);
+        }
+        catch (IllegalActionException e) {
+            e.printStackTrace();
+            Assert.fail("Should not throw this excepion.");
+        }
 
-		/* Duplicated element */
-		try {
-			drawing.putElement(element);
-			Assert.fail("Should not accept the exact same reference.");
-		} catch (IllegalActionException e) {
-			/* Should catch this exception. */
-			Assert.assertTrue(true);
-		} catch (NullArgumentException e) {
-			e.printStackTrace();
-			Assert.fail("Should not throw this excepion.");
-		}
-	}
+        /* Simple element */
+        try {
+            drawing.putElement(element);
+            Collection<Element> contents = drawing.getUnlockedContents();
+            Assert.assertTrue("The element should be in the drawing!", contents
+                    .contains(element));
+        }
+        catch (NullArgumentException e) {
+            e.printStackTrace();
+            Assert.fail("Should not throw this excepion.");
+        }
+        catch (IllegalActionException e) {
+            e.printStackTrace();
+            Assert.fail("Should not throw this excepion.");
+        }
 
-	@Test
-	public void testRemoveElement() {
+        /* Duplicated element */
+        try {
+            drawing.putElement(element);
+            Assert.fail("Should not accept the exact same reference.");
+        }
+        catch (IllegalActionException e) {
+            /* Should catch this exception. */
+            Assert.assertTrue(true);
+        }
+        catch (NullArgumentException e) {
+            e.printStackTrace();
+            Assert.fail("Should not throw this excepion.");
+        }
+    }
 
-		Element line = new MockElement();
-		Collection<Element> contents = drawing.getUnlockedContents();
+    @Test
+    public void testRemoveElement () {
 
-		// Put a line in there
-		putSafeElementOnDrawing(line, drawing);
+        Element line = EasyMock.createMock(Element.class);
+        Collection<Element> contents = drawing.getUnlockedContents();
 
-		// Remove the line
-		try {
-			drawing.removeElement(line);
-		} catch (NullArgumentException e) {
-			e.printStackTrace();
-			Assert.fail("Should not throw this exception.");
-		} catch (IllegalActionException e) {
-			e.printStackTrace();
-			Assert.fail("Should not throw this exception.");
-		}
+        // Put a line in there
+        putSafeElementOnDrawing(line, drawing);
 
-		// Make sure it's not there
-		Assert.assertFalse("The drawing should not contain this line.",
-				contents.contains(line));
+        // Remove the line
+        try {
+            drawing.removeElement(line);
+        }
+        catch (NullArgumentException e) {
+            e.printStackTrace();
+            Assert.fail("Should not throw this exception.");
+        }
+        catch (IllegalActionException e) {
+            e.printStackTrace();
+            Assert.fail("Should not throw this exception.");
+        }
 
-		// Remove it again
-		try {
-			drawing.removeElement(line);
-			Assert.fail("The line has already been removed.");
-		} catch (IllegalActionException e) {
-			/* Should throw this exception */
-			Assert.assertTrue(true);
-		} catch (NullArgumentException e) {
-			e.printStackTrace();
-			Assert.fail("Should not throw this exception.");
-		}
+        // Make sure it's not there
+        Assert.assertFalse("The drawing should not contain this line.",
+                contents.contains(line));
 
-		// Remove null
-		try {
-			drawing.removeElement(null);
-			Assert.fail("Should not remove null");
-		} catch (NullArgumentException e) {
-			/* Should throw this exception */
-			Assert.assertTrue(true);
-		} catch (IllegalActionException e) {
-			e.printStackTrace();
-			Assert.fail("Should not throw this exception.");
-		}
-	}
+        // Remove it again
+        try {
+            drawing.removeElement(line);
+            Assert.fail("The line has already been removed.");
+        }
+        catch (IllegalActionException e) {
+            /* Should throw this exception */
+            Assert.assertTrue(true);
+        }
+        catch (NullArgumentException e) {
+            e.printStackTrace();
+            Assert.fail("Should not throw this exception.");
+        }
 
-	@Test
-	public void testSelectionIntersection() {
+        // Remove null
+        try {
+            drawing.removeElement(null);
+            Assert.fail("Should not remove null");
+        }
+        catch (NullArgumentException e) {
+            /* Should throw this exception */
+            Assert.assertTrue(true);
+        }
+        catch (IllegalActionException e) {
+            e.printStackTrace();
+            Assert.fail("Should not throw this exception.");
+        }
+    }
 
-		// TODO Arrumar quando tiver interseccao
-		// Element line1 = createSafeLine(0.1, 0.1, 0.9, 0.9);
-		// Element line2 = createSafeLine(0.5, 0.5, 2, 2);
-		Element line1 = null;
-		Element line2 = null;
-		Rectangle rect1 = new Rectangle(0, 0, 1, 1);
-		Rectangle rect2 = new Rectangle(0, 0, -0.5, -0.5);
-		try {
-			putSafeElementOnDrawing(line1, drawing);
-			Set<Element> sel = drawing.getSelectionIntersection(rect1);
-			Assert.assertTrue("The line should be selected", sel
-					.contains(line1));
+    @Test
+    public void testSelectionIntersection () {
 
-			putSafeElementOnDrawing(line2, drawing);
-			sel = drawing.getSelectionIntersection(rect1);
-			Assert.assertTrue("The lines should be selected", sel
-					.contains(line1)
-					&& sel.contains(line2));
+        // TODO Arrumar quando tiver interseccao
+        // Element line1 = createSafeLine(0.1, 0.1, 0.9, 0.9);
+        // Element line2 = createSafeLine(0.5, 0.5, 2, 2);
+        Element line1 = null;
+        Element line2 = null;
+        Rectangle rect1 = new Rectangle(0, 0, 1, 1);
+        Rectangle rect2 = new Rectangle(0, 0, -0.5, -0.5);
+        try {
+            putSafeElementOnDrawing(line1, drawing);
+            Set<Element> sel = drawing.getSelectionIntersection(rect1);
+            Assert.assertTrue("The line should be selected", sel
+                    .contains(line1));
 
-			sel = drawing.getSelectionIntersection(rect2);
-			Assert.assertTrue("The lines should not be selected",
-					sel.size() == 0);
-		} catch (NullArgumentException e) {
-			e.printStackTrace();
-			Assert.fail("Should not throw this exception.");
-		}
+            putSafeElementOnDrawing(line2, drawing);
+            sel = drawing.getSelectionIntersection(rect1);
+            Assert.assertTrue("The lines should be selected", sel
+                    .contains(line1)
+                    && sel.contains(line2));
 
-		try {
-			drawing.getSelectionIntersection(null);
-			Assert.fail("Should not accept null rectangle.");
-		} catch (NullArgumentException e) {
-			/* Should throw this exception */
-		}
-	}
+            sel = drawing.getSelectionIntersection(rect2);
+            Assert.assertTrue("The lines should not be selected",
+                    sel.size() == 0);
+        }
+        catch (NullArgumentException e) {
+            e.printStackTrace();
+            Assert.fail("Should not throw this exception.");
+        }
 
-	@Test
-	public void testSelectionInside() {
+        try {
+            drawing.getSelectionIntersection(null);
+            Assert.fail("Should not accept null rectangle.");
+        }
+        catch (NullArgumentException e) {
+            /* Should throw this exception */
+        }
+    }
 
-		// TODO arrumar com mock certo
-		Element line1 = null;// createSafeLine(0.1, 0.1, 14.9, 14.9);
-		Element line2 = null;// createSafeLine(15, 0, 15, 15);
-		Element line3 = null;// createSafeLine(1, 2, 2, 3);
-		Element line4 = null;// createSafeLine(1, 0, 1, 16);
-		Element line5 = null;// createSafeLine(16, 16, 17, 17);
-		Element infiniteLine = null;// createSafeInfiniteLine(0, 0, 15, 15);
+    @Test
+    public void testSelectionInside () {
 
-		Rectangle rectSelection = new Rectangle(0, 0, 15, 15);
+        // TODO arrumar com mock certo
+        Element line1 = null;// createSafeLine(0.1, 0.1, 14.9, 14.9);
+        Element line2 = null;// createSafeLine(15, 0, 15, 15);
+        Element line3 = null;// createSafeLine(1, 2, 2, 3);
+        Element line4 = null;// createSafeLine(1, 0, 1, 16);
+        Element line5 = null;// createSafeLine(16, 16, 17, 17);
+        Element infiniteLine = null;// createSafeInfiniteLine(0, 0, 15, 15);
 
-		putSafeElementOnDrawing(line1, drawing);
-		putSafeElementOnDrawing(line2, drawing);
-		putSafeElementOnDrawing(line3, drawing);
-		putSafeElementOnDrawing(line4, drawing);
-		putSafeElementOnDrawing(line5, drawing);
-		putSafeElementOnDrawing(infiniteLine, drawing);
+        Rectangle rectSelection = new Rectangle(0, 0, 15, 15);
 
-		Set<Element> sel = null;
+        putSafeElementOnDrawing(line1, drawing);
+        putSafeElementOnDrawing(line2, drawing);
+        putSafeElementOnDrawing(line3, drawing);
+        putSafeElementOnDrawing(line4, drawing);
+        putSafeElementOnDrawing(line5, drawing);
+        putSafeElementOnDrawing(infiniteLine, drawing);
 
-		try {
-			sel = drawing.getSelectionInside(rectSelection);
-		} catch (NullArgumentException e) {
-			Assert.fail("Should not throw this exception.");
-			e.printStackTrace();
-		}
+        Set<Element> sel = null;
 
-		Assert.assertNotNull("The selection should not be null.", sel);
+        try {
+            sel = drawing.getSelectionInside(rectSelection);
+        }
+        catch (NullArgumentException e) {
+            Assert.fail("Should not throw this exception.");
+            e.printStackTrace();
+        }
 
-		Assert.assertTrue("The line should be selected", sel.contains(line1));
-		Assert.assertTrue("The line should be selected", sel.contains(line3));
-		Assert.assertTrue("The line should not be selected", sel
-				.contains(line2));
+        Assert.assertNotNull("The selection should not be null.", sel);
 
-		Assert.assertFalse("The line should not be selected", sel
-				.contains(line4));
-		Assert.assertFalse("The line should not be selected", sel
-				.contains(line5));
-		Assert.assertFalse("The line should not be selected", sel
-				.contains(infiniteLine));
-	}
+        Assert.assertTrue("The line should be selected", sel.contains(line1));
+        Assert.assertTrue("The line should be selected", sel.contains(line3));
+        Assert.assertTrue("The line should not be selected", sel
+                .contains(line2));
 
-	@Test
-	public void testBoundaryCalculations() {
+        Assert.assertFalse("The line should not be selected", sel
+                .contains(line4));
+        Assert.assertFalse("The line should not be selected", sel
+                .contains(line5));
+        Assert.assertFalse("The line should not be selected", sel
+                .contains(infiniteLine));
+    }
 
-		// TODO Arrumar
-		Element line0 = null;// createSafeLine(10.0, 5.0, 10.0, 10.0);
-		Element line1 = null;// createSafeLine(0.0, 0.0, 15.0, 20.0);
-		Element line2 = null;// createSafeLine( -5.0, -2.0, 16.0, 17.0);
-		Element xLine = null;// createSafeInfiniteLine(0.0, 0.0, 1.0, -1.0);
+    @Test
+    public void testBoundaryCalculations () {
 
-		Rectangle expectedBoundary = null;
-		Rectangle realBoundary = null;
+        // TODO Arrumar
+        Element line0 = null;// createSafeLine(10.0, 5.0, 10.0, 10.0);
+        Element line1 = null;// createSafeLine(0.0, 0.0, 15.0, 20.0);
+        Element line2 = null;// createSafeLine( -5.0, -2.0, 16.0, 17.0);
+        Element xLine = null;// createSafeInfiniteLine(0.0, 0.0, 1.0, -1.0);
 
-		putSafeElementOnDrawing(line0, drawing);
-		expectedBoundary = new Rectangle(10.0, 5.0, 10.0, 10.0);
-		realBoundary = drawing.getBoundary();
-		Assert.assertEquals(expectedBoundary, realBoundary);
+        Rectangle expectedBoundary = null;
+        Rectangle realBoundary = null;
 
-		putSafeElementOnDrawing(line1, drawing);
-		expectedBoundary = new Rectangle(0, 0, 15, 20);
-		realBoundary = drawing.getBoundary();
-		Assert.assertEquals(expectedBoundary, realBoundary);
+        putSafeElementOnDrawing(line0, drawing);
+        expectedBoundary = new Rectangle(10.0, 5.0, 10.0, 10.0);
+        realBoundary = drawing.getBoundary();
+        Assert.assertEquals(expectedBoundary, realBoundary);
 
-		putSafeElementOnDrawing(line2, drawing);
-		expectedBoundary = new Rectangle(-5, -2, 16, 20);
-		realBoundary = drawing.getBoundary();
-		Assert.assertEquals(expectedBoundary, realBoundary);
+        putSafeElementOnDrawing(line1, drawing);
+        expectedBoundary = new Rectangle(0, 0, 15, 20);
+        realBoundary = drawing.getBoundary();
+        Assert.assertEquals(expectedBoundary, realBoundary);
 
-		putSafeElementOnDrawing(xLine, drawing);
-		realBoundary = drawing.getBoundary();
-		Assert.assertEquals(expectedBoundary, realBoundary);
+        putSafeElementOnDrawing(line2, drawing);
+        expectedBoundary = new Rectangle( -5, -2, 16, 20);
+        realBoundary = drawing.getBoundary();
+        Assert.assertEquals(expectedBoundary, realBoundary);
 
-		removeSafeElement(line1);
-		expectedBoundary = new Rectangle(-5, -2, 16, 17);
-		realBoundary = drawing.getBoundary();
-		Assert.assertEquals(expectedBoundary, realBoundary);
-	}
+        putSafeElementOnDrawing(xLine, drawing);
+        realBoundary = drawing.getBoundary();
+        Assert.assertEquals(expectedBoundary, realBoundary);
 
-	@Test
-	public void testUndo() {
+        removeSafeElement(line1);
+        expectedBoundary = new Rectangle( -5, -2, 16, 17);
+        realBoundary = drawing.getBoundary();
+        Assert.assertEquals(expectedBoundary, realBoundary);
+    }
 
-		// TODO Refazer
-	}
+    @Test
+    public void testUndo () {
 
-	@Test
-	public void testSetCurrentLayer() {
+        // TODO Refazer
+    }
 
-		Layer layer = new Layer(Constant.RED, "layerTest",
-				LineStyle.CONTINUOUS, 2);
-		Layer otherLayer = drawing.getCurrentLayer();
-		drawing.addLayer(layer);
+    @Test
+    public void testSetCurrentLayer () {
 
-		try {
-			drawing.setCurrentLayer(1);
-		} catch (IllegalActionException e) {
-			Assert.fail("Should not throw any exception.");
-		}
-		Assert.assertEquals(layer, drawing.getCurrentLayer());
-		
-		otherLayer.setLocked(true);
-		try {
-			drawing.setCurrentLayer(0);
-			Assert.fail("Should throw IllegalActionException.");
-		} catch (IllegalActionException e) {
-			// Expected behaviour
-		}
-		Assert.assertEquals(layer, drawing.getCurrentLayer());
-	}
+        Layer layer = new Layer(Constant.RED, "layerTest",
+                LineStyle.CONTINUOUS, 2);
+        Layer otherLayer = drawing.getCurrentLayer();
+        drawing.addLayer(layer);
 
-	// private void addCommand (Command newCommand) {
-	//
-	// try {
-	// drawing.setLastCommand(newCommand.toExecuted());
-	// }
-	// catch (NonReversibleException e) {
-	// Assert.fail("Should not throw this exception " + e.toString());
-	// }
-	// if (newCommand.isRevertable()) {
-	// Assert.assertFalse("The history shouldn't be empty.",
-	// drawing.getHistory()
-	// .isEmpty());
-	// Assert.assertTrue("The last command in history is wrong.", drawing
-	// .getHistory().peek().equals(newCommand));
-	// }
-	// else {
-	// Assert.assertFalse("The last command in history is wrong.", drawing
-	// .getHistory().isEmpty()
-	// || drawing.getHistory().peek().equals(newCommand));
-	// }
-	// }
+        try {
+            drawing.setCurrentLayer(1);
+        }
+        catch (IllegalActionException e) {
+            Assert.fail("Should not throw any exception.");
+        }
+        Assert.assertEquals(layer, drawing.getCurrentLayer());
 
-	/**
-	 * Removes an element known to be safe in the drawing. Fails if any
-	 * exception is thrown.
-	 * 
-	 * @param element
-	 *            The element to remove from the drawing.
-	 */
-	private void removeSafeElement(Element element) {
+        otherLayer.setLocked(true);
+        try {
+            drawing.setCurrentLayer(0);
+            Assert.fail("Should throw IllegalActionException.");
+        }
+        catch (IllegalActionException e) {
+            // Expected behaviour
+        }
+        Assert.assertEquals(layer, drawing.getCurrentLayer());
+    }
 
-		try {
-			drawing.removeElement(element);
-		} catch (NullArgumentException e) {
-			e.printStackTrace();
-			Assert.fail("Element was not safe!");
-		} catch (IllegalActionException e) {
-			e.printStackTrace();
-			Assert.fail("Element was not safe!");
-		}
-	}
+    // private void addCommand (Command newCommand) {
+    //
+    // try {
+    // drawing.setLastCommand(newCommand.toExecuted());
+    // }
+    // catch (NonReversibleException e) {
+    // Assert.fail("Should not throw this exception " + e.toString());
+    // }
+    // if (newCommand.isRevertable()) {
+    // Assert.assertFalse("The history shouldn't be empty.",
+    // drawing.getHistory()
+    // .isEmpty());
+    // Assert.assertTrue("The last command in history is wrong.", drawing
+    // .getHistory().peek().equals(newCommand));
+    // }
+    // else {
+    // Assert.assertFalse("The last command in history is wrong.", drawing
+    // .getHistory().isEmpty()
+    // || drawing.getHistory().peek().equals(newCommand));
+    // }
+    // }
+
+    /**
+     * Removes an element known to be safe in the drawing. Fails if any
+     * exception is thrown.
+     * 
+     * @param element
+     *            The element to remove from the drawing.
+     */
+    private void removeSafeElement (Element element) {
+
+        try {
+            drawing.removeElement(element);
+        }
+        catch (NullArgumentException e) {
+            e.printStackTrace();
+            Assert.fail("Element was not safe!");
+        }
+        catch (IllegalActionException e) {
+            e.printStackTrace();
+            Assert.fail("Element was not safe!");
+        }
+    }
 
 }

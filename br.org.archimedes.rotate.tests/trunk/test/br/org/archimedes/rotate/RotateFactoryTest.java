@@ -7,12 +7,12 @@ package br.org.archimedes.rotate;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.easymock.classextension.EasyMock;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import br.org.archimedes.controller.Controller;
-import br.org.archimedes.element.MockElement;
 import br.org.archimedes.factories.CommandFactory;
 import br.org.archimedes.factories.FactoryTester;
 import br.org.archimedes.model.Drawing;
@@ -39,8 +39,8 @@ public class RotateFactoryTest extends FactoryTester {
     @Before
     public void setUp () {
 
-        Element element1 = new MockElement();
-        Element element2 = new MockElement();
+        Element element1 = EasyMock.createMock(Element.class);
+        Element element2 = EasyMock.createMock(Element.class);
         factory = new RotateFactory();
 
         // Arguments

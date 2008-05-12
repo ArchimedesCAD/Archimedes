@@ -3,9 +3,11 @@ Bundle-ManifestVersion: 2
 Bundle-Name: CircleCircle Intersector Tests Plug-in
 Bundle-SymbolicName: br.org.archimedes.intersector.circlecircle.tests
 Bundle-Version: 1.0.0
-Bundle-Localization: plugin
-Require-Bundle: br.org.archimedes,
+Require-Bundle: br.org.archimedes.curvedshape,
+ br.org.archimedes,
  br.org.archimedes.circle,
  br.org.archimedes.intersections,
  br.org.archimedes.intersector.circlecircle,
- br.org.archimedes.tests
+ br.org.archimedes.tests,
+ org.junit4
+Bundle-RequiredExecutionEnvironment: J2SE-1.5

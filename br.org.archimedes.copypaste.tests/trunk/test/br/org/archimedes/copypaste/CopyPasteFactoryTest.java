@@ -3,12 +3,12 @@ package br.org.archimedes.copypaste;
 
 import java.util.HashSet;
 
+import org.easymock.classextension.EasyMock;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import br.org.archimedes.controller.Controller;
-import br.org.archimedes.element.MockElement;
 import br.org.archimedes.factories.CommandFactory;
 import br.org.archimedes.factories.FactoryTester;
 import br.org.archimedes.gui.model.Workspace;
@@ -43,7 +43,7 @@ public class CopyPasteFactoryTest extends FactoryTester {
         controller = Controller.getInstance();
         controller.setActiveDrawing(drawing);
 
-        Element line = new MockElement();
+        Element line = EasyMock.createMock(Element.class);
 
         // Arguments
         point1 = new Point(0, 0);

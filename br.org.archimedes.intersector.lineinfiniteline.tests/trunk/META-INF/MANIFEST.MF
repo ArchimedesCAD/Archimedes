@@ -7,4 +7,6 @@ Require-Bundle: br.org.archimedes.infiniteline,
  br.org.archimedes.line,
  br.org.archimedes,
  br.org.archimedes.tests,
- br.org.archimedes.intersector.lineinfiniteline
+ br.org.archimedes.intersector.lineinfiniteline,
+ org.junit4
+Bundle-RequiredExecutionEnvironment: J2SE-1.5

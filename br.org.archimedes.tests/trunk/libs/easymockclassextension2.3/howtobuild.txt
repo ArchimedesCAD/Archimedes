@@ -1,0 +1,21 @@
+1. Introduction
+---------------------------------------------------------------------------------------------------------
+EasyMock class extension is built with ant. 
+Maven is only used to make the project available in the maven repository (http://www.ibiblio.org/maven2).
+
+I'm personnally using ant 1.7.0 and maven 2.0.7 but lower versions might also work.
+
+
+2. Build a complete release
+---------------------------------------------------------------------------------------------------------
+First create a lib directory in which you should all dependency jars. Check in the pom.xml for list and
+versions. You will also need the latest clover jar with a valid license to be in the lib directory.
+
+If you look in the build.xml, you will see a bunch of, I think, self-explanatory goals. Basically, to
+build a complete release, just call the default one (just type "ant" in a cmd.exe from EasyMock class
+extension root directory.
+
+
+3. Release in maven repository
+---------------------------------------------------------------------------------------------------------
+Call a special ant goal named "maven packaging". The bundle will be created in the project directory
