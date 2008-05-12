@@ -109,4 +109,16 @@ public class InfinitelinePolylineIntersectorTest extends Tester {
 		Collection<Point> real = intersector.getIntersections(testPoly, infiniteLine);
 		assertCollectionTheSame(expected, real);
 	}
+	
+	@Test
+	public void infinitelineContainsPolylineReturnsNoIntersectionPoints() throws NullArgumentException, InvalidArgumentException {
+		List<Point> polyPoints = new ArrayList<Point>();
+		polyPoints.add(new Point(-1.0, -1.0));
+		polyPoints.add(new Point(1.0, 1.0));
+		polyPoints.add(new Point(0.0, 0.0));
+		Polyline testPoly = new Polyline(polyPoints);
+
+		assertCollectionTheSame(Collections.EMPTY_LIST, intersector
+				.getIntersections(testPoly, infiniteLine));
+	}
 }

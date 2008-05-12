@@ -89,6 +89,22 @@ public class LinePolylineIntersectorTest extends Tester {
 	}
 	
 	@Test
+	public void polylineIncludesLineReturnsNoIntersectionPoints() throws InvalidArgumentException, NullArgumentException {
+		Line line = new Line(-0.5, 0.0,	0.5, 0.0);
+		List<Point> list = new ArrayList<Point>();
+		list.add(new Point(-1.0, 0.0));
+		list.add(new Point(1.0, 0.0));
+		Polyline polyline = new Polyline(list);
+
+		Intersector intersector = new LinePolylineIntersector();
+
+		Collection<Point> intersections = intersector.getIntersections(line,
+				polyline);
+
+		assertCollectionTheSame(Collections.EMPTY_LIST, intersections);
+	}
+	
+	@Test
 	public void testLinePolylineIntersectorNullArgument() throws NullArgumentException, InvalidArgumentException{
 		
 		Line line = new Line(0.0, 1.0, 0.0, -1.0);
