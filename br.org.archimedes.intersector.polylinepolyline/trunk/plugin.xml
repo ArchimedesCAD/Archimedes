@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="br.org.archimedes.intersections.elementsIntersector">
+        <elementsIntersector
+        class="br.org.archimedes.intersector.polylinepolyline.PolylinePolylineIntersector"
+        element="br.org.archimedes.polyline"
+        id="br.org.archimedes.polylinepolylineintersector"
+        name="Polyline Polyline Intersector"
+        otherElement="br.org.archimedes.polyline" />
+   </extension>
+
+</plugin>

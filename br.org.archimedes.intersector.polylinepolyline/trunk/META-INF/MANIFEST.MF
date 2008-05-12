@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Polyline Polyline Intersector Plug-in
+Bundle-SymbolicName: br.org.archimedes.intersector.polylinepolyline;singleton:=true
+Bundle-Version: 1.0.0
+Bundle-Vendor: br.org.archimedes
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Require-Bundle: br.org.archimedes;bundle-version="0.52.0",
+ br.org.archimedes.intersections;bundle-version="1.0.0",
+ br.org.archimedes.intersector.linePolyline;bundle-version="1.0.0",
+ br.org.archimedes.line;bundle-version="0.52.0",
+ br.org.archimedes.polyline;bundle-version="0.52.0"
+Export-Package: br.org.archimedes.intersector.polylinepolyline
