@@ -7,7 +7,7 @@
 			id="br.org.archimedes.intersector.arcpolyline"
 			element="br.org.archimedes.arc"
 			otherElement="br.org.archimedes.polyline"
-			class="br.org.archimedes.intersector.arcline.ArcPolylineIntersector"/>
+			class="br.org.archimedes.intersector.arcpolyline.ArcPolylineIntersector"/>
    </extension>
 
 </plugin>
