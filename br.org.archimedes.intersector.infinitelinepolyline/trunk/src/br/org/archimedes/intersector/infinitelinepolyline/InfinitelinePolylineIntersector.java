@@ -1,3 +1,4 @@
+
 package br.org.archimedes.intersector.infinitelinepolyline;
 
 import java.util.ArrayList;
@@ -15,36 +16,36 @@ import br.org.archimedes.polyline.Polyline;
 
 public class InfinitelinePolylineIntersector implements Intersector {
 
-	@Override
-	public Collection<Point> getIntersections(Element element,
-			Element otherElement) throws NullArgumentException {
+    public Collection<Point> getIntersections (Element element,
+            Element otherElement) throws NullArgumentException {
 
-		InfiniteLine infiniteLine;
-		Polyline polyline;
-		
-		if(element == null || otherElement == null)
-			throw new NullArgumentException();
-		
-		if (element.getClass() == Line.class) {
-			infiniteLine = (InfiniteLine) element;
-			polyline = (Polyline) otherElement;
-		} else {
-			infiniteLine = (InfiniteLine) otherElement;
-			polyline = (Polyline) element;
-		}
-		
+        InfiniteLine infiniteLine;
+        Polyline polyline;
 
-		List<Line> lines = polyline.getLines();
-		Collection<Point> intersectionPoints = new ArrayList<Point>();
+        if (element == null || otherElement == null)
+            throw new NullArgumentException();
 
-		Collection<Point> intersection;
+        if (element.getClass() == Line.class) {
+            infiniteLine = (InfiniteLine) element;
+            polyline = (Polyline) otherElement;
+        }
+        else {
+            infiniteLine = (InfiniteLine) otherElement;
+            polyline = (Polyline) element;
+        }
 
-		LineInfiniteLineIntersector lineInfinitelineIntersector = new LineInfiniteLineIntersector();
-		for (Line line : lines) {
-			intersection = lineInfinitelineIntersector.getIntersections(line, infiniteLine);
-			intersectionPoints.addAll(intersection);
-		}
-		return intersectionPoints;
-	}
+        List<Line> lines = polyline.getLines();
+        Collection<Point> intersectionPoints = new ArrayList<Point>();
+
+        Collection<Point> intersection;
+
+        LineInfiniteLineIntersector lineInfinitelineIntersector = new LineInfiniteLineIntersector();
+        for (Line line : lines) {
+            intersection = lineInfinitelineIntersector.getIntersections(line,
+                    infiniteLine);
+            intersectionPoints.addAll(intersection);
+        }
+        return intersectionPoints;
+    }
 
 }

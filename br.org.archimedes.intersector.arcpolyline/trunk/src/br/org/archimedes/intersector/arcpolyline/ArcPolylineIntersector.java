@@ -1,3 +1,4 @@
+
 package br.org.archimedes.intersector.arcpolyline;
 
 import java.util.ArrayList;
@@ -15,34 +16,35 @@ import br.org.archimedes.polyline.Polyline;
 
 public class ArcPolylineIntersector implements Intersector {
 
-	@Override
-	public Collection<Point> getIntersections(Element element,
-			Element otherElement) throws NullArgumentException {
-		Arc baseArc;
-		Polyline polyline;
+    public Collection<Point> getIntersections (Element element,
+            Element otherElement) throws NullArgumentException {
 
-		if (element == null || otherElement == null)
-			throw new NullArgumentException();
+        Arc baseArc;
+        Polyline polyline;
 
-		if (element.getClass() == Arc.class) {
-			baseArc = (Arc) element;
-			polyline = (Polyline) otherElement;
-		} else {
-			baseArc = (Arc) otherElement;
-			polyline = (Polyline) element;
-		}
+        if (element == null || otherElement == null)
+            throw new NullArgumentException();
 
-		List<Line> lines = polyline.getLines();
-		Collection<Point> intersectionPoints = new ArrayList<Point>();
+        if (element.getClass() == Arc.class) {
+            baseArc = (Arc) element;
+            polyline = (Polyline) otherElement;
+        }
+        else {
+            baseArc = (Arc) otherElement;
+            polyline = (Polyline) element;
+        }
 
-		Collection<Point> intersection;
+        List<Line> lines = polyline.getLines();
+        Collection<Point> intersectionPoints = new ArrayList<Point>();
 
-		ArcLineIntersector arcLineIntersector = new ArcLineIntersector();
-		for (Line line : lines) {
-			intersection = arcLineIntersector.getIntersections(line, baseArc);
-			intersectionPoints.addAll(intersection);
-		}
-		return intersectionPoints;
-	}
+        Collection<Point> intersection;
+
+        ArcLineIntersector arcLineIntersector = new ArcLineIntersector();
+        for (Line line : lines) {
+            intersection = arcLineIntersector.getIntersections(line, baseArc);
+            intersectionPoints.addAll(intersection);
+        }
+        return intersectionPoints;
+    }
 
 }

@@ -4,7 +4,7 @@ Bundle-Name: Infiniteline Polyline Intersector Plug-in
 Bundle-SymbolicName: br.org.archimedes.intersector.infinitelinepolyline;singleton:=true
 Bundle-Version: 1.0.0
 Bundle-Vendor: br.org.archimedes
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Require-Bundle: br.org.archimedes;bundle-version="0.52.0",
  br.org.archimedes.infiniteline;bundle-version="0.52.0",
  br.org.archimedes.intersections;bundle-version="1.0.0",

@@ -1,3 +1,4 @@
+
 package br.org.archimedes.intersector.polylinepolyline;
 
 import java.util.ArrayList;
@@ -14,29 +15,29 @@ import br.org.archimedes.polyline.Polyline;
 
 public class PolylinePolylineIntersector implements Intersector {
 
-	@Override
-	public Collection<Point> getIntersections(Element element,
-			Element otherElement) throws NullArgumentException {
-		Polyline polyline1;
-		Polyline polyline2;
-		
-		if(element == null || otherElement == null)
-			throw new NullArgumentException();
-		
-		polyline1 = (Polyline) element;
-		polyline2 = (Polyline) otherElement;
-		
-		List<Line> lines = polyline1.getLines();
-		Collection<Point> intersectionPoints = new ArrayList<Point>();
+    public Collection<Point> getIntersections (Element element,
+            Element otherElement) throws NullArgumentException {
 
-		Collection<Point> intersection;
+        Polyline polyline1;
+        Polyline polyline2;
 
-		LinePolylineIntersector linePolylineIntersector = new LinePolylineIntersector();
-		for (Line line : lines) {
-			intersection = linePolylineIntersector.getIntersections(line, polyline2);
-			intersectionPoints.addAll(intersection);
-		}
-		return intersectionPoints;
-	}
+        if (element == null || otherElement == null)
+            throw new NullArgumentException();
 
+        polyline1 = (Polyline) element;
+        polyline2 = (Polyline) otherElement;
+
+        List<Line> lines = polyline1.getLines();
+        Collection<Point> intersectionPoints = new ArrayList<Point>();
+
+        Collection<Point> intersection;
+
+        LinePolylineIntersector linePolylineIntersector = new LinePolylineIntersector();
+        for (Line line : lines) {
+            intersection = linePolylineIntersector.getIntersections(line,
+                    polyline2);
+            intersectionPoints.addAll(intersection);
+        }
+        return intersectionPoints;
+    }
 }
