@@ -12,9 +12,8 @@ import br.org.archimedes.Tester;
 import br.org.archimedes.circle.Circle;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
-import br.org.archimedes.interfaces.Intersector;
-
 import br.org.archimedes.infiniteline.InfiniteLine;
+import br.org.archimedes.intersections.interfaces.Intersector;
 import br.org.archimedes.model.Point;
 
 public class CircleInfiniteLineIntersectorTests extends Tester {

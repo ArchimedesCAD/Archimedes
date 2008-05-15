@@ -14,11 +14,14 @@ import br.org.archimedes.interfaces.FactoryAction;
  */
 public class NewArcAction extends FactoryAction {
 
+    // The plug-in ID
+    public static final String PLUGIN_ID = "br.org.archimedes.arc"; //$NON-NLS-1$
+
     /**
      * Activates the new Arc Factory
      */
     public NewArcAction () {
 
-        super(Activator.PLUGIN_ID);
+        super(PLUGIN_ID);
     }
 }

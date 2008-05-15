@@ -1,4 +1,5 @@
-package br.org.archimedes.interfaces;
+
+package br.org.archimedes.intersections.interfaces;
 
 import java.util.Collection;
 
@@ -7,8 +8,8 @@ import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
 
 public interface Intersector {
-	
-	/**
+
+    /**
      * Returns the intersection points of two elements.
      * 
      * @param element
@@ -16,9 +17,9 @@ public interface Intersector {
      * @param otherElement
      *            The second element.
      * @return The collection of points of intersection.
-	 * @throws NullArgumentException If element or otherElement is null
+     * @throws NullArgumentException
+     *             If element or otherElement is null
      */
-	
-	public Collection<Point> getIntersections(Element element, Element otherElement) throws NullArgumentException;
-	
+    public Collection<Point> getIntersections (Element element,
+            Element otherElement) throws NullArgumentException;
 }

@@ -112,6 +112,22 @@ public class Rectangle {
 
         return new Point(x + width, y + height);
     }
+    
+    /**
+     * @return The point that is in the lower right corner of the Rectangle.
+     */
+    public Point getLowerRight () {
+
+        return new Point(x + width, y);
+    }
+
+    /**
+     * @return The point that is in the upper left corner of the Rectangle.
+     */
+    public Point getUpperLeft () {
+
+        return new Point(x, y + height);
+    }
 
     /**
      * @return The width of the rectangle.

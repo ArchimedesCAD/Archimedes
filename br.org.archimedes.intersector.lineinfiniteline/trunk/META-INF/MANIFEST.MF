@@ -5,6 +5,7 @@ Bundle-SymbolicName: br.org.archimedes.intersector.lineinfiniteline;singleton:=t
 Bundle-Version: 1.0.0
 Require-Bundle: br.org.archimedes,
  br.org.archimedes.line,
- br.org.archimedes.infiniteline
+ br.org.archimedes.infiniteline,
+ br.org.archimedes.intersections
 Export-Package: br.org.archimedes.intersector.lineinfiniteline
 Bundle-RequiredExecutionEnvironment: J2SE-1.5

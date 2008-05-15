@@ -5,9 +5,10 @@ Bundle-SymbolicName: br.org.archimedes.intersector.infinitelinepolyline.tests
 Bundle-Version: 1.0.0
 Bundle-Vendor: br.org.archimedes
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Require-Bundle: br.org.archimedes;bundle-version="0.52.0",
- br.org.archimedes.infiniteline;bundle-version="0.52.0",
- br.org.archimedes.intersector.infinitelinepolyline;bundle-version="1.0.0",
- br.org.archimedes.polyline;bundle-version="0.52.0",
- br.org.archimedes.tests;bundle-version="0.50.0",
- org.junit4
+Require-Bundle: br.org.archimedes,
+ br.org.archimedes.infiniteline,
+ br.org.archimedes.intersector.infinitelinepolyline,
+ br.org.archimedes.polyline,
+ br.org.archimedes.tests,
+ org.junit4,
+ br.org.archimedes.intersections

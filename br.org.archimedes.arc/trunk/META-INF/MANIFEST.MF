@@ -3,7 +3,6 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Arc Plug-in
 Bundle-SymbolicName: br.org.archimedes.arc;singleton:=true
 Bundle-Version: 0.52.0
-Bundle-Activator: br.org.archimedes.arc.Activator
 Bundle-Vendor: Tarantulus Corporation
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,

@@ -8,9 +8,10 @@ import java.util.Collection;
 import java.util.Collections;
 
 import br.org.archimedes.exceptions.NullArgumentException;
-import br.org.archimedes.interfaces.Intersector;
+import br.org.archimedes.intersections.interfaces.Intersector;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
+import br.org.archimedes.model.Rectangle;
 
 /**
  * Belongs to package br.org.archimedes.model.
@@ -29,5 +30,17 @@ public class NullIntersector implements Intersector {
             Element otherElement) throws NullArgumentException {
 
         return Collections.emptyList();
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see br.org.archimedes.intersections.interfaces.Intersector#intersects(br.org.archimedes.model.Rectangle,
+     *      br.org.archimedes.model.Element)
+     */
+    public boolean intersects (Rectangle rectangle, Element element)
+            throws NullArgumentException {
+
+        return false;
     }
 }

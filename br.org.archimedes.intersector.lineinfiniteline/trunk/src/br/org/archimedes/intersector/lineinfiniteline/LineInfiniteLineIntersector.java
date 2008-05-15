@@ -7,9 +7,9 @@ import java.util.LinkedList;
 import br.org.archimedes.Constant;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.infiniteline.InfiniteLine;
+import br.org.archimedes.intersections.interfaces.Intersector;
 import br.org.archimedes.line.Line;
 import br.org.archimedes.model.Element;
-import br.org.archimedes.interfaces.Intersector;
 import br.org.archimedes.model.Point;
 
 public class LineInfiniteLineIntersector implements Intersector{

@@ -25,7 +25,7 @@ public interface IntersectionManager {
      *            Second element
      * @return Returns the list of intersections between the specified elements.
      * @throws NullArgumentException
-     *             throw new null
+     *             thrown if the element or otherElement are null
      */
     Collection<Point> getIntersectionsBetween (Element element,
             Element otherElement) throws NullArgumentException;
@@ -36,6 +36,8 @@ public interface IntersectionManager {
      * @param element
      *            The element
      * @return true if the element intersects the rectangle, false otherwise
+     * @throws NullArgumentException
+     *             thrown if the element or rectangle are null
      */
     boolean intersects (Rectangle rect, Element element)
             throws NullArgumentException;

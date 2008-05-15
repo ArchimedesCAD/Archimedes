@@ -7,7 +7,7 @@ package br.org.archimedes.arc;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 import br.org.archimedes.Constant;
@@ -312,23 +312,6 @@ public class Arc extends CurvedShape {
     /*
      * (non-Javadoc)
      * 
-     * @see com.tarantulus.archimedes.model.Element#getIntersection(com.tarantulus.archimedes.model.Element)
-     */
-    @SuppressWarnings("unchecked")//$NON-NLS-1$
-    public Collection<Point> getIntersection (Element element)
-            throws NullArgumentException {
-
-        if (element == null) {
-            throw new NullArgumentException();
-        }
-
-        // TODO Implementar a interseccao
-        return Collections.EMPTY_LIST;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
      * @see com.tarantulus.archimedes.model.Element#getBoundaryRectangle()
      */
     public Rectangle getBoundaryRectangle () {
@@ -371,42 +354,24 @@ public class Arc extends CurvedShape {
         Collection<ReferencePoint> references = new ArrayList<ReferencePoint>();
         List<Point> allPoints = getPoints();
         if (area != null) {
-            if (initialPoint.isInside(area)) {
-                try {
+            try {
+                if (initialPoint.isInside(area)) {
                     references.add(new SquarePoint(initialPoint, initialPoint));
                 }
-                catch (NullArgumentException e) {
-                    // Should never reach this block
-                    e.printStackTrace();
-                }
-            }
-            if (endingPoint.isInside(area)) {
-                try {
+                if (endingPoint.isInside(area)) {
                     references.add(new SquarePoint(endingPoint, endingPoint));
                 }
-                catch (NullArgumentException e) {
-                    // Should never reach this block
-                    e.printStackTrace();
-                }
-            }
-            if (centerPoint.isInside(area)) {
-                try {
+                if (centerPoint.isInside(area)) {
                     references.add(new CirclePoint(centerPoint, allPoints));
                 }
-                catch (NullArgumentException e) {
-                    // Should never reach this block
-                    e.printStackTrace();
-                }
-            }
-            if (intermediatePoint.isInside(area)) {
-                try {
+                if (intermediatePoint.isInside(area)) {
                     references.add(new TrianglePoint(intermediatePoint,
                             intermediatePoint));
                 }
-                catch (NullArgumentException e) {
-                    // Should never reach this block
-                    e.printStackTrace();
-                }
+            }
+            catch (NullArgumentException e) {
+                // Should never reach this block
+                e.printStackTrace();
             }
         }
 
@@ -496,14 +461,14 @@ public class Arc extends CurvedShape {
     public boolean contains (Point point) throws NullArgumentException {
 
         boolean result = false;
-        
+
         // Special case where the code below doesn't work!!!!!
-        if(point.equals(initialPoint) || point.equals(endingPoint))
-        	return true;
-        
+        if (point.equals(initialPoint) || point.equals(endingPoint))
+            return true;
+
         double distance = Geometrics.calculateDistance(point, centerPoint);
         double radius = Geometrics.calculateDistance(initialPoint, centerPoint);
-        
+
         if (Math.abs(distance - radius) <= Constant.EPSILON) {
             double intermediateSign = Geometrics.calculateDeterminant(
                     initialPoint, endingPoint, intermediatePoint);
@@ -674,7 +639,7 @@ public class Arc extends CurvedShape {
     @Override
     public List<Point> getPoints () {
 
-        List<Point> points = new ArrayList<Point>();
+        List<Point> points = new LinkedList<Point>();
         points.add(initialPoint);
         points.add(endingPoint);
         points.add(intermediatePoint);
@@ -714,20 +679,23 @@ public class Arc extends CurvedShape {
     }
 
     /**
-     * Este m�todo foi reescrito pois, apesar de o mirror ter sido feito, o arco ainda guardava
-     * as refer�ncias inalteradas para o ending point e initialPoint. Logo, para que o mirror 
-     * funcionasse corretamente, havia a necessidade de trocar o initialPoint com o endingPoint.
+     * Este m�todo foi reescrito pois, apesar de o mirror ter sido feito, o arco
+     * ainda guardava as refer�ncias inalteradas para o ending point e
+     * initialPoint. Logo, para que o mirror funcionasse corretamente, havia a
+     * necessidade de trocar o initialPoint com o endingPoint.
      * 
      * @author Victor
      * @author Eduardo
      */
-	@Override
-	public void mirror(Point p1, Point p2) throws NullArgumentException, IllegalActionException {
-		super.mirror(p1, p2);
-		
-		Point auxiliarPoint = initialPoint;
-		
-		initialPoint = endingPoint;
-        endingPoint = auxiliarPoint;		
-	}    
+    @Override
+    public void mirror (Point p1, Point p2) throws NullArgumentException,
+            IllegalActionException {
+
+        super.mirror(p1, p2);
+
+        Point auxiliarPoint = initialPoint;
+
+        initialPoint = endingPoint;
+        endingPoint = auxiliarPoint;
+    }
 }

@@ -6,6 +6,7 @@ package br.org.archimedes.intersections;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
 import org.eclipse.core.runtime.CoreException;
@@ -16,9 +17,11 @@ import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
 
 import br.org.archimedes.Utils;
+import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.interfaces.IntersectionManager;
-import br.org.archimedes.interfaces.Intersector;
+import br.org.archimedes.intersections.interfaces.Intersector;
+import br.org.archimedes.line.Line;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.PairOfElementClasses;
 import br.org.archimedes.model.Point;
@@ -97,7 +100,7 @@ public class IntersectorsManager implements IntersectionManager {
 
     }
 
-    public Intersector getIntersectorFor (Element element, Element otherElement) {
+    private Intersector getIntersectorFor (Element element, Element otherElement) {
 
         Class<? extends Element> e1Class = element.getClass();
         Class<? extends Element> e2Class = otherElement.getClass();
@@ -113,10 +116,53 @@ public class IntersectorsManager implements IntersectionManager {
      * @see br.org.archimedes.interfaces.IntersectionManager#intersects(br.org.archimedes.model.Rectangle,
      *      br.org.archimedes.model.Element)
      */
-    public boolean intersects (Rectangle rect, Element element) {
+    public boolean intersects (Rectangle rect, Element element)
+            throws NullArgumentException {
 
-        // TODO Auto-generated method stub
-        return false;
+        if (rect == null) {
+            throw new NullArgumentException();
+        }
+
+        boolean intersects = false;
+
+        Collection<Line> borders = new LinkedList<Line>();
+        addLineIfNotSame(borders, rect.getUpperLeft(), rect.getUpperRight());
+        addLineIfNotSame(borders, rect.getUpperRight(), rect.getLowerRight());
+        addLineIfNotSame(borders, rect.getLowerRight(), rect.getLowerLeft());
+        addLineIfNotSame(borders, rect.getLowerLeft(), rect.getUpperLeft());
+
+        for (Line line : borders) {
+            intersects = intersects
+                    || !getIntersectionsBetween(element, line).isEmpty();
+        }
+
+        return intersects;
+    }
+
+    /**
+     * @param borders
+     *            The collection to add the line
+     * @param initial
+     *            The initial point
+     * @param ending
+     *            The ending point
+     */
+    private void addLineIfNotSame (Collection<Line> borders, Point initial,
+            Point ending) {
+
+        try {
+            if ( !initial.equals(ending)) {
+                borders.add(new Line(initial, ending));
+            }
+        }
+        catch (NullArgumentException e) {
+            // Should not happen since this should be used safely
+            e.printStackTrace();
+        }
+        catch (InvalidArgumentException e) {
+            // Should not happen since this should be used safely
+            e.printStackTrace();
+        }
     }
 
     /*
