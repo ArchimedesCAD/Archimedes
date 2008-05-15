@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Arc Infiniteline Intersector Tests Plug-in
+Bundle-SymbolicName: br.org.archimedes.intersector.arcinfiniteline.tests
+Bundle-Version: 0.54.0
+Bundle-Vendor: br.org.archimedes
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Require-Bundle: br.org.archimedes;bundle-version="0.52.0",
+ br.org.archimedes.intersector.arcinfinitline;bundle-version="1.0.0",
+ br.org.archimedes.tests;bundle-version="0.50.0",
+ br.org.archimedes.arc;bundle-version="0.52.0",
+ br.org.archimedes.infiniteline;bundle-version="0.52.0",
+ br.org.archimedes.intersections;bundle-version="1.0.0",
+ org.junit4,
+ br.org.archimedes.curvedshape;bundle-version="0.52.0"
