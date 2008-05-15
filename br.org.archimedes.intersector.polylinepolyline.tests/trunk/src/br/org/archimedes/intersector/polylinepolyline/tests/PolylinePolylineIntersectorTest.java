@@ -107,8 +107,8 @@ public class PolylinePolylineIntersectorTest extends Tester {
 	public void polylineContainsPolylineReturnsNoIntersectionPoints() throws NullArgumentException, InvalidArgumentException {
 		List<Point> polyPoints = new ArrayList<Point>();
 		polyPoints.add(new Point(0.0, 0.0));
-		polyPoints.add(new Point(-1.0, -1.0));
-		polyPoints.add(new Point(1.0, 1.0));
+		polyPoints.add(new Point(-0.5, -0.5));
+		polyPoints.add(new Point(0.5, 0.5));
 		Polyline testPoly = new Polyline(polyPoints);
 
 		assertCollectionTheSame(Collections.EMPTY_LIST, intersector
