@@ -13,6 +13,7 @@ import java.util.TreeSet;
 
 import br.org.archimedes.Constant;
 import br.org.archimedes.Geometrics;
+import br.org.archimedes.Utils;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.InvalidParameterException;
 import br.org.archimedes.exceptions.NullArgumentException;
@@ -298,6 +299,17 @@ public class Polyline extends Element {
             }
         }
 
+        for (Line line : getLines()) {
+        	Collection<Point> intersections;
+			try {
+				intersections = Utils.getIntersectionManager().getIntersectionsBetween(line, this);
+				for (Point intersectionPoint : intersections)
+	        		references.add(new XPoint(intersectionPoint, intersectionPoint));
+			} catch (NullArgumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        }
         return references;
     }
 
