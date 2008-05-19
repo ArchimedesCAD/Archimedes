@@ -6,8 +6,7 @@ Bundle-Version: 0.50.0
 Bundle-Vendor: Tarantulus Corp.
 Require-Bundle: br.org.archimedes,
  org.junit,
- org.junit4,
- org.junit4.source;bundle-version="4.3.1"
+ org.junit4
 Export-Package: br.org.archimedes,
  br.org.archimedes.factories,
  org.easymock,
