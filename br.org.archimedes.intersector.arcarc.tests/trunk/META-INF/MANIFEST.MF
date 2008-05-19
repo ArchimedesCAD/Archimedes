@@ -8,4 +8,6 @@ Require-Bundle: br.org.archimedes;bundle-version="0.52.0",
  br.org.archimedes.arc;bundle-version="0.52.0",
  br.org.archimedes.tests;bundle-version="0.50.0",
  org.junit4,
- br.org.archimedes.curvedshape;bundle-version="0.52.0"
+ br.org.archimedes.curvedshape;bundle-version="0.52.0",
+ br.org.archimedes.intersections,
+ br.org.archimedes.intersector.arcarc

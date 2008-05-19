@@ -7,12 +7,12 @@ import br.org.archimedes.arc.Arc;
 import br.org.archimedes.circle.Circle;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
-import br.org.archimedes.interfaces.Intersector;
+import br.org.archimedes.intersections.interfaces.Intersector;
 import br.org.archimedes.intersector.circlecircle.CircleCircleIntersector;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
 
-public class ArcCircleIntersector implements Intersector{
+public class ArcCircleIntersector implements Intersector {
 
 	public Collection<Point> getIntersections(Element element,
 			Element otherElement) throws NullArgumentException {
