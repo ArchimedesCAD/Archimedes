@@ -91,6 +91,23 @@ public class ArcArcIntersectorTest extends Tester {
 	}
 	
 	@Test
+	public void arcAlmostCompletesACircleReturnsOneIntersectionPoint() throws NullArgumentException, InvalidArgumentException {
+		Arc arc = new Arc(new Point(0.0, 0.0), new Point(1.0, -1.0), new Point(1.0 + Math.sqrt(3)/2, -0.5));
+		
+		Collection<Point> expected = new ArrayList<Point>();
+		expected.add(new Point(0.0, 0.0));
+		
+		assertCollectionTheSame(expected, intersector.getIntersections(arc, baseArc));
+	}
+	
+	@Test
+	public void arcsCompletesACircleAndBypassAnExtremePointReturnsNoIntersectionPoints() throws NullArgumentException, InvalidArgumentException {
+		Arc arc = new Arc(new Point(0.0, 0.0), new Point(1.0, -1.0), new Point(1.0, 1.0));
+		
+		assertCollectionTheSame(Collections.EMPTY_LIST, intersector.getIntersections(arc, baseArc));
+	}
+	
+	@Test
 	public void arcCrossesArcReturnsTwoIntersectionPoints() throws NullArgumentException, InvalidArgumentException {
 		Arc arc = new Arc(new Point(0.0, 1.0), new Point(1.0, 0.0), new Point(2.0, 1.0));
 		

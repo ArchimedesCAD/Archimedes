@@ -480,6 +480,18 @@ public class Arc extends CurvedShape {
 
         return result;
     }
+    
+    public boolean contains(Arc arc) throws NullArgumentException{
+    	if(arc == null){
+    		throw new NullArgumentException();
+    	}
+    	
+    	if(this.contains(arc.getInitialPoint()) && this.contains(arc.getIntermediatePoint()) && this.contains(arc.getEndingPoint())){
+    		return true;
+    	}
+    	
+    	return false;
+    }
 
     /**
      * Returns true if the arc contains a point determined by x and y.
