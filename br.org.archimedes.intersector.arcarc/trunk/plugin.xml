@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.3"?>
+<plugin>
+   <extension point="br.org.archimedes.intersections.elementsIntersector">
+       <elementsIntersector
+			id="br.org.archimedes.intersector.circleline"
+			element="br.org.archimedes.circle"
+			otherElement="br.org.archimedes.line"
+			class="br.org.archimedes.intersector.circleline.CircleLineIntersector"/>
+   </extension>
+
+</plugin>
