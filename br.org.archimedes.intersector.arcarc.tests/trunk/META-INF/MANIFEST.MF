@@ -4,10 +4,11 @@ Bundle-Name: Arc Arc Intersector Tests Plug-in
 Bundle-SymbolicName: br.org.archimedes.intersector.arcarc.tests
 Bundle-Version: 1.0.0
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Require-Bundle: br.org.archimedes;bundle-version="0.52.0",
- br.org.archimedes.arc;bundle-version="0.52.0",
- br.org.archimedes.tests;bundle-version="0.50.0",
+Require-Bundle: 
+ br.org.archimedes,
+ br.org.archimedes.arc,
+ br.org.archimedes.tests,
  org.junit4,
- br.org.archimedes.curvedshape;bundle-version="0.52.0",
+ br.org.archimedes.curvedshape,
  br.org.archimedes.intersections,
  br.org.archimedes.intersector.arcarc
