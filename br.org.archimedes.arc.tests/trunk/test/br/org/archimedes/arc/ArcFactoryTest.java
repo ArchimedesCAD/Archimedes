@@ -1,6 +1,8 @@
 
 package br.org.archimedes.arc;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -186,7 +188,11 @@ public class ArcFactoryTest extends FactoryTester {
         assertSafeNext(factory, v1, false);
         assertSafeNext(factory, v2, false);
         assertCancel(factory, false);
-        
-        
+    }
+    
+    @Test
+    public void arcFactoryNameIsArc () throws Exception {
+
+        assertEquals("The arc factory name should be 'arc'.", "arc", factory.getName());
     }
 }

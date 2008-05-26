@@ -5,7 +5,6 @@
 
 package br.org.archimedes.arc;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
@@ -351,7 +350,7 @@ public class Arc extends CurvedShape {
      */
     public Collection<ReferencePoint> getReferencePoints (Rectangle area) {
 
-        Collection<ReferencePoint> references = new ArrayList<ReferencePoint>();
+        Collection<ReferencePoint> references = new LinkedList<ReferencePoint>();
         List<Point> allPoints = getPoints();
         if (area != null) {
             try {
