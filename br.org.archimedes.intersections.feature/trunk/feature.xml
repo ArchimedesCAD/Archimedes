@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="br.org.archimedes.intersections.feature"
+      label="Intersections Feature"
+      version="0.54.0">
+
+   <description url="http://www.example.com/description">
+      This feature provides an intersection finder for Archimedes. It handles intersections between two elements on a constant runtime for simple elements and on a linear runtime for composed ones. It has no cache or any performance improvement that might become useful in the future.
+   </description>
+
+   <copyright url="http://www.example.com/copyright">
+      As all code in Archimedes until version 0.54.0, it is licensed under the GPL v2 license and is, therefore, copyleft.
+   </copyright>
+
+   <license url="http://www.example.com/license">
+      All the code is licensed under the GNU Public License version 2.
+   </license>
+
+   <requires>
+      <import feature="br.org.archimedes.feature" version="0.54.0" match="compatible"/>
+   </requires>
+
+   <plugin
+         id="br.org.archimedes.intersections"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="br.org.archimedes.intersector.arccircle"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="br.org.archimedes.intersector.arcinfinitline"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="br.org.archimedes.intersector.arcline"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="br.org.archimedes.intersector.arcpolyline"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="br.org.archimedes.intersector.circlecircle"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="br.org.archimedes.intersector.circleinfiniteline"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="br.org.archimedes.intersector.circleline"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="br.org.archimedes.intersector.circlepolyline"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="br.org.archimedes.intersector.dimensionline"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="br.org.archimedes.intersector.infinitelinepolyline"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="br.org.archimedes.intersector.lineinfiniteline"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="br.org.archimedes.intersector.lineline"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="br.org.archimedes.intersector.linePolyline"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="br.org.archimedes.intersector.linetext"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="br.org.archimedes.intersector.polylinepolyline"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>
