@@ -48,7 +48,7 @@
                value="icons/logo128.gif"/>
          <property
                name="aboutText"
-               value="This is a test about Archimedes using the RCP."/>
+               value="Archimedes - The Open CAD is an initiative to produce a framework for CAD systems. Its main workflow is based on a command line system"/>
          <property
                name="windowImages"
                value="icons/logo16.gif,icons/logo32.gif,icons/logo48.gif,icons/logo64.gif,icons/logo128.gif"/>

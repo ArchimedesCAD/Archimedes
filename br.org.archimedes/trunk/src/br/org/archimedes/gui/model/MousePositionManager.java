@@ -293,11 +293,9 @@ public class MousePositionManager implements Observer {
     private boolean elementIsInsideOrIntersects (Element element,
             Rectangle modelDrawingArea) throws NullArgumentException {
 
-        boolean insideOrIntersects = (element.isInside(modelDrawingArea));
-        insideOrIntersects = insideOrIntersects
-                || manager.intersects(modelDrawingArea, element);
+        boolean inside = (element.isInside(modelDrawingArea));
 
-        return insideOrIntersects;
+        return inside || manager.intersects(modelDrawingArea, element);
     }
 
     /**

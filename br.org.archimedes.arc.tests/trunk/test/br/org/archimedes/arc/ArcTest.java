@@ -319,4 +319,33 @@ public class ArcTest extends Tester {
         assertFalse("An arc should never be parallel to anything", arc1
                 .isParallelTo(arc1Clone));
     }
+
+    @Test
+    public void anArcShouldContainAllPointsThatBelongToItAndNoOther ()
+            throws Exception {
+
+        assertTrue("An arc should contain its own initial point", arc1
+                .contains(arc1.getInitialPoint()));
+        assertTrue("An arc should contain its own ending point", arc1
+                .contains(arc1.getEndingPoint()));
+        assertTrue("An arc should contain its own intermediate point", arc1
+                .contains(arc1.getIntermediatePoint()));
+        Point intermediate = new Point(Math.sqrt(2) / 2.0, Math.sqrt(2) / 2.0);
+        assertTrue("An arc should contain other points in it", arc1
+                .contains(intermediate));
+
+        assertFalse("An arc should not contain external points", arc1
+                .contains(new Point(1, 1)));
+        assertFalse("An arc should not contain internal points", arc1
+                .contains(center));
+
+        Point p = null;
+        try {
+            arc1.contains(p);
+            fail("Should have thrown a NullArgumentException");
+        }
+        catch (NullArgumentException e) {
+            // Expected
+        }
+    }
 }

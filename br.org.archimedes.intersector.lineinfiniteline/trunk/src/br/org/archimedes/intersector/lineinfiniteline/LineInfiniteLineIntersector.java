@@ -1,3 +1,4 @@
+
 package br.org.archimedes.intersector.lineinfiniteline;
 
 import java.util.Collection;
@@ -12,23 +13,36 @@ import br.org.archimedes.line.Line;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
 
-public class LineInfiniteLineIntersector implements Intersector{
-	
-	/*
-	 * If the lines are parallels, including case of the InfiniteLine containing the Line, 
-	 * this method returns a empty LinkedList
-	 *  
-	 * */
-	public Collection<Point> getIntersections(Element element, Element otherElement) throws NullArgumentException {
-		Line line = (Line) element;
-		InfiniteLine infiniteLine = (InfiniteLine) otherElement;
-		
-		if (element == null || otherElement == null)
-			throw new NullArgumentException();
-		
-		Collection<Point> intersectionPoints = new LinkedList<Point>();
-		
-		if (isParallelTo(line, infiniteLine)) {
+public class LineInfiniteLineIntersector implements Intersector {
+
+    /*
+     * If the lines are parallels, including case of the InfiniteLine containing
+     * the Line, this method returns a empty LinkedList
+     */
+    public Collection<Point> getIntersections (Element element,
+            Element otherElement) throws NullArgumentException {
+
+        InfiniteLine infiniteLine;
+        Line line;
+
+        if (element == null || otherElement == null)
+            throw new NullArgumentException();
+
+        if (element.getClass() == Line.class) {
+            infiniteLine = (InfiniteLine) otherElement;
+            line = (Line) element;
+        }
+        else {
+            infiniteLine = (InfiniteLine) element;
+            line = (Line) otherElement;
+        }
+
+        if (element == null || otherElement == null)
+            throw new NullArgumentException();
+
+        Collection<Point> intersectionPoints = new LinkedList<Point>();
+
+        if (isParallelTo(line, infiniteLine)) {
             return intersectionPoints;
         }
 
@@ -47,7 +61,7 @@ public class LineInfiniteLineIntersector implements Intersector{
 
         Point secondInitialPoint = infiniteLine.getInitialPoint();
         Point secondEndingPoint = infiniteLine.getEndingPoint();
-        
+
         a1 = initialPoint.getY() - endingPoint.getY();
         b1 = endingPoint.getX() - initialPoint.getX();
         c1 = (initialPoint.getX() - endingPoint.getX()) * initialPoint.getY()
@@ -89,19 +103,20 @@ public class LineInfiniteLineIntersector implements Intersector{
                 xIntersection = -(c1 / a1) - (b1 / a1) * yIntersection;
             }
             Point intersection = new Point(xIntersection, yIntersection);
-            if (line.contains(intersection) && infiniteLine.contains(intersection))
-            	intersectionPoints.add(intersection);
+            if (line.contains(intersection)
+                    && infiniteLine.contains(intersection))
+                intersectionPoints.add(intersection);
         }
 
         return intersectionPoints;
-	}
-	
+    }
+
     public boolean isParallelTo (Element element1, Element element2) {
 
         boolean isParallel = false;
 
-        Line line = ((Line)element1).getSegment();
-        InfiniteLine infiniteLine = (InfiniteLine)element2;
+        Line line = ((Line) element1).getSegment();
+        InfiniteLine infiniteLine = (InfiniteLine) element2;
 
         if (line != null && infiniteLine != null) {
             double deltay1 = line.getInitialPoint().getY()

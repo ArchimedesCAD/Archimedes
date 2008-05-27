@@ -58,14 +58,14 @@ public class DimensionFactory extends TwoPointFactory {
 
         String result = null;
 
-        if (parameter == null || isDone()) {
+        if ((parameter == null && !onSizeState()) || isDone()) {
             throw new InvalidParameterException();
         }
 
-        if (firstPoint == null || secondPoint == null) {
+        if (onPointsState()) {
             result = super.next(parameter);
         }
-        else if (vector == null && distance == null) {
+        else if (onDistanceState()) {
             try {
                 vector = (Vector) parameter;
             }
@@ -86,6 +86,32 @@ public class DimensionFactory extends TwoPointFactory {
         }
 
         return result;
+    }
+
+    /**
+     * @return true if the factory is waiting for a text size or false otherwise
+     */
+    private boolean onSizeState () {
+
+        return !(onPointsState() || onDistanceState());
+    }
+
+    /**
+     * @return true if the factory is waiting for the first or second points,
+     *         false otherwise
+     */
+    private boolean onPointsState () {
+
+        return firstPoint == null || secondPoint == null;
+    }
+
+    /**
+     * @return true if the factory is waiting for a distance to place the text,
+     *         false otherwise
+     */
+    private boolean onDistanceState () {
+
+        return vector == null && distance == null;
     }
 
     /**
@@ -187,10 +213,10 @@ public class DimensionFactory extends TwoPointFactory {
 
         Parser returnParser = null;
         if (active) {
-            if (firstPoint == null || secondPoint == null) {
+            if (onPointsState()) {
                 returnParser = super.getNextParser();
             }
-            else if (vector == null && distance == null) {
+            else if (onDistanceState()) {
                 Parser p = new VectorParser(secondPoint);
                 returnParser = new DoubleDecoratorParser(p);
             }
@@ -228,10 +254,10 @@ public class DimensionFactory extends TwoPointFactory {
     public void drawVisualHelper () {
 
         if ( !isDone()) {
-            if (firstPoint == null || secondPoint == null) {
+            if (onPointsState()) {
                 super.drawVisualHelper();
             }
-            else if (vector == null && distance == null) {
+            else if (onDistanceState()) {
                 Point mouse = Workspace.getInstance().getMousePosition();
 
                 try {

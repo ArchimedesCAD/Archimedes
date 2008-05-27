@@ -350,4 +350,18 @@ POSSIBILITY OF SUCH DAMAGES.
          version="0.0.0"
          unpack="false"/>
 
+   <plugin
+         id="br.org.archimedes.scale"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="br.org.archimedes.stretch"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
 </feature>

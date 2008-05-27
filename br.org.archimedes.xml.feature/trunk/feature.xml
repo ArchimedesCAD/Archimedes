@@ -253,7 +253,6 @@ POSSIBILITY OF SUCH DAMAGES.
          download-size="0"
          install-size="0"
          version="0.0.0"
-         fragment="false"
          unpack="false"/>
 
    <plugin
@@ -261,7 +260,6 @@ POSSIBILITY OF SUCH DAMAGES.
          download-size="0"
          install-size="0"
          version="0.0.0"
-         fragment="false"
          unpack="false"/>
 
    <plugin
@@ -269,7 +267,6 @@ POSSIBILITY OF SUCH DAMAGES.
          download-size="0"
          install-size="0"
          version="0.0.0"
-         fragment="false"
          unpack="false"/>
 
    <plugin
@@ -284,7 +281,6 @@ POSSIBILITY OF SUCH DAMAGES.
          download-size="0"
          install-size="0"
          version="0.0.0"
-         fragment="false"
          unpack="false"/>
 
    <plugin
@@ -292,7 +288,20 @@ POSSIBILITY OF SUCH DAMAGES.
          download-size="0"
          install-size="0"
          version="0.0.0"
-         fragment="false"
+         unpack="false"/>
+
+   <plugin
+         id="br.org.archimedes.dimension.xml"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="br.org.archimedes.text.xml"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
          unpack="false"/>
 
 </feature>

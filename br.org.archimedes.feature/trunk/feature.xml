@@ -252,25 +252,64 @@ POSSIBILITY OF SUCH DAMAGES.
          version="0.0.0"/>
 
    <requires>
+      <import plugin="org.eclipse.ui" version="3.2.0" match="compatible"/>
+      <import plugin="br.org.archimedes.opengl" version="1.0.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.core.runtime" version="3.1.0" match="compatible"/>
       <import plugin="org.eclipse.update.configurator" version="3.1.0" match="compatible"/>
-      <import plugin="org.apache.xerces"/>
-      <import plugin="org.eclipse.ui" version="3.2.0" match="compatible"/>
+      <import plugin="org.eclipse.core.net" version="1.0.0" match="compatible"/>
+      <import plugin="org.eclipse.osgi"/>
       <import plugin="org.eclipse.update.core" version="3.1.0" match="compatible"/>
       <import plugin="org.eclipse.ui.forms" version="3.2.0" match="compatible"/>
-      <import plugin="org.eclipse.core.runtime" version="3.2.0" match="compatible"/>
-      <import plugin="org.eclipse.swt" version="3.2.0" match="compatible"/>
-      <import plugin="org.eclipse.jface" version="3.2.0" match="compatible"/>
-      <import plugin="org.eclipse.ui.workbench" version="3.2.1" match="compatible"/>
-      <import plugin="com.ibm.icu"/>
-      <import plugin="org.apache.lucene" version="1.4.3" match="compatible"/>
-      <import plugin="org.eclipse.help" version="3.1.0" match="compatible"/>
-      <import plugin="org.eclipse.help.appserver" version="3.1.0" match="compatible"/>
-      <import plugin="org.eclipse.help.base" version="3.1.0" match="compatible"/>
    </requires>
 
    <plugin
          id="br.org.archimedes"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="br.org.archimedes.opengl.macosx"
+         os="macosx"
+         ws="carbon"
+         arch="ppc,x86"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"/>
+
+   <plugin
+         id="br.org.archimedes.opengl"
+         os="linux,macosx,win32"
+         ws="carbon,gtk,win32"
+         arch="ppc,x86"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="br.org.archimedes.opengl.linux.x86"
+         os="linux"
+         ws="gtk"
+         arch="x86"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"/>
+
+   <plugin
+         id="br.org.archimedes.opengl.win32.x86"
+         os="win32"
+         ws="win32"
+         arch="x86"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"/>
+
+   <plugin
+         id="br.org.archimedes.batik"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -291,13 +330,6 @@ POSSIBILITY OF SUCH DAMAGES.
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.ui"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.ui.forms"
          download-size="0"
          install-size="0"
@@ -305,88 +337,7 @@ POSSIBILITY OF SUCH DAMAGES.
          unpack="false"/>
 
    <plugin
-         id="org.apache.lucene"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
-         id="org.eclipse.help.appserver"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.help.base"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.help.ui"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.help.webapp"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
-         id="org.eclipse.tomcat"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
-         id="br.org.archimedes.opengl.macosx"
-         os="macosx"
-         ws="carbon"
-         arch="ppc,x86"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="true"
-         fragment="true"/>
-
-   <plugin
-         id="br.org.archimedes.opengl"
-         os="linux,macosx,win32"
-         ws="carbon,gtk,win32"
-         arch="ppc,x86"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
-         id="br.org.archimedes.opengl.linux.x86"
-         os="linux"
-         ws="gtk"
-         arch="x86"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="true"
-         fragment="true"/>
-
-   <plugin
-         id="br.org.archimedes.opengl.win32.x86"
-         os="win32"
-         ws="win32"
-         arch="x86"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="true"
-         fragment="true"/>
-
-   <plugin
-         id="br.org.archimedes.batik"
+         id="org.eclipse.core.net"
          download-size="0"
          install-size="0"
          version="0.0.0"
