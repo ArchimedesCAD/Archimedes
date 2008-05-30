@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Redo Plug-in
 Bundle-SymbolicName: br.org.archimedes.redo;singleton:=true
-Bundle-Version: 1.2.0
+Bundle-Version: 0.54.0
 Bundle-Activator: br.org.archimedes.redo.Activator
 Bundle-Vendor: Tarantulus Corp.
 Bundle-Localization: plugin

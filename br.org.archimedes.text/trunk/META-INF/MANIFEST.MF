@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Text Plug-in
 Bundle-SymbolicName: br.org.archimedes.text;singleton:=true
-Bundle-Version: 0.52.0
+Bundle-Version: 0.54.0
 Bundle-Activator: br.org.archimedes.text.Activator
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,

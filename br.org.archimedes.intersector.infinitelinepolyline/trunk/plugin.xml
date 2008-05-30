@@ -5,7 +5,7 @@
          point="br.org.archimedes.intersections.elementsIntersector">
          <elementsIntersector
 			id="br.org.archimedes.intersector.infinitelinepolyline"
-			element="br.org.archimedes.infiniteLine"
+			element="br.org.archimedes.infiniteline"
 			otherElement="br.org.archimedes.polyline"
 			class="br.org.archimedes.intersector.infinitelinepolyline.InfinitelinePolylineIntersector"/>
    </extension>

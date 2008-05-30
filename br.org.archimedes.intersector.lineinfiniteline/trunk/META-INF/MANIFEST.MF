@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Line Infinite Line Intersector Plug-in
 Bundle-SymbolicName: br.org.archimedes.intersector.lineinfiniteline;singleton:=true
-Bundle-Version: 1.0.0
+Bundle-Version: 0.54.0
 Require-Bundle: br.org.archimedes,
  br.org.archimedes.line,
  br.org.archimedes.infiniteline,

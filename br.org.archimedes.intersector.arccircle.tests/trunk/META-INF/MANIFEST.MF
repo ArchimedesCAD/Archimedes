@@ -2,12 +2,12 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Arc Circle Intersector Test Plug-in
 Bundle-SymbolicName: br.org.archimedes.intersector.arccircle.tests
-Bundle-Version: 1.0.0
+Bundle-Version: 0.54.0
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Require-Bundle: br.org.archimedes;bundle-version="0.52.0",
- br.org.archimedes.arc;bundle-version="0.52.0",
- br.org.archimedes.circle;bundle-version="0.52.0",
- br.org.archimedes.tests;bundle-version="0.50.0",
- br.org.archimedes.intersector.arccircle;bundle-version="1.0.0",
- br.org.archimedes.curvedshape;bundle-version="0.52.0"
+Require-Bundle: br.org.archimedes,
+ br.org.archimedes.arc,
+ br.org.archimedes.circle,
+ br.org.archimedes.tests,
+ br.org.archimedes.intersector.arccircle,
+ br.org.archimedes.curvedshape
 Import-Package: org.junit

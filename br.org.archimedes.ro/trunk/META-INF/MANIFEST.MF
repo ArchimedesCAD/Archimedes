@@ -4,6 +4,6 @@ Bundle-Name: Romenian Translation
 Bundle-SymbolicName: br.org.archimedes.ro
 Bundle-Version: 0.50.0
 Bundle-Vendor: Cristian Balan
-Fragment-Host: br.org.archimedes;bundle-version="0.50.0"
+Fragment-Host: br.org.archimedes
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5

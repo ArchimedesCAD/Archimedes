@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Infinite Line XML Tests Plug-in
 Bundle-SymbolicName: br.org.archimedes.infiniteline.xml.tests
-Bundle-Version: 1.0.0
+Bundle-Version: 0.54.0
 Bundle-Vendor: Tarantulus Corp.
 Require-Bundle: br.org.archimedes,
  br.org.archimedes.infiniteline,
@@ -10,5 +10,5 @@ Require-Bundle: br.org.archimedes,
  br.org.archimedes.io.xml.tests,
  br.org.archimedes.infiniteLine.xml,
  org.junit4,
- br.org.archimedes.tests;bundle-version="0.50.0"
+ br.org.archimedes.tests
 Bundle-RequiredExecutionEnvironment: J2SE-1.5

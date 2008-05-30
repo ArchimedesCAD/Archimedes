@@ -11,3 +11,4 @@ Require-Bundle: br.org.archimedes,
  br.org.archimedes.circle,
  br.org.archimedes.intersector.arccircle
 Export-Package: br.org.archimedes.intersector.arcarc
+Bundle-RequiredExecutionEnvironment: J2SE-1.5

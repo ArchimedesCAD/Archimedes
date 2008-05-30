@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Dimension Test Plug-in
 Bundle-SymbolicName: br.org.archimedes.dimension.test
-Bundle-Version: 1.0.0
+Bundle-Version: 0.54.0
 Require-Bundle: br.org.archimedes.dimension,
  br.org.archimedes.tests,
  br.org.archimedes,

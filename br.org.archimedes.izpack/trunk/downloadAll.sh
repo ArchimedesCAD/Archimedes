@@ -4,6 +4,11 @@ LS_FILE=ls.txt
 CO_FILE=co.sh
 GEN_FILE=gen_build.sh
 BIN=bin
+
+if [ $1 != "" ]; then
+    TMP_DIR=$1  
+fi
+
 mkdir -p $TMP_DIR/$BIN
 svn list https://incubadora.fapesp.br/svn/archimedes/mainarchimedes/rcparchimedes/ > $TMP_DIR/$LS_FILE
 echo '#!/bin/sh' > $TMP_DIR/$CO_FILE
@@ -17,6 +22,9 @@ echo '#!/bin/sh\nECLIPSE_HOME=/Applications/eclipse\n' > $GEN_FILE
 #chmod +x $GEN_FILE
 #cat $GEN_FILE
 cd ..
-ls -R1 *.java | wc
-
+ls -1R | grep ".java" | grep -v ".java." > $JAVA_LIST
+for i in `cat $JAVA_LIST`
+do
+    cat $i | wc -l
+done
 #rm -Rf $TMP_DIR/

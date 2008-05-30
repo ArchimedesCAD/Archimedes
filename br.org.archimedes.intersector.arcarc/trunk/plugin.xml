@@ -3,10 +3,10 @@
 <plugin>
    <extension point="br.org.archimedes.intersections.elementsIntersector">
        <elementsIntersector
-			id="br.org.archimedes.intersector.circleline"
-			element="br.org.archimedes.circle"
-			otherElement="br.org.archimedes.line"
-			class="br.org.archimedes.intersector.circleline.CircleLineIntersector"/>
+			id="br.org.archimedes.intersector.arcarc"
+			element="br.org.archimedes.arc"
+			otherElement="br.org.archimedes.arc"
+			class="br.org.archimedes.intersector.arcarc.ArcArcIntersector"/>
    </extension>
 
 </plugin>

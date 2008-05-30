@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Erase Plug-in
 Bundle-SymbolicName: br.org.archimedes.erase;singleton:=true
-Bundle-Version: 1.0.0
+Bundle-Version: 0.54.0
 Bundle-Activator: br.org.archimedes.erase.Activator
 Bundle-Vendor: Tarantulus Corporation
 Bundle-Localization: plugin

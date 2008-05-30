@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.2"?>
 <plugin>
-   <extension point="br.org.archimedes.intersections">
+   <extension point="br.org.archimedes.intersections.elementsIntersector">
         <elementsIntersector
 		id="br.org.archimedes.intersector.arcinfiniteline"
 		element="br.org.archimedes.arc"

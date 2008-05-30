@@ -9,7 +9,7 @@ TMP_DIR=tmp
 add_dir_if_absent() {
     dir=$1
     if [ ! -d $dir ]; then
-        echo "\tCriando \'$dir\' em $i"
+        echo "\tCreating '$dir' in $i"
         mkdir -p $dir
         svn add $dir
     fi
@@ -17,12 +17,14 @@ add_dir_if_absent() {
 
 cd $1
 ls -1 | grep 'br.org.archimedes' > $PROJECT_LIST_FILE
+
 for i in `cat $PROJECT_LIST_FILE`
 do
     cd "$i"
-    ls -1 | grep -v branches\|tags\|trunk\|$TMP_FILE > $TMP_FILE
+    ls -1 | grep -v "branches\|tags\|trunk\|$TMP_FILE" > $TMP_FILE
     if [ ${#TMP_FILE} != 0 ]; then
-        echo "$i tem arquivos outros que trunk, tags ou branches"
+        echo "$i has files other than trunk, tags or branches:"
+        echo `cat $TMP_FILE`
         
         add_dir_if_absent trunk
         add_dir_if_absent branches
@@ -30,7 +32,7 @@ do
 
         for j in `cat $TMP_FILE`
         do
-            echo "\t\tMovendo $i/$j para 'trunk'"
+            echo "\t\tMoving $i/$j to 'trunk'"
             svn mv $j trunk || (mv $j trunk && svn add trunk/$j)
         done
 

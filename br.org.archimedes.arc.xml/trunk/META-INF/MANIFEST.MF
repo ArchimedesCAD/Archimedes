@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Arc XML Plugin
 Bundle-SymbolicName: br.org.archimedes.arc.xml;singleton:=true
-Bundle-Version: 0.52.0
+Bundle-Version: 0.54.0
 Export-Package: br.org.archimedes.arc.xml
 Require-Bundle: br.org.archimedes,
  br.org.archimedes.io.xml,

@@ -25,7 +25,7 @@ public class InfinitelinePolylineIntersector implements Intersector {
         if (element == null || otherElement == null)
             throw new NullArgumentException();
 
-        if (element.getClass() == Line.class) {
+        if (element.getClass() == InfiniteLine.class) {
             infiniteLine = (InfiniteLine) element;
             polyline = (Polyline) otherElement;
         }

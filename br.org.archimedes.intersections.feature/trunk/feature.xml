@@ -4,16 +4,22 @@
       label="Intersections Feature"
       version="0.54.0">
 
-   <description url="http://www.example.com/description">
-      This feature provides an intersection finder for Archimedes. It handles intersections between two elements on a constant runtime for simple elements and on a linear runtime for composed ones. It has no cache or any performance improvement that might become useful in the future.
+   <description>
+      This feature provides an intersection finder for Archimedes.
+It handles intersections between two elements on a constant runtime
+for simple elements and on a linear runtime for composed ones.
+It has no cache or any performance improvement that might become
+useful in the future.
    </description>
 
-   <copyright url="http://www.example.com/copyright">
-      As all code in Archimedes until version 0.54.0, it is licensed under the GPL v2 license and is, therefore, copyleft.
+   <copyright>
+      As all code in Archimedes until version 0.54.0, it is licensed
+under the GPL v2 license and is, therefore, copyleft.
    </copyright>
 
-   <license url="http://www.example.com/license">
-      All the code is licensed under the GNU Public License version 2.
+   <license>
+      All the code is licensed under the GNU Public License version
+2.
    </license>
 
    <requires>
@@ -29,13 +35,6 @@
 
    <plugin
          id="br.org.archimedes.intersector.arccircle"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="br.org.archimedes.intersector.arcinfinitline"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -127,6 +126,20 @@
 
    <plugin
          id="br.org.archimedes.intersector.polylinepolyline"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="br.org.archimedes.intersector.arcarc"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="br.org.archimedes.intersector.arcinfiniteline"
          download-size="0"
          install-size="0"
          version="0.0.0"

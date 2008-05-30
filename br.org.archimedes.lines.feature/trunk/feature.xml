@@ -2,19 +2,20 @@
 <feature
       id="br.org.archimedes.lines.feature"
       label="Lines feature"
-      version="0.52.0"
+      version="0.54.0"
       provider-name="Tarantulus Corporation">
 
-   <description url="http://www.example.com/description">
-      [Enter Feature Description here.]
+   <description>
+      This feature is reponsible to contribute with straigh line elements such as line, infinite line, semi line and polyline.
+      It also includes rectangle since it is a polyline.
    </description>
 
-   <copyright url="http://www.example.com/copyright">
-      [Enter Copyright Description here.]
+   <copyright>
+      All this work is copyleft according to the license
    </copyright>
 
-   <license url="http://www.example.com/license">
-      [Enter License Description here.]
+   <license>
+      All archimedes is GPL v.2 licensed.
    </license>
 
    <url>

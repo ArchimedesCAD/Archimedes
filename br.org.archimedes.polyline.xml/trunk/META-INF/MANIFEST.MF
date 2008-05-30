@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Polyline XML Plugin
 Bundle-SymbolicName: br.org.archimedes.polyline.xml;singleton:=true
-Bundle-Version: 0.52.0
+Bundle-Version: 0.54.0
 Export-Package: br.org.archimedes.polyline.xml
 Require-Bundle: br.org.archimedes,
  br.org.archimedes.polyline;resolution:=optional,

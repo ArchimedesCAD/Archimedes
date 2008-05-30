@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Rectangle Plug-in
 Bundle-SymbolicName: br.org.archimedes.polyline.rectangle;singleton:=true
-Bundle-Version: 0.52.0
+Bundle-Version: 0.54.0
 Bundle-Activator: br.org.archimedes.polyline.rectangle.Activator
 Bundle-Vendor: Tarantulus Corp.
 Bundle-Localization: plugin

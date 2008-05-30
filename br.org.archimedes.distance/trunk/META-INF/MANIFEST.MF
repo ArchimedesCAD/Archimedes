@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Distance Plug-in
 Bundle-SymbolicName: br.org.archimedes.distance;singleton:=true
-Bundle-Version: 0.52.0
+Bundle-Version: 0.54.0
 Bundle-Activator: br.org.archimedes.distance.Activator
 Bundle-Vendor: Archimedes Team
 Bundle-Localization: plugin
