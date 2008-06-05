@@ -286,18 +286,6 @@
       <toc file="help/toctasks.xml"/>
    </extension>
    <extension
-         point="org.eclipse.ui.exportWizards">
-      <wizard
-            class="br.org.archimedes.gui.rca.exporter.DrawingExporterTest"
-            id="br.org.archimedes.wizardTest"
-            name="A Test Export Wizard"/>
-            
-      <wizard
-            class="br.org.archimedes.gui.rca.exporter.DrawingExporterTest2"
-            id="br.org.archimedes.wizardTest2"
-            name="Another Test Export Wizard"/>
-   </extension>
-   <extension
          point="org.eclipse.ui.importWizards">
       <wizard
             class="br.org.archimedes.gui.rca.importer.DrawingImporterTest"

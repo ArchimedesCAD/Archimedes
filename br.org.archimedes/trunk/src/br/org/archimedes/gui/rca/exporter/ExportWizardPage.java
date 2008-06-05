@@ -18,8 +18,7 @@ import org.eclipse.jface.wizard.IWizardNode;
 import org.eclipse.jface.wizard.WizardSelectionPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.ui.IWorkbench;
@@ -94,12 +93,7 @@ public class ExportWizardPage extends WizardSelectionPage implements
         T exporter = null;
         if ("wizard".equals(element.getName())) { //$NON-NLS-1$
             try {
-                // TODO retirar este if, s� � usado para nao listar os exporters
-                // do eclipse
-                if (element.getAttribute("class").startsWith( //$NON-NLS-1$
-                        "br.org.archimedes")) { //$NON-NLS-1$
-                    exporter = (T) element.createExecutableExtension("class"); //$NON-NLS-1$
-                }
+                exporter = (T) element.createExecutableExtension("class"); //$NON-NLS-1$
             }
             catch (CoreException e) {
                 System.err
@@ -119,31 +113,41 @@ public class ExportWizardPage extends WizardSelectionPage implements
 
         Font font = parent.getFont();
 
-        // create composite for page.
         Composite outerContainer = new Composite(parent, SWT.NONE);
-        outerContainer.setLayout(new GridLayout());
-        outerContainer.setLayoutData(new GridData(GridData.VERTICAL_ALIGN_FILL
-                | GridData.HORIZONTAL_ALIGN_FILL));
+        FillLayout layout = new FillLayout(SWT.HORIZONTAL);
+        layout.spacing = 5;
+        layout.marginWidth = 3;
+        layout.marginHeight = 3;
+        outerContainer.setLayout(layout);
         outerContainer.setFont(font);
 
-        // Label messageLabel = new Label(outerContainer, SWT.NONE);
-        // messageLabel.setText(this.getName());
-        // messageLabel.setFont(font);
-
         createAndFillTable(outerContainer);
+        createAndFillDescription(outerContainer);
 
         setControl(outerContainer);
     }
 
-    private void createAndFillTable (Composite parent) {
+    /**
+     * @param parent
+     *            The composite that will hold the description
+     */
+    private void createAndFillDescription (Composite parent) {
 
-        // Create a table for the list
-        Table table = new Table(parent, SWT.BORDER);
-        table.setFont(parent.getFont());
+        // TODO Add a description field so that the user
+        // can see what this exporter does.
+    }
+
+    /**
+     * @param parent
+     *            The composite that will hold the table
+     */
+    private void createAndFillTable (Composite parent) {
 
         List<IWizardNode> wizardNodes = getAvailableExportWizards();
 
-        // the list viewer
+        Table table = new Table(parent, SWT.BORDER);
+        table.setFont(parent.getFont());
+
         viewer = new TableViewer(table);
         viewer.setContentProvider(new ExportContentProvider(wizardNodes));
         viewer.addSelectionChangedListener(this);
