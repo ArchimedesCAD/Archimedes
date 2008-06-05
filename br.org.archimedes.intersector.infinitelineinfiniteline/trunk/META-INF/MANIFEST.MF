@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Infinite Line Infinite Line Plug-in
+Bundle-SymbolicName: br.org.archimedes.intersector.infinitelineinfiniteline;singleton:=true
+Bundle-Version: 0.56.0
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Require-Bundle: br.org.archimedes;bundle-version="0.54.0",
+ br.org.archimedes.infiniteline;bundle-version="0.54.0",
+ br.org.archimedes.intersections;bundle-version="0.54.0"
+Export-Package: br.org.archimedes.intersector.infinitelineinfiniteline
