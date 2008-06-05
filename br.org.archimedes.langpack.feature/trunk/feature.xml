@@ -324,48 +324,48 @@ POSSIBILITY OF SUCH DAMAGES.
       <update label="Archimedes Update" url="http://arquimedes.sourceforge.net/update/"/>
    </url>
 
+   <requires>
+      <import plugin="br.org.archimedes"/>
+      <import plugin="br.org.archimedes.line"/>
+   </requires>
+
    <plugin
          id="br.org.archimedes.es"
-         nl=""
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.50.0"
          fragment="true"
          unpack="false"/>
 
    <plugin
          id="br.org.archimedes.pt_BR"
-         nl=""
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.50.0"
          fragment="true"
          unpack="false"/>
 
    <plugin
          id="br.org.archimedes.ro"
-         nl=""
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.50.0"
          fragment="true"
          unpack="false"/>
 
    <plugin
          id="br.org.archimedes.fr"
-         nl=""
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.50.0"
          fragment="true"
          unpack="false"/>
 
    <plugin
          id="br.org.archimedes.line.pt_BR"
-         nl=""
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.50.0"
          fragment="true"
          unpack="false"/>
 

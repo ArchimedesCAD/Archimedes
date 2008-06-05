@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: French Translation Fragment
 Bundle-SymbolicName: br.org.archimedes.fr
-Bundle-Version: 0.54.0
+Bundle-Version: 0.50.0
 Bundle-Vendor: Hugo Corbucci
 Fragment-Host: br.org.archimedes
 Bundle-Localization: plugin

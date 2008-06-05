@@ -326,42 +326,42 @@ POSSIBILITY OF SUCH DAMAGES.
          id="br.org.archimedes.mirror"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.54.0"
          unpack="false"/>
 
    <plugin
          id="br.org.archimedes.move"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.54.0"
          unpack="false"/>
 
    <plugin
          id="br.org.archimedes.offset"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.54.0"
          unpack="false"/>
 
    <plugin
          id="br.org.archimedes.rotate"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.54.0"
          unpack="false"/>
 
    <plugin
          id="br.org.archimedes.scale"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.54.0"
          unpack="false"/>
 
    <plugin
          id="br.org.archimedes.stretch"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.54.0"
          unpack="false"/>
 
 </feature>

@@ -30,41 +30,42 @@
       <import plugin="br.org.archimedes"/>
       <import plugin="org.eclipse.ui"/>
       <import plugin="org.eclipse.core.runtime"/>
+      <import plugin="br.org.archimedes.undo"/>
    </requires>
 
    <plugin
          id="br.org.archimedes.line"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.54.0"
          unpack="false"/>
 
    <plugin
          id="br.org.archimedes.infiniteline"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.54.0"
          unpack="false"/>
 
    <plugin
          id="br.org.archimedes.polyline"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.54.0"
          unpack="false"/>
 
    <plugin
          id="br.org.archimedes.polyline.explode"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.54.0"
          unpack="false"/>
 
    <plugin
          id="br.org.archimedes.polyline.rectangle"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.54.0"
          unpack="false"/>
 
 </feature>

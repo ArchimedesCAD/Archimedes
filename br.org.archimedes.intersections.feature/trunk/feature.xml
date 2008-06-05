@@ -24,125 +24,136 @@ under the GPL v2 license and is, therefore, copyleft.
 
    <requires>
       <import feature="br.org.archimedes.feature" version="0.54.0" match="compatible"/>
+      <import plugin="br.org.archimedes"/>
+      <import plugin="org.eclipse.core.runtime" version="3.4.0" match="greaterOrEqual"/>
+      <import plugin="br.org.archimedes.line"/>
+      <import plugin="br.org.archimedes.circle"/>
+      <import plugin="br.org.archimedes.arc"/>
+      <import plugin="br.org.archimedes.curvedshape"/>
+      <import plugin="br.org.archimedes.polyline"/>
+      <import plugin="br.org.archimedes.infiniteline"/>
+      <import plugin="org.eclipse.ui"/>
+      <import plugin="br.org.archimedes.dimension"/>
+      <import plugin="br.org.archimedes.text"/>
    </requires>
 
    <plugin
          id="br.org.archimedes.intersections"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.54.0"
          unpack="false"/>
 
    <plugin
          id="br.org.archimedes.intersector.arccircle"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.54.0"
          unpack="false"/>
 
    <plugin
          id="br.org.archimedes.intersector.arcline"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.54.0"
          unpack="false"/>
 
    <plugin
          id="br.org.archimedes.intersector.arcpolyline"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.54.0"
          unpack="false"/>
 
    <plugin
          id="br.org.archimedes.intersector.circlecircle"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.54.0"
          unpack="false"/>
 
    <plugin
          id="br.org.archimedes.intersector.circleinfiniteline"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.54.0"
          unpack="false"/>
 
    <plugin
          id="br.org.archimedes.intersector.circleline"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.54.0"
          unpack="false"/>
 
    <plugin
          id="br.org.archimedes.intersector.circlepolyline"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.54.0"
          unpack="false"/>
 
    <plugin
          id="br.org.archimedes.intersector.dimensionline"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.54.0"
          unpack="false"/>
 
    <plugin
          id="br.org.archimedes.intersector.infinitelinepolyline"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.54.0"
          unpack="false"/>
 
    <plugin
          id="br.org.archimedes.intersector.lineinfiniteline"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.54.0"
          unpack="false"/>
 
    <plugin
          id="br.org.archimedes.intersector.lineline"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.54.0"
          unpack="false"/>
 
    <plugin
          id="br.org.archimedes.intersector.linePolyline"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.54.0"
          unpack="false"/>
 
    <plugin
          id="br.org.archimedes.intersector.linetext"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.54.0"
          unpack="false"/>
 
    <plugin
          id="br.org.archimedes.intersector.polylinepolyline"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.54.0"
          unpack="false"/>
 
    <plugin
          id="br.org.archimedes.intersector.arcarc"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.54.0"
          unpack="false"/>
 
    <plugin
          id="br.org.archimedes.intersector.arcinfiniteline"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.54.0"
          unpack="false"/>
 
 </feature>

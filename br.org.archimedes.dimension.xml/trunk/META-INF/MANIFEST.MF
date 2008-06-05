@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Exportador XML para o elemento Dimension
+Bundle-Name: Dimension XML Exporter Fragment
 Bundle-SymbolicName: br.org.archimedes.dimension.xml;singleton:=true
 Bundle-Version: 0.54.0
 Export-Package: br.org.archimedes.dimension.xml

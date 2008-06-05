@@ -116,6 +116,7 @@
 				<include name="libcairo-swt.so" />
 				<include name="about_files/**/*" />
 				<include name="plugins/br.org.archimedes.opengl.*linux*/**/*" />
+				<include name="plugins/org.eclipse.equinox.launcher.*linux*/**/*" />
 				<include name="plugins/org.eclipse.swt.*linux*" />
 				<os name="linux" />
 			</fileset>
@@ -124,6 +125,7 @@
 				<include name="Archimedes.app/**/*" />
 				<include name="plugins/br.org.archimedes.opengl.macosx*/**/*" />
 				<include name="plugins/org.eclipse.swt.*macosx*" />
+				<include name="plugins/org.eclipse.equinox.launcher.*macosx*/**/*" />
 				<os family="osx" />
 			</fileset>
 			<fileset dir="@{deployDir}/win32.win32.x86/Archimedes/"
@@ -131,6 +133,7 @@
 				<include name="Archimedes.exe" />
 				<include name="plugins/br.org.archimedes.opengl.*win32*/**/*" />
 				<include name="plugins/org.eclipse.swt.*win32*" />
+				<include name="plugins/org.eclipse.equinox.launcher.*win32*/**/*" />
 				<os family="windows" />
 			</fileset>
 
@@ -193,6 +196,74 @@
 			</fileset>
 		</pack>
 	
+        <pack name="Intersections" id="intersections" required="no">
+            <description>The intersections feature for Archimedes.</description>
+            <fileset dir="@{deployDir}/win32.win32.x86/Archimedes/"
+                targetdir="$INSTALL_PATH">
+                <include
+                    name="features/br.org.archimedes.intersections.feature*/**/*" />
+                <include name="plugins/br.org.archimedes.intersections*.jar" />
+                <include name="plugins/br.org.archimedes.intersector.*.jar" />
+            </fileset>
+        </pack>
+        
+        <pack name="Workspace Operations" id="workspace_ops" required="no">
+            <description>The Workspace Operations feature for Archimedes.</description>
+            <fileset dir="@{deployDir}/win32.win32.x86/Archimedes/"
+                targetdir="$INSTALL_PATH">
+                <include
+                    name="features/br.org.archimedes.operations.workspace.feature*/**/*" />
+                <include name="plugins/br.org.archimedes.copypaste*.jar" />
+                <include name="plugins/br.org.archimedes.copytoclipboard*.jar" />
+                <include name="plugins/br.org.archimedes.erase*.jar" />
+                <include name="plugins/br.org.archimedes.orto*.jar" />
+                <include name="plugins/br.org.archimedes.pan*.jar" />
+                <include name="plugins/br.org.archimedes.paste*.jar" />
+                <include name="plugins/br.org.archimedes.redo*.jar" />
+                <include name="plugins/br.org.archimedes.snap*.jar" />
+                <include name="plugins/br.org.archimedes.undo*.jar" />
+                <include name="plugins/br.org.archimedes.zoom*.jar" />
+            </fileset>
+        </pack>
+        
+        <pack name="Edit Operations" id="edit_ops" required="no">
+            <description>The Operations to edit elements feature for Archimedes.</description>
+            <fileset dir="@{deployDir}/win32.win32.x86/Archimedes/"
+                targetdir="$INSTALL_PATH">
+                <include
+                    name="features/br.org.archimedes.operations.edit.feature*/**/*" />
+                <include name="plugins/br.org.archimedes.mirror*.jar" />
+                <include name="plugins/br.org.archimedes.move*.jar" />
+                <include name="plugins/br.org.archimedes.offset*.jar" />
+                <include name="plugins/br.org.archimedes.rotate*.jar" />
+                <include name="plugins/br.org.archimedes.scale*.jar" />
+                <include name="plugins/br.org.archimedes.strech*.jar" />
+            </fileset>
+        </pack>
+        
+        <pack name="Calculations" id="calculus" required="no">
+            <description>The features to run some calculations on the drawings for Archimedes.</description>
+            <fileset dir="@{deployDir}/win32.win32.x86/Archimedes/"
+                targetdir="$INSTALL_PATH">
+                <include
+                    name="features/br.org.archimedes.calculus.feature*/**/*" />
+                <include name="plugins/br.org.archimedes.distance*.jar" />
+                <include name="plugins/br.org.archimedes.polyline.area*.jar" />
+            </fileset>
+        </pack>
+        
+        <pack name="Writing" id="writing" required="no">
+            <description>The features to write things on the drawings for Archimedes.</description>
+            <fileset dir="@{deployDir}/win32.win32.x86/Archimedes/"
+                targetdir="$INSTALL_PATH">
+                <include
+                    name="features/br.org.archimedes.communication.feature*/**/*" />
+                <include name="plugins/br.org.archimedes.dimension*.jar" />
+                <include name="plugins/br.org.archimedes.text*.jar" />
+                <include name="plugins/br.org.archimedes.text.edittext*.jar" />
+            </fileset>
+        </pack>
+        
 		<pack name="Texts" id="texts" required="no">
 			<description>The text feature for Archimedes.</description>
 			<fileset dir="@{deployDir}/win32.win32.x86/Archimedes/"

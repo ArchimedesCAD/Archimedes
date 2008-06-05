@@ -253,20 +253,23 @@ POSSIBILITY OF SUCH DAMAGES.
 
    <requires>
       <import plugin="org.eclipse.ui" version="3.2.0" match="compatible"/>
-      <import plugin="br.org.archimedes.opengl" version="1.0.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.core.runtime" version="3.1.0" match="compatible"/>
+      <import plugin="br.org.archimedes.opengl" version="1.0.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.update.configurator" version="3.1.0" match="compatible"/>
       <import plugin="org.eclipse.core.net" version="1.0.0" match="compatible"/>
       <import plugin="org.eclipse.osgi"/>
       <import plugin="org.eclipse.update.core" version="3.1.0" match="compatible"/>
       <import plugin="org.eclipse.ui.forms" version="3.2.0" match="compatible"/>
+      <import plugin="org.eclipse.jface" version="3.2.0" match="compatible"/>
+      <import plugin="com.ibm.icu"/>
+      <import plugin="org.eclipse.core.runtime" version="3.3.0" match="compatible"/>
    </requires>
 
    <plugin
          id="br.org.archimedes"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.54.0"
          unpack="false"/>
 
    <plugin
@@ -276,7 +279,7 @@ POSSIBILITY OF SUCH DAMAGES.
          arch="ppc,x86"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="1.1.4"
          fragment="true"/>
 
    <plugin
@@ -286,7 +289,7 @@ POSSIBILITY OF SUCH DAMAGES.
          arch="ppc,x86"
          download-size="0"
          install-size="0"
-         version="0.0.0"/>
+         version="1.1.4"/>
 
    <plugin
          id="br.org.archimedes.opengl.linux.x86"
@@ -295,7 +298,7 @@ POSSIBILITY OF SUCH DAMAGES.
          arch="x86"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="1.1.4"
          fragment="true"/>
 
    <plugin
@@ -305,14 +308,14 @@ POSSIBILITY OF SUCH DAMAGES.
          arch="x86"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="1.1.4"
          fragment="true"/>
 
    <plugin
          id="br.org.archimedes.batik"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.54.0"
          unpack="false"/>
 
    <plugin

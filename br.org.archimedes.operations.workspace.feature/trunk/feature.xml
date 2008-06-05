@@ -315,74 +315,80 @@ POSSIBILITY OF SUCH DAMAGES.
       <update label="Archimedes Update" url="http://arquimedes.sourceforge.net/update/"/>
    </url>
 
+   <requires>
+      <import plugin="org.eclipse.ui"/>
+      <import plugin="org.eclipse.core.runtime"/>
+      <import plugin="br.org.archimedes"/>
+   </requires>
+
    <plugin
          id="br.org.archimedes.copypaste"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.54.0"
          unpack="false"/>
 
    <plugin
          id="br.org.archimedes.copytoclipboard"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.54.0"
          unpack="false"/>
 
    <plugin
          id="br.org.archimedes.orto"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.54.0"
          unpack="false"/>
 
    <plugin
          id="br.org.archimedes.pan"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.54.0"
          unpack="false"/>
 
    <plugin
          id="br.org.archimedes.paste"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.54.0"
          unpack="false"/>
 
    <plugin
          id="br.org.archimedes.redo"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.54.0"
          unpack="false"/>
 
    <plugin
          id="br.org.archimedes.snap"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.54.0"
          unpack="false"/>
 
    <plugin
          id="br.org.archimedes.undo"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.54.0"
          unpack="false"/>
 
    <plugin
          id="br.org.archimedes.zoom"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.54.0"
          unpack="false"/>
 
    <plugin
          id="br.org.archimedes.erase"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.54.0"
          unpack="false"/>
 
 </feature>

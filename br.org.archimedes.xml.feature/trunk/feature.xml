@@ -246,62 +246,63 @@ POSSIBILITY OF SUCH DAMAGES.
    <requires>
       <import plugin="br.org.archimedes"/>
       <import plugin="org.eclipse.core.runtime"/>
+      <import plugin="org.eclipse.ui"/>
    </requires>
 
    <plugin
          id="br.org.archimedes.arc.xml"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.54.0"
          unpack="false"/>
 
    <plugin
          id="br.org.archimedes.circle.xml"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.54.0"
          unpack="false"/>
 
    <plugin
          id="br.org.archimedes.infiniteLine.xml"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.54.0"
          unpack="false"/>
 
    <plugin
          id="br.org.archimedes.io.xml"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.54.0"
          unpack="false"/>
 
    <plugin
          id="br.org.archimedes.line.xml"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.54.0"
          unpack="false"/>
 
    <plugin
          id="br.org.archimedes.polyline.xml"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.54.0"
          unpack="false"/>
 
    <plugin
          id="br.org.archimedes.dimension.xml"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.54.0"
          unpack="false"/>
 
    <plugin
          id="br.org.archimedes.text.xml"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.54.0"
          unpack="false"/>
 
 </feature>
