@@ -9,6 +9,7 @@
    <extension-point id="elementExporter" name="Element Exporter" schema="schema/elementExporter.exsd"/>
    <extension-point id="elementImporter" name="Element Importer" schema="schema/elementImporter.exsd"/>
    <extension-point id="intersections" name="Intersections Manager" schema="schema/intersections.exsd"/>
+   <extension-point id="trims" name="Element Trim" schema="schema/trims.exsd"/>
    
    <extension
          point="org.eclipse.ui.perspectives">
