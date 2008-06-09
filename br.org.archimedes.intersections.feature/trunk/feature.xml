@@ -2,7 +2,7 @@
 <feature
       id="br.org.archimedes.intersections.feature"
       label="Intersections Feature"
-      version="0.56.0">
+      version="0.55.0">
 
    <description>
       This feature provides an intersection finder for Archimedes.
@@ -41,7 +41,7 @@ under the GPL v2 license and is, therefore, copyleft.
          id="br.org.archimedes.intersections"
          download-size="0"
          install-size="0"
-         version="0.54.0"
+         version="0.55.0"
          unpack="false"/>
 
    <plugin
