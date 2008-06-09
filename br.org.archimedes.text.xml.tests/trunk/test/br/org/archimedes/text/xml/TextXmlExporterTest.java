@@ -38,9 +38,10 @@ public class TextXmlExporterTest {
     private String expected = "<text>"
             + "[\\s]*<point[\\s]*x=\"0\\.0\"[\\s]*y=\"0\\.0\"[\\s]*/>"
             + "[\\s]*<size>[\\s]*10\\.0[\\s]*</size>"
-            + "[\\s]*<content>Archimedes!</content>" + "[\\s]*<direction>"
+            + "[\\s]*<content>Archimedes!</content>" 
+            + "[\\s]*<vector>"
             + "[\\s]*<point[\\s]*x=\"" + doublePattern
-            + "\"[\\s]*y=\"1\\.0\"[\\s]*/>" + "[\\s]*</direction>"
+            + "\"[\\s]*y=\"10\\.0\"[\\s]*/>" + "[\\s]*</vector>"
             + "[\\s]*</text>[\\s]*";
 
 
