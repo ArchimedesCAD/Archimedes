@@ -156,4 +156,11 @@ under the GPL v2 license and is, therefore, copyleft.
          version="0.54.0"
          unpack="false"/>
 
+   <plugin
+         id="br.org.archimedes.intersector.infinitelineinfiniteline"
+         download-size="0"
+         install-size="0"
+         version="0.54.0"
+         unpack="false"/>
+
 </feature>
