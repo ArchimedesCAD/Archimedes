@@ -68,8 +68,8 @@ public class XMLWizardExporter extends Wizard implements IExportWizard,
         XMLExporter exporter = new XMLExporter();
         try {
             OutputStream output = new FileOutputStream(fileModel.getFilePath());
-            Drawing firstElement = (Drawing) selection.getFirstElement();
-            exporter.exportDrawing(firstElement, output);
+            Drawing drawing = (Drawing) selection.getFirstElement();
+            exporter.exportDrawing(drawing, output);
         }
         catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -94,7 +94,7 @@ public class XMLWizardExporter extends Wizard implements IExportWizard,
 
     public String getName () {
 
-        return "Xml Exporter"; //$NON-NLS-1$
+        return "Archimedes' XML Exporter"; //$NON-NLS-1$
     }
 
     /**

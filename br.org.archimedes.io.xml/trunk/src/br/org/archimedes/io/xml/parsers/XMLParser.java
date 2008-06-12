@@ -154,6 +154,7 @@ public class XMLParser {
         }
         catch (SAXException e) {
             // Happens if the XML is not valid
+            e.printStackTrace();
             return false;
         }
         catch (IOException e) {

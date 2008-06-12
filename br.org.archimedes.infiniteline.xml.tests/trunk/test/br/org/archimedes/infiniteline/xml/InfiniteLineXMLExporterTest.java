@@ -19,8 +19,8 @@ import br.org.archimedes.io.xml.ElementXMLTester;
 import br.org.archimedes.model.Point;
 
 /**
- * <infiniteLine> <point x="-328" y="8" /> <point x="-315" y="-8" />
- * </infiniteLine>
+ * <infiniteline> <point x="-328" y="8" /> <point x="-315" y="-8" />
+ * </infiniteline>
  * 
  * @author eclipse
  */
@@ -59,7 +59,7 @@ public class InfiniteLineXMLExporterTest extends ElementXMLTester {
      */
     private void testInfiniteLineValues(InfiniteLine element, Document doc) {
         Element infiniteLine = (Element) doc.getFirstChild();
-        Assert.assertEquals("infiniteLine", infiniteLine.getNodeName());
+        Assert.assertEquals("infiniteline", infiniteLine.getNodeName());
 
         Element firstPoint = (Element) infiniteLine.getFirstChild();
         Assert.assertEquals("point", firstPoint.getNodeName());

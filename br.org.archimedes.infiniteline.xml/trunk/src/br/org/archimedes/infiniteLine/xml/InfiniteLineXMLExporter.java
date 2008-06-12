@@ -24,12 +24,12 @@ public class InfiniteLineXMLExporter implements ElementExporter<InfiniteLine> {
 			throws IOException {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("<infiniteLine>"); //$NON-NLS-1$
+		sb.append("<infiniteline>"); //$NON-NLS-1$
 
 		sb.append(XMLExporterHelper.xmlFor("point", element.getInitialPoint())); //$NON-NLS-1$
 		sb.append(XMLExporterHelper.xmlFor("point", element.getEndingPoint())); //$NON-NLS-1$
 		
-		sb.append("</infiniteLine>"); //$NON-NLS-1$
+		sb.append("</infiniteline>"); //$NON-NLS-1$
 
 		output.write(sb.toString().getBytes());
 	}

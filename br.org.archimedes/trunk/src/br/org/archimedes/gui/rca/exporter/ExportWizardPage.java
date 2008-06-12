@@ -151,7 +151,7 @@ public class ExportWizardPage extends WizardSelectionPage implements
         viewer = new TableViewer(table);
         viewer.setContentProvider(new ExportContentProvider(wizardNodes));
         viewer.addSelectionChangedListener(this);
-        viewer.setInput(getAvailableExportWizards());
+        viewer.setInput(wizardNodes);
     }
 
     /**

@@ -4,7 +4,7 @@
 
 package br.org.archimedes.io.xml.parsers;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.w3c.dom.Node;
@@ -48,7 +48,7 @@ public abstract class NPointsParser extends ElementParser {
                 .nodeListToList(nodesCollection);
         Element result = null;
         if (elementList.size() == pointNumber || pointNumber < 0) {
-            List<Point> points = new ArrayList<Point>();
+            List<Point> points = new LinkedList<Point>();
             for (org.w3c.dom.Element element : elementList) {
                 points.add(XMLUtils.nodeToPoint(element));
             }

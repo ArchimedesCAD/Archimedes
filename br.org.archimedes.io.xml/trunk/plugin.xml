@@ -21,7 +21,7 @@
       <wizard
             class="br.org.archimedes.io.xml.XMLWizardExporter"
             id="br.org.archimedes.io.xml.wizard"
-            name="A Test Export Wizard"/>
+            name="XML Exporter Wizard"/>
    </extension>
       <extension
             point="org.eclipse.ui.importWizards">

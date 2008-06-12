@@ -5,12 +5,6 @@
  */
 package br.org.archimedes.polyline.xml;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-
-import br.org.archimedes.Tester;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -19,11 +13,15 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import br.org.archimedes.Tester;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
-import br.org.archimedes.polyline.Polyline;
-import br.org.archimedes.polyline.xml.PolylineXMLExporter;
 import br.org.archimedes.model.Point;
+import br.org.archimedes.polyline.Polyline;
 
 /**
  * @author vidlopes
@@ -72,8 +70,6 @@ public class PolylineXMLExporterTest extends Tester {
         }
         Pattern p = Pattern.compile(regex);
         String result = out.toString();
-        System.out.println(result);
-        System.out.println(regex);
         Matcher m = p.matcher(result);
         Assert.assertTrue("The exported string should match the expected", m.matches());
     }

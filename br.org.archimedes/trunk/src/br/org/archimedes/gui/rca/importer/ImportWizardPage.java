@@ -1,3 +1,4 @@
+
 package br.org.archimedes.gui.rca.importer;
 
 import java.util.ArrayList;
@@ -16,142 +17,131 @@ import org.eclipse.jface.wizard.IWizardNode;
 import org.eclipse.jface.wizard.WizardSelectionPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 
 import br.org.archimedes.interfaces.DrawingImporter;
 
 public class ImportWizardPage extends WizardSelectionPage implements
-		ISelectionChangedListener {
+        ISelectionChangedListener {
 
-	private TableViewer viewer;
+    private TableViewer viewer;
 
-	protected ImportWizardPage() {
-		super("Choose an import format...");
-		this.setMessage("Choose an import format...");
-		this.setTitle("Selection");
-	}
 
-	/**
-	 * Returns the import wizards that are available for invocation.
-	 */
-	protected List<IWizardNode> getAvailableImportWizards() {
+    protected ImportWizardPage () {
 
-		List<IWizardNode> ret = new ArrayList<IWizardNode>();
+        super("Choose an import format...");
+        this.setMessage("Choose an import format...");
+        this.setTitle("Selection");
+    }
 
-		IExtensionPoint extensionPoint = Platform.getExtensionRegistry()
-				.getExtensionPoint("org.eclipse.ui.importWizards"); //$NON-NLS-1$
-		if (extensionPoint != null) {
-			IExtension[] extensions = extensionPoint.getExtensions();
-			for (IExtension extension : extensions) {
+    /**
+     * Returns the import wizards that are available for invocation.
+     */
+    protected List<IWizardNode> getAvailableImportWizards () {
 
-				IConfigurationElement[] configElements = extension
-						.getConfigurationElements();
-				for (IConfigurationElement element : configElements) {
-					try {
-						DrawingImporter importer = parseImporter(element);
-						if (importer != null) {
-							ret.add(new ImportWizardNode(importer));
-						}
-					} catch (ClassCastException e) {
-						System.out
-								.println("Encontrado ImportWizard que não implementa IImportWizard! Ignorando..."); //$NON-NLS-1$
-					}
-				}
-			}
-		}
+        List<IWizardNode> ret = new ArrayList<IWizardNode>();
 
-		return ret;
-	}
+        IExtensionPoint extensionPoint = Platform.getExtensionRegistry()
+                .getExtensionPoint("org.eclipse.ui.importWizards"); //$NON-NLS-1$
+        if (extensionPoint != null) {
+            IExtension[] extensions = extensionPoint.getExtensions();
+            for (IExtension extension : extensions) {
 
-	/**
-	 * This type method is unchecked because 'createExecutableExtension' is not
-	 * ready to deal with generics
-	 * 
-	 * @param element
-	 *            The configuration element that contains the infos to be parsed
-	 * @return The corresponding ElementExporter
-	 */
-	@SuppressWarnings("unchecked") //$NON-NLS-1$
-	private <T> T parseImporter(IConfigurationElement element) {
+                IConfigurationElement[] configElements = extension
+                        .getConfigurationElements();
+                for (IConfigurationElement element : configElements) {
+                    try {
+                        DrawingImporter importer = parseImporter(element);
+                        if (importer != null) {
+                            ret.add(new ImportWizardNode(importer));
+                        }
+                    }
+                    catch (ClassCastException e) {
+                        System.out
+                                .println("Encontrado ImportWizard que não implementa IImportWizard! Ignorando..."); //$NON-NLS-1$
+                    }
+                }
+            }
+        }
 
-		T importer = null;
-		if ("wizard".equals(element.getName())) { //$NON-NLS-1$
-			try {
-				// TODO retirar este if, só é usado para nao listar os importers
-				// do eclipse
-				if (element.getAttribute("class").startsWith( //$NON-NLS-1$
-						"br.org.archimedes")) { //$NON-NLS-1$
-					importer = (T) element.createExecutableExtension("class"); //$NON-NLS-1$
-				}
-			} catch (CoreException e) {
-				System.err
-						.println("Extension did not define the correct element importer"); //$NON-NLS-1$
-				e.printStackTrace();
-			}
-		}
-		return importer;
-	}
+        return ret;
+    }
 
-	/*
-	 * Makes the page to be displayed.
-	 * 
-	 * (non-Javadoc)
-	 * 
-	 * @see org.eclipse.jface.dialogs.IDialogPage#createControl(org.eclipse.swt.widgets.Composite)
-	 */
-	public void createControl(Composite parent) {
-		Font font = parent.getFont();
+    /**
+     * This type method is unchecked because 'createExecutableExtension' is not
+     * ready to deal with generics
+     * 
+     * @param element
+     *            The configuration element that contains the infos to be parsed
+     * @return The corresponding ElementExporter
+     */
+    @SuppressWarnings("unchecked")//$NON-NLS-1$
+    private <T>T parseImporter (IConfigurationElement element) {
 
-		// create composite for page.
-		Composite outerContainer = new Composite(parent, SWT.NONE);
-		outerContainer.setLayout(new GridLayout());
-		outerContainer.setLayoutData(new GridData(GridData.VERTICAL_ALIGN_FILL
-				| GridData.HORIZONTAL_ALIGN_FILL));
-		outerContainer.setFont(font);
+        T importer = null;
+        if ("wizard".equals(element.getName())) { //$NON-NLS-1$
+            try {
+                importer = (T) element.createExecutableExtension("class"); //$NON-NLS-1$
+            }
+            catch (CoreException e) {
+                System.err
+                        .println("Extension did not define the correct element importer"); //$NON-NLS-1$
+                e.printStackTrace();
+            }
+        }
+        return importer;
+    }
 
-//		Label messageLabel = new Label(outerContainer, SWT.NONE);
-//		messageLabel.setText(this.getName());
-//		messageLabel.setFont(font);
+    /*
+     * Makes the page to be displayed. (non-Javadoc)
+     * 
+     * @see org.eclipse.jface.dialogs.IDialogPage#createControl(org.eclipse.swt.widgets.Composite)
+     */
+    public void createControl (Composite parent) {
 
-		createAndFillTable(outerContainer);
+        Font font = parent.getFont();
 
-		setControl(outerContainer);
-	}
+        Composite outerContainer = new Composite(parent, SWT.NONE);
+        FillLayout layout = new FillLayout(SWT.HORIZONTAL);
+        layout.spacing = 5;
+        layout.marginWidth = 3;
+        layout.marginHeight = 3;
+        outerContainer.setLayout(layout);
+        outerContainer.setFont(font);
 
-	private void createAndFillTable(Composite parent) {
-		// Create a table for the list
-		Table table = new Table(parent, SWT.BORDER);
-		table.setFont(parent.getFont());
+        createAndFillTable(outerContainer);
 
-		List<IWizardNode> wizardNodes = getAvailableImportWizards();
-//		System.out.println(wizardNodes.size());
+        setControl(outerContainer);
+    }
 
-		// the list viewer
-		viewer = new TableViewer(table);
-		viewer.setContentProvider(new ImportContentProvider(
-				wizardNodes));
-		viewer.addSelectionChangedListener(this);
-		viewer.setInput(getAvailableImportWizards());
-	}
+    private void createAndFillTable (Composite parent) {
 
-	/**
-	 * Every time the selection changes I must change the following pages. I
-	 * don't know when 'Next' will be pressed.
-	 * 
-	 * (non-Javadoc)
-	 * 
-	 * @see org.eclipse.jface.viewers.ISelectionChangedListener#selectionChanged(org.eclipse.jface.viewers.SelectionChangedEvent)
-	 */
-	public void selectionChanged(SelectionChangedEvent event) {
-		if (!event.getSelection().isEmpty()) {
-			System.out.println("SELECTED WIZARD: " + event.getSelection()); //$NON-NLS-1$
-			StructuredSelection sel = (StructuredSelection) event
-					.getSelection();
-			IWizardNode firstElement = (IWizardNode) sel.getFirstElement();
-			setSelectedNode(firstElement);
-		}
-	}
+        List<IWizardNode> wizardNodes = getAvailableImportWizards();
+
+        Table table = new Table(parent, SWT.BORDER);
+        table.setFont(parent.getFont());
+
+        viewer = new TableViewer(table);
+        viewer.setContentProvider(new ImportContentProvider(wizardNodes));
+        viewer.addSelectionChangedListener(this);
+        viewer.setInput(wizardNodes);
+    }
+
+    /**
+     * Every time the selection changes I must change the following pages. I
+     * don't know when 'Next' will be pressed. (non-Javadoc)
+     * 
+     * @see org.eclipse.jface.viewers.ISelectionChangedListener#selectionChanged(org.eclipse.jface.viewers.SelectionChangedEvent)
+     */
+    public void selectionChanged (SelectionChangedEvent event) {
+
+        if ( !event.getSelection().isEmpty()) {
+            StructuredSelection sel = (StructuredSelection) event
+                    .getSelection();
+            IWizardNode firstElement = (IWizardNode) sel.getFirstElement();
+            setSelectedNode(firstElement);
+        }
+    }
 }
