@@ -2,10 +2,10 @@
  * This file was created on 2007/06/11, 13:22:36, by nitao. It is part of
  * br.org.archimedes.line.xml on the br.org.archimedes.line.xml.tests project.
  */
+
 package br.org.archimedes.line.xml;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.OutputStream;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -18,7 +18,6 @@ import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.io.xml.ElementXMLTester;
 import br.org.archimedes.line.Line;
-import br.org.archimedes.line.xml.LineExporter;
 import br.org.archimedes.model.Point;
 
 public class LineXMLExporterTest extends ElementXMLTester {
@@ -50,21 +49,18 @@ public class LineXMLExporterTest extends ElementXMLTester {
     }
 
     @Test
-    public void testLineXMLExporter () {
+    public void testLineXMLExporter () throws Exception {
 
         OutputStream out = new ByteArrayOutputStream();
+        
         LineExporter exporter = new LineExporter();
-        try {
-            exporter.exportElement(line, out);
-        }
-        catch (IOException e) {
-            Assert.fail("Should not throw IOException");
-        }
-        Pattern p = Pattern.compile(regex);
+        exporter.exportElement(line, out);
+        
         String result = out.toString();
-        // System.out.println(result);
-        // System.out.println(regex);
+
+        Pattern p = Pattern.compile(regex);
         Matcher m = p.matcher(result);
+        
         Assert.assertTrue("The exported string should match the expected", m
                 .matches());
     }

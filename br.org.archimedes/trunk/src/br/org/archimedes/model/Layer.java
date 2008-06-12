@@ -4,9 +4,9 @@
 
 package br.org.archimedes.model;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.Observable;
 
 import br.org.archimedes.Constant;
@@ -70,13 +70,13 @@ public class Layer extends Observable {
 
         this.color = color;
         this.printColor = color;
-        if (color.equals(Constant.WHITE)) {
+        if (Constant.WHITE.equals(color)) {
             printColor = Constant.BLACK;
         }
         this.name = name;
         this.lineStyle = lineStyle;
         this.thickness = thickness;
-        this.elements = new ArrayList<Element>();
+        this.elements = new LinkedList<Element>();
         this.locked = false;
         this.visible = true;
         this.xmlToSave = xmlToSave;
@@ -333,14 +333,79 @@ public class Layer extends Observable {
             element.draw(openGL);
         }
     }
-    //
-    // /**
-    // * @see java.lang.Object#toString()
-    // */
-    // @Override
-    // public String toString () {
-    //
-    // return "Layer '" + getName() + "' color #" + getColor().toHexString()
-    // + " print #" + getPrintColor().toHexString();
-    // }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode () {
+
+        final int prime = 31;
+        int result = 1;
+        result = prime * result
+                + ((this.color == null) ? 0 : this.color.hashCode());
+        result = prime * result + this.elements.hashCode();
+        result = prime * result
+                + ((this.lineStyle == null) ? 0 : this.lineStyle.hashCode());
+        result = prime * result
+                + ((this.name == null) ? 0 : this.name.hashCode());
+        result = prime * result
+                + ((this.printColor == null) ? 0 : this.printColor.hashCode());
+        long temp;
+        temp = Double.doubleToLongBits(this.thickness);
+        result = prime * result + (int) (temp ^ (temp >>> 32));
+        return result;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals (Object obj) {
+
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+
+        Layer other = (Layer) obj;
+        if (this.color == null) {
+            if (other.color != null)
+                return false;
+        }
+        else if ( !this.color.equals(other.color))
+            return false;
+
+        if ( !this.elements.equals(other.elements))
+            return false;
+
+        if (this.lineStyle == null) {
+            if (other.lineStyle != null)
+                return false;
+        }
+        else if ( !this.lineStyle.equals(other.lineStyle))
+            return false;
+        if (this.name == null) {
+            if (other.name != null)
+                return false;
+        }
+        else if ( !this.name.equals(other.name))
+            return false;
+        if (this.printColor == null) {
+            if (other.printColor != null)
+                return false;
+        }
+        else if ( !this.printColor.equals(other.printColor))
+            return false;
+        if (Double.doubleToLongBits(this.thickness) != Double
+                .doubleToLongBits(other.thickness))
+            return false;
+        return true;
+    }
 }

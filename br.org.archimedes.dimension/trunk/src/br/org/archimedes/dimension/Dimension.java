@@ -53,10 +53,10 @@ public class Dimension extends Element {
      *             In case the initial and ending points are the same.
      */
     public Dimension (Point initialPoint, Point endingPoint, Point distance,
-            double fontSize) throws NullArgumentException,
+            Double fontSize) throws NullArgumentException,
             InvalidArgumentException {
 
-        if (initialPoint == null || endingPoint == null || distance == null) {
+        if (initialPoint == null || endingPoint == null || distance == null || fontSize == null) {
             throw new NullArgumentException();
         }
         if (initialPoint.equals(endingPoint) || initialPoint.equals(distance)
@@ -86,11 +86,11 @@ public class Dimension extends Element {
      * @throws InvalidArgumentException
      *             In case the initial and ending point are the same.
      */
-    public Dimension (Point initialPoint, Point endingPoint, double distance,
-            double fontSize) throws NullArgumentException,
+    public Dimension (Point initialPoint, Point endingPoint, Double distance,
+            Double fontSize) throws NullArgumentException,
             InvalidArgumentException {
 
-        if (initialPoint == null || endingPoint == null) {
+        if (initialPoint == null || endingPoint == null || distance == null || fontSize == null) {
             throw new NullArgumentException();
         }
         if (initialPoint.equals(endingPoint)
@@ -570,5 +570,13 @@ public class Dimension extends Element {
     public Text getText () {
 
         return this.text;
+    }
+
+    /**
+     * @return The size of the text contained in this dimension
+     */
+    public double getTextSize () {
+
+        return this.text.getSize();
     }
 }

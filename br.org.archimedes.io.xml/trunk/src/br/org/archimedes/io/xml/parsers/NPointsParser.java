@@ -40,22 +40,35 @@ public abstract class NPointsParser extends ElementParser {
      * @see com.tarantulus.archimedes.xml.ElementParser#parse(org.w3c.dom.Node)
      */
     @Override
-    public final Element parse (Node node) throws ElementCreationException {
+    public Element parse (Node node) throws ElementCreationException {
 
-        NodeList nodesCollection = ((org.w3c.dom.Element) node)
-                .getElementsByTagName("point"); //$NON-NLS-1$
-        List<org.w3c.dom.Element> elementList = XMLUtils
-                .nodeListToList(nodesCollection);
+        List<Point> points = extractPoints(node);
+
         Element result = null;
-        if (elementList.size() == pointNumber || pointNumber < 0) {
-            List<Point> points = new LinkedList<Point>();
-            for (org.w3c.dom.Element element : elementList) {
-                points.add(XMLUtils.nodeToPoint(element));
-            }
+        if (points.size() == pointNumber || pointNumber < 0) {
             result = createElement(points);
         }
 
         return result;
+    }
+
+    /**
+     * @param node
+     *            The node to which we wish to extract points from
+     * @return A list of all the points that were extracted
+     */
+    private List<Point> extractPoints (Node node) {
+
+        List<Point> points = new LinkedList<Point>();
+        NodeList nodesCollection = ((org.w3c.dom.Element) node)
+                .getElementsByTagName("point"); //$NON-NLS-1$
+        List<org.w3c.dom.Element> elementList = XMLUtils
+                .nodeListToList(nodesCollection);
+        for (org.w3c.dom.Element element : elementList) {
+            points.add(XMLUtils.nodeToPoint(element));
+        }
+
+        return points;
     }
 
     /**

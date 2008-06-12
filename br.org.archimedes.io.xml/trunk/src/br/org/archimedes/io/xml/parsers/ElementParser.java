@@ -15,17 +15,10 @@ import br.org.archimedes.model.Element;
  */
 public abstract class ElementParser {
 
-    private static Map<String, ElementParser> parserMap;
+    private static Map<String, ElementParser> parserMap = createParserMap();
 
-    private static ElementFactory elementFactory;
+    private static ElementFactory elementFactory = new ElementFactory();
 
-
-    /**
-     * Default constructor.
-     */
-    public ElementParser () {
-
-    }
 
     /**
      * Gets a parser to read a certain type of element
@@ -36,15 +29,11 @@ public abstract class ElementParser {
      */
     public static ElementParser getParser (String type) {
 
-        if (parserMap == null) {
-            parserMap = createParserMap();
-        }
         return parserMap.get(type);
     }
 
     private static Map<String, ElementParser> createParserMap () {
 
-        elementFactory = new ElementFactory();
         Map<String, ElementParser> map = new HashMap<String, ElementParser>();
 
         map.put("line", new TwoPointParser("br.org.archimedes.line")); //$NON-NLS-1$ //$NON-NLS-2$
@@ -57,8 +46,8 @@ public abstract class ElementParser {
         map.put("polyline", new PolyLineParser());
         map.put("semiline", new TwoPointParser("br.org.archimedes.semiline")); //$NON-NLS-1$ //$NON-NLS-2$
         map.put("text", new TextParser());
-        map.put("dimension", // $NON-NLS-1$
-                new ThreePointParser("br.org.archimedes.dimension")); // $NON-NLS-2$
+        map.put("dimension", new DimensionParser()); // $NON-NLS-1$
+
         return map;
     }
 

@@ -16,7 +16,7 @@ import br.org.archimedes.model.Vector;
 
 public class DimensionTest extends Tester {
 
-    private static final int FONT_SIZE = 18;
+    private static final double FONT_SIZE = 18;
 
     private Point point1;
 
@@ -62,7 +62,8 @@ public class DimensionTest extends Tester {
         }
 
         try {
-            new Dimension(point1, point2, null, FONT_SIZE);
+            Point point = null;
+            new Dimension(point1, point2, point, FONT_SIZE);
             Assert.fail("Should throw NullArgumentException");
         }
         catch (NullArgumentException e) {

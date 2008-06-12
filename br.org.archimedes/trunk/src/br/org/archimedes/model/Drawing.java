@@ -146,6 +146,40 @@ public class Drawing extends Observable implements Observer {
     /*
      * (non-Javadoc)
      * 
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode () {
+
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + this.layers.hashCode();
+        return result;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals (Object obj) {
+
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Drawing other = (Drawing) obj;
+        if ( !this.layers.equals(other.layers))
+            return false;
+        return true;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
      * @see br.org.archimedes.model.Drawing#putElement(br.org.archimedes.model.Element)
      */
     public void putElement (Element element) throws NullArgumentException,

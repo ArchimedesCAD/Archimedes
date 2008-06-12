@@ -9,7 +9,10 @@ package br.org.archimedes.dimension.xml;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -32,32 +35,36 @@ public class DimensionXmlExporterTest {
 
     private Dimension dimension;
 
-    private Point initialPoint = new Point(0, 1);
-
-    private Point endingPoint = new Point(0, 0);
-
-    private Point distancePoint = new Point(1, 1);
+    private final String regex = "<dimension>"
+            + "[\\s]*<point[\\s]*x=\"0\\.0\"[\\s]*y=\"1\\.0\"[\\s]*/>[\\s]*"
+            + "[\\s]*<point[\\s]*x=\"0\\.0\"[\\s]*y=\"0\\.0\"[\\s]*/>[\\s]*"
+            + "[\\s]*<point[\\s]*x=\"1\\.0\"[\\s]*y=\"0\\.5\"[\\s]*/>[\\s]*"
+            + "[\\s]*<size>[\\s]*18\\.0[\\s]*</size>[\\s]*" + "</dimension>";
 
 
     @Before
     public void setup () throws NullArgumentException, InvalidArgumentException {
 
-        dimension = new Dimension(initialPoint, endingPoint, distancePoint, FONT_SIZE);
+        Point initialPoint = new Point(0, 1);
+        Point endingPoint = new Point(0, 0);
+
+        dimension = new Dimension(initialPoint, endingPoint, 1.0, FONT_SIZE);
 
         exporter = new DimensionXmlExporter();
-
     }
 
     @Test
     public void testExport () throws IOException {
 
         OutputStream output = new ByteArrayOutputStream();
-
         exporter.exportElement(dimension, output);
-
         String result = output.toString();
 
-        System.out.println(result);
+        Pattern p = Pattern.compile(regex);
+        Matcher m = p.matcher(result);
+
+        Assert.assertTrue("The exported string (" + result
+                + ") should match the expected", m.matches());
     }
 
 }

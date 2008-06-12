@@ -15,8 +15,6 @@ import java.util.Map;
 
 import junit.framework.Assert;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
 import br.org.archimedes.Constant;
@@ -44,22 +42,6 @@ import br.org.archimedes.text.Text;
 public class XMLImporterTest {
 
     /**
-     * @throws java.lang.Exception
-     */
-    @Before
-    public void setUp () throws Exception {
-
-    }
-
-    /**
-     * @throws java.lang.Exception
-     */
-    @After
-    public void tearDown () throws Exception {
-
-    }
-
-    /**
      * Test method for
      * {@link br.org.archimedes.io.xml.XMLImporter#importDrawing(java.io.InputStream)}.
      * 
@@ -68,8 +50,11 @@ public class XMLImporterTest {
      * @throws InvalidFileFormatException
      *             Thrown if the file is invalid
      * @throws InvalidArgumentException
+     *             Thrown if arguments are invalid
      * @throws IllegalActionException
+     *             Thrown if trying to do something illegal
      * @throws NullArgumentException
+     *             Thrown if something is null
      */
     @Test
     public void testImportDrawing () throws InvalidFileFormatException,
@@ -118,15 +103,15 @@ public class XMLImporterTest {
                 .values()[0], 1);
         layer.setPrintColor(Constant.BLACK);
         layers.put(layer.getName(), layer);
+        layer.putElement(new Text("Archimedes", new Point(143.403, 209.828),
+                63.828));
         layer.putElement(new InfiniteLine(new Point(268, -44), new Point(
                 267.002, -44.063)));
         layer.putElement(new Line(new Point( -1083.033, 453.48), new Point(
                 957.756, -355.968)));
-        layer.putElement(new Text("Archimedes", new Point(143.403, 209.828),
-                63.828));
 
         Drawing expected = new Drawing("ExampleFile", layers);
         Assert.assertEquals(expected, drawing);
     }
-    
+
 }

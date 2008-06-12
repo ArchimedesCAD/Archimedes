@@ -50,11 +50,11 @@ public class Constant {
     public static final Color WHITE = new Color(1.0, 1.0, 1.0);
 
     public static final Color RED = new Color(1.0, 0.0, 0.0);
-    
+
     public static final Color RED_ARCHIMEDES = new Color(0.5, 0.0, 0.0);
 
     public static final Color BLUE = new Color(0.0, 0.0, 1.0);
-    
+
     public static final Color YELLOW = new Color(1.0, 1.0, 0.0);
 
     public static final Color BLACK = new Color(0, 0, 0);
@@ -64,14 +64,21 @@ public class Constant {
     public static final File USER_HOME;
 
     public static final Font DEFAULT_FONT;
-    
+
     public static final double DEFAULT_FONT_SIZE = 18.0;
 
+    public static final String FONT_FOLDER = "fonts";
+
+    public static final String DEFAULT_FONT_NAME = "LiberationSerif-Regular.ttf";
+
     static {
+        
+        String fontPath = FONT_FOLDER + File.separator + DEFAULT_FONT_NAME;
+        
         Activator activator = Activator.getDefault();
         if (activator != null) {
             Bundle bundle = activator.getBundle();
-            Path path = new Path("fonts/LiberationSerif-Regular.ttf"); //$NON-NLS-1$
+            Path path = new Path(fontPath); //$NON-NLS-1$
             URL fontUrl = FileLocator.find(bundle, path, Collections.EMPTY_MAP);
             try {
                 fontUrl = FileLocator.toFileURL(fontUrl);
@@ -83,7 +90,7 @@ public class Constant {
             DEFAULT_FONT = Font.create(fontUrl.getPath());
         }
         else { // Used for non plugin tests
-            DEFAULT_FONT = null;
+            DEFAULT_FONT = Font.create(fontPath);
         }
         USER_HOME = new File(System.getProperty("user.home")); //$NON-NLS-1$
     }
