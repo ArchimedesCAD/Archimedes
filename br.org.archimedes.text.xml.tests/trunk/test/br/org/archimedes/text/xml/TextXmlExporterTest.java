@@ -64,8 +64,6 @@ public class TextXmlExporterTest {
 
         exporter.exportElement(text, os);
 
-        System.out.println(os.toString());
-
         Pattern p = Pattern.compile(expected);
         Matcher m = p.matcher(os.toString());
 

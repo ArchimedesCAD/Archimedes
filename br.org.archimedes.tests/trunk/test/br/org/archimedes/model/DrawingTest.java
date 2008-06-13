@@ -4,6 +4,11 @@
 
 package br.org.archimedes.model;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import java.io.File;
 import java.util.Collection;
 import java.util.Set;
 
@@ -306,28 +311,6 @@ public class DrawingTest extends Tester {
         Assert.assertEquals(layer, drawing.getCurrentLayer());
     }
 
-    // private void addCommand (Command newCommand) {
-    //
-    // try {
-    // drawing.setLastCommand(newCommand.toExecuted());
-    // }
-    // catch (NonReversibleException e) {
-    // Assert.fail("Should not throw this exception " + e.toString());
-    // }
-    // if (newCommand.isRevertable()) {
-    // Assert.assertFalse("The history shouldn't be empty.",
-    // drawing.getHistory()
-    // .isEmpty());
-    // Assert.assertTrue("The last command in history is wrong.", drawing
-    // .getHistory().peek().equals(newCommand));
-    // }
-    // else {
-    // Assert.assertFalse("The last command in history is wrong.", drawing
-    // .getHistory().isEmpty()
-    // || drawing.getHistory().peek().equals(newCommand));
-    // }
-    // }
-
     /**
      * Removes an element known to be safe in the drawing. Fails if any
      * exception is thrown.
@@ -350,4 +333,35 @@ public class DrawingTest extends Tester {
         }
     }
 
+    @Test
+    public void equalsOnlyIfHasTheSameFile () throws Exception {
+
+        assertTrue("A drawing equals itself", drawing.equals(drawing));
+        assertEquals("The hashcode of a drawing must be the same of itself",
+                drawing.hashCode(), drawing.hashCode());
+
+        assertFalse("A drawing is never equal null", drawing.equals(null));
+        assertFalse("A drawing is never equal a random Object", drawing
+                .equals(new Object()));
+
+        Drawing other = new Drawing(null);
+        assertFalse("A new drawing does not equal a new drawing", drawing
+                .equals(other));
+
+        other.setFile(new File("test.xml"));
+        assertFalse("A new drawing does not equal a drawing with a file",
+                drawing.equals(other));
+
+        drawing.setFile(new File("another.xml"));
+        assertFalse(
+                "A drawing with a file does not equal a drawing with another file",
+                drawing.equals(other));
+
+        drawing.setFile(new File("test.xml"));
+        assertTrue("A drawing with a file equals a drawing with the same file",
+                drawing.equals(other));
+        assertEquals(
+                "The hashcode of a drawing must be the same of an equal drawing",
+                drawing.hashCode(), other.hashCode());
+    }
 }

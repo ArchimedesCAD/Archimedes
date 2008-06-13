@@ -53,18 +53,18 @@ public class RectangleTest extends Tester {
     @Test
     public void testIntersects () {
 
-        Rectangle element = new Rectangle(0, 0, 50, 50);
+        Rectangle rectangle = new Rectangle(0, 0, 50, 50);
         Rectangle tester = null;
 
         try {
-            element.intersects(tester);
+            rectangle.intersects(tester);
             Assert.fail("Should throw a null argument exception.");
         }
         catch (NullArgumentException e1) {}
 
         tester = new Rectangle(2, 2, 4, 4);
         try {
-            Assert.assertFalse("Should not intersect " + tester.toString(), element
+            Assert.assertFalse("Should not intersect " + tester.toString(), rectangle
                     .intersects(tester));
         }
         catch (NullArgumentException e) {
@@ -73,7 +73,7 @@ public class RectangleTest extends Tester {
 
         tester = new Rectangle(2, 2, 56, 56);
         try {
-            Assert.assertTrue("Should intersect " + tester.toString(), element
+            Assert.assertTrue("Should intersect " + tester.toString(), rectangle
                     .intersects(tester));
         }
         catch (NullArgumentException e) {
@@ -82,7 +82,7 @@ public class RectangleTest extends Tester {
 
         tester = new Rectangle( -2, -2, 56, 56);
         try {
-            Assert.assertFalse("Should not intersect " + tester.toString(), element
+            Assert.assertFalse("Should not intersect " + tester.toString(), rectangle
                     .intersects(tester));
         }
         catch (NullArgumentException e) {
@@ -91,7 +91,7 @@ public class RectangleTest extends Tester {
 
         tester = new Rectangle(0, 0, 50, 50);
         try {
-            Assert.assertTrue("Should intersect " + tester.toString(), element
+            Assert.assertTrue("Should intersect " + tester.toString(), rectangle
                     .intersects(tester));
         }
         catch (NullArgumentException e) {

@@ -46,12 +46,12 @@ public class DimensionParserTest extends NPointParserTest {
     @Test
     public void testParse () throws Exception {
 
-        final String XML_LINE = "<dimension>"
+        final String xml_line = "<dimension>"
                 + "	<point x=\"-64\" y=\"198\" /><point x=\"-173\" y=\"88\" />"
                 + "<point x=\"-118.5\" y=\"210\" /><size>18.0</size>"
                 + "</dimension>";
 
-        Node nodeLine = this.getNodeLine(XML_LINE);
+        Node nodeLine = this.getNodeLine(xml_line);
         Element element = parser.parse(nodeLine);
         Assert.assertNotNull(element);
         Assert.assertEquals(Dimension.class, element.getClass());

@@ -153,7 +153,8 @@ public class Drawing extends Observable implements Observer {
 
         final int prime = 31;
         int result = 1;
-        result = prime * result + this.layers.hashCode();
+        result = prime * result
+                + ((this.file == null) ? 0 : this.file.hashCode());
         return result;
     }
 
@@ -171,9 +172,11 @@ public class Drawing extends Observable implements Observer {
             return false;
         if (getClass() != obj.getClass())
             return false;
+
         Drawing other = (Drawing) obj;
-        if ( !this.layers.equals(other.layers))
+        if (this.file == null || !this.file.equals(other.file))
             return false;
+
         return true;
     }
 

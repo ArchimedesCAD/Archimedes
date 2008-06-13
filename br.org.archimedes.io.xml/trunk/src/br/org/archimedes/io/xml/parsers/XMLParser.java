@@ -146,7 +146,9 @@ public class XMLParser {
         Schema schema = null;
 
         try {
-        	InputStream fileInput = Activator.locateFile("FileXMLSchema.xsd",br.org.archimedes.io.xml.Activator.getDefault().getBundle()); //$NON-NLS-1$
+            InputStream fileInput = Activator
+                    .locateFile(
+                            "FileXMLSchema.xsd", br.org.archimedes.io.xml.Activator.getDefault().getBundle()); //$NON-NLS-1$
             Source schemaFile = new StreamSource(fileInput);
             schema = factory.newSchema(schemaFile);
             Validator validator = schema.newValidator();

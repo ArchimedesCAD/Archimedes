@@ -134,7 +134,6 @@ public class LineFactory extends TwoPointFactory {
      */
     protected void drawVisualHelper (Point start, Point end) {
 
-        // TODO
         List<Point> points = new ArrayList<Point>();
         points.add(start);
         points.add(end);
@@ -142,7 +141,7 @@ public class LineFactory extends TwoPointFactory {
             OpenGLWrapper.getInstance().drawFromModel(points);
         }
         catch (NullArgumentException e) {
-            // TODO Auto-generated catch block
+            // Shouldn't happen since the parent class handle it
             e.printStackTrace();
         }
     }

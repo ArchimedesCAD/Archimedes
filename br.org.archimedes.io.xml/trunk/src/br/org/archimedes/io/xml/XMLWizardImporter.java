@@ -37,6 +37,7 @@ public class XMLWizardImporter extends Wizard implements IExportWizard,
             try {
                 Drawing drawing = importer.importDrawing(new FileInputStream(
                         file));
+                drawing.setFile(file);
                 IWorkbenchPage page = PlatformUI.getWorkbench()
                         .getActiveWorkbenchWindow().getActivePage();
                 page.openEditor(new DrawingInput(drawing),

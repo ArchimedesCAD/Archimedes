@@ -7,7 +7,7 @@ package br.org.archimedes.controller;
 
 import junit.framework.TestCase;
 
-import org.easymock.EasyMock;
+import org.easymock.classextension.EasyMock;
 
 import br.org.archimedes.factories.CommandFactory;
 import br.org.archimedes.model.Drawing;

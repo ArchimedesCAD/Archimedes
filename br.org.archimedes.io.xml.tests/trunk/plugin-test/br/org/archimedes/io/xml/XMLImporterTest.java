@@ -5,6 +5,7 @@
 
 package br.org.archimedes.io.xml;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -61,9 +62,12 @@ public class XMLImporterTest {
             IOException, NullArgumentException, IllegalActionException,
             InvalidArgumentException {
 
-        InputStream input = new FileInputStream("ExampleFile.xml");
+        String fileName = "ExampleFile.xml";
+        
+        InputStream input = new FileInputStream(fileName);
         XMLImporter importer = new XMLImporter();
         Drawing drawing = importer.importDrawing(input);
+        drawing.setFile(new File(fileName));
 
         Map<String, Layer> layers = new HashMap<String, Layer>(5);
         Layer layer = new Layer(new Color(247, 173, 40), "MeuPrimeiroLayer",
@@ -111,6 +115,8 @@ public class XMLImporterTest {
                 957.756, -355.968)));
 
         Drawing expected = new Drawing("ExampleFile", layers);
+        expected.setFile(new File(fileName));
+        
         Assert.assertEquals(expected, drawing);
     }
 
