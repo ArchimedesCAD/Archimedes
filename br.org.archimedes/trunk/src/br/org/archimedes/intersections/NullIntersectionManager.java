@@ -7,6 +7,7 @@ package br.org.archimedes.intersections;
 import java.util.Collection;
 import java.util.Collections;
 
+import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.interfaces.IntersectionManager;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
@@ -41,4 +42,9 @@ public class NullIntersectionManager implements IntersectionManager {
 
         return Collections.emptyList();
     }
+
+	public Collection<Point> getIntersectionsBetween(Element element,
+			Collection<Element> otherElements) throws NullArgumentException {
+		return Collections.emptyList();
+	}
 }

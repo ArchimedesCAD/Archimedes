@@ -29,7 +29,19 @@ public interface IntersectionManager {
      */
     Collection<Point> getIntersectionsBetween (Element element,
             Element otherElement) throws NullArgumentException;
-
+    
+    /**
+     * @param element
+     *            First element
+     * @param otherElements
+     *            A collection of elements
+     * @return Returns the list of intersections between the specified elements.
+     * @throws NullArgumentException
+     *             thrown if the element or otherElements are null
+     */
+    Collection<Point> getIntersectionsBetween (Element element,
+            Collection<Element> otherElements) throws NullArgumentException;
+    
     /**
      * @param rect
      *            The rectangle to find the intersections

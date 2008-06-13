@@ -4,6 +4,7 @@
 
 package br.org.archimedes.intersections;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -177,4 +178,15 @@ public class IntersectorsManager implements IntersectionManager {
         return getIntersectorFor(element, otherElement).getIntersections(
                 element, otherElement);
     }
+
+	public Collection<Point> getIntersectionsBetween(Element element,
+			Collection<Element> otherElements) throws NullArgumentException{
+		Collection<Point> intersections = new ArrayList<Point>();
+		
+		for (Element otherElement : otherElements) {
+			intersections.addAll(getIntersectionsBetween(element, otherElement));
+		}
+		
+		return intersections;
+	}
 }

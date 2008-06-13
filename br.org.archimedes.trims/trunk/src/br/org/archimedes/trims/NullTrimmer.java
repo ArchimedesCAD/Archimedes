@@ -9,6 +9,7 @@ import java.util.Collections;
 
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.model.Element;
+import br.org.archimedes.model.Point;
 import br.org.archimedes.trims.interfaces.Trimmer;
 
 /**
@@ -19,7 +20,7 @@ import br.org.archimedes.trims.interfaces.Trimmer;
 public class NullTrimmer implements Trimmer {
 
 	public Collection<Element> trim(Element element,
-			Collection<Element> references) throws NullArgumentException {
+			Collection<Element> references, Point click) throws NullArgumentException {
 		
 		return Collections.emptyList();
 	}
