@@ -1,7 +1,7 @@
 
 package br.org.archimedes.gui.rca.importer;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.core.runtime.CoreException;
@@ -10,6 +10,7 @@ import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
@@ -20,6 +21,7 @@ import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
+import org.eclipse.ui.IWorkbench;
 
 import br.org.archimedes.interfaces.DrawingImporter;
 
@@ -28,12 +30,20 @@ public class ImportWizardPage extends WizardSelectionPage implements
 
     private TableViewer viewer;
 
+    private IWorkbench workbench;
 
-    protected ImportWizardPage () {
+    private IStructuredSelection selection;
+
+
+    protected ImportWizardPage (IWorkbench workbench,
+            IStructuredSelection selection) {
 
         super("Choose an import format...");
         this.setMessage("Choose an import format...");
         this.setTitle("Selection");
+
+        this.workbench = workbench;
+        this.selection = selection;
     }
 
     /**
@@ -41,7 +51,7 @@ public class ImportWizardPage extends WizardSelectionPage implements
      */
     protected List<IWizardNode> getAvailableImportWizards () {
 
-        List<IWizardNode> ret = new ArrayList<IWizardNode>();
+        List<IWizardNode> ret = new LinkedList<IWizardNode>();
 
         IExtensionPoint extensionPoint = Platform.getExtensionRegistry()
                 .getExtensionPoint("org.eclipse.ui.importWizards"); //$NON-NLS-1$
@@ -54,6 +64,7 @@ public class ImportWizardPage extends WizardSelectionPage implements
                 for (IConfigurationElement element : configElements) {
                     try {
                         DrawingImporter importer = parseImporter(element);
+                        importer.init(workbench, selection);
                         if (importer != null) {
                             ret.add(new ImportWizardNode(importer));
                         }

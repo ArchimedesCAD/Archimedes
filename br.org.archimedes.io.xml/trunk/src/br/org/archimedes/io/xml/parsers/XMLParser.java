@@ -26,6 +26,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import br.org.archimedes.exceptions.InvalidFileFormatException;
 import br.org.archimedes.gui.rca.Activator;
 import br.org.archimedes.gui.rca.Messages;
 import br.org.archimedes.model.Drawing;
@@ -47,8 +48,11 @@ public class XMLParser {
      *            The File to be Parsed
      * @return Returns the Drawing of the xmlFile or null if the file is
      *         invalid.
+     * @throws InvalidFileFormatException
+     *             Thrown if the inputstream does not define a valid format
      */
-    public Drawing parse (InputStream xmlInputStream) {
+    public Drawing parse (InputStream xmlInputStream)
+            throws InvalidFileFormatException {
 
         Document doc = getDocument(xmlInputStream);
         Drawing drawing = null;
@@ -96,6 +100,9 @@ public class XMLParser {
             drawing.setViewportPosition(viewPoint);
             // drawing.setFile(xmlInputStream);
             drawing.setSaved(true);
+        }
+        else {
+            throw new InvalidFileFormatException();
         }
 
         return drawing;

@@ -9,7 +9,10 @@ import br.org.archimedes.gui.actions.Messages;
 
 public class ImportWizard extends Wizard implements IExportWizard {
 
-	@Override
+	private IWorkbench workbench;
+    private IStructuredSelection selection;
+
+    @Override
 	public boolean performFinish() {
 		return false;
 	}
@@ -17,6 +20,8 @@ public class ImportWizard extends Wizard implements IExportWizard {
 	public void init(IWorkbench workbench, IStructuredSelection selection) {
 		setWindowTitle(Messages.ImportDrawing_Title);
 		this.setForcePreviousAndNextButtons(true);
+		this.workbench = workbench;
+		this.selection = selection;
 	}
 	
 	/**
@@ -27,7 +32,7 @@ public class ImportWizard extends Wizard implements IExportWizard {
 	 */
 	@Override
 	public void addPages() {
-		this.addPage(new ImportWizardPage());		
+        this.addPage(new ImportWizardPage(workbench, selection));		
 		super.addPages();
 	}
 }

@@ -6,13 +6,14 @@
 package br.org.archimedes.io.xml;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
+import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IExportWizard;
 import org.eclipse.ui.IWorkbench;
 
@@ -32,6 +33,9 @@ public class XMLWizardExporter extends Wizard implements IExportWizard,
     private FileModel fileModel = new FileModelImpl();
 
     private IStructuredSelection selection;
+
+    private IWorkbench workbench;
+
 
     /**
      * @see org.eclipse.jface.wizard.Wizard#canFinish()
@@ -71,12 +75,15 @@ public class XMLWizardExporter extends Wizard implements IExportWizard,
             Drawing drawing = (Drawing) selection.getFirstElement();
             exporter.exportDrawing(drawing, output);
         }
-        catch (FileNotFoundException e) {
-            e.printStackTrace();
-            return false;
-        }
         catch (IOException e) {
             e.printStackTrace();
+            Shell shell = workbench.getActiveWorkbenchWindow().getShell();
+            MessageBox box = new MessageBox(shell);
+            // TODO Internacionalize
+            box.setMessage("Error writting file");
+            box
+                    .setText("The file could not be written for some reason. Verify your permissions.");
+
             return false;
         }
 
@@ -89,6 +96,7 @@ public class XMLWizardExporter extends Wizard implements IExportWizard,
      */
     public void init (IWorkbench workbench, IStructuredSelection selection) {
 
+        this.workbench = workbench;
         this.selection = selection;
     }
 

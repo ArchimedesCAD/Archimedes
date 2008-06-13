@@ -8,11 +8,13 @@ import java.io.IOException;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
+import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IExportWizard;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
-import org.eclipse.ui.PlatformUI;
 
 import br.org.archimedes.exceptions.InvalidFileFormatException;
 import br.org.archimedes.gui.rca.LoadFilePage;
@@ -27,43 +29,67 @@ public class XMLWizardImporter extends Wizard implements IExportWizard,
 
     private FileModel fileModel = new FileModelImpl();
 
+    private IWorkbench workbench;
+
 
     @Override
     public boolean performFinish () {
 
         XMLImporter importer = new XMLImporter();
         File file = new File(fileModel.getFilePath());
+        Drawing drawing = null;
+
+        IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
+        IWorkbenchPage page = window.getActivePage();
+        Shell shell = window.getShell();
+        MessageBox box = new MessageBox(shell);
+
+        // TODO Internacionalize
+        
         if (file.exists() && file.isFile() && file.canRead()) {
             try {
-                Drawing drawing = importer.importDrawing(new FileInputStream(
-                        file));
+                drawing = importer.importDrawing(new FileInputStream(file));
                 drawing.setFile(file);
-                IWorkbenchPage page = PlatformUI.getWorkbench()
-                        .getActiveWorkbenchWindow().getActivePage();
                 page.openEditor(new DrawingInput(drawing),
                         "br.org.archimedes.gui.rca.editor.DrawingEditor"); //$NON-NLS-1$
-                return true;
             }
             catch (FileNotFoundException e) {
+                // Shouldn't happen since I check for this
                 e.printStackTrace();
             }
             catch (InvalidFileFormatException e) {
+                box.setMessage("File format invalid");
+                box.setText("The selected file is not valid");
                 e.printStackTrace();
             }
             catch (IOException e) {
+                box.setMessage("Error reading file");
+                box.setText("Cannot read the file for some reason");
                 e.printStackTrace();
             }
             catch (PartInitException e) {
                 // Cannot create a new Editor. BAD!!!!
+                box.setMessage("Cannot create new window for drawing.");
+                box.setText("No more memory to handle the open drawing");
                 e.printStackTrace();
             }
-            return false;
         }
-        return false;
+        else {
+            box.setMessage("Message Error file");
+            box.setText("Text file not working");
+        }
+
+        boolean worked = (drawing != null); 
+        if (!worked) {
+            box.open();
+        }
+
+        return worked;
     }
 
     public void init (IWorkbench workbench, IStructuredSelection selection) {
 
+        this.workbench = workbench;
     }
 
     public String getName () {
