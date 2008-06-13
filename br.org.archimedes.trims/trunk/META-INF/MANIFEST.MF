@@ -6,5 +6,11 @@ Bundle-Version: 0.56.0
 Bundle-Vendor: br.org.archimedes
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Require-Bundle: br.org.archimedes,
- org.eclipse.core.runtime
+ org.eclipse.core.runtime,
+ org.eclipse.ui;bundle-version="3.4.0",
+ br.org.archimedes.polyline;bundle-version="0.54.0",
+ br.org.archimedes.undo;bundle-version="0.54.0",
+ br.org.archimedes.line;bundle-version="0.54.0"
 Export-Package: br.org.archimedes.trims.interfaces
+Bundle-ActivationPolicy: lazy
+Bundle-Activator: br.org.archimedes.trims.Activator

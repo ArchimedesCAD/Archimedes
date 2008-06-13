@@ -8,5 +8,23 @@
          point="br.org.archimedes.trims">
          <manager class="br.org.archimedes.trims.TrimManager"/>
    </extension>
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            id="br.org.archimedes.trims.actionSet"
+            label="Trim action sets"
+            visible="true">
+         <action
+               class="br.org.archimedes.trims.TrimAction"
+               icon="icons/trim.png"
+               id="br.org.archimedes.trims.action"
+               label="Trim"
+               menubarPath="transform/simple1"
+               style="push"
+               toolbarPath="transform/simple1"
+               tooltip="Trims the selected element">
+         </action>
+      </actionSet>
+   </extension>
 
 </plugin>

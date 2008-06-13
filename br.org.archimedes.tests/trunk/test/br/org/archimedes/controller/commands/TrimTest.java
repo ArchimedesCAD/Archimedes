@@ -17,6 +17,7 @@ import br.org.archimedes.controller.Controller;
 import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
+import br.org.archimedes.trims.TrimCommand;
 
 public class TrimTest extends Tester {
 

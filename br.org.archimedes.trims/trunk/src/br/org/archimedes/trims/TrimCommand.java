@@ -2,7 +2,7 @@
  * Created on 25/08/2006
  */
 
-package br.org.archimedes.controller.commands;
+package br.org.archimedes.trims;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -12,7 +12,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import br.org.archimedes.Utils;
 import br.org.archimedes.controller.Controller;
+import br.org.archimedes.controller.commands.MacroCommand;
+import br.org.archimedes.controller.commands.PutOrRemoveElementCommand;
 import br.org.archimedes.exceptions.IllegalActionException;
 import br.org.archimedes.exceptions.NoActiveDrawingException;
 import br.org.archimedes.exceptions.NullArgumentException;
@@ -124,9 +127,11 @@ public class TrimCommand implements UndoableCommand {
      *            A click point for the trim
      * @throws IllegalActionException
      *             In case no element was clicked
+     * @throws NullArgumentException
+     * 			   In case that the references of trimming are null
      */
     private void computeTrim (Drawing drawing, Point click)
-            throws IllegalActionException {
+            throws IllegalActionException, NullArgumentException {
 
         Element toTrim = getClickedElement(click);
         Element key = null;
@@ -154,7 +159,7 @@ public class TrimCommand implements UndoableCommand {
         }
 
         if (key == null || isInMap) {
-            Collection<Element> trimResult = trim(toTrim, references, click);
+            Collection<Element> trimResult = Utils.getTrimManager().getTrimOf(toTrim, references, click);
             if ( !trimResult.isEmpty()) {
                 Set<Element> turnedTo;
                 if (isInMap) {
@@ -190,32 +195,6 @@ public class TrimCommand implements UndoableCommand {
         }
 
         return clickedElement;
-    }
-
-    /**
-     * Performs the trim on a clicked element based on a set of reference
-     * elements and a click position.
-     * 
-     * @param clickedElement
-     *            The clicked element
-     * @param references
-     *            The set of reference elements
-     * @param click
-     *            The click position
-     * @return The collection of resulting elements
-     * @throws IllegalActionException
-     *             Thrown if the trim is invalid.
-     */
-    private Collection<Element> trim (Element clickedElement,
-            Collection<Element> references, Point click)
-            throws IllegalActionException {
-
-        Collection<Element> trimResult = new ArrayList<Element>();
-
-        Trimmable trimmableElement = (Trimmable) clickedElement;
-        trimResult.addAll(trimmableElement.trim(references, click));
-
-        return trimResult;
     }
 
     /**
