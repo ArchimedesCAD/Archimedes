@@ -14,7 +14,6 @@ import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Event;
 
 import br.org.archimedes.Constant;
-import br.org.archimedes.Utils;
 import br.org.archimedes.controller.Controller;
 import br.org.archimedes.controller.InputController;
 import br.org.archimedes.controller.commands.MacroCommand;
@@ -31,6 +30,7 @@ import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Rectangle;
 import br.org.archimedes.model.Vector;
+import br.org.archimedes.rcp.extensionpoints.FactoryEPLoader;
 
 /**
  * This class manipulate mouse click related events, and send them to its
@@ -45,6 +45,8 @@ public class MouseClickHandler extends Observable {
 
     private Workspace workspace;
 
+    private FactoryEPLoader loader;
+
 
     /**
      * Constructor.
@@ -52,6 +54,7 @@ public class MouseClickHandler extends Observable {
     private MouseClickHandler () {
 
         workspace = Workspace.getInstance();
+        loader = new FactoryEPLoader();
     }
 
     /**
@@ -63,7 +66,6 @@ public class MouseClickHandler extends Observable {
      */
     public void receiveClick (MouseEvent event) {
 
-    	
         boolean isShiftSelected = event.stateMask == SWT.SHIFT;
         SelectionCommand.setShiftSelected(isShiftSelected);
 
@@ -188,27 +190,7 @@ public class MouseClickHandler extends Observable {
      */
     public void receiveMiddleClick () {
 
-        // TODO Descobrir como fazer para avisar o pan
-        // CommandFactory factory = InputController.getInstance()
-        // .getCurrentFactory();
-        // if (factory == null || factory.getClass() != PanFactory.class
-        // || (factory.getClass() == PanFactory.class && factory.isDone())) {
-        // if (workspace.isMouseDown()) {
-        // pan = new PanFactory();
-        // pan.begin();
-        // Point point = workspace.getMousePosition();
-        // try {
-        // pan.next(point);
-        // } catch (InvalidParameterException e) {
-        // // Should not reach this block
-        // e.printStackTrace();
-        // }
-        // } else {
-        // pan.cancel();
-        // pan = null;
-        // }
-        // }
-
+        // TODO Discover how to warn the Pan command
     }
 
     /**
@@ -219,51 +201,33 @@ public class MouseClickHandler extends Observable {
      */
     public void receiveDoubleClick (MouseEvent event) {
 
-    	Controller controller = Controller.getInstance();
-    	
-    	try {
-    		//achar o elemento que está abaixo do duplo clique
-			Point normalizedPoint = getNormalizedPoint(event);
-			Element element = controller.getElementUnder(normalizedPoint, Element.class);
-			
-			if (element != null) {
-		    	//dado esse elemento, achar a factory que lida com
-		    	//duplo clique nesse elemento
-				SelectorFactory factory = Utils.getDoubleClickFactoryFor(element);
+        Controller controller = Controller.getInstance();
 
-				if (factory != null) {
-					//ativar a factory
-					InputController inputController = InputController.getInstance();
-					inputController.receiveText(factory.getName());										
-				}
+        try {
+            // achar o elemento que está abaixo do duplo clique
+            Point normalizedPoint = getNormalizedPoint(event);
+            Element element = controller.getElementUnder(normalizedPoint,
+                    Element.class);
 
-			}
+            if (element != null) {
+                // dado esse elemento, achar a factory que lida com
+                // duplo clique nesse elemento
+                SelectorFactory factory = loader
+                        .getDoubleClickFactoryFor(element);
 
+                if (factory != null) {
+                    // ativar a factory
+                    InputController inputController = InputController
+                            .getInstance();
+                    inputController.receiveText(factory.getName());
+                }
 
-			
-		} catch (NoActiveDrawingException e) {
-			e.printStackTrace();
-		}
-    	
-    	
-    	
-    	
-    	//abaixo jeito antigo
-//         Point point = getNormalizedPoint(event);
-//         try {
-//         point = workspace.getMousePosition();
-//         EditTextFactory factory = new EditTextFactory(point);
-//         List<Command> commands = factory.getCommands();
-//         Controller.getInstance().execute(commands);
-//         } catch (InvalidArgumentException e) {
-//         // No text under the click.
-//         } catch (NoActiveDrawingException e) {
-//         // Should not happen
-//         e.printStackTrace();
-//         } catch (IllegalActionException e) {
-//         // Can happen (layer blocked for example)
-//         }
+            }
+
+        }
+        catch (NoActiveDrawingException e) {
+            e.printStackTrace();
+        }
     }
-
 
 }

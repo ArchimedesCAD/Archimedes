@@ -5,14 +5,21 @@
 package br.org.archimedes.gui.actions;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 
+import br.org.archimedes.exceptions.InvalidFileFormatException;
 import br.org.archimedes.gui.model.Workspace;
+import br.org.archimedes.interfaces.Importer;
 import br.org.archimedes.model.Drawing;
+import br.org.archimedes.rcp.extensionpoints.NativeFormatEPLoader;
 
 /**
  * Belongs to package br.org.archimedes.gui.actions.
@@ -21,60 +28,87 @@ import br.org.archimedes.model.Drawing;
  */
 public class LoadCommand {
 
-	private Shell parent;
+    private Shell parent;
 
-	private MessageBox error;
+    private MessageBox error;
 
-	/**
-	 * Constructor
-	 * 
-	 * @param shell
-	 *            DialogBox's parent
-	 */
-	public LoadCommand(Shell shell) {
+    private NativeFormatEPLoader nativeLoader;
 
-		this.parent = shell;
 
-		error = new MessageBox(parent, SWT.OK | SWT.ICON_ERROR);
-		error.setMessage(Messages.Load_InvalidFileTitle);
-		error.setText(Messages.Load_InvalidFileText);
-	}
+    /**
+     * Constructor
+     * 
+     * @param shell
+     *            DialogBox's parent
+     */
+    public LoadCommand (Shell shell) {
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see br.org.archimedes.gui.actions.Command#execute()
-	 */
-	public Drawing execute() {
+        nativeLoader = new NativeFormatEPLoader();
+        this.parent = shell;
 
-		FileDialog dialog = new FileDialog(parent, SWT.OPEN);
-		dialog.setFilterExtensions(new String[] { "*.arc", "*.xml", "*" }); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        error = new MessageBox(parent, SWT.OK | SWT.ICON_ERROR);
+        error.setMessage(Messages.Load_InvalidFileTitle);
+        error.setText(Messages.Load_InvalidFileText);
+    }
 
-		dialog.setText(Messages.Load_OpenDialog);
+    /*
+     * (non-Javadoc)
+     * 
+     * @see br.org.archimedes.gui.actions.Command#execute()
+     */
+    public Drawing execute () {
 
-		Workspace workspace = Workspace.getInstance();
-		String lastDirectory = workspace.getLastUsedDirectory()
-				.getAbsolutePath();
+        FileDialog dialog = new FileDialog(parent, SWT.OPEN);
+        String[] extensions = nativeLoader.getExtensionsArray();
+        dialog.setFilterExtensions(extensions);
 
-		Drawing drawing = null;
-		String filePath;
-		do {
-			dialog.setFilterPath(lastDirectory);
-			filePath = dialog.open();
+        dialog.setText(Messages.Load_OpenDialog);
 
-			if (filePath != null) {
-				File file = new File(filePath);
-				lastDirectory = file.getParent();
-				if (file.exists() && file.canRead()) {
-                    // TODO Load
-					if (drawing == null) {
-						error.open();
-					}
-				}
+        Workspace workspace = Workspace.getInstance();
+        String lastDirectory = workspace.getLastUsedDirectory()
+                .getAbsolutePath();
 
-			}
-		} while (drawing == null && filePath != null);
+        Drawing drawing = null;
+        String filePath;
+        do {
+            dialog.setFilterPath(lastDirectory);
+            filePath = dialog.open();
 
-		return drawing;
-	}
+            if (filePath != null) {
+                File file = new File(filePath);
+                lastDirectory = file.getParent();
+                if (file.exists() && file.canRead()) {
+                    String filename = file.getName();
+                    String extension = filename.substring(filename
+                            .lastIndexOf(".") + 1);
+                    Importer importer = nativeLoader.getImporter(extension);
+
+                    try {
+                        InputStream input = new FileInputStream(filePath);
+                        drawing = importer.importDrawing(input);
+                        drawing.setFile(file);
+                    }
+                    catch (FileNotFoundException e) {
+                        // Shouldn't happen since I checked just before
+                        e.printStackTrace();
+                    }
+                    catch (InvalidFileFormatException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                    catch (IOException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+
+                    if (drawing == null) {
+                        error.open();
+                    }
+                }
+            }
+        }
+        while (drawing == null && filePath != null);
+
+        return drawing;
+    }
 }

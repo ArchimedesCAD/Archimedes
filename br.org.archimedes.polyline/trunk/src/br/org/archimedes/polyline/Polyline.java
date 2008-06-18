@@ -13,11 +13,11 @@ import java.util.TreeSet;
 
 import br.org.archimedes.Constant;
 import br.org.archimedes.Geometrics;
-import br.org.archimedes.Utils;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.InvalidParameterException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.gui.opengl.OpenGLWrapper;
+import br.org.archimedes.interfaces.IntersectionManager;
 import br.org.archimedes.line.Line;
 import br.org.archimedes.model.ComparablePoint;
 import br.org.archimedes.model.Element;
@@ -31,6 +31,7 @@ import br.org.archimedes.model.Vector;
 import br.org.archimedes.model.references.SquarePoint;
 import br.org.archimedes.model.references.TrianglePoint;
 import br.org.archimedes.model.references.XPoint;
+import br.org.archimedes.rcp.extensionpoints.IntersectionManagerEPLoader;
 
 /**
  * Belongs to package com.tarantulus.archimedes.model.
@@ -42,6 +43,9 @@ public class Polyline extends Element {
     private List<Point> points;
 
     private Layer parentLayer;
+
+    private IntersectionManager intersectionManager = new IntersectionManagerEPLoader()
+            .getIntersectionManager();
 
 
     /**
@@ -300,15 +304,18 @@ public class Polyline extends Element {
         }
 
         for (Line line : getLines()) {
-        	Collection<Point> intersections;
-			try {
-				intersections = Utils.getIntersectionManager().getIntersectionsBetween(line, this);
-				for (Point intersectionPoint : intersections)
-	        		references.add(new XPoint(intersectionPoint, intersectionPoint));
-			} catch (NullArgumentException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+            Collection<Point> intersections;
+            try {
+                intersections = intersectionManager.getIntersectionsBetween(
+                        line, this);
+                for (Point intersectionPoint : intersections)
+                    references.add(new XPoint(intersectionPoint,
+                            intersectionPoint));
+            }
+            catch (NullArgumentException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         }
         return references;
     }
@@ -430,7 +437,7 @@ public class Polyline extends Element {
 
         return result;
     }
-    
+
     /**
      * @return True if the polyline is closed, false otherwise
      */

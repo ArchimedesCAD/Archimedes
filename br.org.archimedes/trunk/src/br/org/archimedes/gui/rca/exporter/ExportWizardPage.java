@@ -6,9 +6,6 @@ import java.util.List;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.IExtension;
-import org.eclipse.core.runtime.IExtensionPoint;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
@@ -24,9 +21,15 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.ui.IWorkbench;
 
 import br.org.archimedes.interfaces.DrawingExporter;
+import br.org.archimedes.rcp.ExtensionLoader;
+import br.org.archimedes.rcp.ExtensionTagHandler;
 
 public class ExportWizardPage extends WizardSelectionPage implements
         ISelectionChangedListener {
+
+    private static final String CLASS_ATTRIBUTE_NAME = "class";
+
+    private static final String EXPORT_WIZARDS_EXTENSION_POINT_ID = "org.eclipse.ui.exportWizards";
 
     private TableViewer viewer;
 
@@ -50,58 +53,33 @@ public class ExportWizardPage extends WizardSelectionPage implements
      */
     protected List<IWizardNode> getAvailableExportWizards () {
 
-        List<IWizardNode> ret = new ArrayList<IWizardNode>();
+        final List<IWizardNode> ret = new ArrayList<IWizardNode>();
 
-        IExtensionPoint extensionPoint = Platform.getExtensionRegistry()
-                .getExtensionPoint("org.eclipse.ui.exportWizards"); //$NON-NLS-1$
-        if (extensionPoint != null) {
-            IExtension[] extensions = extensionPoint.getExtensions();
-            for (IExtension extension : extensions) {
+        ExtensionLoader loader = new ExtensionLoader(
+                EXPORT_WIZARDS_EXTENSION_POINT_ID); //$NON-NLS-1$
 
-                IConfigurationElement[] configElements = extension
-                        .getConfigurationElements();
-                for (IConfigurationElement element : configElements) {
-                    try {
-                        DrawingExporter exporter = parseExporter(element);
-                        exporter.init(workbench, selection);
-                        if (exporter != null) {
-                            ret.add(new ExportWizardNode(exporter));
-                        }
-                    }
-                    catch (ClassCastException e) {
-                        System.out
-                                .println("Encontrado ExportWizard que n�o implementa IExportWizard! Ignorando..."); //$NON-NLS-1$
+        loader.loadExtension(new ExtensionTagHandler() {
+
+            public void handleTag (IConfigurationElement tag)
+                    throws CoreException {
+
+                try {
+                    DrawingExporter exporter = (DrawingExporter) tag
+                            .createExecutableExtension(CLASS_ATTRIBUTE_NAME);
+                    exporter.init(workbench, selection);
+                    if (exporter != null) {
+                        ret.add(new ExportWizardNode(exporter));
                     }
                 }
+                catch (ClassCastException e) {
+                    System.err
+                            .println("Wizard that does not implement IWizard interface. Ignoring!"); //$NON-NLS-1$
+                }
+
             }
-        }
+        });
 
         return ret;
-    }
-
-    /**
-     * This type method is unchecked because 'createExecutableExtension' is not
-     * ready to deal with generics
-     * 
-     * @param element
-     *            The configuration element that contains the infos to be parsed
-     * @return The corresponding ElementExporter
-     */
-    @SuppressWarnings("unchecked")//$NON-NLS-1$
-    private <T>T parseExporter (IConfigurationElement element) {
-
-        T exporter = null;
-        if ("wizard".equals(element.getName())) { //$NON-NLS-1$
-            try {
-                exporter = (T) element.createExecutableExtension("class"); //$NON-NLS-1$
-            }
-            catch (CoreException e) {
-                System.err
-                        .println("Extension did not defined the correct element exporter"); //$NON-NLS-1$
-                e.printStackTrace();
-            }
-        }
-        return exporter;
     }
 
     /*

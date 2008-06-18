@@ -4,9 +4,9 @@ package br.org.archimedes.factories;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
-import br.org.archimedes.Utils;
 import br.org.archimedes.exceptions.ElementCreationException;
 import br.org.archimedes.model.Element;
+import br.org.archimedes.rcp.extensionpoints.ElementEPLoader;
 
 /**
  * @author vidlopes
@@ -27,8 +27,10 @@ public class ElementFactory {
     public Element createElement (String elementId, Object... args)
             throws ElementCreationException {
 
+        ElementEPLoader loader = new ElementEPLoader();
+
         Element element = null;
-        Class<? extends Element> elementClass = Utils
+        Class<? extends Element> elementClass = loader
                 .getElementClass(elementId);
         if (elementClass != null) {
             try {

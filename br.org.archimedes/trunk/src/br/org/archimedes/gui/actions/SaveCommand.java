@@ -5,6 +5,9 @@
 package br.org.archimedes.gui.actions;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
@@ -12,7 +15,9 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 
 import br.org.archimedes.gui.model.Workspace;
+import br.org.archimedes.interfaces.Exporter;
 import br.org.archimedes.model.Drawing;
+import br.org.archimedes.rcp.extensionpoints.NativeFormatEPLoader;
 
 /**
  * Belongs to package br.org.archimedes.gui.actions.
@@ -26,6 +31,8 @@ public class SaveCommand implements Command {
     private Shell shell;
 
     private Drawing drawing;
+
+    private NativeFormatEPLoader nativeLoader;
 
 
     /**
@@ -41,6 +48,7 @@ public class SaveCommand implements Command {
         this.drawing = drawing;
         this.shell = shell;
         this.showDialog = showDialog;
+        this.nativeLoader = new NativeFormatEPLoader();
     }
 
     /*
@@ -58,7 +66,13 @@ public class SaveCommand implements Command {
         }
 
         if (file != null) {
-            finished = writeXMLFile(file);
+            try {
+                finished = writeFile(file);
+            }
+            catch (IOException e) {
+                finished = false;
+                e.printStackTrace();
+            }
         }
 
         return finished;
@@ -70,18 +84,30 @@ public class SaveCommand implements Command {
      * @param file
      *            File that should be writen to.
      * @return true if it was writen correctly, false otherwise.
+     * @throws IOException
+     *             Thrown if something goes wrong while writting the file
      */
-    private boolean writeXMLFile (File file) {
+    private boolean writeFile (File file) throws IOException {
 
         boolean finished = true;
 
         if ( !file.exists() || file.canWrite()) {
-            // TODO Save
+            String filename = file.getName();
+            String extension = filename
+                    .substring(filename.lastIndexOf(".") + 1);
+            Exporter exporter = nativeLoader.getExporter(extension);
+
+            OutputStream output = new FileOutputStream(file);
+            exporter.exportDrawing(drawing, output);
+            output.close();
+
+            drawing.setFile(file);
             drawing.setSaved(true);
         }
         else {
             finished = false;
         }
+
         return finished;
     }
 
@@ -97,7 +123,10 @@ public class SaveCommand implements Command {
 
         FileDialog saveDialog = new FileDialog(shell, SWT.SAVE);
         saveDialog.setText(Messages.SaveAs_Title);
-        saveDialog.setFilterExtensions(new String[] {"*.arc", "*.xml", "*"}); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+
+        String[] extensions = nativeLoader.getExtensionsArray();
+        saveDialog.setFilterExtensions(extensions);
+
         Workspace workspace = Workspace.getInstance();
         String lastDirectory = workspace.getLastUsedDirectory()
                 .getAbsolutePath();
@@ -148,6 +177,7 @@ public class SaveCommand implements Command {
      */
     private int showOverwriteDialog () {
 
+        // TODO Verificar se outros sistemas (nao OSX) tb nativamente dao aviso
         MessageBox dialogBox = new MessageBox(shell, SWT.YES | SWT.NO
                 | SWT.ICON_QUESTION);
         dialogBox.setMessage(Messages.OverwriteQuestion);

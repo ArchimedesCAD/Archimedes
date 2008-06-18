@@ -16,6 +16,8 @@ import br.org.archimedes.model.Point;
  */
 public class Contributor extends EditorActionBarContributor implements Observer {
 
+    private static final String STATUS_BAR_ID = "br.org.archimedes.statusbar.position";
+
     private StatusLineContributionItem positionManager;
 
 
@@ -35,8 +37,7 @@ public class Contributor extends EditorActionBarContributor implements Observer 
     @Override
     public void contributeToStatusLine (IStatusLineManager statusLineManager) {
 
-        positionManager = new StatusLineContributionItem(
-                "br.org.archimedes.statusbar.position");
+        positionManager = new StatusLineContributionItem(STATUS_BAR_ID);
         statusLineManager.add(positionManager);
     }
 
@@ -52,13 +53,15 @@ public class Contributor extends EditorActionBarContributor implements Observer 
                 mousePosition.getX(), mousePosition.getY()});
         positionManager.setText(position);
     }
-    
-    /* (non-Javadoc)
+
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.eclipse.ui.part.EditorActionBarContributor#dispose()
      */
     @Override
     public void dispose () {
-    
+
         MouseMoveHandler.getInstance().deleteObserver(this);
         super.dispose();
     }

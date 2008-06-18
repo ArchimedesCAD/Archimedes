@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Archimedes Core
 Bundle-SymbolicName: br.org.archimedes;singleton:=true
-Bundle-Version: 0.54.0
+Bundle-Version: 0.56.0
 Bundle-ClassPath: .
 Bundle-Activator: br.org.archimedes.gui.rca.Activator
 Bundle-Vendor: Tarantulus Corporation
@@ -30,4 +30,6 @@ Export-Package: br.org.archimedes,
  br.org.archimedes.intersections,
  br.org.archimedes.model,
  br.org.archimedes.model.references,
- br.org.archimedes.parser
+ br.org.archimedes.parser,
+ br.org.archimedes.rcp,
+ br.org.archimedes.rcp.extensionpoints

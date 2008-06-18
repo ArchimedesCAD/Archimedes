@@ -6,9 +6,6 @@ import java.util.List;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.IExtension;
-import org.eclipse.core.runtime.IExtensionPoint;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
@@ -24,9 +21,15 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.ui.IWorkbench;
 
 import br.org.archimedes.interfaces.DrawingImporter;
+import br.org.archimedes.rcp.ExtensionLoader;
+import br.org.archimedes.rcp.ExtensionTagHandler;
 
 public class ImportWizardPage extends WizardSelectionPage implements
         ISelectionChangedListener {
+
+    private static final String IMPORT_WIZARDS_EXTENSION_POINT_ID = "org.eclipse.ui.importWizards";
+
+    private static final String CLASS_ATTRIBUTE_NAME = "class";
 
     private TableViewer viewer;
 
@@ -51,58 +54,32 @@ public class ImportWizardPage extends WizardSelectionPage implements
      */
     protected List<IWizardNode> getAvailableImportWizards () {
 
-        List<IWizardNode> ret = new LinkedList<IWizardNode>();
+        final List<IWizardNode> ret = new LinkedList<IWizardNode>();
 
-        IExtensionPoint extensionPoint = Platform.getExtensionRegistry()
-                .getExtensionPoint("org.eclipse.ui.importWizards"); //$NON-NLS-1$
-        if (extensionPoint != null) {
-            IExtension[] extensions = extensionPoint.getExtensions();
-            for (IExtension extension : extensions) {
+        ExtensionLoader loader = new ExtensionLoader(
+                IMPORT_WIZARDS_EXTENSION_POINT_ID);
+        loader.loadExtension(new ExtensionTagHandler() {
 
-                IConfigurationElement[] configElements = extension
-                        .getConfigurationElements();
-                for (IConfigurationElement element : configElements) {
-                    try {
-                        DrawingImporter importer = parseImporter(element);
-                        importer.init(workbench, selection);
-                        if (importer != null) {
-                            ret.add(new ImportWizardNode(importer));
-                        }
-                    }
-                    catch (ClassCastException e) {
-                        System.out
-                                .println("Encontrado ImportWizard que não implementa IImportWizard! Ignorando..."); //$NON-NLS-1$
+            public void handleTag (IConfigurationElement tag)
+                    throws CoreException {
+
+                try {
+                    DrawingImporter importer = (DrawingImporter) tag
+                            .createExecutableExtension(CLASS_ATTRIBUTE_NAME);
+                    importer.init(workbench, selection);
+                    if (importer != null) {
+                        ret.add(new ImportWizardNode(importer));
                     }
                 }
+                catch (ClassCastException e) {
+                    System.out
+                            .println("Got an import wizard that does not implement IWizard interface. Ignoring!"); //$NON-NLS-1$
+                }
             }
-        }
+
+        });
 
         return ret;
-    }
-
-    /**
-     * This type method is unchecked because 'createExecutableExtension' is not
-     * ready to deal with generics
-     * 
-     * @param element
-     *            The configuration element that contains the infos to be parsed
-     * @return The corresponding ElementExporter
-     */
-    @SuppressWarnings("unchecked")//$NON-NLS-1$
-    private <T>T parseImporter (IConfigurationElement element) {
-
-        T importer = null;
-        if ("wizard".equals(element.getName())) { //$NON-NLS-1$
-            try {
-                importer = (T) element.createExecutableExtension("class"); //$NON-NLS-1$
-            }
-            catch (CoreException e) {
-                System.err
-                        .println("Extension did not define the correct element importer"); //$NON-NLS-1$
-                e.printStackTrace();
-            }
-        }
-        return importer;
     }
 
     /*

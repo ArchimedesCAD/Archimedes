@@ -11,6 +11,7 @@ Require-Bundle: br.org.archimedes,
  br.org.archimedes.polyline;bundle-version="0.54.0",
  br.org.archimedes.undo;bundle-version="0.54.0",
  br.org.archimedes.line;bundle-version="0.54.0"
-Export-Package: br.org.archimedes.trims.interfaces
+Export-Package: br.org.archimedes.trims,
+ br.org.archimedes.trims.interfaces
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: br.org.archimedes.trims.Activator

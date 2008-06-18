@@ -12,19 +12,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import br.org.archimedes.Utils;
 import br.org.archimedes.controller.Controller;
 import br.org.archimedes.controller.commands.MacroCommand;
 import br.org.archimedes.controller.commands.PutOrRemoveElementCommand;
 import br.org.archimedes.exceptions.IllegalActionException;
 import br.org.archimedes.exceptions.NoActiveDrawingException;
 import br.org.archimedes.exceptions.NullArgumentException;
+import br.org.archimedes.interfaces.TrimManager;
 import br.org.archimedes.interfaces.UndoableCommand;
 import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Trimmable;
-
+import br.org.archimedes.rcp.extensionpoints.TrimManagerEPLoader;
 
 /**
  * Belongs to package br.org.archimedes.model.commands.
@@ -43,6 +43,8 @@ public class TrimCommand implements UndoableCommand {
 
     private boolean performedOnce;
 
+    private TrimManager trimManager;
+
 
     /**
      * @param references
@@ -52,6 +54,7 @@ public class TrimCommand implements UndoableCommand {
      */
     public TrimCommand (Collection<Element> references, List<Point> points) {
 
+        trimManager = new TrimManagerEPLoader().getTrimManager();
         this.points = points;
         macro = null;
         performedOnce = false;
@@ -128,7 +131,7 @@ public class TrimCommand implements UndoableCommand {
      * @throws IllegalActionException
      *             In case no element was clicked
      * @throws NullArgumentException
-     * 			   In case that the references of trimming are null
+     *             In case that the references of trimming are null
      */
     private void computeTrim (Drawing drawing, Point click)
             throws IllegalActionException, NullArgumentException {
@@ -159,7 +162,8 @@ public class TrimCommand implements UndoableCommand {
         }
 
         if (key == null || isInMap) {
-            Collection<Element> trimResult = Utils.getTrimManager().getTrimOf(toTrim, references, click);
+            
+            Collection<Element> trimResult = trimManager.getTrimOf(toTrim, references, click);
             if ( !trimResult.isEmpty()) {
                 Set<Element> turnedTo;
                 if (isInMap) {

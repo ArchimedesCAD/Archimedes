@@ -2,7 +2,7 @@
 <feature
       id="br.org.archimedes.xml.feature"
       label="Xml Feature"
-      version="0.54.0"
+      version="0.56.0"
       provider-name="Tarantulus Corp.">
 
    <description>

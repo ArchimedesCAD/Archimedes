@@ -14,12 +14,10 @@ import br.org.archimedes.model.Element;
 import br.org.archimedes.parser.SimpleSelectionParser;
 
 /**
- * Belongs to package com.tarantulus.archimedes.factories.
- * 
- * NOTA: Factories que vao lidar com doubleclicks devem extender
- * de SelectorFactory. Afinal, faz sentido que o primeiro passo
- * de uma factory que lida com duplo clique seja uma seleção...
- * senão no quê você estaria dando um duplo clique??
+ * Belongs to package com.tarantulus.archimedes.factories. NOTA: Factories that
+ * will handle double clicks must extend SelectorFactory. After all, it makes
+ * sense that the first step of a factory that will handle double clicks is a
+ * selection... Otherwise in what should you be double clicking?
  * 
  * @author night
  */
@@ -28,6 +26,7 @@ public abstract class SelectorFactory implements CommandFactory {
     private Parser parser;
 
     private boolean done;
+
 
     public SelectorFactory () {
 
@@ -40,7 +39,8 @@ public abstract class SelectorFactory implements CommandFactory {
         String returnValue = null;
         done = false;
         try {
-            Set<Element> selection = Controller.getInstance().getCurrentSelectedElements();
+            Set<Element> selection = Controller.getInstance()
+                    .getCurrentSelectedElements();
 
             if (selection == null || selection.isEmpty()) {
                 parser = new SimpleSelectionParser();
@@ -61,7 +61,7 @@ public abstract class SelectorFactory implements CommandFactory {
         return returnValue;
     }
 
-    @SuppressWarnings("unchecked") //$NON-NLS-1$
+    @SuppressWarnings("unchecked")//$NON-NLS-1$
     public String next (Object parameter) throws InvalidParameterException {
 
         String message;

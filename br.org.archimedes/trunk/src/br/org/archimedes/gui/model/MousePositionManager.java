@@ -25,6 +25,7 @@ import br.org.archimedes.model.Rectangle;
 import br.org.archimedes.model.ReferencePoint;
 import br.org.archimedes.model.references.OrthogonalPoint;
 import br.org.archimedes.model.references.XPoint;
+import br.org.archimedes.rcp.extensionpoints.IntersectionManagerEPLoader;
 
 /**
  * Belongs to package br.org.archimedes.gui.model.
@@ -48,7 +49,7 @@ public class MousePositionManager implements Observer {
         mousePosition = new Point(0, 0);
         perpendicularReferencePoint = null;
         isActive = false;
-        manager = Utils.getIntersectionManager();
+        manager = new IntersectionManagerEPLoader().getIntersectionManager();
     }
 
     /*

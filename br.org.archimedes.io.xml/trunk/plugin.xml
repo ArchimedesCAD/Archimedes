@@ -3,32 +3,16 @@
 <plugin>
    <extension
          point="br.org.archimedes.nativeFormat">
-         <nativeFormat id="xml" name="%extensionName" extension="xml"
-         	importer="br.org.archimedes.xml.XMLImporter"
-         	exporter="br.org.archimedes.xml.XMLExporter">
+         <nativeFormat id="xml" name="%xmlExtensionName" extension="xml"
+         	importer="br.org.archimedes.io.xml.XMLImporter"
+         	exporter="br.org.archimedes.io.xml.XMLExporter">
          </nativeFormat>
    </extension>
    <extension
-         point="br.org.archimedes.exporter">
-         <exporter id="br.org.archimedes.xml.exporter" extension="xml" name="XML Exporter" class="br.org.archimedes.io.xml.XMLExporter"/>
+         point="br.org.archimedes.nativeFormat">
+         <nativeFormat id="arc" name="%xmlExtensionName" extension="arc"
+            importer="br.org.archimedes.io.xml.XMLImporter"
+            exporter="br.org.archimedes.io.xml.XMLExporter">
+         </nativeFormat>
    </extension>
-   <extension
-         point="br.org.archimedes.importer">
-         <importer id="br.org.archimedes.xml.importer" extension="xml" name="XML Importer" class="br.org.archimedes.io.xml.XMLImporter"/>
-   </extension>  
-      <extension
-         point="org.eclipse.ui.exportWizards">
-      <wizard
-            class="br.org.archimedes.io.xml.XMLWizardExporter"
-            id="br.org.archimedes.io.xml.wizard"
-            name="XML Exporter Wizard"/>
-   </extension>
-      <extension
-            point="org.eclipse.ui.importWizards">
-         <wizard
-               class="br.org.archimedes.io.xml.XMLWizardImporter"
-               id="br.org.archimedes.io.xml.importWizard"
-               name="XML Import Wizard">
-         </wizard>
-      </extension>
 </plugin>

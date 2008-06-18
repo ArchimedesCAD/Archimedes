@@ -8,7 +8,6 @@ import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.eclipse.ui.PartInitException;
 
 import br.org.archimedes.gui.actions.LoadCommand;
-import br.org.archimedes.gui.rca.Messages;
 import br.org.archimedes.gui.rca.editor.DrawingInput;
 import br.org.archimedes.model.Drawing;
 
@@ -22,20 +21,10 @@ import br.org.archimedes.model.Drawing;
  */
 public class OpenDrawing implements IWorkbenchWindowActionDelegate {
 
-    private static int drawingNumber = 0;
+    private static final String DRAWING_EDITOR_ID = "br.org.archimedes.gui.rca.editor.DrawingEditor";
 
     private IWorkbenchWindow window;
 
-    private boolean load;
-
-
-    /**
-     * The constructor.
-     */
-    public OpenDrawing () {
-
-        load = false;
-    }
 
     /**
      * The action has been activated. The argument of the method represents the
@@ -43,23 +32,14 @@ public class OpenDrawing implements IWorkbenchWindowActionDelegate {
      * 
      * @see IWorkbenchWindowActionDelegate#run
      */
-    public void run (IAction action) {
+    public final void run (IAction action) {
 
-        Drawing drawing = null;
-        if (load) {
-            LoadCommand command = new LoadCommand(window.getShell());
-            drawing = command.execute();
-        }
-        else {
-            drawing = new Drawing(Messages.NewDrawingName + " " //$NON-NLS-1$
-                    + OpenDrawing.fetchAndAdd());
-        }
+        Drawing drawing = obtainDrawing();
 
         if (drawing != null) {
-
             try {
                 window.getActivePage().openEditor(new DrawingInput(drawing),
-                        "br.org.archimedes.gui.rca.editor.DrawingEditor"); //$NON-NLS-1$
+                        DRAWING_EDITOR_ID);
             }
             catch (PartInitException e) {
                 e.printStackTrace();
@@ -67,9 +47,13 @@ public class OpenDrawing implements IWorkbenchWindowActionDelegate {
         }
     }
 
-    private static int fetchAndAdd () {
+    /**
+     * @return The obtained Drawing
+     */
+    protected Drawing obtainDrawing () {
 
-        return drawingNumber++;
+        LoadCommand command = new LoadCommand(window.getShell());
+        return command.execute();
     }
 
     /**

@@ -160,9 +160,10 @@
                 class="br.org.archimedes.gui.rca.actions.ImportAction"
                 icon="icons/import.png"
                 id="br.org.archimedes.action.import"
-                label="Importar..."
+                label="%action.import.label"
                 menubarPath="file/slot3"
-                style="push">
+                style="push"
+                tooltip="%action.import.tooltip">
           </action>
          <action
                class="br.org.archimedes.gui.rca.actions.ExportAction"
@@ -178,14 +179,6 @@
             </enablement>
          </action>
 <!--         <action
-               class="br.org.archimedes.gui.rca.actions.ImportDrawing"
-               icon="icons/import.png"
-               id="br.org.archimedes.action.import"
-               label="%action.import.label"
-               menubarPath="file/slot3"
-               style="push"
-               tooltip="%action.import.tooltip"/>
-         <action
                id="br.org.archimedes.action.prefs"
                label="%action.prefs.label"
                menubarPath="file/slot4"
@@ -214,7 +207,7 @@
          </action>
          <action
                class="br.org.archimedes.gui.rca.actions.CloseAction"
-               enablesFor="*"
+               enablesFor="+"
                icon="icons/close.png"
                id="br.org.archimedes.action.close"
                label="%action.close.label"
@@ -226,39 +219,60 @@
                <objectClass name="br.org.archimedes.model.Drawing"/>
             </enablement>
          </action>
-<!--         <action
+         <action
+               class="br.org.archimedes.gui.rca.actions.SaveAllAction"
                icon="icons/saveall.png"
+               enablesFor="+"
                id="br.org.archimedes.action.saveall"
                label="%action.saveall.label"
                menubarPath="file/slot1"
                style="push"
-               tooltip="%action.saveall.tooltip"/>
+               tooltip="%action.saveall.tooltip">
+             <enablement>
+               <objectClass name="br.org.archimedes.model.Drawing"/>
+             </enablement>
+         </action>
          <action
+               class="br.org.archimedes.gui.rca.actions.SaveAsAction"
                icon="icons/saveas.png"
+               enablesFor="+"
                id="br.org.archimedes.action.saveas"
                label="%action.saveas.label"
                menubarPath="file/slot1"
                style="push"
-               tooltip="%action.saveas.tooltip"/>
+               tooltip="%action.saveas.tooltip">
+             <enablement>
+               <objectClass name="br.org.archimedes.model.Drawing"/>
+             </enablement>
+         </action>
          <action
+               class="br.org.archimedes.gui.rca.actions.SaveAction"
                icon="icons/save.png"
+               enablesFor="+"
                id="br.org.archimedes.action.save"
                label="%action.save.label"
                menubarPath="file/slot1"
                style="push"
                toolbarPath="file"
-               tooltip="%action.save.tooltip"/>
+               tooltip="%action.save.tooltip">
+             <enablement>
+               <objectClass name="br.org.archimedes.model.Drawing"/>
+             </enablement>
+          </action>
           <action
+                allowLabelUpdate="false"
+                class="br.org.archimedes.gui.rca.actions.OpenDrawing"
                 icon="icons/open.png"
                 id="br.org.archimedes.action.open"
                 label="%action.open.label"
                 menubarPath="file/begin"
                 style="push"
                 toolbarPath="file"
-                tooltip="%action.open.tooltip"/> -->
+                tooltip="%action.open.tooltip">
+          </action>
           <action
                 allowLabelUpdate="false"
-                class="br.org.archimedes.gui.rca.actions.OpenDrawing"
+                class="br.org.archimedes.gui.rca.actions.NewDrawing"
                 icon="icons/new.png"
                 id="br.org.archimedes.action.newDrawing"
                 label="%action.newDrawing.label"

@@ -19,7 +19,6 @@ import java.util.Set;
 import java.util.Stack;
 
 import br.org.archimedes.Constant;
-import br.org.archimedes.Utils;
 import br.org.archimedes.exceptions.IllegalActionException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.gui.model.Workspace;
@@ -29,6 +28,7 @@ import br.org.archimedes.gui.swt.Messages;
 import br.org.archimedes.interfaces.Command;
 import br.org.archimedes.interfaces.IntersectionManager;
 import br.org.archimedes.interfaces.UndoableCommand;
+import br.org.archimedes.rcp.extensionpoints.IntersectionManagerEPLoader;
 
 /**
  * Belongs to package br.org.archimedes.model.
@@ -325,7 +325,8 @@ public class Drawing extends Observable implements Observer {
                     continue;
                 }
 
-                IntersectionManager manager = Utils.getIntersectionManager();
+                IntersectionManagerEPLoader loader = new IntersectionManagerEPLoader();
+                IntersectionManager manager = loader.getIntersectionManager();
                 if (manager.intersects(rect, element)) {
                     selection.add(element);
                 }
