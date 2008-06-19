@@ -33,8 +33,6 @@ public class RedoCommand implements Command {
             UndoableCommand command = redoHistory.pop();
             undoHistory.push(command);
             command.doIt(drawing);
-            drawing.setSaved(false);
-            drawing.notifyChange();
         }
         else {
             throw new IllegalActionException(Messages.notPerformed);

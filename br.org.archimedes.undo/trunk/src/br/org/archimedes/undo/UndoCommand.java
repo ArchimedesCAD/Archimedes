@@ -33,19 +33,17 @@ public class UndoCommand implements Command {
             UndoableCommand command = undoHistory.pop();
             redoHistory.push(command);
             command.undoIt(drawing);
-            drawing.setSaved(false);
-            drawing.notifyChange();
         }
         else {
             throw new IllegalActionException(
                     Messages.notPerformed);
         }
 
-        // TODO Modificar isso para usar o Observer nos botões
-        // Criar método no drawing void
+        // TODO Modificar isso para usar o Observer nos botï¿½es
+        // Criar mï¿½todo no drawing void
         // manipulateHistories(Stack<UndoableCommand> toBePoped,
         // Stack<UndoableCommand> toBePushed) throws ...
-        // Ele manipula as pilhas e já notifica os observadores de uma mudança
+        // Ele manipula as pilhas e jï¿½ notifica os observadores de uma mudanï¿½a
         // nestes estados.
     }
 }

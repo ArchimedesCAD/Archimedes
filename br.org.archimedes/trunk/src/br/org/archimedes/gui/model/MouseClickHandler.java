@@ -170,7 +170,6 @@ public class MouseClickHandler extends Observable {
             list.add(macro);
 
             controller.execute(list);
-            controller.getActiveDrawing().notifyChange();
         }
         catch (NullArgumentException e) {
             // Should not reach this code.

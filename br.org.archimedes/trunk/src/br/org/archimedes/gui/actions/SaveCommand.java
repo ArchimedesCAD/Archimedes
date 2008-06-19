@@ -61,11 +61,11 @@ public class SaveCommand implements Command {
         File file = drawing.getFile();
         boolean finished = false;
         if (showDialog || file == null) {
-            finished = showDialog();
-            file = drawing.getFile();
+            file = showDialog();
+            finished = (file != null);
         }
 
-        if (file != null) {
+        if (finished) {
             try {
                 finished = writeFile(file);
             }
@@ -89,7 +89,7 @@ public class SaveCommand implements Command {
      */
     private boolean writeFile (File file) throws IOException {
 
-        boolean finished = true;
+        boolean finished = false;
 
         if ( !file.exists() || file.canWrite()) {
             String filename = file.getName();
@@ -101,11 +101,9 @@ public class SaveCommand implements Command {
             exporter.exportDrawing(drawing, output);
             output.close();
 
-            drawing.setFile(file);
             drawing.setSaved(true);
-        }
-        else {
-            finished = false;
+            drawing.setFile(file);
+            finished = true;
         }
 
         return finished;
@@ -116,7 +114,7 @@ public class SaveCommand implements Command {
      * 
      * @return true if it finished successfully, false if it was canceled.
      */
-    private boolean showDialog () {
+    private File showDialog () {
 
         File file = null;
         File chosenFile;
@@ -144,14 +142,12 @@ public class SaveCommand implements Command {
                 lastDirectory = chosenFile.getParent();
                 if ( !chosenFile.exists()
                         && chosenFile.getParentFile().canWrite()) {
-                    drawing.setFile(chosenFile);
                     file = chosenFile;
                     workspace.setLastUsedDirectory(chosenFile.getParentFile());
                     finished = true;
                 }
                 else if (chosenFile.canWrite()) {
                     if (showOverwriteDialog() == SWT.YES) {
-                        drawing.setFile(chosenFile);
                         file = chosenFile;
                         workspace.setLastUsedDirectory(chosenFile
                                 .getParentFile());
@@ -167,7 +163,7 @@ public class SaveCommand implements Command {
             }
         }
 
-        return (file != null);
+        return file;
     }
 
     /**
@@ -177,6 +173,10 @@ public class SaveCommand implements Command {
      */
     private int showOverwriteDialog () {
 
+        if(System.getProperty("os.name").contains("Mac")) {
+            return SWT.YES;
+        }
+        
         // TODO Verificar se outros sistemas (nao OSX) tb nativamente dao aviso
         MessageBox dialogBox = new MessageBox(shell, SWT.YES | SWT.NO
                 | SWT.ICON_QUESTION);

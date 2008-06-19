@@ -151,11 +151,14 @@ public class DrawingEditor extends EditorPart implements Observer,
         }
         setSite(site);
         setInput(input);
-        setPartName(getDrawing().getTitle());
+        setPartName(input.getName());
+
         openGL = OpenGLWrapper.getInstance();
         visualHelper = new VisualHelper();
+
         getDrawing().addObserver(this);
         getSite().setSelectionProvider(this);
+
         getEditorSite().getWorkbenchWindow().getPartService().addPartListener(
                 new IPartListener() {
 
@@ -165,7 +168,8 @@ public class DrawingEditor extends EditorPart implements Observer,
                     public void partActivated (IWorkbenchPart part) {
 
                         if (part == DrawingEditor.this) {
-                            System.out.println("Ativando: " + getDrawing().getTitle());
+                            System.out.println("Ativando: "
+                                    + getDrawing().getTitle());
                             lastActivated = part;
                             InputController.getInstance().setDrawing(
                                     getDrawing());
@@ -182,13 +186,16 @@ public class DrawingEditor extends EditorPart implements Observer,
                         System.out.println("Fechando");
                         try {
                             Drawing activeDrawing = Controller.getInstance()
-                                                                        .getActiveDrawing();
-                            System.out.println("Active drawing: "+activeDrawing.getTitle());
+                                    .getActiveDrawing();
+                            System.out.println("Active drawing: "
+                                    + activeDrawing.getTitle());
                             if (part == DrawingEditor.this
                                     || getDrawing() == activeDrawing) {
-                                System.out.println("Fechando: " + getDrawing().getTitle());
-                                System.out.println("Part recebida: "+ part);
-                                System.out.println("Eu-----------: "+ DrawingEditor.this);
+                                System.out.println("Fechando: "
+                                        + getDrawing().getTitle());
+                                System.out.println("Part recebida: " + part);
+                                System.out.println("Eu-----------: "
+                                        + DrawingEditor.this);
                                 InputController.getInstance().setDrawing(null);
                                 partActivated(lastActivated);
                             }
@@ -201,8 +208,9 @@ public class DrawingEditor extends EditorPart implements Observer,
 
                     public void partDeactivated (IWorkbenchPart part) {
 
-                        if(part == DrawingEditor.this) {
-                            System.out.println("Desativando: " + getDrawing().getTitle());
+                        if (part == DrawingEditor.this) {
+                            System.out.println("Desativando: "
+                                    + getDrawing().getTitle());
                             lastActivated = null;
                         }
                     }
@@ -217,8 +225,7 @@ public class DrawingEditor extends EditorPart implements Observer,
     @Override
     public boolean isDirty () {
 
-        // TODO Adjust when it is possible to save the drawing
-        return false;// !getDrawing().isSaved();
+        return !getDrawing().isSaved();
     }
 
     @Override
@@ -355,6 +362,9 @@ public class DrawingEditor extends EditorPart implements Observer,
         openGL.setCurrentDrawing(drawing);
         openGL.clear();
         drawing.draw(openGL);
+
+        setPartName(getEditorInput().getName());
+
         if (drawing == active) {
             visualHelper.draw(currentCursor == Constant.NORMAL_CURSOR);
         }

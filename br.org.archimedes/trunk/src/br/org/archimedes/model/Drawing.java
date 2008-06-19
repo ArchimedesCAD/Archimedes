@@ -18,6 +18,8 @@ import java.util.Observer;
 import java.util.Set;
 import java.util.Stack;
 
+import org.eclipse.swt.opengl.GLCanvas;
+
 import br.org.archimedes.Constant;
 import br.org.archimedes.exceptions.IllegalActionException;
 import br.org.archimedes.exceptions.NullArgumentException;
@@ -33,7 +35,6 @@ import br.org.archimedes.rcp.extensionpoints.IntersectionManagerEPLoader;
 /**
  * Belongs to package br.org.archimedes.model.
  */
-// TODO Setar saved para false qdo necessario
 public class Drawing extends Observable implements Observer {
 
     private String title;
@@ -86,7 +87,7 @@ public class Drawing extends Observable implements Observer {
         this.viewportPosition = new Point(0.0, 0.0);
         this.undoHistory = new Stack<UndoableCommand>();
         this.redoHistory = new Stack<UndoableCommand>();
-        this.saved = false;
+        this.setSaved(false);
         this.helperLayer = new Layer(new Color(1.0, 1.0, 1.0), "Helper Layer", //$NON-NLS-1$
                 LineStyle.CONTINUOUS, 1.0);
 
@@ -213,8 +214,8 @@ public class Drawing extends Observable implements Observer {
 
         Selection selection = getSelection();
         selection.remove(element);
-        setSaved(false);
-        notifyChange();
+        setChanged();
+        notifyObservers();
     }
 
     /**
@@ -340,15 +341,6 @@ public class Drawing extends Observable implements Observer {
     }
 
     /**
-     * Notify the observers
-     */
-    public void notifyChange () {
-
-        setChanged();
-        notifyObservers();
-    }
-
-    /**
      * @param lastCommand
      *            The lastCommand to set.
      */
@@ -376,11 +368,10 @@ public class Drawing extends Observable implements Observer {
     public void setZoom (double zoom) {
 
         if (Math.abs(this.zoom - zoom) > Constant.EPSILON) {
-            setSaved(false);
             setChanged();
             this.zoom = zoom;
-            notifyObservers(zoom);
         }
+        notifyObservers(zoom);
     }
 
     /**
@@ -452,9 +443,23 @@ public class Drawing extends Observable implements Observer {
      */
     public void setFile (File file) {
 
-        this.file = file;
-        this.title = file.getName();
-        notifyChange();
+        if (file != this.file) {
+            OpenGLWrapper instance = OpenGLWrapper.getInstance();
+
+            GLCanvas canvas = instance.getDrawingCanvas().remove(this);
+            this.file = file;
+            this.title = file.getName();
+            try {
+                instance.addDrawingCanvas(this, canvas);
+            }
+            catch (NullArgumentException e) {
+                // this cannot be null
+                e.printStackTrace();
+            }
+        }
+
+        setChanged();
+        notifyObservers();
     }
 
     /**
@@ -505,7 +510,8 @@ public class Drawing extends Observable implements Observer {
     public void setSelection (Selection selection) {
 
         this.selection = selection;
-        notifyChange();
+        super.setChanged();
+        notifyObservers();
     }
 
     /**
@@ -514,16 +520,6 @@ public class Drawing extends Observable implements Observer {
     public void clearSelection () {
 
         setSelection(new Selection());
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.model.Drawing#setSaved(boolean)
-     */
-    public void setSaved (boolean saved) {
-
-        this.saved = saved;
     }
 
     /**
@@ -564,11 +560,24 @@ public class Drawing extends Observable implements Observer {
             layers.put(layer.getName(), layer);
             layer.addObserver(this);
             setChanged();
-            notifyObservers(layer);
         }
         else {
             // TODO - A behaviour must be choosen
         }
+
+        notifyObservers(layer);
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.util.Observable#setChanged()
+     */
+    @Override
+    protected synchronized void setChanged () {
+
+        super.setChanged();
+        setSaved(false);
     }
 
     /**
@@ -655,8 +664,8 @@ public class Drawing extends Observable implements Observer {
         Layer destination = layers.get(layer.getName());
         if ( !destination.isLocked()) {
             destination.putElement(element);
-            setSaved(false);
-            notifyChange();
+            setChanged();
+            notifyObservers();
         }
         else {
             throw new IllegalActionException();
@@ -708,18 +717,6 @@ public class Drawing extends Observable implements Observer {
                 addToUndo(command);
             }
             notifyObservers();
-            // if(!redoHistory.isEmpty()) {
-            // Window.getInstance().enableRedo();
-            // }
-            // else {
-            // Window.getInstance().disableRedo();
-            // }
-            // if(!undoHistory.isEmpty()) {
-            // Window.getInstance().enableUndo();
-            // }
-            // else {
-            // Window.getInstance().disableUndo();
-            // }
         }
     }
 
@@ -808,5 +805,13 @@ public class Drawing extends Observable implements Observer {
             }
             openGL.setLineWidth(OpenGLWrapper.NORMAL_WIDTH);
         }
+    }
+
+    /**
+     * @param saved True if the drawing is saved, false otherwise.
+     */
+    public void setSaved (boolean saved) {
+
+        this.saved = saved;
     }
 }
