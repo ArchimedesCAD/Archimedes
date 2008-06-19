@@ -23,8 +23,20 @@
                style="push"
                toolbarPath="transform/simple1"
                tooltip="Trims the selected element">
+            <enablement>
+               <objectClass
+                     name="br.org.archimedes.model.Drawing">
+               </objectClass>
+            </enablement>
          </action>
       </actionSet>
+   </extension>
+   <extension
+         point="br.org.archimedes.factory">
+         <factory id="br.org.archimedes.trims"
+          class="br.org.archimedes.trims.TrimFactory">
+         	<shortcut id="l"/>
+         </factory>
    </extension>
 
 </plugin>

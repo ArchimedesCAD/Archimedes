@@ -5,18 +5,24 @@ import java.util.Collection;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import br.org.archimedes.Utils;
 import br.org.archimedes.exceptions.NullArgumentException;
+import br.org.archimedes.interfaces.IntersectionManager;
 import br.org.archimedes.line.Line;
 import br.org.archimedes.model.ComparablePoint;
 import br.org.archimedes.model.DoubleKey;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Vector;
+import br.org.archimedes.rcp.extensionpoints.IntersectionManagerEPLoader;
 import br.org.archimedes.trims.interfaces.Trimmer;
 
 public class LineTrimmer implements Trimmer {
-
+	private IntersectionManager intersectionManager;
+	
+	public LineTrimmer() {
+		intersectionManager = new IntersectionManagerEPLoader().getIntersectionManager();
+	}
+	
 	public Collection<Element> trim(Element element,
 			Collection<Element> references, Point click)
 			throws NullArgumentException {
@@ -28,7 +34,7 @@ public class LineTrimmer implements Trimmer {
 		Line line = (Line) element;
 		Collection<Element> trimResult = new ArrayList<Element>();
 		SortedSet<ComparablePoint> sortedPointSet = getSortedPointSet(line, line
-				.getInitialPoint(), Utils.getIntersectionManager()
+				.getInitialPoint(), intersectionManager
 				.getIntersectionsBetween(line, references));
 
 		Vector direction = new Vector(line.getInitialPoint(), line.getEndingPoint());
