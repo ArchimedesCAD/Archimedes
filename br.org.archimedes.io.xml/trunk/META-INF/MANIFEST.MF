@@ -6,7 +6,7 @@ Bundle-Version: 0.56.0
 Bundle-Activator: br.org.archimedes.io.xml.Activator
 Bundle-Vendor: Tarantulus Corporation
 Bundle-Localization: plugin
-Require-Bundle: br.org.archimedes,
+Require-Bundle: br.org.archimedes;bundle-version="0.56.0",
  org.eclipse.core.runtime,
  org.eclipse.ui
 Eclipse-LazyStart: true
