@@ -7,3 +7,4 @@ Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Require-Bundle: br.org.archimedes;bundle-version="0.54.0",
  br.org.archimedes.line;bundle-version="0.54.0",
  br.org.archimedes.trims;bundle-version="0.56.0"
+Export-Package: br.org.archimedes.trim.line

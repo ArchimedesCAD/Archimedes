@@ -18,11 +18,12 @@ import br.org.archimedes.trims.interfaces.Trimmer;
 
 public class LineTrimmer implements Trimmer {
 	private IntersectionManager intersectionManager;
-	
+
 	public LineTrimmer() {
-		intersectionManager = new IntersectionManagerEPLoader().getIntersectionManager();
+		intersectionManager = new IntersectionManagerEPLoader()
+				.getIntersectionManager();
 	}
-	
+
 	public Collection<Element> trim(Element element,
 			Collection<Element> references, Point click)
 			throws NullArgumentException {
@@ -33,11 +34,12 @@ public class LineTrimmer implements Trimmer {
 
 		Line line = (Line) element;
 		Collection<Element> trimResult = new ArrayList<Element>();
-		SortedSet<ComparablePoint> sortedPointSet = getSortedPointSet(line, line
-				.getInitialPoint(), intersectionManager
-				.getIntersectionsBetween(line, references));
+		SortedSet<ComparablePoint> sortedPointSet = getSortedPointSet(line,
+				line.getInitialPoint(), intersectionManager
+						.getIntersectionsBetween(line, references));
 
-		Vector direction = new Vector(line.getInitialPoint(), line.getEndingPoint());
+		Vector direction = new Vector(line.getInitialPoint(), line
+				.getEndingPoint());
 		Vector clickVector = new Vector(line.getInitialPoint(), click);
 		double key = direction.dotProduct(clickVector);
 		ComparablePoint clickPoint = null;
@@ -53,27 +55,29 @@ public class LineTrimmer implements Trimmer {
 
 		try {
 			if (headSet.size() == 0 && tailSet.size() > 0) {
-				Element trimmedLine = new Line(tailSet.first().getPoint(),
-						line.getEndingPoint());
+				Element trimmedLine = new Line(tailSet.first().getPoint(), line
+						.getEndingPoint());
 				trimmedLine.setLayer(line.getLayer());
 
 				trimResult.add(trimmedLine);
 			} else if (tailSet.size() == 0 && headSet.size() > 0) {
-				Element trimmedLine = new Line(line.getInitialPoint(), headSet.last()
-						.getPoint());
+				Element trimmedLine = new Line(line.getInitialPoint(), headSet
+						.last().getPoint());
 				trimmedLine.setLayer(line.getLayer());
 
 				trimResult.add(trimmedLine);
 			} else if (headSet.size() > 0 && tailSet.size() > 0) {
-				Element trimmedLine1 = new Line(line.getInitialPoint(), headSet.last()
-						.getPoint());
-				Element trimmedLine2 = new Line(tailSet.first().getPoint(),
-						line.getEndingPoint());
+				Element trimmedLine1 = new Line(line.getInitialPoint(), headSet
+						.last().getPoint());
 				trimmedLine1.setLayer(line.getLayer());
-				trimmedLine2.setLayer(line.getLayer());
-
 				trimResult.add(trimmedLine1);
-				trimResult.add(trimmedLine2);
+
+				if (!tailSet.first().getPoint().equals(line.getEndingPoint())) {
+					Element trimmedLine2 = new Line(tailSet.first().getPoint(),
+							line.getEndingPoint());
+					trimmedLine2.setLayer(line.getLayer());
+					trimResult.add(trimmedLine2);
+				}
 			}
 		} catch (Exception e) {
 			// Should not catch any exception
@@ -83,8 +87,8 @@ public class LineTrimmer implements Trimmer {
 		return trimResult;
 	}
 
-	public SortedSet<ComparablePoint> getSortedPointSet(Line line, Point referencePoint,
-			Collection<Point> intersectionPoints) {
+	public SortedSet<ComparablePoint> getSortedPointSet(Line line,
+			Point referencePoint, Collection<Point> intersectionPoints) {
 
 		SortedSet<ComparablePoint> sortedPointSet = new TreeSet<ComparablePoint>();
 
