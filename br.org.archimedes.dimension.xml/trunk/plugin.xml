@@ -2,14 +2,10 @@
 <?eclipse version="3.2"?>
 <plugin>
    <extension
-         point="br.org.archimedes.elementExporter">
-         
-           <exporter 
-           		id="br.org.archimedes.dimension.xml.exporter"
-			   extension="xml" 
-			   elementId="br.org.archimedes.dimension"
-			   class="br.org.archimedes.dimension.xml.DimensionXmlExporter"/>
-         
+         point="br.org.archimedes.io.xml.xmlElementExporter">
+       <exporter 
+       		id="br.org.archimedes.dimension.xml.exporter"
+		    elementId="br.org.archimedes.dimension"
+		    class="br.org.archimedes.dimension.xml.DimensionXmlExporter"/>
    </extension>
-
 </plugin>

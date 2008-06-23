@@ -11,8 +11,21 @@ create_deployed_zip() {
     rm -Rf Archimedes
 }
 
+create_source_zip() {
+    cd ..
+    zip br.org.archimedes.izpack/target/Archimedes.sources-${VERSION}.zip -q -r br.org.archimedes* -i \
+        \*.{xml,arc,java,properties,project,classpath,txt,sh,ini,product,bmp,png,gif,ico,icns,mappings,exsd,MF,html,ttf,jar,so,dll,dylib,jnilib}
+    cd br.org.archimedes.izpack
+}
+
+if [ "${1}" = "" ]; then
+    echo "Uso: ${0} versao usuario"
+    exit
+fi
+
 rm -rf target
 mkdir target
+create_source_zip
 izpack archimedes-full-installer.xml -b ./ \
     -o target/archimedes-full-installer-${VERSION}.jar
 izpack archimedes-full-installer.xml -b ./ \
@@ -30,4 +43,5 @@ rsync -avP -e ssh target/archimedes-full-installer-${VERSION}.jar \
     target/Archimedes.linux.gtk.x86-${VERSION}.zip \
     target/Archimedes.macosx.carbon.x86-${VERSION}.zip \
     target/Archimedes.win32.win32.x86-${VERSION}.zip \
+    target/Archimedes.sources-${VERSION}.zip \
     ${USER}@frs.sourceforge.net:uploads/

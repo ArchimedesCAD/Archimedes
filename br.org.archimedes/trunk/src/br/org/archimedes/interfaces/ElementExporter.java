@@ -9,7 +9,6 @@ import java.io.OutputStream;
 
 import br.org.archimedes.model.Element;
 
-
 /**
  * Belongs to package br.org.archimedes.interfaces.
  * 

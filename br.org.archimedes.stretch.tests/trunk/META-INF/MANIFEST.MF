@@ -6,5 +6,6 @@ Bundle-Version: 0.54.0
 Bundle-Vendor: Tarantulus Corporation
 Require-Bundle: br.org.archimedes,
  br.org.archimedes.tests,
- br.org.archimedes.stretch
+ br.org.archimedes.stretch,
+ org.junit4
 Bundle-RequiredExecutionEnvironment: J2SE-1.5

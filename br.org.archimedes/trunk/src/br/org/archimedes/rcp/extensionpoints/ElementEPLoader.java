@@ -98,9 +98,10 @@ public class ElementEPLoader implements ExtensionTagHandler {
         String factoryName = factory.getName();
         if (factoryName != null) {
             elementFactoryMap.put(factoryName, factory);
+            elementFactoryMap.put(elementTag
+                    .getAttribute(ELEMENT_ID_ATTRIBUTE_NAME), factory);
         }
 
-        // We add shortcuts for element factory...
         String shortcutName = elementTag.getAttribute(SHORTCUT_ATTRIBUTE_NAME); //$NON-NLS-1$
         if (shortcutName != null) {
             elementFactoryMap.put(shortcutName, factory);
@@ -114,7 +115,7 @@ public class ElementEPLoader implements ExtensionTagHandler {
      */
     public String getElementId (Element element) {
 
-        return elementToIdMap.get(element);
+        return elementToIdMap.get(element.getClass());
     }
 
     /**

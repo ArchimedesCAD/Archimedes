@@ -6,22 +6,17 @@ package br.org.archimedes.io.xml;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.HashMap;
-import java.util.Map;
-
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.IExtension;
-import org.eclipse.core.runtime.IExtensionPoint;
-import org.eclipse.core.runtime.Platform;
+import java.io.UnsupportedEncodingException;
 
 import br.org.archimedes.gui.opengl.Color;
 import br.org.archimedes.interfaces.ElementExporter;
 import br.org.archimedes.interfaces.Exporter;
+import br.org.archimedes.io.xml.rcp.ElementExporterEPLoader;
 import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Layer;
 import br.org.archimedes.model.Point;
+import br.org.archimedes.rcp.extensionpoints.ElementEPLoader;
 
 /**
  * Belongs to package br.org.archimedes.io.xml.
@@ -29,9 +24,6 @@ import br.org.archimedes.model.Point;
  * @author night
  */
 public class XMLExporter implements Exporter {
-
-    private final static Map<String, ElementExporter<Element>> exporters = getExporters();
-
 
     /**
      * (non-Javadoc).
@@ -44,6 +36,50 @@ public class XMLExporter implements Exporter {
 
         String charset = "UTF-8"; //$NON-NLS-1$
         // TODO Forçar locale
+
+        exportXMLHeader(drawing, output, charset);
+
+        byte[] endContainerTagBytes = ("\t" + "</container>" + "\n")
+                .getBytes(charset);
+
+        ElementEPLoader elementEPLoader = new ElementEPLoader();
+        ElementExporterEPLoader exporterLoader = new ElementExporterEPLoader();
+        
+        for (Layer layer : drawing.getLayerMap().values()) {
+            StringBuilder containerTag = new StringBuilder();
+            containerTag.append("\t" + "<container name=\"" + layer.getName() //$NON-NLS-1$
+                    + "\" lineStyle=\"" + layer.getLineStyle().ordinal() //$NON-NLS-1$
+                    + "\" thickness=\"" + layer.getThickness() + "\" >" + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
+            writeColor(containerTag, layer.getColor());
+
+            output.write(containerTag.toString().getBytes(charset));
+
+            for (Element element : layer.getElements()) {
+                String elementId = elementEPLoader.getElementId(element);
+                ElementExporter<Element> exporter = exporterLoader.getExporter(elementId);
+                exporter.exportElement(element, output);
+            }
+
+            output.write(endContainerTagBytes);
+        }
+        output.write(("</drawing>" + "\n").getBytes(charset));
+        output.close();
+    }
+
+    /**
+     * @param drawing
+     *            Drawing to be exported
+     * @param output
+     *            The outputstream to write on
+     * @param charset
+     *            The charset to use to write the file
+     * @throws IOException
+     *             Thrown if something goes wrong when writing the file
+     * @throws UnsupportedEncodingException
+     *             Thrown if the system cannot write in the specified charset
+     */
+    private void exportXMLHeader (Drawing drawing, OutputStream output,
+            String charset) throws IOException, UnsupportedEncodingException {
 
         StringBuilder drawingTag = new StringBuilder(
                 "<?xml version=\"1.0\" encoding=\"" + charset + "\"?>" + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -65,29 +101,6 @@ public class XMLExporter implements Exporter {
         drawingTag.append("\t" + "</viewport>" + "\n"); //$NON-NLS-1$
 
         output.write(drawingTag.toString().getBytes(charset));
-
-        byte[] endContainerTagBytes = ("\t" + "</container>" + "\n")
-                .getBytes(charset);
-
-        for (Layer layer : drawing.getLayerMap().values()) {
-            StringBuilder containerTag = new StringBuilder();
-            containerTag.append("\t" + "<container name=\"" + layer.getName() //$NON-NLS-1$
-                    + "\" lineStyle=\"" + layer.getLineStyle().ordinal() //$NON-NLS-1$
-                    + "\" thickness=\"" + layer.getThickness() + "\" >" + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
-            writeColor(containerTag, layer.getColor());
-
-            output.write(containerTag.toString().getBytes(charset));
-
-            for (Element element : layer.getElements()) {
-                ElementExporter<Element> exporter = exporters.get(element
-                        .getClass().getCanonicalName());
-                exporter.exportElement(element, output);
-            }
-
-            output.write(endContainerTagBytes);
-        }
-        output.write(("</drawing>" + "\n").getBytes(charset));
-        output.close();
     }
 
     /**
@@ -116,82 +129,5 @@ public class XMLExporter implements Exporter {
         builder.append("\t" + "\t" + "\t" + "<unsignedByte>"); //$NON-NLS-1$
         builder.append(component);
         builder.append("</unsignedByte>" + "\n"); //$NON-NLS-1$
-    }
-
-    /**
-     * inicializa o Map est�tico de
-     * 
-     * @return The map
-     */
-    @SuppressWarnings("unchecked")
-    private static Map<String, ElementExporter<Element>> getExporters () {
-
-        Map<String, String> idToClassNameMap = getIdToClassNameMap();
-
-        IExtensionPoint exporterExtension = Platform.getExtensionRegistry()
-                .getExtensionPoint("br.org.archimedes.elementExporter");
-        Map<String, ElementExporter<Element>> exporters = new HashMap<String, ElementExporter<Element>>();
-
-        if (exporterExtension != null) {
-            IExtension[] extensions = exporterExtension.getExtensions();
-            for (IExtension extension : extensions) {
-
-                IConfigurationElement[] configElements = extension
-                        .getConfigurationElements();
-                for (IConfigurationElement element : configElements) {
-
-                    if ("exporter".equals(element.getName())) {
-                        String exportType = element.getAttribute("extension");
-                        if ("xml".equals(exportType)) {
-                            String elementId = element
-                                    .getAttribute("elementId");
-
-                            ElementExporter<Element> exporter;
-                            try {
-                                exporter = (ElementExporter<Element>) element
-                                        .createExecutableExtension("class");
-                                exporters.put(idToClassNameMap.get(elementId),
-                                        exporter);
-                            }
-                            catch (CoreException e) {
-                                e.printStackTrace();
-                            }
-
-                        }
-
-                    }
-                }
-            }
-        }
-
-        return exporters;
-    }
-
-    /**
-     * @return A Map associating id to the class name of the element.
-     */
-    private static Map<String, String> getIdToClassNameMap () {
-
-        IExtensionPoint elementExtension = Platform.getExtensionRegistry()
-                .getExtensionPoint("br.org.archimedes.element");
-
-        Map<String, String> elements = new HashMap<String, String>();
-
-        if (elementExtension != null) {
-            IExtension[] extensions = elementExtension.getExtensions();
-            for (IExtension extension : extensions) {
-
-                IConfigurationElement[] configElements = extension
-                        .getConfigurationElements();
-                for (IConfigurationElement element : configElements) {
-                    if ("element".equals(element.getName())) {
-                        String id = element.getAttribute("id");
-                        String clazz = element.getAttribute("class");
-                        elements.put(id, clazz);
-                    }
-                }
-            }
-        }
-        return elements;
     }
 }

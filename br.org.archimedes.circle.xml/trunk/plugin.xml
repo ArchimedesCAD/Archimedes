@@ -2,11 +2,10 @@
 <?eclipse version="3.2"?>
 <plugin>
    <extension
-         point="br.org.archimedes.elementExporter">
+         point="br.org.archimedes.io.xml.xmlElementExporter">
 	  <exporter id="br.org.archimedes.circle.xml.exporter"
-	   extension="xml" 
-	   elementId="br.org.archimedes.circle"
-	   class="br.org.archimedes.circle.xml.CircleXMLExporter"/>
+    	   elementId="br.org.archimedes.circle"
+    	   class="br.org.archimedes.circle.xml.CircleXMLExporter"/>
    </extension>
 
 </plugin>

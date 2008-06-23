@@ -3,7 +3,7 @@
 <schema targetNamespace="br.org.archimedes">
 <annotation>
       <appInfo>
-         <meta.schema plugin="br.org.archimedes" id="elementExporter" name="Element Exporter"/>
+         <meta.schema plugin="br.org.archimedes" id="xmlElementExporter" name="XML Element Exporter"/>
       </appInfo>
       <documentation>
          This extension point should be used to describe part of a fragment associated to plugins that define an element extension point.
@@ -66,13 +66,6 @@ Not really important.
                </documentation>
             </annotation>
          </attribute>
-         <attribute name="extension" type="string" use="required">
-            <annotation>
-               <documentation>
-                  The file extension to which this exporter will be registered under. Very important to ensure this exporter will be called at the right moment.
-               </documentation>
-            </annotation>
-         </attribute>
          <attribute name="elementId" type="string" use="required">
             <annotation>
                <documentation>
@@ -112,9 +105,9 @@ It should be used only within fragments that refer to a plugin that defines an e
 Here follows it&apos;s use:
 &lt;extension point=&quot;br.org.archimedes.elementExporter&quot;&gt;
   &lt;exporter id=&quot;br.org.archimedes.line.xml.exporter&quot;
-  	extension=&quot;xml&quot; 
-  	elementId=&quot;br.org.archimedes.line&quot;
-  	class=&quot;br.org.archimedes.line.xml.LineExporter&quot;/&gt;
+   extension=&quot;xml&quot; 
+   elementId=&quot;br.org.archimedes.line&quot;
+   class=&quot;br.org.archimedes.line.xml.LineExporter&quot;/&gt;
 &lt;/extension&gt;
       </documentation>
    </annotation>

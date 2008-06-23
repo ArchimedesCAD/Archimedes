@@ -2,11 +2,9 @@
 <?eclipse version="3.2"?>
 <plugin>
    <extension
-         point="br.org.archimedes.elementExporter">
+         point="br.org.archimedes.io.xml.xmlElementExporter">
        <exporter id="br.org.archimedes.infiniteline.xml.exporter"
-   extension="xml" 
-   elementId="br.org.archimedes.infiniteline"
-   class="br.org.archimedes.infiniteLine.xml.InfiniteLineXMLExporter"/>
+		   elementId="br.org.archimedes.infiniteline"
+		   class="br.org.archimedes.infiniteLine.xml.InfiniteLineXMLExporter"/>
    </extension>
-
 </plugin>

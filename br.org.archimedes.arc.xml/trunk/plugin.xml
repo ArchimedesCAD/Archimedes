@@ -2,10 +2,9 @@
 <?eclipse version="3.2"?>
 <plugin>
    <extension
-         point="br.org.archimedes.elementExporter">
+         point="br.org.archimedes.io.xml.xmlElementExporter">
 	  <exporter id="br.org.archimedes.arc.xml.exporter"
-	   extension="xml" 
-	   elementId="br.org.archimedes.arc"
-	   class="br.org.archimedes.arc.xml.ArcXMLExporter"/>
+		   elementId="br.org.archimedes.arc"
+		   class="br.org.archimedes.arc.xml.ArcXMLExporter"/>
    </extension>
 </plugin>
