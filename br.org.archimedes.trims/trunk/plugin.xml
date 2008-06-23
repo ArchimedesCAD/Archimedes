@@ -38,5 +38,11 @@
          	<shortcut id="l"/>
          </factory>
    </extension>
+   <extension point="br.org.archimedes.trims.trimmer">
+   		<elementTrimmer
+			id="br.org.archimedes.trim.polyline"
+			element="br.org.archimedes.polyline"
+			class="br.org.archimedes.trim.polyline.PoylineTrimmer"/>
+	</extension>
 
 </plugin>

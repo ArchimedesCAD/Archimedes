@@ -10,7 +10,9 @@ Require-Bundle: br.org.archimedes;bundle-version="0.56.0",
  org.eclipse.ui;bundle-version="3.4.0",
  br.org.archimedes.polyline;bundle-version="0.54.0",
  br.org.archimedes.undo;bundle-version="0.54.0",
- br.org.archimedes.line;bundle-version="0.54.0"
+ br.org.archimedes.line;bundle-version="0.54.0",
+ br.org.archimedes.tests;bundle-version="0.54.0",
+ org.junit4
 Export-Package: br.org.archimedes.trims,
  br.org.archimedes.trims.interfaces
 Bundle-ActivationPolicy: lazy
