@@ -23,7 +23,6 @@ import br.org.archimedes.interfaces.UndoableCommand;
 import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
-import br.org.archimedes.model.Trimmable;
 import br.org.archimedes.rcp.extensionpoints.TrimManagerEPLoader;
 
 /**
@@ -191,7 +190,7 @@ public class TrimCommand implements UndoableCommand {
         Element clickedElement = null;
         try {
             clickedElement = Controller.getInstance().getElementUnder(click,
-                    Trimmable.class);
+                    Element.class);
         }
         catch (NoActiveDrawingException e) {
             // Should not happen because I know there is a drawing

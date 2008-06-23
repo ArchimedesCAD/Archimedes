@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.Set;
 
 import br.org.archimedes.Constant;
@@ -34,8 +33,6 @@ import br.org.archimedes.undo.UndoCommand;
 public class TrimFactory implements CommandFactory {
 
     private boolean gotRef;
-
-    private ResourceBundle messages;
 
     private Collection<Element> references;
 
@@ -67,7 +64,7 @@ public class TrimFactory implements CommandFactory {
         command = null;
         count = 0;
 
-        String returnValue = messages.getString("SelectRefs");
+        String returnValue = Messages.SelectRefs;
         try {
             Set<Element> selection = Controller.getInstance()
                     .getCurrentSelectedElements();
@@ -95,7 +92,7 @@ public class TrimFactory implements CommandFactory {
             if (parameter == null) {
                 active = false;
                 command = null;
-                result = messages.getString("Trimmed");
+                result = Messages.Trimmed;
             }
             else if (parameter.equals("u") || parameter.equals("U")) {
                 result = makeUndo();
@@ -117,24 +114,22 @@ public class TrimFactory implements CommandFactory {
      */
     private String makeUndo () {
 
-        ResourceBundle undoMessages = ResourceBundle
-                .getBundle("br.org.archimedes.undo.messages");
-        String returnMessage = undoMessages.getString("UndoPerformed")
+        String returnMessage = br.org.archimedes.undo.Messages.UndoPerformed
                 + Constant.NEW_LINE;
 
         command = null;
         if (count > 0) {
             command = new UndoCommand();
             count--;
-            returnMessage += messages.getString("TrimSelectElements");
+            returnMessage += Messages.TrimSelectElements;
         }
         else if (gotRef) {
             references = null;
             gotRef = false;
-            returnMessage += messages.getString("SelectRefs");
+            returnMessage += Messages.SelectRefs;
         }
         else {
-            returnMessage = undoMessages.getString("notPerformed");
+            returnMessage = br.org.archimedes.undo.Messages.notPerformed;
         }
 
         return returnMessage;
@@ -158,8 +153,8 @@ public class TrimFactory implements CommandFactory {
             collection = (Set<Element>) parameter;
         }
         catch (ClassCastException e) {
-            throw new InvalidParameterException(messages
-                    .getString("SelectRefs"));
+            throw new InvalidParameterException(Messages
+                    .SelectRefs);
         }
 
         references = new HashSet<Element>();
@@ -168,7 +163,7 @@ public class TrimFactory implements CommandFactory {
         }
 
         gotRef = true;
-        return messages.getString("TrimSelectElements");
+        return Messages.TrimSelectElements;
     }
 
     /**
@@ -186,17 +181,16 @@ public class TrimFactory implements CommandFactory {
         String result = null;
         try {
             if (parameter == null) {
-                throw new InvalidParameterException(messages
-                        .getString("TrimSelectElements"));
+                throw new InvalidParameterException(Messages
+                        .TrimSelectElements);
             }
             Selection selection = (Selection) parameter;
             calculatePoints(selection);
             command = new TrimCommand(references, points);
-            result = messages.getString("TrimSelectElements");
+            result = Messages.TrimSelectElements;
         }
         catch (ClassCastException e) {
-            throw new InvalidParameterException(messages
-                    .getString("TrimSelectElements"));
+            throw new InvalidParameterException(Messages.TrimSelectElements);
         }
         catch (NullArgumentException e) {
             e.printStackTrace();
@@ -261,7 +255,7 @@ public class TrimFactory implements CommandFactory {
         String returnMsg = null;
 
         if ( !isDone()) {
-            returnMsg = messages.getString("TrimCancel");
+            returnMsg = Messages.TrimCancel;
         }
 
         deactivate();
@@ -283,12 +277,6 @@ public class TrimFactory implements CommandFactory {
     public void drawVisualHelper (Writer writer) {
 
         // Nothing to do
-    }
-
-    @Override
-    public String toString () {
-
-        return "trim";
     }
 
     /*
@@ -333,6 +321,6 @@ public class TrimFactory implements CommandFactory {
 
     public String getName () {
 
-        return "trim";
+        return "trim"; //$NON-NLS-1$
     }
 }
