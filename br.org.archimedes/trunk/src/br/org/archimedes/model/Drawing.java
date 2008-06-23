@@ -458,7 +458,7 @@ public class Drawing extends Observable implements Observer {
             }
         }
 
-        setChanged();
+        super.setChanged();
         notifyObservers();
     }
 
