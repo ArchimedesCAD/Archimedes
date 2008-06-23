@@ -22,7 +22,7 @@ public class NullTrimmer implements Trimmer {
 	public Collection<Element> trim(Element element,
 			Collection<Element> references, Point click) throws NullArgumentException {
 		
-		return Collections.emptyList();
+		return Collections.singleton(element);
 	}
 
 }
