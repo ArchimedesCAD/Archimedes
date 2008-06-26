@@ -43,6 +43,10 @@
 			id="br.org.archimedes.trim.polyline"
 			element="br.org.archimedes.polyline"
 			class="br.org.archimedes.trim.polyline.PoylineTrimmer"/>
+		<elementTrimmer
+			id="br.org.archimedes.trim.circle"
+			element="br.org.archimedes.circle"
+			class="br.org.archimedes.trim.circle.CircleTrimmer"/>
 	</extension>
 
 </plugin>
