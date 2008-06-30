@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Arc Plug-in
 Bundle-SymbolicName: br.org.archimedes.arc;singleton:=true
-Bundle-Version: 0.54.0
+Bundle-Version: 0.57.0
 Bundle-Vendor: Tarantulus Corporation
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,
