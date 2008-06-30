@@ -2,7 +2,7 @@
 <feature
       id="br.org.archimedes.comunication.feature"
       label="Comunication Elements Feature"
-      version="0.54.0"
+      version="0.57.0"
       provider-name="Tarantulus Corp.">
 
    <description>
@@ -327,21 +327,21 @@ POSSIBILITY OF SUCH DAMAGES.
          id="br.org.archimedes.dimension"
          download-size="0"
          install-size="0"
-         version="0.54.0"
+         version="0.57.0"
          unpack="false"/>
 
    <plugin
          id="br.org.archimedes.text"
          download-size="0"
          install-size="0"
-         version="0.54.0"
+         version="0.57.0"
          unpack="false"/>
 
    <plugin
          id="br.org.archimedes.text.edittext"
          download-size="0"
          install-size="0"
-         version="0.54.0"
+         version="0.57.0"
          unpack="false"/>
 
 </feature>

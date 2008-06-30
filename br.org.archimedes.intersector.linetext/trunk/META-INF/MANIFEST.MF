@@ -3,10 +3,10 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Line Text Intersector Plug-in
 Bundle-SymbolicName: br.org.archimedes.intersector.linetext;singleton:=true
 Bundle-Version: 0.54.0
-Require-Bundle: br.org.archimedes,
- br.org.archimedes.line,
- br.org.archimedes.text,
- br.org.archimedes.intersector.lineline,
- br.org.archimedes.intersections
+Require-Bundle: br.org.archimedes;bundle-version="0.57.0",
+ br.org.archimedes.line;bundle-version="0.57.0",
+ br.org.archimedes.text;bundle-version="0.57.0",
+ br.org.archimedes.intersector.lineline;bundle-version="0.54.0",
+ br.org.archimedes.intersections;bundle-version="0.57.0"
 Export-Package: br.org.archimedes.intersector.linetext
 Bundle-RequiredExecutionEnvironment: J2SE-1.5

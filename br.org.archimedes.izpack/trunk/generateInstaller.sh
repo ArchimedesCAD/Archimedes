@@ -19,7 +19,7 @@ create_source_zip() {
 }
 
 if [ "${1}" = "" ]; then
-    echo "Uso: ${0} versao usuario"
+    echo "Uso: ${0} <versao> <usuario>"
     exit
 fi
 

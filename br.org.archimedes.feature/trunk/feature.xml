@@ -2,7 +2,7 @@
 <feature
       id="br.org.archimedes.feature"
       label="Archimedes Feature"
-      version="0.56.0"
+      version="0.57.0"
       provider-name="Tarantulus Corporation"
       plugin="br.org.archimedes"
       os="linux,macosx,win32"
@@ -269,8 +269,17 @@ POSSIBILITY OF SUCH DAMAGES.
          id="br.org.archimedes"
          download-size="0"
          install-size="0"
-         version="0.56.0"
+         version="0.57.0"
          unpack="false"/>
+
+   <plugin
+         id="br.org.archimedes.opengl"
+         os="linux,macosx,win32"
+         ws="carbon,gtk,win32"
+         arch="ppc,x86"
+         download-size="0"
+         install-size="0"
+         version="1.1.4"/>
 
    <plugin
          id="br.org.archimedes.opengl.macosx"
@@ -281,15 +290,6 @@ POSSIBILITY OF SUCH DAMAGES.
          install-size="0"
          version="1.1.4"
          fragment="true"/>
-
-   <plugin
-         id="br.org.archimedes.opengl"
-         os="linux,macosx,win32"
-         ws="carbon,gtk,win32"
-         arch="ppc,x86"
-         download-size="0"
-         install-size="0"
-         version="1.1.4"/>
 
    <plugin
          id="br.org.archimedes.opengl.linux.x86"

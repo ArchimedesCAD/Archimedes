@@ -8,6 +8,5 @@ Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  br.org.archimedes
-Eclipse-LazyStart: true
 Export-Package: br.org.archimedes.copytoclipboard
 Bundle-RequiredExecutionEnvironment: J2SE-1.5

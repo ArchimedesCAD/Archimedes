@@ -9,12 +9,10 @@
             label="Semi Line action set"
             visible="true">
          <action
-               icon="icons/semiline.png"
                id="br.org.archimedes.semiline.action"
                label="%action.text.label"
                menubarPath="create/simple1"
                style="push"
-               class="br.org.archimedes.semiline.SemilineAction"
                toolbarPath="create/simple1"
                tooltip="%action.text.tooltip">
             <enablement>
