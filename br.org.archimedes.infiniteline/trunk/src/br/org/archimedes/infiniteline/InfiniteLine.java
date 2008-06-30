@@ -3,7 +3,8 @@ package br.org.archimedes.infiniteline;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import br.org.archimedes.Constant;
@@ -218,9 +219,15 @@ public class InfiniteLine extends Element implements Offsetable {
     public void draw (OpenGLWrapper wrapper) {
 
         Rectangle modelRect = Workspace.getInstance().getCurrentViewportArea();
-        Point[] pointsToDraw = getPointsCrossing(modelRect);
+        List<Point> pointsToDraw = getPointsCrossing(modelRect);
         if (pointsToDraw != null) {
-            wrapper.drawFromModel(pointsToDraw);
+            try {
+                wrapper.drawFromModel(pointsToDraw);
+            }
+            catch (NullArgumentException e) {
+                // Should not happen since I checked for null
+                e.printStackTrace();
+            }
         }
     }
 
@@ -230,16 +237,19 @@ public class InfiniteLine extends Element implements Offsetable {
      *            coordinates.
      * @return The line crossing the whole rectangle.
      */
-    protected Point[] getPointsCrossing (Rectangle rectangle) {
-        Point[] points;
-               
+    protected List<Point> getPointsCrossing (Rectangle rectangle) {
+
+        List<Point> points;
+
         double sen = (initialPoint.getX() - endingPoint.getX());
         double tan = (initialPoint.getY() - endingPoint.getY()) / sen;
         if (Math.abs(sen) < Constant.EPSILON) {
-        	points = getVerticalLine(rectangle.getLowerLeft().getY(), rectangle.getUpperRight().getY());
+            points = getVerticalLine(rectangle.getLowerLeft().getY(), rectangle
+                    .getUpperRight().getY());
         }
         else if (Math.abs(tan) < Constant.EPSILON) {
-            points = getHorizontalLine(rectangle.getLowerLeft().getX(), rectangle.getUpperRight().getX());
+            points = getHorizontalLine(rectangle.getLowerLeft().getX(),
+                    rectangle.getUpperRight().getX());
         }
         else {
             double b = initialPoint.getY() - (tan) * initialPoint.getX();
@@ -255,26 +265,29 @@ public class InfiniteLine extends Element implements Offsetable {
             Point upperPoint = new Point((upperRightModel.getY() - b) / tan,
                     upperRightModel.getY());
 
-            points = new Point[2];
-            int i = 0;
+            points = new LinkedList<Point>();
             if (lefterPoint.getY() <= upperRightModel.getY()
-                    && lefterPoint.getY() >= lowerLeftModel.getY() && i < 2) {
-                points[i++] = lefterPoint;
+                    && lefterPoint.getY() >= lowerLeftModel.getY()
+                    && points.size() < 2) {
+                points.add(lefterPoint);
             }
             if (righterPoint.getY() <= upperRightModel.getY()
-                    && righterPoint.getY() >= lowerLeftModel.getY() && i < 2) {
-                points[i++] = righterPoint;
+                    && righterPoint.getY() >= lowerLeftModel.getY()
+                    && points.size() < 2) {
+                points.add(righterPoint);
             }
             if (upperPoint.getX() <= upperRightModel.getX()
-                    && upperPoint.getX() >= lowerLeftModel.getX() && i < 2) {
-                points[i++] = upperPoint;
+                    && upperPoint.getX() >= lowerLeftModel.getX()
+                    && points.size() < 2) {
+                points.add(upperPoint);
             }
             if (lowerPoint.getX() <= upperRightModel.getX()
-                    && lowerPoint.getX() >= lowerLeftModel.getX() && i < 2) {
-                points[i++] = lowerPoint;
+                    && lowerPoint.getX() >= lowerLeftModel.getX()
+                    && points.size() < 2) {
+                points.add(lowerPoint);
             }
 
-            if (i < 2) {
+            if (points.size() < 2) {
                 points = null;
             }
         }
@@ -283,29 +296,34 @@ public class InfiniteLine extends Element implements Offsetable {
     }
 
     /**
-     * @param minX The lowest X coordinate of the containing rectangle.
-     * @param maxX The highest X coordinate of the containing rectangle.
-     * 
-     * @return Point[] An array with the Points that define the horizontal line.
+     * @param minX
+     *            The lowest X coordinate of the containing rectangle.
+     * @param maxX
+     *            The highest X coordinate of the containing rectangle.
+     * @return List<Point> A list with the Points that define the horizontal
+     *         line.
      */
-    private Point[] getHorizontalLine (double minX, double maxX) {
-        Point[] points = new Point[2];
-        points[0] = new Point(minX, this.getInitialPoint().getY());
-        points[1] = new Point(maxX, this.getInitialPoint().getY());
+    private List<Point> getHorizontalLine (double minX, double maxX) {
+
+        List<Point> points = new LinkedList<Point>();
+        points.add(new Point(minX, this.getInitialPoint().getY()));
+        points.add(new Point(maxX, this.getInitialPoint().getY()));
         return points;
     }
 
     /**
-     * @param minY The lowest Y coordinate of the containing rectangle.
-     * @param maxY The highest Y coordinate of the containing rectangle.
-     * 
-     * @return Point[] An array with the Points that define the vertical line.
+     * @param minY
+     *            The lowest Y coordinate of the containing rectangle.
+     * @param maxY
+     *            The highest Y coordinate of the containing rectangle.
+     * @return List<Point> A list with the Points that define the vertical
+     *         line.
      */
-    private Point[] getVerticalLine (double minY, double maxY) {
+    private List<Point> getVerticalLine (double minY, double maxY) {
 
-        Point[] points = new Point[2];
-        points[0] = new Point(this.getInitialPoint().getX(), minY);
-        points[1] = new Point(this.getInitialPoint().getX(), maxY);
+        List<Point> points = new LinkedList<Point>();
+        points.add(new Point(this.getInitialPoint().getX(), minY));
+        points.add(new Point(this.getInitialPoint().getX(), maxY));
         return points;
     }
 
@@ -353,38 +371,28 @@ public class InfiniteLine extends Element implements Offsetable {
     }
 
     @Override
-    public Collection<? extends ReferencePoint> getReferencePoints (
-            Rectangle area) {
+    public Collection<ReferencePoint> getReferencePoints (Rectangle area) {
 
-        Point[] pointsCrossing = getPointsCrossing(area);
+        Collection<ReferencePoint> references = new LinkedList<ReferencePoint>();
+
+        List<Point> pointsCrossing = getPointsCrossing(area);
         if (pointsCrossing != null) {
             try {
-                Point meanPoint = Geometrics.getMeanPoint(pointsCrossing[0],
-                        pointsCrossing[1]);
-                TrianglePoint meanReference = new TrianglePoint(meanPoint,
-                        initialPoint, endingPoint);
-                return Collections.singletonList(meanReference);
+                Iterator<Point> iterator = pointsCrossing.iterator();
+                Point meanPoint = Geometrics.getMeanPoint(iterator.next(),
+                        iterator.next());
+                if (meanPoint.isInside(area)) {
+                    TrianglePoint meanReference = new TrianglePoint(meanPoint,
+                            initialPoint, endingPoint);
+                    references.add(meanReference);
+                }
             }
             catch (NullArgumentException e) {
                 // Should not happen
                 e.printStackTrace();
             }
         }
-        return null;
-    }
-
-    @Override
-    public boolean isCollinearWith (Element element) {
-
-        // TODO implementar
-        return false;
-    }
-
-    @Override
-    public boolean isParallelTo (Element element) {
-
-        // TODO implementar
-        return false;
+        return references;
     }
 
     /**
@@ -396,7 +404,7 @@ public class InfiniteLine extends Element implements Offsetable {
             throws InvalidParameterException {
 
         Vector direction = new Vector(getInitialPoint(), getEndingPoint());
-        
+
         direction = Geometrics.normalize(direction);
         direction = direction.getOrthogonalVector();
         direction = direction.multiply(distance);

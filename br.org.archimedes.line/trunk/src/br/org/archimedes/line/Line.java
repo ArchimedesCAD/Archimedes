@@ -425,23 +425,6 @@ public class Line extends Element implements Offsetable {
         return references;
     }
 
-    public boolean isCollinearWith (Element element) {
-
-        // TODO Implementar
-        return false;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.tarantulus.archimedes.model.elements.Element#isParallelTo(com.tarantulus.archimedes.model.elements.Element)
-     */
-    public boolean isParallelTo (Element element) {
-
-        // TODO Implementar
-        return false;
-    }
-
     /*
      * (non-Javadoc)
      * 

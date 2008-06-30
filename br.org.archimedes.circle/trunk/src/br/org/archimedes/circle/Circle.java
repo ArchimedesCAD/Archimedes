@@ -296,22 +296,6 @@ public class Circle extends CurvedShape {
         }
         return isOutside;
     }
-
-    public boolean isCollinearWith (Element element) {
-
-        return false;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.tarantulus.archimedes.model.elements.Element#isParallelTo(com.tarantulus.archimedes.model.elements.Element)
-     */
-    public boolean isParallelTo (Element element) {
-
-        return false;
-    }
-
     
     public void scale (Point reference, double proportion)
             throws NullArgumentException, IllegalActionException {

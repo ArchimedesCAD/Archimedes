@@ -12,7 +12,6 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.update.ui,
  br.org.archimedes.opengl,
  br.org.archimedes.batik;visibility:=reexport
-Eclipse-LazyStart: true
 Eclipse-BuddyPolicy: registered
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: br.org.archimedes,

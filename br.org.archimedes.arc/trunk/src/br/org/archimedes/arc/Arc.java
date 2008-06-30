@@ -572,21 +572,6 @@ public class Arc extends CurvedShape {
         return arc;
     }
 
-    public boolean isCollinearWith (Element element) {
-
-        return false;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.tarantulus.archimedes.model.elements.Element#isParallelTo(com.tarantulus.archimedes.model.elements.Element)
-     */
-    public boolean isParallelTo (Element element) {
-
-        return false;
-    }
-
     /**
      * @see br.org.archimedes.model.Element#draw(br.org.archimedes.gui.opengl.OpenGLWrapper)
      */

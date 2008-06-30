@@ -1,46 +1,48 @@
-package br.org.archimedes.controller.commands;
 
+package br.org.archimedes.controller.commands;
 import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Point;
 
+
 /**
- * Command class for zoom using the mouse wheel. 
+ * Command class for zoom using the mouse wheel.
  * 
  * @author eduardo.souza
  * @author wellington.pinheiro
  */
 public class ZoomByScrollCommand extends ZoomCommand {
 
-	/**
-	 * The mouse position when received the wheel event.
-	 */
-	private Point mousePoint;
+    /**
+     * Constructor that receives the mouse position.
+     * 
+     * @param p
+     *            The mouse position.
+     */
+    public ZoomByScrollCommand (Point p) {
 
-	/**
-	 * Constructor that receives the mouse position.
-	 * @param p The mouse position.
-	 */
-	public ZoomByScrollCommand(Point p) {
-		mousePoint = p;
-	}
+    }
 
-	/**
-	 * (non-Javadoc).
-	 * @see br.org.archimedes.controller.commands.ZoomCommand#calculateZoom(br.org.archimedes.model.Drawing)
-	 */
-	@Override
-	protected double calculateZoom(Drawing drawing) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+    /**
+     * (non-Javadoc).
+     * 
+     * @see br.org.archimedes.controller.commands.ZoomCommand#calculateZoom(br.org.archimedes.model.Drawing)
+     */
+    @Override
+    protected double calculateZoom (Drawing drawing) {
 
-	/**
-	 * (non-Javadoc).
-	 * @see br.org.archimedes.controller.commands.ZoomCommand#getNewViewport(br.org.archimedes.model.Drawing)
-	 */
-	@Override
-	protected Point getNewViewport(Drawing drawing) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    /**
+     * (non-Javadoc).
+     * 
+     * @see br.org.archimedes.controller.commands.ZoomCommand#getNewViewport(br.org.archimedes.model.Drawing)
+     */
+    @Override
+    protected Point getNewViewport (Drawing drawing) {
+
+        // TODO Auto-generated method stub
+        return null;
+    }
 }

@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import br.org.archimedes.Constant;
 import br.org.archimedes.Geometrics;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.InvalidParameterException;
@@ -21,7 +20,6 @@ import br.org.archimedes.interfaces.IntersectionManager;
 import br.org.archimedes.line.Line;
 import br.org.archimedes.model.ComparablePoint;
 import br.org.archimedes.model.Element;
-import br.org.archimedes.model.JoinableElement;
 import br.org.archimedes.model.Layer;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.PolyLinePointKey;
@@ -636,396 +634,8 @@ public class Polyline extends Element {
 
         return result;
     }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.tarantulus.archimedes.model.FilletableElement#fillet(com.tarantulus.archimedes.model.Point,
-     *      com.tarantulus.archimedes.model.Point)
-     */
-    public Element fillet (Point intersection, Point direction) {
-
-        int intersectionSegment = getPointSegment(intersection);
-        int directionSegment = getNearestSegment(direction);
-        List<Point> newPoints = new ArrayList<Point>();
-
-        if (intersectionSegment >= 0) {
-            boolean toEnd = false;
-            if (intersectionSegment == directionSegment) {
-                Vector toEndVector = new Vector(intersection, points
-                        .get(intersectionSegment + 1));
-                Vector directionVector = new Vector(intersection, direction);
-
-                if (toEndVector.dotProduct(directionVector) > 0) {
-                    toEnd = true;
-                }
-            }
-            else if (intersectionSegment < directionSegment) {
-                toEnd = true;
-            }
-
-            newPoints.add(intersection);
-            if (toEnd) {
-                for (int i = intersectionSegment + 1; i < points.size(); i++) {
-                    newPoints.add(points.get(i));
-                }
-            }
-            else {
-                for (int i = intersectionSegment; i >= 0; i--) {
-                    newPoints.add(points.get(i));
-                }
-            }
-        }
-        else {
-            try {
-                boolean extendFirstSegment = Math.abs(Geometrics
-                        .calculateDeterminant(points.get(0), points.get(1),
-                                intersection)) < Constant.EPSILON;
-                boolean extendLastSegment = Math.abs(Geometrics
-                        .calculateDeterminant(points.get(points.size() - 2),
-                                points.get(points.size() - 1), intersection)) < Constant.EPSILON;
-                if (extendFirstSegment && extendLastSegment) {
-                    double distToFirst = Geometrics.calculateDistance(
-                            direction, points.get(0));
-                    double distToLast = Geometrics.calculateDistance(direction,
-                            points.get(points.size() - 1));
-                    if (distToFirst <= distToLast) {
-                        extendLastSegment = false;
-                    }
-                    else {
-                        extendFirstSegment = false;
-                    }
-                }
-                if (extendFirstSegment) {
-                    Vector firstSegmentVector = new Vector(points.get(1),
-                            points.get(0));
-                    Vector intersectionVector = new Vector(points.get(1),
-                            intersection);
-                    if (firstSegmentVector.dotProduct(intersectionVector) > 0) {
-                        newPoints.add(intersection);
-                        for (int i = 1; i < points.size(); i++) {
-                            newPoints.add(points.get(i));
-                        }
-                    }
-                }
-                else if (extendLastSegment) {
-                    Vector lastSegmentVector = new Vector(points.get(points
-                            .size() - 2), points.get(points.size() - 1));
-                    Vector intersectionVector = new Vector(points.get(points
-                            .size() - 2), intersection);
-                    if (lastSegmentVector.dotProduct(intersectionVector) > 0) {
-                        newPoints.add(intersection);
-                        for (int i = points.size() - 2; i >= 0; i--) {
-                            newPoints.add(points.get(i));
-                        }
-                    }
-                }
-            }
-            catch (NullArgumentException e) {
-                // Should not reach this block
-                e.printStackTrace();
-            }
-        }
-
-        Polyline newPolyLine = null;
-        if (newPoints.size() > 1) {
-            try {
-                newPolyLine = new Polyline(newPoints);
-                newPolyLine.setLayer(parentLayer);
-            }
-            catch (NullArgumentException e) {
-                // Should never reach this block
-                e.printStackTrace();
-            }
-            catch (InvalidArgumentException e) {
-                // Should never reach this block
-                e.printStackTrace();
-            }
-        }
-        return newPolyLine;
-    }
-
-    /**
-     * @param point
-     * @return Return the index of the segment that contains the point or -1 if
-     *         the polyline does not contain the point.
-     */
-    public int getPointSegment (Point point) {
-
-        int index = -1;
-
-        List<Line> lines = getLines();
-        for (int i = 0; i < lines.size(); i++) {
-            try {
-                if (lines.get(i).contains(point)) {
-                    index = i;
-                }
-            }
-            catch (NullArgumentException e) {
-                e.printStackTrace();
-            }
-        }
-
-        return index;
-    }
-
-    public String toString () {
-
-        String string = "PolyLine: "; //$NON-NLS-1$
-        for (Point point : points) {
-            string += " " + point.toString(); //$NON-NLS-1$
-        }
-        return string;
-    }
-
-    public Element join (Element element) {
-
-        return this;
-    }
-
-    public Element joinWithLine (Line line) {
-
-        List<Point> newPoints = new ArrayList<Point>(points);
-        List<Line> lines = getLines();
-        if (points.get(0).equals(line.getInitialPoint())) {
-            newPoints.add(0, line.getEndingPoint());
-        }
-        else if (points.get(0).equals(line.getEndingPoint())) {
-            newPoints.add(0, line.getInitialPoint());
-        }
-        else if (points.get(points.size() - 1).equals(line.getInitialPoint())) {
-            newPoints.add(line.getEndingPoint());
-        }
-        else if (points.get(points.size() - 1).equals(line.getEndingPoint())) {
-            newPoints.add(line.getInitialPoint());
-        }
-        else if (line.isCollinearWith(lines.get(0))) {
-            try {
-                double distToStart = Geometrics.calculateDistance(
-                        points.get(0), line.getInitialPoint());
-                double distToEnd = Geometrics.calculateDistance(points.get(0),
-                        line.getEndingPoint());
-
-                Point point = points.get(0);
-                if (distToStart < distToEnd) {
-                    point.setX(line.getEndingPoint().getX());
-                    point.setY(line.getEndingPoint().getY());
-                }
-                else {
-                    point.setX(line.getInitialPoint().getX());
-                    point.setY(line.getInitialPoint().getY());
-                }
-            }
-            catch (NullArgumentException e) {
-                // Should not reach this block
-                e.printStackTrace();
-            }
-        }
-        else if (line.isCollinearWith(lines.get(lines.size() - 1))) {
-            try {
-                double distToStart = Geometrics.calculateDistance(points
-                        .get(points.size() - 1), line.getInitialPoint());
-                double distToEnd = Geometrics.calculateDistance(points
-                        .get(points.size() - 1), line.getEndingPoint());
-
-                Point point = points.get(points.size() - 1);
-                if (distToStart < distToEnd) {
-                    point.setX(line.getEndingPoint().getX());
-                    point.setY(line.getEndingPoint().getY());
-                }
-                else {
-                    point.setX(line.getInitialPoint().getX());
-                    point.setY(line.getInitialPoint().getY());
-                }
-            }
-            catch (NullArgumentException e) {
-                // Should not reach this block
-                e.printStackTrace();
-            }
-        }
-
-        Polyline result = null;
-        try {
-            result = new Polyline(newPoints);
-        }
-        catch (NullArgumentException e) {
-            // Should not reach this block
-            e.printStackTrace();
-        }
-        catch (InvalidArgumentException e) {
-            // Should nor reach this block
-            e.printStackTrace();
-        }
-
-        return result;
-    }
-
-    public boolean isJoinableWith (Element element) {
-
-        JoinableElement joinableElement = (JoinableElement) element;
-        return joinableElement.isJoinableWith(this);
-    }
-
-    public Element joinWithPolyLine (Polyline polyLine) {
-
-        List<Point> newPoints = new ArrayList<Point>();
-        List<Point> otherPoints = polyLine.getPoints();
-
-        List<Line> lines = getLines();
-        List<Line> otherLines = polyLine.getLines();
-
-        if (lines.get(0).isCollinearWith(otherLines.get(0))) {
-            for (int i = otherPoints.size() - 1; i > 0; i--) {
-                newPoints.add(otherPoints.get(i));
-            }
-            for (int i = 1; i < points.size(); i++) {
-                newPoints.add(points.get(i));
-            }
-        }
-        else if (lines.get(0).isCollinearWith(
-                otherLines.get(otherLines.size() - 1))) {
-            for (int i = 0; i < otherPoints.size() - 1; i++) {
-                newPoints.add(otherPoints.get(i));
-            }
-            for (int i = 1; i < points.size(); i++) {
-                newPoints.add(points.get(i));
-            }
-        }
-        else if (lines.get(lines.size() - 1).isCollinearWith(otherLines.get(0))) {
-            for (int i = 0; i < points.size() - 1; i++) {
-                newPoints.add(points.get(i));
-            }
-            for (int i = 1; i < otherPoints.size(); i++) {
-                newPoints.add(otherPoints.get(i));
-            }
-        }
-        else if (lines.get(lines.size() - 1).isCollinearWith(
-                otherLines.get(otherLines.size() - 1))) {
-            for (int i = 0; i < points.size() - 1; i++) {
-                newPoints.add(points.get(i));
-            }
-            for (int i = otherPoints.size() - 2; i >= 0; i--) {
-                newPoints.add(otherPoints.get(i));
-            }
-        }
-        else if (points.get(0).equals(otherPoints.get(0))) {
-            for (int i = otherPoints.size() - 1; i > 0; i--) {
-                newPoints.add(otherPoints.get(i));
-            }
-            for (int i = 0; i < points.size(); i++) {
-                newPoints.add(points.get(i));
-            }
-        }
-        else if (points.get(0).equals(otherPoints.get(otherPoints.size() - 1))) {
-            for (int i = 0; i < otherPoints.size() - 1; i++) {
-                newPoints.add(otherPoints.get(i));
-            }
-            for (int i = 0; i < points.size(); i++) {
-                newPoints.add(points.get(i));
-            }
-        }
-        else if (points.get(points.size() - 1).equals(otherPoints.get(0))) {
-            for (int i = 0; i < points.size() - 1; i++) {
-                newPoints.add(points.get(i));
-            }
-            for (int i = 0; i < otherPoints.size(); i++) {
-                newPoints.add(otherPoints.get(i));
-            }
-        }
-        else if (points.get(points.size() - 1).equals(
-                otherPoints.get(otherPoints.size() - 1))) {
-            for (int i = 0; i < points.size(); i++) {
-                newPoints.add(points.get(i));
-            }
-            for (int i = otherPoints.size() - 1; i >= 0; i--) {
-                newPoints.add(otherPoints.get(i));
-            }
-        }
-
-        Polyline result = null;
-        try {
-            result = new Polyline(newPoints);
-        }
-        catch (NullArgumentException e) {
-            // Should not reach this block
-            e.printStackTrace();
-        }
-        catch (InvalidArgumentException e) {
-            // Should nor reach this block
-            e.printStackTrace();
-        }
-
-        return result;
-    }
-
-    public boolean isCollinearWith (Element element) {
-
-        // TODO Implementar
-        return false;
-    }
-
-    public boolean isCollinearWithLine (Line line) {
-
-        boolean isCollinear = false;
-
-        Line segment1 = getLines().get(0);
-        Line segment2 = getLines().get(getLines().size() - 1);
-        Line segment3 = line;
-
-        if (segment1 != null && segment2 != null && segment3 != null) {
-            Line line1 = null;
-            Line line2 = null;
-            try {
-                line1 = new Line(points.get(1), points.get(0));
-                line2 = new Line(points.get(points.size() - 2), points
-                        .get(points.size() - 1));
-
-                if (line1.contains(line.getInitialPoint())
-                        && line1.contains(line.getEndingPoint())) {
-                    isCollinear = true;
-                }
-                else if (line2.contains(line.getInitialPoint())
-                        && line2.contains(line.getEndingPoint())) {
-                    isCollinear = true;
-                }
-            }
-            catch (NullArgumentException e) {
-                // Should nor reach this block
-                e.printStackTrace();
-            }
-            catch (InvalidArgumentException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-
-        }
-
-        return isCollinear;
-
-    }
-
-    public boolean isCollinearWithPolyLine (Polyline polyLine) {
-
-        boolean isCollinear = false;
-
-        isCollinear = polyLine.isCollinearWithLine(getLines().get(0))
-                || polyLine.isCollinearWith(getLines().get(
-                        getLines().size() - 1));
-
-        return isCollinear;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.tarantulus.archimedes.model.elements.Element#isParallelTo(com.tarantulus.archimedes.model.elements.Element)
-     */
-    public boolean isParallelTo (Element element) {
-
-        return false;
-    }
-
-    /**
+    
+        /**
      * Cuts the polyline in the specified points. Returns the resulting
      * polylines ordered from the initial point to the ending point.
      * 
@@ -1138,87 +748,38 @@ public class Polyline extends Element {
 
         return polyLines;
     }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.tarantulus.archimedes.model.FilletableElement#getFilletSegment(com.tarantulus.archimedes.model.Point,
-     *      com.tarantulus.archimedes.model.Point)
+    
+    /**
+     * @param point
+     * @return Return the index of the segment that contains the point or -1 if
+     *         the polyline does not contain the point.
      */
-    public Line getFilletSegment (Point intersection, Point click) {
+    public int getPointSegment (Point point) {
 
-        Line segment = null;
+        int index = -1;
 
-        try {
-            Point firstPoint = points.get(0);
-            Point secondPoint = points.get(1);
-
-            Point beforeLast = points.get(points.size() - 2);
-            Point lastPoint = points.get(points.size() - 1);
-
-            boolean startCollinear = (Math.abs(Geometrics.calculateDeterminant(
-                    firstPoint, secondPoint, intersection)) < Constant.EPSILON);
-            boolean endCollinear = (Math.abs(Geometrics.calculateDeterminant(
-                    beforeLast, lastPoint, intersection)) < Constant.EPSILON);
-
-            if (this.contains(intersection)) {
-                int intersectionSegment = getPointSegment(intersection);
-                int clickSegment = getNearestSegment(click);
-
-                boolean toStart = true;
-
-                if (intersectionSegment == clickSegment) {
-                    Vector segmentDirection = new Vector(points
-                            .get(intersectionSegment), points
-                            .get(intersectionSegment + 1));
-                    Vector filletDirection = new Vector(intersection, click);
-
-                    double dotProduct = segmentDirection
-                            .dotProduct(filletDirection);
-
-                    if (dotProduct > 0) {
-                        toStart = false;
-                    }
-                }
-                else {
-                    if (intersectionSegment < clickSegment) {
-                        toStart = false;
-                    }
-                }
-
-                if (toStart) {
-                    if ( !intersection.equals(points.get(intersectionSegment))) {
-                        segment = new Line(intersection, points
-                                .get(intersectionSegment));
-                    }
-                }
-                else {
-                    if ( !intersection.equals(points
-                            .get(intersectionSegment + 1))) {
-                        segment = new Line(intersection, points
-                                .get(intersectionSegment + 1));
-                    }
+        List<Line> lines = getLines();
+        for (int i = 0; i < lines.size(); i++) {
+            try {
+                if (lines.get(i).contains(point)) {
+                    index = i;
                 }
             }
-            else {
-                if (startCollinear) {
-                    segment = new Line(firstPoint, intersection);
-                }
-                else if (endCollinear) {
-                    segment = new Line(lastPoint, intersection);
-                }
+            catch (NullArgumentException e) {
+                e.printStackTrace();
             }
         }
-        catch (NullArgumentException e) {
-            // Should never happen
-            e.printStackTrace();
-        }
-        catch (InvalidArgumentException e) {
-            // Should never happen
-            e.printStackTrace();
-        }
 
-        return segment;
+        return index;
+    }
+
+    public String toString () {
+
+        String string = "PolyLine: "; //$NON-NLS-1$
+        for (Point point : points) {
+            string += " " + point.toString(); //$NON-NLS-1$
+        }
+        return string;
     }
 
     /**

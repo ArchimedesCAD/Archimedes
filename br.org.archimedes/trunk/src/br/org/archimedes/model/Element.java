@@ -156,26 +156,6 @@ public abstract class Element {
     public abstract boolean contains (Point point) throws NullArgumentException;
 
     /**
-     * Verifies if the elements are collinear
-     * 
-     * @param element
-     *            The element to be compared with this
-     * @return true if the elements are collinear, false if they are not
-     *         collinear or if they cannot be compared
-     */
-    public abstract boolean isCollinearWith (Element element);
-
-    /**
-     * Verifies if the elements are parallel
-     * 
-     * @param element
-     *            The element to be compared with this
-     * @return true if the elements are parallel, false if they are not parallel
-     *         or if they cannot be compared
-     */
-    public abstract boolean isParallelTo (Element element);
-
-    /**
      * Rotate the element around the reference point counter-clockwise.
      * 
      * @param rotateReference

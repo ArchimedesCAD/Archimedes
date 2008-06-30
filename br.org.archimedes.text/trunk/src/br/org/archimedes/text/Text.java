@@ -295,28 +295,6 @@ public class Text extends Element {
         return references;
     }
 
-    /**
-     * A text is never collinear to anything.
-     * 
-     * @see br.org.archimedes.model.Element#isCollinearWith(br.org.archimedes.model.Element)
-     */
-    @Override
-    public boolean isCollinearWith (Element element) {
-
-        return false;
-    }
-
-    /**
-     * A text is never parallel to anything.
-     * 
-     * @see br.org.archimedes.model.Element#isParallelTo(br.org.archimedes.model.Element)
-     */
-    @Override
-    public boolean isParallelTo (Element element) {
-
-        return false;
-    }
-
     @Override
     public void scale (Point scaleReference, double proportion)
             throws NullArgumentException, IllegalActionException {

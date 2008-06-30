@@ -496,32 +496,6 @@ public class Dimension extends Element {
         return lines;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.model.Element#isCollinearWith(br.org.archimedes.model.Element)
-     */
-    @Override
-    public boolean isCollinearWith (Element element) {
-
-        // Dimension will not be used for trim, extend, fillet or intersection
-        // snap points.
-        return false;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.model.Element#isParallelTo(br.org.archimedes.model.Element)
-     */
-    @Override
-    public boolean isParallelTo (Element element) {
-
-        // Dimension will not be used for trim, extend, fillet or intersection
-        // snap points.
-        return false;
-    }
-
     /**
      * @return The distance Point (not yet very useful)
      */
