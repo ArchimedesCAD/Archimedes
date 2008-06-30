@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            description="The action set with the actions for Semi lines"
+            id="br.org.archimedes.semiline.actionSet"
+            label="Semi Line action set"
+            visible="true">
+         <action
+               icon="icons/semiline.png"
+               id="br.org.archimedes.semiline.action"
+               label="%action.text.label"
+               menubarPath="create/simple1"
+               style="push"
+               class="br.org.archimedes.semiline.SemilineAction"
+               toolbarPath="create/simple1"
+               tooltip="%action.text.tooltip">
+            <enablement>
+               <objectClass name="br.org.archimedes.model.Drawing"/>
+            </enablement>
+         </action>
+      </actionSet>
+   </extension>
+   <extension
+         point="br.org.archimedes.element">
+         <element
+               class="br.org.archimedes.semiline.Semiline"
+               factory="br.org.archimedes.semiline.SemilineFactory"
+               id="br.org.archimedes.semiline"
+               shortcut="sl"/>
+   </extension>
+</plugin>
