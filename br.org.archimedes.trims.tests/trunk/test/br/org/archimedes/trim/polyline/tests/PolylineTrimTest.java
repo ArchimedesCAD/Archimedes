@@ -114,18 +114,14 @@ public class PolylineTrimTest extends Tester {
 
 		List<Point> expectedPoly1Points = new ArrayList<Point>();
 		expectedPoly1Points.add(new Point(0.0, -1.0));
-		expectedPoly1Points.add(new Point(0.0, -0.5));
+		expectedPoly1Points.add(new Point(0.0, 0.0));
+		expectedPoly1Points.add(new Point(-1.0, 0.0));
+		expectedPoly1Points.add(new Point(-1.0, -1.0));
 		Polyline expectedPoly1 = new Polyline(expectedPoly1Points);
 
-		List<Point> expectedPoly2Points = new ArrayList<Point>();
-		expectedPoly2Points.add(new Point(0.0, 0.0));
-		expectedPoly2Points.add(new Point(-1.0, 0.0));
-		expectedPoly2Points.add(new Point(-1.0, -1.0));
-		Polyline expectedPoly2 = new Polyline(expectedPoly2Points);
 
 		Collection<Element> expected = new ArrayList<Element>();
 		expected.add(expectedPoly1);
-		expected.add(expectedPoly2);
 
 		assertCollectionTheSame(expected, sideBelow);
 	}
@@ -190,5 +186,32 @@ public class PolylineTrimTest extends Tester {
 		expected.add(expectedPoly2);
 
 		assertCollectionTheSame(expected, twoPieces);
+	}
+	
+	@Test
+	public void polylineIntersectingItselfThreeTimesWithLineIntersectingThereReturnsRWhenClickedOnLeft() throws NullArgumentException, InvalidArgumentException{
+		List<Point> polyPoints = new ArrayList<Point>();
+		polyPoints.add(new Point(0.0, -1.0));
+		polyPoints.add(new Point(0.0, 1.0));
+		polyPoints.add(new Point(1.0, 1.0));
+		polyPoints.add(new Point(1.0, 0.0));
+		polyPoints.add(new Point(-1.0, 0.0));
+		polyPoints.add(new Point(-1.0, 1.0));
+		polyPoints.add(new Point(1.0, -1.0));
+		
+		Element poly = new Polyline(polyPoints);
+		Element reference = new Line(new Point(-1.0, -1.0), new Point(1.0, 1.0));
+		
+		Collection<Element> r = trimmer.trim(poly, Collections.singleton(reference), new Point(-1.0, 0.5));
+		
+		List<Point> expectedPoints = new ArrayList<Point>();
+		expectedPoints.add(new Point(0.0, -1.0));
+		expectedPoints.add(new Point(0.0, 1.0));
+		expectedPoints.add(new Point(1.0, 1.0));
+		expectedPoints.add(new Point(1.0, 0.0));
+		expectedPoints.add(new Point(0.0, 0.0));
+		expectedPoints.add(new Point(1.0, -1.0));
+		
+		assertCollectionTheSame(Collections.singleton(new Polyline(expectedPoints)), r);
 	}
 }

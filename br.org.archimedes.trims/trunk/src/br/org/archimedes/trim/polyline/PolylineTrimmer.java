@@ -2,10 +2,9 @@ package br.org.archimedes.trim.polyline;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 import br.org.archimedes.Constant;
 import br.org.archimedes.Geometrics;
@@ -13,12 +12,8 @@ import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.interfaces.IntersectionManager;
 import br.org.archimedes.line.Line;
-import br.org.archimedes.model.ComparablePoint;
-import br.org.archimedes.model.DoubleKey;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
-import br.org.archimedes.model.PolyLinePointKey;
-import br.org.archimedes.model.Vector;
 import br.org.archimedes.polyline.Polyline;
 import br.org.archimedes.rcp.extensionpoints.IntersectionManagerEPLoader;
 import br.org.archimedes.trims.interfaces.Trimmer;
@@ -43,51 +38,104 @@ public class PolylineTrimmer implements Trimmer {
 		Collection<Element> trimResult = new ArrayList<Element>();
 		Collection<Point> intersectionPoints = intersectionManager
 				.getIntersectionsBetween(polyline, references);
-		Point point = polyline.getPoints().get(0);
-		SortedSet<ComparablePoint> sortedPointSet = getSortedPointSet(polyline, point,
-				intersectionPoints);
+		
+		if(intersectionPoints.isEmpty()){
+			return Collections.singleton(element);
+		}
 
-		int clickSegment = polyline.getNearestSegment(click);
-		Line line = polyline.getLines().get(clickSegment);
-		Vector direction = new Vector(line.getInitialPoint(), line
-				.getEndingPoint());
-		Vector clickVector = new Vector(line.getInitialPoint(), click);
-		PolyLinePointKey key = new PolyLinePointKey(clickSegment, direction
-				.dotProduct(clickVector));
+		int clickSegmentIndex = polyline.getNearestSegment(click);
 
-		ComparablePoint zero = null;
-		ComparablePoint clickPoint = null;
+		List<Line> lines = polyline.getLines();
+		int negativeIntersectedIndex = 0;
+		int positiveIntersectedIndex = 0;
+		Point nearestNegativeIntersectionPoint = null;
+		Point nearestPositiveIntersectionPoint = null;
+
+		Line clickedSegment = lines.get(clickSegmentIndex);
+		Line halfSegmentBeforeClick = null;
 		try {
-			clickPoint = new ComparablePoint(click, key);
-			zero = new ComparablePoint(point, new DoubleKey(0));
-		} catch (NullArgumentException e) {
-			// Should never reach
-			e.printStackTrace();
+			halfSegmentBeforeClick = new Line(clickedSegment.getInitialPoint(),
+					click);
+		} catch (InvalidArgumentException e2) {
+			// user clicked on a joint; no problem :)
 		}
 
-		sortedPointSet = sortedPointSet.tailSet(zero);
-		SortedSet<ComparablePoint> negativeIntersections = sortedPointSet
-				.headSet(clickPoint);
-		SortedSet<ComparablePoint> positiveIntersections = sortedPointSet
-				.tailSet(clickPoint);
-
-		Point firstCut = null;
-		Point secondCut = null;
-		if (negativeIntersections.size() == 0
-				&& positiveIntersections.size() > 0) {
-			firstCut = positiveIntersections.first().getPoint();
-			secondCut = positiveIntersections.last().getPoint();
-		} else if (positiveIntersections.size() == 0
-				&& negativeIntersections.size() > 0) {
-			firstCut = negativeIntersections.first().getPoint();
-			secondCut = negativeIntersections.last().getPoint();
-		} else if (negativeIntersections.size() > 0
-				&& positiveIntersections.size() > 0) {
-			firstCut = positiveIntersections.first().getPoint();
-			secondCut = negativeIntersections.last().getPoint();
+		if (halfSegmentBeforeClick != null) {
+			nearestNegativeIntersectionPoint = getNearestIntersectionPoint(
+					intersectionPoints, halfSegmentBeforeClick, click);
+			negativeIntersectedIndex = clickSegmentIndex;
 		}
 
-		Collection<Polyline> polyLines = polyline.split(firstCut, secondCut);
+		if (nearestNegativeIntersectionPoint == null) {
+			for (negativeIntersectedIndex = clickSegmentIndex - 1; negativeIntersectedIndex >= 0; negativeIntersectedIndex--) {
+				Line line = lines.get(negativeIntersectedIndex);
+
+				nearestNegativeIntersectionPoint = getNearestIntersectionPoint(
+						intersectionPoints, line, line.getEndingPoint());
+
+				if (nearestNegativeIntersectionPoint != null) {
+					break;
+				}
+			}
+		}
+
+		Line halfSegmentAfterClick = null;
+		try {
+			halfSegmentAfterClick = new Line(clickedSegment.getEndingPoint(),
+					click);
+		} catch (InvalidArgumentException e2) {
+			// user clicked on a joint; no problem :)
+		}
+
+		if (halfSegmentAfterClick != null) {
+			nearestPositiveIntersectionPoint = getNearestIntersectionPoint(
+					intersectionPoints, halfSegmentAfterClick, click);
+			positiveIntersectedIndex = clickSegmentIndex;
+		}
+
+		if (nearestPositiveIntersectionPoint == null) {
+			for (positiveIntersectedIndex = clickSegmentIndex + 1; positiveIntersectedIndex < lines
+					.size(); positiveIntersectedIndex++) {
+				Line line = lines.get(positiveIntersectedIndex);
+
+				nearestPositiveIntersectionPoint = getNearestIntersectionPoint(
+						intersectionPoints, line, line.getInitialPoint());
+
+				if (nearestPositiveIntersectionPoint != null) {
+					break;
+				}
+			}
+		}
+
+		Collection<Polyline> polyLines = new ArrayList<Polyline>();
+		List<Point> polyPoints = polyline.getPoints();
+
+		if (nearestNegativeIntersectionPoint != null) {
+			List<Point> polylinePoints1 = new ArrayList<Point>();
+			polylinePoints1.addAll(polyPoints.subList(0,
+					negativeIntersectedIndex + 1));
+			polylinePoints1.add(nearestNegativeIntersectionPoint);
+			try {
+				polyLines.add(new Polyline(polylinePoints1));
+			} catch (InvalidArgumentException e1) {
+				// should not happen
+				e1.printStackTrace();
+			}
+		}
+
+		if (nearestPositiveIntersectionPoint != null) {
+			List<Point> polylinePoints2 = new ArrayList<Point>();
+			polylinePoints2.add(nearestPositiveIntersectionPoint);
+			polylinePoints2.addAll(polyPoints.subList(
+					positiveIntersectedIndex + 1, polyPoints.size()));
+			try {
+				polyLines.add(new Polyline(polylinePoints2));
+			} catch (InvalidArgumentException e1) {
+				// should not happen
+				e1.printStackTrace();
+			}
+		}
+		
 		for (Polyline polyLine : polyLines) {
 			boolean clicked = false;
 			try {
@@ -134,92 +182,35 @@ public class PolylineTrimmer implements Trimmer {
 
 		return trimResult;
 	}
-
-	public SortedSet<ComparablePoint> getSortedPointSet(Polyline polyline,
-			Point referencePoint, Collection<Point> intersectionPoints) {
-
-		SortedSet<ComparablePoint> sortedPointSet = new TreeSet<ComparablePoint>();
-		List<Line> lines = polyline.getLines();
-
-		Point firstPoint = polyline.getPoints().get(0);
-		boolean invertOrder = !firstPoint.equals(referencePoint);
-
-		for (Point intersection : intersectionPoints) {
-			try {
-				int i = getIntersectionIndex(polyline, invertOrder, intersection);
-
-				if (i < lines.size()) {
-					ComparablePoint point = generateComparablePoint(polyline,
-							intersection, invertOrder, i);
-					sortedPointSet.add(point);
-				}
-			} catch (NullArgumentException e) {
-				// Should never happen
-				e.printStackTrace();
-			}
-		}
-
-		return sortedPointSet;
-	}
-
-	private int getIntersectionIndex(Polyline polyline, boolean invertOrder, Point intersection)
-			throws NullArgumentException {
-
-		List<Line> lines = polyline.getLines();
-		int i;
-		for (i = 0; i < lines.size(); i++) {
-			Line line = lines.get(i);
-			if (line.contains(intersection)) {
-				break;
-			}
-		}
-		/*TODO: add this piece of code when Semiline exists*/
-		/*if (i >= lines.size()) {
-			SemiLine semiLine;
-			int extendableSegment = 0;
-			if (!invertOrder) {
-				semiLine = new SemiLine(points.get(1), points.get(0));
-			} else {
-				Point beforeLast = points.get(points.size() - 2);
-				Point last = points.get(points.size() - 1);
-				semiLine = new SemiLine(beforeLast, last);
-				extendableSegment = lines.size() - 1;
-			}
-
-			if (semiLine.contains(intersection)) {
-				i = extendableSegment;
-			}
-		}*/
-		return i;
-	}
 	
-	private ComparablePoint generateComparablePoint (Polyline polyline, Point point,
-            boolean invertOrder, int i) throws NullArgumentException {
+	/**
+	 * Get the nearest intersection point from a given reference that is inside line.
+	 * @param intersectionPoints Collection of all intersection points of polyline.
+	 * @param line A segment of polyline.
+	 * @param reference The point that will serve as reference for "close".
+	 * @return The point in intersectionPoints that is closest to reference and is inside line.
+	 * @throws NullArgumentException if intersectionPoints contains a null reference.
+	 * @author keizo
+	 * @author lreal
+	 */
+	private Point getNearestIntersectionPoint(
+			Collection<Point> intersectionPoints, Line line, Point reference)
+			throws NullArgumentException {
+		Point nearestIntersectionPoint = null;
+		double distanceToNearestIntersectionPoint = 0.0;
 
-        List<Line> lines = polyline.getLines();
-        Line line = lines.get(i);
-        Point initialPoint = line.getInitialPoint();
-        Point endingPoint = line.getEndingPoint();
-        int segmentNumber = i;
-        if (invertOrder) {
-            Point temp = initialPoint;
-            initialPoint = endingPoint;
-            endingPoint = temp;
-            segmentNumber = (lines.size() - 1) - segmentNumber;
-        }
-        Vector direction = new Vector(initialPoint, endingPoint);
+		for (Point point : intersectionPoints) {
+			if (line.contains(point)) {
+				double distance = point.calculateDistance(reference);
 
-        ComparablePoint element = null;
-        try {
-            Vector pointVector = new Vector(initialPoint, point);
-            PolyLinePointKey key = new PolyLinePointKey(segmentNumber,
-                    direction.dotProduct(pointVector));
-            element = new ComparablePoint(point, key);
-        }
-        catch (NullArgumentException e) {
-            // Should not reach this block
-            e.printStackTrace();
-        }
-        return element;
-    }
+				if (nearestIntersectionPoint == null
+						|| distance < distanceToNearestIntersectionPoint) {
+					nearestIntersectionPoint = point;
+					distanceToNearestIntersectionPoint = distance;
+				}
+			}
+		}
+
+		return nearestIntersectionPoint;
+	}
 }
