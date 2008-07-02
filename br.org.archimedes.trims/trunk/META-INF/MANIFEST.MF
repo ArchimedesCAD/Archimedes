@@ -14,7 +14,8 @@ Require-Bundle: br.org.archimedes;bundle-version="0.56.0",
  br.org.archimedes.circle;bundle-version="0.54.0",
  br.org.archimedes.curvedshape;bundle-version="0.54.0",
  br.org.archimedes.arc;bundle-version="0.54.0"
-Export-Package: br.org.archimedes.trim.circle,
+Export-Package: br.org.archimedes.trim.arc,
+ br.org.archimedes.trim.circle,
  br.org.archimedes.trim.polyline,
  br.org.archimedes.trims,
  br.org.archimedes.trims.interfaces
