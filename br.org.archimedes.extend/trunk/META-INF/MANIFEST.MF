@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Extend Plug-in
+Bundle-SymbolicName: br.org.archimedes.extend;singleton:=true
+Bundle-Version: 0.58.0
+Bundle-Activator: br.org.archimedes.extend.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ br.org.archimedes;bundle-version="0.57.0"
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
