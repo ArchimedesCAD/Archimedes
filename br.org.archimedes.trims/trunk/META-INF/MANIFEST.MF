@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Trims Plug-in
 Bundle-SymbolicName: br.org.archimedes.trims;singleton:=true
-Bundle-Version: 0.57.0
+Bundle-Version: 0.58.0
 Bundle-Vendor: br.org.archimedes
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Require-Bundle: br.org.archimedes;bundle-version="0.56.0",
@@ -16,6 +16,7 @@ Require-Bundle: br.org.archimedes;bundle-version="0.56.0",
  br.org.archimedes.arc;bundle-version="0.54.0"
 Export-Package: br.org.archimedes.trim.arc,
  br.org.archimedes.trim.circle,
+ br.org.archimedes.trim.line,
  br.org.archimedes.trim.polyline,
  br.org.archimedes.trims,
  br.org.archimedes.trims.interfaces
