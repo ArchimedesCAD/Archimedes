@@ -18,10 +18,10 @@ public class ExtendManager implements
 		loader = new ExtenderEPLoader();
 	}
 	
-	public Element getExtensionOf(Element element,
+	public void extend(Element element,
 			Collection<Element> references, Point click)
 			throws NullArgumentException {
-		return getExtenderFor(element).extend(element, references, click);
+		getExtenderFor(element).extend(element, references, click);
 	}
 	
 	private Extender getExtenderFor(Element element) {

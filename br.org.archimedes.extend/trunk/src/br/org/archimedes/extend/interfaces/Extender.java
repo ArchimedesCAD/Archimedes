@@ -8,7 +8,7 @@ import br.org.archimedes.model.Point;
 
 public interface Extender {
 	/**
-     * Returns the result of extending the element.
+     * Extends an element to the nearest reference.
      * 
      * @param element
      *            The element to be extended.
@@ -16,10 +16,9 @@ public interface Extender {
      *            References to extend the element
      * @param click
      * 			  Point where user clicked to choose which parts of the element shall be extended
-     * @return The extended element.
      * @throws NullArgumentException
-     *             If element or references is null
+     *             If element, references or click is null
      */
-	public Element extend(Element element,
+	public void extend(Element element,
 			Collection<Element> references, Point click) throws NullArgumentException;
 }

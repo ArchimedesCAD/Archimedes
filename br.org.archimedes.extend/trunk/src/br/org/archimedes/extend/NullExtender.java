@@ -9,9 +9,9 @@ import br.org.archimedes.model.Point;
 
 public class NullExtender implements Extender {
 
-	public Element extend(Element element, Collection<Element> references,
+	public void extend(Element element, Collection<Element> references,
 			Point click) throws NullArgumentException {
-		return element;
+		// Does nothing
 	}
 
 }
