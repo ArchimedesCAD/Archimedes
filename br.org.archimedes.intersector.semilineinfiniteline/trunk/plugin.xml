@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="br.org.archimedes.intersections.elementsIntersector">
+         <elementsIntersector
+			id="br.org.archimedes.intersector.semilineinfiniteline"
+			element="br.org.archimedes.semiline"
+			otherElement="br.org.archimedes.infiniteline"
+			class="br.org.archimedes.intersector.semilineinfiniteline.SemilineInfinitelineIntersector"/>
+   </extension>
+
+</plugin>
