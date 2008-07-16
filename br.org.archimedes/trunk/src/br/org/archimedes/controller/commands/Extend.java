@@ -34,7 +34,7 @@ public class Extend implements UndoableCommand {
 
     /**
      * @param references
-     *            The references for this trim
+     *            The references for this extend
      * @param points
      *            The points where a click ocurred
      */
@@ -194,7 +194,7 @@ public class Extend implements UndoableCommand {
     /**
      * @param click
      *            The click point
-     * @return The clicked element if there was any and it is Trimmable, null
+     * @return The clicked element if there was any and it is Extendable, null
      *         otherwise.
      */
 //    private Element getClickedElement (Point click) {

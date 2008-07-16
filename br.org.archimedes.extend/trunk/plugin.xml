@@ -3,7 +3,43 @@
 <plugin>
    <extension-point id="extender" name="Extender" schema="schema/extender.exsd"/>
    <extension
+         id="br.org.archimedes.extends.default"
+         name="The default extender finder"
          point="br.org.archimedes.extends">
+         <manager class="br.org.archimedes.extend.ExtendManager"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            id="br.org.archimedes.extend.actionSet"
+            label="Extend Action Sets"
+            visible="true">
+         <action
+               class="br.org.archimedes.extend.ExtendAction"
+               icon="icons/extend.png"
+               id="br.org.archimedes.extend.action"
+               label="Extend"
+               menubarPath="transform/simple1"
+               style="push"
+               toolbarPath="transform/simple1"
+               tooltip="Extends the selected element">
+            <enablement>
+               <objectClass
+                     name="br.org.archimedes.model.Drawing">
+               </objectClass>
+            </enablement>
+         </action>
+      </actionSet>
+   </extension>
+   <extension
+         point="br.org.archimedes.factory">
+         <factory id="br.org.archimedes.extend"
+          class="br.org.archimedes.extend.ExtendFactory">
+         	<shortcut id="x"/>
+         </factory>
+   </extension>
+   <extension
+         point="br.org.archimedes.extend.extender">
    </extension>
 
 </plugin>
