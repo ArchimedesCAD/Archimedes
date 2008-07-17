@@ -40,6 +40,10 @@
    </extension>
    <extension
          point="br.org.archimedes.extend.extender">
+         <elementExtender
+			id="br.org.archimedes.extend.line"
+			element="br.org.archimedes.line"
+			class="br.org.archimedes.extend.line.LineExtender"/>
    </extension>
 
 </plugin>
