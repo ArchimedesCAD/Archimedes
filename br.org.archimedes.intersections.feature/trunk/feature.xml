@@ -35,6 +35,7 @@ under the GPL v2 license and is, therefore, copyleft.
       <import plugin="org.eclipse.ui"/>
       <import plugin="br.org.archimedes.dimension"/>
       <import plugin="br.org.archimedes.text"/>
+      <import plugin="br.org.archimedes.semiline"/>
    </requires>
 
    <plugin
@@ -161,6 +162,41 @@ under the GPL v2 license and is, therefore, copyleft.
          download-size="0"
          install-size="0"
          version="0.56.0"
+         unpack="false"/>
+
+   <plugin
+         id="br.org.archimedes.intersector.semilinesemiline"
+         download-size="0"
+         install-size="0"
+         version="0.58.0"
+         unpack="false"/>
+
+   <plugin
+         id="br.org.archimedes.intersector.semilineline"
+         download-size="0"
+         install-size="0"
+         version="0.58.0"
+         unpack="false"/>
+
+   <plugin
+         id="br.org.archimedes.intersector.semilinepolyline"
+         download-size="0"
+         install-size="0"
+         version="0.58.0"
+         unpack="false"/>
+
+   <plugin
+         id="br.org.archimedes.intersector.semilinecircle"
+         download-size="0"
+         install-size="0"
+         version="0.58.0"
+         unpack="false"/>
+
+   <plugin
+         id="br.org.archimedes.intersector.semilinearc"
+         download-size="0"
+         install-size="0"
+         version="0.58.0"
          unpack="false"/>
 
 </feature>
