@@ -2,7 +2,7 @@
 <feature
       id="br.org.archimedes.intersections.feature"
       label="Intersections Feature"
-      version="0.57.0">
+      version="0.57.1">
 
    <description>
       This feature provides an intersection finder for Archimedes.
@@ -168,35 +168,42 @@ under the GPL v2 license and is, therefore, copyleft.
          id="br.org.archimedes.intersector.semilinesemiline"
          download-size="0"
          install-size="0"
-         version="0.58.0"
+         version="0.57.1"
          unpack="false"/>
 
    <plugin
          id="br.org.archimedes.intersector.semilineline"
          download-size="0"
          install-size="0"
-         version="0.58.0"
+         version="0.57.1"
          unpack="false"/>
 
    <plugin
          id="br.org.archimedes.intersector.semilinepolyline"
          download-size="0"
          install-size="0"
-         version="0.58.0"
+         version="0.57.1"
          unpack="false"/>
 
    <plugin
          id="br.org.archimedes.intersector.semilinecircle"
          download-size="0"
          install-size="0"
-         version="0.58.0"
+         version="0.57.1"
          unpack="false"/>
 
    <plugin
          id="br.org.archimedes.intersector.semilinearc"
          download-size="0"
          install-size="0"
-         version="0.58.0"
+         version="0.57.1"
+         unpack="false"/>
+
+   <plugin
+         id="br.org.archimedes.intersector.semilineinfiniteline"
+         download-size="0"
+         install-size="0"
+         version="0.57.1"
          unpack="false"/>
 
 </feature>

@@ -2,7 +2,7 @@
 <feature
       id="br.org.archimedes.operations.edit.feature"
       label="Edit Operations Feature"
-      version="0.57.0"
+      version="0.57.1"
       provider-name="Tarantulus Corp.">
 
    <description>
@@ -368,14 +368,7 @@ POSSIBILITY OF SUCH DAMAGES.
          id="br.org.archimedes.trims"
          download-size="0"
          install-size="0"
-         version="0.57.0"
-         unpack="false"/>
-
-   <plugin
-         id="br.org.archimedes.trim.line"
-         download-size="0"
-         install-size="0"
-         version="0.56.0"
+         version="0.57.1"
          unpack="false"/>
 
 </feature>

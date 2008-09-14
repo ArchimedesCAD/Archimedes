@@ -2,7 +2,7 @@
 <feature
       id="br.org.archimedes.feature"
       label="Archimedes Feature"
-      version="0.57.0"
+      version="0.57.1"
       provider-name="Tarantulus Corporation"
       plugin="br.org.archimedes"
       os="linux,macosx,win32"
@@ -269,7 +269,7 @@ POSSIBILITY OF SUCH DAMAGES.
          id="br.org.archimedes"
          download-size="0"
          install-size="0"
-         version="0.57.0"
+         version="0.57.1"
          unpack="false"/>
 
    <plugin
@@ -341,6 +341,13 @@ POSSIBILITY OF SUCH DAMAGES.
 
    <plugin
          id="org.eclipse.core.net"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.equinox.security"
          download-size="0"
          install-size="0"
          version="0.0.0"

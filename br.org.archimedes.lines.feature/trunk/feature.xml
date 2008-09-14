@@ -2,7 +2,7 @@
 <feature
       id="br.org.archimedes.lines.feature"
       label="Lines feature"
-      version="0.54.0"
+      version="0.57.1"
       provider-name="Tarantulus Corporation">
 
    <description>
@@ -72,7 +72,7 @@
          id="br.org.archimedes.semiline"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.57.1"
          unpack="false"/>
 
 </feature>

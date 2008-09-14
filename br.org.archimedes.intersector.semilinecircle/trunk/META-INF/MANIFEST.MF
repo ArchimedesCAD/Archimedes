@@ -2,9 +2,9 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Semiline Circle Intersector Plug-in
 Bundle-SymbolicName: br.org.archimedes.intersector.semilinecircle;singleton:=true
-Bundle-Version: 0.58.0
+Bundle-Version: 0.57.1
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Require-Bundle: br.org.archimedes;bundle-version="0.58.0",
+Require-Bundle: br.org.archimedes;bundle-version="0.57.1",
  br.org.archimedes.circle;bundle-version="0.57.0",
  br.org.archimedes.curvedshape;bundle-version="0.57.0",
  br.org.archimedes.intersections;bundle-version="0.57.0",
