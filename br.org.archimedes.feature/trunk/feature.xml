@@ -270,7 +270,7 @@ POSSIBILITY OF SUCH DAMAGES.
          download-size="0"
          install-size="0"
          version="0.57.1"
-         unpack="false"/>
+         unpack="true"/>
 
    <plugin
          id="br.org.archimedes.opengl"

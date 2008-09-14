@@ -33,3 +33,4 @@ Export-Package: br.org.archimedes,
  br.org.archimedes.parser,
  br.org.archimedes.rcp,
  br.org.archimedes.rcp.extensionpoints
+Bundle-ActivationPolicy: lazy
