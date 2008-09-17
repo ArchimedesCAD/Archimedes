@@ -53,7 +53,6 @@ public class SaveCommand implements Command {
 
     /*
      * (non-Javadoc)
-     * 
      * @see br.org.archimedes.gui.actions.Command#execute()
      */
     public boolean execute () {
@@ -146,15 +145,34 @@ public class SaveCommand implements Command {
                     workspace.setLastUsedDirectory(chosenFile.getParentFile());
                     finished = true;
                 }
-                else if (chosenFile.canWrite()) {
-                    if (showOverwriteDialog() == SWT.YES) {
-                        file = chosenFile;
-                        workspace.setLastUsedDirectory(chosenFile
-                                .getParentFile());
-                        finished = true;
-                    }
+                else if (chosenFile.canWrite()
+                        && showOverwriteDialog() == SWT.YES) {
+                    file = chosenFile;
+                    workspace.setLastUsedDirectory(chosenFile.getParentFile());
+                    finished = true;
                 }
                 else {
+                    String log = "Error dialog!\n";
+                    if (chosenFile.exists()) {
+                        log += "File exists\n";
+                        if (chosenFile.canWrite()) {
+                            log += "The parent folder is writable\n";
+                        }
+                    }
+                    else {
+                        log += "File does NOT exist\n";
+                    }
+                    if (chosenFile.getParentFile().canWrite()) {
+                        log += "The parent folder is writable\n";
+                    }
+                    else {
+                        log += "The parent folder is NOT writable\n";
+                    }
+
+                    if (showOverwriteDialog() == SWT.YES) {
+                        log += "O usuario quis sobreescrever\n";
+                    }
+                    errorDialog.setMessage(log);
                     errorDialog.open();
                 }
             }
@@ -173,10 +191,10 @@ public class SaveCommand implements Command {
      */
     private int showOverwriteDialog () {
 
-        if(System.getProperty("os.name").contains("Mac")) {
+        if (System.getProperty("os.name").contains("Mac")) {
             return SWT.YES;
         }
-        
+
         // TODO Verificar se outros sistemas (nao OSX) tb nativamente dao aviso
         MessageBox dialogBox = new MessageBox(shell, SWT.YES | SWT.NO
                 | SWT.ICON_QUESTION);

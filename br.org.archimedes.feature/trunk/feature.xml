@@ -2,7 +2,7 @@
 <feature
       id="br.org.archimedes.feature"
       label="Archimedes Feature"
-      version="0.57.1"
+      version="0.57.2"
       provider-name="Tarantulus Corporation"
       plugin="br.org.archimedes"
       os="linux,macosx,win32"
@@ -269,8 +269,8 @@ POSSIBILITY OF SUCH DAMAGES.
          id="br.org.archimedes"
          download-size="0"
          install-size="0"
-         version="0.57.1"
-         unpack="true"/>
+         version="0.57.2"
+         unpack="false"/>
 
    <plugin
          id="br.org.archimedes.opengl"
