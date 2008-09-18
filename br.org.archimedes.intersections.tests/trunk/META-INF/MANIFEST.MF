@@ -1,0 +1,20 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Intersectiors Tests Plug-in
+Bundle-SymbolicName: br.org.archimedes.intersections.tests
+Bundle-Version: 0.57.3
+Bundle-Vendor: Hugo Corbucci
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Require-Bundle: br.org.archimedes;bundle-version="0.56.0",
+ br.org.archimedes.curvedshape;bundle-version="0.56.0",
+ br.org.archimedes.arc;bundle-version="0.56.0",
+ br.org.archimedes.circle;bundle-version="0.56.0",
+ br.org.archimedes.line;bundle-version="0.56.0",
+ br.org.archimedes.infiniteline;bundle-version="0.56.0",
+ br.org.archimedes.semiline;bundle-version="0.56.0",
+ br.org.archimedes.polyline;bundle-version="0.56.0",
+ br.org.archimedes.dimension;bundle-version="0.56.0",
+ br.org.archimedes.text;bundle-version="0.56.0",
+ br.org.archimedes.intersections;bundle-version="0.57.3",
+ br.org.archimedes.tests;bundle-version="0.56.0",
+ org.junit4;bundle-version="3.4.0"
