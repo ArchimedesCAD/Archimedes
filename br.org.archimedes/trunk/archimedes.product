@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.4"?>
 
-<product name="Archimedes" id="br.org.archimedes.archimedes" application="br.org.archimedes.application" version="0.57.2" useFeatures="true">
+<product name="Archimedes" id="br.org.archimedes.archimedes" application="br.org.archimedes.application" version="0.57.3" useFeatures="true">
 
    <aboutInfo>
       <image path="/br.org.archimedes/icons/logo128.gif"/>
@@ -80,7 +80,7 @@
       <feature id="br.org.archimedes.feature" version="0.57.1"/>
       <feature id="br.org.archimedes.lines.feature" version="0.57.1"/>
       <feature id="br.org.archimedes.curves.feature" version="0.57.0"/>
-      <feature id="br.org.archimedes.intersections.feature" version="0.57.1"/>
+      <feature id="br.org.archimedes.intersections.feature" version="0.57.3"/>
       <feature id="br.org.archimedes.operations.edit.feature" version="0.57.1"/>
       <feature id="br.org.archimedes.operations.workspace.feature" version="0.57.0"/>
       <feature id="br.org.archimedes.xml.feature" version="0.57.0"/>

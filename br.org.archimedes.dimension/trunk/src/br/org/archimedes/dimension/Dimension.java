@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.apache.batik.svggen.font.Font;
+
 import br.org.archimedes.Constant;
 import br.org.archimedes.Geometrics;
 import br.org.archimedes.exceptions.InvalidArgumentException;
@@ -56,7 +58,8 @@ public class Dimension extends Element {
             Double fontSize) throws NullArgumentException,
             InvalidArgumentException {
 
-        if (initialPoint == null || endingPoint == null || distance == null || fontSize == null) {
+        if (initialPoint == null || endingPoint == null || distance == null
+                || fontSize == null) {
             throw new NullArgumentException();
         }
         if (initialPoint.equals(endingPoint) || initialPoint.equals(distance)
@@ -69,13 +72,13 @@ public class Dimension extends Element {
         this.distance = distance.clone();
         this.fontSize = fontSize;
         remakeDistance();
-        text = makeText();
+        text = makeText(Constant.DEFAULT_FONT);
     }
 
     /**
-     * @param p1
+     * @param initialPoint
      *            Initial point
-     * @param p2
+     * @param endingPoint
      *            Ending point
      * @param distance
      *            distance for displaying the dimension
@@ -90,7 +93,31 @@ public class Dimension extends Element {
             Double fontSize) throws NullArgumentException,
             InvalidArgumentException {
 
-        if (initialPoint == null || endingPoint == null || distance == null || fontSize == null) {
+        this(initialPoint, endingPoint, distance, fontSize,
+                Constant.DEFAULT_FONT);
+    }
+
+    /**
+     * @param initialPoint
+     *            Initial point
+     * @param endingPoint
+     *            Ending point
+     * @param distance
+     *            distance for displaying the dimension
+     * @param fontSize
+     *            size of text font
+     * @param font
+     *            the font to use
+     * @throws NullArgumentException
+     *             In case any argument is null
+     * @throws InvalidArgumentException
+     *             In case the initial and ending point are the same.
+     */
+    public Dimension (Point initialPoint, Point endingPoint, Double distance,
+            Double fontSize, Font font) throws NullArgumentException, InvalidArgumentException {
+
+        if (initialPoint == null || endingPoint == null || distance == null
+                || fontSize == null) {
             throw new NullArgumentException();
         }
         if (initialPoint.equals(endingPoint)
@@ -107,7 +134,7 @@ public class Dimension extends Element {
         this.distance = offseted.getInitialPoint();
         this.fontSize = fontSize;
         remakeDistance();
-        text = makeText();
+        text = makeText(font);
     }
 
     /**
@@ -132,10 +159,11 @@ public class Dimension extends Element {
 
     /**
      * Makes the text for this dimension.
+     * @param font The font to be used for the Text
      * 
      * @return The created text.
      */
-    private Text makeText () {
+    private Text makeText (Font font) {
 
         Line lineToMeasure = getDimensionLine();
         Point initial = lineToMeasure.getInitialPoint();
@@ -147,7 +175,7 @@ public class Dimension extends Element {
             String lengthStr = df.format(length);
 
             Point mean = Geometrics.getMeanPoint(initial, ending);
-            text = new Text(lengthStr, mean, fontSize);
+            text = new Text(lengthStr, mean, fontSize, font);
             double width = text.getWidth();
 
             if (isDimLineHorizontal()) {
@@ -168,7 +196,6 @@ public class Dimension extends Element {
 
     /*
      * (non-Javadoc)
-     * 
      * @see br.org.archimedes.model.Element#clone()
      */
     @Override
@@ -188,8 +215,8 @@ public class Dimension extends Element {
 
     /*
      * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.model.Element#contains(br.org.archimedes.model.Point)
+     * @see
+     * br.org.archimedes.model.Element#contains(br.org.archimedes.model.Point)
      */
     @Override
     public boolean contains (Point point) throws NullArgumentException {
@@ -201,7 +228,6 @@ public class Dimension extends Element {
 
     /*
      * (non-Javadoc)
-     * 
      * @see br.org.archimedes.model.Element#equals(java.lang.Object)
      */
     @Override
@@ -317,7 +343,6 @@ public class Dimension extends Element {
 
     /*
      * (non-Javadoc)
-     * 
      * @see br.org.archimedes.model.Element#getBoundaryRectangle()
      */
     @Override
@@ -345,7 +370,6 @@ public class Dimension extends Element {
 
     /*
      * (non-Javadoc)
-     * 
      * @see br.org.archimedes.model.Element#getPoints()
      */
     @Override
@@ -361,8 +385,9 @@ public class Dimension extends Element {
 
     /*
      * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.model.Element#getProjectionOf(br.org.archimedes.model.Point)
+     * @see
+     * br.org.archimedes.model.Element#getProjectionOf(br.org.archimedes.model
+     * .Point)
      */
     @Override
     public Point getProjectionOf (Point point) throws NullArgumentException {
@@ -373,8 +398,9 @@ public class Dimension extends Element {
 
     /*
      * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.model.Element#getReferencePoints(br.org.archimedes.model.Rectangle)
+     * @see
+     * br.org.archimedes.model.Element#getReferencePoints(br.org.archimedes.
+     * model.Rectangle)
      */
     @Override
     public Collection<ReferencePoint> getReferencePoints (Rectangle area) {
@@ -396,9 +422,8 @@ public class Dimension extends Element {
 
     /*
      * (non-Javadoc)
-     * 
      * @see br.org.archimedes.model.Element#move(java.util.Collection,
-     *      br.org.archimedes.model.Vector)
+     * br.org.archimedes.model.Vector)
      */
     public void move (Collection<Point> pointsToMove, Vector vector)
             throws NullArgumentException {
@@ -406,7 +431,7 @@ public class Dimension extends Element {
         super.move(pointsToMove, vector);
         remakeDistance();
         if ( !pointsToMove.contains(text.getLowerLeft())) {
-            text = makeText();
+            text = makeText(getText().getFont());
         }
     }
 
@@ -506,7 +531,6 @@ public class Dimension extends Element {
 
     /*
      * (non-Javadoc)
-     * 
      * @see java.lang.Object#toString()
      */
     public String toString () {
@@ -518,8 +542,8 @@ public class Dimension extends Element {
 
     /*
      * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.model.Element#draw(br.org.archimedes.gui.opengl.OpenGLWrapper)
+     * @seebr.org.archimedes.model.Element#draw(br.org.archimedes.gui.opengl.
+     * OpenGLWrapper)
      */
     @Override
     public void draw (OpenGLWrapper wrapper) {
