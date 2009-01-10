@@ -114,7 +114,7 @@ public class Text extends Element {
     public double getWidth () {
 
         if (cachedWidth == null) {
-            OpenGLWrapper openGl = OpenGLWrapper.getInstance();
+            OpenGLWrapper openGl = br.org.archimedes.Utils.getOpenGLWrapper();
             cachedWidth = Double.valueOf(openGl.calculateWidth(font,
                     new Vector(originPoint, verticalPoint).getNorm(), text));
         }

@@ -20,7 +20,6 @@ public class TextParser extends ElementParser {
 
     /*
      * (non-Javadoc)
-     * 
      * @see com.tarantulus.archimedes.xml.ElementParser#parse(org.w3c.dom.Node)
      */
     @Override
@@ -48,7 +47,7 @@ public class TextParser extends ElementParser {
             }
         }
 
-        return getElementFactory().createElement("br.org.archimedes.text",
+        return getElementFactory().createElement("br.org.archimedes.text", //$NON-NLS-1$
                 content, lowerLeft, size);
     }
 

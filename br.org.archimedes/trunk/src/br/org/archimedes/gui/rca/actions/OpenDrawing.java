@@ -8,6 +8,7 @@ import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.eclipse.ui.PartInitException;
 
 import br.org.archimedes.gui.actions.LoadCommand;
+import br.org.archimedes.gui.rca.editor.DrawingEditor;
 import br.org.archimedes.gui.rca.editor.DrawingInput;
 import br.org.archimedes.model.Drawing;
 
@@ -20,8 +21,6 @@ import br.org.archimedes.model.Drawing;
  * @see IWorkbenchWindowActionDelegate
  */
 public class OpenDrawing implements IWorkbenchWindowActionDelegate {
-
-    private static final String DRAWING_EDITOR_ID = "br.org.archimedes.gui.rca.editor.DrawingEditor";
 
     private IWorkbenchWindow window;
 
@@ -39,7 +38,7 @@ public class OpenDrawing implements IWorkbenchWindowActionDelegate {
         if (drawing != null) {
             try {
                 window.getActivePage().openEditor(new DrawingInput(drawing),
-                        DRAWING_EDITOR_ID);
+                        DrawingEditor.EDITOR_ID);
             }
             catch (PartInitException e) {
                 e.printStackTrace();

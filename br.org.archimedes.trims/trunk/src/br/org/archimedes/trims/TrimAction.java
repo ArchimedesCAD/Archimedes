@@ -12,10 +12,12 @@ import br.org.archimedes.interfaces.FactoryAction;
  */
 public class TrimAction extends FactoryAction {
 
+    private static final String PLUGIN_ID = "br.org.archimedes.trims"; //$NON-NLS-1$
+
     /**
      * Trim action activator.
      */
 	public TrimAction() {
-		super(Activator.PLUGIN_ID);
+		super(PLUGIN_ID);
 	}
 }

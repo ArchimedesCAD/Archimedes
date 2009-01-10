@@ -14,13 +14,13 @@ import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.infiniteline.InfiniteLine;
 import br.org.archimedes.model.Point;
-import br.org.archimedes.semiline.SemiLine;
+import br.org.archimedes.semiline.Semiline;
 
 public class SemilineInfiniteLineIntersectorTest extends Tester {
 
     private SemilineInfiniteLineIntersector intersector;
 
-    private SemiLine semiline;
+    private Semiline semiline;
 
     private InfiniteLine infiniteLine;
 
@@ -33,7 +33,7 @@ public class SemilineInfiniteLineIntersectorTest extends Tester {
     public void createElementsAndIntersector () throws InvalidArgumentException {
 
         intersector = new SemilineInfiniteLineIntersector();
-        semiline = new SemiLine(1, 1, 10, 10);
+        semiline = new Semiline(1, 1, 10, 10);
         infiniteLine = new InfiniteLine(1, 1, 10, 10);
         horizontalInfiniteLine = new InfiniteLine( -1, 3, 10, 3);
         result = Collections.singleton(new Point(3, 3));
@@ -61,7 +61,7 @@ public class SemilineInfiniteLineIntersectorTest extends Tester {
     public void noLineIntersectionWouldIfOneExtended ()
             throws InvalidArgumentException, NullArgumentException {
 
-    	SemiLine shorterLine = new SemiLine(4, 3, 3, -10);
+    	Semiline shorterLine = new Semiline(4, 3, 3, -10);
         Collection<Point> intersections = intersector.getIntersections(
                 shorterLine, infiniteLine);
         assertTrue(intersections.isEmpty());
@@ -72,7 +72,7 @@ public class SemilineInfiniteLineIntersectorTest extends Tester {
     public void onePointOrthogonalLineIntersection ()
             throws InvalidArgumentException, NullArgumentException {
 
-    	SemiLine line = new SemiLine( -4, 10, 3, 3);
+    	Semiline line = new Semiline( -4, 10, 3, 3);
         Collection<Point> intersections = intersector.getIntersections(line,
                 infiniteLine);
         assertCollectionTheSame(result, intersections);

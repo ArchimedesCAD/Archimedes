@@ -5,7 +5,6 @@
 package br.org.archimedes.parser;
 
 import junit.framework.TestCase;
-import br.org.archimedes.controller.Controller;
 import br.org.archimedes.exceptions.InvalidParameterException;
 import br.org.archimedes.model.Drawing;
 
@@ -14,7 +13,7 @@ import br.org.archimedes.model.Drawing;
  */
 public class SimpleSelectionParserTest extends TestCase {
 	public void testSelectionParser() {
-        Controller.getInstance().setActiveDrawing(new Drawing(""));
+        br.org.archimedes.Utils.getController().setActiveDrawing(new Drawing(""));
 		SimpleSelectionParser sp = new SimpleSelectionParser();
 		assertFalse("Should not be done yet", sp.isDone());
 		assertNull("The parameter should be null", sp.getParameter());

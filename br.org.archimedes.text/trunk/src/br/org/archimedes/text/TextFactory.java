@@ -40,14 +40,13 @@ public class TextFactory implements CommandFactory {
      */
     public TextFactory () {
 
-        workspace = Workspace.getInstance();
+        workspace = br.org.archimedes.Utils.getWorkspace();
         deactivate();
     }
 
     public String begin () {
 
         active = true;
-        workspace.setMouseGrip(true);
         return Messages.Iteration1;
     }
 
@@ -140,7 +139,6 @@ public class TextFactory implements CommandFactory {
         content = null;
         active = false;
         workspace.setPerpendicularGripReferencePoint(null);
-        workspace.setMouseGrip(false);
     }
 
     /*
@@ -159,7 +157,7 @@ public class TextFactory implements CommandFactory {
     public void drawVisualHelper () {
 
         if (content != null && !isDone()) {
-            OpenGLWrapper wrapper = OpenGLWrapper.getInstance();
+            OpenGLWrapper wrapper = br.org.archimedes.Utils.getOpenGLWrapper();
             Point mouse = workspace.getMousePosition();
             Point lowerLeft = mouse;
             double size = 1.0;

@@ -27,9 +27,9 @@ import br.org.archimedes.rcp.ExtensionTagHandler;
 public class ExportWizardPage extends WizardSelectionPage implements
         ISelectionChangedListener {
 
-    private static final String CLASS_ATTRIBUTE_NAME = "class";
+    private static final String CLASS_ATTRIBUTE_NAME = "class"; //$NON-NLS-1$
 
-    private static final String EXPORT_WIZARDS_EXTENSION_POINT_ID = "org.eclipse.ui.exportWizards";
+    private static final String EXPORT_WIZARDS_EXTENSION_POINT_ID = "org.eclipse.ui.exportWizards"; //$NON-NLS-1$
 
     private TableViewer viewer;
 

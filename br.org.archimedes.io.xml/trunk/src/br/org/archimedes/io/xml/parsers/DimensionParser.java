@@ -63,7 +63,7 @@ public class DimensionParser extends NPointsParser {
             throws ElementCreationException {
 
         ElementFactory elementFactory = getElementFactory();
-        return elementFactory.createElement("br.org.archimedes.dimension",
+        return elementFactory.createElement("br.org.archimedes.dimension", //$NON-NLS-1$
                 points.get(0), points.get(1), points.get(2), size);
     }
 }

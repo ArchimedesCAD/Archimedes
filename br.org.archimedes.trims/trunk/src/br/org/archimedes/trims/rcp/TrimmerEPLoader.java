@@ -23,11 +23,11 @@ import br.org.archimedes.trims.interfaces.Trimmer;
  */
 public class TrimmerEPLoader implements ExtensionTagHandler {
 
-    private static final String TRIMMER_EXTENSION_POINT_ID = "br.org.archimedes.trims.trimmer";
+    private static final String TRIMMER_EXTENSION_POINT_ID = "br.org.archimedes.trims.trimmer"; //$NON-NLS-1$
 
-    private static final String CLASS_ATTRIBUTE_NAME = "class";
+    private static final String CLASS_ATTRIBUTE_NAME = "class"; //$NON-NLS-1$
 
-    private static final String ELEMENT_ATTRIBUTE_NAME = "element";
+    private static final String ELEMENT_ATTRIBUTE_NAME = "element"; //$NON-NLS-1$
 
     private final Map<Class<? extends Element>, Trimmer> trimmableElementsMap = new HashMap<Class<? extends Element>, Trimmer>();
 

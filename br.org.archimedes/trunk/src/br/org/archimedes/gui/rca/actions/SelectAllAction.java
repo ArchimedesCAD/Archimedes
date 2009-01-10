@@ -12,7 +12,6 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 
-import br.org.archimedes.controller.Controller;
 import br.org.archimedes.exceptions.NoActiveDrawingException;
 import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Element;
@@ -47,7 +46,7 @@ public class SelectAllAction implements IWorkbenchWindowActionDelegate {
     public void run (IAction action) {
 
         try {
-            Drawing activeDrawing = Controller.getInstance().getActiveDrawing();
+            Drawing activeDrawing = br.org.archimedes.Utils.getController().getActiveDrawing();
             if (activeDrawing != null) {
                 Collection<Element> unlockedContents = activeDrawing
                         .getUnlockedContents();

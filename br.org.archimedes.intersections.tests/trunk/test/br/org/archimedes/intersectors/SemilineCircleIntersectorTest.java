@@ -14,7 +14,7 @@ import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.intersections.interfaces.Intersector;
 import br.org.archimedes.model.Point;
-import br.org.archimedes.semiline.SemiLine;
+import br.org.archimedes.semiline.Semiline;
 
 public class SemilineCircleIntersectorTest extends Tester {
 
@@ -30,7 +30,7 @@ public class SemilineCircleIntersectorTest extends Tester {
 	@Test
 	public void testNullElements() throws NullArgumentException,
 			InvalidArgumentException {
-		SemiLine testLine = new SemiLine(new Point(0.0, 0.0), new Point(1.0, 1.0));
+		Semiline testLine = new Semiline(new Point(0.0, 0.0), new Point(1.0, 1.0));
 		try {
 			intersector.getIntersections(testLine, null);
 			fail("The otherElement is null and getIntersections should have thrown a NullArgumentException");
@@ -70,7 +70,7 @@ public class SemilineCircleIntersectorTest extends Tester {
 	@Test
 	public void testNoIntersections() throws NullArgumentException,
 			InvalidArgumentException {
-		SemiLine testLine = new SemiLine(new Point(-10.0, 10.0), new Point(10.0, 10.0));
+		Semiline testLine = new Semiline(new Point(-10.0, 10.0), new Point(10.0, 10.0));
 		Collection<Point> intersections = intersector.getIntersections(
 				testCircle, testLine);
 		assertCollectionTheSame(new ArrayList<Point>(), intersections);
@@ -79,7 +79,7 @@ public class SemilineCircleIntersectorTest extends Tester {
 	@Test
 	public void testTangentLine() throws NullArgumentException,
 			InvalidArgumentException {
-		SemiLine testLine = new SemiLine(new Point(5.0, -5.0), new Point(5.0, 5.0));
+		Semiline testLine = new Semiline(new Point(5.0, -5.0), new Point(5.0, 5.0));
 		Collection<Point> expected = new ArrayList<Point>();
 		expected.add(new Point(5.0, 0.0));
 		assertCollectionTheSame(expected, intersector.getIntersections(
@@ -89,7 +89,7 @@ public class SemilineCircleIntersectorTest extends Tester {
 	@Test
 	public void testTwoIntersections() throws NullArgumentException,
 			InvalidArgumentException {
-		SemiLine testLine = new SemiLine(new Point(-10.0, 0.0), new Point(0.0, 0.0));
+		Semiline testLine = new Semiline(new Point(-10.0, 0.0), new Point(0.0, 0.0));
 		Collection<Point> expected = new ArrayList<Point>();
 		expected.add(new Point(-5.0, 0.0));
 		expected.add(new Point(5.0, 0.0));
@@ -100,7 +100,7 @@ public class SemilineCircleIntersectorTest extends Tester {
 	@Test
 	public void testPartiallyInside() throws NullArgumentException,
 			InvalidArgumentException {
-		SemiLine testLine = new SemiLine(new Point(0.0, 0.0), new Point(10.0, 0.0));
+		Semiline testLine = new Semiline(new Point(0.0, 0.0), new Point(10.0, 0.0));
 		Collection<Point> expected = new ArrayList<Point>();
 		expected.add(new Point(5.0, 0.0));
 		assertCollectionTheSame(expected, intersector.getIntersections(
@@ -110,7 +110,7 @@ public class SemilineCircleIntersectorTest extends Tester {
 	@Test
 	public void testOnePointAtCircle() throws NullArgumentException,
 			InvalidArgumentException {
-		SemiLine testLine = new SemiLine(new Point(5.0, 0.0), new Point(10.0, 0.0));
+		Semiline testLine = new Semiline(new Point(5.0, 0.0), new Point(10.0, 0.0));
 		Collection<Point> expected = new ArrayList<Point>();
 		expected.add(new Point(5.0, 0.0));
 		assertCollectionTheSame(expected, intersector.getIntersections(
@@ -120,7 +120,7 @@ public class SemilineCircleIntersectorTest extends Tester {
 	@Test
 	public void testWouldntIntersectCircleIfLine() throws NullArgumentException,
 			InvalidArgumentException {
-		SemiLine testLine = new SemiLine(new Point(-10.0, 0.0), new Point(-7.0, 0.0));
+		Semiline testLine = new Semiline(new Point(-10.0, 0.0), new Point(-7.0, 0.0));
 		Collection<Point> expected = new ArrayList<Point>();
 		expected.add(new Point(-5.0, 0.0));
 		expected.add(new Point(5.0, 0.0));
@@ -131,7 +131,7 @@ public class SemilineCircleIntersectorTest extends Tester {
 	@Test
 	public void testNoIntersectionWouldIfInfiniteLine() throws NullArgumentException,
 			InvalidArgumentException {
-		SemiLine testLine = new SemiLine(new Point(-7.0, 0.0), new Point(-10.0, 0.0));
+		Semiline testLine = new Semiline(new Point(-7.0, 0.0), new Point(-10.0, 0.0));
 		Collection<Point> intersections = intersector.getIntersections(
 				testCircle, testLine);
 		assertCollectionTheSame(new ArrayList<Point>(), intersections);

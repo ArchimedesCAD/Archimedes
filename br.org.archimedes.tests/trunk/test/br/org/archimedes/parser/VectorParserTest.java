@@ -12,7 +12,6 @@ import org.junit.Test;
 import br.org.archimedes.Tester;
 import br.org.archimedes.controller.Controller;
 import br.org.archimedes.exceptions.InvalidParameterException;
-import br.org.archimedes.gui.model.Workspace;
 import br.org.archimedes.interfaces.Parser;
 import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Point;
@@ -259,7 +258,7 @@ public class VectorParserTest extends Tester {
 	}
 
 	public void testVectorByDistanceAndReturn(Class<?> name) {
-		Controller controller = Controller.getInstance();
+		Controller controller = br.org.archimedes.Utils.getController();
 		Drawing dr = new Drawing("Drawing");
 		controller.setActiveDrawing(dr);
 
@@ -278,7 +277,7 @@ public class VectorParserTest extends Tester {
 		Assert.assertFalse("Should not be done yet.", vp.isDone());
 		Assert.assertNull("Should have no parameter yet.", vp.getParameter());
 
-		Workspace.getInstance().setMousePosition(new Point(40, 10));
+		br.org.archimedes.Utils.getWorkspace().setMousePosition(new Point(40, 10));
 		try {
 			vp.next("");
 		}

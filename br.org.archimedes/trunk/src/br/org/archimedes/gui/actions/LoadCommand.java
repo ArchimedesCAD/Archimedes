@@ -64,7 +64,7 @@ public class LoadCommand {
 
         dialog.setText(Messages.Load_OpenDialog);
 
-        Workspace workspace = Workspace.getInstance();
+        Workspace workspace = br.org.archimedes.Utils.getWorkspace();
         String lastDirectory = workspace.getLastUsedDirectory()
                 .getAbsolutePath();
 
@@ -80,7 +80,7 @@ public class LoadCommand {
                 if (file.exists() && file.canRead()) {
                     String filename = file.getName();
                     String extension = filename.substring(filename
-                            .lastIndexOf(".") + 1);
+                            .lastIndexOf(".") + 1); //$NON-NLS-1$
                     Importer importer = nativeLoader.getImporter(extension);
 
                     try {

@@ -10,7 +10,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import br.org.archimedes.Geometrics;
-import br.org.archimedes.controller.Controller;
 import br.org.archimedes.controller.commands.PutOrRemoveElementCommand;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.InvalidParameterException;
@@ -58,7 +57,7 @@ public class ArcFactory implements CommandFactory {
      */
     public ArcFactory () {
 
-        workspace = Workspace.getInstance();
+        workspace = br.org.archimedes.Utils.getWorkspace();
         deactivate();
         this.isCenterProtocol = false;
     }
@@ -67,8 +66,7 @@ public class ArcFactory implements CommandFactory {
 
         active = true;
         direction = null;
-        Controller.getInstance().deselectAll();
-        workspace.setMouseGrip(true);
+        br.org.archimedes.Utils.getController().deselectAll();
 
         return Messages.ArcInitialPointorCenter;
     }
@@ -269,7 +267,6 @@ public class ArcFactory implements CommandFactory {
         point4 = null;
         direction = null;
         active = false;
-        workspace.setMouseGrip(false);
         isCenterProtocol = false;
     }
 
@@ -288,7 +285,7 @@ public class ArcFactory implements CommandFactory {
      */
     public void drawVisualHelper () {
 
-        OpenGLWrapper opengl = OpenGLWrapper.getInstance();
+        OpenGLWrapper opengl = br.org.archimedes.Utils.getOpenGLWrapper();
         Point end = workspace.getMousePosition();
 
         if ( !isCenterProtocol && point1 != null) {

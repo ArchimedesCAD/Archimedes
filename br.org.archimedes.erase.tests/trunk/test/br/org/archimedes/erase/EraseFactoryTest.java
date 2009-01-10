@@ -9,7 +9,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import br.org.archimedes.controller.Controller;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.factories.CommandFactory;
 import br.org.archimedes.factories.FactoryTester;
@@ -27,7 +26,7 @@ public class EraseFactoryTest extends FactoryTester {
     public void setUp () {
 
         drawing = new Drawing("Teste");
-        Controller.getInstance().setActiveDrawing(drawing);
+        br.org.archimedes.Utils.getController().setActiveDrawing(drawing);
 
         factory = new EraseFactory();
     }
@@ -35,7 +34,7 @@ public class EraseFactoryTest extends FactoryTester {
     @After
     public void tearDown () {
 
-        Controller.getInstance().setActiveDrawing(null);
+        br.org.archimedes.Utils.getController().setActiveDrawing(null);
     }
 
     @Test

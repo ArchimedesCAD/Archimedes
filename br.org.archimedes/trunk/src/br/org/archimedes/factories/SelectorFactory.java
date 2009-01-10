@@ -6,7 +6,6 @@ package br.org.archimedes.factories;
 
 import java.util.Set;
 
-import br.org.archimedes.controller.Controller;
 import br.org.archimedes.exceptions.InvalidParameterException;
 import br.org.archimedes.exceptions.NoActiveDrawingException;
 import br.org.archimedes.interfaces.Parser;
@@ -39,7 +38,7 @@ public abstract class SelectorFactory implements CommandFactory {
         String returnValue = null;
         done = false;
         try {
-            Set<Element> selection = Controller.getInstance()
+            Set<Element> selection = br.org.archimedes.Utils.getController()
                     .getCurrentSelectedElements();
 
             if (selection == null || selection.isEmpty()) {

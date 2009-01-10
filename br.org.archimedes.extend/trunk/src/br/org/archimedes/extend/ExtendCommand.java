@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import br.org.archimedes.controller.Controller;
 import br.org.archimedes.controller.commands.MacroCommand;
 import br.org.archimedes.controller.commands.PutOrRemoveElementCommand;
 import br.org.archimedes.exceptions.IllegalActionException;
@@ -177,7 +176,7 @@ public class ExtendCommand implements UndoableCommand {
 
         Element clickedElement = null;
         try {
-            clickedElement = Controller.getInstance().getElementUnder(click,
+            clickedElement = br.org.archimedes.Utils.getController().getElementUnder(click,
                     Element.class);
         }
         catch (NoActiveDrawingException e) {

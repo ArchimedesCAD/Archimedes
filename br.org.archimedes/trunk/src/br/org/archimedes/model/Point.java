@@ -92,7 +92,7 @@ public class Point implements Comparable {
 
     public String toString () {
 
-        return "(" + (Math.abs(x) < Constant.EPSILON ? "0.0" : x) + "," + (Math.abs(y) < Constant.EPSILON ? "0.0" : y) + ")"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        return "(" + (Math.abs(x) < Constant.EPSILON ? "0.0" : x) + "," + (Math.abs(y) < Constant.EPSILON ? "0.0" : y) + ")"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
     }
 
     /**

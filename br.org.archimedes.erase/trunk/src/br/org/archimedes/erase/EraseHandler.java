@@ -10,7 +10,6 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.IHandler;
 import org.eclipse.core.commands.IHandlerListener;
 
-import br.org.archimedes.controller.Controller;
 import br.org.archimedes.controller.InputController;
 import br.org.archimedes.factories.CommandFactory;
 
@@ -44,7 +43,7 @@ public class EraseHandler implements IHandler {
      */
     public Object execute (ExecutionEvent event) throws ExecutionException {
 
-        InputController inputController = InputController.getInstance();
+        InputController inputController = br.org.archimedes.Utils.getInputController();
         CommandFactory currentFactory = inputController.getCurrentFactory();
         if (currentFactory == null) {
             inputController.receiveText(Activator.PLUGIN_ID);
@@ -57,7 +56,7 @@ public class EraseHandler implements IHandler {
      */
     public boolean isEnabled () {
 
-        return (Controller.getInstance().isThereActiveDrawing());
+        return (br.org.archimedes.Utils.getController().isThereActiveDrawing());
     }
 
     /**

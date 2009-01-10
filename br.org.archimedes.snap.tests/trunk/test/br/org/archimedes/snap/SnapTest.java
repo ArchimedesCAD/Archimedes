@@ -27,7 +27,7 @@ public class SnapTest {
 
         Drawing drawing = new Drawing("Drawing");
 
-        Workspace workspace = Workspace.getInstance();
+        Workspace workspace = br.org.archimedes.Utils.getWorkspace();
         boolean snap = workspace.isSnapOn();
 
         Command ortoCommand = new SnapCommand();

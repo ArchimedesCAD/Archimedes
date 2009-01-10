@@ -10,8 +10,6 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 
-import br.org.archimedes.controller.InputController;
-
 
 /**
  * Belongs to package br.org.archimedes.interfaces.
@@ -47,7 +45,7 @@ public abstract class FactoryAction implements IWorkbenchWindowActionDelegate {
      */
     public void run (IAction action) {
 
-        InputController.getInstance().receiveText(factoryID);
+        br.org.archimedes.Utils.getInputController().receiveText(factoryID);
     }
 
     /* (non-Javadoc)

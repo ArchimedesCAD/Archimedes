@@ -203,7 +203,7 @@ public class CanvasWithSlider {
      */
     public final void redraw () {
 
-        OpenGLWrapper openGL = OpenGLWrapper.getInstance();
+        OpenGLWrapper openGL = br.org.archimedes.Utils.getOpenGLWrapper();
 
         double selectionSize = (double) slider.getSelection();
         Rectangle selectionSquare = new Rectangle( -selectionSize / 2,

@@ -5,7 +5,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import br.org.archimedes.controller.Controller;
 import br.org.archimedes.factories.FactoryTester;
 import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Point;
@@ -21,13 +20,13 @@ public class ZoomFactoryTest extends FactoryTester {
 
         factory = new ZoomFactory();
         Drawing drawing = new Drawing("Drawing 1");
-        Controller.getInstance().setActiveDrawing(drawing);
+        br.org.archimedes.Utils.getController().setActiveDrawing(drawing);
     }
 
     @After
     public void tearDown () {
 
-        Controller.getInstance().setActiveDrawing(null);
+        br.org.archimedes.Utils.getController().setActiveDrawing(null);
     }
 
     @Test

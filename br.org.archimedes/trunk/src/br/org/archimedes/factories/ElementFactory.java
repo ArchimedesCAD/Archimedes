@@ -38,48 +38,32 @@ public class ElementFactory {
                         elementClass, args);
                 element = constructor.newInstance(args);
             }
-            catch (SecurityException e) {
-                throw new ElementCreationException(
-                        "Impossible to create the element "
-                                + "("
-                                + elementId
-                                + "). "
-                                + "Check that you have all the required plugins.",
-                        e);
-            }
             catch (IllegalArgumentException e) {
-                throw new ElementCreationException(
-                        "Impossible to create the element " + "(" + elementId
-                                + "). " + "The arguments are wrong.", e);
+                throw new ElementCreationException(Messages.bind(
+                        Messages.ElementFactory_WrongNumberArguments, elementId), e);
             }
             catch (NoSuchMethodException e) {
-                throw new ElementCreationException(
-                        "Impossible to create the element " + "(" + elementId
-                                + "). " + "No constructor with such arguments.",
-                        e);
+                throw new ElementCreationException(Messages.bind(
+                        Messages.ElementFactory_WrongArgument, elementId), e);
             }
             catch (InstantiationException e) {
                 throw new ElementCreationException(
-                        "Impossible to create the element "
-                                + "("
-                                + elementId
-                                + "). "
-                                + "The class could not be instantiated (thrown an exception on instacing or is not a concrete class).",
-                        e);
+                        Messages
+                                .bind(
+                                        Messages.ElementFactory_NonBuildableObject,
+                                        elementId), e);
+            }
+            catch (SecurityException e) {
+                throw new ElementCreationException(Messages.bind(
+                        Messages.ElementFactory_MissingPlugins, elementId), e);
             }
             catch (IllegalAccessException e) {
-                throw new ElementCreationException(
-                        "Impossible to create the element "
-                                + "("
-                                + elementId
-                                + "). "
-                                + "Check that you have all the required plugins.",
-                        e);
+                throw new ElementCreationException(Messages.bind(
+                        Messages.ElementFactory_MissingPlugins, elementId), e);
             }
             catch (InvocationTargetException e) {
-                throw new ElementCreationException(
-                        "Impossible to create the element " + "(" + elementId
-                                + "). " + "Cannot invoke the constructor.", e);
+                throw new ElementCreationException(Messages.bind(
+                        Messages.ElementFactory_InvalidConstructor, elementId), e);
             }
         }
         return element;
@@ -112,8 +96,8 @@ public class ElementFactory {
             }
         }
 
-        throw new NoSuchMethodException(clazz.getCanonicalName() + ".<init>("
-                + joinArrayWith(parameterTypes, ", ") + ")");
+        throw new NoSuchMethodException(Messages.bind(Messages.ElementFactory_NoConstructor, clazz
+                .getCanonicalName(), joinArrayWith(parameterTypes, ", "))); //$NON-NLS-1$
     }
 
     /**
@@ -126,7 +110,7 @@ public class ElementFactory {
      */
     private String joinArrayWith (Object[] array, String separator) {
 
-        String parameterListStr = "";
+        String parameterListStr = ""; //$NON-NLS-1$
         boolean first = true;
         for (Object object : array) {
             if (first) {

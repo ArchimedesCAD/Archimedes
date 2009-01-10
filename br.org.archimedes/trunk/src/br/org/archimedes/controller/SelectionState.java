@@ -63,7 +63,7 @@ public class SelectionState extends InputState {
         String returnValue = null;
         if (command != null && command.isDone() && !nextShould) {
             try {
-                selectionCount = Controller.getInstance().getActiveDrawing()
+                selectionCount = br.org.archimedes.Utils.getController().getActiveDrawing()
                         .getSelection().getSelectedElements().size();
             }
             catch (NoActiveDrawingException e) {

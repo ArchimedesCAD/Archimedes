@@ -67,9 +67,9 @@ public class Constant {
 
     public static final double DEFAULT_FONT_SIZE = 18.0;
 
-    public static final String FONT_FOLDER = "fonts";
+    public static final String FONT_FOLDER = "fonts"; //$NON-NLS-1$
 
-    public static final String DEFAULT_FONT_NAME = "LiberationSerif-Regular.ttf";
+    public static final String DEFAULT_FONT_NAME = Messages.Constant_defaultFontFileName;
 
     static {
         

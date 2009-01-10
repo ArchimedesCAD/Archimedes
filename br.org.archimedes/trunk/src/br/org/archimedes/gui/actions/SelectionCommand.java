@@ -7,7 +7,6 @@ package br.org.archimedes.gui.actions;
 import br.org.archimedes.controller.Controller;
 import br.org.archimedes.exceptions.NoActiveDrawingException;
 import br.org.archimedes.exceptions.NullArgumentException;
-import br.org.archimedes.gui.model.Workspace;
 import br.org.archimedes.gui.opengl.OpenGLWrapper;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Rectangle;
@@ -38,7 +37,7 @@ public class SelectionCommand implements Command {
     public SelectionCommand (Point point) {
 
         p1 = point;
-        controller = Controller.getInstance();
+        controller = br.org.archimedes.Utils.getController();
         active = this;
     }
 
@@ -48,11 +47,11 @@ public class SelectionCommand implements Command {
     public void drawVisualHelper () {
 
         Point start = p1;
-        Point end = Workspace.getInstance().getActualMousePosition();
+        Point end = br.org.archimedes.Utils.getWorkspace().getActualMousePosition();
 
         Rectangle rectangle = new Rectangle(start.getX(), start.getY(), end
                 .getX(), end.getY());
-        OpenGLWrapper opengl = OpenGLWrapper.getInstance();
+        OpenGLWrapper opengl = br.org.archimedes.Utils.getOpenGLWrapper();
         if (end.getX() <= start.getX()) {
             opengl.setLineStyle(OpenGLWrapper.STIPPLED_LINE);
         }

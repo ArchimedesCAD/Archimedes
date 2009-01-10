@@ -6,7 +6,6 @@ package br.org.archimedes.parser;
 
 import br.org.archimedes.Utils;
 import br.org.archimedes.exceptions.InvalidParameterException;
-import br.org.archimedes.gui.model.Workspace;
 import br.org.archimedes.interfaces.Parser;
 import br.org.archimedes.model.Point;
 
@@ -47,7 +46,7 @@ public class DirectionParser implements Parser {
             result = (Point) Utils.getPointCoordinates(message);
         }
         else if (Utils.isReturn(message)) {
-            result = Workspace.getInstance().getActualMousePosition();
+            result = br.org.archimedes.Utils.getWorkspace().getActualMousePosition();
         }
         else if (message.equals("+")) { //$NON-NLS-1$
             result = true;

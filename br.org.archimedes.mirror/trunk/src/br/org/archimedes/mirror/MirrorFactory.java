@@ -89,7 +89,7 @@ public class MirrorFactory extends SelectionPointVectorFactory {
     protected void drawVisualHelper (Set<Element> selection, Point reference,
             Vector vector) {
 
-        OpenGLWrapper opengl = OpenGLWrapper.getInstance();
+        OpenGLWrapper opengl = br.org.archimedes.Utils.getOpenGLWrapper();
         for (Element element : selection) {
             Element copied = element.clone();
             try {

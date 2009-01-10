@@ -11,7 +11,6 @@ import org.junit.Test;
 import br.org.archimedes.controller.Controller;
 import br.org.archimedes.factories.CommandFactory;
 import br.org.archimedes.factories.FactoryTester;
-import br.org.archimedes.gui.model.Workspace;
 import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
@@ -40,7 +39,7 @@ public class CopyPasteFactoryTest extends FactoryTester {
         factory = new CopyPasteFactory();
 
         drawing = new Drawing("Teste");
-        controller = Controller.getInstance();
+        controller = br.org.archimedes.Utils.getController();
         controller.setActiveDrawing(drawing);
 
         Element line = EasyMock.createMock(Element.class);
@@ -59,7 +58,7 @@ public class CopyPasteFactoryTest extends FactoryTester {
 
         controller.deselectAll();
         controller.setActiveDrawing(null);
-        Workspace.getInstance().getClipboard().clear();
+        br.org.archimedes.Utils.getWorkspace().getClipboard().clear();
     }
 
     @Test

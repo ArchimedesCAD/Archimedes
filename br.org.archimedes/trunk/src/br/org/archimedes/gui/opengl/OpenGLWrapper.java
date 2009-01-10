@@ -21,7 +21,6 @@ import org.lwjgl.opengl.GL11;
 import br.org.archimedes.Constant;
 import br.org.archimedes.Geometrics;
 import br.org.archimedes.exceptions.NullArgumentException;
-import br.org.archimedes.gui.model.Workspace;
 import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Rectangle;
@@ -62,8 +61,6 @@ public class OpenGLWrapper {
 
     public static final double GRIP_WIDTH = 2.5;
 
-    private static OpenGLWrapper instance;
-
     private GLCanvas currentCanvas;
 
     private Map<Drawing, GLCanvas> drawingCanvas;
@@ -72,9 +69,12 @@ public class OpenGLWrapper {
 
 
     /**
-     * Constructor.
+     * Constructor. Starts the drawing to canvas map and the default line type.<br>
+     * Do NOT use this constructor. It should only be used by the Activator.<br>
+     * If you need a reference to the OpenGLWrapper, be sure to use
+     * Utils.getOpenGLWrapper()
      */
-    private OpenGLWrapper () {
+    public OpenGLWrapper () {
 
         drawingCanvas = new HashMap<Drawing, GLCanvas>();
         primitiveType = PRIMITIVE_LINE;
@@ -82,8 +82,8 @@ public class OpenGLWrapper {
 
     /**
      * Retorna o Enconding que deve ser utilizado. Durante os testes com TTF foi
-     * notado que o Encoding est� ligado � plataforma. i.e. Plataforma MAC (1) ->
-     * Encoding ASCII (0) Plataforma WIN (3) -> Encoding ISO10646 (1) Como s�
+     * notado que o Encoding est� ligado � plataforma. i.e. Plataforma MAC (1)
+     * -> Encoding ASCII (0) Plataforma WIN (3) -> Encoding ISO10646 (1) Como s�
      * consideramos estas duas plataformas no m�todo getPlatform ent�o s�
      * consideramos estes dois casos de Enconding neste m�todo. Returns the
      * encoding related to the platform.
@@ -105,8 +105,8 @@ public class OpenGLWrapper {
     }
 
     /**
-     * Retorna a plataforma onde o Archimedes est� sendo rodado. Esta informa��o �
-     * usada pelo Batik para escolher qual CmapFormat utilizar. Dependendo da
+     * Retorna a plataforma onde o Archimedes est� sendo rodado. Esta informa��o
+     * � usada pelo Batik para escolher qual CmapFormat utilizar. Dependendo da
      * fonte utilizada podem n�o existir inst�ncias de CmapFormat para
      * determinada plataforma. Isso � um problema em potencial. Talvez s�
      * possamos incluir no Archimedes fontes que tenham CmapFormat para qualquer
@@ -126,20 +126,6 @@ public class OpenGLWrapper {
             platform = CmapTable.platformMicrosoft;
         }
         return platform;
-    }
-
-    /**
-     * Returns the unique instance of the OpenGLWrapper.
-     * 
-     * @return The OpenGLWrapper.
-     */
-    public static OpenGLWrapper getInstance () {
-
-        if (instance == null) {
-            instance = new OpenGLWrapper();
-        }
-
-        return instance;
     }
 
     /**
@@ -198,7 +184,7 @@ public class OpenGLWrapper {
                     rect.height / 2, -1.0, 1.0);
             Rectangle window = new Rectangle(0, 0, rect.width, rect.height);
             GL11.glViewport(0, 0, rect.width, rect.height);
-            Workspace.getInstance().setWindowSize(window);
+            br.org.archimedes.Utils.getWorkspace().setWindowSize(window);
         }
     }
 
@@ -229,8 +215,8 @@ public class OpenGLWrapper {
         GL11.glBegin(primitiveType);
         for (Point point : points) {
             try {
-                Point convertedPoint = Workspace.getInstance().modelToScreen(
-                        point);
+                Point convertedPoint = br.org.archimedes.Utils.getWorkspace()
+                        .modelToScreen(point);
                 GL11.glVertex2d(convertedPoint.getX(), convertedPoint.getY());
             }
             catch (NullArgumentException e) {
@@ -252,8 +238,8 @@ public class OpenGLWrapper {
         GL11.glBegin(primitiveType);
         for (Point point : points) {
             try {
-                Point convertedPoint = Workspace.getInstance().modelToScreen(
-                        point);
+                Point convertedPoint = br.org.archimedes.Utils.getWorkspace()
+                        .modelToScreen(point);
                 GL11.glVertex2d(convertedPoint.getX(), convertedPoint.getY());
             }
             catch (NullArgumentException e) {
@@ -366,9 +352,9 @@ public class OpenGLWrapper {
     }
 
     /**
-     * Retorna um CmapFormat para este Font adequado para esta plataforma. Lan�a
-     * um IllegalStateException se n�o encontrar no Font um CmapFormat adequado.
-     * TODO IllegalStateException � a Exception adequada?
+     * Returns a CmapFormat to this Font according to the platform.<br>
+     * Throws an IllegalStateException if it cannot find a valid CmapFormat on
+     * this Font.
      * 
      * @param font
      *            Font
@@ -383,17 +369,15 @@ public class OpenGLWrapper {
         if (format != null)
             return format;
         else
-            throw new IllegalStateException(
-                    "Esta Fonte ("
-                            + font.toString()
-                            + ") n�o pode ser utilizada nesta combina��o de plataforma/encoding ("
-                            + platform + "/ " + encoding + ")");
+            throw new IllegalStateException(Messages.bind(
+                    Messages.OpenGLWrapper_InvalidFont, new Object[] {
+                            font.toString(), platform, encoding}));
     }
 
     /**
      * This method should be used VERY carefully because it will not throw a
-     * {@link NullArgumentException}. It assumes the list is never null and
-     * does nothing if it is.
+     * {@link NullArgumentException}. It assumes the list is never null and does
+     * nothing if it is.
      * 
      * @param points
      *            The list of points to be safely drawed like model points.

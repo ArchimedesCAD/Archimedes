@@ -10,7 +10,7 @@ import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.intersections.interfaces.Intersector;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
-import br.org.archimedes.semiline.SemiLine;
+import br.org.archimedes.semiline.Semiline;
 
 public class SemilineArcIntersector implements Intersector {
 
@@ -22,15 +22,15 @@ public class SemilineArcIntersector implements Intersector {
 		
 		SemilineCircleIntersector intersector = new SemilineCircleIntersector();
 		Arc arc = null;
-		SemiLine semiline = null;
+		Semiline semiline = null;
 		Circle circle = null;
 		Collection<Point> intersections = null;
 		
-		if (element.getClass() == SemiLine.class) {
-			semiline = (SemiLine) element;
+		if (element.getClass() == Semiline.class) {
+			semiline = (Semiline) element;
 			arc = (Arc) otherElement;
 		} else {
-			semiline = (SemiLine) otherElement;
+			semiline = (Semiline) otherElement;
 			arc = (Arc) element;
 		}
 		

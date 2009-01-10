@@ -24,10 +24,10 @@
 <point x="-328" y="8" />
 <point x="-315" y="-8" />
 </infiniteline>
-<semiLine>
+<semiline>
 <point x="-258.84" y="-77.12" />
 <point x="-135" y="88" />
-</semiLine>
+</semiline>
 </container>
 <container name="UmSegundoLayer" lineStyle="1" thickness="2" >
 <color><unsignedByte>102</unsignedByte>

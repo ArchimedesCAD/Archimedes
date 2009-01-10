@@ -38,13 +38,12 @@ import org.eclipse.ui.IWorkbenchWindow;
 
 import br.org.archimedes.controller.Controller;
 import br.org.archimedes.exceptions.IllegalActionException;
-import br.org.archimedes.controller.InputController;
 import br.org.archimedes.exceptions.NoActiveDrawingException;
 import br.org.archimedes.gui.rca.editor.DrawingEditor;
 import br.org.archimedes.gui.rca.editor.DrawingInput;
+import br.org.archimedes.gui.rca.exporter.Messages;
 import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Layer;
-import br.org.archimedes.gui.rca.exporter.Messages;
 
 /**
  * Belongs to package br.org.archimedes.gui.rca.
@@ -136,7 +135,7 @@ public class LayerComboContributionItem extends ContributionItem implements
 
     private Control createLayersCombo (Composite parent) {
 
-        final Controller controller = Controller.getInstance();
+        final Controller controller = br.org.archimedes.Utils.getController();
         Composite top = new Composite(parent, SWT.NONE);
         GridLayout layout = new GridLayout();
         layout.marginHeight = 0;
@@ -173,8 +172,7 @@ public class LayerComboContributionItem extends ContributionItem implements
                         int currentIndex = layers.indexOf(currentLayerName);
 
                         combo.select(currentIndex);
-                        InputController
-                                .getInstance()
+                        br.org.archimedes.Utils.getInputController()
                                 .printInInterpreter(
                                         Messages.LayerComboContributionItem_LayerLocked);
                     }

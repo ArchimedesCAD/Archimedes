@@ -85,7 +85,7 @@ public class QuickMoveFactory extends TwoPointFactory {
         }
         
         Vector vector = new Vector(start, end);
-        OpenGLWrapper wrapper = OpenGLWrapper.getInstance();
+        OpenGLWrapper wrapper = br.org.archimedes.Utils.getOpenGLWrapper();
         for (Element clone : clonedToMove.keySet()) {
             Collection<Point> points = clonedToMove.get(clone);
             try {

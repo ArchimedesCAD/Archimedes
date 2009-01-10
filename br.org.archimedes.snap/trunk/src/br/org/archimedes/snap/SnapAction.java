@@ -29,7 +29,7 @@ public class SnapAction implements IWorkbenchWindowActionDelegate {
 
         try {
             SnapCommand snapCommand = new SnapCommand();
-            Controller controller = Controller.getInstance();
+            Controller controller = br.org.archimedes.Utils.getController();
             List<Command> commands = new ArrayList<Command>();
             commands.add(snapCommand);
             controller.execute(commands);

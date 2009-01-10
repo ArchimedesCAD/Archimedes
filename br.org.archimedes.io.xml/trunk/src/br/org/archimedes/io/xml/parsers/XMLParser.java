@@ -10,15 +10,10 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Source;
 import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamSource;
-import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 
 import org.w3c.dom.Document;
@@ -27,7 +22,6 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import br.org.archimedes.exceptions.InvalidFileFormatException;
-import br.org.archimedes.gui.rca.Activator;
 import br.org.archimedes.gui.rca.Messages;
 import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Element;
@@ -40,6 +34,16 @@ import br.org.archimedes.model.Point;
  * @author fernandorb
  */
 public class XMLParser {
+
+    private Validator validator;
+
+    /**
+     * @param validator The validator to use. If null, will not validate the file.
+     */
+    public XMLParser (Validator validator) {
+
+        this.validator = validator;
+    }
 
     /**
      * Parse and Archimedes XML file
@@ -94,7 +98,7 @@ public class XMLParser {
                 }
             }
 
-            // TODO verificar como fazer
+            // TODO Check how to set the file
             drawing = new Drawing(Messages.NewDrawingName, layerMap);
             drawing.setZoom(zoom);
             drawing.setViewportPosition(viewPoint);
@@ -144,21 +148,13 @@ public class XMLParser {
      * 
      * @param doc
      *            The document to be validated
-     * @return True if the file is valid, false otherwise
+     * @return True if the file is valid or the validator is null, false otherwise
      */
     private boolean validadeXMLSchema (Document doc) {
-
-        SchemaFactory factory = SchemaFactory
-                .newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-        Schema schema = null;
-
+        if(validator == null)
+            return true;
+        
         try {
-            InputStream fileInput = Activator
-                    .locateFile(
-                            "FileXMLSchema.xsd", br.org.archimedes.io.xml.Activator.getDefault().getBundle()); //$NON-NLS-1$
-            Source schemaFile = new StreamSource(fileInput);
-            schema = factory.newSchema(schemaFile);
-            Validator validator = schema.newValidator();
             validator.validate(new DOMSource(doc));
         }
         catch (SAXException e) {

@@ -10,12 +10,10 @@ import java.util.Set;
 
 import br.org.archimedes.Constant;
 import br.org.archimedes.Utils;
-import br.org.archimedes.controller.Controller;
 import br.org.archimedes.exceptions.InvalidParameterException;
 import br.org.archimedes.exceptions.NoActiveDrawingException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.gui.model.Workspace;
-import br.org.archimedes.gui.opengl.OpenGLWrapper;
 import br.org.archimedes.interfaces.Command;
 import br.org.archimedes.interfaces.Parser;
 import br.org.archimedes.model.Element;
@@ -47,18 +45,17 @@ public abstract class SelectionPointVectorFactory implements CommandFactory {
      */
     public SelectionPointVectorFactory () {
 
-        workspace = Workspace.getInstance();
+        workspace = br.org.archimedes.Utils.getWorkspace();
         deactivate();
     }
 
     public String begin () {
 
         active = true;
-        workspace.setMouseGrip(true);
         String returnValue = Messages.SelectionPointVector_Iteration1;
         if (selection == null || selection.isEmpty()) {
             try {
-                Set<Element> currentSelection = Controller.getInstance()
+                Set<Element> currentSelection = Utils.getController()
                         .getCurrentSelectedElements();
 
                 if (currentSelection != null && !currentSelection.isEmpty()) {
@@ -85,7 +82,6 @@ public abstract class SelectionPointVectorFactory implements CommandFactory {
         selection = null;
         reference = null;
         vector = null;
-        workspace.setMouseGrip(false);
     }
 
     public String next (Object parameter) throws InvalidParameterException {
@@ -235,7 +231,7 @@ public abstract class SelectionPointVectorFactory implements CommandFactory {
 
             try {
                 end = Utils.useOrto(start, end);
-                OpenGLWrapper.getInstance().drawFromModel(start, end);
+                br.org.archimedes.Utils.getOpenGLWrapper().drawFromModel(start, end);
             }
             catch (NullArgumentException e) {
                 // Shouldn't happen

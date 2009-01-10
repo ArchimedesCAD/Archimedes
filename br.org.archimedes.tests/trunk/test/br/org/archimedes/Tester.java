@@ -9,11 +9,11 @@ import java.util.Collection;
 import org.junit.Assert;
 import org.junit.Before;
 
-import br.org.archimedes.controller.Controller;
 import br.org.archimedes.exceptions.IllegalActionException;
 import br.org.archimedes.exceptions.NoActiveDrawingException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.gui.model.Workspace;
+import br.org.archimedes.gui.rca.Activator;
 import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
@@ -34,12 +34,15 @@ public abstract class Tester {
 
     protected final double COS_60 = 0.5;
 
+
     @Before
     public void setUp () throws Exception {
 
-        Workspace workspace = Workspace.getInstance();
-        if (workspace.isOrtoOn()) {
-            workspace.setOrtoOn(false);
+        if (Activator.getDefault() != null) { // plugin tests
+            Workspace workspace = br.org.archimedes.Utils.getWorkspace();
+            if (workspace.isOrtoOn()) {
+                workspace.setOrtoOn(false);
+            }
         }
     }
 
@@ -94,12 +97,12 @@ public abstract class Tester {
     public void assertCollectionTheSame (Collection<?> expected,
             Collection<?> real) {
 
-        Assert.assertTrue("The expected collection " + expected.toString()
-                + " should contain the actual one " + real.toString(), expected
+        Assert.assertTrue("The expected collection " + expected
+                + " should contain the actual one " + real, expected
                 .containsAll(real));
-        Assert.assertTrue("The actual collection " + real.toString()
-                + " should contain the expected one " + expected.toString(),
-                real.containsAll(expected));
+        Assert.assertTrue("The actual collection " + real
+                + " should contain the expected one " + expected, real
+                .containsAll(expected));
     }
 
     /**
@@ -113,8 +116,10 @@ public abstract class Tester {
     public void assertCollectionNotTheSame (Collection<?> expected,
             Collection<?> real) {
 
-        Assert.assertFalse("The collections should not contain each other",
-                expected.containsAll(real) || real.containsAll(expected));
+        Assert.assertFalse("The expected collection " + expected
+                + " should not contain the real one " + real
+                + " and vice-versa.", expected.containsAll(real)
+                || real.containsAll(expected));
     }
 
     /**
@@ -135,8 +140,8 @@ public abstract class Tester {
                 break;
             }
         }
-        Assert.assertTrue("Should have found the element in the collection",
-                foundOne);
+        Assert.assertTrue("Should have found the element " + element
+                + " in the collection " + collection, foundOne);
     }
 
     /**
@@ -157,8 +162,8 @@ public abstract class Tester {
                 break;
             }
         }
-        Assert.assertFalse("Should have found no element in the collection",
-                foundOne);
+        Assert.assertFalse("Should not have found the element " + element
+                + " in the collection " + collection, foundOne);
     }
 
     /**
@@ -172,7 +177,8 @@ public abstract class Tester {
     protected void safeSelect (Point point, boolean invertSelection) {
 
         try {
-            Controller.getInstance().select(point, invertSelection);
+            br.org.archimedes.Utils.getController().select(point,
+                    invertSelection);
         }
         catch (NullArgumentException e) {
             e.printStackTrace();
@@ -198,8 +204,8 @@ public abstract class Tester {
             boolean invertSelection) {
 
         try {
-            Controller.getInstance().select(firstPoint, secondPoint,
-                    invertSelection);
+            br.org.archimedes.Utils.getController().select(firstPoint,
+                    secondPoint, invertSelection);
         }
         catch (NullArgumentException e) {
             e.printStackTrace();

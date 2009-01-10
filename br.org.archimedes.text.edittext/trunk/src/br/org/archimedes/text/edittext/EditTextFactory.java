@@ -34,7 +34,7 @@ public class EditTextFactory extends SelectorFactory {
     
     public EditTextFactory (Point point) throws InvalidArgumentException {
 
-        Controller controller = Controller.getInstance();
+        Controller controller = br.org.archimedes.Utils.getController();
         Text textUnder;
         try {
             textUnder = (Text) controller.getElementUnder(point, Text.class);

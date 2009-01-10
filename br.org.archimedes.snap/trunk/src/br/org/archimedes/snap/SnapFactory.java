@@ -9,7 +9,6 @@ import java.util.List;
 
 import br.org.archimedes.exceptions.InvalidParameterException;
 import br.org.archimedes.factories.CommandFactory;
-import br.org.archimedes.gui.model.Workspace;
 import br.org.archimedes.interfaces.Command;
 import br.org.archimedes.interfaces.Parser;
 
@@ -25,7 +24,7 @@ public class SnapFactory implements CommandFactory {
 
     public String begin () {
 
-        boolean isOn = Workspace.getInstance().isSnapOn();
+        boolean isOn = br.org.archimedes.Utils.getWorkspace().isSnapOn();
         command = new SnapCommand();
 
         return !isOn ? Messages.SnapOn : Messages.SnapOff;

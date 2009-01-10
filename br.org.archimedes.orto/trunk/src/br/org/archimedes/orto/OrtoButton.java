@@ -42,7 +42,7 @@ public class OrtoButton extends AbstractWorkbenchTrimWidget implements Observer 
     public void init (IWorkbenchWindow workbenchWindow) {
 
         super.init(workbenchWindow);
-        Workspace.getInstance().addObserver(this);
+        br.org.archimedes.Utils.getWorkspace().addObserver(this);
     }
 
     /**
@@ -63,7 +63,7 @@ public class OrtoButton extends AbstractWorkbenchTrimWidget implements Observer 
     @Override
     public void fill (Composite parent, int oldSide, int newSide) {
 
-        final Workspace workspace = Workspace.getInstance();
+        final Workspace workspace = br.org.archimedes.Utils.getWorkspace();
         composite = new Composite(parent, SWT.NONE);
         FillLayout layout = new FillLayout();
         layout.marginHeight = 4;
@@ -98,7 +98,7 @@ public class OrtoButton extends AbstractWorkbenchTrimWidget implements Observer 
     public void update (Observable warner, Object orto) {
 
         if (button != null && "orto".equals(orto)) { //$NON-NLS-1$
-            button.setSelection(Workspace.getInstance().isOrtoOn());
+            button.setSelection(br.org.archimedes.Utils.getWorkspace().isOrtoOn());
         }
     }
 }

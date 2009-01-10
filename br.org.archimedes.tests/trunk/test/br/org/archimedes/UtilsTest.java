@@ -50,4 +50,13 @@ public class UtilsTest {
         Assert.assertFalse("Should be false to \"5.0;6.1\"", Utils.isDouble("5.0;6.1"));
         Assert.assertFalse("Should be false to \"\"", Utils.isDouble(""));
     }
+    
+    @Test
+    public void singletonsWorkWithoutThePlatform () throws Exception {
+
+        Assert.assertNotNull(Utils.getController());
+        Assert.assertNotNull(Utils.getInputController());
+        Assert.assertNotNull(Utils.getOpenGLWrapper());
+        Assert.assertNotNull(Utils.getWorkspace());
+    }
 }

@@ -11,7 +11,6 @@ import br.org.archimedes.controller.commands.PutOrRemoveElementCommand;
 import br.org.archimedes.exceptions.InvalidParameterException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.factories.TwoPointFactory;
-import br.org.archimedes.gui.opengl.OpenGLWrapper;
 import br.org.archimedes.interfaces.Command;
 import br.org.archimedes.interfaces.Parser;
 import br.org.archimedes.model.Point;
@@ -138,7 +137,7 @@ public class LineFactory extends TwoPointFactory {
         points.add(start);
         points.add(end);
         try {
-            OpenGLWrapper.getInstance().drawFromModel(points);
+            br.org.archimedes.Utils.getOpenGLWrapper().drawFromModel(points);
         }
         catch (NullArgumentException e) {
             // Shouldn't happen since the parent class handle it

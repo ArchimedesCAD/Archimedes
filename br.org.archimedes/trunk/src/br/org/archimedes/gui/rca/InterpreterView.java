@@ -21,12 +21,10 @@ import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.part.ViewPart;
 
-import br.org.archimedes.controller.Controller;
 import br.org.archimedes.controller.InputController;
 import br.org.archimedes.gui.actions.SelectionCommand;
 import br.org.archimedes.gui.model.MouseClickHandler;
 import br.org.archimedes.gui.model.ParameterHandler;
-import br.org.archimedes.gui.model.Workspace;
 import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Rectangle;
 
@@ -44,7 +42,7 @@ public class InterpreterView extends ViewPart implements Observer,
 
         getSite().getWorkbenchWindow().getSelectionService()
                 .addSelectionListener(this);
-        InputController.getInstance().addObserver(this);
+        br.org.archimedes.Utils.getInputController().addObserver(this);
 
         final FormLayout layout = new FormLayout();
         parent.setLayout(layout);
@@ -73,7 +71,7 @@ public class InterpreterView extends ViewPart implements Observer,
             // (only the widget on focus receives the event)
             public void handleEvent (Event event) {
 
-                Rectangle rect = Workspace.getInstance().getWindowSize();
+                Rectangle rect = br.org.archimedes.Utils.getWorkspace().getWindowSize();
                 int outputHeight = output.getSize().y;
                 int canvasHeight = (int) rect.getHeight();
                 int marginsHeight = 10;
@@ -89,17 +87,17 @@ public class InterpreterView extends ViewPart implements Observer,
 
             public void keyPressed (KeyEvent e) {
 
-                InputController inputController = InputController.getInstance();
+                InputController inputController = br.org.archimedes.Utils.getInputController();
                 if (e.character == SWT.ESC) {
                     if (SelectionCommand.isActive()) {
                         SelectionCommand.getActive().cancel();
                     }
                     else if ( !(inputController.getCurrentFactory() == null || inputController
                             .getCurrentFactory().isDone())) {
-                        inputController.cancelCurrentCommand();
+                        inputController.cancelCurrentFactory();
                     }
                     else {
-                        Controller.getInstance().deselectAll();
+                        br.org.archimedes.Utils.getController().deselectAll();
                     }
                 }
                 else if (Character.isWhitespace(e.character)
@@ -130,7 +128,7 @@ public class InterpreterView extends ViewPart implements Observer,
      */
     public void update (Observable arg0, Object arg1) {
 
-        if (arg0 == InputController.getInstance()
+        if (arg0 == br.org.archimedes.Utils.getInputController()
                 && (arg1 != null && arg1.getClass() == String.class)) {
             output.append(arg1.toString());
         }
@@ -145,7 +143,7 @@ public class InterpreterView extends ViewPart implements Observer,
         if (StructuredSelection.class.isAssignableFrom(selection.getClass())) {
             IStructuredSelection structuredSelection = (IStructuredSelection) selection;
             try {
-                InputController.getInstance().setDrawing(
+                br.org.archimedes.Utils.getInputController().setDrawing(
                         (Drawing) structuredSelection.getFirstElement());
             }
             catch (ClassCastException e) {

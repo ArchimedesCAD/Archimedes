@@ -24,6 +24,18 @@ public class Messages extends NLS {
 
     public static String SelectionPointVector_Cancel;
 
+    public static String ElementFactory_InvalidConstructor;
+
+    public static String ElementFactory_MissingPlugins;
+
+    public static String ElementFactory_NoConstructor;
+
+    public static String ElementFactory_NonBuildableObject;
+
+    public static String ElementFactory_WrongArgument;
+
+    public static String ElementFactory_WrongNumberArguments;
+
     public static String ExpectedPoint;
 
     public static String SelectionPointVector_Iteration1;

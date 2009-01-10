@@ -29,7 +29,7 @@ public class OrtoAction implements IWorkbenchWindowActionDelegate {
 
         try {
             OrtoCommand ortoCommand = new OrtoCommand();
-            Controller controller = Controller.getInstance();
+            Controller controller = br.org.archimedes.Utils.getController();
             List<Command> commands = new ArrayList<Command>();
             commands.add(ortoCommand);
             controller.execute(commands);

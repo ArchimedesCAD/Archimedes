@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="br.org.archimedes">
+<schema targetNamespace="br.org.archimedes" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
-      <appInfo>
+      <appinfo>
          <meta.schema plugin="br.org.archimedes" id="xmlElementExporter" name="XML Element Exporter"/>
-      </appInfo>
+      </appinfo>
       <documentation>
          This extension point should be used to describe part of a fragment associated to plugins that define an element extension point.
 It was created to allow people to develop a specific exporter (associated to a specific file extension) for a specific element. With it, it is possible to create a new element, add it to a drawing and not break all the exports of this drawing.
@@ -19,6 +19,9 @@ Be extremely carefull about the id of the element. If you are dealing with an un
 
    <element name="extension">
       <annotation>
+         <appinfo>
+            <meta.element />
+         </appinfo>
          <documentation>
             Basical extension definition. This will be used by RCP to register this as an extension.
          </documentation>
@@ -43,9 +46,9 @@ Be extremely carefull about the id of the element. If you are dealing with an un
                <documentation>
                   
                </documentation>
-               <appInfo>
+               <appinfo>
                   <meta.attribute translatable="true"/>
-               </appInfo>
+               </appinfo>
             </annotation>
          </attribute>
       </complexType>
@@ -78,28 +81,28 @@ Not really important.
                <documentation>
                   The class that extends ElementExporter and will be encharged of exporting this element when the exporter associated to the file extension is called.
                </documentation>
-               <appInfo>
+               <appinfo>
                   <meta.attribute kind="java" basedOn="br.org.archimedes.interfaces.ElementExporter"/>
-               </appInfo>
+               </appinfo>
             </annotation>
          </attribute>
       </complexType>
    </element>
 
    <annotation>
-      <appInfo>
+      <appinfo>
          <meta.section type="since"/>
-      </appInfo>
+      </appinfo>
       <documentation>
-         This extension point exists since Archimedes was brought to RCP.
+         This extension point exists since Archimedes was brought to RCP (version 0.50.0).
 It should be used only within fragments that refer to a plugin that defines an element extension.
       </documentation>
    </annotation>
 
    <annotation>
-      <appInfo>
+      <appinfo>
          <meta.section type="examples"/>
-      </appInfo>
+      </appinfo>
       <documentation>
          The first extension created using this point was the Line element exporter to XML.
 Here follows it&apos;s use:
@@ -113,9 +116,9 @@ Here follows it&apos;s use:
    </annotation>
 
    <annotation>
-      <appInfo>
+      <appinfo>
          <meta.section type="apiInfo"/>
-      </appInfo>
+      </appinfo>
       <documentation>
          There is no API information to use this point yet.
 If you believe there is one already, please check if there is some kind of Map associating String to ElementExporters in the Controller.
@@ -124,18 +127,18 @@ If so, please remember the developing team to alter this information.
    </annotation>
 
    <annotation>
-      <appInfo>
+      <appinfo>
          <meta.section type="implementation"/>
-      </appInfo>
+      </appinfo>
       <documentation>
          Please feel free to check the br.org.archimedes.line.xml plugin since this was the first implementation of this extension point.
       </documentation>
    </annotation>
 
    <annotation>
-      <appInfo>
+      <appinfo>
          <meta.section type="copyright"/>
-      </appInfo>
+      </appinfo>
       <documentation>
          For now, all content regarding Archimedes is licensed under GPL v.2.
 Therefore all that regards the extension points is copyleft.

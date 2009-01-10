@@ -17,7 +17,6 @@ import br.org.archimedes.exceptions.NoActiveDrawingException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.factories.CommandFactory;
 import br.org.archimedes.factories.QuickMoveFactory;
-import br.org.archimedes.gui.model.Workspace;
 import br.org.archimedes.interfaces.Command;
 import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Element;
@@ -32,23 +31,16 @@ import br.org.archimedes.model.Selection;
  */
 public class Controller {
 
-    private static Controller instance;
-
     private Drawing activeDrawing;
 
-    private int defaultDrawingNumber = 1;
+    private static int defaultDrawingNumber = 1;
 
-
-    public static Controller getInstance () {
-
-        if (instance == null) {
-            instance = new Controller();
-        }
-        return instance;
-    }
-
-    private Controller () {
-
+    /**
+     * Default constructor. Does nothing.<br>
+     * Do NOT call this constructor. This only exists to allow the Activator to call it.<br>
+     * To acquire an instance of this controller, refer to Utils.getController().
+     */
+    public Controller () {
         // Empty constructor
     }
 
@@ -86,7 +78,7 @@ public class Controller {
     }
 
     /**
-     * Sets the current drawing. Also sets the Workspace.getInstance() viewport
+     * Sets the current drawing. Also sets the br.org.archimedes.Utils.getWorkspace() viewport
      * to this drawing's viewport.
      * 
      * @param drawing
@@ -97,7 +89,7 @@ public class Controller {
         activeDrawing = drawing;
         if (drawing != null) {
             try {
-                Workspace.getInstance().setViewport(
+                br.org.archimedes.Utils.getWorkspace().setViewport(
                         drawing.getViewportPosition(), drawing.getZoom());
             }
             catch (NullArgumentException e) {
@@ -146,14 +138,14 @@ public class Controller {
      */
     public void copyToClipboard (Set<Element> selection) {
 
-        Workspace.getInstance().getClipboard().clear();
+        br.org.archimedes.Utils.getWorkspace().getClipboard().clear();
 
         for (Element element : selection) {
             // For now, elements that go to the clipboard have no layer.
             Element cloned = element.clone();
             Layer layerClone = element.getLayer().clone();
             cloned.setLayer(layerClone);
-            Workspace.getInstance().getClipboard().add(cloned);
+            br.org.archimedes.Utils.getWorkspace().getClipboard().add(cloned);
         }
     }
 
@@ -193,8 +185,8 @@ public class Controller {
 
         Collection<Element> elements = new ArrayList<Element>();
         Drawing drawing = getActiveDrawing();
-        double delta = Workspace.getInstance().getSelectionSize() / 2.0;
-        delta = Workspace.getInstance().screenToModel(delta);
+        double delta = br.org.archimedes.Utils.getWorkspace().getSelectionSize() / 2.0;
+        delta = br.org.archimedes.Utils.getWorkspace().screenToModel(delta);
         Point a = new Point(point.getX() - delta, point.getY() - delta);
         Point b = new Point(point.getX() + delta, point.getY() + delta);
 
@@ -237,8 +229,8 @@ public class Controller {
     public boolean select (Point point, boolean invertSelection)
             throws NullArgumentException, NoActiveDrawingException {
 
-        double delta = Workspace.getInstance().getSelectionSize() / 2.0;
-        delta = Workspace.getInstance().screenToModel(delta);
+        double delta = br.org.archimedes.Utils.getWorkspace().getSelectionSize() / 2.0;
+        delta = br.org.archimedes.Utils.getWorkspace().screenToModel(delta);
         Point a = new Point(point.getX() - delta, point.getY() - delta);
         Point b = new Point(point.getX() + delta, point.getY() + delta);
 
@@ -313,8 +305,8 @@ public class Controller {
     protected boolean movePoint (Point mousePosition)
             throws NoActiveDrawingException {
 
-        double delta = Workspace.getInstance().getMouseSize() / 2.0;
-        delta = Workspace.getInstance().screenToModel(delta);
+        double delta = br.org.archimedes.Utils.getWorkspace().getMouseSize() / 2.0;
+        delta = br.org.archimedes.Utils.getWorkspace().screenToModel(delta);
         Rectangle selectionArea = Utils
                 .getSquareFromDelta(mousePosition, delta);
         Map<Element, Collection<Point>> pointsToMove = new HashMap<Element, Collection<Point>>();
@@ -332,7 +324,7 @@ public class Controller {
             try {
                 CommandFactory quickMoveFactory = new QuickMoveFactory(
                         pointsToMove, mousePosition);
-                InputController.getInstance().setCurrentFactory(
+                br.org.archimedes.Utils.getInputController().setCurrentFactory(
                         quickMoveFactory);
             }
             catch (Exception e) {
@@ -354,7 +346,7 @@ public class Controller {
     private Collection<Point> getPointsToMove (Element element,
             Rectangle selectionArea) {
 
-        Rectangle modelDrawingArea = Workspace.getInstance()
+        Rectangle modelDrawingArea = br.org.archimedes.Utils.getWorkspace()
                 .getCurrentViewportArea();
 
         Collection<Point> points = new ArrayList<Point>();

@@ -47,7 +47,7 @@ public class ActiveState extends InputState {
     public ActiveState (InputState state, CommandFactory factory,
             Drawing drawing) {
 
-        System.setProperty("ActiveState", "true");
+        System.setProperty("ActiveState", "true"); //$NON-NLS-1$ //$NON-NLS-2$
         this.previousState = state;
         this.factory = factory;
         this.myDrawing = drawing;
@@ -116,7 +116,7 @@ public class ActiveState extends InputState {
     public InputState getNext () {
 
         if (nextState == previousState) {
-            System.setProperty("ActiveState", "false");
+            System.setProperty("ActiveState", "false"); //$NON-NLS-1$ //$NON-NLS-2$
         }
         return nextState;
     }
@@ -196,7 +196,7 @@ public class ActiveState extends InputState {
 
         List<Command> commands = factory.getCommands();
         try {
-            Controller.getInstance().execute(commands);
+            br.org.archimedes.Utils.getController().execute(commands);
         }
         catch (NoActiveDrawingException e) {
             nextState = previousState.changedDrawing(null);

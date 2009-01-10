@@ -12,7 +12,6 @@ import br.org.archimedes.controller.commands.PutOrRemoveElementCommand;
 import br.org.archimedes.exceptions.InvalidParameterException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.factories.SelectionPointVectorFactory;
-import br.org.archimedes.gui.opengl.OpenGLWrapper;
 import br.org.archimedes.interfaces.Command;
 import br.org.archimedes.interfaces.Parser;
 import br.org.archimedes.model.Element;
@@ -128,7 +127,7 @@ public class CopyPasteFactory extends SelectionPointVectorFactory {
         for (Element element : selection) {
             Element copied = element.clone();
             copied.move(vector.getX(), vector.getY());
-            copied.draw(OpenGLWrapper.getInstance());
+            copied.draw(br.org.archimedes.Utils.getOpenGLWrapper());
         }
     }
 

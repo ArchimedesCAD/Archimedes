@@ -29,7 +29,7 @@ public class ZoomByAreaCommandTest {
     @Before
     public void setUp () {
 
-        workspace = Workspace.getInstance();
+        workspace = br.org.archimedes.Utils.getWorkspace();
         workspace.setWindowSize(new Rectangle(0.0, 0.0, 100.0, 100.0));
         windowSize = workspace.getWindowSize();
         drawing = new Drawing("Drawing");

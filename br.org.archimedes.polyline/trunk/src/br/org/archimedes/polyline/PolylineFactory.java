@@ -18,7 +18,6 @@ import br.org.archimedes.exceptions.NoActiveDrawingException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.factories.CommandFactory;
 import br.org.archimedes.gui.model.Workspace;
-import br.org.archimedes.gui.opengl.OpenGLWrapper;
 import br.org.archimedes.interfaces.Command;
 import br.org.archimedes.interfaces.Parser;
 import br.org.archimedes.model.Drawing;
@@ -52,8 +51,8 @@ public class PolylineFactory implements CommandFactory {
      */
     public PolylineFactory () {
 
-        workspace = Workspace.getInstance();
-        controller = Controller.getInstance();
+        workspace = br.org.archimedes.Utils.getWorkspace();
+        controller = br.org.archimedes.Utils.getController();
         deactivate();
     }
 
@@ -78,7 +77,6 @@ public class PolylineFactory implements CommandFactory {
 
         controller.deselectAll();
         active = false;
-        workspace.setMouseGrip(true);
         points = new ArrayList<Point>();
     }
 
@@ -357,9 +355,7 @@ public class PolylineFactory implements CommandFactory {
                 
                 points.add(end);
                 Polyline polyLine = new Polyline(points);
-                polyLine.draw(OpenGLWrapper.getInstance());
-
-                workspace.setMouseGrip(true);
+                polyLine.draw(br.org.archimedes.Utils.getOpenGLWrapper());
             }
             catch (NullArgumentException e) {
                 // Should never reach this exception.

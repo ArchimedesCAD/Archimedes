@@ -52,7 +52,7 @@ public class IdleState extends InputState {
             factory = previousFactory;
         }
         else {
-            CommandParser parser = InputController.getInstance().getCommandParser();
+            CommandParser parser = br.org.archimedes.Utils.getInputController().getCommandParser();
             factory = parser.getCommand(text);
         }
 
@@ -62,7 +62,7 @@ public class IdleState extends InputState {
         else if (Utils.isPoint(text)) {
             Point point = Utils.getPointCoordinates(text);
             try {
-                if ( !Controller.getInstance().movePoint(point)) {
+                if ( !br.org.archimedes.Utils.getController().movePoint(point)) {
                     nextState = new SelectionState(this);
                     nextShould = true;
                 }
@@ -101,14 +101,14 @@ public class IdleState extends InputState {
 
         String returnValue = factory.getName().toUpperCase() + ": " //$NON-NLS-1$
                 + factory.begin();
-        CommandParser parser = InputController.getInstance().getCommandParser();
+        CommandParser parser = br.org.archimedes.Utils.getInputController().getCommandParser();
         if (parser.getCommand(factory.getName()) != null) {
             previousFactory = factory;
         }
 
         if (factory.isDone()) {
             try {
-                Controller.getInstance().execute(factory.getCommands());
+                br.org.archimedes.Utils.getController().execute(factory.getCommands());
             }
             catch (IllegalActionException e) {
                 returnValue = factory.getName().toUpperCase()

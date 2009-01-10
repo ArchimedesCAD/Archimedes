@@ -11,7 +11,6 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Text;
 
-import br.org.archimedes.controller.InputController;
 import br.org.archimedes.model.Point;
 
 /**
@@ -101,6 +100,6 @@ public class ParameterHandler implements Observer, SelectionListener {
 	 */
 	public void handleParameter(String text) {
 
-		InputController.getInstance().receiveText(text);
+		br.org.archimedes.Utils.getInputController().receiveText(text);
 	}
 }

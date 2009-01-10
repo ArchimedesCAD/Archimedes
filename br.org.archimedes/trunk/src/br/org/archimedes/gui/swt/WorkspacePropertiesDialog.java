@@ -63,7 +63,7 @@ public class WorkspacePropertiesDialog {
      */
     public WorkspacePropertiesDialog (Shell parent) {
 
-        workspace = Workspace.getInstance();
+        workspace = br.org.archimedes.Utils.getWorkspace();
         this.parent = parent;
         createShell();
         createAndLayThingsOut();
@@ -82,7 +82,7 @@ public class WorkspacePropertiesDialog {
 
             public void widgetDisposed (DisposeEvent arg0) {
 
-                OpenGLWrapper.getInstance().setCurrentCanvas(null);
+                br.org.archimedes.Utils.getOpenGLWrapper().setCurrentCanvas(null);
                 getParent().setEnabled(true);
             }
         });

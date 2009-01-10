@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.org.archimedes.Geometrics;
-import br.org.archimedes.controller.Controller;
 import br.org.archimedes.controller.commands.PutOrRemoveElementCommand;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.InvalidParameterException;
@@ -34,15 +33,14 @@ public class CircleFactory implements CommandFactory {
 
     public CircleFactory () {
 
-        workspace = Workspace.getInstance();
+        workspace = br.org.archimedes.Utils.getWorkspace();
         deactivate();
     }
 
     public String begin () {
 
         active = true;
-        Controller.getInstance().deselectAll();
-        workspace.setMouseGrip(true);
+        br.org.archimedes.Utils.getController().deselectAll();
 
         return Messages.SelectCenter;
     }
@@ -56,7 +54,7 @@ public class CircleFactory implements CommandFactory {
 
     public void drawVisualHelper () {
 
-        OpenGLWrapper opengl = OpenGLWrapper.getInstance();
+        OpenGLWrapper opengl = br.org.archimedes.Utils.getOpenGLWrapper();
 
         if (center != null && !isDone()) {
             Point start = center;
@@ -158,7 +156,6 @@ public class CircleFactory implements CommandFactory {
         center = null;
         radius = 0.0;
         active = false;
-        workspace.setMouseGrip(false);
     }
 
     /**

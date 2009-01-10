@@ -72,7 +72,7 @@ public class MoveElementTest extends Tester {
         selection = new Selection();
 // selection.add(new Line(0, 0, 100, 100));
 // selection.add(new InfiniteLine(10, 10, 50, 50));
-// selection.add(new SemiLine(10, -10, 50, 50));
+// selection.add(new Semiline(10, -10, 50, 50));
 // circle = new Circle(new Point(0, 0), 50);
 // selection.add(circle);
 // selection.add(new Arc(new Point( -100, 0), new Point(0, 100),
@@ -91,7 +91,7 @@ public class MoveElementTest extends Tester {
         expected = new ArrayList<Element>();
 // expected.add(new Line(10, 10, 110, 110));
 // expected.add(new InfiniteLine(20, 20, 60, 60));
-// expected.add(new SemiLine(20, 0, 60, 60));
+// expected.add(new Semiline(20, 0, 60, 60));
 // expected.add(new Circle(new Point(10, 10), 50));
 // expected.add(new Arc(new Point( -90, 10), new Point(10, 110),
 // new Point(110, 10)));
@@ -233,7 +233,7 @@ public class MoveElementTest extends Tester {
         expected = new ArrayList<Element>();
 //        expected.add(new Line(108, 38, 795, 3));
 //        expected.add(new InfiniteLine( -546, 336, 123, -12));
-//        expected.add(new SemiLine(165, 9, 192, 8));
+//        expected.add(new Semiline(165, 9, 192, 8));
 //        try {
 //            expected.add(new Circle(new Point(574, 606), 50));
 //            expected.add(new Arc(new Point(8, -12), new Point(108, 88),

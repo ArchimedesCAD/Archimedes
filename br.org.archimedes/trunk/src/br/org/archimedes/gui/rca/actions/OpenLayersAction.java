@@ -45,7 +45,7 @@ public class OpenLayersAction implements IWorkbenchWindowActionDelegate {
     public void init (IWorkbenchWindow window) {
 
         this.window = window;
-        this.controller = Controller.getInstance();
+        this.controller = br.org.archimedes.Utils.getController();
     }
 
     /**

@@ -16,14 +16,14 @@ import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.intersections.interfaces.Intersector;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.polyline.Polyline;
-import br.org.archimedes.semiline.SemiLine;
+import br.org.archimedes.semiline.Semiline;
 
 public class SemilinePolylineIntersectorTest extends Tester {
 
 	@Test
 	public void testSemilineIntersectsPolylineReturnsOneIntersectionPoint()
 			throws InvalidArgumentException, NullArgumentException {
-		SemiLine semiline = new SemiLine(0.0, 1.0, 0.0, -1.0);
+		Semiline semiline = new Semiline(0.0, 1.0, 0.0, -1.0);
 		List<Point> list = new ArrayList<Point>();
 		list.add(new Point(-1.0, 0.0));
 		list.add(new Point(1.0, 0.0));
@@ -43,7 +43,7 @@ public class SemilinePolylineIntersectorTest extends Tester {
 	public void testSemilineIntersectsPolylineReturnsManyIntersectionPoints()
 			throws InvalidArgumentException, NullArgumentException {
 		
-		SemiLine semiline = new SemiLine(0.0, 1.0, 0.0, -1.0);
+		Semiline semiline = new Semiline(0.0, 1.0, 0.0, -1.0);
 		List<Point> list = new ArrayList<Point>();
 		list.add(new Point(-1.0, 0.0));
 		list.add(new Point(1.0, 0.0));
@@ -69,7 +69,7 @@ public class SemilinePolylineIntersectorTest extends Tester {
 	public void testSemilineIntersectsPolylineReturnsNoIntersectionPoints()
 			throws InvalidArgumentException, NullArgumentException {
 		
-		SemiLine semiline = new SemiLine(0.0, 1.0, 0.0, -1.0);
+		Semiline semiline = new Semiline(0.0, 1.0, 0.0, -1.0);
 		List<Point> list = new ArrayList<Point>();
 		
 		list.add(new Point(1.0, 0.0));
@@ -89,7 +89,7 @@ public class SemilinePolylineIntersectorTest extends Tester {
 	
 	@Test
 	public void polylineIntersectsSemilineReturnsNoIntersectionPoints() throws InvalidArgumentException, NullArgumentException {
-		SemiLine semiline = new SemiLine(-0.5, 0.0,	0.5, 0.0);
+		Semiline semiline = new Semiline(-0.5, 0.0,	0.5, 0.0);
 		List<Point> list = new ArrayList<Point>();
 		list.add(new Point(-1.0, 0.0));
 		list.add(new Point(1.0, 0.0));
@@ -106,7 +106,7 @@ public class SemilinePolylineIntersectorTest extends Tester {
 	@Test
 	public void testSemilinePolylineIntersectorNullArgument() throws NullArgumentException, InvalidArgumentException{
 		
-		SemiLine semiline = new SemiLine(0.0, 1.0, 0.0, -1.0);
+		Semiline semiline = new Semiline(0.0, 1.0, 0.0, -1.0);
 		
 		List<Point> list = new ArrayList<Point>();
 		list.add(new Point(-1.0, 0.0));

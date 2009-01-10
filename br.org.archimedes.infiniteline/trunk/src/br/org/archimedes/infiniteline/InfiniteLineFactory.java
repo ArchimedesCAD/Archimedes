@@ -10,7 +10,6 @@ import java.util.List;
 import br.org.archimedes.controller.commands.PutOrRemoveElementCommand;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.factories.TwoPointFactory;
-import br.org.archimedes.gui.opengl.OpenGLWrapper;
 import br.org.archimedes.interfaces.Command;
 import br.org.archimedes.interfaces.Parser;
 import br.org.archimedes.model.Point;
@@ -91,7 +90,7 @@ public class InfiniteLineFactory extends TwoPointFactory {
         try {
             InfiniteLine xline = new InfiniteLine(start.getX(), start.getY(),
                     end.getX(), end.getY());
-            xline.draw(OpenGLWrapper.getInstance());
+            xline.draw(br.org.archimedes.Utils.getOpenGLWrapper());
         }
         catch (InvalidArgumentException e) {
             // Draw nothing

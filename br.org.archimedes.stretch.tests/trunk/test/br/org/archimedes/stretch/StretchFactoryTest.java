@@ -11,7 +11,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import br.org.archimedes.controller.Controller;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.factories.FactoryTester;
 import br.org.archimedes.model.Drawing;
@@ -41,16 +40,16 @@ public class StretchFactoryTest extends FactoryTester {
         selection.add(element1);
         selection.add(element2);
 
-        Controller.getInstance().deselectAll();
-        Controller.getInstance().setActiveDrawing(drawing);
+        br.org.archimedes.Utils.getController().deselectAll();
+        br.org.archimedes.Utils.getController().setActiveDrawing(drawing);
     }
 
     @After
     public void tearDown () {
 
         selection = null;
-        Controller.getInstance().deselectAll();
-        Controller.getInstance().setActiveDrawing(null);
+        br.org.archimedes.Utils.getController().deselectAll();
+        br.org.archimedes.Utils.getController().setActiveDrawing(null);
     }
 
     @Test

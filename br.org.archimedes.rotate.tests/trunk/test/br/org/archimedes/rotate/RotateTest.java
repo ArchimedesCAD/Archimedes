@@ -66,7 +66,7 @@ public class RotateTest extends Tester {
         selection = new ArrayList<Element>();
         // selection.add(new Line(10, 0, 20, 0));
         // selection.add(new InfiniteLine(1, 0, 2, 0));
-        // selection.add(new SemiLine(2, 0, 3, 0));
+        // selection.add(new Semiline(2, 0, 3, 0));
         // selection.add(new Circle(new Point(5, 0), 5));
         // selection.add(new Arc(new Point( -10, 0), new Point(0, 10), new
         // Point(
@@ -85,7 +85,7 @@ public class RotateTest extends Tester {
         expected = new ArrayList<Element>();
         // expected.add(new Line(0, 10, 0, 20));
         // expected.add(new InfiniteLine(0, 1, 0, 2));
-        // expected.add(new SemiLine(0, 2, 0, 3));
+        // expected.add(new Semiline(0, 2, 0, 3));
         // expected.add(new Circle(new Point(0, 5), 5));
         // expected.add(new Arc(new Point(0, -10), new Point( -10, 0), new
         // Point(
@@ -208,7 +208,7 @@ public class RotateTest extends Tester {
         // TODO ARRumar
         // expected.add(new Line( -10, 0, -20, 0));
         // expected.add(new InfiniteLine( -1, 0, -2, 0));
-        // expected.add(new SemiLine(0, 2, 0, 3));
+        // expected.add(new Semiline(0, 2, 0, 3));
         // try {
         // expected.add(new Circle(new Point( -5, 0), 5));
         // expected.add(new Arc(new Point(10, 0), new Point(0, -10),

@@ -7,7 +7,6 @@ package br.org.archimedes.zoom;
 
 import org.eclipse.jface.action.IAction;
 
-import br.org.archimedes.controller.InputController;
 import br.org.archimedes.interfaces.FactoryAction;
 
 /**
@@ -32,6 +31,6 @@ public class ZoomExtentsAction extends FactoryAction {
     public void run (IAction action) {
 
         super.run(action);
-        InputController.getInstance().receiveText("e"); //$NON-NLS-1$
+        br.org.archimedes.Utils.getInputController().receiveText("e"); //$NON-NLS-1$
     }
 }

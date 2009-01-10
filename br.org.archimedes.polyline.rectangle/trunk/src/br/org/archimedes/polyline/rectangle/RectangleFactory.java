@@ -10,7 +10,6 @@ import java.util.List;
 
 import br.org.archimedes.controller.commands.PutOrRemoveElementCommand;
 import br.org.archimedes.factories.TwoPointFactory;
-import br.org.archimedes.gui.opengl.OpenGLWrapper;
 import br.org.archimedes.interfaces.Command;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Rectangle;
@@ -94,7 +93,7 @@ public class RectangleFactory extends TwoPointFactory {
 
         try {
             Polyline newRect = new Polyline(points);
-            newRect.draw(OpenGLWrapper.getInstance());
+            newRect.draw(br.org.archimedes.Utils.getOpenGLWrapper());
         }
         catch (Exception e) {
             // May happen when we just started to draw the visual helper of the

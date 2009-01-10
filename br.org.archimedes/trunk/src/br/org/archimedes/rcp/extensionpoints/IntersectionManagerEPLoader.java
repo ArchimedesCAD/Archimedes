@@ -19,9 +19,9 @@ import br.org.archimedes.rcp.ExtensionTagHandler;
  */
 public class IntersectionManagerEPLoader implements ExtensionTagHandler {
 
-    private static final String CLASS_ATTRIBUTE = "class";
+    private static final String CLASS_ATTRIBUTE = "class"; //$NON-NLS-1$
 
-    private static final String INTERSECTION_EXTENSION_POINT_ID = "br.org.archimedes.intersections";
+    private static final String INTERSECTION_EXTENSION_POINT_ID = "br.org.archimedes.intersections"; //$NON-NLS-1$
 
     private static final NullIntersectionManager NULL_INTERSECTION_MANAGER = new NullIntersectionManager();
 

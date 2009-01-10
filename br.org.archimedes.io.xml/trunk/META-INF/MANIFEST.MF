@@ -6,10 +6,20 @@ Bundle-Version: 0.57.0
 Bundle-Activator: br.org.archimedes.io.xml.Activator
 Bundle-Vendor: Tarantulus Corporation
 Bundle-Localization: plugin
-Require-Bundle: br.org.archimedes;bundle-version="0.56.0",
+Require-Bundle: br.org.archimedes;bundle-version="0.57.3",
  org.eclipse.core.runtime,
- org.eclipse.ui
-Export-Package: br.org.archimedes.io.xml,
- br.org.archimedes.io.xml.parsers
+ org.eclipse.ui,
+ br.org.archimedes.curvedshape;bundle-version="0.57.0";resolution:=optional,
+ br.org.archimedes.arc;bundle-version="0.57.0";resolution:=optional,
+ br.org.archimedes.circle;bundle-version="0.57.0";resolution:=optional,
+ br.org.archimedes.dimension;bundle-version="0.57.0";resolution:=optional,
+ br.org.archimedes.infiniteline;bundle-version="0.57.0";resolution:=optional,
+ br.org.archimedes.line;bundle-version="0.57.0";resolution:=optional,
+ br.org.archimedes.polyline;bundle-version="0.57.0";resolution:=optional,
+ br.org.archimedes.semiline;bundle-version="0.57.1";resolution:=optional,
+ br.org.archimedes.text;bundle-version="0.57.0";resolution:=optional
+Export-Package: br.org.archimedes.io.xml;x-friends:="br.org.archimedes.io.xml.tests",
+ br.org.archimedes.io.xml.elements;x-friends:="br.org.archimedes.io.xml.tests",
+ br.org.archimedes.io.xml.parsers;x-friends:="br.org.archimedes.io.xml.tests"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy

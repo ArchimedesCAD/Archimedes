@@ -12,7 +12,6 @@ import br.org.archimedes.Geometrics;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.InvalidParameterException;
 import br.org.archimedes.exceptions.NullArgumentException;
-import br.org.archimedes.gui.model.Workspace;
 import br.org.archimedes.gui.opengl.OpenGLWrapper;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Offsetable;
@@ -218,7 +217,7 @@ public class InfiniteLine extends Element implements Offsetable {
     @Override
     public void draw (OpenGLWrapper wrapper) {
 
-        Rectangle modelRect = Workspace.getInstance().getCurrentViewportArea();
+        Rectangle modelRect = br.org.archimedes.Utils.getWorkspace().getCurrentViewportArea();
         List<Point> pointsToDraw = getPointsCrossing(modelRect);
         if (pointsToDraw != null) {
             try {

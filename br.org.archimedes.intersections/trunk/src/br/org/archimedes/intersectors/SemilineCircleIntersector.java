@@ -11,7 +11,7 @@ import br.org.archimedes.intersections.interfaces.Intersector;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Vector;
-import br.org.archimedes.semiline.SemiLine;
+import br.org.archimedes.semiline.Semiline;
 
 public class SemilineCircleIntersector implements Intersector {
 
@@ -23,14 +23,14 @@ public class SemilineCircleIntersector implements Intersector {
 
 		Collection<Point> intersections = new ArrayList<Point>();
 
-		SemiLine semiline;
+		Semiline semiline;
 		Circle circle;
 
-		if (element.getClass() == SemiLine.class) {
-			semiline = (SemiLine) element;
+		if (element.getClass() == Semiline.class) {
+			semiline = (Semiline) element;
 			circle = (Circle) otherElement;
 		} else {
-			semiline = (SemiLine) otherElement;
+			semiline = (Semiline) otherElement;
 			circle = (Circle) element;
 		}
 		

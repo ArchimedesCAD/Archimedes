@@ -202,7 +202,7 @@ public class Extend implements UndoableCommand {
 //        Element clickedElement = null;
 //        try {
 //            /* An extendable element is pointsortable */
-//            clickedElement = Controller.getInstance().getElementUnder(click,
+//            clickedElement = br.org.archimedes.Utils.getController().getElementUnder(click,
 //                    PointSortable.class);
 //        }
 //        catch (NoActiveDrawingException e) {

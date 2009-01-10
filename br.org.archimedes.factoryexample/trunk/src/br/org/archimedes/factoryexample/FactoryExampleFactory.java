@@ -14,7 +14,6 @@ import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.InvalidParameterException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.factories.CommandFactory;
-import br.org.archimedes.gui.model.Workspace;
 import br.org.archimedes.gui.opengl.OpenGLWrapper;
 import br.org.archimedes.interfaces.Command;
 import br.org.archimedes.interfaces.Parser;
@@ -92,10 +91,10 @@ public class FactoryExampleFactory implements CommandFactory {
      */
     public void drawVisualHelper () {
 
-        Point actualMousePosition = Workspace.getInstance()
+        Point actualMousePosition = br.org.archimedes.Utils.getWorkspace()
                 .getActualMousePosition();
         Collection<Element> elements = generateElements(actualMousePosition);
-        OpenGLWrapper wrapper = OpenGLWrapper.getInstance();
+        OpenGLWrapper wrapper = br.org.archimedes.Utils.getOpenGLWrapper();
         for (Element element : elements) {
             element.draw(wrapper);
         }

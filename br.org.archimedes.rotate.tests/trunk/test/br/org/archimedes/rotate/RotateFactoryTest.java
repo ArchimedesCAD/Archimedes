@@ -50,7 +50,7 @@ public class RotateFactoryTest extends FactoryTester {
         reference = new Point(100, 100);
         vector = new Vector(reference, new Point(0, 0));
 
-        Controller controller = Controller.getInstance();
+        Controller controller = br.org.archimedes.Utils.getController();
         controller.deselectAll();
         controller.setActiveDrawing(new Drawing("Test"));
     }
@@ -62,7 +62,7 @@ public class RotateFactoryTest extends FactoryTester {
         vector = null;
         reference = null;
         selection = null;
-        Controller controller = Controller.getInstance();
+        Controller controller = br.org.archimedes.Utils.getController();
         controller.deselectAll();
         controller.setActiveDrawing(null);
     }

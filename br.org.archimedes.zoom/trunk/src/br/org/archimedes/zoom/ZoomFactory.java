@@ -15,7 +15,6 @@ import br.org.archimedes.controller.commands.ZoomPreviousCommand;
 import br.org.archimedes.exceptions.InvalidParameterException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.factories.CommandFactory;
-import br.org.archimedes.gui.model.Workspace;
 import br.org.archimedes.gui.opengl.OpenGLWrapper;
 import br.org.archimedes.interfaces.Command;
 import br.org.archimedes.interfaces.Parser;
@@ -210,12 +209,12 @@ public class ZoomFactory implements CommandFactory {
 
         if (active && p1 != null) {
             Point start = p1;
-            Point end = Workspace.getInstance().getMousePosition();
+            Point end = br.org.archimedes.Utils.getWorkspace().getMousePosition();
 
             Rectangle rectangle = new Rectangle(start.getX(), start.getY(), end
                     .getX(), end.getY());
 
-            OpenGLWrapper wrapper = OpenGLWrapper.getInstance();
+            OpenGLWrapper wrapper = br.org.archimedes.Utils.getOpenGLWrapper();
             wrapper.setPrimitiveType(OpenGLWrapper.PRIMITIVE_LINE_LOOP);
             try {
                 wrapper.drawFromModel(rectangle.getPoints());

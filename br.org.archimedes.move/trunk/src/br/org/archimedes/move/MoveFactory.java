@@ -14,7 +14,6 @@ import java.util.Set;
 import br.org.archimedes.exceptions.InvalidParameterException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.factories.SelectionPointVectorFactory;
-import br.org.archimedes.gui.opengl.OpenGLWrapper;
 import br.org.archimedes.interfaces.Command;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
@@ -116,7 +115,7 @@ public class MoveFactory extends SelectionPointVectorFactory {
         for (Element element : selection) {
             Element copied = element.clone();
             copied.move(vector.getX(), vector.getY());
-            copied.draw(OpenGLWrapper.getInstance());
+            copied.draw(br.org.archimedes.Utils.getOpenGLWrapper());
         }
     }
 

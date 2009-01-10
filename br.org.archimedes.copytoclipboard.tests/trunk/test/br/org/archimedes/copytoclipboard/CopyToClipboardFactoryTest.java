@@ -9,7 +9,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import br.org.archimedes.controller.Controller;
 import br.org.archimedes.factories.CommandFactory;
 import br.org.archimedes.factories.FactoryTester;
 import br.org.archimedes.gui.model.Workspace;
@@ -26,15 +25,15 @@ public class CopyToClipboardFactoryTest extends FactoryTester {
     public void setUp () {
 
         drawing = new Drawing("Teste");
-        Controller.getInstance().setActiveDrawing(drawing);
+        br.org.archimedes.Utils.getController().setActiveDrawing(drawing);
     }
 
     @After
     public void tearDown () {
 
-        Controller.getInstance().deselectAll();
-        Controller.getInstance().setActiveDrawing(null);
-        Workspace.getInstance().getClipboard().clear();
+        br.org.archimedes.Utils.getController().deselectAll();
+        br.org.archimedes.Utils.getController().setActiveDrawing(null);
+        br.org.archimedes.Utils.getWorkspace().getClipboard().clear();
     }
 
     @Test
@@ -54,7 +53,7 @@ public class CopyToClipboardFactoryTest extends FactoryTester {
 
         assertBegin(factory, true, false);
 
-        Workspace workspace = Workspace.getInstance();
+        Workspace workspace = br.org.archimedes.Utils.getWorkspace();
         Collection<Element> clipboard = workspace.getClipboard();
         Assert.assertTrue("The element should be in the clipboard.", clipboard
                 .contains(element1));
@@ -62,7 +61,7 @@ public class CopyToClipboardFactoryTest extends FactoryTester {
                 clipboard.contains(element2));
 
         workspace.getClipboard().clear();
-        Controller.getInstance().deselectAll();
+        br.org.archimedes.Utils.getController().deselectAll();
         selection = new Selection();
         selection.add(element2);
 

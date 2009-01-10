@@ -9,7 +9,7 @@ import br.org.archimedes.infiniteline.InfiniteLine;
 import br.org.archimedes.intersections.interfaces.Intersector;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
-import br.org.archimedes.semiline.SemiLine;
+import br.org.archimedes.semiline.Semiline;
 
 public class SemilineInfiniteLineIntersector implements Intersector {
 
@@ -21,18 +21,18 @@ public class SemilineInfiniteLineIntersector implements Intersector {
             Element otherElement) throws NullArgumentException {
 
         InfiniteLine infiniteLine;
-        SemiLine semiline;
+        Semiline semiline;
 
         if (element == null || otherElement == null)
             throw new NullArgumentException();
 
-        if (element.getClass() == SemiLine.class) {
+        if (element.getClass() == Semiline.class) {
             infiniteLine = (InfiniteLine) otherElement;
-            semiline = (SemiLine) element;
+            semiline = (Semiline) element;
         }
         else {
             infiniteLine = (InfiniteLine) element;
-            semiline = (SemiLine) otherElement;
+            semiline = (Semiline) otherElement;
         }
 
         if (element == null || otherElement == null)
@@ -108,7 +108,7 @@ public class SemilineInfiniteLineIntersector implements Intersector {
 
         boolean isParallel = false;
 
-        SemiLine firstLine = ((SemiLine)element1);
+        Semiline firstLine = ((Semiline)element1);
         InfiniteLine secondLine = ((InfiniteLine)element2);
         
         Point initialPoint = firstLine.getInitialPoint();

@@ -23,15 +23,15 @@ import br.org.archimedes.rcp.ExtensionTagHandler;
  */
 public class ExporterEPLoader implements ExtensionTagHandler {
 
-    private static final String ELEMENT_EXTENSION_POINT_ID = "br.org.archimedes.element";
+    private static final String ELEMENT_EXTENSION_POINT_ID = "br.org.archimedes.element"; //$NON-NLS-1$
 
-    private static final String FACTORY_ATTRIBUTE_NAME = "factory";
+    private static final String FACTORY_ATTRIBUTE_NAME = "factory"; //$NON-NLS-1$
 
-    private static final String SHORTCUT_ATTRIBUTE_NAME = "shortcut";
+    private static final String SHORTCUT_ATTRIBUTE_NAME = "shortcut"; //$NON-NLS-1$
 
-    private static final String ELEMENT_ID_ATTRIBUTE_NAME = "id";
+    private static final String ELEMENT_ID_ATTRIBUTE_NAME = "id"; //$NON-NLS-1$
 
-    private static final String CLASS_ATTRIBUTE = "class";
+    private static final String CLASS_ATTRIBUTE = "class"; //$NON-NLS-1$
 
     private static final Map<String, Class<? extends Element>> idToElementClassMap = new HashMap<String, Class<? extends Element>>();
 

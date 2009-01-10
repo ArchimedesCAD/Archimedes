@@ -25,7 +25,7 @@ public class MousePositionManagerTest extends Tester {
 
     private MousePositionManager manager;
 
-    private Controller controller = Controller.getInstance();
+    private Controller controller = br.org.archimedes.Utils.getController();
 
 
     @Before
@@ -35,7 +35,7 @@ public class MousePositionManagerTest extends Tester {
         controller.setActiveDrawing(drawing);
         manager = new MousePositionManager();
         controller.deselectAll();
-        Workspace.getInstance().setWindowSize(
+        br.org.archimedes.Utils.getWorkspace().setWindowSize(
                 new Rectangle( -1000, -1000, 1000, 1000));
     }
 
@@ -66,7 +66,6 @@ public class MousePositionManagerTest extends Tester {
     public void testWithOneLine () throws InvalidArgumentException {
 
         ReferencePoint refPoint;
-        manager.setActive(true);
         Point mouse, grip, actual, expected;
         // putSafeElementOnDrawing(new Line(0, 0, 100, 100), drawing);
 
@@ -107,7 +106,6 @@ public class MousePositionManagerTest extends Tester {
     @Test
     public void testWithTwoLines () throws InvalidArgumentException {
 
-        manager.setActive(true);
         Point mouse, grip, actual, expected;
         // putSafeElementOnDrawing(new Line(0, 0, 100, 100), drawing);
         // putSafeElementOnDrawing(new Line(50, 75, 150, 75), drawing);

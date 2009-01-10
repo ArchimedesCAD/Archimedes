@@ -5,16 +5,44 @@
 
    <extension
          point="br.org.archimedes.nativeFormat">
+         <nativeFormat id="arc" name="%xmlExtensionName" extension="arc"
+            importer="br.org.archimedes.io.xml.XMLImporter"
+            exporter="br.org.archimedes.io.xml.XMLExporter">
+         </nativeFormat>
+   </extension>
+   <extension
+         point="br.org.archimedes.nativeFormat">
          <nativeFormat id="xml" name="%xmlExtensionName" extension="xml"
          	importer="br.org.archimedes.io.xml.XMLImporter"
          	exporter="br.org.archimedes.io.xml.XMLExporter">
          </nativeFormat>
    </extension>
+   
    <extension
-         point="br.org.archimedes.nativeFormat">
-         <nativeFormat id="arc" name="%xmlExtensionName" extension="arc"
-            importer="br.org.archimedes.io.xml.XMLImporter"
-            exporter="br.org.archimedes.io.xml.XMLExporter">
-         </nativeFormat>
+         point="br.org.archimedes.io.xml.xmlElementExporter">
+      <exporter id="br.org.archimedes.arc.xml.exporter"
+           elementId="br.org.archimedes.arc"
+           class="br.org.archimedes.io.xml.elements.ArcXMLExporter"/>
+      <exporter id="br.org.archimedes.circle.xml.exporter"
+           elementId="br.org.archimedes.circle"
+           class="br.org.archimedes.io.xml.elements.CircleXMLExporter"/>
+      <exporter id="br.org.archimedes.dimension.xml.exporter"
+           elementId="br.org.archimedes.dimension"
+           class="br.org.archimedes.io.xml.elements.DimensionXMLExporter"/>
+      <exporter id="br.org.archimedes.infiniteline.xml.exporter"
+           elementId="br.org.archimedes.infiniteline"
+           class="br.org.archimedes.io.xml.elements.InfiniteLineXMLExporter"/>
+      <exporter id="br.org.archimedes.line.xml.exporter"
+           elementId="br.org.archimedes.line"
+           class="br.org.archimedes.io.xml.elements.LineXMLExporter"/>
+      <exporter id="br.org.archimedes.polyline.xml.exporter"
+           elementId="br.org.archimedes.polyline"
+           class="br.org.archimedes.io.xml.elements.PolylineXMLExporter"/>
+      <exporter id="br.org.archimedes.semiline.xml.exporter"
+           elementId="br.org.archimedes.semiline"
+           class="br.org.archimedes.io.xml.elements.SemilineXMLExporter"/>
+      <exporter id="br.org.archimedes.text.xml.exporter"
+           elementId="br.org.archimedes.text"
+           class="br.org.archimedes.io.xml.elements.TextXMLExporter"/>
    </extension>
 </plugin>

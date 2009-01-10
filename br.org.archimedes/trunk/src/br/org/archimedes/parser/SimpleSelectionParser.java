@@ -7,7 +7,6 @@ package br.org.archimedes.parser;
 import java.util.Set;
 
 import br.org.archimedes.Utils;
-import br.org.archimedes.controller.Controller;
 import br.org.archimedes.exceptions.InvalidParameterException;
 import br.org.archimedes.exceptions.NoActiveDrawingException;
 import br.org.archimedes.interfaces.Parser;
@@ -34,7 +33,7 @@ public class SimpleSelectionParser implements Parser {
 	public String next(String message) throws InvalidParameterException {
 		if (Utils.isReturn(message)) {
 			try {
-                selection = Controller.getInstance().getCurrentSelectedElements();
+                selection = br.org.archimedes.Utils.getController().getCurrentSelectedElements();
             }
             catch (NoActiveDrawingException e) {
                 // Should not happen.

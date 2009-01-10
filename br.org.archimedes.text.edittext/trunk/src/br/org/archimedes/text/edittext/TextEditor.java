@@ -51,7 +51,7 @@ public class TextEditor {
      */
     public TextEditor (Shell parent, String text) {
 
-        workspace = Workspace.getInstance();
+        workspace = br.org.archimedes.Utils.getWorkspace();
         this.parent = parent;
         this.contents = text;
         createShell();

@@ -10,24 +10,24 @@ import br.org.archimedes.line.Line;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.polyline.Polyline;
-import br.org.archimedes.semiline.SemiLine;
+import br.org.archimedes.semiline.Semiline;
 
 public class SemilinePolylineIntersector implements Intersector {
 
 	public Collection<Point> getIntersections(Element element,
 			Element otherElement) throws NullArgumentException {
 		
-		SemiLine baseLine;
+		Semiline baseLine;
 		Polyline polyline;
 		
 		if(element == null || otherElement == null)
 			throw new NullArgumentException();
 		
-		if (element.getClass() == SemiLine.class) {
-			baseLine = (SemiLine) element;
+		if (element.getClass() == Semiline.class) {
+			baseLine = (Semiline) element;
 			polyline = (Polyline) otherElement;
 		} else {
-			baseLine = (SemiLine) otherElement;
+			baseLine = (Semiline) otherElement;
 			polyline = (Polyline) element;
 		}
 		

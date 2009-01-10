@@ -21,7 +21,7 @@ public class ExtendTest extends Tester {
     @Before
     public void setUp () {
 
-        ctrlInstance = Controller.getInstance();
+        ctrlInstance = br.org.archimedes.Utils.getController();
         drawing = new Drawing("test");
         ctrlInstance.setActiveDrawing(drawing);
         ctrlInstance.deselectAll();

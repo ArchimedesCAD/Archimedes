@@ -52,7 +52,7 @@ public class PanFactory implements CommandFactory, Observer {
 
     public PanFactory () {
 
-        workspace = Workspace.getInstance();
+        workspace = br.org.archimedes.Utils.getWorkspace();
         isActive = false;
         observing = false;
     }

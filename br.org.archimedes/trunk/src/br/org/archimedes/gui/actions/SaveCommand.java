@@ -26,6 +26,8 @@ import br.org.archimedes.rcp.extensionpoints.NativeFormatEPLoader;
  */
 public class SaveCommand implements Command {
 
+    private static final String LINE_BREAK = "\n"; //$NON-NLS-1$
+
     private boolean showDialog;
 
     private Shell shell;
@@ -93,7 +95,7 @@ public class SaveCommand implements Command {
         if ( !file.exists() || file.canWrite()) {
             String filename = file.getName();
             String extension = filename
-                    .substring(filename.lastIndexOf(".") + 1);
+                    .substring(filename.lastIndexOf(".") + 1); //$NON-NLS-1$
             Exporter exporter = nativeLoader.getExporter(extension);
 
             OutputStream output = new FileOutputStream(file);
@@ -124,7 +126,7 @@ public class SaveCommand implements Command {
         String[] extensions = nativeLoader.getExtensionsArray();
         saveDialog.setFilterExtensions(extensions);
 
-        Workspace workspace = Workspace.getInstance();
+        Workspace workspace = br.org.archimedes.Utils.getWorkspace();
         String lastDirectory = workspace.getLastUsedDirectory()
                 .getAbsolutePath();
 
@@ -152,27 +154,7 @@ public class SaveCommand implements Command {
                     finished = true;
                 }
                 else {
-                    String log = "Error dialog!\n";
-                    if (chosenFile.exists()) {
-                        log += "File exists\n";
-                        if (chosenFile.canWrite()) {
-                            log += "The parent folder is writable\n";
-                        }
-                    }
-                    else {
-                        log += "File does NOT exist\n";
-                    }
-                    if (chosenFile.getParentFile().canWrite()) {
-                        log += "The parent folder is writable\n";
-                    }
-                    else {
-                        log += "The parent folder is NOT writable\n";
-                    }
-
-                    if (showOverwriteDialog() == SWT.YES) {
-                        log += "O usuario quis sobreescrever\n";
-                    }
-                    errorDialog.setMessage(log);
+                    errorDialog.setMessage(buildLogMessage(chosenFile));
                     errorDialog.open();
                 }
             }
@@ -185,17 +167,46 @@ public class SaveCommand implements Command {
     }
 
     /**
+     * @param chosenFile The file chosen that caused the error
+     * @return The log message to be shown
+     */
+    private String buildLogMessage (File chosenFile) {
+
+        String log = Messages.SaveCommand_ErrorLogEntry + LINE_BREAK;
+        if (chosenFile.exists()) {
+            log += Messages.SaveCommand_FileExists + LINE_BREAK;
+            if (chosenFile.canWrite()) {
+                log += Messages.SaveCommand_ParentWritable + LINE_BREAK;
+            }
+        }
+        else {
+            log += Messages.SaveCommand_FileNotExist + LINE_BREAK;
+        }
+        if (chosenFile.getParentFile().canWrite()) {
+            log += Messages.SaveCommand_ParentWritable + LINE_BREAK;
+        }
+        else {
+            log += Messages.SaveCommand_ParentNotWritable + LINE_BREAK;
+        }
+
+        if (showOverwriteDialog() == SWT.YES) {
+            log += Messages.SaveCommand_Overwrite + LINE_BREAK;
+        }
+        return log;
+    }
+
+    /**
      * Shows an overwrite dialog box
      * 
      * @return the user option
      */
     private int showOverwriteDialog () {
 
-        if (System.getProperty("os.name").contains("Mac")) {
+        if (System.getProperty("os.name").contains("Mac")) { //$NON-NLS-1$ //$NON-NLS-2$
             return SWT.YES;
         }
 
-        // TODO Verificar se outros sistemas (nao OSX) tb nativamente dao aviso
+        // TODO Check is non OS X systems also present the overwrite message natively
         MessageBox dialogBox = new MessageBox(shell, SWT.YES | SWT.NO
                 | SWT.ICON_QUESTION);
         dialogBox.setMessage(Messages.OverwriteQuestion);

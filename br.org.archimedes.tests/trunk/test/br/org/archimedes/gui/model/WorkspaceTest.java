@@ -18,7 +18,7 @@ public class WorkspaceTest {
 
     public WorkspaceTest () {
 
-        workspace = Workspace.getInstance();
+        workspace = br.org.archimedes.Utils.getWorkspace();
     }
 
     @Test

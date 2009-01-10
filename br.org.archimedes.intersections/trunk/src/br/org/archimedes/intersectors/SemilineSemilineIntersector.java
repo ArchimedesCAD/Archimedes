@@ -8,14 +8,14 @@ import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.intersections.interfaces.Intersector;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
-import br.org.archimedes.semiline.SemiLine;
+import br.org.archimedes.semiline.Semiline;
 
 public class SemilineSemilineIntersector implements Intersector {
 
 	public Collection<Point> getIntersections(Element element,
 			Element otherElement) throws NullArgumentException {
-		SemiLine firstLine = (SemiLine) element;
-		SemiLine secondLine = (SemiLine) otherElement;
+		Semiline firstLine = (Semiline) element;
+		Semiline secondLine = (Semiline) otherElement;
 		
 		if (element == null || otherElement == null)
 			throw new NullArgumentException();
@@ -93,8 +93,8 @@ public class SemilineSemilineIntersector implements Intersector {
 
         boolean isParallel = false;
 
-        SemiLine firstLine = ((SemiLine)element1);
-        SemiLine secondLine = ((SemiLine)element2);
+        Semiline firstLine = ((Semiline)element1);
+        Semiline secondLine = ((Semiline)element2);
         
         Point initialPoint = firstLine.getInitialPoint();
         Point endingPoint = firstLine.getDirectionPoint();

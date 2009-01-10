@@ -9,8 +9,12 @@ import java.util.Collection;
 import java.util.Locale;
 import java.util.Scanner;
 
+import br.org.archimedes.controller.Controller;
+import br.org.archimedes.controller.InputController;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.gui.model.Workspace;
+import br.org.archimedes.gui.opengl.OpenGLWrapper;
+import br.org.archimedes.gui.rca.Activator;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Rectangle;
 
@@ -235,10 +239,54 @@ public class Utils {
 	public static Point useOrto(Point p1, Point point)
 			throws NullArgumentException {
 
-		Workspace workspace = Workspace.getInstance();
+		Workspace workspace = getWorkspace();
 		if (workspace.isOrtoOn() && workspace.getGripMousePosition() == null) {
 			point = Geometrics.orthogonalize(p1, point);
 		}
 		return point;
 	}
+
+	/**
+	 * @return The instance of Workspace that should be used.
+	 */
+	public static Workspace getWorkspace() {
+	    Activator current = Activator.getDefault();
+	    if(current == null) { // For the tests
+	        return new Workspace();
+	    }
+        return current.getWorkspace();
+	}
+
+    /**
+     * @return The instance of InputController that should be used.
+     */
+    public static InputController getInputController() {
+        Activator current = Activator.getDefault();
+        if(current == null) { // For the tests
+            return new InputController();
+        }
+        return current.getInputController();
+    }
+
+    /**
+     * @return The instance of Controller that should be used.
+     */
+    public static Controller getController() {
+        Activator current = Activator.getDefault();
+        if(current == null) { // For the tests
+            return new Controller();
+        }
+        return current.getController();
+    }
+    
+    /**
+     * @return The instance of OpenGLWrapper that should be used.
+     */
+    public static OpenGLWrapper getOpenGLWrapper() {
+        Activator current = Activator.getDefault();
+        if(current == null) { // For the tests
+            return new OpenGLWrapper();
+        }
+        return Activator.getDefault().getOpenGLWrapper();
+    }
 }

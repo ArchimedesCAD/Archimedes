@@ -7,7 +7,6 @@ import java.io.OutputStream;
 import org.junit.Assert;
 import org.junit.Test;
 
-import br.org.archimedes.io.xml.XMLExporterHelper;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Vector;
 

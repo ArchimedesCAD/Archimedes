@@ -19,9 +19,9 @@ import br.org.archimedes.trims.NullTrimManager;
  */
 public class TrimManagerEPLoader implements ExtensionTagHandler {
 
-    private static final String CLASS_ATTRIBUTE_NAME = "class";
+    private static final String CLASS_ATTRIBUTE_NAME = "class"; //$NON-NLS-1$
 
-    private static final String TRIM_MANAGER_EXTENSION_POINT_ID = "br.org.archimedes.trims";
+    private static final String TRIM_MANAGER_EXTENSION_POINT_ID = "br.org.archimedes.trims"; //$NON-NLS-1$
 
     private static final TrimManager NULL_TRIM_MANAGER = new NullTrimManager();
 

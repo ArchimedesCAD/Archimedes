@@ -16,7 +16,7 @@ import br.org.archimedes.model.Point;
  */
 public class Contributor extends EditorActionBarContributor implements Observer {
 
-    private static final String STATUS_BAR_ID = "br.org.archimedes.statusbar.position";
+    private static final String STATUS_BAR_ID = "br.org.archimedes.statusbar.position"; //$NON-NLS-1$
 
     private StatusLineContributionItem positionManager;
 

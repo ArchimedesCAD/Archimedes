@@ -1,29 +1,33 @@
 
 package br.org.archimedes.gui.rca;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.util.Collections;
-
-import org.eclipse.core.runtime.FileLocator;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.ui.plugin.AbstractUIPlugin;
-import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+
+import br.org.archimedes.controller.Controller;
+import br.org.archimedes.controller.InputController;
+import br.org.archimedes.gui.model.Workspace;
+import br.org.archimedes.gui.opengl.OpenGLWrapper;
+import br.org.archimedes.rcp.AbstractFileLocatorActivator;
 
 /**
  * The activator class controls the plug-in life cycle
  */
-public class Activator extends AbstractUIPlugin {
+public class Activator extends AbstractFileLocatorActivator {
 
     // The plug-in ID
     public static final String PLUGIN_ID = "br.org.archimedes"; //$NON-NLS-1$
 
     // The shared instance
     private static Activator plugin;
+
+    private Workspace workspace;
+
+    private InputController inputController;
+
+    private Controller controller;
+
+    private OpenGLWrapper openGL;
 
 
     /**
@@ -36,8 +40,9 @@ public class Activator extends AbstractUIPlugin {
 
     /*
      * (non-Javadoc)
-     * 
-     * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
+     * @see
+     * org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext
+     * )
      */
     public void start (BundleContext context) throws Exception {
 
@@ -46,8 +51,9 @@ public class Activator extends AbstractUIPlugin {
 
     /*
      * (non-Javadoc)
-     * 
-     * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
+     * @see
+     * org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext
+     * )
      */
     public void stop (BundleContext context) throws Exception {
 
@@ -64,7 +70,7 @@ public class Activator extends AbstractUIPlugin {
 
         return plugin;
     }
-
+    
     /**
      * Returns an image descriptor for the image file at the given plug-in
      * relative path
@@ -78,34 +84,35 @@ public class Activator extends AbstractUIPlugin {
         return imageDescriptorFromPlugin(PLUGIN_ID, path);
     }
 
-    /**
-     * @param path
-     *            The path to the file relative to this plugin's root
-     * @return An Inputstream to the file or null if the activator is not set
-     *         (this is not a regular RCP run... happens for tests)
-     * @throws IOException
-     *             Thrown if there is an error while reading the file
-     */
-    public static InputStream locateFile (String path) throws IOException {
+    public Workspace getWorkspace () {
 
-        InputStream input = null;
-        
-		if (getDefault() != null) {
-			input = locateFile(path, getDefault().getBundle());
-		}        
-		return input;
-    }
-    
-    public static InputStream locateFile (String path, Bundle bundle) throws IOException {
-
-        FileInputStream input = null;
-        if (bundle != null) {
-            URL url = FileLocator.find(bundle,
-                    new Path(path), Collections.emptyMap());
-            URL fileUrl = FileLocator.toFileURL(url);
-            input = new FileInputStream(fileUrl.getFile());
-
+        if (workspace == null) {
+            workspace = new Workspace();
         }
-        return input;
+        return workspace;
+    }
+
+    public InputController getInputController () {
+
+        if (inputController == null) {
+            inputController = new InputController();
+        }
+        return inputController;
+    }
+
+    public Controller getController () {
+
+        if (controller == null) {
+            controller = new Controller();
+        }
+        return controller;
+    }
+
+    public OpenGLWrapper getOpenGLWrapper () {
+
+        if (openGL == null) {
+            openGL = new OpenGLWrapper();
+        }
+        return openGL;
     }
 }

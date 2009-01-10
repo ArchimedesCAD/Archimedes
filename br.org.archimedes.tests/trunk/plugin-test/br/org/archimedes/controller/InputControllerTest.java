@@ -52,8 +52,8 @@ public class InputControllerTest {
 
     public InputControllerTest () {
 
-        interpreter = InputController.getInstance();
-        controller = Controller.getInstance();
+        interpreter = br.org.archimedes.Utils.getInputController();
+        controller = br.org.archimedes.Utils.getController();
     }
 
     @Before
@@ -78,7 +78,7 @@ public class InputControllerTest {
     @Test
     public void testGetInstance () {
 
-        Assert.assertNotNull(InputController.getInstance());
+        Assert.assertNotNull(br.org.archimedes.Utils.getInputController());
 
         repeatCommand();
     }
@@ -86,10 +86,10 @@ public class InputControllerTest {
     @Test
     public void testCancelNullCommand () {
 
-        InputController instance = InputController.getInstance();
+        InputController instance = br.org.archimedes.Utils.getInputController();
         try {
             instance.setCurrentFactory(null);
-            instance.cancelCurrentCommand();
+            instance.cancelCurrentFactory();
         }
         catch (NullPointerException e) {
             Assert.fail("Should not throw null pointer exception");
@@ -135,7 +135,7 @@ public class InputControllerTest {
         runCommand(command, parameters);
         InnerObserver resultObserver = new InnerObserver();
         interpreter.addObserver(resultObserver);
-        interpreter.cancelCurrentCommand();
+        interpreter.cancelCurrentFactory();
         interpreter.deleteObserver(resultObserver);
 
         return resultObserver.getReturnValue();

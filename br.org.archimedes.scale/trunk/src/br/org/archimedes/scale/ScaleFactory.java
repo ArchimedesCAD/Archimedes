@@ -58,15 +58,14 @@ public class ScaleFactory implements CommandFactory {
 
     public ScaleFactory () {
 
-        controller = Controller.getInstance();
-        workspace = Workspace.getInstance();
+        controller = br.org.archimedes.Utils.getController();
+        workspace = br.org.archimedes.Utils.getWorkspace();
         deactivate();
     }
 
     public String begin () {
 
         active = true;
-        workspace.setMouseGrip(true);
         String returnValue = Messages.GetSelection;
         try {
             Set<Element> selection = controller.getCurrentSelectedElements();
@@ -101,7 +100,6 @@ public class ScaleFactory implements CommandFactory {
         denominator = null;
         proportion = null;
         getReference = false;
-        workspace.setMouseGrip(false);
     }
 
     public String next (Object parameter) throws InvalidParameterException {
@@ -361,7 +359,7 @@ public class ScaleFactory implements CommandFactory {
     public void drawVisualHelper () {
 
         if (active) {
-            OpenGLWrapper opengl = OpenGLWrapper.getInstance();
+            OpenGLWrapper opengl = br.org.archimedes.Utils.getOpenGLWrapper();
             Point mousePosition = workspace.getMousePosition();
 
             if (distanceReference != null && !getReference) {

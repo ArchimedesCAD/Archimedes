@@ -37,9 +37,9 @@ public class VisualHelper {
      */
     public VisualHelper () {
 
-        this.opengl = OpenGLWrapper.getInstance();
-        this.workspace = Workspace.getInstance();
-        this.interpreter = InputController.getInstance();
+        this.opengl = br.org.archimedes.Utils.getOpenGLWrapper();
+        this.workspace = br.org.archimedes.Utils.getWorkspace();
+        this.interpreter = br.org.archimedes.Utils.getInputController();
     }
 
     /**

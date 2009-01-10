@@ -6,7 +6,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import br.org.archimedes.controller.Controller;
 import br.org.archimedes.exceptions.InvalidParameterException;
 import br.org.archimedes.factories.CommandFactory;
 import br.org.archimedes.factories.FactoryTester;
@@ -29,13 +28,13 @@ public class AreaPerimeterFactoryTest extends FactoryTester {
 
         factory = new AreaPerimeterFactory();
         drawing = new Drawing("Drawing");
-        Controller.getInstance().setActiveDrawing(drawing);
+        br.org.archimedes.Utils.getController().setActiveDrawing(drawing);
     }
 
     @After
     public void tearDown () {
 
-        Controller.getInstance().setActiveDrawing(null);
+        br.org.archimedes.Utils.getController().setActiveDrawing(null);
     }
 
     @Test

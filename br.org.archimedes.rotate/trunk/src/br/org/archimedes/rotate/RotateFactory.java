@@ -10,7 +10,6 @@ import java.util.Set;
 
 import br.org.archimedes.Geometrics;
 import br.org.archimedes.Utils;
-import br.org.archimedes.controller.Controller;
 import br.org.archimedes.exceptions.InvalidParameterException;
 import br.org.archimedes.exceptions.NoActiveDrawingException;
 import br.org.archimedes.exceptions.NullArgumentException;
@@ -57,7 +56,7 @@ public class RotateFactory implements CommandFactory {
 
     public RotateFactory () {
 
-        workspace = Workspace.getInstance();
+        workspace = br.org.archimedes.Utils.getWorkspace();
         deactivate();
     }
 
@@ -68,10 +67,9 @@ public class RotateFactory implements CommandFactory {
         getNewAngleAxis = false;
 
         active = true;
-        workspace.setMouseGrip(true);
         String returnValue = Messages.Iteration1;
         try {
-            Set<Element> selection = Controller.getInstance()
+            Set<Element> selection = br.org.archimedes.Utils.getController()
                     .getCurrentSelectedElements();
 
             if (selection != null && !selection.isEmpty()) {
@@ -100,7 +98,6 @@ public class RotateFactory implements CommandFactory {
         angle = 0.0;
         gotAngle = false;
         getNewAngleAxis = false;
-        workspace.setMouseGrip(false);
     }
 
     public String next (Object parameter) throws InvalidParameterException {
@@ -309,7 +306,7 @@ public class RotateFactory implements CommandFactory {
         Point start = reference;
         Point end = workspace.getMousePosition();
 
-        OpenGLWrapper wrapper = OpenGLWrapper.getInstance();
+        OpenGLWrapper wrapper = br.org.archimedes.Utils.getOpenGLWrapper();
         try {
             end = Utils.useOrto(start, end);
             

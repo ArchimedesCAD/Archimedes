@@ -8,7 +8,6 @@ import br.org.archimedes.Geometrics;
 import br.org.archimedes.Utils;
 import br.org.archimedes.exceptions.InvalidParameterException;
 import br.org.archimedes.exceptions.NullArgumentException;
-import br.org.archimedes.gui.model.Workspace;
 import br.org.archimedes.interfaces.Parser;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Vector;
@@ -93,8 +92,6 @@ public class VectorParser implements Parser {
             throw new InvalidParameterException();
         }
         String returnValue = null;
-        Workspace workspace = Workspace.getInstance();
-
         // TODO Nao permitir vetor com tamanho zero
         if (gotDistance) {
             Point directionPoint = Utils.getPointCoordinates(message);
@@ -111,7 +108,7 @@ public class VectorParser implements Parser {
             else {
                 if (directionPoint != null || Utils.isReturn(message)) {
                     if (directionPoint == null) {
-                        directionPoint = workspace.getMousePosition();
+                        directionPoint = br.org.archimedes.Utils.getWorkspace().getMousePosition();
                     }
 
                     try {

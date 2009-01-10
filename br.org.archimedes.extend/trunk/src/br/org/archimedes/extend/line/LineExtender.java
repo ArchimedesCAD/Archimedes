@@ -11,7 +11,7 @@ import br.org.archimedes.line.Line;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.rcp.extensionpoints.IntersectionManagerEPLoader;
-import br.org.archimedes.semiline.SemiLine;
+import br.org.archimedes.semiline.Semiline;
 
 public class LineExtender implements Extender {
 
@@ -25,12 +25,12 @@ public class LineExtender implements Extender {
 		}
 
 		Line line = (Line) element;
-		SemiLine semiline = null;
+		Semiline semiline = null;
 		
 		Point nearestExtremePoint = getNearestExtremePoint(line, click);
 		
 		try {
-			semiline = new SemiLine(click, nearestExtremePoint);
+			semiline = new Semiline(click, nearestExtremePoint);
 		} catch (InvalidArgumentException e) {
 			e.printStackTrace();
 		}

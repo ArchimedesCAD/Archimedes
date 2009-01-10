@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Set;
 
 import br.org.archimedes.Constant;
-import br.org.archimedes.controller.Controller;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.InvalidParameterException;
 import br.org.archimedes.exceptions.NoActiveDrawingException;
@@ -65,7 +64,7 @@ public class ExtendFactory implements CommandFactory {
 
         String returnValue = Messages.SelectRefs;
         try {
-            Set<Element> selection = Controller.getInstance()
+            Set<Element> selection = br.org.archimedes.Utils.getController()
                     .getCurrentSelectedElements();
 
             if (selection != null && !selection.isEmpty()) {

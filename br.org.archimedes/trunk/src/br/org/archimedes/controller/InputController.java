@@ -22,33 +22,21 @@ import br.org.archimedes.parser.CommandParser;
  */
 public class InputController extends Observable {
 
-    private static InputController instance;
-
     private CommandParser commandParser;
 
     private InputState currentState;
 
 
     /**
-     * The constructor initializes the tokens.
+     * The constructor initializes the tokens.<br>
+     * Do NOT use this constructor. It is only here so that the Activator can
+     * use it.<br>
+     * To aquire the instance, refer to Utils.getInputController()
      */
-    private InputController () {
+    public InputController () {
 
         commandParser = new CommandParser();
         currentState = new DisabledState();
-    }
-
-    /**
-     * Singleton pattern
-     * 
-     * @return The instance of the Interpreter
-     */
-    public static InputController getInstance () {
-
-        if (instance == null) {
-            instance = new InputController();
-        }
-        return instance;
     }
 
     /**
@@ -93,7 +81,7 @@ public class InputController extends Observable {
      */
     public void setDrawing (Drawing drawing) {
 
-        Controller controller = Controller.getInstance();
+        Controller controller = br.org.archimedes.Utils.getController();
         if ( !controller.isThereActiveDrawing()) {
             controller.setActiveDrawing(drawing);
         }
@@ -102,16 +90,16 @@ public class InputController extends Observable {
             controller.setActiveDrawing(drawing);
             controller.deselectAll();
         }
-        
+
         currentState = currentState.changedDrawing(drawing);
         setChanged();
         notifyObservers(drawing);
     }
 
     /**
-     * Cancels the current command and sets the current command as selection.
+     * Cancels the current factory and sets the current factory as selection.
      */
-    public void cancelCurrentCommand () {
+    public void cancelCurrentFactory () {
 
         String message = currentState.cancel();
         currentState = currentState.getNext();
@@ -135,8 +123,9 @@ public class InputController extends Observable {
      * @return The message that should be printed.
      */
     public String setCurrentFactory (CommandFactory factory) {
+
         if (factory == null) {
-            cancelCurrentCommand();
+            cancelCurrentFactory();
             return null;
         }
         return currentState.setCurrentFactory(factory);

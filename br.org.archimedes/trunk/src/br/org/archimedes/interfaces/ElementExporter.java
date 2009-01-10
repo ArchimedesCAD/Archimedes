@@ -5,7 +5,6 @@
 package br.org.archimedes.interfaces;
 
 import java.io.IOException;
-import java.io.OutputStream;
 
 import br.org.archimedes.model.Element;
 
@@ -17,13 +16,14 @@ import br.org.archimedes.model.Element;
 public interface ElementExporter <T extends Element> {
 
     /**
-     * @param output
-     *            The output to which the element must be written.
      * @param element
      *            The element of type T.
+     * @param output
+     *            The output to which the element must be written. Users must
+     *            known which class this is.
      * @throws IOException
      *             In case of any IO problem.
      */
-    public void exportElement (T element, OutputStream output)
+    public void exportElement (T element, Object outputObject)
             throws IOException;
 }

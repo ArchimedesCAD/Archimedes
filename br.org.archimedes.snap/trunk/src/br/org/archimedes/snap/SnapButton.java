@@ -42,7 +42,7 @@ public class SnapButton extends AbstractWorkbenchTrimWidget implements Observer 
     public void init (IWorkbenchWindow workbenchWindow) {
 
         super.init(workbenchWindow);
-        Workspace.getInstance().addObserver(this);
+        br.org.archimedes.Utils.getWorkspace().addObserver(this);
     }
 
     /**
@@ -63,7 +63,7 @@ public class SnapButton extends AbstractWorkbenchTrimWidget implements Observer 
     @Override
     public void fill (Composite parent, int oldSide, int newSide) {
 
-        final Workspace workspace = Workspace.getInstance();
+        final Workspace workspace = br.org.archimedes.Utils.getWorkspace();
         composite = new Composite(parent, SWT.NONE);
         FillLayout layout = new FillLayout();
         layout.marginHeight = 4;
@@ -98,7 +98,7 @@ public class SnapButton extends AbstractWorkbenchTrimWidget implements Observer 
     public void update (Observable warner, Object snap) {
 
         if (button != null && "snap".equals(snap)) { //$NON-NLS-1$
-            button.setSelection(Workspace.getInstance().isSnapOn());
+            button.setSelection(br.org.archimedes.Utils.getWorkspace().isSnapOn());
         }
     }
 }

@@ -34,7 +34,7 @@ public class RectangleFactoryTest extends FactoryTester {
     public void setUp () {
 
         factory = new RectangleFactory();
-        controller = Controller.getInstance();
+        controller = br.org.archimedes.Utils.getController();
         drawing = new Drawing("Drawing");
         controller.setActiveDrawing(drawing);
 

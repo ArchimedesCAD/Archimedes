@@ -13,7 +13,7 @@ import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.line.Line;
 import br.org.archimedes.model.Point;
-import br.org.archimedes.semiline.SemiLine;
+import br.org.archimedes.semiline.Semiline;
 
 public class SemilineLineIntersectorTest extends Tester {
 
@@ -21,7 +21,7 @@ public class SemilineLineIntersectorTest extends Tester {
 	public void simpleLineIntersection() throws InvalidArgumentException,
 			NullArgumentException {
 		SemilineLineIntersector lli = new SemilineLineIntersector();
-		SemiLine line1 = new SemiLine(1, 1, 10, 10);
+		Semiline line1 = new Semiline(1, 1, 10, 10);
 		Line line2 = new Line(-1, 3, 10, 3);
 		Point p0 = new Point(3, 3);
 		Collection<Point> intersections = lli.getIntersections(line1, line2);
@@ -32,7 +32,7 @@ public class SemilineLineIntersectorTest extends Tester {
 	public void paralelsLinesIntersection() throws InvalidArgumentException,
 			NullArgumentException {
 		SemilineLineIntersector lli = new SemilineLineIntersector();
-		SemiLine line1 = new SemiLine(1, 1, 10, 10);
+		Semiline line1 = new Semiline(1, 1, 10, 10);
 		Line line2 = new Line(2, 2, 12, 12);
 		Collection<Point> intersections = lli.getIntersections(line1, line2);
 		assertTrue(intersections.isEmpty());
@@ -42,7 +42,7 @@ public class SemilineLineIntersectorTest extends Tester {
 	public void sameLineIntersection() throws InvalidArgumentException,
 			NullArgumentException {
 		SemilineLineIntersector lli = new SemilineLineIntersector();
-		SemiLine line1 = new SemiLine(2, 2, 12, 12);
+		Semiline line1 = new Semiline(2, 2, 12, 12);
 		Line line2 = new Line(2, 2, 12, 12);
 		Collection<Point> intersections = lli.getIntersections(line1, line2);
 		assertTrue(intersections.isEmpty());
@@ -52,7 +52,7 @@ public class SemilineLineIntersectorTest extends Tester {
 	public void subLineIntersection() throws InvalidArgumentException,
 			NullArgumentException {
 		SemilineLineIntersector lli = new SemilineLineIntersector();
-		SemiLine line1 = new SemiLine(2, 2, 12, 12);
+		Semiline line1 = new Semiline(2, 2, 12, 12);
 		Line line2 = new Line(3, 3, 10, 10);
 		Collection<Point> intersections = lli.getIntersections(line1, line2);
 		assertTrue(intersections.isEmpty());
@@ -63,7 +63,7 @@ public class SemilineLineIntersectorTest extends Tester {
 	public void interLineIntersection() throws InvalidArgumentException,
 			NullArgumentException {
 		SemilineLineIntersector lli = new SemilineLineIntersector();
-		SemiLine line1 = new SemiLine(12, 12, 20, 20);
+		Semiline line1 = new Semiline(12, 12, 20, 20);
 		Line line2 = new Line(10, 10, 15, 15);
 		Collection<Point> intersections = lli.getIntersections(line1, line2);
 		assertTrue(intersections.isEmpty());
@@ -74,7 +74,7 @@ public class SemilineLineIntersectorTest extends Tester {
 	public void noLineIntersectionWouldIfOneExtended()
 			throws InvalidArgumentException, NullArgumentException {
 		SemilineLineIntersector lli = new SemilineLineIntersector();
-		SemiLine line1 = new SemiLine(2, 2, 12, 12);
+		Semiline line1 = new Semiline(2, 2, 12, 12);
 		Line line2 = new Line(4, 3, 3, -10);
 		Collection<Point> intersections = lli.getIntersections(line1, line2);
 		assertTrue(intersections.isEmpty());
@@ -85,7 +85,7 @@ public class SemilineLineIntersectorTest extends Tester {
 	public void noLineIntersectionWouldIfTwoExtended()
 			throws InvalidArgumentException, NullArgumentException {
 		SemilineLineIntersector lli = new SemilineLineIntersector();
-		SemiLine line1 = new SemiLine(2, 2, 12, 12);
+		Semiline line1 = new Semiline(2, 2, 12, 12);
 		Line line2 = new Line(0, 0, 3, -10);
 		Collection<Point> intersections = lli.getIntersections(line1, line2);
 		assertTrue(intersections.isEmpty());
@@ -95,7 +95,7 @@ public class SemilineLineIntersectorTest extends Tester {
 	public void onePointParallelLineIntersection()
 			throws InvalidArgumentException, NullArgumentException {
 		SemilineLineIntersector lli = new SemilineLineIntersector();
-		SemiLine line1 = new SemiLine(2, 2, 3, 3);
+		Semiline line1 = new Semiline(2, 2, 3, 3);
 		Line line2 = new Line(0, 0, 2, 2);
 		Point p0 = new Point(2, 2);
 		Collection<Point> intersections = lli.getIntersections(line1, line2);
@@ -107,7 +107,7 @@ public class SemilineLineIntersectorTest extends Tester {
 	public void onePointOrthogonalLineIntersection()
 			throws InvalidArgumentException, NullArgumentException {
 		SemilineLineIntersector lli = new SemilineLineIntersector();
-		SemiLine line1 = new SemiLine(2, 2, 10, 10);
+		Semiline line1 = new Semiline(2, 2, 10, 10);
 		Line line2 = new Line(-4, 10, 3, 3);
 		Point p0 = new Point(3, 3);
 		Collection<Point> intersections = lli.getIntersections(line1, line2);
@@ -119,7 +119,7 @@ public class SemilineLineIntersectorTest extends Tester {
 	public void onePointLineIntersection() throws InvalidArgumentException,
 			NullArgumentException {
 		SemilineLineIntersector lli = new SemilineLineIntersector();
-		SemiLine line1 = new SemiLine(10, 10, 2, 2);
+		Semiline line1 = new Semiline(10, 10, 2, 2);
 		Line line2 = new Line(10, 10, 15, 20);
 		Point p0 = new Point(10, 10);
 		Collection<Point> intersections = lli.getIntersections(line1, line2);
@@ -129,7 +129,7 @@ public class SemilineLineIntersectorTest extends Tester {
 	@Test
 	public void nullLineIntersection() throws InvalidArgumentException {
 		SemilineLineIntersector lli = new SemilineLineIntersector();
-		SemiLine line1 = new SemiLine(2, 2, 10, 10);
+		Semiline line1 = new Semiline(2, 2, 10, 10);
 		Line line2 = null;
 
 		try {

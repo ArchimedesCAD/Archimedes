@@ -10,8 +10,6 @@ import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.InvalidParameterException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.factories.TwoPointFactory;
-import br.org.archimedes.gui.model.Workspace;
-import br.org.archimedes.gui.opengl.OpenGLWrapper;
 import br.org.archimedes.interfaces.Command;
 import br.org.archimedes.interfaces.Parser;
 import br.org.archimedes.model.Point;
@@ -258,12 +256,12 @@ public class DimensionFactory extends TwoPointFactory {
                 super.drawVisualHelper();
             }
             else if (onDistanceState()) {
-                Point mouse = Workspace.getInstance().getMousePosition();
+                Point mouse = br.org.archimedes.Utils.getWorkspace().getMousePosition();
 
                 try {
                     Dimension toDraw = new Dimension(firstPoint, secondPoint,
                             mouse, fontSize);
-                    toDraw.draw(OpenGLWrapper.getInstance());
+                    toDraw.draw(br.org.archimedes.Utils.getOpenGLWrapper());
                 }
                 catch (NullArgumentException e) {
                     // Do nothing
@@ -284,7 +282,7 @@ public class DimensionFactory extends TwoPointFactory {
                         toDraw = new Dimension(firstPoint, secondPoint,
                                 distance, fontSize);
                     }
-                    toDraw.draw(OpenGLWrapper.getInstance());
+                    toDraw.draw(br.org.archimedes.Utils.getOpenGLWrapper());
                 }
                 catch (NullArgumentException e) {
                     // Do nothing
@@ -303,7 +301,7 @@ public class DimensionFactory extends TwoPointFactory {
     @Override
     protected void drawVisualHelper (Point start, Point end) {
 
-        OpenGLWrapper.getInstance().draw(start, end);
+        br.org.archimedes.Utils.getOpenGLWrapper().draw(start, end);
     }
 
     public String getName () {

@@ -39,7 +39,7 @@ public class XMLExporter implements Exporter {
 
         exportXMLHeader(drawing, output, charset);
 
-        byte[] endContainerTagBytes = ("\t" + "</container>" + "\n")
+        byte[] endContainerTagBytes = ("\t" + "</container>" + "\n") //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                 .getBytes(charset);
 
         ElementEPLoader elementEPLoader = new ElementEPLoader();
@@ -47,9 +47,9 @@ public class XMLExporter implements Exporter {
         
         for (Layer layer : drawing.getLayerMap().values()) {
             StringBuilder containerTag = new StringBuilder();
-            containerTag.append("\t" + "<container name=\"" + layer.getName() //$NON-NLS-1$
+            containerTag.append("\t" + "<container name=\"" + layer.getName() //$NON-NLS-1$ //$NON-NLS-2$
                     + "\" lineStyle=\"" + layer.getLineStyle().ordinal() //$NON-NLS-1$
-                    + "\" thickness=\"" + layer.getThickness() + "\" >" + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
+                    + "\" thickness=\"" + layer.getThickness() + "\" >" + "\n"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
             writeColor(containerTag, layer.getColor());
 
             output.write(containerTag.toString().getBytes(charset));
@@ -62,7 +62,7 @@ public class XMLExporter implements Exporter {
 
             output.write(endContainerTagBytes);
         }
-        output.write(("</drawing>" + "\n").getBytes(charset));
+        output.write(("</drawing>" + "\n").getBytes(charset)); //$NON-NLS-1$ //$NON-NLS-2$
         output.close();
     }
 
@@ -82,23 +82,23 @@ public class XMLExporter implements Exporter {
             String charset) throws IOException, UnsupportedEncodingException {
 
         StringBuilder drawingTag = new StringBuilder(
-                "<?xml version=\"1.0\" encoding=\"" + charset + "\"?>" + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
+                "<?xml version=\"1.0\" encoding=\"" + charset + "\"?>" + "\n"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
         drawingTag
                 .append("<drawing xmlns=\"http://www.archimedes.org.br/xml/FileXMLSchema\" " //$NON-NLS-1$
                         + "xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" " //$NON-NLS-1$
                         + "xsi:schemaLocation=\"http://www.archimedes.org.br/xml/FileXMLSchema FileXMLSchema.xsd\">" //$NON-NLS-1$
-                        + "\n");
+                        + "\n"); //$NON-NLS-1$
         drawingTag.append("\t<zoom>"); //$NON-NLS-1$
         drawingTag.append(drawing.getZoom());
-        drawingTag.append("</zoom>" + "\n"); //$NON-NLS-1$
+        drawingTag.append("</zoom>" + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
         drawingTag.append("\t<viewport>"); //$NON-NLS-1$
 
         Point viewportPosition = drawing.getViewportPosition();
-        drawingTag.append("\t" + "\t"
+        drawingTag.append("\t" + "\t" //$NON-NLS-1$ //$NON-NLS-2$
                 + "<point x=\"" + viewportPosition.getX() + "\" y=\"" //$NON-NLS-1$ //$NON-NLS-2$
-                + viewportPosition.getY() + "\" />" + "\n"); //$NON-NLS-1$
-        drawingTag.append("\t" + "</viewport>" + "\n"); //$NON-NLS-1$
+                + viewportPosition.getY() + "\" />" + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
+        drawingTag.append("\t" + "</viewport>" + "\n"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
         output.write(drawingTag.toString().getBytes(charset));
     }
@@ -111,11 +111,11 @@ public class XMLExporter implements Exporter {
      */
     private void writeColor (StringBuilder builder, Color color) {
 
-        builder.append("\t" + "\t" + "<color>" + "\n"); //$NON-NLS-1$
+        builder.append("\t" + "\t" + "<color>" + "\n"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
         writeComponent(builder, color.getRed());
         writeComponent(builder, color.getGreen());
         writeComponent(builder, color.getBlue());
-        builder.append("\t" + "\t" + "</color>" + "\n"); //$NON-NLS-1$
+        builder.append("\t" + "\t" + "</color>" + "\n"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
     }
 
     /**
@@ -126,8 +126,8 @@ public class XMLExporter implements Exporter {
      */
     private void writeComponent (StringBuilder builder, int component) {
 
-        builder.append("\t" + "\t" + "\t" + "<unsignedByte>"); //$NON-NLS-1$
+        builder.append("\t" + "\t" + "\t" + "<unsignedByte>"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
         builder.append(component);
-        builder.append("</unsignedByte>" + "\n"); //$NON-NLS-1$
+        builder.append("</unsignedByte>" + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
     }
 }

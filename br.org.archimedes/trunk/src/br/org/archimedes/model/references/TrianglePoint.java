@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.org.archimedes.exceptions.NullArgumentException;
-import br.org.archimedes.gui.model.Workspace;
 import br.org.archimedes.gui.opengl.OpenGLWrapper;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.ReferencePoint;
@@ -45,14 +44,14 @@ public class TrianglePoint extends ReferencePoint {
     @Override
     public void draw () {
 
-        OpenGLWrapper openGLWrapper = OpenGLWrapper.getInstance();
+        OpenGLWrapper openGLWrapper = br.org.archimedes.Utils.getOpenGLWrapper();
 
         Point p1, p2, p3;
-        double size = Workspace.getInstance().getGripSize() * 2 / 3;
+        double size = br.org.archimedes.Utils.getWorkspace().getGripSize() * 2 / 3;
 
         Point point = null;
         try {
-            point = Workspace.getInstance().modelToScreen(getPoint());
+            point = br.org.archimedes.Utils.getWorkspace().modelToScreen(getPoint());
         }
         catch (NullArgumentException e) {
             // Should never reach this block since a mid point is created with a

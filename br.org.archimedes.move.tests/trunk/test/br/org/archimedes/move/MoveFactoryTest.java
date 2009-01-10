@@ -35,7 +35,7 @@ public class MoveFactoryTest extends FactoryTester {
         factory = new MoveFactory();
 
         drawing = new Drawing("Test");
-        Controller controller = Controller.getInstance();
+        Controller controller = br.org.archimedes.Utils.getController();
         controller.deselectAll();
         controller.setActiveDrawing(drawing);
 
@@ -55,7 +55,7 @@ public class MoveFactoryTest extends FactoryTester {
     @After
     public void tearDown () {
 
-        Controller controller = Controller.getInstance();
+        Controller controller = br.org.archimedes.Utils.getController();
         controller.deselectAll();
         controller.setActiveDrawing(null);
     }

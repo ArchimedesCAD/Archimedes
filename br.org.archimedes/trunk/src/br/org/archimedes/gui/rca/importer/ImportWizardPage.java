@@ -27,9 +27,9 @@ import br.org.archimedes.rcp.ExtensionTagHandler;
 public class ImportWizardPage extends WizardSelectionPage implements
         ISelectionChangedListener {
 
-    private static final String IMPORT_WIZARDS_EXTENSION_POINT_ID = "org.eclipse.ui.importWizards";
+    private static final String IMPORT_WIZARDS_EXTENSION_POINT_ID = "org.eclipse.ui.importWizards"; //$NON-NLS-1$
 
-    private static final String CLASS_ATTRIBUTE_NAME = "class";
+    private static final String CLASS_ATTRIBUTE_NAME = "class"; //$NON-NLS-1$
 
     private TableViewer viewer;
 
@@ -41,9 +41,9 @@ public class ImportWizardPage extends WizardSelectionPage implements
     protected ImportWizardPage (IWorkbench workbench,
             IStructuredSelection selection) {
 
-        super("Choose an import format...");
-        this.setMessage("Choose an import format...");
-        this.setTitle("Selection");
+        super(Messages.ImportWizardPage_DialogMessage);
+        this.setMessage(Messages.ImportWizardPage_DialogMessage);
+        this.setTitle(Messages.ImportWizardPage_DialogTitle);
 
         this.workbench = workbench;
         this.selection = selection;

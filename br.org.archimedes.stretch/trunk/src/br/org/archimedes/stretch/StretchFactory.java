@@ -56,14 +56,13 @@ public class StretchFactory implements CommandFactory {
      */
     public StretchFactory () {
 
-        workspace = Workspace.getInstance();
+        workspace = br.org.archimedes.Utils.getWorkspace();
         deactivate();
     }
 
     public String begin () {
 
         active = true;
-        workspace.setMouseGrip(true);
         String returnValue = "Iteration1";
 
         return returnValue;
@@ -79,7 +78,6 @@ public class StretchFactory implements CommandFactory {
         selection = null;
         reference = null;
         vector = null;
-        workspace.setMouseGrip(false);
     }
 
     public String next (Object parameter) throws InvalidParameterException {
@@ -249,7 +247,7 @@ public class StretchFactory implements CommandFactory {
     public void drawVisualHelper () {
 
         if ( !isDone() && reference != null && vector == null) {
-            OpenGLWrapper opengl = OpenGLWrapper.getInstance();
+            OpenGLWrapper opengl = br.org.archimedes.Utils.getOpenGLWrapper();
             Point start = reference;
             Point end = workspace.getMousePosition();
 

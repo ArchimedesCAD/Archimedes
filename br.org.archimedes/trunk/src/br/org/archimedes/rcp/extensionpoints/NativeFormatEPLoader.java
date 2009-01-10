@@ -23,13 +23,13 @@ import br.org.archimedes.rcp.ExtensionTagHandler;
  */
 public class NativeFormatEPLoader implements ExtensionTagHandler {
 
-    private static final String NATIVE_FORMAT_EXTENSION_POINT_ID = "br.org.archimedes.nativeFormat";
+    private static final String NATIVE_FORMAT_EXTENSION_POINT_ID = "br.org.archimedes.nativeFormat"; //$NON-NLS-1$
 
-    private static final String IMPORTER_ATTRIBUTE_NAME = "importer";
+    private static final String IMPORTER_ATTRIBUTE_NAME = "importer"; //$NON-NLS-1$
 
-    private static final String EXPORTER_ATTRIBUTE_NAME = "exporter";
+    private static final String EXPORTER_ATTRIBUTE_NAME = "exporter"; //$NON-NLS-1$
 
-    private static final String EXTENSION_ATTRIBUTE_NAME = "extension";
+    private static final String EXTENSION_ATTRIBUTE_NAME = "extension"; //$NON-NLS-1$
 
     private static final Map<String, Importer> nativeImporters = new HashMap<String, Importer>();
 

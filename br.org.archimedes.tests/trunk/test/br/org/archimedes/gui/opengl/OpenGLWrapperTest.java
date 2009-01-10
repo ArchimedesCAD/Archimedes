@@ -15,7 +15,7 @@ public class OpenGLWrapperTest {
     public OpenGLWrapperTest (String name) {
 
         // super(name);
-        openGL = OpenGLWrapper.getInstance();
+        openGL = br.org.archimedes.Utils.getOpenGLWrapper();
     }
 
     @Before

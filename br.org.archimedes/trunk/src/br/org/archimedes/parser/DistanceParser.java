@@ -49,19 +49,17 @@ public class DistanceParser implements Parser {
 
         String returnValue = null;
 
-        Workspace workspace = Workspace.getInstance();
+        Workspace workspace = Utils.getWorkspace();
 
         if (Utils.isPoint(message)) {
             Point point = (Point) Utils.getPointCoordinates(message);
             if (p1 == null) {
                 p1 = point;
-                workspace.setMouseGrip(true);
                 workspace.setPerpendicularGripReferencePoint(p1);
             }
             else {
                 try {
                     distance = Geometrics.calculateDistance(p1, point);
-                    workspace.setMouseGrip(false);
                     done = true;
                 }
                 catch (NullArgumentException e) {

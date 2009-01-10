@@ -6,7 +6,6 @@ import java.util.List;
 import br.org.archimedes.Geometrics;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.factories.TwoPointFactory;
-import br.org.archimedes.gui.opengl.OpenGLWrapper;
 import br.org.archimedes.interfaces.Command;
 import br.org.archimedes.model.Point;
 
@@ -43,7 +42,7 @@ public class DistanceFactory extends TwoPointFactory {
         points.add(start);
         points.add(end);
         try {
-            OpenGLWrapper.getInstance().drawFromModel(points);
+            br.org.archimedes.Utils.getOpenGLWrapper().drawFromModel(points);
         }
         catch (NullArgumentException e) {
             // TODO Auto-generated catch block

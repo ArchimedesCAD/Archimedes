@@ -10,8 +10,6 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 
-import br.org.archimedes.controller.Controller;
-
 /**
  * Belongs to package br.org.archimedes.gui.rca.actions.
  * 
@@ -40,7 +38,7 @@ public class DeselectAction implements IWorkbenchWindowActionDelegate {
      */
     public void run (IAction action) {
 
-        Controller.getInstance().deselectAll();
+        br.org.archimedes.Utils.getController().deselectAll();
     }
 
     /**

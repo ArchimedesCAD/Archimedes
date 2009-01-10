@@ -14,7 +14,7 @@ import br.org.archimedes.arc.Arc;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.model.Point;
-import br.org.archimedes.semiline.SemiLine;
+import br.org.archimedes.semiline.Semiline;
 
 public class SemilineArcIntersectorTest extends Tester {
 	Arc testArc = null;
@@ -31,7 +31,7 @@ public class SemilineArcIntersectorTest extends Tester {
 	@Test
 	public void testNullElements() throws NullArgumentException,
 			InvalidArgumentException {
-		SemiLine testLine = new SemiLine(new Point(0.0, 0.0), new Point(1.0, 1.0));
+		Semiline testLine = new Semiline(new Point(0.0, 0.0), new Point(1.0, 1.0));
 		try {
 			intersector.getIntersections(testLine, null);
 			fail("The otherElement is null and getIntersections should have thrown a NullArgumentException");
@@ -70,21 +70,21 @@ public class SemilineArcIntersectorTest extends Tester {
 	
 	@Test
 	public void testNoIntersectionsArcAsCircle() throws NullArgumentException, InvalidArgumentException{
-		SemiLine testLine = new SemiLine(new Point(-1.0, 10.0), new Point(-1.0, -10.0));
+		Semiline testLine = new Semiline(new Point(-1.0, 10.0), new Point(-1.0, -10.0));
 		
 		assertCollectionTheSame(Collections.EMPTY_LIST, intersector.getIntersections(testArc, testLine));
 	}
 	
 	@Test
 	public void testNoIntersectionsArcWouldIfCircle() throws NullArgumentException, InvalidArgumentException{
-		SemiLine testLine = new SemiLine(new Point(-1.0, -1.0), new Point(10.0, -1.0));
+		Semiline testLine = new Semiline(new Point(-1.0, -1.0), new Point(10.0, -1.0));
 		
 		assertCollectionTheSame(Collections.EMPTY_LIST, intersector.getIntersections(testArc, testLine));
 	}
 	
 	@Test
 	public void testIntersectsTwoPoints() throws NullArgumentException, InvalidArgumentException{
-		SemiLine testLine = new SemiLine(new Point(-1.0, 10.0), new Point(40.0, 10.0));
+		Semiline testLine = new Semiline(new Point(-1.0, 10.0), new Point(40.0, 10.0));
 		Collection<Point> expected = new ArrayList<Point>();
 		
 		expected.add(new Point(20.0 - Math.sqrt(3.0)*10.0, 10.0));
@@ -95,7 +95,7 @@ public class SemilineArcIntersectorTest extends Tester {
 	
 	@Test
 	public void testIntersectsTwoPointsWouldIntersectOnceIfLine() throws NullArgumentException, InvalidArgumentException{
-		SemiLine testLine = new SemiLine(new Point(-1.0, 10.0), new Point(20.0, 10.0));
+		Semiline testLine = new Semiline(new Point(-1.0, 10.0), new Point(20.0, 10.0));
 		Collection<Point> expected = new ArrayList<Point>();
 		
 		expected.add(new Point(20.0 - Math.sqrt(3.0)*10.0, 10.0));
@@ -106,7 +106,7 @@ public class SemilineArcIntersectorTest extends Tester {
 	
 	@Test
 	public void testTangentLine() throws NullArgumentException, InvalidArgumentException{
-		SemiLine testLine = new SemiLine(new Point(0.0, 20.0), new Point(40.0, 20.0));
+		Semiline testLine = new Semiline(new Point(0.0, 20.0), new Point(40.0, 20.0));
 		Collection<Point> expected = new ArrayList<Point>();
 		
 		expected.add(new Point(20.0, 20.0));
@@ -116,7 +116,7 @@ public class SemilineArcIntersectorTest extends Tester {
 	
 	@Test
 	public void testExtremePoints() throws NullArgumentException, InvalidArgumentException{
-		SemiLine testLine = new SemiLine(new Point(0.0, 0.0), new Point(50.0, 0.0));
+		Semiline testLine = new Semiline(new Point(0.0, 0.0), new Point(50.0, 0.0));
 		Collection<Point> expected = new ArrayList<Point>();
 		
 		expected.add(new Point(0.0, 0.0));
@@ -127,7 +127,7 @@ public class SemilineArcIntersectorTest extends Tester {
 	
 	@Test
 	public void testOneIntersectionTwoIfCircle() throws NullArgumentException, InvalidArgumentException{
-		SemiLine testLine = new SemiLine(new Point(20.0, 30.0), new Point(20.0, -30.0));
+		Semiline testLine = new Semiline(new Point(20.0, 30.0), new Point(20.0, -30.0));
 		Collection<Point> expected = new ArrayList<Point>();
 		
 		expected.add(new Point(20.0, 20.0));
@@ -137,7 +137,7 @@ public class SemilineArcIntersectorTest extends Tester {
 	
 	@Test
 	public void testNoIntersectionWouldIfInfiniteline() throws NullArgumentException, InvalidArgumentException{
-		SemiLine testLine = new SemiLine(new Point(20.0, 10.0), new Point(20.0, -30.0));
+		Semiline testLine = new Semiline(new Point(20.0, 10.0), new Point(20.0, -30.0));
 		assertCollectionTheSame(Collections.EMPTY_LIST, intersector.getIntersections(testArc, testLine));
 	}
 }

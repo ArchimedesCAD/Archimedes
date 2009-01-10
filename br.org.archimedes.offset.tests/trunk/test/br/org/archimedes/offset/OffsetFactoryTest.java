@@ -34,7 +34,7 @@ public class OffsetFactoryTest extends FactoryTester {
 
         factory = new OffsetFactory();
 
-        controller = Controller.getInstance();
+        controller = br.org.archimedes.Utils.getController();
         drawing = new Drawing("Teste");
         controller.setActiveDrawing(drawing);
 

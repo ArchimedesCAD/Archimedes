@@ -24,7 +24,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 
-import br.org.archimedes.controller.Controller;
 import br.org.archimedes.exceptions.NoActiveDrawingException;
 import br.org.archimedes.gui.opengl.Color;
 import br.org.archimedes.gui.rca.Activator;
@@ -202,7 +201,7 @@ public class LayerEditor {
                 Layer layer = table.newLayer();
 
                 try {
-                    Controller.getInstance().getActiveDrawing().addLayer(layer);
+                    br.org.archimedes.Utils.getController().getActiveDrawing().addLayer(layer);
                 }
                 catch (NoActiveDrawingException e1) {
                     // This should never happen

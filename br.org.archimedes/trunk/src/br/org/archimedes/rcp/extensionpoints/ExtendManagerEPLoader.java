@@ -19,9 +19,9 @@ import br.org.archimedes.rcp.ExtensionTagHandler;
  */
 public class ExtendManagerEPLoader implements ExtensionTagHandler {
 
-    private static final String CLASS_ATTRIBUTE_NAME = "class";
+    private static final String CLASS_ATTRIBUTE_NAME = "class"; //$NON-NLS-1$
 
-    private static final String EXTEND_MANAGER_EXTENSION_POINT_ID = "br.org.archimedes.extends";
+    private static final String EXTEND_MANAGER_EXTENSION_POINT_ID = "br.org.archimedes.extends"; //$NON-NLS-1$
 
     private static final ExtendManager NULL_EXTEND_MANAGER = new NullExtendManager();
 

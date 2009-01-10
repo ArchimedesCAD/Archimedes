@@ -8,7 +8,6 @@ import org.junit.Assert;
 
 import br.org.archimedes.Tester;
 import br.org.archimedes.exceptions.InvalidParameterException;
-import br.org.archimedes.gui.model.Workspace;
 import br.org.archimedes.interfaces.Parser;
 import br.org.archimedes.model.Point;
 
@@ -58,7 +57,7 @@ public class OffsetDirectionParserTest extends Tester {
         Parser dp = new DirectionParser();
         Assert.assertFalse("Should not be done yet", dp.isDone());
 
-        Workspace.getInstance().setMousePosition(new Point(40, 10));
+        br.org.archimedes.Utils.getWorkspace().setMousePosition(new Point(40, 10));
 
         doSafeNext(dp, "");
         Assert.assertTrue("Should be done", dp.isDone());

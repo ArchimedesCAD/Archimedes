@@ -13,8 +13,6 @@ import java.util.Observer;
 import java.util.Set;
 
 import br.org.archimedes.Utils;
-import br.org.archimedes.controller.Controller;
-import br.org.archimedes.controller.InputController;
 import br.org.archimedes.exceptions.NoActiveDrawingException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.interfaces.IntersectionManager;
@@ -34,8 +32,6 @@ import br.org.archimedes.rcp.extensionpoints.IntersectionManagerEPLoader;
  */
 public class MousePositionManager implements Observer {
 
-    private boolean isActive;
-
     private Point mousePosition;
 
     private Point perpendicularReferencePoint;
@@ -48,13 +44,11 @@ public class MousePositionManager implements Observer {
         MouseMoveHandler.getInstance().addObserver(this);
         mousePosition = new Point(0, 0);
         perpendicularReferencePoint = null;
-        isActive = false;
         manager = new IntersectionManagerEPLoader().getIntersectionManager();
     }
 
     /*
      * (non-Javadoc)
-     * 
      * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
      */
     /**
@@ -86,18 +80,14 @@ public class MousePositionManager implements Observer {
 
         ReferencePoint position = null;
         Drawing activeDrawing = null;
+
         try {
-            activeDrawing = Controller.getInstance().getActiveDrawing();
+            activeDrawing = Utils.getController().getActiveDrawing();
         }
         catch (NoActiveDrawingException e) {
-            // Will return null in this case
+            // Should not happen since I verified it.
         }
-
-        InputController interpreter = InputController.getInstance();
-        if (isActive() || interpreter.getCurrentFactory() == null
-                || interpreter.getCurrentFactory().isDone()) {
-            position = getGripPoint(activeDrawing);
-        }
+        position = getGripPoint(activeDrawing);
 
         return position;
     }
@@ -115,7 +105,7 @@ public class MousePositionManager implements Observer {
         ReferencePoint position = null;
         Collection<ReferencePoint> closePoints = new ArrayList<ReferencePoint>();
 
-        Workspace workspace = Workspace.getInstance();
+        Workspace workspace = br.org.archimedes.Utils.getWorkspace();
 
         Rectangle modelDrawingArea = workspace.getCurrentViewportArea();
         Rectangle mouseArea = getMouseArea(workspace);
@@ -332,29 +322,6 @@ public class MousePositionManager implements Observer {
     public void setMousePosition (Point mousePosition) {
 
         this.mousePosition = mousePosition;
-    }
-
-    /**
-     * @return Returns the activity of the mouse grip.
-     */
-    public boolean isActive () {
-
-        return isActive;
-    }
-
-    /**
-     * Activates or deactivates the mouse grip. Resets the perpendicular
-     * reference point if deactivating.
-     * 
-     * @param isActive
-     *            The isActive to set.
-     */
-    public void setActive (boolean isActive) {
-
-        this.isActive = isActive;
-        if (isActive == false) {
-            perpendicularReferencePoint = null;
-        }
     }
 
     /**

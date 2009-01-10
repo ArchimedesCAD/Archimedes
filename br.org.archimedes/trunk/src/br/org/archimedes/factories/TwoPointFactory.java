@@ -74,8 +74,8 @@ public abstract class TwoPointFactory implements CommandFactory {
     public TwoPointFactory (boolean endWhenComplete, boolean ignoreOrto) {
 
         // TODO Rever as mensagens. Esta tosco!!
-        workspace = Workspace.getInstance();
-        controller = Controller.getInstance();
+        workspace = Utils.getWorkspace();
+        controller = Utils.getController();
         this.end = endWhenComplete;
         this.ignoreOrto = ignoreOrto;
         deactivate();
@@ -85,7 +85,6 @@ public abstract class TwoPointFactory implements CommandFactory {
 
         active = true;
         controller.deselectAll();
-        workspace.setMouseGrip(true);
         return Messages.TwoPointFactory_firstPoint;
     }
 
@@ -164,7 +163,6 @@ public abstract class TwoPointFactory implements CommandFactory {
         vector = null;
         active = false;
         workspace.setPerpendicularGripReferencePoint(null);
-        workspace.setMouseGrip(false);
     }
 
     /*

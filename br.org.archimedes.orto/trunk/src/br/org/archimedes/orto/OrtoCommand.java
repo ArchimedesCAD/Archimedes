@@ -26,7 +26,7 @@ public class OrtoCommand implements Command {
     public void doIt (Drawing drawing) throws IllegalActionException,
             NullArgumentException {
 
-        Workspace workspace = Workspace.getInstance();
+        Workspace workspace = br.org.archimedes.Utils.getWorkspace();
         boolean ortoState = workspace.isOrtoOn();
         workspace.setOrtoOn( !ortoState);
     }

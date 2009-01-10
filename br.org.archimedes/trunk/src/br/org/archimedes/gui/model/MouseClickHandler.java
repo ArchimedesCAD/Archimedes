@@ -53,7 +53,7 @@ public class MouseClickHandler extends Observable {
      */
     private MouseClickHandler () {
 
-        workspace = Workspace.getInstance();
+        workspace = br.org.archimedes.Utils.getWorkspace();
         loader = new FactoryEPLoader();
     }
 
@@ -147,7 +147,7 @@ public class MouseClickHandler extends Observable {
                 .getHeight() - y) - rect.getHeight() / 2));
 
         Point modelPoint = null;
-        Controller controller = Controller.getInstance();
+        Controller controller = br.org.archimedes.Utils.getController();
         try {
             workspace.setMousePosition(workspace.screenToModel(screenPoint));
             modelPoint = workspace.getMousePosition();
@@ -200,7 +200,7 @@ public class MouseClickHandler extends Observable {
      */
     public void receiveDoubleClick (MouseEvent event) {
 
-        Controller controller = Controller.getInstance();
+        Controller controller = br.org.archimedes.Utils.getController();
 
         try {
             // achar o elemento que está abaixo do duplo clique
@@ -216,8 +216,7 @@ public class MouseClickHandler extends Observable {
 
                 if (factory != null) {
                     // ativar a factory
-                    InputController inputController = InputController
-                            .getInstance();
+                    InputController inputController = br.org.archimedes.Utils.getInputController();
                     inputController.receiveText(factory.getName());
                 }
 

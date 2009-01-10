@@ -11,7 +11,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import br.org.archimedes.controller.Controller;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.factories.CommandFactory;
 import br.org.archimedes.factories.FactoryTester;
@@ -53,8 +52,8 @@ public class ScaleFactoryTest extends FactoryTester {
 
         reference = new Point(50, 50);
         proportion = 1.6;
-        Controller.getInstance().deselectAll();
-        Controller.getInstance().setActiveDrawing(drawing);
+        br.org.archimedes.Utils.getController().deselectAll();
+        br.org.archimedes.Utils.getController().setActiveDrawing(drawing);
     }
 
     @After
@@ -64,8 +63,8 @@ public class ScaleFactoryTest extends FactoryTester {
         selection = null;
         reference = null;
         proportion = 1.0;
-        Controller.getInstance().deselectAll();
-        Controller.getInstance().setActiveDrawing(null);
+        br.org.archimedes.Utils.getController().deselectAll();
+        br.org.archimedes.Utils.getController().setActiveDrawing(null);
     }
 
     @Test

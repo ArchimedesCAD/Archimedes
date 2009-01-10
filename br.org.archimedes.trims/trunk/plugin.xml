@@ -35,26 +35,33 @@
          point="br.org.archimedes.factory">
          <factory id="br.org.archimedes.trims"
           class="br.org.archimedes.trims.TrimFactory">
-         	<shortcut id="l"/>
+         	<shortcut id="tr"/>
          </factory>
    </extension>
    <extension point="br.org.archimedes.trims.trimmer">
    		<elementTrimmer
 			id="br.org.archimedes.trim.polyline"
 			element="br.org.archimedes.polyline"
-			class="br.org.archimedes.trim.polyline.PolylineTrimmer"/>
+			class="br.org.archimedes.trim.PolylineTrimmer"/>
 		<elementTrimmer
 			id="br.org.archimedes.trim.circle"
 			element="br.org.archimedes.circle"
-			class="br.org.archimedes.trim.circle.CircleTrimmer"/>
+			class="br.org.archimedes.trim.CircleTrimmer"/>
 		<elementTrimmer
 			id="br.org.archimedes.trim.line"
 			element="br.org.archimedes.line"
-			class="br.org.archimedes.trim.line.LineTrimmer"/>
+			class="br.org.archimedes.trim.LineTrimmer"/>
 		<elementTrimmer
 			id="br.org.archimedes.trim.arc"
 			element="br.org.archimedes.arc"
-			class="br.org.archimedes.trim.arc.ArcTrimmer"/>
+			class="br.org.archimedes.trim.ArcTrimmer"/>
+        <elementTrimmer
+            id="br.org.archimedes.trim.semiline"
+            element="br.org.archimedes.semiline"
+            class="br.org.archimedes.trim.SemilineTrimmer"/>
+        <elementTrimmer
+            id="br.org.archimedes.trim.infiniteline"
+            element="br.org.archimedes.infiniteline"
+            class="br.org.archimedes.trim.InfiniteLineTrimmer"/>    
 	</extension>
-
 </plugin>

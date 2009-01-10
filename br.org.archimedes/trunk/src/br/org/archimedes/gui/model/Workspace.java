@@ -15,7 +15,6 @@ import java.util.Collection;
 import java.util.Observable;
 import java.util.Properties;
 
-import br.org.archimedes.controller.Controller;
 import br.org.archimedes.exceptions.NoActiveDrawingException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.model.Drawing;
@@ -31,8 +30,6 @@ import br.org.archimedes.model.Vector;
  */
 public class Workspace extends Observable {
 
-    private static Workspace instance;
-
     private Properties workspaceProperties;
 
     private Point currentViewport;
@@ -47,11 +44,15 @@ public class Workspace extends Observable {
 
     private boolean mouseDown;
 
+
     /**
-     * Private construtor to grant unique instance.<br>
+     * Constructor. Should NOT be used.<br>
+     * This is only public so that the Activator instantiate it.<br>
+     * Use br.org.archimedes.Utils.getWorkspace() to get the singleton instance.<br>
+     * <br>
      * Sets the preferences to default.
      */
-    private Workspace () {
+    public Workspace () {
 
         currentZoom = -1;
         mouseDown = false;
@@ -63,19 +64,6 @@ public class Workspace extends Observable {
 
         workspaceProperties = new Properties();
         loadProperties();
-    }
-
-    /**
-     * Singleton Pattern.
-     * 
-     * @return The unique instance.
-     */
-    public static Workspace getInstance () {
-
-        if (instance == null) {
-            instance = new Workspace();
-        }
-        return instance;
     }
 
     /**
@@ -213,7 +201,7 @@ public class Workspace extends Observable {
 
         currentZoom = zoom;
         currentViewport = viewportPosition;
-        Drawing activeDrawing = Controller.getInstance().getActiveDrawing();
+        Drawing activeDrawing = br.org.archimedes.Utils.getController().getActiveDrawing();
         activeDrawing.setViewportPosition(viewportPosition);
         activeDrawing.setZoom(zoom);
     }
@@ -258,7 +246,7 @@ public class Workspace extends Observable {
     private void updateCurrentZoom () {
 
         try {
-            currentZoom = Controller.getInstance().getActiveDrawing().getZoom();
+            currentZoom = br.org.archimedes.Utils.getController().getActiveDrawing().getZoom();
         }
         catch (NoActiveDrawingException e) {
             currentZoom = -1;
@@ -380,7 +368,7 @@ public class Workspace extends Observable {
     public Rectangle getCurrentViewportArea () {
 
         Rectangle result = null;
-        if (Controller.getInstance().isThereActiveDrawing()) {
+        if (br.org.archimedes.Utils.getController().isThereActiveDrawing()) {
             updateCurrentZoom();
             double zoomFactor = 1 / currentZoom;
             double width = windowSize.getWidth();
@@ -444,17 +432,6 @@ public class Workspace extends Observable {
     }
 
     /**
-     * Turns the mouse grip on and off.
-     * 
-     * @param activate
-     *            true to activate the mouse grip, false to deactivate it.
-     */
-    public void setMouseGrip (boolean activate) {
-
-        mousePositionManager.setActive(activate);
-    }
-
-    /**
      * Sets the reference point for perpendicular mouse grip.
      * 
      * @param referencePoint
@@ -514,7 +491,7 @@ public class Workspace extends Observable {
             NoActiveDrawingException {
 
         if (nextViewport != null) {
-            setViewport(nextViewport, Controller.getInstance()
+            setViewport(nextViewport, br.org.archimedes.Utils.getController()
                     .getActiveDrawing().getZoom());
         }
         else {

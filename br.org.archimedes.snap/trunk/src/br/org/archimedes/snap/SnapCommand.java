@@ -25,7 +25,7 @@ public class SnapCommand implements Command {
     public void doIt (Drawing drawing) throws IllegalActionException,
             NullArgumentException {
 
-        Workspace workspace = Workspace.getInstance();
+        Workspace workspace = br.org.archimedes.Utils.getWorkspace();
         boolean snapState = workspace.isSnapOn();
         workspace.setSnapOn( !snapState);
     }

@@ -9,23 +9,23 @@ import br.org.archimedes.intersections.interfaces.Intersector;
 import br.org.archimedes.line.Line;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
-import br.org.archimedes.semiline.SemiLine;
+import br.org.archimedes.semiline.Semiline;
 
 public class SemilineLineIntersector implements Intersector {
 
 	public Collection<Point> getIntersections(Element element,
 			Element otherElement) throws NullArgumentException {
-		SemiLine firstLine;
+		Semiline firstLine;
 		Line secondLine;
 
 		if (element == null || otherElement == null)
 			throw new NullArgumentException();
 		
-		if (element.getClass() == SemiLine.class) {
-			firstLine = (SemiLine) element;
+		if (element.getClass() == Semiline.class) {
+			firstLine = (Semiline) element;
 			secondLine = (Line) otherElement;
 		} else {
-			firstLine = (SemiLine) otherElement;
+			firstLine = (Semiline) otherElement;
 			secondLine = (Line) element;
 		}
 		
@@ -104,7 +104,7 @@ public class SemilineLineIntersector implements Intersector {
 
 		boolean isParallel = false;
 
-		SemiLine firstLine = ((SemiLine) element1);
+		Semiline firstLine = ((Semiline) element1);
 		Line secondLine = ((Line) element2);
 
 		Point initialPoint = firstLine.getInitialPoint();

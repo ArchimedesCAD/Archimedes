@@ -109,7 +109,7 @@ public abstract class AbstractFilePage extends WizardPage {
         if (pathText != null) {
             return this.pathText.getText();
         }
-        return "";
+        return ""; //$NON-NLS-1$
     }
 
     /**

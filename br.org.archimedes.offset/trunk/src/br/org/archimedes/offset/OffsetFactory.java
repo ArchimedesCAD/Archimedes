@@ -22,7 +22,6 @@ import br.org.archimedes.exceptions.NoActiveDrawingException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.factories.CommandFactory;
 import br.org.archimedes.gui.model.Workspace;
-import br.org.archimedes.gui.opengl.OpenGLWrapper;
 import br.org.archimedes.interfaces.Command;
 import br.org.archimedes.interfaces.Parser;
 import br.org.archimedes.model.Element;
@@ -68,7 +67,7 @@ public class OffsetFactory implements CommandFactory {
      */
     public OffsetFactory () {
 
-        workspace = Workspace.getInstance();
+        workspace = br.org.archimedes.Utils.getWorkspace();
         previousDistance = 100.0;
         deactivate();
         formatter = new DecimalFormat();
@@ -83,9 +82,8 @@ public class OffsetFactory implements CommandFactory {
     public String begin () {
 
         active = true;
-        workspace.setMouseGrip(true);
 
-        Controller controller = Controller.getInstance();
+        Controller controller = br.org.archimedes.Utils.getController();
         String returnValue = Messages.getString("OffsetFactory.WaitDistance") + "(" //$NON-NLS-1$ //$NON-NLS-2$
                 + formatter.format(previousDistance) + ")"; //$NON-NLS-1$
         try {
@@ -367,7 +365,7 @@ public class OffsetFactory implements CommandFactory {
         }
         else if (selection != null) {
             selection = null;
-            Controller.getInstance().deselectAll();
+            br.org.archimedes.Utils.getController().deselectAll();
             numPositive = new HashMap<Offsetable, Integer>();
             numNegative = new HashMap<Offsetable, Integer>();
             returnMessage += Messages.getString("OffsetFactory.WaitSelection"); //$NON-NLS-1$
@@ -423,7 +421,6 @@ public class OffsetFactory implements CommandFactory {
         offsetCount = 0;
 
         active = false;
-        workspace.setMouseGrip(false);
     }
 
     /*
@@ -512,7 +509,7 @@ public class OffsetFactory implements CommandFactory {
                 Element copyElement;
                 try {
                     copyElement = element.cloneWithDistance(localDistance);
-                    copyElement.draw(OpenGLWrapper.getInstance());
+                    copyElement.draw(br.org.archimedes.Utils.getOpenGLWrapper());
                 }
                 catch (InvalidParameterException e) {
                     // Will often happen. Don't want to print it.

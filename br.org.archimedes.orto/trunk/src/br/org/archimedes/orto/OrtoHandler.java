@@ -10,7 +10,6 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.IHandler;
 import org.eclipse.core.commands.IHandlerListener;
 
-import br.org.archimedes.controller.Controller;
 import br.org.archimedes.gui.model.Workspace;
 
 /**
@@ -42,7 +41,7 @@ public class OrtoHandler implements IHandler {
      */
     public Object execute (ExecutionEvent event) throws ExecutionException {
 
-        Workspace workspace = Workspace.getInstance();
+        Workspace workspace = br.org.archimedes.Utils.getWorkspace();
         boolean orto = workspace.isOrtoOn();
         workspace.setOrtoOn( !orto);
 
@@ -54,7 +53,7 @@ public class OrtoHandler implements IHandler {
      */
     public boolean isEnabled () {
 
-        return (Controller.getInstance().isThereActiveDrawing());
+        return (br.org.archimedes.Utils.getController().isThereActiveDrawing());
     }
 
     /**

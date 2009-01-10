@@ -444,7 +444,7 @@ public class Drawing extends Observable implements Observer {
     public void setFile (File file) {
 
         if (file != this.file) {
-            OpenGLWrapper instance = OpenGLWrapper.getInstance();
+            OpenGLWrapper instance = br.org.archimedes.Utils.getOpenGLWrapper();
 
             GLCanvas canvas = instance.getDrawingCanvas().remove(this);
             this.file = file;
@@ -770,7 +770,7 @@ public class Drawing extends Observable implements Observer {
             }
         }
 
-        Workspace workspace = Workspace.getInstance();
+        Workspace workspace = br.org.archimedes.Utils.getWorkspace();
         Rectangle drawableArea = workspace.getCurrentViewportArea();
         drawSelectedElements(openGL, drawableArea);
     }

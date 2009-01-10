@@ -10,7 +10,6 @@ import br.org.archimedes.controller.commands.PutOrRemoveElementCommand;
 import br.org.archimedes.exceptions.InvalidParameterException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.factories.CommandFactory;
-import br.org.archimedes.gui.model.Workspace;
 import br.org.archimedes.interfaces.Command;
 import br.org.archimedes.interfaces.Parser;
 import br.org.archimedes.model.Element;
@@ -29,7 +28,7 @@ public class PasteFactory implements CommandFactory {
 
         String result = Messages.ClipboardEmpty;
         done = false;
-        elements = Workspace.getInstance().getClipboard();
+        elements = br.org.archimedes.Utils.getWorkspace().getClipboard();
         try {
             result = next(elements);
         }

@@ -40,6 +40,18 @@ public class Messages extends NLS {
     public static String Save_ErrorTitle;
 
     public static String SaveAs_Title;
+
+    public static String SaveCommand_ErrorLogEntry;
+
+    public static String SaveCommand_FileExists;
+
+    public static String SaveCommand_FileNotExist;
+
+    public static String SaveCommand_Overwrite;
+    
+    public static String SaveCommand_ParentNotWritable;
+
+    public static String SaveCommand_ParentWritable;
     static {
         // initialize resource bundle
         NLS.initializeMessages(BUNDLE_NAME, Messages.class);

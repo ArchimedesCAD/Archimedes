@@ -25,7 +25,7 @@ public class OrtoTest extends TestCase {
 
         Drawing drawing = new Drawing("Drawing");
 
-        Workspace workspace = Workspace.getInstance();
+        Workspace workspace = br.org.archimedes.Utils.getWorkspace();
         boolean orto = workspace.isOrtoOn();
 
         Command ortoCommand = new OrtoCommand();

@@ -36,7 +36,7 @@ public class CircleParser extends ElementParser {
             }
         }
 
-        return getElementFactory().createElement("br.org.archimedes.circle",
+        return getElementFactory().createElement("br.org.archimedes.circle", //$NON-NLS-1$
                 circleCenter, circleRadius);
     }
 }

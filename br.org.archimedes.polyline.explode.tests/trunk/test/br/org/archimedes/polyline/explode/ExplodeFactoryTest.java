@@ -11,7 +11,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import br.org.archimedes.controller.Controller;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.factories.CommandFactory;
@@ -32,7 +31,7 @@ public class ExplodeFactoryTest extends FactoryTester {
     public void setUp () {
 
         drawing = new Drawing("Teste");
-        Controller.getInstance().setActiveDrawing(drawing);
+        br.org.archimedes.Utils.getController().setActiveDrawing(drawing);
 
         factory = new ExplodeFactory();
     }
@@ -40,7 +39,7 @@ public class ExplodeFactoryTest extends FactoryTester {
     @After
     public void tearDown () {
 
-        Controller.getInstance().setActiveDrawing(null);
+        br.org.archimedes.Utils.getController().setActiveDrawing(null);
     }
 
     @Test

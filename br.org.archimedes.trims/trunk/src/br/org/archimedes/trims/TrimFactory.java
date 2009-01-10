@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Set;
 
 import br.org.archimedes.Constant;
-import br.org.archimedes.controller.Controller;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.InvalidParameterException;
 import br.org.archimedes.exceptions.NoActiveDrawingException;
@@ -66,7 +65,7 @@ public class TrimFactory implements CommandFactory {
 
         String returnValue = Messages.SelectRefs;
         try {
-            Set<Element> selection = Controller.getInstance()
+            Set<Element> selection = br.org.archimedes.Utils.getController()
                     .getCurrentSelectedElements();
 
             if (selection != null && !selection.isEmpty()) {
@@ -94,7 +93,7 @@ public class TrimFactory implements CommandFactory {
                 command = null;
                 result = Messages.Trimmed;
             }
-            else if (parameter.equals("u") || parameter.equals("U")) {
+            else if (parameter.equals("u") || parameter.equals("U")) { //$NON-NLS-1$ //$NON-NLS-2$
                 result = makeUndo();
             }
             else if ( !gotRef) {
@@ -295,7 +294,7 @@ public class TrimFactory implements CommandFactory {
                 Parser selectionParser = new SelectionParser();
                 Parser decoratedParser = new ReturnDecoratorParser(
                         selectionParser);
-                parser = new StringDecoratorParser(decoratedParser, "u");
+                parser = new StringDecoratorParser(decoratedParser, "u"); //$NON-NLS-1$
             }
         }
         return parser;

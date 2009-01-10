@@ -56,7 +56,7 @@ public class MouseMoveHandler extends Observable {
         point = new Point(x - rect.width / 2, (rect.height - y) - rect.height
                 / 2);
 
-        Workspace workspace = Workspace.getInstance();
+        Workspace workspace = br.org.archimedes.Utils.getWorkspace();
         try {
 			point = workspace.screenToModel(point);
         }

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="br.org.archimedes.xml.feature"
-      label="Xml Feature"
-      version="0.57.0"
+      label="XML Feature"
+      version="0.57.3"
       provider-name="Tarantulus Corp.">
 
    <description>
@@ -250,59 +250,10 @@ POSSIBILITY OF SUCH DAMAGES.
    </requires>
 
    <plugin
-         id="br.org.archimedes.arc.xml"
-         download-size="0"
-         install-size="0"
-         version="0.54.0"
-         unpack="false"/>
-
-   <plugin
-         id="br.org.archimedes.circle.xml"
-         download-size="0"
-         install-size="0"
-         version="0.54.0"
-         unpack="false"/>
-
-   <plugin
-         id="br.org.archimedes.infiniteLine.xml"
-         download-size="0"
-         install-size="0"
-         version="0.54.0"
-         unpack="false"/>
-
-   <plugin
          id="br.org.archimedes.io.xml"
          download-size="0"
          install-size="0"
-         version="0.57.0"
-         unpack="false"/>
-
-   <plugin
-         id="br.org.archimedes.line.xml"
-         download-size="0"
-         install-size="0"
-         version="0.54.0"
-         unpack="false"/>
-
-   <plugin
-         id="br.org.archimedes.polyline.xml"
-         download-size="0"
-         install-size="0"
-         version="0.54.0"
-         unpack="false"/>
-
-   <plugin
-         id="br.org.archimedes.dimension.xml"
-         download-size="0"
-         install-size="0"
-         version="0.54.0"
-         unpack="false"/>
-
-   <plugin
-         id="br.org.archimedes.text.xml"
-         download-size="0"
-         install-size="0"
-         version="0.54.0"
+         version="0.57.3"
          unpack="false"/>
 
 </feature>
