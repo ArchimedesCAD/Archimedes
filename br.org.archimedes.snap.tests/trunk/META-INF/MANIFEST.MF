@@ -2,10 +2,10 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Snap Tests Plug-in
 Bundle-SymbolicName: br.org.archimedes.snap.tests
-Bundle-Version: 0.54.0
+Bundle-Version: 0.57.3
 Bundle-Vendor: Tarantulus Corp.
-Require-Bundle: br.org.archimedes,
- br.org.archimedes.snap,
- br.org.archimedes.tests,
+Require-Bundle: br.org.archimedes;bundle-version="0.57.3",
+ br.org.archimedes.snap;bundle-version="0.57.3",
+ br.org.archimedes.tests;bundle-version="0.57.3",
  org.junit4
 Bundle-RequiredExecutionEnvironment: J2SE-1.5

@@ -2,11 +2,11 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Tests Plug-in
 Bundle-SymbolicName: br.org.archimedes.pan.tests
-Bundle-Version: 0.57.0
+Bundle-Version: 0.57.3
 Bundle-Activator: br.org.archimedes.pan.tests.Activator
 Require-Bundle: org.eclipse.core.runtime,
- br.org.archimedes,
- br.org.archimedes.pan,
- br.org.archimedes.tests,
+ br.org.archimedes;bundle-version="0.57.3",
+ br.org.archimedes.pan;bundle-version="0.57.3",
+ br.org.archimedes.tests;bundle-version="0.57.3",
  org.junit4
 Bundle-RequiredExecutionEnvironment: J2SE-1.5

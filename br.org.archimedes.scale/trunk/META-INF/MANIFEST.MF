@@ -2,12 +2,12 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Scale Plug-in
 Bundle-SymbolicName: br.org.archimedes.scale;singleton:=true
-Bundle-Version: 0.57.0
+Bundle-Version: 0.57.3
 Bundle-Activator: br.org.archimedes.scale.Activator
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- br.org.archimedes
+ br.org.archimedes;bundle-version="0.57.3"
 Bundle-Vendor: Tarantulus Corporation
 Export-Package: br.org.archimedes.scale
 Bundle-RequiredExecutionEnvironment: J2SE-1.5

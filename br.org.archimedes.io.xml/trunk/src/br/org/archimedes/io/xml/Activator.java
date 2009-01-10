@@ -54,7 +54,7 @@ public class Activator extends AbstractFileLocatorActivator {
 	/**
      * @param path
      *            The path to the file relative to this plugin's root
-     * @return An Inputstream to the file or null if the activator is not set
+     * @return An Inputstream to the file or null if the activator is not set or the file cannot be found
      *         (this is not a regular RCP run... happens for tests)
      * @throws IOException
      *             Thrown if there is an error while reading the file

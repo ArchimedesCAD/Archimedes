@@ -2,13 +2,13 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Edit Text
 Bundle-SymbolicName: br.org.archimedes.text.edittext;singleton:=true
-Bundle-Version: 0.57.0
+Bundle-Version: 0.57.3
 Bundle-Activator: br.org.archimedes.text.edittext.Activator
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- br.org.archimedes.text,
- br.org.archimedes
+ br.org.archimedes;bundle-version="0.57.3",
+ br.org.archimedes.text;bundle-version="0.57.3"
 Bundle-Vendor: Tarantulus Corp.
 Eclipse-RegisterBuddy: br.org.archimedes
 Bundle-RequiredExecutionEnvironment: J2SE-1.5

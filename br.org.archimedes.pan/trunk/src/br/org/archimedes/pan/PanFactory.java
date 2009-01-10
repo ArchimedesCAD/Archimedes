@@ -71,7 +71,6 @@ public class PanFactory implements CommandFactory, Observer {
         firstViewport = workspace.getViewport();
 
         return Messages.ClickDrag;
-
     }
 
     /**

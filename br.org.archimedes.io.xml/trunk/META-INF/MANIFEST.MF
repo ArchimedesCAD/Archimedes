@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Xml Import/Export Plug-in
 Bundle-SymbolicName: br.org.archimedes.io.xml;singleton:=true
-Bundle-Version: 0.57.0
+Bundle-Version: 0.57.3
 Bundle-Activator: br.org.archimedes.io.xml.Activator
 Bundle-Vendor: Tarantulus Corporation
 Bundle-Localization: plugin

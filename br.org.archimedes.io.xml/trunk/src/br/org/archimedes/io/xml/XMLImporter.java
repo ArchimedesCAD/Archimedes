@@ -75,7 +75,11 @@ public class XMLImporter implements Importer {
      */
     private Validator buildValidator (InputStream inputStream) {
 
-        return obtainSchema(inputStream).newValidator();
+        Schema schema = obtainSchema(inputStream);
+        if(schema == null) {
+            return null;
+        }
+        return schema.newValidator();
     }
 
     /**

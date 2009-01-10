@@ -27,7 +27,7 @@ public abstract class AbstractFileLocatorActivator extends AbstractUIPlugin {
      *            The path to the file relative to this plugin's root
      * @param bundle
      *            The bundle containing information as to where is this plugin           
-     * @return An Inputstream to the file or null if the activator is not set
+     * @return An Inputstream to the file or null if the activator is not set or could not find the file
      *         (this is not a regular RCP run... happens for tests)
      * @throws IOException
      *             Thrown if there is an error while reading the file
@@ -39,9 +39,10 @@ public abstract class AbstractFileLocatorActivator extends AbstractUIPlugin {
         if (bundle != null) {
             URL url = FileLocator.find(bundle, new Path(path), Collections
                     .emptyMap());
-            URL fileUrl = FileLocator.toFileURL(url);
-            input = new FileInputStream(fileUrl.getFile());
-
+            if(url != null) {
+                URL fileUrl = FileLocator.toFileURL(url);
+                input = new FileInputStream(fileUrl.getFile());
+            }
         }
         return input;
     }

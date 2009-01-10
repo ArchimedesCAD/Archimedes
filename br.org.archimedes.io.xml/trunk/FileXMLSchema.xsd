@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:archimedes="http://www.archimedes.org.br/xml/FileXMLSchema" targetNamespace="http://www.archimedes.org.br/xml/FileXMLSchema" version="0.2">
+	<simpleType name="coordinate">
+		<restriction base="double"/>
+	</simpleType>
+
+	<element name="point" nillable="false">
+		<complexType>
+			<attribute name="x" type="archimedes:coordinate" use="required"/>
+			<attribute name="y" type="archimedes:coordinate" use="required"/>
+			<attribute name="z" type="archimedes:coordinate" use="optional"/>
+		</complexType>
+	</element>
+
+	<element name="line">
+		<complexType>
+            <sequence maxOccurs="1" minOccurs="1">
+				<element ref="archimedes:point"/>
+				<element ref="archimedes:point"/>
+            </sequence>
+		</complexType>
+	</element>
+
+	<element name="infiniteline">
+		<complexType>
+			<sequence maxOccurs="1" minOccurs="1">
+				<element ref="archimedes:point"/>
+				<element ref="archimedes:point"/>
+			</sequence>
+		</complexType>
+	</element>
+
+	<element name="drawing">
+		<complexType>
+            <sequence maxOccurs="1" minOccurs="1">
+				<element maxOccurs="1" minOccurs="1" ref="archimedes:zoom"/>
+				<element maxOccurs="1" minOccurs="1" ref="archimedes:viewport">
+				</element>
+				
+				<element maxOccurs="unbounded" minOccurs="1" ref="archimedes:container"/>
+            </sequence>
+		</complexType>
+	</element>
+
+	<element name="container">
+		<complexType>
+            <sequence maxOccurs="1" minOccurs="1">
+                <sequence maxOccurs="1" minOccurs="1">
+                	<element maxOccurs="2" minOccurs="1" ref="archimedes:color"/>
+                </sequence>
+                <choice maxOccurs="unbounded" minOccurs="0">
+					<element ref="archimedes:text"/>
+					<element ref="archimedes:circle"/>
+					<element ref="archimedes:polyline"/>
+					<element ref="archimedes:semiline"/>
+					<element ref="archimedes:infiniteline"/>
+					<element ref="archimedes:arc"/>
+					<element ref="archimedes:rectangle"/>
+					<element ref="archimedes:line"/>
+					<element ref="archimedes:leader"/>
+					<element ref="archimedes:dimension"/>
+                </choice>
+            </sequence>
+			<attribute name="name" type="string" use="required"/>
+			<attribute name="lineStyle" type="int" use="required"/>
+			<attribute name="thickness" type="double" use="required"/>
+			<attribute name="visible" type="boolean" use="optional"/>
+			<attribute name="locked" type="boolean" use="optional"/>
+		</complexType>
+	</element>
+
+	<element name="semiline">
+		<complexType>
+			<sequence>
+				<element ref="archimedes:point"/>
+				<element ref="archimedes:point"/>
+			</sequence>
+		</complexType>
+	</element>
+
+	<element name="polyline">
+		<complexType>
+			<sequence maxOccurs="unbounded" minOccurs="2">
+				<element ref="archimedes:point"/>
+			</sequence>
+		</complexType>
+	</element>
+
+	<element name="arc">
+		<complexType>
+			<sequence>
+				<element ref="archimedes:point"/>
+				<element ref="archimedes:point"/>
+				<element ref="archimedes:point"/>
+			</sequence>
+		</complexType>
+	</element>
+
+	<element name="rectangle">
+		<complexType>
+			<sequence>
+				<element ref="archimedes:point"/>
+				<element ref="archimedes:point"/>
+			</sequence>
+		</complexType>
+	</element>
+
+	<element name="circle">
+		<complexType>
+			<sequence>
+				<element ref="archimedes:point"/>
+				<element maxOccurs="1" minOccurs="1" ref="archimedes:radius"/>
+			</sequence>
+		</complexType>
+	</element>
+
+	<element name="zoom" type="double"/>
+
+	<element name="viewport">
+		<complexType>
+			<sequence maxOccurs="1" minOccurs="1">
+				<element maxOccurs="1" minOccurs="1" ref="archimedes:point"/>
+			</sequence>
+		</complexType>
+	</element>
+
+	<element name="radius" type="double"/>
+
+	<element name="text">
+		<complexType>
+			<sequence>
+				<element ref="archimedes:point"/>
+				<element ref="archimedes:size"/>
+				<element ref="archimedes:content"/>
+				<element ref="archimedes:vector"/>
+			</sequence>
+		</complexType>
+	</element>
+	
+	<element name="vector">
+		<complexType>
+			<sequence maxOccurs="1" minOccurs="1">
+				<element ref="archimedes:point"/>
+			</sequence>
+		</complexType>
+	</element> 
+
+	<element name="size" type="double"/>
+	<element name="content" type="string"/>
+
+	<element name="color">
+		<complexType>
+			<sequence>
+				<element maxOccurs="3" minOccurs="3" ref="archimedes:unsignedByte"/>
+			</sequence>
+		</complexType>
+	</element>
+
+	<element name="unsignedByte" type="unsignedByte"/>
+
+	<element name="leader">
+		<complexType>
+			<sequence>
+				<element maxOccurs="3" minOccurs="3" ref="archimedes:point"/>
+			</sequence>
+		</complexType>
+	</element>
+	
+	<element name="dimension">
+		<complexType>
+			<sequence>
+				<element maxOccurs="3" minOccurs="3" ref="archimedes:point"/>
+				<element maxOccurs="1" minOccurs="1" ref="archimedes:size"/>
+			</sequence>
+		</complexType>
+	</element>
+
+</schema>
