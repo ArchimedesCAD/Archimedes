@@ -2,7 +2,7 @@
 <feature
       id="br.org.archimedes.curves.feature"
       label="Curves Feature"
-      version="0.57.0"
+      version="0.57.3"
       provider-name="Tarantulus Corp.">
 
    <description>
@@ -326,14 +326,14 @@ POSSIBILITY OF SUCH DAMAGES.
          id="br.org.archimedes.arc"
          download-size="0"
          install-size="0"
-         version="0.57.0"
+         version="0.57.3"
          unpack="false"/>
 
    <plugin
          id="br.org.archimedes.circle"
          download-size="0"
          install-size="0"
-         version="0.57.0"
+         version="0.57.3"
          unpack="false"/>
 
    <plugin

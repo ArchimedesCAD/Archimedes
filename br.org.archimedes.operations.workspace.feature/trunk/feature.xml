@@ -2,7 +2,7 @@
 <feature
       id="br.org.archimedes.operations.workspace.feature"
       label="Workspace Operations Feature"
-      version="0.57.0"
+      version="0.57.3"
       provider-name="Tarantulus Corp.">
 
    <description>
@@ -325,35 +325,35 @@ POSSIBILITY OF SUCH DAMAGES.
          id="br.org.archimedes.copypaste"
          download-size="0"
          install-size="0"
-         version="0.57.0"
+         version="0.57.3"
          unpack="false"/>
 
    <plugin
          id="br.org.archimedes.copytoclipboard"
          download-size="0"
          install-size="0"
-         version="0.54.0"
+         version="0.57.3"
          unpack="false"/>
 
    <plugin
          id="br.org.archimedes.orto"
          download-size="0"
          install-size="0"
-         version="0.57.0"
+         version="0.57.3"
          unpack="false"/>
 
    <plugin
          id="br.org.archimedes.pan"
          download-size="0"
          install-size="0"
-         version="0.57.0"
+         version="0.57.3"
          unpack="false"/>
 
    <plugin
          id="br.org.archimedes.paste"
          download-size="0"
          install-size="0"
-         version="0.57.0"
+         version="0.57.3"
          unpack="false"/>
 
    <plugin
@@ -367,7 +367,7 @@ POSSIBILITY OF SUCH DAMAGES.
          id="br.org.archimedes.snap"
          download-size="0"
          install-size="0"
-         version="0.57.0"
+         version="0.57.3"
          unpack="false"/>
 
    <plugin
@@ -381,14 +381,14 @@ POSSIBILITY OF SUCH DAMAGES.
          id="br.org.archimedes.zoom"
          download-size="0"
          install-size="0"
-         version="0.57.0"
+         version="0.57.3"
          unpack="false"/>
 
    <plugin
          id="br.org.archimedes.erase"
          download-size="0"
          install-size="0"
-         version="0.57.0"
+         version="0.57.3"
          unpack="false"/>
 
 </feature>
