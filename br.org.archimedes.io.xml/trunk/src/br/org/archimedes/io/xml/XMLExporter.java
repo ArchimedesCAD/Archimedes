@@ -44,7 +44,7 @@ public class XMLExporter implements Exporter {
 
         ElementEPLoader elementEPLoader = new ElementEPLoader();
         ElementExporterEPLoader exporterLoader = new ElementExporterEPLoader();
-        
+
         for (Layer layer : drawing.getLayerMap().values()) {
             StringBuilder containerTag = new StringBuilder();
             containerTag.append("\t" + "<container name=\"" + layer.getName() //$NON-NLS-1$ //$NON-NLS-2$
@@ -56,8 +56,15 @@ public class XMLExporter implements Exporter {
 
             for (Element element : layer.getElements()) {
                 String elementId = elementEPLoader.getElementId(element);
-                ElementExporter<Element> exporter = exporterLoader.getExporter(elementId);
-                exporter.exportElement(element, output);
+                ElementExporter<Element> exporter = exporterLoader
+                        .getExporter(elementId);
+                if (exporter == null) {
+                    System.err.println(Messages.bind(
+                            Messages.XMLExporter_NoExporter, elementId));
+                }
+                else {
+                    exporter.exportElement(element, output);
+                }
             }
 
             output.write(endContainerTagBytes);

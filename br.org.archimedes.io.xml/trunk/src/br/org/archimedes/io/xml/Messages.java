@@ -14,6 +14,8 @@ public class Messages extends NLS {
 
     private static final String BUNDLE_NAME = "br.org.archimedes.io.xml.messages"; //$NON-NLS-1$
 
+    public static String XMLExporter_NoExporter;
+
     public static String XMLFilePickerPage_BrowseButtonText;
 
     public static String XMLFilePickerPage_BrowseButtonTooltip;
