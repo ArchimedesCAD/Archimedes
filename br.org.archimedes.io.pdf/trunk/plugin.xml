@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension-point id="pdfElementExporter" name="PDF Element Exporter" schema="schema/pdfElementExporter.exsd"/>
+   
+   <extension point="br.org.archimedes.exporter">
+     <exporter id="br.org.archimedes.pdf.exporter"
+        extension="pdf" name="%exporterName"
+        class="br.org.archimedes.io.pdf.PDFExporter"/>
+   </extension>
+   
+   <extension
+         point="br.org.archimedes.io.pdf.pdfElementExporter">
+         <exporter 
+            id="br.org.archimedes.line.pdf.exporter" 
+            elementId="br.org.archimedes.line"
+            class="br.org.archimedes.io.pdf.elements.LineExporter"/>
+         <exporter 
+            id="br.org.archimedes.arc.pdf.exporter" 
+            elementId="br.org.archimedes.arc"
+            class="br.org.archimedes.io.pdf.elements.ArcExporter"/>
+         <exporter 
+            id="br.org.archimedes.circle.pdf.exporter"
+            elementId="br.org.archimedes.circle"
+            class="br.org.archimedes.io.pdf.elements.CircleExporter"/>
+         <exporter 
+            id="br.org.archimedes.dimension.pdf.exporter" 
+            elementId="br.org.archimedes.dimension"
+            class="br.org.archimedes.io.pdf.elements.DimensionExporter"/>
+         <exporter 
+            id="br.org.archimedes.infiniteline.pdf.exporter"
+            elementId="br.org.archimedes.infiniteline"
+            class="br.org.archimedes.io.pdf.elements.InfiniteLineExporter"/>
+<!--         <exporter 
+            id="br.org.archimedes.leader.pdf.exporter"
+            elementId="br.org.archimedes.leader"
+            class="br.org.archimedes.io.pdf.elements.LeaderExporter"/> -->
+         <exporter 
+            id="br.org.archimedes.polyline.pdf.exporter"
+            elementId="br.org.archimedes.polyline"
+            class="br.org.archimedes.io.pdf.elements.PolylineExporter"/>
+         <exporter 
+            id="br.org.archimedes.semiline.pdf.exporter"
+            elementId="br.org.archimedes.semiline"
+            class="br.org.archimedes.io.pdf.elements.SemilineExporter"/>
+         <exporter 
+            id="br.org.archimedes.text.pdf.exporter"
+            elementId="br.org.archimedes.text"
+            class="br.org.archimedes.io.pdf.elements.TextExporter"/>
+   </extension>
+   
+   <extension
+         point="org.eclipse.ui.exportWizards">
+      <wizard
+            class="br.org.archimedes.io.pdf.rcp.PDFWizardExporter"
+            id="br.org.archimedes.io.pdf.wizard"
+            name="%exporterName">
+      </wizard>
+   </extension>
+</plugin>
