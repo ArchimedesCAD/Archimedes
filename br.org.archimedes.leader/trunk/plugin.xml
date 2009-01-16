@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            description="The action set for the leader"
+            id="br.org.archimedes.leader.actionSet"
+            label="Leader action set"
+            visible="true">
+         <action
+               class="br.org.archimedes.leader.NewLeaderAction"
+               id="br.org.archimedes.leader.actionCreate"
+               label="%action.create.label"
+               menubarPath="create/complex0"
+               style="push"
+               toolbarPath="create/complex0"
+               tooltip="%action.create.tooltip">
+            <enablement>
+               <objectClass name="br.org.archimedes.model.Drawing"/>
+            </enablement>
+         </action>
+      </actionSet>
+   </extension>
+   <extension
+         point="br.org.archimedes.element">
+         <element id="br.org.archimedes.leader" name="Leader" 
+            class="br.org.archimedes.leader.Leader"
+            factory="br.org.archimedes.leader.LeaderFactory" 
+            shortcut="lea" />
+   </extension>
+</plugin>
