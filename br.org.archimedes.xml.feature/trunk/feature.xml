@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="br.org.archimedes.xml.feature"
-      label="XML Feature"
-      version="0.57.3"
-      provider-name="Tarantulus Corp.">
+      id="br.org.archimedes.io.feature"
+      label="Basic IO Feature"
+      version="0.57.4"
+      provider-name="Hugo Corbucci">
 
    <description>
-      This feature contains all the plugins required to save an xml file describing the drawing. In the future, it will also contain the plugins required to read the save xml file.
+      This feature contains all the plugins used to import and export as well as to open and save archimedes files.
    </description>
 
    <copyright>
@@ -244,16 +244,26 @@ POSSIBILITY OF SUCH DAMAGES.
    </url>
 
    <requires>
-      <import plugin="br.org.archimedes"/>
       <import plugin="org.eclipse.core.runtime"/>
       <import plugin="org.eclipse.ui"/>
+      <import plugin="br.org.archimedes" version="0.57.3" match="greaterOrEqual"/>
+      <import plugin="br.org.archimedes" version="0.56.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.core.runtime" version="3.4.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.ui" version="3.4.0" match="greaterOrEqual"/>
    </requires>
 
    <plugin
          id="br.org.archimedes.io.xml"
          download-size="0"
          install-size="0"
-         version="0.57.3"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="br.org.archimedes.io.pdf"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
          unpack="false"/>
 
 </feature>

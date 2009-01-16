@@ -217,7 +217,8 @@ public class InfiniteLine extends Element implements Offsetable {
     @Override
     public void draw (OpenGLWrapper wrapper) {
 
-        Rectangle modelRect = br.org.archimedes.Utils.getWorkspace().getCurrentViewportArea();
+        Rectangle modelRect = br.org.archimedes.Utils.getWorkspace()
+                .getCurrentViewportArea();
         List<Point> pointsToDraw = getPointsCrossing(modelRect);
         if (pointsToDraw != null) {
             try {
@@ -234,9 +235,13 @@ public class InfiniteLine extends Element implements Offsetable {
      * @param rectangle
      *            The rectangle that this line should cross in model
      *            coordinates.
-     * @return The line crossing the whole rectangle.
+     * @return null if this infinite line does not cross the rectangle, crosses
+     *         it on infinite points or crosses it on a corner. Otherwise it
+     *         will return two points that constitute the intersections of this
+     *         infinite line with the rectangle or the starting point with an
+     *         intersection.
      */
-    protected List<Point> getPointsCrossing (Rectangle rectangle) {
+    public List<Point> getPointsCrossing (Rectangle rectangle) {
 
         List<Point> points;
 
@@ -315,8 +320,7 @@ public class InfiniteLine extends Element implements Offsetable {
      *            The lowest Y coordinate of the containing rectangle.
      * @param maxY
      *            The highest Y coordinate of the containing rectangle.
-     * @return List<Point> A list with the Points that define the vertical
-     *         line.
+     * @return List<Point> A list with the Points that define the vertical line.
      */
     private List<Point> getVerticalLine (double minY, double maxY) {
 
@@ -445,5 +449,4 @@ public class InfiniteLine extends Element implements Offsetable {
 
         this.endingPoint = endingPoint;
     }
-
 }

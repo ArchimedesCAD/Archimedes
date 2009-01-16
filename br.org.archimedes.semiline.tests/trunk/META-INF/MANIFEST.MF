@@ -2,10 +2,10 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Semiline Tests Plug-in
 Bundle-SymbolicName: br.org.archimedes.semiline.tests
-Bundle-Version: 0.57.3
+Bundle-Version: 0.57.4
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Require-Bundle: br.org.archimedes;bundle-version="0.56.0",
  br.org.archimedes.tests;bundle-version="0.54.0",
- br.org.archimedes.semiline;bundle-version="0.57.3",
+ br.org.archimedes.semiline;bundle-version="0.57.4",
  br.org.archimedes.line;bundle-version="0.54.0",
  org.junit4

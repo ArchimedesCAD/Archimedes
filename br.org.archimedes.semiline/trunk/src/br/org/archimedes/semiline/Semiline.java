@@ -217,8 +217,9 @@ public class Semiline extends Element implements Offsetable {
 
     /*
      * (non-Javadoc)
-     * 
-     * @see com.tarantulus.archimedes.model.Element#getProjectionOf(com.tarantulus.archimedes.model.Point)
+     * @see
+     * com.tarantulus.archimedes.model.Element#getProjectionOf(com.tarantulus
+     * .archimedes.model.Point)
      */
     public Point getProjectionOf (Point point) throws NullArgumentException {
 
@@ -237,13 +238,15 @@ public class Semiline extends Element implements Offsetable {
 
     public String toString () {
 
-        return Messages.bind(Messages.Semiline_toString, initialPoint.toString(), directionPoint.toString());
+        return Messages.bind(Messages.Semiline_toString, initialPoint
+                .toString(), directionPoint.toString());
     }
 
     /*
      * (non-Javadoc)
-     * 
-     * @see com.tarantulus.archimedes.model.Element#getReferencePoints(com.tarantulus.archimedes.model.Rectangle)
+     * @see
+     * com.tarantulus.archimedes.model.Element#getReferencePoints(com.tarantulus
+     * .archimedes.model.Rectangle)
      */
     public Collection<ReferencePoint> getReferencePoints (Rectangle area) {
 
@@ -265,7 +268,6 @@ public class Semiline extends Element implements Offsetable {
 
     /*
      * (non-Javadoc)
-     * 
      * @see com.tarantulus.archimedes.model.elements.Element#getPoints()
      */
     public @Override
@@ -279,12 +281,91 @@ public class Semiline extends Element implements Offsetable {
 
     /*
      * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.model.Element#draw(br.org.archimedes.gui.opengl.OpenGLWrapper)
+     * @seebr.org.archimedes.model.Element#draw(br.org.archimedes.gui.opengl.
+     * OpenGLWrapper)
      */
     @Override
     public void draw (OpenGLWrapper wrapper) {
 
-        // TODO Auto-generated method stub
+        Rectangle modelRect = br.org.archimedes.Utils.getWorkspace()
+                .getCurrentViewportArea();
+        List<Point> pointsToDraw = getPointsCrossing(modelRect);
+        if (pointsToDraw != null) {
+            try {
+                wrapper.drawFromModel(pointsToDraw);
+            }
+            catch (NullArgumentException e) {
+                // Should not happen since I checked for null
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * @param rectangle
+     *            The rectangle that we are looking to match to
+     * @return null if this semi line does not cross the rectangle, crosses it
+     *         on infinite points or crosses it on a corner. Otherwise it will
+     *         return two points that constitute the intersections of this
+     *         semiline with the rectangle or the starting point with an
+     *         intersection.
+     */
+    public List<Point> getPointsCrossing (Rectangle rectangle) {
+
+        List<Point> points = new LinkedList<Point>();
+        // TODO Adjust to limit with the starting point
+        
+        double sen = (initialPoint.getX() - directionPoint.getX());
+        double tan = (initialPoint.getY() - directionPoint.getY()) / sen;
+        if (Math.abs(sen) < Constant.EPSILON) {
+            points.add(new Point(initialPoint.getX(), rectangle.getLowerLeft().getY()));
+            points.add(new Point(initialPoint.getX(), rectangle.getUpperRight().getY()));
+        }
+        else if (Math.abs(tan) < Constant.EPSILON) {
+            points.add(new Point(rectangle.getLowerLeft().getX(), initialPoint.getY()));
+            points.add(new Point(rectangle.getUpperRight().getX(), initialPoint.getY()));
+        }
+        else {
+            double b = initialPoint.getY() - (tan) * initialPoint.getX();
+            Point lowerLeftModel = rectangle.getLowerLeft();
+            Point upperRightModel = rectangle.getUpperRight();
+
+            Point lefterPoint = new Point(lowerLeftModel.getX(), (tan
+                    * lowerLeftModel.getX() + b));
+            Point righterPoint = new Point(upperRightModel.getX(), (tan
+                    * upperRightModel.getX() + b));
+            Point lowerPoint = new Point((lowerLeftModel.getY() - b) / tan,
+                    lowerLeftModel.getY());
+            Point upperPoint = new Point((upperRightModel.getY() - b) / tan,
+                    upperRightModel.getY());
+
+            points = new LinkedList<Point>();
+            if (lefterPoint.getY() <= upperRightModel.getY()
+                    && lefterPoint.getY() >= lowerLeftModel.getY()
+                    && points.size() < 2) {
+                points.add(lefterPoint);
+            }
+            if (righterPoint.getY() <= upperRightModel.getY()
+                    && righterPoint.getY() >= lowerLeftModel.getY()
+                    && points.size() < 2) {
+                points.add(righterPoint);
+            }
+            if (upperPoint.getX() <= upperRightModel.getX()
+                    && upperPoint.getX() >= lowerLeftModel.getX()
+                    && points.size() < 2) {
+                points.add(upperPoint);
+            }
+            if (lowerPoint.getX() <= upperRightModel.getX()
+                    && lowerPoint.getX() >= lowerLeftModel.getX()
+                    && points.size() < 2) {
+                points.add(lowerPoint);
+            }
+
+            if (points.size() < 2) {
+                points = null;
+            }
+        }
+
+        return points;
     }
 }

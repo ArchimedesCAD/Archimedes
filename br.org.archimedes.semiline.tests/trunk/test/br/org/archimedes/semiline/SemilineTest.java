@@ -442,4 +442,6 @@ public class SemilineTest extends Tester {
         Semiline sline = new Semiline(2, 2, 12, 12);
         sline.scale(point, -0.5);
     }
+    
+    // TODO Test the getPointsCrossing
 }

@@ -4,13 +4,14 @@ LS_FILE=ls.txt
 CO_FILE=co.sh
 GEN_FILE=gen_build.sh
 BIN=bin
+SVN_REPO=http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/
 
 if [ $1 != "" ]; then
     TMP_DIR=$1  
 fi
 
 mkdir -p $TMP_DIR/$BIN
-svn list https://incubadora.fapesp.br/svn/archimedes/mainarchimedes/rcparchimedes/ > $TMP_DIR/$LS_FILE
+svn list $SVN_REPO > $TMP_DIR/$LS_FILE
 echo '#!/bin/sh' > $TMP_DIR/$CO_FILE
 sed 's/$/trunk/' $TMP_DIR/$LS_FILE | sed 's/^/svn co https:\/\/incubadora.fapesp.br\/svn\/archimedes\/mainarchimedes\/rcparchimedes\//' | sed 's/\(rcparchimedes\/\(.*\)\/trunk\)/\1 \2/' >> $TMP_DIR/$CO_FILE
 chmod +x $TMP_DIR/$CO_FILE
@@ -28,3 +29,8 @@ do
     cat $i | wc -l
 done
 #rm -Rf $TMP_DIR/
+
+escape_slash() 
+{
+
+}

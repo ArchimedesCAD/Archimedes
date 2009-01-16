@@ -15,11 +15,11 @@ import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
 
 /**
- * Infinite line tests.
+ * Infinite line tests.<br>
+ * TODO Add tests for different lines<br>
+ * such as orthogonal lines and inclined lines with "strange" angles
  * 
- * @author mapmoreti TODO Considerar nos testes linhas diferentes (exemplos:
- *         paralelas ao eixo x e ao eixo y, com inclinação > 90 graus, e outros
- *         que possam ser importantes)
+ * @author mapmoreti
  */
 public class infiniteLineTest {
 
@@ -314,7 +314,7 @@ public class infiniteLineTest {
         }
 
         /**
-         * Testando no caso que um dos pontos é nulo
+         * Testando no caso que um dos pontos ï¿½ nulo
          */
         try {
             infiniteLine = new InfiniteLine(new Point(1, 0), (Point) null);
@@ -378,8 +378,6 @@ public class infiniteLineTest {
 
     @Test
     public void testEquals () {
-
-        
 
         // Horizontal line
         InfiniteLine xLine = createSafeInfiniteLine(2.0, 1.0, 1.0, 1.0);
@@ -489,12 +487,10 @@ public class infiniteLineTest {
                 expected, copiedXLine);
 
         /*
-         * expected = createSafeInfiniteLine(0.0, -0.5, 1.0, -0.5); copiedXLine =
-         * safeCloneWithDistance(xLine, -0.5); Assert.assertEquals("The copied
+         * expected = createSafeInfiniteLine(0.0, -0.5, 1.0, -0.5); copiedXLine
+         * = safeCloneWithDistance(xLine, -0.5); Assert.assertEquals("The copied
          * xLine and the original should be the same.", expected, copiedXLine);
          */
-
-        
 
         // Ascending line
         xLine = createSafeInfiniteLine(0.0, 0.0, 1.0, 1.0);
@@ -585,8 +581,6 @@ public class infiniteLineTest {
         toProject = new Point(20, 30);
         projection = getSafeProjectionOf(xLine, toProject);
         Assert.assertEquals(expected, projection);
-
-
 
         // Test exception
         try {
@@ -684,6 +678,6 @@ public class infiniteLineTest {
             Assert.fail("Should not throw IllegalActionException");
         }
     }
-    
-    // TODO Criar testes para o getPointsCrossing
+
+    // TODO Tests to getPointsCrossing
 }
