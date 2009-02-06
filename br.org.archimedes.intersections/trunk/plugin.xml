@@ -189,4 +189,12 @@
             otherElement="br.org.archimedes.semiline"
             class="br.org.archimedes.intersectors.SemilineSemilineIntersector"/>
    </extension>
+   <extension
+         point="br.org.archimedes.intersections.elementsIntersector">
+         <elementsIntersector
+            id="br.org.archimedes.intersector.lineleader"
+            element="br.org.archimedes.line"
+            otherElement="br.org.archimedes.leader"
+            class="br.org.archimedes.intersectors.LineLeaderIntersector"/>
+   </extension>
 </plugin>

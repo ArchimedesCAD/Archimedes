@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.4"?>
 
-<product name="Archimedes" id="br.org.archimedes.archimedes" application="br.org.archimedes.application" version="0.57.3" useFeatures="true">
+<product name="Archimedes" id="br.org.archimedes.archimedes" application="br.org.archimedes.application" version="0.57.4" useFeatures="true">
 
    <aboutInfo>
       <image path="/br.org.archimedes/icons/logo128.gif"/>
@@ -77,13 +77,13 @@
 
    <features>
       <feature id="org.eclipse.rcp" version="3.4.0.v20080324a-989JERhEk-jWnd5IY8K5tjxB"/>
-      <feature id="br.org.archimedes.feature" version="0.57.3"/>
+      <feature id="br.org.archimedes.feature" version="0.57.4"/>
       <feature id="br.org.archimedes.lines.feature" version="0.57.3"/>
       <feature id="br.org.archimedes.curves.feature" version="0.57.3"/>
       <feature id="br.org.archimedes.operations.workspace.feature" version="0.57.3"/>
       <feature id="br.org.archimedes.intersections.feature" version="0.57.3"/>
       <feature id="br.org.archimedes.operations.edit.feature" version="0.57.3"/>
-      <feature id="br.org.archimedes.comunication.feature" version="0.57.3"/>
+      <feature id="br.org.archimedes.comunication.feature" version="0.57.4"/>
       <feature id="br.org.archimedes.io.feature" version="0.57.4"/>
       <feature id="br.org.archimedes.calculus.feature" version="0.57.3"/>
       <feature id="br.org.archimedes.langpack.feature" version="0.50.0"/>

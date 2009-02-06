@@ -11,6 +11,7 @@ import br.org.archimedes.exceptions.IllegalActionException;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.model.Point;
+import br.org.archimedes.model.Rectangle;
 
 /**
  * Belongs to package com.tarantulus.archimedes.model.elements.
@@ -141,5 +142,19 @@ public class LeaderTest extends Tester {
         catch (IllegalActionException e) {
             fail("Should not throw IllegalActionException");
         }
+    }
+
+    @Test
+    public void boundaryRectangleShouldIncludeBothLines () throws Exception {
+
+        Leader leader = new Leader(new Point(0, 0), new Point(1, 1), new Point(
+                3, 1));
+        Rectangle boundaryRectangle = leader.getBoundaryRectangle();
+        assertEquals(new Rectangle(0, 0, 3, 1), boundaryRectangle);
+        
+        leader = new Leader(new Point(0, 0), new Point(1, 1), new Point(
+                4, -2));
+        boundaryRectangle = leader.getBoundaryRectangle();
+        assertEquals(new Rectangle(0, -2, 4, 1), boundaryRectangle);
     }
 }

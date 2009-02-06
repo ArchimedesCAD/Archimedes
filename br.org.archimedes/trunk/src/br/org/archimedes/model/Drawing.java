@@ -692,7 +692,9 @@ public class Drawing extends Observable implements Observer {
         if (oldName != null && !newName.equals(oldName)) {
             layers.remove(oldName);
             layers.put(newName, layer);
+            setChanged();
         }
+        notifyObservers(layer);
     }
 
     /**

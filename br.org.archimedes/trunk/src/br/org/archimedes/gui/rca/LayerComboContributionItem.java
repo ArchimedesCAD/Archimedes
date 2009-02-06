@@ -220,7 +220,7 @@ public class LayerComboContributionItem extends ContributionItem implements
 
         try {
             Drawing activeDrawing = controller.getActiveDrawing();
-            populateCombo(activeDrawing);
+            setObservedDrawing(activeDrawing);
         }
         catch (NoActiveDrawingException e) {
             deactivateCombo();
@@ -246,28 +246,36 @@ public class LayerComboContributionItem extends ContributionItem implements
      *            The drawing that contains the layers that should populate the
      *            combo
      */
-    private void populateCombo (Drawing drawing) {
+    private void setObservedDrawing (Drawing drawing) {
 
         if (currentDrawing != drawing) {
             currentDrawing = drawing;
             drawing.addObserver(this);
-            layersCombo.removeAll();
-            layersCombo.setText(""); //$NON-NLS-1$
-            List<String> layerNames = drawing.getLayerNames();
-            int i = 0;
-            boolean done = false;
-            for (String layerName : layerNames) {
-                layersCombo.add(layerName);
-                if ( !done
-                        && drawing.getCurrentLayer().getName()
-                                .equals(layerName)) {
-                    layersCombo.select(i);
-                    done = true;
-                }
-                i++;
-            }
-            layersCombo.setEnabled(true);
+            populate(drawing);
         }
+    }
+
+    /**
+     * @param drawing
+     */
+    private void populate (Drawing drawing) {
+
+        layersCombo.removeAll();
+        layersCombo.setText(""); //$NON-NLS-1$
+        List<String> layerNames = drawing.getLayerNames();
+        int i = 0;
+        boolean done = false;
+        for (String layerName : layerNames) {
+            layersCombo.add(layerName);
+            if ( !done
+                    && drawing.getCurrentLayer().getName()
+                            .equals(layerName)) {
+                layersCombo.select(i);
+                done = true;
+            }
+            i++;
+        }
+        layersCombo.setEnabled(true);
     }
 
     /**
@@ -308,7 +316,7 @@ public class LayerComboContributionItem extends ContributionItem implements
             DrawingEditor editor = (DrawingEditor) part;
             DrawingInput editorInput = (DrawingInput) editor.getEditorInput();
             Drawing drawing = editorInput.getDrawing();
-            populateCombo(drawing);
+            setObservedDrawing(drawing);
         }
     }
 
@@ -354,8 +362,7 @@ public class LayerComboContributionItem extends ContributionItem implements
 
         if (arg1 != null && arg0 == currentDrawing
                 && arg1.getClass() == Layer.class) {
-            Layer layer = (Layer) arg1;
-            layersCombo.add(layer.getName());
+            populate(currentDrawing);
         }
     }
 }

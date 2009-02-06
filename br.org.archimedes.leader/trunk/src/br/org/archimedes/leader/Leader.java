@@ -53,9 +53,8 @@ public class Leader extends Element {
 
     /*
      * (non-Javadoc)
-     * 
      * @see com.tarantulus.archimedes.model.elements.Element#move(double,
-     *      double)
+     * double)
      */
     @Override
     public void move (double deltaX, double deltaY) {
@@ -66,8 +65,8 @@ public class Leader extends Element {
 
     /*
      * (non-Javadoc)
-     * 
-     * @see com.tarantulus.archimedes.model.elements.Element#getBoundaryRectangle()
+     * @see
+     * com.tarantulus.archimedes.model.elements.Element#getBoundaryRectangle()
      */
     @Override
     public Rectangle getBoundaryRectangle () {
@@ -87,13 +86,14 @@ public class Leader extends Element {
         x2 = Math.max(upperRightPointer.getX(), upperRightText.getX());
         y2 = Math.max(upperRightPointer.getY(), upperRightText.getY());
 
-        return new Rectangle(x1, x2, y1, y2);
+        return new Rectangle(x1, y1, x2, y2);
     }
 
     /*
      * (non-Javadoc)
-     * 
-     * @see com.tarantulus.archimedes.model.elements.Element#getReferencePoints(com.tarantulus.archimedes.model.Rectangle)
+     * @see
+     * com.tarantulus.archimedes.model.elements.Element#getReferencePoints(com
+     * .tarantulus.archimedes.model.Rectangle)
      */
     @Override
     public Collection<ReferencePoint> getReferencePoints (Rectangle area) {
@@ -113,8 +113,9 @@ public class Leader extends Element {
 
     /*
      * (non-Javadoc)
-     * 
-     * @see com.tarantulus.archimedes.model.elements.Element#getProjectionOf(com.tarantulus.archimedes.model.Point)
+     * @see
+     * com.tarantulus.archimedes.model.elements.Element#getProjectionOf(com.
+     * tarantulus.archimedes.model.Point)
      */
     @Override
     public Point getProjectionOf (Point point) throws NullArgumentException {
@@ -128,8 +129,9 @@ public class Leader extends Element {
 
     /*
      * (non-Javadoc)
-     * 
-     * @see com.tarantulus.archimedes.model.elements.Element#contains(com.tarantulus.archimedes.model.Point)
+     * @see
+     * com.tarantulus.archimedes.model.elements.Element#contains(com.tarantulus
+     * .archimedes.model.Point)
      */
     @Override
     public boolean contains (Point point) throws NullArgumentException {
@@ -139,7 +141,6 @@ public class Leader extends Element {
 
     /*
      * (non-Javadoc)
-     * 
      * @see java.lang.Object#clone()
      */
     public Element clone () {
@@ -189,7 +190,6 @@ public class Leader extends Element {
 
     /*
      * (non-Javadoc)
-     * 
      * @see com.tarantulus.archimedes.model.elements.Element#getPoints()
      */
     public @Override
@@ -203,13 +203,29 @@ public class Leader extends Element {
 
     /*
      * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.model.Element#draw(br.org.archimedes.gui.opengl.OpenGLWrapper)
+     * @seebr.org.archimedes.model.Element#draw(br.org.archimedes.gui.opengl.
+     * OpenGLWrapper)
      */
     @Override
     public void draw (OpenGLWrapper wrapper) {
 
         pointer.draw(wrapper);
         textBase.draw(wrapper);
+    }
+
+    /**
+     * @return The text base line.
+     */
+    public Line getTextBase () {
+
+        return textBase;
+    }
+
+    /**
+     * @return The pointer line
+     */
+    public Line getPointer () {
+
+        return pointer;
     }
 }

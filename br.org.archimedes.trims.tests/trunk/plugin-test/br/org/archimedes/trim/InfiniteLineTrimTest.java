@@ -34,35 +34,19 @@ public class InfiniteLineTrimTest extends Tester {
         references.add(verticalXLine);
     }
 
-    @Test
-    public void testNullLineArgument () {
+    @Test(expected = NullArgumentException.class)
+    public void testNullLineArgument () throws NullArgumentException {
 
-        try {
-            trimmer.trim(null, references, new Point(0.0, 0.0));
-        }
-        catch (NullArgumentException e) {
-            Assert.assertTrue("Should throw null argument exception", true);
-            return;
-        }
-
-        Assert.assertFalse("Should throw null argument exception", true);
+        trimmer.trim(null, references, new Point(0.0, 0.0));
     }
 
-    @Test
-    public void testNullReferencesArgument () throws InvalidArgumentException,
-            NullArgumentException {
+    @Test(expected = NullArgumentException.class)
+    public void testNullReferencesArgument () throws NullArgumentException,
+            InvalidArgumentException {
 
         InfiniteLine xline3 = new InfiniteLine(new Point( -1.0, 2.0),
                 new Point(3.0, 2.0));
-        try {
-            trimmer.trim(xline3, null, new Point(0.0, 0.0));
-        }
-        catch (NullArgumentException e) {
-            Assert.assertTrue("Should throw null argument exception", true);
-            return;
-        }
-
-        Assert.assertFalse("Should throw null argument exception", true);
+        trimmer.trim(xline3, null, new Point(0.0, 0.0));
     }
 
     @Test
@@ -132,8 +116,8 @@ public class InfiniteLineTrimTest extends Tester {
 
         assertCollectionContains(collection, new Semiline(new Point(0.0, 2.0),
                 new Point( -1.0, 2.0)));
-        assertCollectionContains(collection, new Semiline(new Point(2.0,
-                2.0), new Point(3.0, 2.0)));
+        assertCollectionContains(collection, new Semiline(new Point(2.0, 2.0),
+                new Point(3.0, 2.0)));
         Assert.assertEquals(
                 "A trim at an intersection point removes the lefter part.", 2,
                 collection.size());

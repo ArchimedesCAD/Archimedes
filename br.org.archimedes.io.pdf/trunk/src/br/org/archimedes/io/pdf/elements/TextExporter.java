@@ -6,6 +6,8 @@ package br.org.archimedes.io.pdf.elements;
 
 import java.io.IOException;
 
+import br.org.archimedes.Geometrics;
+import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.interfaces.ElementExporter;
 import br.org.archimedes.io.pdf.PDFWriterHelper;
 import br.org.archimedes.model.Point;
@@ -35,7 +37,7 @@ public class TextExporter implements ElementExporter<Text> {
         PdfContentByte cb = helper.getPdfContentByte();
 
         Point lowerLeft = text.getLowerLeft();
-        cb.moveTo((float) lowerLeft.getX(), (float) lowerLeft.getY());
+        Point docPoint = helper.modelToDocument(lowerLeft);
 
         BaseFont font = null;
         try {
@@ -49,6 +51,22 @@ public class TextExporter implements ElementExporter<Text> {
             e.printStackTrace();
         }
         cb.setFontAndSize(font, (float) text.getSize());
-        cb.showText(text.getText());
+        cb.setTextRenderingMode(PdfContentByte.TEXT_RENDER_MODE_FILL);
+        cb.beginText();
+        cb.moveText((float) docPoint.getX(), (float) docPoint.getY());
+        double angle = 0;
+        try {
+            angle = Geometrics.calculateAngle(new Point(0, 0), text
+                    .getDirection().getPoint());
+        }
+        catch (NullArgumentException e) {
+            // Shouldn't happen since the text MUST have a direction to exists
+            // and the point 0,0 is valid
+            e.printStackTrace();
+        }
+        float degreeAngle = (float) (angle * 180 / Math.PI);
+        cb.showTextAligned(PdfContentByte.ALIGN_LEFT, text.getText(), (float) docPoint.getX(), (float) docPoint.getY(),
+                degreeAngle);
+        cb.endText();
     }
 }

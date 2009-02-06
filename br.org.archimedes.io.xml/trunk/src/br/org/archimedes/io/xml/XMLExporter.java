@@ -49,8 +49,11 @@ public class XMLExporter implements Exporter {
             StringBuilder containerTag = new StringBuilder();
             containerTag.append("\t" + "<container name=\"" + layer.getName() //$NON-NLS-1$ //$NON-NLS-2$
                     + "\" lineStyle=\"" + layer.getLineStyle().ordinal() //$NON-NLS-1$
-                    + "\" thickness=\"" + layer.getThickness() + "\" >" + "\n"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                    + "\" thickness=\"" + layer.getThickness() //$NON-NLS-1$
+                    + "\" visible=\"" + layer.isVisible() //$NON-NLS-1$
+                    + "\" locked=\"" + layer.isLocked() + "\"" + " >" + "\n"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
             writeColor(containerTag, layer.getColor());
+            writeColor(containerTag, layer.getPrintColor());
 
             output.write(containerTag.toString().getBytes(charset));
 

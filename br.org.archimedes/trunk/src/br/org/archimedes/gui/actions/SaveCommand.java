@@ -26,6 +26,8 @@ import br.org.archimedes.rcp.extensionpoints.NativeFormatEPLoader;
  */
 public class SaveCommand implements Command {
 
+    private static final String DEFAULT_SAVE_EXTENSION = "arc";
+
     private static final String LINE_BREAK = "\n"; //$NON-NLS-1$
 
     private boolean showDialog;
@@ -60,7 +62,7 @@ public class SaveCommand implements Command {
     public boolean execute () {
 
         File file = drawing.getFile();
-        boolean finished = false;
+        boolean finished = true;
         if (showDialog || file == null) {
             file = showDialog();
             finished = (file != null);
@@ -137,18 +139,16 @@ public class SaveCommand implements Command {
         boolean finished = false;
         while ( !finished) {
             saveDialog.setFilterPath(lastDirectory);
-            String filePath = saveDialog.open();
+            String rawFilePath = saveDialog.open();
+            String extension = getExtension(saveDialog.getFilterExtensions(),
+                    saveDialog.getFilterIndex());
+            String filePath = addExtensionIfNeeded(rawFilePath, extension);
             if (filePath != null) {
                 chosenFile = new File(filePath);
                 lastDirectory = chosenFile.getParent();
-                if ( !chosenFile.exists()
-                        && chosenFile.getParentFile().canWrite()) {
-                    file = chosenFile;
-                    workspace.setLastUsedDirectory(chosenFile.getParentFile());
-                    finished = true;
-                }
-                else if (chosenFile.canWrite()
-                        && showOverwriteDialog() == SWT.YES) {
+                if (( !chosenFile.exists() && chosenFile.getParentFile()
+                        .canWrite())
+                        || (chosenFile.canWrite() && showOverwriteDialog() == SWT.YES)) {
                     file = chosenFile;
                     workspace.setLastUsedDirectory(chosenFile.getParentFile());
                     finished = true;
@@ -167,7 +167,45 @@ public class SaveCommand implements Command {
     }
 
     /**
-     * @param chosenFile The file chosen that caused the error
+     * @param rawFilePath
+     *            The file path according to what the user sent
+     * @param extension
+     *            The extension to be added if none was set
+     * @return The complete file path with the chosen extension
+     */
+    private String addExtensionIfNeeded (String rawFilePath, String extension) {
+
+        int extensionSeparator = rawFilePath.lastIndexOf('.');
+        String insertedExtension = "";
+        if (extensionSeparator >= 0) {
+            insertedExtension = rawFilePath.substring(extensionSeparator + 1);
+            if (nativeLoader.getExporter(insertedExtension) != null) {
+                return rawFilePath;
+            }
+        }
+
+        return rawFilePath + '.' + DEFAULT_SAVE_EXTENSION;
+    }
+
+    /**
+     * @param extensions
+     *            Avaliable extensions
+     * @param filterIndex
+     *            Selected extension or -1 if none
+     * @return The selected extension by the user or the default one if none was
+     *         selected.
+     */
+    private String getExtension (String[] extensions, int filterIndex) {
+
+        if (filterIndex >= 0) {
+            return extensions[filterIndex];
+        }
+        return DEFAULT_SAVE_EXTENSION;
+    }
+
+    /**
+     * @param chosenFile
+     *            The file chosen that caused the error
      * @return The log message to be shown
      */
     private String buildLogMessage (File chosenFile) {
@@ -206,7 +244,8 @@ public class SaveCommand implements Command {
             return SWT.YES;
         }
 
-        // TODO Check is non OS X systems also present the overwrite message natively
+        // TODO Check if non OS X systems also present the overwrite message
+        // natively
         MessageBox dialogBox = new MessageBox(shell, SWT.YES | SWT.NO
                 | SWT.ICON_QUESTION);
         dialogBox.setMessage(Messages.OverwriteQuestion);

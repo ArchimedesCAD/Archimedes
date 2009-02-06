@@ -2,8 +2,8 @@
 <feature
       id="br.org.archimedes.comunication.feature"
       label="Comunication Elements Feature"
-      version="0.57.3"
-      provider-name="Tarantulus Corp.">
+      version="0.57.4"
+      provider-name="Hugo Corbucci">
 
    <description>
       This feature contains elements that allow the user to insert comunicative elements such as text and dimensions into the drawing. This contains also all operations specific to those elements.
@@ -342,6 +342,13 @@ POSSIBILITY OF SUCH DAMAGES.
          download-size="0"
          install-size="0"
          version="0.57.3"
+         unpack="false"/>
+
+   <plugin
+         id="br.org.archimedes.leader"
+         download-size="0"
+         install-size="0"
+         version="0.57.4"
          unpack="false"/>
 
 </feature>
