@@ -107,11 +107,12 @@
 				<include name="configuration/config.ini" />
 				<include name="features/org.eclipse.rcp*/**/*" />
 				<include
-					name="features/br.org.archimedes.feature*/**/*" />
+					name="features/br.org.archimedes.core.feature*/**/*" />
 				<include name="plugins/**/*" />
 				<exclude name="plugins/br.org.archimedes.*.jar" />
 				<exclude name="plugins/org.eclipse.swt.*linux*.jar" />
 				<exclude name="plugins/br.org.archimedes.opengl.*win32*/**/*" />
+				<include name="plugins/br.org.archimedes.core*.jar"  />
 			</fileset>
 			<fileset dir="@{deployDir}/linux.gtk.x86/Archimedes/"
 				targetdir="$INSTALL_PATH">
