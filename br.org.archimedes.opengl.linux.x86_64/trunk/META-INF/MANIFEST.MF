@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: X86_64 Fragment
+Bundle-SymbolicName: br.org.archimedes.opengl.linux.x86_64
+Bundle-Version: 2.0.1
+Bundle-Vendor: LWJGL team
+Fragment-Host: br.org.archimedes.opengl;bundle-version="2.0.1"
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
