@@ -41,7 +41,7 @@
          id="archimedes"
          point="org.eclipse.core.runtime.products">
       <product
-            application="br.org.archimedes.application"
+            application="br.org.archimedes.core.application"
             name="Archimedes">
          <property
                name="aboutImage"
@@ -54,7 +54,7 @@
                value="icons/logo16.gif,icons/logo32.gif,icons/logo48.gif,icons/logo64.gif,icons/logo128.gif"/>
          <property
                name="preferenceCustomization"
-               value="help/preferences.ini"/>
+               value="plugin_customization.ini"/>
          <property
                name="startupProgressRect"
                value="0,0,300,30"/>

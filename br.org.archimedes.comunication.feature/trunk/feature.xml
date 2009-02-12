@@ -318,7 +318,7 @@ POSSIBILITY OF SUCH DAMAGES.
    <requires>
       <import plugin="org.eclipse.ui"/>
       <import plugin="org.eclipse.core.runtime"/>
-      <import plugin="br.org.archimedes"/>
+      <import plugin="br.org.archimedes.core"/>
       <import plugin="br.org.archimedes.line"/>
       <import plugin="br.org.archimedes.batik"/>
    </requires>

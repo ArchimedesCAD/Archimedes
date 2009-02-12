@@ -38,7 +38,7 @@
       </actionSet>
    </extension>
    <extension
-         point="br.org.archimedes.factory">
+         point="br.org.archimedes.core.factory">
          <factory id="br.org.archimedes.polyline.area"
           	class="br.org.archimedes.polyline.area.AreaPerimeterFactory"/>
    </extension>

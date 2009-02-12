@@ -2,9 +2,9 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Leader Tests Plug-in
 Bundle-SymbolicName: br.org.archimedes.leader.tests
-Bundle-Version: 0.57.0
+Bundle-Version: 0.57.4
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Require-Bundle: br.org.archimedes;bundle-version="0.57.3",
- br.org.archimedes.leader;bundle-version="0.57.4",
- br.org.archimedes.tests;bundle-version="0.57.3",
+Require-Bundle: br.org.archimedes.core,
+ br.org.archimedes.leader,
+ br.org.archimedes.core.tests,
  org.junit4

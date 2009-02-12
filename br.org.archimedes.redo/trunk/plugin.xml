@@ -24,7 +24,7 @@
       </actionSet>
    </extension>
    <extension
-         point="br.org.archimedes.factory">
+         point="br.org.archimedes.core.factory">
          <factory id="br.org.archimedes.redo"
           class="br.org.archimedes.redo.RedoFactory">
          	<shortcut id="re"/>

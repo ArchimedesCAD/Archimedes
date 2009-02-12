@@ -3,7 +3,7 @@
 <plugin>
    <extension-point id="pdfElementExporter" name="PDF Element Exporter" schema="schema/pdfElementExporter.exsd"/>
    
-   <extension point="br.org.archimedes.exporter">
+   <extension point="br.org.archimedes.core.exporter">
      <exporter id="br.org.archimedes.pdf.exporter"
         extension="pdf" name="%exporterName"
         class="br.org.archimedes.io.pdf.PDFExporter"/>

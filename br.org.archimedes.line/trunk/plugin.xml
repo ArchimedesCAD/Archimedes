@@ -24,7 +24,7 @@
       </actionSet>
    </extension>
    <extension
-         point="br.org.archimedes.element">
+         point="br.org.archimedes.core.element">
          <element id="br.org.archimedes.line" name="Line" 
          	class="br.org.archimedes.line.Line"
          	factory="br.org.archimedes.line.LineFactory"

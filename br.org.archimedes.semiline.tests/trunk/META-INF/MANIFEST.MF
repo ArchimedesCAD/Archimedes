@@ -4,8 +4,8 @@ Bundle-Name: Semiline Tests Plug-in
 Bundle-SymbolicName: br.org.archimedes.semiline.tests
 Bundle-Version: 0.57.4
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Require-Bundle: br.org.archimedes;bundle-version="0.56.0",
- br.org.archimedes.tests;bundle-version="0.54.0",
- br.org.archimedes.semiline;bundle-version="0.57.4",
- br.org.archimedes.line;bundle-version="0.54.0",
+Require-Bundle: br.org.archimedes.core,
+ br.org.archimedes.core.tests,
+ br.org.archimedes.semiline,
+ br.org.archimedes.line,
  org.junit4

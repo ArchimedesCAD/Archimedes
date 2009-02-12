@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Line Pt_BR Fragment
 Bundle-SymbolicName: br.org.archimedes.line.pt_BR
-Bundle-Version: 0.50.0
+Bundle-Version: 0.57.4
 Bundle-Vendor: Tarantulus Corporation
 Fragment-Host: br.org.archimedes.line
 Bundle-Localization: plugin

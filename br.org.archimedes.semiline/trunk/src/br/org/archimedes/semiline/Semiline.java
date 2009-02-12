@@ -289,15 +289,17 @@ public class Semiline extends Element implements Offsetable {
 
         Rectangle modelRect = br.org.archimedes.Utils.getWorkspace()
                 .getCurrentViewportArea();
-        List<Point> pointsToDraw = getPointsCrossing(modelRect);
-        if (pointsToDraw != null) {
-            try {
-                wrapper.drawFromModel(pointsToDraw);
+
+        try {
+            List<Point> pointsToDraw = getPointsCrossing(modelRect);
+            if (pointsToDraw.size() == 1) {
+                pointsToDraw.add(initialPoint);
             }
-            catch (NullArgumentException e) {
-                // Should not happen since I checked for null
-                e.printStackTrace();
-            }
+            wrapper.drawFromModel(pointsToDraw);
+        }
+        catch (NullArgumentException e) {
+            // Should not happen since I checked for null
+            e.printStackTrace();
         }
     }
 
@@ -309,23 +311,37 @@ public class Semiline extends Element implements Offsetable {
      *         return two points that constitute the intersections of this
      *         semiline with the rectangle or the starting point with an
      *         intersection.
+     * @throws NullArgumentException
+     *             Thrown if the rectangle is null
      */
-    public List<Point> getPointsCrossing (Rectangle rectangle) {
+    public List<Point> getPointsCrossing (Rectangle rectangle)
+            throws NullArgumentException {
 
-        List<Point> points = new LinkedList<Point>();
-        // TODO Adjust to limit with the starting point
-        
-        double sen = (initialPoint.getX() - directionPoint.getX());
-        double tan = (initialPoint.getY() - directionPoint.getY()) / sen;
-        if (Math.abs(sen) < Constant.EPSILON) {
-            points.add(new Point(initialPoint.getX(), rectangle.getLowerLeft().getY()));
-            points.add(new Point(initialPoint.getX(), rectangle.getUpperRight().getY()));
+        if (rectangle == null)
+            throw new NullArgumentException();
+
+        Point firstSideInter = null;
+        Point otherSideInter = null;
+        boolean condition;
+
+        Vector direction = new Vector(initialPoint, directionPoint);
+        if (isVertical(direction)) {
+            firstSideInter = new Point(directionPoint.getX(), rectangle
+                    .getUpperLeft().getY());
+            otherSideInter = new Point(directionPoint.getX(), rectangle
+                    .getLowerLeft().getY());
+            condition = goingUp(direction);
         }
-        else if (Math.abs(tan) < Constant.EPSILON) {
-            points.add(new Point(rectangle.getLowerLeft().getX(), initialPoint.getY()));
-            points.add(new Point(rectangle.getUpperRight().getX(), initialPoint.getY()));
+        else if (isHorizontal(direction)) {
+            firstSideInter = new Point(rectangle.getLowerLeft().getX(),
+                    directionPoint.getY());
+            otherSideInter = new Point(rectangle.getLowerRight().getX(),
+                    directionPoint.getY());
+            condition = goingLeft(direction);
         }
-        else {
+        else { // biased line
+            // Using y = a*x + b to describe the semiline
+            double tan = direction.getY() / direction.getX();
             double b = initialPoint.getY() - (tan) * initialPoint.getX();
             Point lowerLeftModel = rectangle.getLowerLeft();
             Point upperRightModel = rectangle.getUpperRight();
@@ -339,33 +355,160 @@ public class Semiline extends Element implements Offsetable {
             Point upperPoint = new Point((upperRightModel.getY() - b) / tan,
                     upperRightModel.getY());
 
-            points = new LinkedList<Point>();
-            if (lefterPoint.getY() <= upperRightModel.getY()
-                    && lefterPoint.getY() >= lowerLeftModel.getY()
-                    && points.size() < 2) {
+            List<Point> points = new LinkedList<Point>();
+            if (isWithinHorizontalBoundsAndContained(rectangle, lefterPoint)) {
                 points.add(lefterPoint);
             }
-            if (righterPoint.getY() <= upperRightModel.getY()
-                    && righterPoint.getY() >= lowerLeftModel.getY()
-                    && points.size() < 2) {
+            if (isWithinHorizontalBoundsAndContained(rectangle, righterPoint)) {
                 points.add(righterPoint);
             }
-            if (upperPoint.getX() <= upperRightModel.getX()
-                    && upperPoint.getX() >= lowerLeftModel.getX()
-                    && points.size() < 2) {
+            if (isWithinVerticalBoundsAndContained(rectangle, upperPoint)) {
                 points.add(upperPoint);
             }
-            if (lowerPoint.getX() <= upperRightModel.getX()
-                    && lowerPoint.getX() >= lowerLeftModel.getX()
-                    && points.size() < 2) {
+            if (isWithinVerticalBoundsAndContained(rectangle, lowerLeftModel)) {
                 points.add(lowerPoint);
             }
 
-            if (points.size() < 2) {
-                points = null;
+            // FIXME Problems with restrictions
+            if (points.size() > 0) {
+                firstSideInter = points.get(0);
             }
+            if (points.size() > 1) {
+                otherSideInter = points.get(1);
+            }
+
+            condition = true;
         }
 
+        return ifTrueReturnsFirstAndCheckOther(condition, rectangle,
+                firstSideInter, otherSideInter);
+    }
+
+    /**
+     * @param rectangle
+     *            The rectangle that sets the vertical boundaries
+     * @param point
+     *            The point that should be checked
+     * @return true if and only if the point is not to the left the lefter
+     *         vertical boundary and not righter to the righter vertical
+     *         boundary and the point is on the same side of the intial point as
+     *         the direction one.
+     */
+    private boolean isWithinVerticalBoundsAndContained (Rectangle rectangle,
+            Point point) {
+
+        try {
+            return point.getX() <= rectangle.getUpperRight().getX()
+                    && point.getX() >= rectangle.getUpperLeft().getX()
+                    && contains(point);
+        }
+        catch (NullArgumentException e) {
+            // Should never happen since I created it
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     * @param rectangle
+     *            The rectangle that sets the horizontal boundaries
+     * @param point
+     *            The point that should be checked
+     * @return true if and only if the point is not below the lower horizontal
+     *         boundary and not above the upper horizontal boundary and the
+     *         point is on the same side of the intial point as the direction
+     *         one.
+     */
+    private boolean isWithinHorizontalBoundsAndContained (Rectangle rectangle,
+            Point point) {
+
+        try {
+            return point.getY() <= rectangle.getUpperLeft().getY()
+                    && point.getY() >= rectangle.getLowerLeft().getY()
+                    && contains(point);
+        }
+        catch (NullArgumentException e) {
+            // Should never happen since I created the point
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     * @param addFirst
+     *            true if the first point is always added, false if the second
+     *            is.
+     * @param rectangle
+     *            The rectangle that will decide wether the other point should
+     *            be added or not
+     * @param trueCasePoint
+     *            The point that should ALWAYS be added in case the argument is
+     *            true
+     * @param falseCasePoint
+     *            The point that should ALWAYS be added in case the argument is
+     *            false
+     * @return The points added that matched the condition
+     */
+    private List<Point> ifTrueReturnsFirstAndCheckOther (boolean addFirst,
+            Rectangle rectangle, Point trueCasePoint, Point falseCasePoint) {
+
+        List<Point> points = new LinkedList<Point>();
+        Point otherBound = null;
+        if (addFirst && trueCasePoint != null) {
+            points.add(trueCasePoint);
+            otherBound = falseCasePoint;
+        }
+        else if (falseCasePoint != null) {
+            points.add(falseCasePoint);
+            otherBound = trueCasePoint;
+        }
+
+        if ( !initialPoint.isInside(rectangle) && otherBound != null) {
+            points.add(otherBound);
+        }
         return points;
     }
+
+    /**
+     * @param direction
+     *            The direction to be verified
+     * @return True if and only if adding this vector to a point decreases its x
+     *         coordinate
+     */
+    private boolean goingLeft (Vector direction) {
+
+        return direction.getX() < 0;
+    }
+
+    /**
+     * @param direction
+     *            The direction to be verified
+     * @return True if and only if adding this vector to a point increases its y
+     *         coordinate
+     */
+    private boolean goingUp (Vector direction) {
+
+        return direction.getY() > 0;
+    }
+
+    /**
+     * @param direction
+     *            The direction of to be verified
+     * @return True if and only if the vector never increases the x coordinate.
+     */
+    private boolean isVertical (Vector direction) {
+
+        return Math.abs(direction.getX()) < Constant.EPSILON;
+    }
+
+    /**
+     * @param direction
+     *            The direction of to be verified
+     * @return True if and only if the vector never increases the y coordinate.
+     */
+    private boolean isHorizontal (Vector direction) {
+
+        return Math.abs(direction.getY()) < Constant.EPSILON;
+    }
+
 }

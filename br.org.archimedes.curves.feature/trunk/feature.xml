@@ -319,7 +319,7 @@ POSSIBILITY OF SUCH DAMAGES.
    <requires>
       <import plugin="org.eclipse.ui"/>
       <import plugin="org.eclipse.core.runtime"/>
-      <import plugin="br.org.archimedes"/>
+      <import plugin="br.org.archimedes.core"/>
    </requires>
 
    <plugin

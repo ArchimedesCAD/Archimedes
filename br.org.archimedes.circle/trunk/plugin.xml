@@ -24,7 +24,7 @@
       </actionSet>            
    </extension>
    <extension
-         point="br.org.archimedes.element">
+         point="br.org.archimedes.core.element">
          <element id="br.org.archimedes.circle" name="Circle" 
          	class="br.org.archimedes.circle.Circle"
          	factory="br.org.archimedes.circle.CircleFactory"

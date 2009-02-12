@@ -24,7 +24,7 @@
       </actionSet>
    </extension>
    <extension
-         point="br.org.archimedes.factory">
+         point="br.org.archimedes.core.factory">
          <factory id="br.org.archimedes.copytoclipboard"
           class="br.org.archimedes.copytoclipboard.CopyToClipboardFactory">
          	<shortcut id="cp"/>

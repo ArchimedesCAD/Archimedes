@@ -24,7 +24,7 @@
       </actionSet>
    </extension>
    <extension
-         point="br.org.archimedes.element">
+         point="br.org.archimedes.core.element">
          <element
                class="br.org.archimedes.text.Text"
                factory="br.org.archimedes.text.TextFactory"

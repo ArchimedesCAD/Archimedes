@@ -5,8 +5,8 @@ Bundle-SymbolicName: br.org.archimedes.leader;singleton:=true
 Bundle-Version: 0.57.4
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Require-Bundle: br.org.archimedes;bundle-version="0.57.3",
- br.org.archimedes.line;bundle-version="0.57.3",
+Require-Bundle: br.org.archimedes.core,
+ br.org.archimedes.line,
  org.eclipse.ui;bundle-version="3.4.0"
 Export-Package: br.org.archimedes.leader
-Eclipse-RegisterBuddy: br.org.archimedes
+Eclipse-RegisterBuddy: br.org.archimedes.core

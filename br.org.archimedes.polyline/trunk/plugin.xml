@@ -24,7 +24,7 @@
       </actionSet>
    </extension>
    <extension
-         point="br.org.archimedes.element">
+         point="br.org.archimedes.core.element">
          <element id="br.org.archimedes.polyline" name="Polyline" 
          	class="br.org.archimedes.polyline.Polyline"
          	factory="br.org.archimedes.polyline.PolylineFactory"

@@ -325,7 +325,7 @@ POSSIBILITY OF SUCH DAMAGES.
    </url>
 
    <requires>
-      <import plugin="br.org.archimedes"/>
+      <import plugin="br.org.archimedes.core"/>
       <import plugin="br.org.archimedes.line"/>
    </requires>
 

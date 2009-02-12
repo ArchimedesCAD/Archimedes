@@ -5,7 +5,7 @@
    <extension
          id="br.org.archimedes.extends.default"
          name="The default extender finder"
-         point="br.org.archimedes.extends">
+         point="br.org.archimedes.core.extends">
          <manager class="br.org.archimedes.extend.ExtendManager"/>
    </extension>
    <extension
@@ -32,7 +32,7 @@
       </actionSet>
    </extension>
    <extension
-         point="br.org.archimedes.factory">
+         point="br.org.archimedes.core.factory">
          <factory id="br.org.archimedes.extend"
           class="br.org.archimedes.extend.ExtendFactory">
          	<shortcut id="x"/>

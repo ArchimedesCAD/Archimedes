@@ -5,7 +5,7 @@
    <extension
          id="br.org.archimedes.intersection.default"
          name="The default intersection finder"
-         point="br.org.archimedes.intersections">
+         point="br.org.archimedes.core.intersections">
          <manager class="br.org.archimedes.intersections.IntersectorsManager"/>
    </extension>
    <extension point="br.org.archimedes.intersections.elementsIntersector">

@@ -2,8 +2,8 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Pacote de tradução para o Português do Brasil
 Bundle-SymbolicName: br.org.archimedes.pt_BR
-Bundle-Version: 0.50.0
+Bundle-Version: 0.57.4
 Bundle-Vendor: Hugo Corbucci
-Fragment-Host: br.org.archimedes
+Fragment-Host: br.org.archimedes.core
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5

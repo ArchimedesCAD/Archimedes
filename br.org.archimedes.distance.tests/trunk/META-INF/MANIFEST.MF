@@ -2,10 +2,10 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Distance Tests Plug-in
 Bundle-SymbolicName: br.org.archimedes.distance.tests
-Bundle-Version: 0.57.3
+Bundle-Version: 0.57.4
 Bundle-Vendor: Tarantulus Corp.
-Require-Bundle: br.org.archimedes,
+Require-Bundle: br.org.archimedes.core,
  br.org.archimedes.distance,
- br.org.archimedes.tests,
+ br.org.archimedes.core.tests,
  org.junit4
 Bundle-RequiredExecutionEnvironment: J2SE-1.5

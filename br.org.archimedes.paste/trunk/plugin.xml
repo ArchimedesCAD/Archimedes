@@ -24,7 +24,7 @@
       </actionSet>         
    </extension>
    <extension
-         point="br.org.archimedes.factory">
+         point="br.org.archimedes.core.factory">
          <factory id="br.org.archimedes.paste"
           class="br.org.archimedes.paste.PasteFactory">
          	<shortcut id="pa"/>

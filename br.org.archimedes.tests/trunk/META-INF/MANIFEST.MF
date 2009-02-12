@@ -1,10 +1,10 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Core Tests Plug-in
-Bundle-SymbolicName: br.org.archimedes.tests
-Bundle-Version: 0.57.3
+Bundle-SymbolicName: br.org.archimedes.core.tests
+Bundle-Version: 0.57.4
 Bundle-Vendor: Tarantulus Corp.
-Require-Bundle: br.org.archimedes;bundle-version="0.57.3",
+Require-Bundle: br.org.archimedes.core,
  org.junit,
  org.junit4,
  org.eclipse.core.runtime;bundle-version="3.4.0"
@@ -14,5 +14,5 @@ Export-Package: br.org.archimedes,
  org.easymock.classextension
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ClassPath: .,
- libs/easymock2.3/easymock.jar,
- libs/easymockclassextension2.3/easymockclassextension.jar
+ easymock.jar,
+ easymockclassextension.jar

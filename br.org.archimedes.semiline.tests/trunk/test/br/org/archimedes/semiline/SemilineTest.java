@@ -9,6 +9,8 @@ import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.LinkedList;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -442,6 +444,208 @@ public class SemilineTest extends Tester {
         Semiline sline = new Semiline(2, 2, 12, 12);
         sline.scale(point, -0.5);
     }
-    
-    // TODO Test the getPointsCrossing
+
+    @Test(expected = NullArgumentException.class)
+    public void testGetNullPointsCrossing () throws Exception {
+
+        sl.getPointsCrossing(null);
+    }
+
+    @Test
+    public void testGetNoPointsCrossing () throws Exception {
+
+        // on the side of the initial point but before
+        Collection<Point> pointsCrossing = sl.getPointsCrossing(new Rectangle(
+                -100, -100, -50, -50));
+        assertEquals(Collections.emptyList(), pointsCrossing);
+
+        // above the semiline
+        pointsCrossing = sl.getPointsCrossing(new Rectangle( -100, 0, -50, 50));
+        assertEquals(Collections.emptyList(), pointsCrossing);
+
+        // below the semiline
+        pointsCrossing = sl.getPointsCrossing(new Rectangle( -100, 0, -50, 50));
+        assertEquals(Collections.emptyList(), pointsCrossing);
+    }
+
+    @Test
+    public void testGetOnePointCrossingVertically () throws Exception {
+
+        // vertical semiline going up
+        Collection<Point> pointsCrossing = new Semiline(new Point(0, 0),
+                new Point(0, 100)).getPointsCrossing(new Rectangle( -50, -50,
+                50, 50));
+        assertEquals(Collections.singletonList(new Point(0, 50)),
+                pointsCrossing);
+
+        // vertical semiline going down
+        pointsCrossing = new Semiline(new Point(0, 0), new Point(0, -100))
+                .getPointsCrossing(new Rectangle( -50, -50, 50, 50));
+        assertEquals(Collections.singletonList(new Point(0, -50)),
+                pointsCrossing);
+
+    }
+
+    @Test
+    public void testGetOnePointCrossingHorizontally () throws Exception {
+
+        // horizontal semiline going left
+        Collection<Point> pointsCrossing = new Semiline(new Point(0, 0),
+                new Point( -100, 0)).getPointsCrossing(new Rectangle( -50, -50,
+                50, 50));
+        assertEquals(Collections.singletonList(new Point( -50, 0)),
+                pointsCrossing);
+
+        // horizontal semiline going right
+        pointsCrossing = new Semiline(new Point(0, 0), new Point(100, 0))
+                .getPointsCrossing(new Rectangle( -50, -50, 50, 50));
+        assertEquals(Collections.singletonList(new Point(50, 0)),
+                pointsCrossing);
+    }
+
+    @Test
+    public void testGetOnePointCrossing () throws Exception {
+
+        // above and touching the initial point
+        Collection<Point> pointsCrossing = sl.getPointsCrossing(new Rectangle(
+                -100, 0, 0, 100));
+        assertEquals(Collections.singletonList(new Point(0, 0)), pointsCrossing);
+
+        // below and touching the initial point
+        pointsCrossing = sl.getPointsCrossing(new Rectangle(0, -100, 100, 0));
+        assertEquals(Collections.singletonList(new Point(0, 0)), pointsCrossing);
+
+        // on the side of the initial point and touching
+        pointsCrossing = sl.getPointsCrossing(new Rectangle( -100, -100, 0, 0));
+        assertEquals(Collections.singletonList(new Point(0, 0)), pointsCrossing);
+
+        // biased semiline going up-right
+        pointsCrossing = new Semiline(new Point(0, 0), new Point(100, 100))
+                .getPointsCrossing(new Rectangle( -50, -50, 100, 50));
+        assertEquals(Collections.singletonList(new Point(50, 50)),
+                pointsCrossing);
+
+        // biased semiline going right-up
+        pointsCrossing = new Semiline(new Point(0, 0), new Point(100, 100))
+                .getPointsCrossing(new Rectangle( -50, -50, 50, 100));
+        assertEquals(Collections.singletonList(new Point(50, 50)),
+                pointsCrossing);
+
+        // biased semiline going right-down
+        pointsCrossing = new Semiline(new Point(0, 0), new Point(100, -100))
+                .getPointsCrossing(new Rectangle( -50, -100, 50, 50));
+        assertEquals(Collections.singletonList(new Point(50, -50)),
+                pointsCrossing);
+
+        // biased semiline going down-right
+        pointsCrossing = new Semiline(new Point(0, 0), new Point(100, -100))
+                .getPointsCrossing(new Rectangle( -100, -50, 50, 50));
+        assertEquals(Collections.singletonList(new Point(50, -50)),
+                pointsCrossing);
+
+        // biased semiline going down-left
+        pointsCrossing = new Semiline(new Point(0, 0), new Point( -100, -100))
+                .getPointsCrossing(new Rectangle( -100, -50, 50, 50));
+        assertEquals(Collections.singletonList(new Point( -50, -50)),
+                pointsCrossing);
+
+        // biased semiline going left-down
+        pointsCrossing = new Semiline(new Point(0, 0), new Point( -100, -100))
+                .getPointsCrossing(new Rectangle( -50, -100, 50, 50));
+        assertEquals(Collections.singletonList(new Point( -50, -50)),
+                pointsCrossing);
+
+        // biased semiline going left-up
+        pointsCrossing = new Semiline(new Point(0, 0), new Point( -100, 100))
+                .getPointsCrossing(new Rectangle( -50, -50, 50, 100));
+        assertEquals(Collections.singletonList(new Point( -50, 50)),
+                pointsCrossing);
+
+        // biased semiline going up-left
+        pointsCrossing = new Semiline(new Point(0, 0), new Point( -100, 100))
+                .getPointsCrossing(new Rectangle( -100, -50, 50, 50));
+        assertEquals(Collections.singletonList(new Point( -50, 50)),
+                pointsCrossing);
+    }
+
+    @Test
+    public void testGetTwoPointsCrossingVertically () throws Exception {
+
+        // vertical semiline crossing
+        Collection<Point> expected = new LinkedList<Point>();
+        Collection<Point> pointsCrossing = new Semiline(new Point(0, 0),
+                new Point(0, 100)).getPointsCrossing(new Rectangle( -50, 10,
+                50, 60));
+        expected.clear();
+        expected.add(new Point(0, 10));
+        expected.add(new Point(0, 60));
+        assertCollectionTheSame(expected, pointsCrossing);
+    }
+
+    @Test
+    public void testGetTwoPointsCrossingHorizontally () throws Exception {
+
+        // horizontal semiline crossing
+        Collection<Point> expected = new LinkedList<Point>();
+        Collection<Point> pointsCrossing = new Semiline(new Point(0, 0),
+                new Point( -100, 0)).getPointsCrossing(new Rectangle( -60, -50,
+                -10, 50));
+        expected.clear();
+        expected.add(new Point( -60, 0));
+        expected.add(new Point( -10, 0));
+        assertCollectionTheSame(expected, pointsCrossing);
+    }
+
+    @Test
+    public void testGetTwoPointsCrossing () throws Exception {
+
+        Collection<Point> expected = new LinkedList<Point>();
+
+        // Crossing through corners down-left to right-up
+        Collection<Point> pointsCrossing = sl.getPointsCrossing(new Rectangle(10, 10,
+                60, 60));
+        expected.add(new Point(10, 10));
+        expected.add(new Point(60, 60));
+        assertCollectionTheSame(expected, pointsCrossing);
+
+        // Crossing through corners up-left to right-down
+        pointsCrossing = new Semiline(0, 100, 100, 0)
+                .getPointsCrossing(new Rectangle(10, 10, 90, 90));
+        expected.clear();
+        expected.add(new Point(10, 90));
+        expected.add(new Point(90, 10));
+        assertCollectionTheSame(expected, pointsCrossing);
+
+        // biased semiline crossing down-left and up-right
+        pointsCrossing = new Semiline(new Point(0, 0), new Point(100, 100))
+                .getPointsCrossing(new Rectangle(0, 10, 100, 60));
+        expected.clear();
+        expected.add(new Point(10, 10));
+        expected.add(new Point(60, 60));
+        assertCollectionTheSame(expected, pointsCrossing);
+
+        // biased semiline crossing down-left and right-up
+        pointsCrossing = new Semiline(new Point(0, 0), new Point(100, 100))
+                .getPointsCrossing(new Rectangle(0, 10, 60, 100));
+        expected.clear();
+        expected.add(new Point(10, 10));
+        expected.add(new Point(60, 60));
+        assertCollectionTheSame(expected, pointsCrossing);
+
+        // biased semiline crossing left-down and right-up
+        pointsCrossing = new Semiline(new Point(0, 0), new Point(100, 100))
+                .getPointsCrossing(new Rectangle(10, 0, 60, 100));
+        expected.clear();
+        expected.add(new Point(10, 10));
+        expected.add(new Point(60, 60));
+        assertCollectionTheSame(expected, pointsCrossing);
+
+        // biased semiline crossing left-down and up-right
+        pointsCrossing = new Semiline(new Point(0, 0), new Point(100, 100))
+                .getPointsCrossing(new Rectangle(10, 0, 100, 60));
+        expected.clear();
+        expected.add(new Point(10, 10));
+        expected.add(new Point(60, 60));
+        assertCollectionTheSame(expected, pointsCrossing);
+    }
 }

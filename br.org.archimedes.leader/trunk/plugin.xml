@@ -23,7 +23,7 @@
       </actionSet>
    </extension>
    <extension
-         point="br.org.archimedes.element">
+         point="br.org.archimedes.core.element">
          <element id="br.org.archimedes.leader" name="Leader" 
             class="br.org.archimedes.leader.Leader"
             factory="br.org.archimedes.leader.LeaderFactory" 

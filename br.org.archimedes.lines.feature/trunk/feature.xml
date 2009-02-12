@@ -23,11 +23,11 @@
    </url>
 
    <includes
-         id="br.org.archimedes.feature"
+         id="br.org.archimedes.core.feature"
          version="0.0.0"/>
 
    <requires>
-      <import plugin="br.org.archimedes"/>
+      <import plugin="br.org.archimedes.core"/>
       <import plugin="org.eclipse.ui"/>
       <import plugin="org.eclipse.core.runtime"/>
       <import plugin="br.org.archimedes.undo"/>

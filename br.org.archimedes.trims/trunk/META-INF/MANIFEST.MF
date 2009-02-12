@@ -2,20 +2,21 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Trims Plug-in
 Bundle-SymbolicName: br.org.archimedes.trims;singleton:=true
-Bundle-Version: 0.57.3
-Bundle-Vendor: br.org.archimedes
+Bundle-Version: 0.57.4
+Bundle-Vendor: br.org.archimedes.core
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Require-Bundle: br.org.archimedes;bundle-version="0.57.3",
+Require-Bundle: br.org.archimedes.core,
  org.eclipse.core.runtime,
  org.eclipse.ui;bundle-version="3.4.0",
- br.org.archimedes.polyline;bundle-version="0.54.0",
- br.org.archimedes.undo;bundle-version="0.54.0",
- br.org.archimedes.infiniteline;bundle-version="0.56.0",
- br.org.archimedes.semiline;bundle-version="0.56.0",
- br.org.archimedes.line;bundle-version="0.54.0",
- br.org.archimedes.circle;bundle-version="0.54.0",
- br.org.archimedes.curvedshape;bundle-version="0.54.0",
- br.org.archimedes.arc;bundle-version="0.54.0"
-Export-Package: br.org.archimedes.trim;x-friends:="br.org.archimedes.trims.tests",
+ br.org.archimedes.polyline,
+ br.org.archimedes.undo,
+ br.org.archimedes.infiniteline,
+ br.org.archimedes.semiline,
+ br.org.archimedes.line,
+ br.org.archimedes.circle,
+ br.org.archimedes.curvedshape,
+ br.org.archimedes.arc,
+ br.org.archimedes.trims
+Export-Package: br.org.archimedes.trim,
  br.org.archimedes.trims,
  br.org.archimedes.trims.interfaces

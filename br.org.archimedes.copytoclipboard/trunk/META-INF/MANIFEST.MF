@@ -2,11 +2,11 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Copy to Clipboard Plug-in
 Bundle-SymbolicName: br.org.archimedes.copytoclipboard;singleton:=true
-Bundle-Version: 0.57.3
+Bundle-Version: 0.57.4
 Bundle-Activator: br.org.archimedes.copytoclipboard.Activator
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- br.org.archimedes;bundle-version="0.57.3"
+ br.org.archimedes.core
 Export-Package: br.org.archimedes.copytoclipboard
 Bundle-RequiredExecutionEnvironment: J2SE-1.5

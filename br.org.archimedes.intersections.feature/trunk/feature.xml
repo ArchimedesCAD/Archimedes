@@ -23,8 +23,8 @@ under the GPL v2 license and is, therefore, copyleft.
    </license>
 
    <requires>
-      <import feature="br.org.archimedes.feature" version="0.54.0" match="compatible"/>
-      <import plugin="br.org.archimedes" version="0.56.0" match="greaterOrEqual"/>
+      <import feature="br.org.archimedes.core.feature"/>
+      <import plugin="br.org.archimedes.core"/>
       <import plugin="org.eclipse.core.runtime" version="3.4.0" match="greaterOrEqual"/>
       <import plugin="br.org.archimedes.line"/>
       <import plugin="br.org.archimedes.circle"/>
@@ -42,7 +42,7 @@ under the GPL v2 license and is, therefore, copyleft.
          id="br.org.archimedes.intersections"
          download-size="0"
          install-size="0"
-         version="0.57.3"
+         version="0.0.0"
          unpack="false"/>
 
 </feature>

@@ -4,14 +4,14 @@
     <extension-point id="xmlElementExporter" name="XML Element Exporter" schema="schema/XMLElementExporter.exsd"/>
 
    <extension
-         point="br.org.archimedes.nativeFormat">
+         point="br.org.archimedes.core.nativeFormat">
          <nativeFormat id="arc" name="%xmlExtensionName" extension="arc"
             importer="br.org.archimedes.io.xml.XMLImporter"
             exporter="br.org.archimedes.io.xml.XMLExporter">
          </nativeFormat>
    </extension>
    <extension
-         point="br.org.archimedes.nativeFormat">
+         point="br.org.archimedes.core.nativeFormat">
          <nativeFormat id="xml" name="%xmlExtensionName" extension="xml"
          	importer="br.org.archimedes.io.xml.XMLImporter"
          	exporter="br.org.archimedes.io.xml.XMLExporter">

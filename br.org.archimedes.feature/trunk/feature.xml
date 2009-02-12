@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="br.org.archimedes.feature"
-      label="Archimedes Feature"
-      version="0.57.3"
+      id="br.org.archimedes.core.feature"
+      label="Archimedes Core Feature"
+      version="0.57.4"
       provider-name="Tarantulus Corporation"
-      plugin="br.org.archimedes"
+      plugin="br.org.archimedes.core"
       os="linux,macosx,win32"
       ws="carbon,gtk,win32"
       arch="ppc,x86">
@@ -247,14 +247,9 @@ POSSIBILITY OF SUCH DAMAGES.
       <update label="Archimedes Update" url="http://arquimedes.sourceforge.net/update/"/>
    </url>
 
-   <includes
-         id="org.eclipse.rcp"
-         version="0.0.0"/>
-
    <requires>
       <import plugin="org.eclipse.ui" version="3.2.0" match="compatible"/>
       <import plugin="org.eclipse.core.runtime" version="3.1.0" match="compatible"/>
-      <import plugin="br.org.archimedes.opengl" version="1.0.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.update.configurator" version="3.1.0" match="compatible"/>
       <import plugin="org.eclipse.core.net" version="1.0.0" match="compatible"/>
       <import plugin="org.eclipse.osgi"/>
@@ -262,15 +257,18 @@ POSSIBILITY OF SUCH DAMAGES.
       <import plugin="org.eclipse.ui.forms" version="3.2.0" match="compatible"/>
       <import plugin="org.eclipse.jface" version="3.2.0" match="compatible"/>
       <import plugin="com.ibm.icu"/>
-      <import plugin="org.eclipse.core.runtime" version="3.3.0" match="compatible"/>
+      <import plugin="br.org.archimedes.opengl" version="1.1.4" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.core.runtime" version="3.4.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.ui" version="3.4.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.update.ui" version="3.2.100" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.core.net" version="1.1.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.equinox.security" version="1.0.0" match="compatible"/>
+      <import plugin="org.eclipse.equinox.common" version="3.4.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.equinox.preferences" version="3.2.200" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.osgi" version="3.4.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.equinox.registry" version="3.4.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.core.jobs"/>
    </requires>
-
-   <plugin
-         id="br.org.archimedes"
-         download-size="0"
-         install-size="0"
-         version="0.57.3"
-         unpack="false"/>
 
    <plugin
          id="br.org.archimedes.opengl"
@@ -279,7 +277,7 @@ POSSIBILITY OF SUCH DAMAGES.
          arch="ppc,x86"
          download-size="0"
          install-size="0"
-         version="1.1.4"/>
+         version="0.0.0"/>
 
    <plugin
          id="br.org.archimedes.opengl.macosx"
@@ -288,7 +286,7 @@ POSSIBILITY OF SUCH DAMAGES.
          arch="ppc,x86"
          download-size="0"
          install-size="0"
-         version="1.1.4"
+         version="0.0.0"
          fragment="true"/>
 
    <plugin
@@ -298,7 +296,7 @@ POSSIBILITY OF SUCH DAMAGES.
          arch="x86"
          download-size="0"
          install-size="0"
-         version="1.1.4"
+         version="0.0.0"
          fragment="true"/>
 
    <plugin
@@ -308,14 +306,21 @@ POSSIBILITY OF SUCH DAMAGES.
          arch="x86"
          download-size="0"
          install-size="0"
-         version="1.1.4"
+         version="0.0.0"
          fragment="true"/>
 
    <plugin
          id="br.org.archimedes.batik"
          download-size="0"
          install-size="0"
-         version="0.54.0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="br.org.archimedes.core"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin

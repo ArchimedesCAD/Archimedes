@@ -25,7 +25,7 @@
       </actionSet>
    </extension>
    <extension
-         point="br.org.archimedes.element">
+         point="br.org.archimedes.core.element">
          <element id="br.org.archimedes.arc" name="Arc" 
          	class="br.org.archimedes.arc.Arc"
          	factory="br.org.archimedes.arc.ArcFactory"

@@ -2,13 +2,13 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Copy and Paste Plug-in
 Bundle-SymbolicName: br.org.archimedes.copypaste;singleton:=true
-Bundle-Version: 0.57.3
+Bundle-Version: 0.57.4
 Bundle-Activator: br.org.archimedes.copypaste.Activator
 Bundle-Vendor: Tarantulus Corporation
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- br.org.archimedes;bundle-version="0.57.3",
+ br.org.archimedes.core,
  br.org.archimedes.undo
 Export-Package: br.org.archimedes.copypaste
 Bundle-RequiredExecutionEnvironment: J2SE-1.5

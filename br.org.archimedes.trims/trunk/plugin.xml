@@ -5,7 +5,7 @@
    <extension
    		 id="br.org.archimedes.trims.default"
          name="The default trimmer finder"
-         point="br.org.archimedes.trims">
+         point="br.org.archimedes.core.trims">
          <manager class="br.org.archimedes.trims.TrimManager"/>
    </extension>
    <extension
@@ -32,7 +32,7 @@
       </actionSet>
    </extension>
    <extension
-         point="br.org.archimedes.factory">
+         point="br.org.archimedes.core.factory">
          <factory id="br.org.archimedes.trims"
           class="br.org.archimedes.trims.TrimFactory">
          	<shortcut id="tr"/>
