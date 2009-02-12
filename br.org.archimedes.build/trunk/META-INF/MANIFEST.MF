@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Archimedes' Build Plug-in
+Bundle-SymbolicName: br.org.archimedes.build
+Bundle-Version: 0.57.4
