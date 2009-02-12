@@ -1,11 +1,12 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Opengl Plug-in
-Bundle-SymbolicName: br.org.archimedes.opengl
-Bundle-Version: 1.1.4
+Bundle-SymbolicName: br.org.archimedes.opengl;singleton:=true
+Bundle-Version: 2.0.1
 Bundle-Vendor: LWJGL
 Bundle-ClassPath: lwjgl.jar
 Export-Package: org.lwjgl,
  org.lwjgl.opengl,
  org.lwjgl.opengl.glu
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Require-Bundle: org.eclipse.ui
