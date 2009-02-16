@@ -37,42 +37,42 @@
          id="br.org.archimedes.line"
          download-size="0"
          install-size="0"
-         version="0.57.3"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="br.org.archimedes.infiniteline"
          download-size="0"
          install-size="0"
-         version="0.57.3"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="br.org.archimedes.polyline"
          download-size="0"
          install-size="0"
-         version="0.57.3"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="br.org.archimedes.polyline.explode"
          download-size="0"
          install-size="0"
-         version="0.57.0"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="br.org.archimedes.polyline.rectangle"
          download-size="0"
          install-size="0"
-         version="0.57.3"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="br.org.archimedes.semiline"
          download-size="0"
          install-size="0"
-         version="0.57.3"
+         version="0.0.0"
          unpack="false"/>
 
 </feature>

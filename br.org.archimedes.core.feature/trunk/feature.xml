@@ -298,6 +298,16 @@ POSSIBILITY OF SUCH DAMAGES.
          install-size="0"
          version="0.0.0"
          fragment="true"/>
+         
+   <plugin
+         id="br.org.archimedes.opengl.linux.x86_64"
+         os="linux"
+         ws="gtk"
+         arch="x86_64"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"/>
 
    <plugin
          id="br.org.archimedes.opengl.win32.x86"

@@ -45,13 +45,13 @@
             name="Archimedes">
          <property
                name="aboutImage"
-               value="icons/logo128.gif"/>
+               value="/br.org.archimedes/icons/logo128.gif"/>
          <property
                name="aboutText"
                value="Archimedes - The Open CAD is an initiative to produce a framework for CAD systems. Its main workflow is based on a command line system"/>
          <property
                name="windowImages"
-               value="icons/logo16.gif,icons/logo32.gif,icons/logo48.gif,icons/logo64.gif,icons/logo128.gif"/>
+               value="/br.org.archimedes/icons/logo16.gif,/br.org.archimedes/icons/logo32.gif,/br.org.archimedes/icons/logo48.gif,/br.org.archimedes/icons/logo64.gif,/br.org.archimedes/icons/logo128.gif"/>
          <property
                name="preferenceCustomization"
                value="plugin_customization.ini"/>

@@ -333,7 +333,7 @@ POSSIBILITY OF SUCH DAMAGES.
          id="br.org.archimedes.es"
          download-size="0"
          install-size="0"
-         version="0.50.0"
+         version="0.0.0"
          fragment="true"
          unpack="false"/>
 
@@ -341,7 +341,7 @@ POSSIBILITY OF SUCH DAMAGES.
          id="br.org.archimedes.pt_BR"
          download-size="0"
          install-size="0"
-         version="0.50.0"
+         version="0.0.0"
          fragment="true"
          unpack="false"/>
 
@@ -349,7 +349,7 @@ POSSIBILITY OF SUCH DAMAGES.
          id="br.org.archimedes.ro"
          download-size="0"
          install-size="0"
-         version="0.50.0"
+         version="0.0.0"
          fragment="true"
          unpack="false"/>
 
@@ -357,7 +357,7 @@ POSSIBILITY OF SUCH DAMAGES.
          id="br.org.archimedes.fr"
          download-size="0"
          install-size="0"
-         version="0.50.0"
+         version="0.0.0"
          fragment="true"
          unpack="false"/>
 
@@ -365,7 +365,7 @@ POSSIBILITY OF SUCH DAMAGES.
          id="br.org.archimedes.line.pt_BR"
          download-size="0"
          install-size="0"
-         version="0.50.0"
+         version="0.0.0"
          fragment="true"
          unpack="false"/>
 

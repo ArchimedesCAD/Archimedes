@@ -326,21 +326,21 @@ POSSIBILITY OF SUCH DAMAGES.
          id="br.org.archimedes.arc"
          download-size="0"
          install-size="0"
-         version="0.57.3"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="br.org.archimedes.circle"
          download-size="0"
          install-size="0"
-         version="0.57.3"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="br.org.archimedes.curvedshape"
          download-size="0"
          install-size="0"
-         version="0.57.0"
+         version="0.0.0"
          unpack="false"/>
 
 </feature>

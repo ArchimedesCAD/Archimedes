@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.4"?>
 
-<product name="Archimedes" id="br.org.archimedes.archimedes" application="br.org.archimedes.application" version="0.57.4" useFeatures="true">
+<product name="Archimedes" id="br.org.archimedes.core.archimedes" application="br.org.archimedes.core.application" version="0.57.4" useFeatures="true">
 
    <aboutInfo>
       <image path="/br.org.archimedes/icons/logo128.gif"/>
