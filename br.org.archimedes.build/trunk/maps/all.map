@@ -1,7 +1,0 @@
-feature@br.org.archimedes.core.feature=COPY,/Users/night/Documents/Archimedes/workspace,br.org.archimedes.core.feature
-plugin@br.org.archimedes.opengl=COPY,/Users/night/Documents/Archimedes/workspace,br.org.archimedes.opengl
-fragment@br.org.archimedes.opengl.macosx=COPY,/Users/night/Documents/Archimedes/workspace,br.org.archimedes.opengl.macosx
-fragment@br.org.archimedes.opengl.linux.x86=COPY,/Users/night/Documents/Archimedes/workspace,br.org.archimedes.opengl.linux.x86
-fragment@br.org.archimedes.opengl.win32.x86=COPY,/Users/night/Documents/Archimedes/workspace,br.org.archimedes.opengl.win32.x86
-plugin@br.org.archimedes.batik=COPY,/Users/night/Documents/Archimedes/workspace,br.org.archimedes.batik
-plugin@br.org.archimedes.core=COPY,/Users/night/Documents/Archimedes/workspace,br.org.archimedes.core
