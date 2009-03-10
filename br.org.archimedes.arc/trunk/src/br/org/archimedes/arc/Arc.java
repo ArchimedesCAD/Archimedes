@@ -310,7 +310,6 @@ public class Arc extends CurvedShape {
 
     /*
      * (non-Javadoc)
-     * 
      * @see com.tarantulus.archimedes.model.Element#getBoundaryRectangle()
      */
     public Rectangle getBoundaryRectangle () {
@@ -345,8 +344,9 @@ public class Arc extends CurvedShape {
 
     /*
      * (non-Javadoc)
-     * 
-     * @see com.tarantulus.archimedes.model.Element#getReferencePoints(com.tarantulus.archimedes.model.Rectangle)
+     * @see
+     * com.tarantulus.archimedes.model.Element#getReferencePoints(com.tarantulus
+     * .archimedes.model.Rectangle)
      */
     public Collection<ReferencePoint> getReferencePoints (Rectangle area) {
 
@@ -406,8 +406,9 @@ public class Arc extends CurvedShape {
 
     /*
      * (non-Javadoc)
-     * 
-     * @see com.tarantulus.archimedes.model.Element#getProjectionOf(com.tarantulus.archimedes.model.Point)
+     * @see
+     * com.tarantulus.archimedes.model.Element#getProjectionOf(com.tarantulus
+     * .archimedes.model.Point)
      */
     public Point getProjectionOf (Point point) throws NullArgumentException {
 
@@ -415,8 +416,8 @@ public class Arc extends CurvedShape {
             throw new NullArgumentException();
         }
 
-        Point closer = null, farther = null;
-        // TODO Implementar a projecao
+//        Point closer = null, farther = null;
+        // FIXME Implementar a projecao
         // try {
         // Line line = new Line(centerPoint, point);
         // Collection<Point> intersectionWithLine =
@@ -440,22 +441,23 @@ public class Arc extends CurvedShape {
         // // May happen
         // e.printStackTrace();
         // }
-
-        Point projection = null;
-        if (contains(closer) || !contains(farther)) {
-            projection = closer;
-        }
-        else {
-            projection = farther;
-        }
-
-        return projection;
+        //
+        // Point projection = null;
+        // if (contains(closer) || !contains(farther)) {
+        // projection = closer;
+        // }
+        // else {
+        // projection = farther;
+        // }
+        // return projection;
+        return null;
     }
 
     /*
      * (non-Javadoc)
-     * 
-     * @see com.tarantulus.archimedes.model.Element#contains(com.tarantulus.archimedes.model.Point)
+     * @see
+     * com.tarantulus.archimedes.model.Element#contains(com.tarantulus.archimedes
+     * .model.Point)
      */
     public boolean contains (Point point) throws NullArgumentException {
 
@@ -475,17 +477,20 @@ public class Arc extends CurvedShape {
 
         return result;
     }
-    
-    public boolean contains(Arc arc) throws NullArgumentException{
-    	if(arc == null){
-    		throw new NullArgumentException();
-    	}
-    	
-    	if(this.contains(arc.getInitialPoint()) && this.contains(arc.getIntermediatePoint()) && this.contains(arc.getEndingPoint())){
-    		return true;
-    	}
-    	
-    	return false;
+
+    public boolean contains (Arc arc) throws NullArgumentException {
+
+        if (arc == null) {
+            throw new NullArgumentException();
+        }
+
+        if (this.contains(arc.getInitialPoint())
+                && this.contains(arc.getIntermediatePoint())
+                && this.contains(arc.getEndingPoint())) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -625,7 +630,6 @@ public class Arc extends CurvedShape {
 
     /*
      * (non-Javadoc)
-     * 
      * @see com.tarantulus.archimedes.model.elements.Element#getPoints()
      */
     @Override
@@ -648,9 +652,8 @@ public class Arc extends CurvedShape {
 
     /*
      * (non-Javadoc)
-     * 
      * @see com.tarantulus.archimedes.model.Element#move(Collection<Point>,
-     *      Vector)
+     * Vector)
      */
     public void move (Collection<Point> points, Vector vector)
             throws NullArgumentException {
