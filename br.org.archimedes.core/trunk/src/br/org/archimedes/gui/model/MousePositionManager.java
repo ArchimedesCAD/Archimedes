@@ -134,6 +134,7 @@ public class MousePositionManager implements Observer {
         }
         catch (NullArgumentException e) {
             // Should not reach this point
+            e.printStackTrace();
         }
 
         return position;
