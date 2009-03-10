@@ -146,7 +146,6 @@ public class Drawing extends Observable implements Observer {
 
     /*
      * (non-Javadoc)
-     * 
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -161,7 +160,6 @@ public class Drawing extends Observable implements Observer {
 
     /*
      * (non-Javadoc)
-     * 
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
@@ -183,8 +181,9 @@ public class Drawing extends Observable implements Observer {
 
     /*
      * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.model.Drawing#putElement(br.org.archimedes.model.Element)
+     * @see
+     * br.org.archimedes.model.Drawing#putElement(br.org.archimedes.model.Element
+     * )
      */
     public void putElement (Element element) throws NullArgumentException,
             IllegalActionException {
@@ -194,8 +193,9 @@ public class Drawing extends Observable implements Observer {
 
     /*
      * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.model.Drawing#removeElement(br.org.archimedes.model.Element)
+     * @see
+     * br.org.archimedes.model.Drawing#removeElement(br.org.archimedes.model
+     * .Element)
      */
     public void removeElement (Element element) throws NullArgumentException,
             IllegalActionException {
@@ -266,7 +266,6 @@ public class Drawing extends Observable implements Observer {
 
     /*
      * (non-Javadoc)
-     * 
      * @see br.org.archimedes.model.Drawing#setTitle(java.lang.String)
      */
     public void setTitle (String title) {
@@ -362,7 +361,6 @@ public class Drawing extends Observable implements Observer {
 
     /*
      * (non-Javadoc)
-     * 
      * @see br.org.archimedes.model.Drawing#setZoom(double)
      */
     public void setZoom (double zoom) {
@@ -384,8 +382,9 @@ public class Drawing extends Observable implements Observer {
 
     /*
      * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.model.Drawing#setViewportPosition(br.org.archimedes.model.Point)
+     * @see
+     * br.org.archimedes.model.Drawing#setViewportPosition(br.org.archimedes
+     * .model.Point)
      */
     public void setViewportPosition (Point viewportPosition) {
 
@@ -438,7 +437,6 @@ public class Drawing extends Observable implements Observer {
 
     /*
      * (non-Javadoc)
-     * 
      * @see br.org.archimedes.model.Drawing#setFile(java.io.File)
      */
     public void setFile (File file) {
@@ -449,12 +447,16 @@ public class Drawing extends Observable implements Observer {
             GLCanvas canvas = instance.getDrawingCanvas().remove(this);
             this.file = file;
             this.title = file.getName();
-            try {
-                instance.addDrawingCanvas(this, canvas);
-            }
-            catch (NullArgumentException e) {
-                // this cannot be null
-                e.printStackTrace();
+            // Might be null if I haven't open the editor yet but the drawing
+            // exists (loading an existing one)
+            if (canvas != null) {
+                try {
+                    instance.addDrawingCanvas(this, canvas);
+                }
+                catch (NullArgumentException e) {
+                    // this cannot be null
+                    e.printStackTrace();
+                }
             }
         }
 
@@ -504,8 +506,9 @@ public class Drawing extends Observable implements Observer {
 
     /*
      * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.model.Drawing#setSelection(br.org.archimedes.model.Selection)
+     * @see
+     * br.org.archimedes.model.Drawing#setSelection(br.org.archimedes.model.
+     * Selection)
      */
     public void setSelection (Selection selection) {
 
@@ -551,8 +554,8 @@ public class Drawing extends Observable implements Observer {
 
     /*
      * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.model.Drawing#addLayer(br.org.archimedes.model.Layer)
+     * @see
+     * br.org.archimedes.model.Drawing#addLayer(br.org.archimedes.model.Layer)
      */
     public void addLayer (Layer layer) {
 
@@ -570,7 +573,6 @@ public class Drawing extends Observable implements Observer {
 
     /*
      * (non-Javadoc)
-     * 
      * @see java.util.Observable#setChanged()
      */
     @Override
@@ -590,7 +592,6 @@ public class Drawing extends Observable implements Observer {
 
     /*
      * (non-Javadoc)
-     * 
      * @see br.org.archimedes.model.Drawing#setCurrentLayer(int)
      */
     public void setCurrentLayer (int selectionIndex)
@@ -621,8 +622,9 @@ public class Drawing extends Observable implements Observer {
 
     /*
      * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.model.Drawing#putHelperElement(br.org.archimedes.model.Element)
+     * @see
+     * br.org.archimedes.model.Drawing#putHelperElement(br.org.archimedes.model
+     * .Element)
      */
     public void putHelperElement (Element element)
             throws NullArgumentException, IllegalActionException {
@@ -650,9 +652,9 @@ public class Drawing extends Observable implements Observer {
 
     /*
      * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.model.Drawing#putElement(br.org.archimedes.model.Element,
-     *      br.org.archimedes.model.Layer)
+     * @see
+     * br.org.archimedes.model.Drawing#putElement(br.org.archimedes.model.Element
+     * , br.org.archimedes.model.Layer)
      */
     public void putElement (Element element, Layer layer)
             throws NullArgumentException, IllegalActionException {
@@ -674,7 +676,6 @@ public class Drawing extends Observable implements Observer {
 
     /*
      * (non-Javadoc)
-     * 
      * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
      */
     /**
@@ -810,7 +811,8 @@ public class Drawing extends Observable implements Observer {
     }
 
     /**
-     * @param saved True if the drawing is saved, false otherwise.
+     * @param saved
+     *            True if the drawing is saved, false otherwise.
      */
     public void setSaved (boolean saved) {
 
