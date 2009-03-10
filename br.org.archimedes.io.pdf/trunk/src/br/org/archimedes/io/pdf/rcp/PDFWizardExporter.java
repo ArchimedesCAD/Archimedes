@@ -80,7 +80,6 @@ public class PDFWizardExporter extends Wizard implements IExportWizard,
             e.printStackTrace();
             Shell shell = workbench.getActiveWorkbenchWindow().getShell();
             MessageBox box = new MessageBox(shell);
-            // TODO Internacionalize
             box.setMessage(Messages.PDFWizardExporter_ErrorBoxTitle);
             box
                     .setText(Messages.PDFWizardExporter_ErrorBoxMessage);
