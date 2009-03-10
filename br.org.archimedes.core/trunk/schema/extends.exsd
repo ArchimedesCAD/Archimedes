@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="br.org.archimedes" xmlns="http://www.w3.org/2001/XMLSchema">
+<schema targetNamespace="br.org.archimedes.core" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appinfo>
-         <meta.schema plugin="br.org.archimedes" id="extends" name="Extend Manager"/>
+         <meta.schema plugin="br.org.archimedes.core" id="extends" name="Extend Manager"/>
       </appinfo>
       <documentation>
          This extension is used to register a handler for the extendss. It should be able to choose the right extender to a given element.

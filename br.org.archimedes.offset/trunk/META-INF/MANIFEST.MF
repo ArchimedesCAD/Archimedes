@@ -10,3 +10,4 @@ Require-Bundle: org.eclipse.core.runtime,
  br.org.archimedes.core,
  br.org.archimedes.undo
 Export-Package: br.org.archimedes.offset
+Bundle-RequiredExecutionEnvironment: J2SE-1.5

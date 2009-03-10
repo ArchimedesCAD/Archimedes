@@ -1,6 +1,6 @@
 /**
  * This file was created on 2007/04/07, 18:41:59, by nitao. It is part of
- * br.org.archimedes.model on the br.org.archimedes project.
+ * br.org.archimedes.model on the br.org.archimedes.core project.
  */
 
 package br.org.archimedes.model;

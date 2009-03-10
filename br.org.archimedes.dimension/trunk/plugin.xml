@@ -3,11 +3,9 @@
 <plugin>
    <extension
          point="br.org.archimedes.core.element">
-         <element
+         <element id="br.org.archimedes.dimension" name="Dimension"
                class="br.org.archimedes.dimension.Dimension"
-               factory="br.org.archimedes.dimension.DimensionFactory"
-               id="br.org.archimedes.dimension"
-               name="Dimension"/>
+               factory="br.org.archimedes.dimension.DimensionFactory" />
    </extension>
    <extension
          point="org.eclipse.ui.actionSets">

@@ -1,5 +1,5 @@
 /*
- * Created on Jul 03, 2008 for br.org.archimedes
+ * Created on Jul 03, 2008 for br.org.archimedes.core
  */
 
 package br.org.archimedes.rcp.extensionpoints;
@@ -21,7 +21,7 @@ public class ExtendManagerEPLoader implements ExtensionTagHandler {
 
     private static final String CLASS_ATTRIBUTE_NAME = "class"; //$NON-NLS-1$
 
-    private static final String EXTEND_MANAGER_EXTENSION_POINT_ID = "br.org.archimedes.extends"; //$NON-NLS-1$
+    private static final String EXTEND_MANAGER_EXTENSION_POINT_ID = "br.org.archimedes.core.extends"; //$NON-NLS-1$
 
     private static final ExtendManager NULL_EXTEND_MANAGER = new NullExtendManager();
 

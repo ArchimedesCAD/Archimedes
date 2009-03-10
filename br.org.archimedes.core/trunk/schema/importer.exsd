@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="br.org.archimedes">
+<schema targetNamespace="br.org.archimedes.core" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
-      <appInfo>
-         <meta.schema plugin="br.org.archimedes" id="importer" name="Importer"/>
-      </appInfo>
+      <appinfo>
+         <meta.schema plugin="br.org.archimedes.core" id="importer" name="Importer"/>
+      </appinfo>
       <documentation>
          This extension point should be used to provide ways to load a drawing into archimedes from wherever it may come.
 This is unstable for now.
@@ -12,6 +12,11 @@ This is unstable for now.
    </annotation>
 
    <element name="extension">
+      <annotation>
+         <appinfo>
+            <meta.element />
+         </appinfo>
+      </annotation>
       <complexType>
          <attribute name="point" type="string" use="required">
             <annotation>
@@ -32,9 +37,9 @@ This is unstable for now.
                <documentation>
                   
                </documentation>
-               <appInfo>
+               <appinfo>
                   <meta.attribute translatable="true"/>
-               </appInfo>
+               </appinfo>
             </annotation>
          </attribute>
       </complexType>
@@ -61,9 +66,9 @@ This is unstable for now.
                <documentation>
                   
                </documentation>
-               <appInfo>
+               <appinfo>
                   <meta.attribute translatable="true"/>
-               </appInfo>
+               </appinfo>
             </annotation>
          </attribute>
          <attribute name="class" type="string" use="required">
@@ -71,54 +76,54 @@ This is unstable for now.
                <documentation>
                   
                </documentation>
-               <appInfo>
+               <appinfo>
                   <meta.attribute kind="java" basedOn="br.org.archimedes.interfaces.Importer"/>
-               </appInfo>
+               </appinfo>
             </annotation>
          </attribute>
       </complexType>
    </element>
 
    <annotation>
-      <appInfo>
+      <appinfo>
          <meta.section type="since"/>
-      </appInfo>
+      </appinfo>
       <documentation>
          This extension point exists since Archimedes was brought to RCP.
       </documentation>
    </annotation>
 
    <annotation>
-      <appInfo>
+      <appinfo>
          <meta.section type="examples"/>
-      </appInfo>
+      </appinfo>
       <documentation>
          There is no example yet.
       </documentation>
    </annotation>
 
    <annotation>
-      <appInfo>
+      <appinfo>
          <meta.section type="apiInfo"/>
-      </appInfo>
+      </appinfo>
       <documentation>
          There is no API information to use this point yet.
       </documentation>
    </annotation>
 
    <annotation>
-      <appInfo>
+      <appinfo>
          <meta.section type="implementation"/>
-      </appInfo>
+      </appinfo>
       <documentation>
          There is no supplied implementation so far.
       </documentation>
    </annotation>
 
    <annotation>
-      <appInfo>
+      <appinfo>
          <meta.section type="copyright"/>
-      </appInfo>
+      </appinfo>
       <documentation>
          For now, all content regarding Archimedes is licensed under GPL v.2.
 Therefore all that regards the extension points is copyleft.

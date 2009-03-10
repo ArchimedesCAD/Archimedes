@@ -1,5 +1,5 @@
 /*
- * Created on June 9, 2008 for br.org.archimedes
+ * Created on June 9, 2008 for br.org.archimedes.trims
  */
 
 package br.org.archimedes.trims;

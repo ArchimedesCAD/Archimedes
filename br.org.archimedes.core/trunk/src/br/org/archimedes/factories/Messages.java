@@ -1,6 +1,6 @@
 /**
  * This file was created on 2007/04/23, 07:51:04, by nitao. It is part of
- * br.org.archimedes.factories on the br.org.archimedes project.
+ * br.org.archimedes.factories on the br.org.archimedes.core project.
  */
 
 package br.org.archimedes.factories;

@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="br.org.archimedes">
+<schema targetNamespace="br.org.archimedes.core" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
-      <appInfo>
-         <meta.schema plugin="br.org.archimedes" id="exporter" name="Exporter"/>
-      </appInfo>
+      <appinfo>
+         <meta.schema plugin="br.org.archimedes.core" id="exporter" name="Exporter"/>
+      </appinfo>
       <documentation>
          This extension point should define a general exporter that is capable of exporting the general elements of the drawing like the infos regarding the drawing itself as well as infos about the layers.
 
@@ -14,6 +14,9 @@ This exporter will not be responsible to export the elements. For this, it will 
 
    <element name="extension">
       <annotation>
+         <appinfo>
+            <meta.element />
+         </appinfo>
          <documentation>
             Basical extension definition. This will be used by RCP to register this as an extension.
          </documentation>
@@ -38,9 +41,9 @@ This exporter will not be responsible to export the elements. For this, it will 
                <documentation>
                   
                </documentation>
-               <appInfo>
+               <appinfo>
                   <meta.attribute translatable="true"/>
-               </appInfo>
+               </appinfo>
             </annotation>
          </attribute>
       </complexType>
@@ -73,9 +76,9 @@ Not really important.
                <documentation>
                   The name of this exporter. This will be used to show to the user close to the element exporter&apos;s extension on the Export dialog.
                </documentation>
-               <appInfo>
+               <appinfo>
                   <meta.attribute translatable="true"/>
-               </appInfo>
+               </appinfo>
             </annotation>
          </attribute>
          <attribute name="class" type="string" use="required">
@@ -83,27 +86,27 @@ Not really important.
                <documentation>
                   The class that extends Exporter and will be encharged of exporting the drawing when asked to.
                </documentation>
-               <appInfo>
+               <appinfo>
                   <meta.attribute kind="java" basedOn="br.org.archimedes.interfaces.Exporter"/>
-               </appInfo>
+               </appinfo>
             </annotation>
          </attribute>
       </complexType>
    </element>
 
    <annotation>
-      <appInfo>
+      <appinfo>
          <meta.section type="since"/>
-      </appInfo>
+      </appinfo>
       <documentation>
          This extension point exists since Archimedes was brought to RCP.
       </documentation>
    </annotation>
 
    <annotation>
-      <appInfo>
+      <appinfo>
          <meta.section type="examples"/>
-      </appInfo>
+      </appinfo>
       <documentation>
          The first extension created using this point was the XML exporter.
 Here follows its use:
@@ -116,27 +119,27 @@ Here follows its use:
    </annotation>
 
    <annotation>
-      <appInfo>
+      <appinfo>
          <meta.section type="apiInfo"/>
-      </appInfo>
+      </appinfo>
       <documentation>
          There is no API information to use this point yet.
       </documentation>
    </annotation>
 
    <annotation>
-      <appInfo>
+      <appinfo>
          <meta.section type="implementation"/>
-      </appInfo>
+      </appinfo>
       <documentation>
          Please feel free to check the br.org.archimedes.io.xml plugin since this was the first implementation of this extension point.
       </documentation>
    </annotation>
 
    <annotation>
-      <appInfo>
+      <appinfo>
          <meta.section type="copyright"/>
-      </appInfo>
+      </appinfo>
       <documentation>
          For now, all content regarding Archimedes is licensed under GPL v.2.
 Therefore all that regards the extension points is copyleft.

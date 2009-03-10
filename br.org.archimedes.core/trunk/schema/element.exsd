@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="br.org.archimedes">
+<schema targetNamespace="br.org.archimedes.core" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
-      <appInfo>
-         <meta.schema plugin="br.org.archimedes" id="element" name="Element"/>
-      </appInfo>
+      <appinfo>
+         <meta.schema plugin="br.org.archimedes.core" id="element" name="Element"/>
+      </appinfo>
       <documentation>
          This extension point defines a new element to Archimedes&apos; drawings. The only reason this point exists is to enable saving/loading this element.
 The elementExporter and elementImporter related to this element will be forced to use the id defined in this extension point.
@@ -16,6 +16,9 @@ If your element has another persistence system or should not be persisted with t
 
    <element name="extension">
       <annotation>
+         <appinfo>
+            <meta.element />
+         </appinfo>
          <documentation>
             Basical extension definition. This will be used by RCP to register this as an extension.
          </documentation>
@@ -40,9 +43,9 @@ If your element has another persistence system or should not be persisted with t
                <documentation>
                   
                </documentation>
-               <appInfo>
+               <appinfo>
                   <meta.attribute translatable="true"/>
-               </appInfo>
+               </appinfo>
             </annotation>
          </attribute>
       </complexType>
@@ -67,9 +70,9 @@ If your element has another persistence system or should not be persisted with t
                <documentation>
                   The class that represents this element. It must extend, at some level, br.org.archimedes.model.Element and implement its abstract methods. Those will be used for most of Archimedes work.
                </documentation>
-               <appInfo>
+               <appinfo>
                   <meta.attribute kind="java" basedOn="br.org.archimedes.model.elements.Element"/>
-               </appInfo>
+               </appinfo>
             </annotation>
          </attribute>
          <attribute name="factory" type="string">
@@ -77,9 +80,9 @@ If your element has another persistence system or should not be persisted with t
                <documentation>
                   The class that defines a factory to create this element. This factory will be associated with the element&apos;s id and name. It will also be associated to the defined shortcut (although this might be overwrite by some other element or factory).
                </documentation>
-               <appInfo>
+               <appinfo>
                   <meta.attribute kind="java" basedOn="br.org.archimedes.interfaces.CommandFactory"/>
-               </appInfo>
+               </appinfo>
             </annotation>
          </attribute>
          <attribute name="shortcut" type="string">
@@ -94,18 +97,18 @@ This is not guaranteed because other elements or factory may conflict with it.
    </element>
 
    <annotation>
-      <appInfo>
+      <appinfo>
          <meta.section type="since"/>
-      </appInfo>
+      </appinfo>
       <documentation>
          This extension point exists since Archimedes was brought to RCP and it&apos;s only objective is to allow elements to be referenced by their id.
       </documentation>
    </annotation>
 
    <annotation>
-      <appInfo>
+      <appinfo>
          <meta.section type="examples"/>
-      </appInfo>
+      </appinfo>
       <documentation>
          The first extension created using this point was the Line element.
 Here follows its use:
@@ -119,9 +122,9 @@ Here follows its use:
    </annotation>
 
    <annotation>
-      <appInfo>
+      <appinfo>
          <meta.section type="apiInfo"/>
-      </appInfo>
+      </appinfo>
       <documentation>
          There is no API information to use this point yet.
 If you believe there is one already, please check if there is some kind of Map associating String to Elements in the Controller.
@@ -130,18 +133,18 @@ If so, please remember the developing team to alter this information.
    </annotation>
 
    <annotation>
-      <appInfo>
+      <appinfo>
          <meta.section type="implementation"/>
-      </appInfo>
+      </appinfo>
       <documentation>
          Please feel free to check the br.org.archimedes.line plugin since this was the first implementation of this extension point.
       </documentation>
    </annotation>
 
    <annotation>
-      <appInfo>
+      <appinfo>
          <meta.section type="copyright"/>
-      </appInfo>
+      </appinfo>
       <documentation>
          For now, all content regarding Archimedes is licensed under GPL v.2.
 Therefore all that regards the extension points is copyleft.

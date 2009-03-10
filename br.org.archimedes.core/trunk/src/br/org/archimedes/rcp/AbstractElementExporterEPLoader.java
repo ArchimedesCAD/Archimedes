@@ -1,5 +1,5 @@
 /*
- * Created on Jan 9, 2009 for br.org.archimedes
+ * Created on Jan 9, 2009 for br.org.archimedes.core
  */
 package br.org.archimedes.rcp;
 

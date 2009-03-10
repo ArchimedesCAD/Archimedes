@@ -1,6 +1,6 @@
 /**
  * This file was created on 03/04/2006, 10:44:46, by cmsato. It is part of
- * br.org.archimedes on the archimedes project.
+ * br.org.archimedes on the br.org.archimedes.core project.
  */
 
 package br.org.archimedes;

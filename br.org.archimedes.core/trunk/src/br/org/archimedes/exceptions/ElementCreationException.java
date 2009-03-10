@@ -1,6 +1,6 @@
 /**
  * This file was created on 2007/06/11, 07:37:39, by nitao. It is part of
- * br.org.archimedes.exceptions on the br.org.archimedes project.
+ * br.org.archimedes.exceptions on the br.org.archimedes.core project.
  */
 
 package br.org.archimedes.exceptions;

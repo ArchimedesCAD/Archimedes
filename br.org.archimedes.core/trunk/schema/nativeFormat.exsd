@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="br.org.archimedes">
+<schema targetNamespace="br.org.archimedes.core" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
-      <appInfo>
-         <meta.schema plugin="br.org.archimedes" id="nativeFormat" name="Native Format"/>
-      </appInfo>
+      <appinfo>
+         <meta.schema plugin="br.org.archimedes.core" id="nativeFormat" name="Native Format"/>
+      </appinfo>
       <documentation>
          This extension should be used to describe a native file format for Archimedes.
 This means that Archimedes can deal with this file format as if it was its original file format. Drawings can be saved and loaded without any information lose.
@@ -14,6 +14,11 @@ This should be used only to file formats that grant all the information to be pe
    </annotation>
 
    <element name="extension">
+      <annotation>
+         <appinfo>
+            <meta.element />
+         </appinfo>
+      </annotation>
       <complexType>
          <attribute name="point" type="string" use="required">
             <annotation>
@@ -34,9 +39,9 @@ This should be used only to file formats that grant all the information to be pe
                <documentation>
                   
                </documentation>
-               <appInfo>
+               <appinfo>
                   <meta.attribute translatable="true"/>
-               </appInfo>
+               </appinfo>
             </annotation>
          </attribute>
       </complexType>
@@ -56,9 +61,9 @@ This should be used only to file formats that grant all the information to be pe
                <documentation>
                   
                </documentation>
-               <appInfo>
+               <appinfo>
                   <meta.attribute translatable="true"/>
-               </appInfo>
+               </appinfo>
             </annotation>
          </attribute>
          <attribute name="extension" type="string" use="required">
@@ -73,9 +78,9 @@ This should be used only to file formats that grant all the information to be pe
                <documentation>
                   
                </documentation>
-               <appInfo>
+               <appinfo>
                   <meta.attribute kind="java" basedOn="br.org.archimedes.interfaces.Importer"/>
-               </appInfo>
+               </appinfo>
             </annotation>
          </attribute>
          <attribute name="exporter" type="string" use="required">
@@ -83,54 +88,54 @@ This should be used only to file formats that grant all the information to be pe
                <documentation>
                   
                </documentation>
-               <appInfo>
+               <appinfo>
                   <meta.attribute kind="java" basedOn="br.org.archimedes.interfaces.Exporter"/>
-               </appInfo>
+               </appinfo>
             </annotation>
          </attribute>
       </complexType>
    </element>
 
    <annotation>
-      <appInfo>
+      <appinfo>
          <meta.section type="since"/>
-      </appInfo>
+      </appinfo>
       <documentation>
          This extension point exists since Archimedes was brought to RCP.
       </documentation>
    </annotation>
 
    <annotation>
-      <appInfo>
+      <appinfo>
          <meta.section type="examples"/>
-      </appInfo>
+      </appinfo>
       <documentation>
          There is no example yet.
       </documentation>
    </annotation>
 
    <annotation>
-      <appInfo>
+      <appinfo>
          <meta.section type="apiInfo"/>
-      </appInfo>
+      </appinfo>
       <documentation>
          There is no API information to use this point yet.
       </documentation>
    </annotation>
 
    <annotation>
-      <appInfo>
+      <appinfo>
          <meta.section type="implementation"/>
-      </appInfo>
+      </appinfo>
       <documentation>
          There is no supplied implementation so far.
       </documentation>
    </annotation>
 
    <annotation>
-      <appInfo>
+      <appinfo>
          <meta.section type="copyright"/>
-      </appInfo>
+      </appinfo>
       <documentation>
          For now, all content regarding Archimedes is licensed under GPL v.2.
 Therefore all that regards the extension points is copyleft.

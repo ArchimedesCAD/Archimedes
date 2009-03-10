@@ -6,15 +6,15 @@ Bundle-Version: 0.57.4
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Require-Bundle: br.org.archimedes.core,
  org.eclipse.core.runtime;bundle-version="3.4.0",
- br.org.archimedes.line,
- br.org.archimedes.curvedshape,
- br.org.archimedes.arc,
- br.org.archimedes.circle,
- br.org.archimedes.infiniteline,
- br.org.archimedes.semiline,
- br.org.archimedes.polyline,
- br.org.archimedes.text,
- br.org.archimedes.dimension,
- br.org.archimedes.leader
+ br.org.archimedes.line;resolution:=optional,
+ br.org.archimedes.curvedshape;resolution:=optional,
+ br.org.archimedes.arc;resolution:=optional,
+ br.org.archimedes.circle;resolution:=optional,
+ br.org.archimedes.infiniteline;resolution:=optional,
+ br.org.archimedes.semiline;resolution:=optional,
+ br.org.archimedes.polyline;resolution:=optional,
+ br.org.archimedes.text;resolution:=optional,
+ br.org.archimedes.dimension;resolution:=optional,
+ br.org.archimedes.leader;resolution:=optional
 Export-Package: br.org.archimedes.intersections.interfaces,
  br.org.archimedes.intersectors;x-friends:="br.org.archimedes.intersections.tests"

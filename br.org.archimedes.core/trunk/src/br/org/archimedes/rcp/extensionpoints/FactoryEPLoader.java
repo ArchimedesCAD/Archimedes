@@ -1,5 +1,5 @@
 /*
- * Created on Jun 16, 2008 for br.org.archimedes
+ * Created on Jun 16, 2008 for br.org.archimedes.core
  */
 
 package br.org.archimedes.rcp.extensionpoints;
@@ -25,7 +25,7 @@ public class FactoryEPLoader implements ExtensionTagHandler {
 
     private static final String CLASS_ATTRIBUTE_NAME = "class"; //$NON-NLS-1$
 
-    private static final String FACTORY_EXTENSION_POINT_ID = "br.org.archimedes.factory"; //$NON-NLS-1$
+    private static final String FACTORY_EXTENSION_POINT_ID = "br.org.archimedes.core.factory"; //$NON-NLS-1$
 
     private static final String SHORTCUT_ATTRIBUTE_NAME = "shortcut"; //$NON-NLS-1$
 

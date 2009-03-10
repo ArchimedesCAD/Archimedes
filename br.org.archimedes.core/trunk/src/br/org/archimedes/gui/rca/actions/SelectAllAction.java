@@ -1,6 +1,6 @@
 /**
  * This file was created on 2007/04/21, 19:01:16, by nitao. It is part of
- * br.org.archimedes.gui.rca.actions on the br.org.archimedes project.
+ * br.org.archimedes.gui.rca.actions on the br.org.archimedes.core project.
  */
 
 package br.org.archimedes.gui.rca.actions;

@@ -1,6 +1,6 @@
 /**
  * This file was created on 2007/06/21, 09:27:52, by nitao. It is part of
- * br.org.archimedes.interfaces on the br.org.archimedes project.
+ * br.org.archimedes.interfaces on the br.org.archimedes.core project.
  */
 
 package br.org.archimedes.interfaces;

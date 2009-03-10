@@ -1,5 +1,5 @@
 /*
- * Created on Jun 16, 2008 for br.org.archimedes
+ * Created on Jun 16, 2008 for br.org.archimedes.core
  */
 
 package br.org.archimedes.rcp.extensionpoints;
@@ -23,7 +23,7 @@ import br.org.archimedes.rcp.ExtensionTagHandler;
  */
 public class ElementEPLoader implements ExtensionTagHandler {
 
-    private static final String ELEMENT_EXTENSION_POINT_ID = "br.org.archimedes.element"; //$NON-NLS-1$
+    private static final String ELEMENT_EXTENSION_POINT_ID = "br.org.archimedes.core.element"; //$NON-NLS-1$
 
     private static final String FACTORY_ATTRIBUTE_NAME = "factory"; //$NON-NLS-1$
 
@@ -72,17 +72,31 @@ public class ElementEPLoader implements ExtensionTagHandler {
             elementToIdMap.put(elementClass, elementId);
             idToElementClassMap.put(elementId, elementClass);
 
-            CommandFactory factory = (CommandFactory) elementTag
-                    .createExecutableExtension(FACTORY_ATTRIBUTE_NAME);
-            if (factory != null) {
-                loadElementFactory(elementTag, factory);
-            }
+            loadFactoryIfPresent(elementTag);
         }
         catch (InvalidRegistryObjectException e) {
             e.printStackTrace();
         }
         catch (ClassNotFoundException e) {
             // Element's plugin not loaded. Just ignoring
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * @param elementTag Tag that contains the element definition
+     */
+    private void loadFactoryIfPresent (IConfigurationElement elementTag){
+
+        try {
+            CommandFactory factory = (CommandFactory) elementTag
+                    .createExecutableExtension(FACTORY_ATTRIBUTE_NAME);
+            if (factory != null) {
+                loadElementFactory(elementTag, factory);
+            }
+        }
+        catch (CoreException e) {
+            // No factory defined for this element.
         }
     }
 

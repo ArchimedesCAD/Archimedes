@@ -54,7 +54,7 @@ import br.org.archimedes.model.Drawing;
 
 public class DrawingEditor extends EditorPart implements Observer,
         ISelectionProvider {
-    
+
     public static final String EDITOR_ID = "br.org.archimedes.gui.rca.editor.DrawingEditor"; //$NON-NLS-1$
 
     private static List<Cursor> cursors;
@@ -108,24 +108,26 @@ public class DrawingEditor extends EditorPart implements Observer,
 
         Cursor normalCursor = new Cursor(display, sourceData, 0, 0);
         cursors.add(normalCursor);
-
-        ImageDescriptor imageDescriptor = Activator
-                .getImageDescriptor("cursors/open_hand.png"); //$NON-NLS-1$
-        if (imageDescriptor != null) { // found the image
-            ImageData openHand = imageDescriptor.getImageData();
-            Cursor openHandCursor = new Cursor(display, openHand, 12, 12);
-            cursors.add(openHandCursor);
-        }
-
-        imageDescriptor = Activator
-                .getImageDescriptor("cursors/closed_hand.png"); //$NON-NLS-1$
-        if (imageDescriptor != null) { // found the image
-            ImageData closedHand = imageDescriptor.getImageData();
-            Cursor closedHandCursor = new Cursor(display, closedHand, 12, 12);
-            cursors.add(closedHandCursor);
-        }
+        cursors.add(createCursor("cursors/open_hand.png")); //$NON-NLS-1$
+        cursors.add(createCursor("cursors/closed_hand.png")); //$NON-NLS-1$
 
         return cursors;
+    }
+
+    /**
+     * @param path
+     *            The path to the cursor image.
+     * @return The created cursor or null if the image couldn't be found.
+     */
+    private static Cursor createCursor (String path) {
+
+        ImageDescriptor imageDescriptor = Activator.getImageDescriptor(path); //$NON-NLS-1$
+        Cursor openHandCursor = null;
+        if (imageDescriptor != null) { // found the image
+            ImageData openHand = imageDescriptor.getImageData();
+            openHandCursor = new Cursor(Display.getCurrent(), openHand, 12, 12);
+        }
+        return openHandCursor;
     }
 
     @Override
@@ -171,8 +173,8 @@ public class DrawingEditor extends EditorPart implements Observer,
                             System.out.println("Ativando: " //$NON-NLS-1$
                                     + getDrawing().getTitle());
                             lastActivated = part;
-                            br.org.archimedes.Utils.getInputController().setDrawing(
-                                    getDrawing());
+                            br.org.archimedes.Utils.getInputController()
+                                    .setDrawing(getDrawing());
                         }
                     }
 
@@ -185,8 +187,8 @@ public class DrawingEditor extends EditorPart implements Observer,
 
                         System.out.println("Fechando"); //$NON-NLS-1$
                         try {
-                            Drawing activeDrawing = br.org.archimedes.Utils.getController()
-                                    .getActiveDrawing();
+                            Drawing activeDrawing = br.org.archimedes.Utils
+                                    .getController().getActiveDrawing();
                             System.out.println("Active drawing: " //$NON-NLS-1$
                                     + activeDrawing.getTitle());
                             if (part == DrawingEditor.this
@@ -196,7 +198,8 @@ public class DrawingEditor extends EditorPart implements Observer,
                                 System.out.println("Part recebida: " + part); //$NON-NLS-1$
                                 System.out.println("Eu-----------: " //$NON-NLS-1$
                                         + DrawingEditor.this);
-                                br.org.archimedes.Utils.getInputController().setDrawing(null);
+                                br.org.archimedes.Utils.getInputController()
+                                        .setDrawing(null);
                                 partActivated(lastActivated);
                             }
                         }
@@ -280,7 +283,8 @@ public class DrawingEditor extends EditorPart implements Observer,
                 .getInstance();
         canvas.addMouseListener(new MouseListener() {
 
-            private Workspace workspace = br.org.archimedes.Utils.getWorkspace();
+            private Workspace workspace = br.org.archimedes.Utils
+                    .getWorkspace();
 
 
             public void mouseDoubleClick (MouseEvent event) {
@@ -348,8 +352,8 @@ public class DrawingEditor extends EditorPart implements Observer,
         Drawing drawing = getDrawing();
         Drawing active = null;
         try {
-            br.org.archimedes.Utils.getWorkspace().setViewport(drawing.getViewportPosition(),
-                    drawing.getZoom());
+            br.org.archimedes.Utils.getWorkspace().setViewport(
+                    drawing.getViewportPosition(), drawing.getZoom());
             active = br.org.archimedes.Utils.getController().getActiveDrawing();
         }
         catch (NullArgumentException e) {

@@ -16,7 +16,7 @@ import br.org.archimedes.rcp.AbstractFileLocatorActivator;
 public class Activator extends AbstractFileLocatorActivator {
 
     // The plug-in ID
-    public static final String PLUGIN_ID = "br.org.archimedes"; //$NON-NLS-1$
+    public static final String PLUGIN_ID = "br.org.archimedes.core"; //$NON-NLS-1$
 
     // The shared instance
     private static Activator plugin;

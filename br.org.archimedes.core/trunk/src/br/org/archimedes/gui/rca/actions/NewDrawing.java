@@ -1,5 +1,5 @@
 /*
- * Created on Jun 13, 2008 for br.org.archimedes
+ * Created on Jun 13, 2008 for br.org.archimedes.core
  */
 
 package br.org.archimedes.gui.rca.actions;

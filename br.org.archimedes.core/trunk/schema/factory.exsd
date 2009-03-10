@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="br.org.archimedes">
+<schema targetNamespace="br.org.archimedes.core" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
-      <appInfo>
-         <meta.schema plugin="br.org.archimedes" id="factory" name="Factory"/>
-      </appInfo>
+      <appinfo>
+         <meta.schema plugin="br.org.archimedes.core" id="factory" name="Factory"/>
+      </appinfo>
       <documentation>
          This extension point should be used to define a factory that will produce something other than just a new element of any kind.
 For those kind of factories, the element extension point should be used.
@@ -18,6 +18,9 @@ apply for registration as a double-click handler by the Archimedes platform.
 
    <element name="extension">
       <annotation>
+         <appinfo>
+            <meta.element />
+         </appinfo>
          <documentation>
             Basical extension definition. This will be used by RCP to register this as an extension.
          </documentation>
@@ -42,9 +45,9 @@ apply for registration as a double-click handler by the Archimedes platform.
                <documentation>
                   
                </documentation>
-               <appInfo>
+               <appinfo>
                   <meta.attribute translatable="true"/>
-               </appInfo>
+               </appinfo>
             </annotation>
          </attribute>
       </complexType>
@@ -70,9 +73,9 @@ It is very important because it&apos;s the key that will be used to call this fa
                <documentation>
                   The class that extends CommandFactory and will be encharged of controlling the command factory.
                </documentation>
-               <appInfo>
+               <appinfo>
                   <meta.attribute kind="java" basedOn="br.org.archimedes.interfaces.CommandFactory:"/>
-               </appInfo>
+               </appinfo>
             </annotation>
          </attribute>
          <attribute name="handlesDoubleClick" type="boolean">
@@ -110,18 +113,18 @@ It is very important because it&apos;s the key that will be used to call this fa
    </element>
 
    <annotation>
-      <appInfo>
+      <appinfo>
          <meta.section type="since"/>
-      </appInfo>
+      </appinfo>
       <documentation>
          This extension point exists since Archimedes was brought to RCP.
       </documentation>
    </annotation>
 
    <annotation>
-      <appInfo>
+      <appinfo>
          <meta.section type="examples"/>
-      </appInfo>
+      </appinfo>
       <documentation>
          The first extension created using this point was the move factory.
 Here follows its use:
@@ -137,27 +140,27 @@ Here follows its use:
    </annotation>
 
    <annotation>
-      <appInfo>
+      <appinfo>
          <meta.section type="apiInfo"/>
-      </appInfo>
+      </appinfo>
       <documentation>
          All factories are registered on the br.org.archimedes.parser.CommandParser in a Map from String to CommandFactory. It is there that the software will ask for a factory when needed and it is there, at startup, that all factories will be registered.
       </documentation>
    </annotation>
 
    <annotation>
-      <appInfo>
+      <appinfo>
          <meta.section type="implementation"/>
-      </appInfo>
+      </appinfo>
       <documentation>
          Please feel free to check the br.org.archimedes.move plugin since this was the first implementation of this extension point.
       </documentation>
    </annotation>
 
    <annotation>
-      <appInfo>
+      <appinfo>
          <meta.section type="copyright"/>
-      </appInfo>
+      </appinfo>
       <documentation>
          For now, all content regarding Archimedes is licensed under GPL v.2.
 Therefore all that regards the extension points is copyleft.

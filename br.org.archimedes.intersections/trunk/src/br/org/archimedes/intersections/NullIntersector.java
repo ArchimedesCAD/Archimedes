@@ -1,5 +1,5 @@
 /*
- * Created on May 5, 2008 for br.org.archimedes
+ * Created on May 5, 2008 for br.org.archimedes.intersections
  */
 
 package br.org.archimedes.intersections;
