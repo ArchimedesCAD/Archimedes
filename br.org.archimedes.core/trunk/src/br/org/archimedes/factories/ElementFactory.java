@@ -39,19 +39,18 @@ public class ElementFactory {
                 element = constructor.newInstance(args);
             }
             catch (IllegalArgumentException e) {
-                throw new ElementCreationException(Messages.bind(
-                        Messages.ElementFactory_WrongNumberArguments, elementId), e);
+                throw new ElementCreationException(Messages
+                        .bind(Messages.ElementFactory_WrongNumberArguments,
+                                elementId), e);
             }
             catch (NoSuchMethodException e) {
                 throw new ElementCreationException(Messages.bind(
                         Messages.ElementFactory_WrongArgument, elementId), e);
             }
             catch (InstantiationException e) {
-                throw new ElementCreationException(
-                        Messages
-                                .bind(
-                                        Messages.ElementFactory_NonBuildableObject,
-                                        elementId), e);
+                throw new ElementCreationException(Messages.bind(
+                        Messages.ElementFactory_NonBuildableObject, elementId),
+                        e);
             }
             catch (SecurityException e) {
                 throw new ElementCreationException(Messages.bind(
@@ -63,7 +62,8 @@ public class ElementFactory {
             }
             catch (InvocationTargetException e) {
                 throw new ElementCreationException(Messages.bind(
-                        Messages.ElementFactory_InvalidConstructor, elementId), e);
+                        Messages.ElementFactory_InvalidConstructor, elementId),
+                        e);
             }
         }
         return element;
@@ -88,7 +88,9 @@ public class ElementFactory {
 
         Class<?>[] parameterTypes = extractTypes(args);
 
-        Constructor<? extends Element>[] constructors = clazz.getConstructors();
+        // Had to insert the class cast because Java 6 considers this a compile error
+        Constructor<? extends Element>[] constructors = (Constructor<? extends Element>[]) clazz
+                .getConstructors();
 
         for (Constructor<? extends Element> constructor : constructors) {
             if (matches(constructor, parameterTypes)) {
@@ -96,8 +98,9 @@ public class ElementFactory {
             }
         }
 
-        throw new NoSuchMethodException(Messages.bind(Messages.ElementFactory_NoConstructor, clazz
-                .getCanonicalName(), joinArrayWith(parameterTypes, ", "))); //$NON-NLS-1$
+        throw new NoSuchMethodException(Messages.bind(
+                Messages.ElementFactory_NoConstructor,
+                clazz.getCanonicalName(), joinArrayWith(parameterTypes, ", "))); //$NON-NLS-1$
     }
 
     /**
