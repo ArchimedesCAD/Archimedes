@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<psf version="2.0">
+<provider id="org.tigris.subversion.subclipse.core.svnnature">
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.arc/trunk,br.org.archimedes.arc"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.arc.tests/trunk,br.org.archimedes.arc.tests"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.batik/trunk,br.org.archimedes.batik"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.build/trunk,br.org.archimedes.build"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.calculus.feature/trunk,br.org.archimedes.calculus.feature"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.circle/trunk,br.org.archimedes.circle"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.circle.tests/trunk,br.org.archimedes.circle.tests"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.comunication.feature/trunk,br.org.archimedes.comunication.feature"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.config/trunk,br.org.archimedes.config"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.copypaste/trunk,br.org.archimedes.copypaste"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.copypaste.tests/trunk,br.org.archimedes.copypaste.tests"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.copytoclipboard/trunk,br.org.archimedes.copytoclipboard"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.copytoclipboard.tests/trunk,br.org.archimedes.copytoclipboard.tests"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.core/trunk,br.org.archimedes.core"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.core.feature/trunk,br.org.archimedes.core.feature"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.core.tests/trunk,br.org.archimedes.core.tests"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.curvedshape/trunk,br.org.archimedes.curvedShape"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.curves.feature/trunk,br.org.archimedes.curves.feature"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.dimension/trunk,br.org.archimedes.dimension"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.dimension.test/trunk,br.org.archimedes.dimension.test"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.distance/trunk,br.org.archimedes.distance"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.distance.tests/trunk,br.org.archimedes.distance.tests"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.es/trunk,br.org.archimedes.es"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.extend/trunk,br.org.archimedes.extend"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.fr/trunk,br.org.archimedes.fr"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.infiniteline/trunk,br.org.archimedes.infiniteline"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.infiniteline.tests/trunk,br.org.archimedes.infiniteline.tests"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.intersections/trunk,br.org.archimedes.intersections"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.intersections.feature/trunk,br.org.archimedes.intersections.feature"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.intersections.tests/trunk,br.org.archimedes.intersections.tests"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.io.feature/trunk,br.org.archimedes.io.feature"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.io.pdf/trunk,br.org.archimedes.io.pdf"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.io.pdf.tests/trunk,br.org.archimedes.io.pdf.tests"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.io.svg/trunk,br.org.archimedes.io.svg"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.io.svg.tests/trunk,br.org.archimedes.io.svg.tests"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.io.xml/trunk,br.org.archimedes.io.xml"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.io.xml.tests/trunk,br.org.archimedes.io.xml.tests"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.izpack/trunk,br.org.archimedes.izpack"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.langpack.feature/trunk,br.org.archimedes.langpack.feature"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.leader/trunk,br.org.archimedes.leader"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.leader.tests/trunk,br.org.archimedes.leader.tests"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.line/trunk,br.org.archimedes.line"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.line.pt_BR/trunk,br.org.archimedes.line.pt_BR"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.line.tests/trunk,br.org.archimedes.line.tests"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.lines.feature/trunk,br.org.archimedes.lines.feature"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.mirror/trunk,br.org.archimedes.mirror"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.mirror.tests/trunk,br.org.archimedes.mirror.tests"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.move/trunk,br.org.archimedes.move"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.move.tests/trunk,br.org.archimedes.move.tests"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.offset/trunk,br.org.archimedes.offset"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.offset.tests/trunk,br.org.archimedes.offset.tests"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.opengl/trunk,br.org.archimedes.opengl"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.opengl.linux.x86/trunk,br.org.archimedes.opengl.linux.x86"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.opengl.linux.x86_64/trunk,br.org.archimedes.opengl.linux.x86_64"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.opengl.macosx/trunk,br.org.archimedes.opengl.macosx"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.opengl.win32.x86/trunk,br.org.archimedes.opengl.win32.x86"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.operations.edit.feature/trunk,br.org.archimedes.operations.edit.feature"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.operations.workspace.feature/trunk,br.org.archimedes.operations.workspace.feature"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.orto/trunk,br.org.archimedes.orto"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.orto.tests/trunk,br.org.archimedes.orto.tests"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.pan/trunk,br.org.archimedes.pan"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.pan.tests/trunk,br.org.archimedes.pan.tests"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.paste/trunk,br.org.archimedes.paste"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.paste.tests/trunk,br.org.archimedes.paste.tests"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.polyline/trunk,br.org.archimedes.polyline"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.polyline.area/trunk,br.org.archimedes.polyline.area"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.polyline.area.tests/trunk,br.org.archimedes.polyline.area.tests"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.polyline.explode/trunk,br.org.archimedes.polyline.explode"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.polyline.explode.tests/trunk,br.org.archimedes.polyline.explode.tests"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.polyline.rectangle/trunk,br.org.archimedes.polyline.rectangle"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.polyline.rectangle.tests/trunk,br.org.archimedes.polyline.rectangle.tests"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.polyline.tests/trunk,br.org.archimedes.polyline.tests"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.pt_BR/trunk,br.org.archimedes.pt_BR"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.redo/trunk,br.org.archimedes.redo"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.redo.tests/trunk,br.org.archimedes.redo.tests"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.ro/trunk,br.org.archimedes.ro"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.rotate/trunk,br.org.archimedes.rotate"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.rotate.tests/trunk,br.org.archimedes.rotate.tests"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.scale/trunk,br.org.archimedes.scale"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.scale.tests/trunk,br.org.archimedes.scale.tests"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.semiline/trunk,br.org.archimedes.semiline"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.semiline.tests/trunk,br.org.archimedes.semiline.tests"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.snap/trunk,br.org.archimedes.snap"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.snap.tests/trunk,br.org.archimedes.snap.tests"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.stretch/trunk,br.org.archimedes.stretch"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.stretch.tests/trunk,br.org.archimedes.stretch.tests"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.text/trunk,br.org.archimedes.text"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.text.edittext/trunk,br.org.archimedes.text.edittext"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.text.tests/trunk,br.org.archimedes.text.tests"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.trims/trunk,br.org.archimedes.trims"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.trims.tests/trunk,br.org.archimedes.trims.tests"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.undo/trunk,br.org.archimedes.undo"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.undo.tests/trunk,br.org.archimedes.undo.tests"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.zoom/trunk,br.org.archimedes.zoom"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.zoom.tests/trunk,br.org.archimedes.zoom.tests"/>
+</provider>
+<workingSets editPageId="org.eclipse.pde.ui.pluginWorkingSet" label="Plugins - Archimedes Calculus Feature and Tests" name="Plugins - Archimedes Calculus Feature and Tests">
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.distance"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.distance.tests"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.polyline.area"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.polyline.area.tests"/>
+</workingSets>
+<workingSets editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" label="General - Archimedes Config and Build" name="General - Archimedes Config and Build">
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/br.org.archimedes.izpack" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/br.org.archimedes.build" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/br.org.archimedes.config" type="4"/>
+</workingSets>
+<workingSets editPageId="org.eclipse.pde.ui.pluginWorkingSet" label="Plugins - Archimedes Core Feature And Tests" name="Plugins - Archimedes Core Feature And Tests">
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.batik"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.core"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.core.tests"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.opengl"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.opengl.linux.x86"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.opengl.linux.x86_64"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.opengl.macosx"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.opengl.win32.x86"/>
+</workingSets>
+<workingSets editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" label="General - Archimedes Features" name="General - Archimedes Features">
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/br.org.archimedes.operations.edit.feature" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/br.org.archimedes.operations.workspace.feature" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/br.org.archimedes.langpack.feature" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/br.org.archimedes.core.feature" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/br.org.archimedes.curves.feature" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/br.org.archimedes.intersections.feature" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/br.org.archimedes.io.feature" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/br.org.archimedes.lines.feature" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/br.org.archimedes.calculus.feature" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/br.org.archimedes.comunication.feature" type="4"/>
+</workingSets>
+<workingSets editPageId="org.eclipse.pde.ui.pluginWorkingSet" label="Plugins - Archimedes IO Feature And Tests" name="Plugins - Archimedes IO Feature And Tests">
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.io.pdf"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.io.pdf.tests"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.io.svg"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.io.svg.tests"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.io.xml"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.io.xml.tests"/>
+</workingSets>
+<workingSets editPageId="org.eclipse.pde.ui.pluginWorkingSet" label="Plugins - Archimedes Communication Feature and Tests" name="Plugins - Archimedes Communication Feature and Tests">
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.dimension"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.dimension.test"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.leader"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.leader.tests"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.text"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.text.edittext"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.text.tests"/>
+</workingSets>
+<workingSets editPageId="org.eclipse.pde.ui.pluginWorkingSet" label="Plugins - Archimedes Curves Feature and Tests" name="Plugins - Archimedes Curves Feature and Tests">
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.arc"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.arc.tests"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.circle"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.circle.tests"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.curvedshape"/>
+</workingSets>
+<workingSets editPageId="org.eclipse.pde.ui.pluginWorkingSet" label="Plugins - Archimedes Edit Operations Feature and Tests" name="Plugins - Archimedes Edit Operations Feature and Tests">
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.extend"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.mirror"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.mirror.tests"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.move"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.move.tests"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.offset"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.offset.tests"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.rotate"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.rotate.tests"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.scale"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.scale.tests"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.stretch"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.stretch.tests"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.trims"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.trims.tests"/>
+</workingSets>
+<workingSets editPageId="org.eclipse.pde.ui.pluginWorkingSet" label="Plugins - Archimedes Intersection Feature and Tests" name="Plugins - Archimedes Intersection Feature and Tests">
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.intersections"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.intersections.tests"/>
+</workingSets>
+<workingSets editPageId="org.eclipse.pde.ui.pluginWorkingSet" label="Plugins - Archimedes Language Pack Feature" name="Plugins - Archimedes Language Pack Feature">
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.es"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.fr"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.line.pt_BR"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.pt_BR"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.ro"/>
+</workingSets>
+<workingSets editPageId="org.eclipse.pde.ui.pluginWorkingSet" label="Plugins - Archimedes Lines Feature and Tests" name="Plugins - Archimedes Lines Feature and Tests">
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.infiniteLine.tests"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.infiniteline"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.line"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.line.tests"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.polyline"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.polyline.explode"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.polyline.explode.tests"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.polyline.rectangle"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.polyline.rectangle.tests"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.polyline.tests"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.semiline"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.semiline.tests"/>
+</workingSets>
+<workingSets editPageId="org.eclipse.pde.ui.pluginWorkingSet" label="Plugins - Archimedes Workspace Operations Feature and Tests" name="Plugins - Archimedes Workspace Operations Feature and Tests">
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.copypaste"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.copypaste.tests"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.copytoclipboard"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.copytoclipboard.tests"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.orto"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.orto.tests"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.pan"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.pan.tests"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.paste"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.paste.tests"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.redo"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.redo.tests"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.snap"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.snap.tests"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.undo"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.undo.tests"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.zoom"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.zoom.tests"/>
+</workingSets>
+</psf>

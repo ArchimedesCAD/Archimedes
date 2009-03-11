@@ -1,6 +1,8 @@
 #Organize Import Order
-#Tue Oct 11 16:41:16 BRT 2005
-3=com
-2=org
-1=javax
-0=java
+#Wed Mar 11 10:57:34 BRT 2009
+5=\#org.junit.Assert
+4=javax
+3=java
+2=com
+1=org
+0=br.org.archimedes
