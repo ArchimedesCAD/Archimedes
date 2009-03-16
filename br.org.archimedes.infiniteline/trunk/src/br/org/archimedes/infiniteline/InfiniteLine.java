@@ -1,16 +1,9 @@
 
 package br.org.archimedes.infiniteline;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-
 import br.org.archimedes.Constant;
 import br.org.archimedes.Geometrics;
 import br.org.archimedes.exceptions.InvalidArgumentException;
-import br.org.archimedes.exceptions.InvalidParameterException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.gui.opengl.OpenGLWrapper;
 import br.org.archimedes.model.Element;
@@ -20,6 +13,12 @@ import br.org.archimedes.model.Rectangle;
 import br.org.archimedes.model.ReferencePoint;
 import br.org.archimedes.model.Vector;
 import br.org.archimedes.model.references.TrianglePoint;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 public class InfiniteLine extends Element implements Offsetable {
 
@@ -403,8 +402,7 @@ public class InfiniteLine extends Element implements Offsetable {
      * 
      * @see br.org.archimedes.model.Offsetable#cloneWithDistance(double)
      */
-    public Element cloneWithDistance (double distance)
-            throws InvalidParameterException {
+    public Element cloneWithDistance (double distance) {
 
         Vector direction = new Vector(getInitialPoint(), getEndingPoint());
 

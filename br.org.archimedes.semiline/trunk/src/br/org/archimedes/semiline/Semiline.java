@@ -1,11 +1,6 @@
 
 package br.org.archimedes.semiline;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
-
 import br.org.archimedes.Constant;
 import br.org.archimedes.Geometrics;
 import br.org.archimedes.exceptions.InvalidArgumentException;
@@ -21,6 +16,11 @@ import br.org.archimedes.model.Rectangle;
 import br.org.archimedes.model.ReferencePoint;
 import br.org.archimedes.model.Vector;
 import br.org.archimedes.model.references.SquarePoint;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Semiline extends Element implements Offsetable {
 
@@ -208,7 +208,7 @@ public class Semiline extends Element implements Offsetable {
             copied.setLayer(parentLayer);
         }
         catch (Exception e) {
-            // Will not reach this block
+            // Should not reach this block
             e.printStackTrace();
         }
 

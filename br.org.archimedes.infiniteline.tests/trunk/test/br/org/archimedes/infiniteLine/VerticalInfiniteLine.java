@@ -60,13 +60,13 @@ public class VerticalInfiniteLine extends InfiniteLineTestCase {
                 testedLine, copiedXLine);
 
         expected = createSafeInfiniteLine( -0.5, 0.0, -0.5, 1.0);
-        copiedXLine = safeCloneWithDistance(xLine, 0.5);
+        copiedXLine = (InfiniteLine) xLine.cloneWithDistance(0.5);
         Assert.assertEquals(
                 "The copied xLine and the original should be the same.",
                 expected, copiedXLine);
 
         expected = createSafeInfiniteLine(0.5, 0.0, 0.5, 1.0);
-        copiedXLine = safeCloneWithDistance(xLine, -0.5);
+        copiedXLine = (InfiniteLine) xLine.cloneWithDistance((-0.5));
         Assert.assertEquals(
                 "The copied xLine and the original should be the same.",
                 expected, copiedXLine);

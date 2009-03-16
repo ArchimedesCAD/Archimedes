@@ -4,15 +4,6 @@
 
 package br.org.archimedes.offset;
 
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.ResourceBundle;
-import java.util.Set;
-
 import br.org.archimedes.Constant;
 import br.org.archimedes.Utils;
 import br.org.archimedes.controller.Controller;
@@ -33,6 +24,16 @@ import br.org.archimedes.parser.ReturnDecoratorParser;
 import br.org.archimedes.parser.SimpleSelectionParser;
 import br.org.archimedes.parser.StringDecoratorParser;
 import br.org.archimedes.undo.UndoCommand;
+
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.ResourceBundle;
+import java.util.Set;
 
 /**
  * Belongs to package com.tarantulus.archimedes.commands.
@@ -312,11 +313,12 @@ public class OffsetFactory implements CommandFactory {
         double localDistance;
         boolean localPositive;
         List<Element> offseteds = new ArrayList<Element>();
-        // TODO Pensar em algum jeito melhor de fazer isso
+        // TODO Think of a better way to do this
         Map<Offsetable, Integer> localNumPositive, localNumNegative;
         localNumPositive = (Map<Offsetable, Integer>) numPositive.clone();
         localNumNegative = (Map<Offsetable, Integer>) numNegative.clone();
 
+        List<InvalidParameterException> problems = new LinkedList<InvalidParameterException>();
         for (Offsetable element : selection) {
             localDistance = distance;
             localPositive = direction.get(element);
@@ -335,14 +337,19 @@ public class OffsetFactory implements CommandFactory {
             Element offseted = null;
             try {
                 offseted = element.cloneWithDistance(localDistance);
+                offseteds.add(offseted);
             }
             catch (InvalidParameterException e) {
+                // Couldn't offset this element. Ignore it but keep the exception for later throw
                 numPositive = (HashMap<Offsetable, Integer>) localNumPositive;
                 numNegative = (HashMap<Offsetable, Integer>) localNumNegative;
-                throw e;
+                problems.add(e);
             }
-            offseteds.add(offseted);
         }
+        
+        if(!problems.isEmpty())
+            throw new InvalidParametersException(problems);
+        
         return offseteds;
     }
 

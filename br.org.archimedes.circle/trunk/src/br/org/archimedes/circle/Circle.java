@@ -4,23 +4,19 @@
 
 package br.org.archimedes.circle;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
-
 import br.org.archimedes.Constant;
 import br.org.archimedes.Geometrics;
 import br.org.archimedes.curvedshape.CurvedShape;
 import br.org.archimedes.exceptions.IllegalActionException;
 import br.org.archimedes.exceptions.InvalidArgumentException;
+import br.org.archimedes.exceptions.InvalidParameterException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.gui.opengl.OpenGLWrapper;
 import br.org.archimedes.model.ComparablePoint;
 import br.org.archimedes.model.DoubleKey;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Layer;
+import br.org.archimedes.model.Offsetable;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Rectangle;
 import br.org.archimedes.model.ReferencePoint;
@@ -28,10 +24,16 @@ import br.org.archimedes.model.Vector;
 import br.org.archimedes.model.references.CirclePoint;
 import br.org.archimedes.model.references.RhombusPoint;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
+
 /**
  * Belongs to package com.tarantulus.archimedes.model.
  */
-public class Circle extends CurvedShape {
+public class Circle extends CurvedShape implements Offsetable {
 
     private Point center;
 
@@ -256,15 +258,15 @@ public class Circle extends CurvedShape {
         return radius;
     }
 
-    public Element cloneWithDistance (double distance)
-            throws IllegalActionException {
+    public Element cloneWithDistance (double distance) throws InvalidParameterException {
 
         if (distance < 0) {
             if (Math.abs(radius - distance) <= Constant.EPSILON
                     || Math.abs(distance) > radius) {
-                throw new IllegalActionException();
+                throw new InvalidParameterException();
             }
         }
+        
         Circle clone = null;
         try {
             clone = new Circle(center.clone(), radius + distance);

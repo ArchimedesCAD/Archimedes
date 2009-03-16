@@ -5,18 +5,16 @@
 
 package br.org.archimedes.arc;
 
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
-
 import br.org.archimedes.Constant;
 import br.org.archimedes.Geometrics;
 import br.org.archimedes.curvedshape.CurvedShape;
 import br.org.archimedes.exceptions.IllegalActionException;
 import br.org.archimedes.exceptions.InvalidArgumentException;
+import br.org.archimedes.exceptions.InvalidParameterException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.gui.opengl.OpenGLWrapper;
 import br.org.archimedes.model.Element;
+import br.org.archimedes.model.Offsetable;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Rectangle;
 import br.org.archimedes.model.ReferencePoint;
@@ -25,12 +23,16 @@ import br.org.archimedes.model.references.CirclePoint;
 import br.org.archimedes.model.references.SquarePoint;
 import br.org.archimedes.model.references.TrianglePoint;
 
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * Belongs to package br.org.archimedes.arc.
  * 
  * @author nitao
  */
-public class Arc extends CurvedShape {
+public class Arc extends CurvedShape implements Offsetable {
 
     private Point initialPoint;
 
@@ -533,12 +535,12 @@ public class Arc extends CurvedShape {
     }
 
     public Element cloneWithDistance (double distance)
-            throws IllegalActionException {
+            throws InvalidParameterException {
 
         if (distance < 0) {
             if (Math.abs(getRadius() - distance) <= Constant.EPSILON
                     || Math.abs(distance) > getRadius()) {
-                throw new IllegalActionException();
+                throw new InvalidParameterException();
             }
         }
 

@@ -1,18 +1,17 @@
 
 package br.org.archimedes.infiniteLine;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-
 import br.org.archimedes.Constant;
 import br.org.archimedes.exceptions.IllegalActionException;
 import br.org.archimedes.exceptions.InvalidArgumentException;
-import br.org.archimedes.exceptions.InvalidParameterException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.infiniteline.InfiniteLine;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Infinite line tests.<br>
@@ -66,29 +65,6 @@ public class infiniteLineTest {
             Assert.fail("Initial point and ending point are equals.");
         }
         return xline;
-    }
-
-    /**
-     * Clones an infinite line known to be safe. Fails if any exception is
-     * thrown.
-     * 
-     * @param infiniteLine
-     *            The infiniteLine to be cloned.
-     * @param distance
-     *            The distance from the infiniteLine.
-     * @return The cloned infinite line
-     */
-    protected InfiniteLine safeCloneWithDistance (InfiniteLine infiniteLine,
-            double distance) {
-
-        try {
-            return (InfiniteLine) infiniteLine.cloneWithDistance(distance);
-        }
-        catch (InvalidParameterException e) {
-            e.printStackTrace();
-            Assert.fail("Could not clone with distance.");
-        }
-        return null;
     }
 
     /**
@@ -475,13 +451,13 @@ public class infiniteLineTest {
         // Horizontal line
         xLine = createSafeInfiniteLine(0.0, 0.0, 1.0, 0.0);
         expected = createSafeInfiniteLine(0.0, 0.0, 1.0, 0.0);
-        copiedXLine = safeCloneWithDistance(xLine, 0.0);
+        copiedXLine = (InfiniteLine) xLine.cloneWithDistance(0.0);
         Assert.assertEquals(
                 "The copied xLine and the original should be the same.",
                 expected, copiedXLine);
 
         expected = createSafeInfiniteLine(0.0, 0.5, 1.0, 0.5);
-        copiedXLine = safeCloneWithDistance(xLine, 0.5);
+        copiedXLine = (InfiniteLine) xLine.cloneWithDistance(0.5);
         Assert.assertEquals(
                 "The copied xLine and the original should be the same.",
                 expected, copiedXLine);
@@ -495,7 +471,7 @@ public class infiniteLineTest {
         // Ascending line
         xLine = createSafeInfiniteLine(0.0, 0.0, 1.0, 1.0);
         expected = createSafeInfiniteLine(0.0, 0.0, 1.0, 1.0);
-        copiedXLine = safeCloneWithDistance(xLine, 0.0);
+        copiedXLine = (InfiniteLine) xLine.cloneWithDistance(0.0);
         Assert.assertEquals(
                 "The copied xLine and the original should be the same.",
                 expected, copiedXLine);
@@ -519,7 +495,7 @@ public class infiniteLineTest {
         // Descending line
         xLine = createSafeInfiniteLine(0.0, 0.0, -1.0, 1.0);
         expected = createSafeInfiniteLine(0.0, 0.0, -1.0, 1.0);
-        copiedXLine = safeCloneWithDistance(xLine, 0.0);
+        copiedXLine = (InfiniteLine) xLine.cloneWithDistance(0.0);
         Assert.assertEquals(
                 "The copied xLine and the original should be the same.",
                 expected, copiedXLine);
