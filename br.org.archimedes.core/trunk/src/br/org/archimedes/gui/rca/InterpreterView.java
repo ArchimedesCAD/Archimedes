@@ -1,8 +1,12 @@
 
 package br.org.archimedes.gui.rca;
 
-import java.util.Observable;
-import java.util.Observer;
+import br.org.archimedes.controller.InputController;
+import br.org.archimedes.gui.actions.SelectionCommand;
+import br.org.archimedes.gui.model.MouseClickHandler;
+import br.org.archimedes.gui.model.ParameterHandler;
+import br.org.archimedes.model.Drawing;
+import br.org.archimedes.model.Rectangle;
 
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -21,15 +25,10 @@ import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.part.ViewPart;
 
-import br.org.archimedes.controller.InputController;
-import br.org.archimedes.gui.actions.SelectionCommand;
-import br.org.archimedes.gui.model.MouseClickHandler;
-import br.org.archimedes.gui.model.ParameterHandler;
-import br.org.archimedes.model.Drawing;
-import br.org.archimedes.model.Rectangle;
+import java.util.Observable;
+import java.util.Observer;
 
-public class InterpreterView extends ViewPart implements Observer,
-        ISelectionListener {
+public class InterpreterView extends ViewPart implements Observer, ISelectionListener {
 
     public static final String ID = "Archimedes.interpreterView"; //$NON-NLS-1$
 
@@ -40,8 +39,7 @@ public class InterpreterView extends ViewPart implements Observer,
 
     public void createPartControl (Composite parent) {
 
-        getSite().getWorkbenchWindow().getSelectionService()
-                .addSelectionListener(this);
+        getSite().getWorkbenchWindow().getSelectionService().addSelectionListener(this);
         br.org.archimedes.Utils.getInputController().addObserver(this);
 
         final FormLayout layout = new FormLayout();
@@ -55,8 +53,7 @@ public class InterpreterView extends ViewPart implements Observer,
         layoutData.bottom = new FormAttachment(100);
         input.setLayoutData(layoutData);
 
-        output = new Text(parent, SWT.MULTI | SWT.V_SCROLL | SWT.READ_ONLY
-                | SWT.BORDER);
+        output = new Text(parent, SWT.MULTI | SWT.V_SCROLL | SWT.READ_ONLY | SWT.BORDER);
         layoutData = new FormData();
         layoutData.left = new FormAttachment(0);
         layoutData.right = new FormAttachment(100);
@@ -76,8 +73,8 @@ public class InterpreterView extends ViewPart implements Observer,
                 int canvasHeight = (int) rect.getHeight();
                 int marginsHeight = 10;
                 // Relocating the y position of the event to be relative to the
-                // canvas origin. This will cause problems if the user relocates
-                // the interpreter view.
+                // canvas origin.
+                // FIXME Problems if the user relocates the interpreter view.
                 event.y = event.y + outputHeight + canvasHeight + marginsHeight;
                 MouseClickHandler.getInstance().receiveMouseWheel(event);
             }
@@ -100,8 +97,7 @@ public class InterpreterView extends ViewPart implements Observer,
                         br.org.archimedes.Utils.getController().deselectAll();
                     }
                 }
-                else if (Character.isWhitespace(e.character)
-                        && !inputController.wantsSpace()) {
+                else if (Character.isWhitespace(e.character) && !inputController.wantsSpace()) {
                     inputController.receiveText(input.getText());
                     e.doit = false;
                     input.setText(""); //$NON-NLS-1$
@@ -123,7 +119,6 @@ public class InterpreterView extends ViewPart implements Observer,
 
     /*
      * (non-Javadoc)
-     * 
      * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
      */
     public void update (Observable arg0, Object arg1) {
@@ -159,8 +154,7 @@ public class InterpreterView extends ViewPart implements Observer,
     @Override
     public void dispose () {
 
-        getSite().getWorkbenchWindow().getSelectionService()
-                .removeSelectionListener(this);
+        getSite().getWorkbenchWindow().getSelectionService().removeSelectionListener(this);
         super.dispose();
     }
 }

@@ -4,16 +4,8 @@
 
 package br.org.archimedes.gui.model;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Observable;
-
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.widgets.Canvas;
-import org.eclipse.swt.widgets.Event;
-
 import br.org.archimedes.Constant;
+import br.org.archimedes.Utils;
 import br.org.archimedes.controller.Controller;
 import br.org.archimedes.controller.InputController;
 import br.org.archimedes.controller.commands.MacroCommand;
@@ -32,9 +24,17 @@ import br.org.archimedes.model.Rectangle;
 import br.org.archimedes.model.Vector;
 import br.org.archimedes.rcp.extensionpoints.FactoryEPLoader;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.widgets.Canvas;
+import org.eclipse.swt.widgets.Event;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Observable;
+
 /**
- * This class manipulate mouse click related events, and send them to its
- * observers.<br>
+ * This class manipulate mouse click related events, and send them to its observers.<br>
  * Belongs to package br.org.archimedes.gui.model.
  * 
  * @author gigante
@@ -58,8 +58,8 @@ public class MouseClickHandler extends Observable {
     }
 
     /**
-     * This method receives the click from the current Canvas, and sends to the
-     * observers the normalized point.
+     * This method receives the click from the current Canvas, and sends to the observers the
+     * normalized point.
      * 
      * @param event
      *            The mouse event received.
@@ -92,8 +92,7 @@ public class MouseClickHandler extends Observable {
         double x = (double) event.x;
         double y = (double) event.y;
 
-        point = new Point(x - rect.width / 2, (rect.height - y) - rect.height
-                / 2);
+        point = new Point(x - rect.width / 2, (rect.height - y) - rect.height / 2);
 
         try {
             point = workspace.screenToModel(point);
@@ -118,8 +117,7 @@ public class MouseClickHandler extends Observable {
     }
 
     /**
-     * This method is called whenever the right mouse button is clicked over a
-     * drawing.
+     * This method is called whenever the right mouse button is clicked over a drawing.
      */
     public void receiveRightClick () {
 
@@ -128,8 +126,7 @@ public class MouseClickHandler extends Observable {
     }
 
     /**
-     * This method is called whenever the mouse's wheel is rolled over a
-     * drawing.
+     * This method is called whenever the mouse's wheel is rolled over a drawing.
      * 
      * @param event
      *            The mouse wheel event.
@@ -143,8 +140,8 @@ public class MouseClickHandler extends Observable {
         double x = (double) event.x;
         double y = (double) event.y;
 
-        Point screenPoint = new Point(x - rect.getWidth() / 2, ((rect
-                .getHeight() - y) - rect.getHeight() / 2));
+        Point screenPoint = new Point(x - rect.getWidth() / 2, ((rect.getHeight() - y) - rect
+                .getHeight() / 2));
 
         Point modelPoint = null;
         Controller controller = br.org.archimedes.Utils.getController();
@@ -162,8 +159,7 @@ public class MouseClickHandler extends Observable {
             List<UndoableCommand> commands = new ArrayList<UndoableCommand>();
             commands.add(new RelativeZoomCommand(ratio));
             if ( !newModelPoint.equals(modelPoint)) {
-                commands.add(new PanCommand(viewport, viewport
-                        .addVector(modelVector)));
+                commands.add(new PanCommand(viewport, viewport.addVector(modelVector)));
             }
             MacroCommand macro = new MacroCommand(commands);
             List<Command> list = new ArrayList<Command>();
@@ -184,12 +180,29 @@ public class MouseClickHandler extends Observable {
     }
 
     /**
-     * Receives a middle click and if the mouse is down, starts a pan command,
-     * otherwise cancels the current pan command.
+     * Receives a middle click and if the mouse is down, starts a pan command, otherwise cancels the
+     * current pan command.
+     * 
+     * @param event
+     *            The event that triggered this method
      */
-    public void receiveMiddleClick () {
+    public void receiveMiddleClick (MouseEvent event) {
 
-        // TODO Discover how to warn the Pan command
+        // TODO find a better way to refer to the pan command
+        String pan = "br.org.archimedes.pan";
+        if ( !loader.getFatoryMap().containsKey(pan))
+            return;
+
+        boolean activatedPan = workspace.isMouseDown();
+        if (activatedPan) {
+            Utils.getInputController().receiveText(pan);
+            Point point = getNormalizedPoint(event);
+            Utils.getInputController().receiveText(point.getX() + ";" + point.getY());
+        }
+        else {
+            // TODO might have a concurrency issue here.
+            Utils.getInputController().cancelCurrentFactory();
+        }
     }
 
     /**
@@ -205,14 +218,12 @@ public class MouseClickHandler extends Observable {
         try {
             // achar o elemento que está abaixo do duplo clique
             Point normalizedPoint = getNormalizedPoint(event);
-            Element element = controller.getElementUnder(normalizedPoint,
-                    Element.class);
+            Element element = controller.getElementUnder(normalizedPoint, Element.class);
 
             if (element != null) {
                 // dado esse elemento, achar a factory que lida com
                 // duplo clique nesse elemento
-                SelectorFactory factory = loader
-                        .getDoubleClickFactoryFor(element);
+                SelectorFactory factory = loader.getDoubleClickFactoryFor(element);
 
                 if (factory != null) {
                     // ativar a factory

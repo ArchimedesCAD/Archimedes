@@ -1,12 +1,17 @@
 
 package br.org.archimedes.gui.rca.editor;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
+import br.org.archimedes.Constant;
+import br.org.archimedes.exceptions.NoActiveDrawingException;
+import br.org.archimedes.exceptions.NullArgumentException;
+import br.org.archimedes.gui.model.MouseClickHandler;
+import br.org.archimedes.gui.model.MouseMoveHandler;
+import br.org.archimedes.gui.model.VisualHelper;
+import br.org.archimedes.gui.model.Workspace;
+import br.org.archimedes.gui.opengl.OpenGLWrapper;
+import br.org.archimedes.gui.rca.Activator;
+import br.org.archimedes.gui.rca.InterpreterView;
+import br.org.archimedes.model.Drawing;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -40,17 +45,12 @@ import org.eclipse.ui.part.EditorPart;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.GLContext;
 
-import br.org.archimedes.Constant;
-import br.org.archimedes.exceptions.NoActiveDrawingException;
-import br.org.archimedes.exceptions.NullArgumentException;
-import br.org.archimedes.gui.model.MouseClickHandler;
-import br.org.archimedes.gui.model.MouseMoveHandler;
-import br.org.archimedes.gui.model.VisualHelper;
-import br.org.archimedes.gui.model.Workspace;
-import br.org.archimedes.gui.opengl.OpenGLWrapper;
-import br.org.archimedes.gui.rca.Activator;
-import br.org.archimedes.gui.rca.InterpreterView;
-import br.org.archimedes.model.Drawing;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 public class DrawingEditor extends EditorPart implements Observer,
         ISelectionProvider {
@@ -305,7 +305,7 @@ public class DrawingEditor extends EditorPart implements Observer,
                         mouseClickHandler.receiveClick(event);
                     }
                     else if (event.button == 2) {
-                        mouseClickHandler.receiveMiddleClick();
+                        mouseClickHandler.receiveMiddleClick(event);
                     }
                 }
             }
@@ -314,7 +314,7 @@ public class DrawingEditor extends EditorPart implements Observer,
 
                 workspace.setMouseDown(false);
                 if (event.button == 2) {
-                    mouseClickHandler.receiveMiddleClick();
+                    mouseClickHandler.receiveMiddleClick(event);
                 }
             }
 
