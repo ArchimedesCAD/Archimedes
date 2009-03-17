@@ -271,55 +271,6 @@ POSSIBILITY OF SUCH DAMAGES.
    </requires>
 
    <plugin
-         id="br.org.archimedes.opengl"
-         os="linux,macosx,win32"
-         ws="carbon,gtk,win32"
-         arch="ppc,x86"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
-         id="br.org.archimedes.opengl.macosx"
-         os="macosx"
-         ws="carbon"
-         arch="ppc,x86"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         fragment="true"/>
-
-   <plugin
-         id="br.org.archimedes.opengl.linux.x86"
-         os="linux"
-         ws="gtk"
-         arch="x86"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         fragment="true"/>
-         
-   <plugin
-         id="br.org.archimedes.opengl.linux.x86_64"
-         os="linux"
-         ws="gtk"
-         arch="x86_64"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         fragment="true"/>
-
-   <plugin
-         id="br.org.archimedes.opengl.win32.x86"
-         os="win32"
-         ws="win32"
-         arch="x86"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         fragment="true"/>
-
-   <plugin
          id="br.org.archimedes.batik"
          download-size="0"
          install-size="0"
@@ -327,42 +278,44 @@ POSSIBILITY OF SUCH DAMAGES.
          unpack="false"/>
 
    <plugin
+         id="br.org.archimedes.opengl"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="br.org.archimedes.opengl.linux.x86"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="br.org.archimedes.opengl.linux.x86_64"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"/>
+
+   <plugin
+         id="br.org.archimedes.opengl.macosx"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="br.org.archimedes.opengl.win32.x86"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
          id="br.org.archimedes.core"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.update.core"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.update.ui"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ui.forms"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.core.net"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.equinox.security"
          download-size="0"
          install-size="0"
          version="0.0.0"

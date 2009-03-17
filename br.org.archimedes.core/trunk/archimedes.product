@@ -33,7 +33,6 @@
       </win>
    </launcher>
 
-
    <vm>
    </vm>
 
@@ -42,14 +41,14 @@
 
    <features>
       <feature id="org.eclipse.rcp" version="3.4.0.v20080324a-989JERhEk-jWnd5IY8K5tjxB"/>
-      <feature id="br.org.archimedes.feature" version="0.57.4"/>
+      <feature id="br.org.archimedes.core.feature" version="0.57.4"/>
       <feature id="br.org.archimedes.lines.feature" version="0.57.3"/>
       <feature id="br.org.archimedes.curves.feature" version="0.57.3"/>
-      <feature id="br.org.archimedes.operations.workspace.feature" version="0.57.3"/>
-      <feature id="br.org.archimedes.intersections.feature" version="0.57.3"/>
-      <feature id="br.org.archimedes.operations.edit.feature" version="0.57.3"/>
       <feature id="br.org.archimedes.comunication.feature" version="0.57.4"/>
       <feature id="br.org.archimedes.io.feature" version="0.57.4"/>
+      <feature id="br.org.archimedes.intersections.feature" version="0.57.3"/>
+      <feature id="br.org.archimedes.operations.edit.feature" version="0.57.3"/>
+      <feature id="br.org.archimedes.operations.workspace.feature" version="0.57.3"/>
       <feature id="br.org.archimedes.calculus.feature" version="0.57.3"/>
       <feature id="br.org.archimedes.langpack.feature" version="0.50.0"/>
    </features>
