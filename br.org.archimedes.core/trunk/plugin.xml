@@ -73,7 +73,9 @@
    <extension
          id="application"
          point="org.eclipse.core.runtime.applications">
-      <application>
+      <application
+            icon="icons/logo128.gif"
+            visible="true">
          <run class="br.org.archimedes.gui.rca.Archimedes"/>
       </application>
    </extension>
