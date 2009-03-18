@@ -1,168 +1,175 @@
 <project name="allElements delegation and assemble customTargets.xml">
 <!-- FILE WILL BE OVERWRITTEN WHEN GENERATED -->
-  	<target name="allElementsExceptSvnFetch" unless="is.svn.fetch">
-  		<antcall target="norcpbuild"/>
-  		<antcall target="rcpbuild"/>
+    <target name="allElementsExceptSvnFetch" unless="is.svn.fetch">
+        <antcall target="norcpbuild"/>
+        <antcall target="rcpbuild"/>
     </target>
-	
-	<target name="norcpbuild" unless="build.container.feature">
-		<ant antfile="${genericTargets}" target="${target}">
-			<property name="type" value="feature" />
-			<property name="id" value="br.org.archimedes.core.feature" />
-		</ant>
-		<ant antfile="${genericTargets}" target="${target}">
-			<property name="type" value="feature" />
-			<property name="id" value="br.org.archimedes.calculus.feature" />
-		</ant>
-		<ant antfile="${genericTargets}" target="${target}">
-			<property name="type" value="feature" />
-			<property name="id" value="br.org.archimedes.comunication.feature" />
-		</ant>
-		<ant antfile="${genericTargets}" target="${target}">
-			<property name="type" value="feature" />
-			<property name="id" value="br.org.archimedes.curves.feature" />
-		</ant>
-		<ant antfile="${genericTargets}" target="${target}">
-			<property name="type" value="feature" />
-			<property name="id" value="br.org.archimedes.intersections.feature" />
-		</ant>
-		<ant antfile="${genericTargets}" target="${target}">
-			<property name="type" value="feature" />
-			<property name="id" value="br.org.archimedes.io.feature" />
-		</ant>
-		<ant antfile="${genericTargets}" target="${target}">
-			<property name="type" value="feature" />
-			<property name="id" value="br.org.archimedes.langpack.feature" />
-		</ant>
-		<ant antfile="${genericTargets}" target="${target}">
-			<property name="type" value="feature" />
-			<property name="id" value="br.org.archimedes.lines.feature" />
-		</ant>
-		<ant antfile="${genericTargets}" target="${target}">
-			<property name="type" value="feature" />
-			<property name="id" value="br.org.archimedes.operations.edit.feature" />
-		</ant>
-		<ant antfile="${genericTargets}" target="${target}">
-			<property name="type" value="feature" />
-			<property name="id" value="br.org.archimedes.operations.workspace.feature" />
-		</ant>
-		
-	</target>
+    
+    <target name="norcpbuild" unless="build.container.feature">
+        <ant antfile="${genericTargets}" target="${target}">
+            <property name="type" value="feature" />
+            <property name="id" value="br.org.archimedes.core.feature" />
+        </ant>
+        <ant antfile="${genericTargets}" target="${target}">
+            <property name="type" value="feature" />
+            <property name="id" value="br.org.archimedes.calculus.feature" />
+        </ant>
+        <ant antfile="${genericTargets}" target="${target}">
+            <property name="type" value="feature" />
+            <property name="id" value="br.org.archimedes.comunication.feature" />
+        </ant>
+        <ant antfile="${genericTargets}" target="${target}">
+            <property name="type" value="feature" />
+            <property name="id" value="br.org.archimedes.curves.feature" />
+        </ant>
+        <ant antfile="${genericTargets}" target="${target}">
+            <property name="type" value="feature" />
+            <property name="id" value="br.org.archimedes.intersections.feature" />
+        </ant>
+        <ant antfile="${genericTargets}" target="${target}">
+            <property name="type" value="feature" />
+            <property name="id" value="br.org.archimedes.io.feature" />
+        </ant>
+        <ant antfile="${genericTargets}" target="${target}">
+            <property name="type" value="feature" />
+            <property name="id" value="br.org.archimedes.langpack.feature" />
+        </ant>
+        <ant antfile="${genericTargets}" target="${target}">
+            <property name="type" value="feature" />
+            <property name="id" value="br.org.archimedes.lines.feature" />
+        </ant>
+        <ant antfile="${genericTargets}" target="${target}">
+            <property name="type" value="feature" />
+            <property name="id" value="br.org.archimedes.operations.edit.feature" />
+        </ant>
+        <ant antfile="${genericTargets}" target="${target}">
+            <property name="type" value="feature" />
+            <property name="id" value="br.org.archimedes.operations.workspace.feature" />
+        </ant>
+        
+    </target>
 
-	<target name="rcpbuild" if="build.container.feature">
-		<ant antfile="${genericTargets}" target="${target}">
-			<property name="type" value="feature" />
-			<property name="id" value="org.eclipse.pde.build.container.feature" />
-		</ant>
-	</target>
-	
-	<!-- generated assemble targets -->	     
-	<target name="assemble.br.org.archimedes.core.feature">
-		<ant antfile="${assembleScriptName}" dir="${buildDirectory}">
-			<property name="zipargs" value="" />
-		</ant>
-	</target>
-	<target name="assemble.br.org.archimedes.calculus.feature">
-		<ant antfile="${assembleScriptName}" dir="${buildDirectory}">
-			<property name="zipargs" value="" />
-		</ant>
-	</target>
-	<target name="assemble.br.org.archimedes.comunication.feature">
-		<ant antfile="${assembleScriptName}" dir="${buildDirectory}">
-			<property name="zipargs" value="" />
-		</ant>
-	</target>
-	<target name="assemble.br.org.archimedes.curves.feature">
-		<ant antfile="${assembleScriptName}" dir="${buildDirectory}">
-			<property name="zipargs" value="" />
-		</ant>
-	</target>
-	<target name="assemble.br.org.archimedes.intersections.feature">
-		<ant antfile="${assembleScriptName}" dir="${buildDirectory}">
-			<property name="zipargs" value="" />
-		</ant>
-	</target>
-	<target name="assemble.br.org.archimedes.io.feature">
-		<ant antfile="${assembleScriptName}" dir="${buildDirectory}">
-			<property name="zipargs" value="" />
-		</ant>
-	</target>
-	<target name="assemble.br.org.archimedes.langpack.feature">
-		<ant antfile="${assembleScriptName}" dir="${buildDirectory}">
-			<property name="zipargs" value="" />
-		</ant>
-	</target>
-	<target name="assemble.br.org.archimedes.lines.feature">
-		<ant antfile="${assembleScriptName}" dir="${buildDirectory}">
-			<property name="zipargs" value="" />
-		</ant>
-	</target>
-	<target name="assemble.br.org.archimedes.operations.edit.feature">
-		<ant antfile="${assembleScriptName}" dir="${buildDirectory}">
-			<property name="zipargs" value="" />
-		</ant>
-	</target>
-	<target name="assemble.br.org.archimedes.operations.workspace.feature">
-		<ant antfile="${assembleScriptName}" dir="${buildDirectory}">
-			<property name="zipargs" value="" />
-		</ant>
-	</target>
+    <target name="rcpbuild" if="build.container.feature">
+        <ant antfile="${genericTargets}" target="${target}">
+            <property name="type" value="feature" />
+            <property name="id" value="org.eclipse.pde.build.container.feature" />
+        </ant>
+    </target>
+    
+    <!-- generated assemble targets -->      
+    <target name="assemble.br.org.archimedes.core.feature">
+        <ant antfile="${assembleScriptName}" dir="${buildDirectory}">
+            <property name="zipargs" value="" />
+        </ant>
+    </target>
+    <target name="assemble.br.org.archimedes.calculus.feature">
+        <ant antfile="${assembleScriptName}" dir="${buildDirectory}">
+            <property name="zipargs" value="" />
+        </ant>
+    </target>
+    <target name="assemble.br.org.archimedes.comunication.feature">
+        <ant antfile="${assembleScriptName}" dir="${buildDirectory}">
+            <property name="zipargs" value="" />
+        </ant>
+    </target>
+    <target name="assemble.br.org.archimedes.curves.feature">
+        <ant antfile="${assembleScriptName}" dir="${buildDirectory}">
+            <property name="zipargs" value="" />
+        </ant>
+    </target>
+    <target name="assemble.br.org.archimedes.intersections.feature">
+        <ant antfile="${assembleScriptName}" dir="${buildDirectory}">
+            <property name="zipargs" value="" />
+        </ant>
+    </target>
+    <target name="assemble.br.org.archimedes.io.feature">
+        <ant antfile="${assembleScriptName}" dir="${buildDirectory}">
+            <property name="zipargs" value="" />
+        </ant>
+    </target>
+    <target name="assemble.br.org.archimedes.langpack.feature">
+        <ant antfile="${assembleScriptName}" dir="${buildDirectory}">
+            <property name="zipargs" value="" />
+        </ant>
+    </target>
+    <target name="assemble.br.org.archimedes.lines.feature">
+        <ant antfile="${assembleScriptName}" dir="${buildDirectory}">
+            <property name="zipargs" value="" />
+        </ant>
+    </target>
+    <target name="assemble.br.org.archimedes.operations.edit.feature">
+        <ant antfile="${assembleScriptName}" dir="${buildDirectory}">
+            <property name="zipargs" value="" />
+        </ant>
+    </target>
+    <target name="assemble.br.org.archimedes.operations.workspace.feature">
+        <ant antfile="${assembleScriptName}" dir="${buildDirectory}">
+            <property name="zipargs" value="" />
+        </ant>
+    </target>
 
-	
-	<!-- assmble targets for RCP build -->	
-	<target name="assemble.org.eclipse.pde.build.container.feature.win32.win32.x86">
- 		<ant antfile="${assembleScriptName}" dir="${buildDirectory}">			
- 			<property name="archiveName" value="${archiveNamePrefix}-win32.win32.x86.zip"/>
-		</ant>
-	</target>
-	<target name="assemble.org.eclipse.pde.build.container.feature.linux.gtk.x86">
- 		<ant antfile="${assembleScriptName}" dir="${buildDirectory}">			
- 			<property name="archiveName" value="${archiveNamePrefix}-linux.gtk.x86.zip"/>
-		</ant>
-	</target>
-	<target name="assemble.org.eclipse.pde.build.container.feature.linux.gtk.ppc">
- 		<ant antfile="${assembleScriptName}" dir="${buildDirectory}">			
- 			<property name="archiveName" value="${archiveNamePrefix}-linux.gtk.ppc.zip"/>
-		</ant>
-	</target>
-	<target name="assemble.org.eclipse.pde.build.container.feature.linux.gtk.x86_64">
- 		<ant antfile="${assembleScriptName}" dir="${buildDirectory}">			
- 			<property name="archiveName" value="${archiveNamePrefix}-linux.gtk.x86_64.zip"/>
-		</ant>
-	</target>
-	<target name="assemble.org.eclipse.pde.build.container.feature.linux.motif.x86">
- 		<ant antfile="${assembleScriptName}" dir="${buildDirectory}">			
- 			<property name="archiveName" value="${archiveNamePrefix}-linux.motif.x86.zip"/>
-		</ant>
-	</target>
-	<target name="assemble.org.eclipse.pde.build.container.feature.solaris.motif.sparc">
- 		<ant antfile="${assembleScriptName}" dir="${buildDirectory}">			
- 			<property name="archiveName" value="${archiveNamePrefix}-solaris.motif.sparc.zip"/>
-		</ant>
-	</target>
-	<target name="assemble.org.eclipse.pde.build.container.feature.solaris.gtk.sparc">
- 		<ant antfile="${assembleScriptName}" dir="${buildDirectory}">			
- 			<property name="archiveName" value="${archiveNamePrefix}-solaris.gtk.sparc.zip"/>
-		</ant>
-	</target>
-	<target name="assemble.org.eclipse.pde.build.container.feature.aix.motif.ppc">
- 		<ant antfile="${assembleScriptName}" dir="${buildDirectory}">			
- 			<property name="archiveName" value="${archiveNamePrefix}-aix.motif.ppc.zip"/>
-		</ant>
-	</target>
-	<target name="assemble.org.eclipse.pde.build.container.feature.hpux.motif.PA_RISC">
- 		<ant antfile="${assembleScriptName}" dir="${buildDirectory}">			
- 			<property name="archiveName" value="${archiveNamePrefix}-hpux.motif.PA_RISC.zip"/>
-		</ant>
-	</target>
-	<target name="assemble.org.eclipse.pde.build.container.feature.macosx.carbon.ppc">
- 		<ant antfile="${assembleScriptName}" dir="${buildDirectory}">			
- 			<property name="archiveName" value="${archiveNamePrefix}-macosx.carbon.ppc.zip"/>
-		</ant>
-	</target>
-	<target name="assemble.org.eclipse.pde.build.container.feature.macosx.carbon.x86">
- 		<ant antfile="${assembleScriptName}" dir="${buildDirectory}">			
- 			<property name="archiveName" value="${archiveNamePrefix}-macosx.carbon.x86.zip"/>
-		</ant>
-	</target>	
+    
+    <!-- assmble targets for RCP build -->  
+    <target name="assemble.org.eclipse.pde.build.container.feature.win32.win32.x86">
+        <ant antfile="${assembleScriptName}" dir="${buildDirectory}">           
+            <property name="archiveName" value="${archiveNamePrefix}-win32.win32.x86.zip"/>
+            <property name="launcherIcons" value="${brandingPlugin}/icons/icon.ico" />
+        </ant>
+    </target>
+    <target name="assemble.org.eclipse.pde.build.container.feature.linux.gtk.x86">
+        <ant antfile="${assembleScriptName}" dir="${buildDirectory}">           
+            <property name="archiveName" value="${archiveNamePrefix}-linux.gtk.x86.zip"/>
+            <property name="launcherIcons" value="${brandingPlugin}/icons/icon.xpm" />
+        </ant>
+    </target>
+    <target name="assemble.org.eclipse.pde.build.container.feature.linux.gtk.ppc">
+        <ant antfile="${assembleScriptName}" dir="${buildDirectory}">           
+            <property name="archiveName" value="${archiveNamePrefix}-linux.gtk.ppc.zip"/>
+            <property name="launcherIcons" value="${brandingPlugin}/icons/icon.xpm" />
+        </ant>
+    </target>
+    <target name="assemble.org.eclipse.pde.build.container.feature.linux.gtk.x86_64">
+        <ant antfile="${assembleScriptName}" dir="${buildDirectory}">           
+            <property name="archiveName" value="${archiveNamePrefix}-linux.gtk.x86_64.zip"/>
+            <property name="launcherIcons" value="${brandingPlugin}/icons/icon.xpm" />
+        </ant>
+    </target>
+    <target name="assemble.org.eclipse.pde.build.container.feature.linux.motif.x86">
+        <ant antfile="${assembleScriptName}" dir="${buildDirectory}">           
+            <property name="archiveName" value="${archiveNamePrefix}-linux.motif.x86.zip"/>
+            <property name="launcherIcons" value="${brandingPlugin}/icons/icon.xpm" />
+        </ant>
+    </target>
+    <target name="assemble.org.eclipse.pde.build.container.feature.solaris.motif.sparc">
+        <ant antfile="${assembleScriptName}" dir="${buildDirectory}">           
+            <property name="archiveName" value="${archiveNamePrefix}-solaris.motif.sparc.zip"/>
+        </ant>
+    </target>
+    <target name="assemble.org.eclipse.pde.build.container.feature.solaris.gtk.sparc">
+        <ant antfile="${assembleScriptName}" dir="${buildDirectory}">           
+            <property name="archiveName" value="${archiveNamePrefix}-solaris.gtk.sparc.zip"/>
+        </ant>
+    </target>
+    <target name="assemble.org.eclipse.pde.build.container.feature.aix.motif.ppc">
+        <ant antfile="${assembleScriptName}" dir="${buildDirectory}">           
+            <property name="archiveName" value="${archiveNamePrefix}-aix.motif.ppc.zip"/>
+        </ant>
+    </target>
+    <target name="assemble.org.eclipse.pde.build.container.feature.hpux.motif.PA_RISC">
+        <ant antfile="${assembleScriptName}" dir="${buildDirectory}">           
+            <property name="archiveName" value="${archiveNamePrefix}-hpux.motif.PA_RISC.zip"/>
+        </ant>
+    </target>
+    <target name="assemble.org.eclipse.pde.build.container.feature.macosx.carbon.ppc">
+        <ant antfile="${assembleScriptName}" dir="${buildDirectory}">           
+            <property name="archiveName" value="${archiveNamePrefix}-macosx.carbon.ppc.zip"/>
+            <property name="launcherIcons" value="${brandingPlugin}/icons/icon.icns" />
+        </ant>
+    </target>
+    <target name="assemble.org.eclipse.pde.build.container.feature.macosx.carbon.x86">
+        <ant antfile="${assembleScriptName}" dir="${buildDirectory}">           
+            <property name="archiveName" value="${archiveNamePrefix}-macosx.carbon.x86.zip"/>
+            <property name="launcherIcons" value="${brandingPlugin}/icons/icon.icns" />
+        </ant>
+    </target>   
 </project>
