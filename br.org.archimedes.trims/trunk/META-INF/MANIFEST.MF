@@ -18,4 +18,5 @@ Require-Bundle: br.org.archimedes.core,
  br.org.archimedes.arc
 Export-Package: br.org.archimedes.trim,
  br.org.archimedes.trims,
- br.org.archimedes.trims.interfaces
+ br.org.archimedes.trims.interfaces,
+ br.org.archimedes.trims.rcp

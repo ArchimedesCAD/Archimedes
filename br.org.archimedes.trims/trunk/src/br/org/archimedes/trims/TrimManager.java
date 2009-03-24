@@ -32,6 +32,10 @@ public class TrimManager implements br.org.archimedes.interfaces.TrimManager {
         loader = new TrimmerEPLoader();
     }
 
+    public TrimManager (TrimmerEPLoader loader) {
+    	this.loader = loader;
+    }
+    
     public Collection<Element> getTrimOf (Element element,
             Collection<Element> references, Point click)
             throws NullArgumentException {
