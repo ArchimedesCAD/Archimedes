@@ -184,29 +184,9 @@ public class DrawingEditor extends EditorPart implements Observer,
                     }
 
                     public void partClosed (IWorkbenchPart part) {
-
-                        System.out.println("Fechando"); //$NON-NLS-1$
-                        try {
-                            Drawing activeDrawing = br.org.archimedes.Utils
-                                    .getController().getActiveDrawing();
-                            System.out.println("Active drawing: " //$NON-NLS-1$
-                                    + activeDrawing.getTitle());
-                            if (part == DrawingEditor.this
-                                    || getDrawing() == activeDrawing) {
-                                System.out.println("Fechando: " //$NON-NLS-1$
-                                        + getDrawing().getTitle());
-                                System.out.println("Part recebida: " + part); //$NON-NLS-1$
-                                System.out.println("Eu-----------: " //$NON-NLS-1$
-                                        + DrawingEditor.this);
-                                br.org.archimedes.Utils.getInputController()
-                                        .setDrawing(null);
-                                partActivated(lastActivated);
-                            }
-                        }
-                        catch (NoActiveDrawingException e) {
-                            // TODO Auto-generated catch block
-                            e.printStackTrace();
-                        }
+                        br.org.archimedes.Utils.getInputController()
+                                .setDrawing(null);
+                        partActivated(lastActivated);
                     }
 
                     public void partDeactivated (IWorkbenchPart part) {
