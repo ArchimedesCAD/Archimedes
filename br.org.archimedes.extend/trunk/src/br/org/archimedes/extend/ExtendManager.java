@@ -18,6 +18,10 @@ public class ExtendManager implements
 		loader = new ExtenderEPLoader();
 	}
 	
+	public ExtendManager (ExtenderEPLoader loader) {
+    	this.loader = loader;
+    }
+	
 	public void extend(Element element,
 			Collection<Element> references, Point click)
 			throws NullArgumentException {

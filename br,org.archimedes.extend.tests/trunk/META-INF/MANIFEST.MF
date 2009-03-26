@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Extend Tests
+Bundle-SymbolicName: br.org.archimedes.extend.tests
+Bundle-Version: 0.58
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Require-Bundle: br.org.archimedes.core;bundle-version="0.57.4",
+ br.org.archimedes.extend;bundle-version="0.57.4"
