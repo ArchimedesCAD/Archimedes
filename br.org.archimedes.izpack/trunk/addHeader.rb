@@ -34,17 +34,18 @@ REPLACE_REST */
              "marivb" => "Mariana V. Bravo",
              "mpmoreti" => "Marcos P. Moreti",
              "pablolh" => "Paulo L. Huaman",
+             "rsider" => "Ricardo Sider",
              "ruivo" => "Eduardo O. de Souza",
              "victordlopes" => "Victor D. Lopes",
              "wrp" => "Wellington R. Pinheiro" }
 
 def generate_year_range file
   created_year = file.created_on.year;
-	year = Date.today.year
-	if created_year = Date.today.year
-	 	"#{year}"
+	current_year = Date.today.year
+	if created_year == current_year
+	 	"#{current_year}"
 	else
-		"#{created_year}, #{year}" 
+		"#{created_year}, #{current_year}" 
 	end
 end
 
@@ -125,9 +126,7 @@ subprojects.each do |project_dir|
   files.each do |file|
     old_header = file.original_header
     new_header = file.generate_header(header, hooks)
-    puts "For file '#{file.path}' on project '#{project.path}'"
-    puts "Replaced: #{old_header}"
-    puts "With: #{new_header}"
+    file.add_header new_header, old_header
   end
 end
 
