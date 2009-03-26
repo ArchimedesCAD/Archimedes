@@ -1,0 +1,100 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Schema file written by PDE -->
+<schema targetNamespace="br.org.archimedes.io.svg" xmlns="http://www.w3.org/2001/XMLSchema">
+<annotation>
+      <appinfo>
+         <meta.schema plugin="br.org.archimedes.io.svg" id="svgElementExporter" name="SVG Element Exporter"/>
+      </appinfo>
+      <documentation>
+         This extension point allows for plugins to contribute with a class that knows how to export a given element to SVG.
+      </documentation>
+   </annotation>
+
+   <element name="extension">
+      <annotation>
+         <appinfo>
+            <meta.element />
+         </appinfo>
+      </annotation>
+      <complexType>
+         <attribute name="point" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="id" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appinfo>
+                  <meta.attribute translatable="true"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <annotation>
+      <appinfo>
+         <meta.section type="since"/>
+      </appinfo>
+      <documentation>
+         This feature was first release in 15/01/2009 for version 0.57.3
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appinfo>
+         <meta.section type="examples"/>
+      </appinfo>
+      <documentation>
+         The first extension created using this point was the Line element exporter to SVG
+Here follows it&apos;s use:
+&lt;extension point=&quot;br.org.archimedes.elementExporter&quot;&gt;
+  &lt;exporter id=&quot;br.org.archimedes.line.svg.exporter&quot;
+   extension=&quot;svg&quot; 
+   elementId=&quot;br.org.archimedes.line&quot;
+   class=&quot;br.org.archimedes.line.svg.LineExporter&quot;/&gt;
+&lt;/extension&gt;
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appinfo>
+         <meta.section type="apiinfo"/>
+      </appinfo>
+      <documentation>
+         Check for the
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appinfo>
+         <meta.section type="implementation"/>
+      </appinfo>
+      <documentation>
+         Check the implementation available on this plugin for the extension &quot;br.org.archimedes.svg.line&quot;.
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appinfo>
+         <meta.section type="copyright"/>
+      </appinfo>
+      <documentation>
+         For now, all content regarding Archimedes is licensed under GPL v.2.
+Therefore all that regards the extension points is copyleft.
+      </documentation>
+   </annotation>
+
+</schema>
