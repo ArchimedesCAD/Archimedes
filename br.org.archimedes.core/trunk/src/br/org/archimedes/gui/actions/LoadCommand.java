@@ -9,6 +9,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
@@ -59,8 +61,13 @@ public class LoadCommand {
     public Drawing execute () {
 
         FileDialog dialog = new FileDialog(parent, SWT.OPEN);
-        String[] extensions = nativeLoader.getExtensionsArray();
-        dialog.setFilterExtensions(extensions);
+        List<String> filters = new LinkedList<String>();
+        for (String extension : nativeLoader.getExtensionsArray()) {
+			String filter = "*." + extension;
+			filters.add(filter);
+		}
+        String[] filtersArray = filters.toArray(new String[0]);
+		dialog.setFilterExtensions(filtersArray);
 
         dialog.setText(Messages.Load_OpenDialog);
 

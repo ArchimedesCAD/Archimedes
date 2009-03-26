@@ -121,6 +121,10 @@ public class XMLParser {
 
         DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory
                 .newInstance();
+        // Needed in order to tell the DocumentBuilder that the XML uses name spaces.
+        // If not set, the validation fails since it assumes everything on the
+        // document is in the default name space.
+        docBuilderFactory.setNamespaceAware(true);
         DocumentBuilder docBuilder = null;
         try {
             docBuilder = docBuilderFactory.newDocumentBuilder();
