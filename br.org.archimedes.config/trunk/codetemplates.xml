@@ -1,2 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?><templates><template autoinsert="true" context="catchblock_context" deleted="false" description="Code in new catch blocks" enabled="true" id="org.eclipse.jdt.ui.text.codetemplates.catchblock" name="catchblock">// ${todo} Auto-generated catch block
-${exception_var}.printStackTrace();</template></templates>
+<?xml version="1.0" encoding="UTF-8"?><templates><template autoinsert="false" context="methodbody_context" deleted="false" description="Code in created method stubs" enabled="true" id="org.eclipse.jdt.ui.text.codetemplates.methodbody" name="methodbody">// ${todo} Auto-generated method stub
+${body_statement}
+System.out.println("Called ${enclosing_type}.${enclosing_method}");</template></templates>
