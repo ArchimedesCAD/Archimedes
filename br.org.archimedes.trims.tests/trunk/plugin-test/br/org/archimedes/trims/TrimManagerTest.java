@@ -1,10 +1,11 @@
 package br.org.archimedes.trims;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Set;
 
 import org.junit.Test;
 
@@ -29,22 +30,34 @@ public class TrimManagerTest extends Tester{
 	}
 	
 	@Test
-	public void testeReturnTrimmerMockadoeChamarTrimparaOTrimmerMockado() throws Exception {
+	public void testeReturnTrimmerMockadoeChamarTrimParaOTrimmerMockado() throws Exception {
 		
-/*		Trimmer trimmerMockado = new Trimmer() {
-
+		final Line line = new Line(1.0, 0.0, -1.0, 0.0);
+		final Collection<Element> reference = Collections.EMPTY_LIST;
+		final Point point = new Point(0.0, 0.0);		
+		
+		Trimmer trimmerMockado = new Trimmer() {			
+			
 			public Collection<Element> trim(Element element,
 					Collection<Element> references, Point click)
 					throws NullArgumentException {
-				// TODO Auto-generated method stub
-				return null;
+					assertEquals(line, element);
+					assertEquals(reference, references);
+					assertEquals(point, click);
+				return Collections.singleton((Element) line);
 			}
 			
-		}
+		};
 		
-		MockTrimmerEPLoader trimmerEPLoader = new MockTrimmerEPLoader(Collections.singletonMap(Line.class, trimmerMockado));
+		HashMap<Class<? extends Element>, Trimmer> trimmerMap = new HashMap<Class<? extends Element>, Trimmer>();
+		trimmerMap.put(Line.class, trimmerMockado);
+		
+		MockTrimmerEPLoader trimmerEPLoader = new MockTrimmerEPLoader(trimmerMap);
 		TrimManager manager = new TrimManager(trimmerEPLoader);
-		Line line = new Line(1.0, 0.0, -1.0, 0.0);
-*/
+		
+		Collection<Element> collection = manager.getTrimOf(line, reference, point);
+		assertCollectionTheSame(Collections.singleton(line), collection);
+		
+
 	}
 }
