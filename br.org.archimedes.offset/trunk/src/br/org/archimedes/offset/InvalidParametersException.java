@@ -1,16 +1,7 @@
-/*
- * Archimedes -The Open CAD, Copyright (C) 2009 Hugo Corbucci <hugo.corbucci@gmail.com>
- * http://www.archimedes.org.br/ This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 2 of the License, or (at your option) any later version. This program
- * is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
- * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
- * Public License for more details. You should have received a copy of the GNU General Public
- * License along with this program; if not, write to the Free Software Foundation, Inc., 59 Temple
- * Place, Suite 330, Boston, MA 02111-1307 US Created on Mar 16, 2009 for br.org.archimedes.offset
- * as part of Archimedes' plug-ins.
+/**
+ * This file was created on 16/03/2009, 10:42:02, by nitao.
+ * It is part of br.org.archimedes.offset on the br.org.archimedes.core project.
  */
-
 package br.org.archimedes.offset;
 
 import br.org.archimedes.exceptions.InvalidParameterException;
