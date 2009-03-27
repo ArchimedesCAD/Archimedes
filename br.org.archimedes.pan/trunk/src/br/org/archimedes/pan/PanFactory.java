@@ -1,7 +1,16 @@
 /**
- * 
+ * Copyright (c) 2007, 2009 Hugo Corbucci and others.<br>
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html<br>
+ * <br>
+ * Contributors:<br>
+ * Julien Renaut - initial API and implementation<br>
+ * Hugo Corbucci - later contributions<br>
+ * <br>
+ * This file was created on 2007/05/10, 10:10:26, by Julien Renaut.<br>
+ * It is part of package br.org.archimedes.pan on the br.org.archimedes.pan project.<br>
  */
-
 package br.org.archimedes.pan;
 
 import java.util.ArrayList;
@@ -29,7 +38,7 @@ import br.org.archimedes.parser.PointParser;
 import br.org.archimedes.parser.ReturnDecoratorParser;
 
 /**
- * Belongs to package com.tarantulus.archimedes.commands.
+ * Belongs to package br.org.archimedes.pan.
  */
 public class PanFactory implements CommandFactory, Observer {
 

@@ -1,8 +1,15 @@
 /**
- * This file was created on 2007/06/16, 16:07:27, by nitao. It is part of
- * br.org.archimedes.text.tests on the br.org.archimedes.text.tests project.
+ * Copyright (c) 2008, 2009 Hugo Corbucci and others.<br>
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html<br>
+ * <br>
+ * Contributors:<br>
+ * Hugo Corbucci - initial API and implementation<br>
+ * <br>
+ * This file was created on 2007/06/16, 16:07:27, by Hugo Corbucci.<br>
+ * It is part of package br.org.archimedes.mock on the br.org.archimedes.intersections.tests project.<br>
  */
-
 package br.org.archimedes.mock;
 
 import org.apache.batik.svggen.font.Font;
@@ -10,7 +17,7 @@ import org.apache.batik.svggen.font.Glyph;
 import org.apache.batik.svggen.font.table.GlyphDescription;
 
 /**
- * Belongs to package br.org.archimedes.text.tests.
+ * Belongs to package br.org.archimedes.mock.
  * 
  * @author nitao
  */

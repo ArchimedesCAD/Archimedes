@@ -1,7 +1,16 @@
-/*
- * Created on 13/04/2006
+/**
+ * Copyright (c) 2006, 2009 Hugo Corbucci and others.<br>
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html<br>
+ * <br>
+ * Contributors:<br>
+ * Hugo Corbucci - initial API and implementation<br>
+ * Mariana V. Bravo - later contributions<br>
+ * <br>
+ * This file was created on 2006/04/13, 13:44:23, by Hugo Corbucci.<br>
+ * It is part of package br.org.archimedes.offset on the br.org.archimedes.offset project.<br>
  */
-
 package br.org.archimedes.offset;
 
 import br.org.archimedes.Constant;
@@ -36,7 +45,7 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 /**
- * Belongs to package com.tarantulus.archimedes.commands.
+ * Belongs to package br.org.archimedes.offset.
  * 
  * @author night
  */

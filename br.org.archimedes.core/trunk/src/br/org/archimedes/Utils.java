@@ -1,8 +1,16 @@
 /**
- * This file was created on 03/04/2006, 10:44:46, by cmsato. It is part of
- * br.org.archimedes on the br.org.archimedes.core project.
+ * Copyright (c) 2006, 2009 Hugo Corbucci and others.<br>
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html<br>
+ * <br>
+ * Contributors:<br>
+ * Cristiane M. Sato - initial API and implementation<br>
+ * Julien Renaut, Mariana V. Bravo, Luiz C. Real, Jonas K. Hirata - later contributions<br>
+ * <br>
+ * This file was created on 2006/04/03, 10:44:46, by Cristiane M. Sato.<br>
+ * It is part of package br.org.archimedes on the br.org.archimedes.core project.<br>
  */
-
 package br.org.archimedes;
 
 import java.util.Collection;

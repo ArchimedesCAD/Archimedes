@@ -1,4 +1,16 @@
-
+/**
+ * Copyright (c) 2007, 2009 Hugo Corbucci and others.<br>
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html<br>
+ * <br>
+ * Contributors:<br>
+ * Hugo Corbucci - initial API and implementation<br>
+ * Mariana V. Bravo - later contributions<br>
+ * <br>
+ * This file was created on 2007/04/19, 10:22:04, by Hugo Corbucci.<br>
+ * It is part of package br.org.archimedes.polyline.area on the br.org.archimedes.polyline.area.tests project.<br>
+ */
 package br.org.archimedes.polyline.area;
 
 import org.junit.After;
@@ -14,7 +26,7 @@ import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Vector;
 
 /**
- * Belongs to package com.tarantulus.archimedes.tests.commands.
+ * Belongs to package br.org.archimedes.polyline.area.
  */
 public class AreaPerimeterFactoryTest extends FactoryTester {
 

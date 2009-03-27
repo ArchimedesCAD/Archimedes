@@ -1,7 +1,15 @@
-/*
- * Created on 23/08/2006
+/**
+ * Copyright (c) 2006, 2009 Hugo Corbucci and others.<br>
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html<br>
+ * <br>
+ * Contributors:<br>
+ * Hugo Corbucci - initial API and implementation<br>
+ * <br>
+ * This file was created on 2006/08/23, 10:12:26, by Hugo Corbucci.<br>
+ * It is part of package br.org.archimedes.redo on the br.org.archimedes.redo.tests project.<br>
  */
-
 package br.org.archimedes.redo;
 
 import java.util.ArrayList;
@@ -28,7 +36,7 @@ import br.org.archimedes.model.Point;
 import br.org.archimedes.undo.UndoCommand;
 
 /**
- * Belongs to package com.tarantulus.archimedes.model.commands.
+ * Belongs to package br.org.archimedes.redo.
  * 
  * @author night
  */

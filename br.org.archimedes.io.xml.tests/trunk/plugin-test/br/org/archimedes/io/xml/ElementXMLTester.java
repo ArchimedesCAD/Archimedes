@@ -1,3 +1,16 @@
+/**
+ * Copyright (c) 2007, 2009 Hugo Corbucci and others.<br>
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html<br>
+ * <br>
+ * Contributors:<br>
+ * Wellington R. Pinheiro - initial API and implementation<br>
+ * Hugo Corbucci - later contributions<br>
+ * <br>
+ * This file was created on 2007/05/21, 11:37:17, by Wellington R. Pinheiro.<br>
+ * It is part of package br.org.archimedes.io.xml on the br.org.archimedes.io.xml.tests project.<br>
+ */
 package br.org.archimedes.io.xml;
 
 import java.io.ByteArrayOutputStream;
@@ -17,9 +30,7 @@ import br.org.archimedes.Tester;
 import br.org.archimedes.interfaces.ElementExporter;
 
 /**
- * Classe básica para testes de exportação de XML.
- * 
- * @author eclipse
+ * Basic class to XML exporting.
  */
 public class ElementXMLTester extends Tester {
 

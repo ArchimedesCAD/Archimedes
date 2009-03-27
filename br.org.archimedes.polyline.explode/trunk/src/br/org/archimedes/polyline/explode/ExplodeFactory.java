@@ -1,7 +1,15 @@
-/*
- * Created on 04/04/2006
+/**
+ * Copyright (c) 2006, 2009 Hugo Corbucci and others.<br>
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html<br>
+ * <br>
+ * Contributors:<br>
+ * Hugo Corbucci - initial API and implementation<br>
+ * <br>
+ * This file was created on 2006/04/04, 22:53:23, by Hugo Corbucci.<br>
+ * It is part of package br.org.archimedes.polyline.explode on the br.org.archimedes.polyline.explode project.<br>
  */
-
 package br.org.archimedes.polyline.explode;
 
 import java.util.ArrayList;
@@ -21,7 +29,7 @@ import br.org.archimedes.model.Element;
 import br.org.archimedes.polyline.Polyline;
 
 /**
- * Belongs to package com.tarantulus.archimedes.commands.
+ * Belongs to package br.org.archimedes.polyline.explode.
  * 
  * @author gigante
  */

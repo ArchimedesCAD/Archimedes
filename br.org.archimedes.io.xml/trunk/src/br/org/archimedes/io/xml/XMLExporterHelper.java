@@ -1,4 +1,16 @@
-
+/**
+ * Copyright (c) 2007, 2009 Hugo Corbucci and others.<br>
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html<br>
+ * <br>
+ * Contributors:<br>
+ * Julien Renaut - initial API and implementation<br>
+ * Hugo Corbucci - later contributions<br>
+ * <br>
+ * This file was created on 2007/05/31, 12:37:35, by Julien Renaut.<br>
+ * It is part of package br.org.archimedes.io.xml on the br.org.archimedes.io.xml project.<br>
+ */
 package br.org.archimedes.io.xml;
 
 import java.io.IOException;
@@ -8,10 +20,11 @@ import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Vector;
 
 /**
- * Classe utilitária com métodos para converter elementos básicos para xml como:
- * Point Vector Entra no lugar dos métodos write(...) do projeto antigo para
- * elementos exportáveis que não são sub-classe de Element. Deve escrever o XML
- * conforme especificado em FileXMLSchema.xsd
+ * Utility class with methods to convert basic elements to XML such as:
+ * Point and Vector<br>
+ * Replaces the write(...) methods of the old version to export pieces
+ * of the drawing that are not Elements. Should write the XML according
+ * to the specification FileSchema.xsd
  * 
  * @author julien
  */

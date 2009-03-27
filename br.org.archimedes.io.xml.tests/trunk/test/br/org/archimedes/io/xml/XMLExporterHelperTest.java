@@ -1,3 +1,16 @@
+/**
+ * Copyright (c) 2007, 2009 Hugo Corbucci and others.<br>
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html<br>
+ * <br>
+ * Contributors:<br>
+ * Julien Renaut - initial API and implementation<br>
+ * Hugo Corbucci - later contributions<br>
+ * <br>
+ * This file was created on 2007/05/31, 12:37:41, by Julien Renaut.<br>
+ * It is part of package br.org.archimedes.io.xml on the br.org.archimedes.io.xml.tests project.<br>
+ */
 package br.org.archimedes.io.xml;
 
 import java.io.ByteArrayOutputStream;
@@ -11,7 +24,7 @@ import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Vector;
 
 /**
- * Testes do XMLExporterHelper
+ * XMLExporterHelper's tests
  * 
  * @author julien
  */

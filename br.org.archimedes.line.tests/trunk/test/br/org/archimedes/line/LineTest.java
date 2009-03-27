@@ -1,7 +1,16 @@
-/*
- * Created on 23/03/2006
+/**
+ * Copyright (c) 2006, 2009 Hugo Corbucci and others.<br>
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html<br>
+ * <br>
+ * Contributors:<br>
+ * Cristiane M. Sato - initial API and implementation<br>
+ * Marcio Oshiro, Hugo Corbucci, Mariana V. Bravo - later contributions<br>
+ * <br>
+ * This file was created on 2006/03/23, 10:09:12, by Cristiane M. Sato.<br>
+ * It is part of package br.org.archimedes.line on the br.org.archimedes.line.tests project.<br>
  */
-
 package br.org.archimedes.line;
 
 import org.junit.Assert;
@@ -15,7 +24,7 @@ import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.model.Point;
 
 /**
- * Belongs to package com.tarantulus.archimedes.tests.model.
+ * Belongs to package br.org.archimedes.line.
  * 
  * @author cris e oshiro
  */

@@ -1,4 +1,16 @@
-
+/**
+ * Copyright (c) 2007, 2009 Hugo Corbucci and others.<br>
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html<br>
+ * <br>
+ * Contributors:<br>
+ * Wellington R. Pinheiro - initial API and implementation<br>
+ * César Seragiotto, Victor D. Lopes, Mariana V. Bravo, Hugo Corbucci - later contributions<br>
+ * <br>
+ * This file was created on 2007/04/09, 13:02:39, by Wellington R. Pinheiro.<br>
+ * It is part of package br.org.archimedes.arc on the br.org.archimedes.arc.tests project.<br>
+ */
 package br.org.archimedes.arc;
 
 import static org.junit.Assert.assertFalse;

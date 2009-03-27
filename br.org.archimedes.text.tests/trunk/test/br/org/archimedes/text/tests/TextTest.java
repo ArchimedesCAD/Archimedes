@@ -1,4 +1,16 @@
-
+/**
+ * Copyright (c) 2007, 2009 Hugo Corbucci and others.<br>
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html<br>
+ * <br>
+ * Contributors:<br>
+ * Wellington R. Pinheiro - initial API and implementation<br>
+ * Eduardo O. de Souza, Julien Renaut, Hugo Corbucci - later contributions<br>
+ * <br>
+ * This file was created on 2007/05/07, 13:15:26, by Wellington R. Pinheiro.<br>
+ * It is part of package br.org.archimedes.text.tests on the br.org.archimedes.text.tests project.<br>
+ */
 package br.org.archimedes.text.tests;
 
 import junit.framework.Assert;
@@ -18,7 +30,7 @@ import br.org.archimedes.model.Rectangle;
 import br.org.archimedes.text.Text;
 
 /**
- * Belongs to package com.tarantulus.archimedes.model.elements.
+ * Belongs to package br.org.archimedes.text.tests.
  * 
  * @author night
  */

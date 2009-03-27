@@ -1,4 +1,16 @@
-
+/**
+ * Copyright (c) 2007, 2009 Hugo Corbucci and others.<br>
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html<br>
+ * <br>
+ * Contributors:<br>
+ * Mariana V. Bravo - initial API and implementation<br>
+ * Hugo Corbucci, Julien Renaut, Marcos P. Moreti, Luiz C. Real - later contributions<br>
+ * <br>
+ * This file was created on 2007/04/27, 11:06:57, by Mariana V. Bravo.<br>
+ * It is part of package br.org.archimedes.dimension on the br.org.archimedes.dimension project.<br>
+ */
 package br.org.archimedes.dimension;
 
 import java.text.DecimalFormat;

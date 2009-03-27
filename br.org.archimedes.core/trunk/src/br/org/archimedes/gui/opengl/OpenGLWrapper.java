@@ -1,10 +1,17 @@
-
-package br.org.archimedes.gui.opengl;
-
 /**
- * This file was created on 13/10/2005, 10:53:38, by jefsilva. It is part of on
- * the archimedes project.
+ * Copyright (c) 2006, 2009 Hugo Corbucci and others.<br>
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html<br>
+ * <br>
+ * Contributors:<br>
+ * Jeferson R. Silva - initial API and implementation<br>
+ * Hugo Corbucci, Wellington R. Pinheiro, Marcos P. Moreti - later contributions<br>
+ * <br>
+ * This file was created on 2005/10/13, 10:53:38, by Hugo Corbucci.<br>
+ * It is part of package br.org.archimedes.gui.opengl on the br.org.archimedes.core project.<br>
  */
+package br.org.archimedes.gui.opengl;
 
 import java.util.HashMap;
 import java.util.LinkedList;

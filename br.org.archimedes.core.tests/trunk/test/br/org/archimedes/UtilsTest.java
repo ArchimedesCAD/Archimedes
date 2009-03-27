@@ -1,12 +1,21 @@
+/**
+ * Copyright (c) 2007, 2009 Hugo Corbucci and others.<br>
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html<br>
+ * <br>
+ * Contributors:<br>
+ * Mariana V. Bravo - initial API and implementation<br>
+ * Hugo Corbucci - later contributions<br>
+ * <br>
+ * This file was created on 2006/04/06, 11:32:46, by Mariana V. Bravo.<br>
+ * It is part of package br.org.archimedes on the br.org.archimedes.core.tests project.<br>
+ */
 package br.org.archimedes;
 
 
 import org.junit.Assert;
 import org.junit.Test;
-
-/*
- * Created on 06/04/2006
- */
 
 /**
  * Belongs to package .

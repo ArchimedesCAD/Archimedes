@@ -1,8 +1,16 @@
-// TODO: salvar o ROTATE
-/*
- * Created on 11/07/2006
+/**
+ * Copyright (c) 2006, 2009 Hugo Corbucci and others.<br>
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html<br>
+ * <br>
+ * Contributors:<br>
+ * Fernando R. Barbosa - initial API and implementation<br>
+ * Victor D. Lopes, Hugo Corbucci, Marcos P. Moreti - later contributions<br>
+ * <br>
+ * This file was created on 2006/07/11, 10:04:05, by Victor D. Lopes.<br>
+ * It is part of package br.org.archimedes.io.xml.parsers on the br.org.archimedes.io.xml project.<br>
  */
-
 package br.org.archimedes.io.xml.parsers;
 
 import java.io.IOException;
@@ -33,6 +41,7 @@ import br.org.archimedes.model.Point;
  * 
  * @author fernandorb
  */
+ // TODO Save rotate
 public class XMLParser {
 
     private Validator validator;

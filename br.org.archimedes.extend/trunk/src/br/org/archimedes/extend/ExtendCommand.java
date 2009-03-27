@@ -1,7 +1,16 @@
-/*
- * Created on 25/08/2006
+/**
+ * Copyright (c) 2006, 2009 Hugo Corbucci and others.<br>
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html<br>
+ * <br>
+ * Contributors:<br>
+ * Jeferson R. Silva - initial API and implementation<br>
+ * Jonas K. Hirata, Hugo Corbucci - later contributions<br>
+ * <br>
+ * This file was created on 2006/08/25, 23:59:46, by Jonas K. Hirata.<br>
+ * It is part of package br.org.archimedes.extend on the br.org.archimedes.extend project.<br>
  */
-
 package br.org.archimedes.extend;
 
 import java.util.ArrayList;

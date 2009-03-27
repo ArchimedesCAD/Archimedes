@@ -1,7 +1,16 @@
-/*
- * Created on 27/03/2006
+/**
+ * Copyright (c) 2006, 2009 Hugo Corbucci and others.<br>
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html<br>
+ * <br>
+ * Contributors:<br>
+ * Hugo Corbucci - initial API and implementation<br>
+ * Paulo L. Huaman, Eduardo O. de Souza - later contributions<br>
+ * <br>
+ * This file was created on 2006/03/27, 22:53:43, by Hugo Corbucci.<br>
+ * It is part of package br.org.archimedes.polyline on the br.org.archimedes.polyline project.<br>
  */
-
 package br.org.archimedes.polyline;
 
 import java.util.ArrayList;
@@ -29,7 +38,7 @@ import br.org.archimedes.parser.StringDecoratorParser;
 import br.org.archimedes.parser.VectorParser;
 
 /**
- * Belongs to package com.tarantulus.archimedes.commands.
+ * Belongs to package br.org.archimedes.polyline.
  */
 public class PolylineFactory implements CommandFactory {
 

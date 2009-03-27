@@ -1,7 +1,16 @@
-/*
- * Created on June 9, 2008 for br.org.archimedes.trims
+/**
+ * Copyright (c) 2008, 2009 Hugo Corbucci and others.<br>
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html<br>
+ * <br>
+ * Contributors:<br>
+ * Cecilia Fernandes - initial API and implementation<br>
+ * Jonas K. Hirata, Hugo Corbucci, Bruno V. da Hora - later contributions<br>
+ * <br>
+ * This file was created on 2008/06/05, 10:11:16, by Cecilia Fernandes.<br>
+ * It is part of package br.org.archimedes.trims on the br.org.archimedes.trims project.<br>
  */
-
 package br.org.archimedes.trims;
 
 import java.util.Collection;

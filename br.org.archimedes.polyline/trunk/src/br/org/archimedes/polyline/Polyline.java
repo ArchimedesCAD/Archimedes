@@ -1,7 +1,16 @@
-/*
- * Created on 05/06/2006
+/**
+ * Copyright (c) 2006, 2009 Hugo Corbucci and others.<br>
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html<br>
+ * <br>
+ * Contributors:<br>
+ * Hugo Corbucci - initial API and implementation<br>
+ * Luiz C. Real - later contributions<br>
+ * <br>
+ * This file was created on 2006/06/05, 22:53:43, by Hugo Corbucci.<br>
+ * It is part of package br.org.archimedes.polyline on the br.org.archimedes.polyline project.<br>
  */
-
 package br.org.archimedes.polyline;
 
 import br.org.archimedes.Geometrics;
@@ -32,7 +41,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 /**
- * Belongs to package com.tarantulus.archimedes.model.
+ * Belongs to package br.org.archimedes.polyline.
  * 
  * @author nitao
  */
