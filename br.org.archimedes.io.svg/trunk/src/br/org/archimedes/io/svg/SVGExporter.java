@@ -16,6 +16,7 @@ package br.org.archimedes.io.svg;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.util.Collection;
 
 import br.org.archimedes.exceptions.NotSupportedException;
 import br.org.archimedes.gui.opengl.Color;
@@ -38,52 +39,6 @@ import br.org.archimedes.semiline.Semiline;
 public class SVGExporter implements Exporter {
 
     /**
-     * Returns the boundary rectangle containing all the drawing elements. It ignores the infinite
-     * lines and includes only the initial point of semilines.
-     * 
-     * @param drawing
-     * @return the boundary rectangle containing all the drawing elements
-     */
-    private Rectangle getBoundaryRectangle (Drawing drawing) {
-
-        Rectangle boundaryRectangle = null;
-
-        for (Layer layer : drawing.getLayerMap().values()) {
-
-            for (Element element : layer.getElements()) {
-
-                if (element instanceof InfiniteLine) {
-                    continue;
-                }
-                else if (element instanceof Semiline) {
-                    Semiline semiline = (Semiline) element;
-                    Rectangle rect = new Rectangle(semiline.getInitialPoint().getX(), semiline
-                            .getInitialPoint().getY(), 0, 0);
-                    if (boundaryRectangle == null) {
-                        boundaryRectangle = rect;
-                    }
-                    else {
-                        boundaryRectangle = boundaryRectangle.union(rect);
-                    }
-                    continue;
-                }
-                else {
-                    boundaryRectangle = boundaryRectangle.union(element.getBoundaryRectangle());
-                }
-
-            }
-
-        }
-
-        if (boundaryRectangle == null) {
-            boundaryRectangle = new Rectangle(0, 0, 0, 0);
-        }
-
-        return boundaryRectangle;
-
-    }
-
-    /**
      * (non-Javadoc).
      * 
      * @see br.org.archimedes.interfaces.Exporter#exportDrawing(br.org.archimedes.interfaces.Drawing,
@@ -94,27 +49,21 @@ public class SVGExporter implements Exporter {
         String charset = "UTF-8"; //$NON-NLS-1$
         // TODO Forçar locale
 
-        Rectangle boundaryRectangle = getBoundaryRectangle(drawing);
+        Rectangle boundaryRectangle = drawing.getBoundary();
+        if (boundaryRectangle == null) {
+        	boundaryRectangle = new Rectangle(0, 0, 0, 0);
+        }
 
         exportSVGHeader(drawing, output, charset, boundaryRectangle);
-
-        byte[] endContainerTagBytes = ("\t" + "</container>" + "\n") //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                .getBytes(charset);
+        writeLayersDefs(drawing.getLayerMap().values(), output, charset);
 
         ElementEPLoader elementEPLoader = new ElementEPLoader();
         ElementExporterEPLoader exporterLoader = new ElementExporterEPLoader();
 
         for (Layer layer : drawing.getLayerMap().values()) {
-            StringBuilder containerTag = new StringBuilder();
-            containerTag.append("\t" + "<container name=\"" + layer.getName() //$NON-NLS-1$ //$NON-NLS-2$
-                    + "\" lineStyle=\"" + layer.getLineStyle().ordinal() //$NON-NLS-1$
-                    + "\" thickness=\"" + layer.getThickness() //$NON-NLS-1$
-                    + "\" visible=\"" + layer.isVisible() //$NON-NLS-1$
-                    + "\" locked=\"" + layer.isLocked() + "\"" + " >" + "\n"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-            writeColor(containerTag, layer.getColor());
-            writeColor(containerTag, layer.getPrintColor());
 
-            output.write(containerTag.toString().getBytes(charset));
+        	String header = "<g class=\"" + escapeName(layer.getName()) + "\" fill=\"none\">\n";
+            output.write(header.getBytes(charset));
 
             for (Element element : layer.getElements()) {
 
@@ -140,7 +89,7 @@ public class SVGExporter implements Exporter {
 
             }
 
-            output.write(endContainerTagBytes);
+            output.write("</g>\n".getBytes(charset));
         }
         output.write(("</svg>" + "\n").getBytes(charset)); //$NON-NLS-1$ //$NON-NLS-2$
         output.close();
@@ -169,7 +118,7 @@ public class SVGExporter implements Exporter {
                 + " viewBox=\"" + (int) Math.ceil(boundaryRectangle.getLowerLeft().getX()) + " "
                 + (int) Math.ceil(boundaryRectangle.getLowerLeft().getY()) + " "
                 + (int) Math.ceil(boundaryRectangle.getWidth()) + " "
-                + (int) Math.ceil(boundaryRectangle.getHeight()) + ">");
+                + (int) Math.ceil(boundaryRectangle.getHeight()) + "\">");
 
         output.write(drawingTag.toString().getBytes(charset));
     }
@@ -200,5 +149,22 @@ public class SVGExporter implements Exporter {
         builder.append("\t" + "\t" + "\t" + "<unsignedByte>"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
         builder.append(component);
         builder.append("</unsignedByte>" + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
+    }
+    
+    private void writeLayersDefs (Collection<Layer> layers, OutputStream output, String encoding) throws IOException {
+
+    	StringBuilder builder = new StringBuilder();
+        builder.append("<defs>\n" + "<style type=\"text/css\">\n" + "<![CDATA[\n");
+        for (Layer layer : layers) {
+            String printColor = layer.getPrintColor().toHexString();
+            builder.append("." + escapeName(layer.getName()) + " {stroke:#" + printColor + ";stroke-width:"
+                    + ((int) layer.getThickness()) + "}\n");
+        }
+        builder.append("]]>\n" + "</style>\n" + "</defs>\n");
+        output.write(builder.toString().getBytes(encoding));
+    }
+    
+    private String escapeName(String name) {
+    	return name.replaceAll(" ", "-_-");
     }
 }
