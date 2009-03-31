@@ -10,6 +10,7 @@
  * This file was created on 2006/03/30, 00:03:02, by Hugo Corbucci.<br>
  * It is part of package br.org.archimedes.model on the br.org.archimedes.core project.<br>
  */
+
 package br.org.archimedes.model;
 
 import java.util.ArrayList;
@@ -49,8 +50,8 @@ public class Rectangle {
     }
 
     /**
-     * @return A list of points of the rectangle in counter-clockwise order
-     *         starting from the lower left one.
+     * @return A list of points of the rectangle in counter-clockwise order starting from the lower
+     *         left one.
      */
     public List<Point> getPoints () {
 
@@ -99,13 +100,12 @@ public class Rectangle {
         return inside;
     }
 
-    public boolean intersects (Rectangle rectangle)
-            throws NullArgumentException {
+    public boolean intersects (Rectangle rectangle) throws NullArgumentException {
 
-        if(rectangle == null) {
+        if (rectangle == null) {
             throw new NullArgumentException();
         }
-        
+
         double x1 = x;
         double y1 = y;
         double w1 = width;
@@ -172,6 +172,24 @@ public class Rectangle {
     public double getHeight () {
 
         return height;
+    }
+
+    /**
+     * Computes the union of this Rectangle with the specified Rectangle.
+     * 
+     * @param other
+     *            the Rectangle to be merged
+     * @return the union of this Rectangle with other
+     */
+    public Rectangle union (Rectangle other) {
+
+        double x = Math.min(this.x, other.x);
+        double y = Math.min(this.y, other.y);
+        double width = Math.max(this.x + this.width, other.x + other.width);
+        double height = Math.max(this.y + this.height, other.y + other.height);
+
+        return new Rectangle(x, y, width, height);
+
     }
 
 }

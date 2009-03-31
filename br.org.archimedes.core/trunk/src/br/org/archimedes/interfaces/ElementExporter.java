@@ -10,11 +10,14 @@
  * This file was created on 2007/02/01, 23:19:00, by Hugo Corbucci.<br>
  * It is part of package br.org.archimedes.interfaces on the br.org.archimedes.core project.<br>
  */
+
 package br.org.archimedes.interfaces;
 
 import java.io.IOException;
 
+import br.org.archimedes.exceptions.NotSupportedException;
 import br.org.archimedes.model.Element;
+import br.org.archimedes.model.Rectangle;
 
 /**
  * Belongs to package br.org.archimedes.interfaces.
@@ -27,11 +30,28 @@ public interface ElementExporter <T extends Element> {
      * @param element
      *            The element of type T.
      * @param output
-     *            The output to which the element must be written. Users must
-     *            known which class this is.
+     *            The output to which the element must be written. Users must known which class this
+     *            is.
      * @throws IOException
      *             In case of any IO problem.
+     * @throws NotSupportedException
+     *             In case the method is not supported.
      */
-    public void exportElement (T element, Object outputObject)
-            throws IOException;
+    public void exportElement (T element, Object outputObject) throws IOException,
+            NotSupportedException;
+
+    /**
+     * @param element
+     *            The element of type T.
+     * @param output
+     *            The output to which the element must be written. Users must known which class this
+     *            is.
+     * @param boundingBox
+     * @throws IOException
+     *             In case of any IO problem.
+     * @throws NotSupportedException
+     *             In case the method is not supported.
+     */
+    public void exportElement (T element, Object outputObject, Rectangle boundingBox)
+            throws IOException, NotSupportedException;
 }

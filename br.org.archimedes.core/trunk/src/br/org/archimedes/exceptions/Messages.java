@@ -35,6 +35,9 @@ public class Messages extends NLS {
     public static String NoDrawing;
 
     public static String NullArgument;
+    
+    public static String NotSupported;
+    
     static {
         // initialize resource bundle
         NLS.initializeMessages(BUNDLE_NAME, Messages.class);
