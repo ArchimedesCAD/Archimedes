@@ -5,4 +5,7 @@ Bundle-SymbolicName: br.org.archimedes.extend.tests
 Bundle-Version: 0.58
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Require-Bundle: br.org.archimedes.core;bundle-version="0.57.4",
- br.org.archimedes.extend;bundle-version="0.57.4"
+ br.org.archimedes.extend;bundle-version="0.57.4",
+ br.org.archimedes.core.tests;bundle-version="0.57.4",
+ org.junit4;bundle-version="4.3.1",
+ br.org.archimedes.line;bundle-version="0.57.4"
