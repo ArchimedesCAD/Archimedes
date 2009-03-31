@@ -1,3 +1,12 @@
-<?xml version="1.0" encoding="UTF-8"?><templates><template autoinsert="false" context="methodbody_context" deleted="false" description="Code in created method stubs" enabled="true" id="org.eclipse.jdt.ui.text.codetemplates.methodbody" name="methodbody">// ${todo} Auto-generated method stub
-${body_statement}
-System.out.println("Called ${enclosing_type}.${enclosing_method}");</template></templates>
+<?xml version="1.0" encoding="UTF-8"?><templates><template autoinsert="false" context="filecomment_context" deleted="false" description="Comment for created Java files" enabled="true" id="org.eclipse.jdt.ui.text.codetemplates.filecomment" name="filecomment">/**
+ * Copyright (c) 2006, ${year} Hugo Corbucci and others.&lt;br&gt;
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html&lt;br&gt;
+ *&lt;br&gt;
+ * Contributors:&lt;br&gt;
+ * ${user} - initial API and implementation&lt;br&gt;
+ * &lt;br&gt;
+ * This file was created on ${date}, ${time}.&lt;br&gt;
+ * It is part of ${package_name} on the ${project_name} project.&lt;br&gt;
+ */</template></templates>
