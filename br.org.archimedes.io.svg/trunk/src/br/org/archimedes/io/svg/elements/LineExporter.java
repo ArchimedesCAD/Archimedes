@@ -5,46 +5,54 @@
  * http://www.eclipse.org/legal/epl-v10.html<br>
  * <br>
  * Contributors:<br>
- * Ricardo Sider - initial API and implementation<br>
+ * Bruno Klava, Ricardo Sider - initial API and implementation<br>
  * <br>
  * This file was created on 2009/03/26, 12:05:56, by Ricardo Sider.<br>
  * It is part of package br.org.archimedes.io.svg.elements on the br.org.archimedes.io.svg project.<br>
  */
+
 package br.org.archimedes.io.svg.elements;
 
 import java.io.IOException;
 import java.io.OutputStream;
 
-import br.org.archimedes.arc.Arc;
 import br.org.archimedes.exceptions.NotSupportedException;
 import br.org.archimedes.interfaces.ElementExporter;
-import br.org.archimedes.io.svg.SVGExporterHelper;
-import br.org.archimedes.model.Point;
+import br.org.archimedes.line.Line;
 import br.org.archimedes.model.Rectangle;
 
-public class ArcExporter implements ElementExporter<Arc> {
+/**
+ * Belongs to package br.org.archimedes.io.svg.
+ * 
+ * @author klava, sider
+ */
+public class LineExporter implements ElementExporter<Line> {
 
-    public void exportElement (Arc arc, Object outputObject) throws IOException {
-
-        Point initial = arc.getInitialPoint();
-        Point ending = arc.getEndingPoint();
-        int radius = (int) arc.getRadius();
+    /*
+     * (non-Javadoc)
+     * @see br.org.archimedes.interfaces.ElementExporter#exportElement(br.org.archimedes
+     * .model.Element, java.io.OutputStream)
+     */
+    public void exportElement (Line line, Object outputObject) throws IOException {
 
         OutputStream output = (OutputStream) outputObject;
         StringBuilder lineTag = new StringBuilder();
 
-        lineTag.append("<path d=\"M "); //$NON-NLS-1$
+        int x1 = (int) line.getInitialPoint().getX();
+        int y1 = (int) line.getInitialPoint().getY();
+        int x2 = (int) line.getEndingPoint().getX();
+        int y2 = (int) line.getEndingPoint().getY();
 
-        lineTag.append(SVGExporterHelper.svgFor(initial)); //$NON-NLS-1$
-        lineTag.append(SVGExporterHelper.svgFor(ending)); //$NON-NLS-1$
-
-        lineTag.append(" A " + radius + " " + radius + " 0 1 0  \" />\n"); //$NON-NLS-1$
+        lineTag.append("<line x1=\"" + x1 + "\" y1=\"" + -y1 + "\" x2=\"" + x2 + "\" y2=\"" + -y2
+                + "\" />\n");
 
         output.write(lineTag.toString().getBytes());
+
     }
-    
-    public void exportElement (Arc element, Object outputObject, Rectangle boundingBox)
+
+    public void exportElement (Line element, Object outputObject, Rectangle boundingBox)
             throws NotSupportedException {
+
         throw new NotSupportedException();
     }
 }

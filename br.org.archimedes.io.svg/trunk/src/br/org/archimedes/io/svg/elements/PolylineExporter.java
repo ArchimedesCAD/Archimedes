@@ -5,7 +5,7 @@
  * http://www.eclipse.org/legal/epl-v10.html<br>
  * <br>
  * Contributors:<br>
- * Ricardo Sider - initial API and implementation<br>
+ * Bruno Klava, Ricardo Sider - initial API and implementation<br>
  * <br>
  * This file was created on 2009/03/26, 12:05:56, by Ricardo Sider.<br>
  * It is part of package br.org.archimedes.io.svg.elements on the br.org.archimedes.io.svg project.<br>
@@ -14,38 +14,40 @@
 package br.org.archimedes.io.svg.elements;
 
 import java.io.IOException;
-import java.io.OutputStream;
+import java.util.List;
 
-import br.org.archimedes.circle.Circle;
 import br.org.archimedes.exceptions.NotSupportedException;
 import br.org.archimedes.interfaces.ElementExporter;
+import br.org.archimedes.line.Line;
 import br.org.archimedes.model.Rectangle;
+import br.org.archimedes.polyline.Polyline;
 
 /**
  * Belongs to package br.org.archimedes.io.svg.
  * 
- * @author night
+ * @author klava, sider
  */
-public class CircleExporter implements ElementExporter<Circle> {
+public class PolylineExporter implements ElementExporter<Polyline> {
 
-    public void exportElement (Circle circle, Object outputObject) throws IOException {
+    /*
+     * (non-Javadoc)
+     * @see
+     * br.org.archimedes.interfaces.ElementExporter#exportElement(br.org.archimedes.model.Element,
+     * java.lang.Object)
+     */
+    public void exportElement (Polyline polyLine, Object outputObject) throws IOException {
 
-        OutputStream output = (OutputStream) outputObject;
-        StringBuilder lineTag = new StringBuilder();
-
-        int x = (int) circle.getCenter().getX();
-        int y = (int) circle.getCenter().getY();
-        int r = (int) circle.getRadius();
-
-        lineTag.append("<circle fill=\"none\" cx=\"" + x + "\" cy=\"" + -y + "\" r=\"" + r
-                + "\"/>\n");
-
-        output.write(lineTag.toString().getBytes());
+        LineExporter auxiliaryExporter = new LineExporter();
+        List<Line> lines = polyLine.getLines();
+        for (Line line : lines) {
+            auxiliaryExporter.exportElement(line, outputObject);
+        }
     }
 
-    public void exportElement (Circle element, Object outputObject, Rectangle boundingBox)
+    public void exportElement (Polyline element, Object outputObject, Rectangle boundingBox)
             throws NotSupportedException {
 
         throw new NotSupportedException();
     }
+
 }

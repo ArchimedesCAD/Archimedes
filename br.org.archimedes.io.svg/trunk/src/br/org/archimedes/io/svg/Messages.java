@@ -22,6 +22,8 @@ public class Messages extends NLS {
 
     private static final String BUNDLE_NAME = "br.org.archimedes.io.svg.messages"; //$NON-NLS-1$
 
+    public static String SVGExporter_FontCreatingError;
+    
     public static String SVGExporter_NoExporter;
 
     public static String SVGFilePickerPage_BrowseButtonText;

@@ -5,33 +5,79 @@
  * http://www.eclipse.org/legal/epl-v10.html<br>
  * <br>
  * Contributors:<br>
- * Ricardo Sider - initial API and implementation<br>
+ * Bruno Klava, Ricardo Sider - initial API and implementation<br>
  * <br>
  * This file was created on 2009/03/26, 12:05:56, by Ricardo Sider.<br>
  * It is part of package br.org.archimedes.io.svg on the br.org.archimedes.io.svg project.<br>
  */
+
 package br.org.archimedes.io.svg;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 
+import br.org.archimedes.exceptions.NotSupportedException;
 import br.org.archimedes.gui.opengl.Color;
+import br.org.archimedes.infiniteline.InfiniteLine;
 import br.org.archimedes.interfaces.ElementExporter;
 import br.org.archimedes.interfaces.Exporter;
 import br.org.archimedes.io.svg.rcp.ElementExporterEPLoader;
 import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Layer;
-import br.org.archimedes.model.Point;
+import br.org.archimedes.model.Rectangle;
 import br.org.archimedes.rcp.extensionpoints.ElementEPLoader;
+import br.org.archimedes.semiline.Semiline;
 
 /**
  * Belongs to package br.org.archimedes.io.svg.
  * 
- * @author night
+ * @author klava, sider
  */
 public class SVGExporter implements Exporter {
+
+    /**
+     * Returns the boundary rectangle containing all the drawing elements. It ignores the infinite
+     * lines and includes only the initial point of semilines.
+     * 
+     * @param drawing
+     * @return the boundary rectangle containing all the drawing elements
+     */
+    private Rectangle getBoundaryRectangle (Drawing drawing) {
+
+        Rectangle boundaryRectangle = null;
+
+        for (Layer layer : drawing.getLayerMap().values()) {
+
+            for (Element element : layer.getElements()) {
+
+                if (element instanceof InfiniteLine) {
+                    continue;
+                }
+                else if (element instanceof Semiline) {
+                    Semiline semiline = (Semiline) element;
+                    Rectangle rect = new Rectangle(semiline.getInitialPoint().getX(), semiline
+                            .getInitialPoint().getY(), 0, 0);
+                    if (boundaryRectangle == null) {
+                        boundaryRectangle = rect;
+                    }
+                    else {
+                        boundaryRectangle = boundaryRectangle.union(rect);
+                    }
+                    continue;
+                }
+                else {
+                    boundaryRectangle = boundaryRectangle.union(element.getBoundaryRectangle());
+                }
+
+            }
+
+        }
+
+        return boundaryRectangle;
+
+    }
 
     /**
      * (non-Javadoc).
@@ -39,13 +85,14 @@ public class SVGExporter implements Exporter {
      * @see br.org.archimedes.interfaces.Exporter#exportDrawing(br.org.archimedes.interfaces.Drawing,
      *      java.io.OutputStream)
      */
-    public void exportDrawing (Drawing drawing, OutputStream output)
-            throws IOException {
+    public void exportDrawing (Drawing drawing, OutputStream output) throws IOException {
 
         String charset = "UTF-8"; //$NON-NLS-1$
         // TODO Forçar locale
 
-        exportXMLHeader(drawing, output, charset);
+        Rectangle boundaryRectangle = getBoundaryRectangle(drawing);
+
+        exportSVGHeader(drawing, output, charset, boundaryRectangle);
 
         byte[] endContainerTagBytes = ("\t" + "</container>" + "\n") //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                 .getBytes(charset);
@@ -66,16 +113,27 @@ public class SVGExporter implements Exporter {
             output.write(containerTag.toString().getBytes(charset));
 
             for (Element element : layer.getElements()) {
+
                 String elementId = elementEPLoader.getElementId(element);
-                ElementExporter<Element> exporter = exporterLoader
-                        .getExporter(elementId);
+                ElementExporter<Element> exporter = exporterLoader.getExporter(elementId);
                 if (exporter == null) {
-                    System.err.println(Messages.bind(
-                            Messages.SVGExporter_NoExporter, elementId));
+                    System.err.println(Messages.bind(Messages.SVGExporter_NoExporter, elementId));
                 }
                 else {
-                    exporter.exportElement(element, output);
+                    try {
+                        if (element instanceof InfiniteLine || element instanceof Semiline) {
+                            exporter.exportElement(element, output, boundaryRectangle);
+                        }
+                        else {
+                            exporter.exportElement(element, output);
+                        }
+                    }
+                    catch (NotSupportedException e) {
+                        // wont reach here
+                    }
+
                 }
+
             }
 
             output.write(endContainerTagBytes);
@@ -90,33 +148,24 @@ public class SVGExporter implements Exporter {
      * @param output
      *            The outputstream to write on
      * @param charset
-     *            The charset to use to write the file
-     * @throws IOException
-     *             Thrown if something goes wrong when writing the file
+     *            The charset to use to write the file @ * @throws IOException Thrown if something
+     *            goes wrong when writing the file
      * @throws UnsupportedEncodingException
      *             Thrown if the system cannot write in the specified charset
      */
-    private void exportXMLHeader (Drawing drawing, OutputStream output,
-            String charset) throws IOException, UnsupportedEncodingException {
+    private void exportSVGHeader (Drawing drawing, OutputStream output, String charset,
+            Rectangle boundaryRectangle) throws IOException, UnsupportedEncodingException {
 
-        StringBuilder drawingTag = new StringBuilder(
-                "<?xml version=\"1.0\" encoding=\"" + charset + "\"?>" + "\n"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        StringBuilder drawingTag = new StringBuilder("<?xml version=\"1.0\" encoding=\"" + charset
+                + "\"?>" + "\n");
 
-        drawingTag
-                .append("<drawing xmlns=\"http://www.archimedes.org.br/xml/FileXMLSchema\" " //$NON-NLS-1$
-                        + "xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" " //$NON-NLS-1$
-                        + "xsi:schemaLocation=\"http://www.archimedes.org.br/xml/FileXMLSchema FileXMLSchema.xsd\">" //$NON-NLS-1$
-                        + "\n"); //$NON-NLS-1$
-        drawingTag.append("\t<zoom>"); //$NON-NLS-1$
-        drawingTag.append(drawing.getZoom());
-        drawingTag.append("</zoom>" + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
-        drawingTag.append("\t<viewport>"); //$NON-NLS-1$
+        drawingTag.append("<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\""
+                // + " width="10cm" height="3cm"
 
-        Point viewportPosition = drawing.getViewportPosition();
-        drawingTag.append("\t" + "\t" //$NON-NLS-1$ //$NON-NLS-2$
-                + "<point x=\"" + viewportPosition.getX() + "\" y=\"" //$NON-NLS-1$ //$NON-NLS-2$
-                + viewportPosition.getY() + "\" />" + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
-        drawingTag.append("\t" + "</viewport>" + "\n"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                + " viewBox=\"" + (int) Math.ceil(boundaryRectangle.getLowerLeft().getX()) + " "
+                + (int) Math.ceil(boundaryRectangle.getLowerLeft().getY()) + " "
+                + (int) Math.ceil(boundaryRectangle.getWidth()) + " "
+                + (int) Math.ceil(boundaryRectangle.getHeight()) + ">");
 
         output.write(drawingTag.toString().getBytes(charset));
     }

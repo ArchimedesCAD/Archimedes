@@ -5,7 +5,7 @@
  * http://www.eclipse.org/legal/epl-v10.html<br>
  * <br>
  * Contributors:<br>
- * Ricardo Sider - initial API and implementation<br>
+ * Bruno Klava, Ricardo Sider - initial API and implementation<br>
  * <br>
  * This file was created on 2009/03/26, 12:05:56, by Ricardo Sider.<br>
  * It is part of package br.org.archimedes.io.svg.elements on the br.org.archimedes.io.svg project.<br>
@@ -16,34 +16,40 @@ package br.org.archimedes.io.svg.elements;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import br.org.archimedes.circle.Circle;
 import br.org.archimedes.exceptions.NotSupportedException;
 import br.org.archimedes.interfaces.ElementExporter;
 import br.org.archimedes.model.Rectangle;
+import br.org.archimedes.text.Text;
 
 /**
  * Belongs to package br.org.archimedes.io.svg.
  * 
- * @author night
+ * @author klava, sider
  */
-public class CircleExporter implements ElementExporter<Circle> {
+public class TextExporter implements ElementExporter<Text> {
 
-    public void exportElement (Circle circle, Object outputObject) throws IOException {
+    /*
+     * (non-Javadoc)
+     * @see br.org.archimedes.interfaces.ElementExporter#exportElement(br.org.archimedes
+     * .model.Element, java.lang.Object)
+     */
+    public void exportElement (Text text, Object outputObject) throws IOException {
 
         OutputStream output = (OutputStream) outputObject;
-        StringBuilder lineTag = new StringBuilder();
+        StringBuilder textTag = new StringBuilder();
 
-        int x = (int) circle.getCenter().getX();
-        int y = (int) circle.getCenter().getY();
-        int r = (int) circle.getRadius();
+        textTag.append("<text x=\"" + text.getLowerLeft().getX() + "\" y=\""
+                + text.getLowerLeft().getY() + "\" font-size=\"" + text.getSize()
+                + "\" font-family=\"Courier\">");
 
-        lineTag.append("<circle fill=\"none\" cx=\"" + x + "\" cy=\"" + -y + "\" r=\"" + r
-                + "\"/>\n");
+        textTag.append(text.getText());
+        textTag.append("</text>");
 
-        output.write(lineTag.toString().getBytes());
+        output.write(textTag.toString().getBytes());
+
     }
 
-    public void exportElement (Circle element, Object outputObject, Rectangle boundingBox)
+    public void exportElement (Text element, Object outputObject, Rectangle boundingBox)
             throws NotSupportedException {
 
         throw new NotSupportedException();

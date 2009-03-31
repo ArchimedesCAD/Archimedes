@@ -14,36 +14,39 @@
 package br.org.archimedes.io.svg.elements;
 
 import java.io.IOException;
-import java.io.OutputStream;
+import java.util.Collection;
 
 import br.org.archimedes.circle.Circle;
+import br.org.archimedes.dimension.Dimension;
 import br.org.archimedes.exceptions.NotSupportedException;
 import br.org.archimedes.interfaces.ElementExporter;
+import br.org.archimedes.line.Line;
 import br.org.archimedes.model.Rectangle;
 
 /**
- * Belongs to package br.org.archimedes.io.svg.
+ * Belongs to package br.org.archimedes.io.pdf.
  * 
  * @author night
  */
-public class CircleExporter implements ElementExporter<Circle> {
+public class DimensionExporter implements ElementExporter<Dimension> {
 
-    public void exportElement (Circle circle, Object outputObject) throws IOException {
+    /*
+     * (non-Javadoc)
+     * @see br.org.archimedes.interfaces.ElementExporter#exportElement(br.org.archimedes
+     * .model.Element, java.io.OutputStream)
+     */
+    public void exportElement (Dimension dimension, Object outputObject) throws IOException {
 
-        OutputStream output = (OutputStream) outputObject;
-        StringBuilder lineTag = new StringBuilder();
+        Collection<Line> linesToDraw = dimension.getLinesToDraw();
+        LineExporter exporter = new LineExporter();
+        for (Line line : linesToDraw) {
+            exporter.exportElement(line, outputObject);
+        }
 
-        int x = (int) circle.getCenter().getX();
-        int y = (int) circle.getCenter().getY();
-        int r = (int) circle.getRadius();
-
-        lineTag.append("<circle fill=\"none\" cx=\"" + x + "\" cy=\"" + -y + "\" r=\"" + r
-                + "\"/>\n");
-
-        output.write(lineTag.toString().getBytes());
+        new TextExporter().exportElement(dimension.getText(), outputObject);
     }
 
-    public void exportElement (Circle element, Object outputObject, Rectangle boundingBox)
+    public void exportElement (Dimension element, Object outputObject, Rectangle boundingBox)
             throws NotSupportedException {
 
         throw new NotSupportedException();
