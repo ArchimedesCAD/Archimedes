@@ -10,15 +10,18 @@
  * This file was created on 2008/06/23, 10:01:23, by Hugo Corbucci.<br>
  * It is part of package br.org.archimedes.io.pdf.elements on the br.org.archimedes.io.pdf project.<br>
  */
+
 package br.org.archimedes.io.pdf.elements;
 
 import java.io.IOException;
 
 import br.org.archimedes.Geometrics;
+import br.org.archimedes.exceptions.NotSupportedException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.interfaces.ElementExporter;
 import br.org.archimedes.io.pdf.PDFWriterHelper;
 import br.org.archimedes.model.Point;
+import br.org.archimedes.model.Rectangle;
 import br.org.archimedes.text.Text;
 
 import com.lowagie.text.DocumentException;
@@ -34,12 +37,10 @@ public class TextExporter implements ElementExporter<Text> {
 
     /*
      * (non-Javadoc)
-     * @see
-     * br.org.archimedes.interfaces.ElementExporter#exportElement(br.org.archimedes
+     * @see br.org.archimedes.interfaces.ElementExporter#exportElement(br.org.archimedes
      * .model.Element, java.lang.Object)
      */
-    public void exportElement (Text text, Object outputObject)
-            throws IOException {
+    public void exportElement (Text text, Object outputObject) throws IOException {
 
         PDFWriterHelper helper = (PDFWriterHelper) outputObject;
         PdfContentByte cb = helper.getPdfContentByte();
@@ -49,8 +50,7 @@ public class TextExporter implements ElementExporter<Text> {
 
         BaseFont font = null;
         try {
-            font = BaseFont.createFont(BaseFont.COURIER, BaseFont.CP1252,
-                    BaseFont.NOT_EMBEDDED);
+            font = BaseFont.createFont(BaseFont.COURIER, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
         }
         catch (DocumentException e) {
             // Problems creating the font. This means the current
@@ -64,8 +64,7 @@ public class TextExporter implements ElementExporter<Text> {
         cb.moveText((float) docPoint.getX(), (float) docPoint.getY());
         double angle = 0;
         try {
-            angle = Geometrics.calculateAngle(new Point(0, 0), text
-                    .getDirection().getPoint());
+            angle = Geometrics.calculateAngle(new Point(0, 0), text.getDirection().getPoint());
         }
         catch (NullArgumentException e) {
             // Shouldn't happen since the text MUST have a direction to exists
@@ -73,8 +72,14 @@ public class TextExporter implements ElementExporter<Text> {
             e.printStackTrace();
         }
         float degreeAngle = (float) (angle * 180 / Math.PI);
-        cb.showTextAligned(PdfContentByte.ALIGN_LEFT, text.getText(), (float) docPoint.getX(), (float) docPoint.getY(),
-                degreeAngle);
+        cb.showTextAligned(PdfContentByte.ALIGN_LEFT, text.getText(), (float) docPoint.getX(),
+                (float) docPoint.getY(), degreeAngle);
         cb.endText();
+    }
+
+    public void exportElement (Text element, Object outputObject, Rectangle boundingBox)
+            throws IOException, NotSupportedException {
+
+        throw new NotSupportedException();
     }
 }

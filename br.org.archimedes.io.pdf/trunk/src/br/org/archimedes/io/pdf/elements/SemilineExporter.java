@@ -10,11 +10,13 @@
  * This file was created on 2008/06/23, 10:01:23, by Hugo Corbucci.<br>
  * It is part of package br.org.archimedes.io.pdf.elements on the br.org.archimedes.io.pdf project.<br>
  */
+
 package br.org.archimedes.io.pdf.elements;
 
 import java.io.IOException;
 import java.util.List;
 
+import br.org.archimedes.exceptions.NotSupportedException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.interfaces.ElementExporter;
 import br.org.archimedes.io.pdf.PDFWriterHelper;
@@ -31,12 +33,10 @@ public class SemilineExporter implements ElementExporter<Semiline> {
 
     /*
      * (non-Javadoc)
-     * @see
-     * br.org.archimedes.interfaces.ElementExporter#exportElement(br.org.archimedes
+     * @see br.org.archimedes.interfaces.ElementExporter#exportElement(br.org.archimedes
      * .model.Element, java.lang.Object)
      */
-    public void exportElement (Semiline semiline, Object outputObject)
-            throws IOException {
+    public void exportElement (Semiline semiline, Object outputObject) throws IOException {
 
         PDFWriterHelper helper = (PDFWriterHelper) outputObject;
         Rectangle viewArea = helper.getModelArea();
@@ -51,5 +51,11 @@ public class SemilineExporter implements ElementExporter<Semiline> {
             // Should never happen. Dont allow an empty view area
             e.printStackTrace();
         }
+    }
+
+    public void exportElement (Semiline element, Object outputObject, Rectangle boundingBox)
+            throws IOException, NotSupportedException {
+
+        throw new NotSupportedException();
     }
 }

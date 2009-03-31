@@ -14,6 +14,7 @@ package br.org.archimedes.io.pdf;
 
 import java.io.IOException;
 
+import br.org.archimedes.exceptions.NotSupportedException;
 import br.org.archimedes.gui.opengl.Color;
 import br.org.archimedes.interfaces.ElementExporter;
 import br.org.archimedes.io.pdf.rcp.ElementExporterEPLoader;
@@ -97,6 +98,8 @@ public class PDFWriter {
                 // Something went wrong when writting this element.
                 // Just skip it and trace the log.
                 e.printStackTrace();
+            } catch (NotSupportedException e) {
+                // wont reach here
             }
         }
     }

@@ -15,8 +15,10 @@ package br.org.archimedes.io.pdf.elements;
 import java.io.IOException;
 import java.util.List;
 
+import br.org.archimedes.exceptions.NotSupportedException;
 import br.org.archimedes.interfaces.ElementExporter;
 import br.org.archimedes.line.Line;
+import br.org.archimedes.model.Rectangle;
 import br.org.archimedes.polyline.Polyline;
 
 /**
@@ -37,6 +39,12 @@ public class PolylineExporter implements ElementExporter<Polyline> {
         for (Line line : lines) {
             auxiliaryExporter.exportElement(line, outputObject);
         }
+    }
+    
+    public void exportElement (Polyline element, Object outputObject, Rectangle boundingBox)
+            throws IOException, NotSupportedException {
+    
+        throw new NotSupportedException();
     }
 
 }

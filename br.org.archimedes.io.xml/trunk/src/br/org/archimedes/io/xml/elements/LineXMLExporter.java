@@ -10,14 +10,17 @@
  * This file was created on 2009/01/10, 11:16:48, by Hugo Corbucci.<br>
  * It is part of package br.org.archimedes.io.xml.elements on the br.org.archimedes.io.xml project.<br>
  */
+
 package br.org.archimedes.io.xml.elements;
 
 import java.io.IOException;
 import java.io.OutputStream;
 
+import br.org.archimedes.exceptions.NotSupportedException;
 import br.org.archimedes.interfaces.ElementExporter;
 import br.org.archimedes.io.xml.XMLExporterHelper;
 import br.org.archimedes.line.Line;
+import br.org.archimedes.model.Rectangle;
 
 /**
  * Belongs to package br.org.archimedes.line.xml.
@@ -28,26 +31,27 @@ public class LineXMLExporter implements ElementExporter<Line> {
 
     /*
      * (non-Javadoc)
-     * @see
-     * br.org.archimedes.interfaces.ElementExporter#exportElement(br.org.archimedes
+     * @see br.org.archimedes.interfaces.ElementExporter#exportElement(br.org.archimedes
      * .model.Element, java.io.OutputStream)
      */
-    public void exportElement (Line line, Object outputObject)
-            throws IOException {
+    public void exportElement (Line line, Object outputObject) throws IOException {
 
         OutputStream output = (OutputStream) outputObject;
 
         StringBuilder lineTag = new StringBuilder();
         lineTag.append("<line>"); //$NON-NLS-1$
 
-        lineTag.append(XMLExporterHelper
-                .xmlFor("point", line.getInitialPoint())); //$NON-NLS-1$
-        lineTag
-                .append(XMLExporterHelper
-                        .xmlFor("point", line.getEndingPoint())); //$NON-NLS-1$
+        lineTag.append(XMLExporterHelper.xmlFor("point", line.getInitialPoint())); //$NON-NLS-1$
+        lineTag.append(XMLExporterHelper.xmlFor("point", line.getEndingPoint())); //$NON-NLS-1$
 
         lineTag.append("</line>"); //$NON-NLS-1$
         output.write(lineTag.toString().getBytes());
+    }
+
+    public void exportElement (Line element, Object outputObject, Rectangle boundingBox)
+            throws IOException, NotSupportedException {
+
+        throw new NotSupportedException();
     }
 
 }

@@ -10,16 +10,19 @@
  * This file was created on 2008/06/23, 10:01:23, by Hugo Corbucci.<br>
  * It is part of package br.org.archimedes.io.pdf.elements on the br.org.archimedes.io.pdf project.<br>
  */
+
 package br.org.archimedes.io.pdf.elements;
 
 import java.io.IOException;
 
 import br.org.archimedes.Geometrics;
 import br.org.archimedes.arc.Arc;
+import br.org.archimedes.exceptions.NotSupportedException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.interfaces.ElementExporter;
 import br.org.archimedes.io.pdf.PDFWriterHelper;
 import br.org.archimedes.model.Point;
+import br.org.archimedes.model.Rectangle;
 
 import com.lowagie.text.pdf.PdfContentByte;
 
@@ -32,14 +35,14 @@ public class ArcExporter implements ElementExporter<Arc> {
 
     /*
      * (non-Javadoc)
-     * @see
-     * br.org.archimedes.interfaces.ElementExporter#exportElement(br.org.archimedes
+     * @see br.org.archimedes.interfaces.ElementExporter#exportElement(br.org.archimedes
      * .model.Element, java.io.OutputStream)
      */
     public void exportElement (Arc arc, Object outputObject) throws IOException {
+
         PDFWriterHelper helper = (PDFWriterHelper) outputObject;
         PdfContentByte cb = helper.getPdfContentByte();
-        
+
         Point center = arc.getCenter();
         Point initial = arc.getInitialPoint();
         Point ending = arc.getEndingPoint();
@@ -70,4 +73,11 @@ public class ArcExporter implements ElementExporter<Arc> {
         cb.arc(x1, y1, x2, y2, start, extent);
         cb.stroke();
     }
+
+    public void exportElement (Arc element, Object outputObject, Rectangle boundingBox)
+            throws IOException, NotSupportedException {
+
+        throw new NotSupportedException();
+    }
+
 }

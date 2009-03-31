@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 
+import br.org.archimedes.exceptions.NotSupportedException;
 import br.org.archimedes.gui.opengl.Color;
 import br.org.archimedes.interfaces.ElementExporter;
 import br.org.archimedes.interfaces.Exporter;
@@ -75,7 +76,12 @@ public class XMLExporter implements Exporter {
                             Messages.XMLExporter_NoExporter, elementId));
                 }
                 else {
-                    exporter.exportElement(element, output);
+                    try {
+                        exporter.exportElement(element, output);
+                    }
+                    catch (NotSupportedException e) {
+                        // wont reach here
+                    }
                 }
             }
 
