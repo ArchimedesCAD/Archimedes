@@ -30,107 +30,252 @@ import br.org.archimedes.trims.interfaces.Trimmer;
 
 public class InfiniteLineTrimTest extends Tester {
 
-    Trimmer trimmer = new InfiniteLineTrimmer();
+	Trimmer trimmer = new InfiniteLineTrimmer();
 
-    Collection<Element> references = new ArrayList<Element>();
+	Collection<Element> references = new ArrayList<Element>();
 
+	@Override
+	public void setUp() throws NullArgumentException, InvalidArgumentException {
 
-    public void setUp () throws NullArgumentException, InvalidArgumentException {
+		InfiniteLine biasedLine = new InfiniteLine(new Point(1.0, 4.0),
+				new Point(-1.0, 0.0));
+		InfiniteLine verticalXLine = new InfiniteLine(new Point(2.0, 4.0),
+				new Point(2.0, 0.0));
+		references.add(biasedLine);
+		references.add(verticalXLine);
+	}
 
-        InfiniteLine biasedLine = new InfiniteLine(new Point(1.0, 4.0),
-                new Point( -1.0, 0.0));
-        InfiniteLine verticalXLine = new InfiniteLine(new Point(2.0, 4.0),
-                new Point(2.0, 0.0));
-        references.add(biasedLine);
-        references.add(verticalXLine);
-    }
+	@Test(expected = NullArgumentException.class)
+	public void testNullLineArgument() throws NullArgumentException {
 
-    @Test(expected = NullArgumentException.class)
-    public void testNullLineArgument () throws NullArgumentException {
+		trimmer.trim(null, references, new Point(0.0, 0.0));
+	}
 
-        trimmer.trim(null, references, new Point(0.0, 0.0));
-    }
+	@Test(expected = NullArgumentException.class)
+	public void testNullReferencesArgument() throws NullArgumentException,
+			InvalidArgumentException {
 
-    @Test(expected = NullArgumentException.class)
-    public void testNullReferencesArgument () throws NullArgumentException,
-            InvalidArgumentException {
+		InfiniteLine xline3 = new InfiniteLine(new Point(-1.0, 2.0), new Point(
+				3.0, 2.0));
+		trimmer.trim(xline3, null, new Point(0.0, 0.0));
+	}
 
-        InfiniteLine xline3 = new InfiniteLine(new Point( -1.0, 2.0),
-                new Point(3.0, 2.0));
-        trimmer.trim(xline3, null, new Point(0.0, 0.0));
-    }
+	@Test
+	public void infiniteLineTrimsCenter() throws NullArgumentException,
+			InvalidArgumentException {
 
-    @Test
-    public void infiniteLineTrimsCenter () throws NullArgumentException,
-            InvalidArgumentException {
+		InfiniteLine horizontalXLine = new InfiniteLine(new Point(-1.0, 2.0),
+				new Point(3.0, 2.0));
+		Collection<Element> collection = trimmer.trim(horizontalXLine,
+				references, new Point(1.0, 2.0));
 
-        InfiniteLine horizontalXLine = new InfiniteLine(new Point( -1.0, 2.0),
-                new Point(3.0, 2.0));
-        Collection<Element> collection = trimmer.trim(horizontalXLine,
-                references, new Point(1.0, 2.0));
+		assertCollectionContains(collection, new Semiline(new Point(0.0, 2.0),
+				new Point(-1.0, 2.0)));
+		assertCollectionContains(collection, new Semiline(new Point(2.0, 2.0),
+				new Point(3.0, 2.0)));
+		Assert
+				.assertEquals(
+						"A trim between references should produce exactly 2 semilines.",
+						2, collection.size());
+	}
 
-        assertCollectionContains(collection, new Semiline(new Point(0.0, 2.0),
-                new Point( -1.0, 2.0)));
-        assertCollectionContains(collection, new Semiline(new Point(2.0, 2.0),
-                new Point(3.0, 2.0)));
-        Assert
-                .assertEquals(
-                        "A trim between references should produce exactly 2 semilines.",
-                        2, collection.size());
-    }
+	@Test
+	@Ignore
+	// FIXME: make it work even if initial and ending points are very close.
+	public void infiniteLineDefinedVerySmallTrimsCenter()
+			throws NullArgumentException, InvalidArgumentException {
 
-    @Test
-    @Ignore
-    // FIXME: make it work even if initial and ending points are very close.
-    public void infiniteLineDefinedVerySmallTrimsCenter ()
-            throws NullArgumentException, InvalidArgumentException {
+		InfiniteLine horizontalXLine = new InfiniteLine(new Point(0.5, 2.0),
+				new Point(0.6, 2.0));
+		Collection<Element> collection = trimmer.trim(horizontalXLine,
+				references, new Point(1.0, 2.0));
 
-        InfiniteLine horizontalXLine = new InfiniteLine(new Point(0.5, 2.0),
-                new Point(0.6, 2.0));
-        Collection<Element> collection = trimmer.trim(horizontalXLine,
-                references, new Point(1.0, 2.0));
+		assertCollectionContains(collection, new Semiline(new Point(0.0, 2.0),
+				new Point(-1.0, 2.0)));
+		assertCollectionContains(collection, new Semiline(new Point(2.0, 2.0),
+				new Point(3.0, 2.0)));
+		Assert
+				.assertEquals(
+						"A trim between references should produce exactly 2 semilines.",
+						2, collection.size());
+	}
 
-        assertCollectionContains(collection, new Semiline(new Point(0.0, 2.0),
-                new Point( -1.0, 2.0)));
-        assertCollectionContains(collection, new Semiline(new Point(2.0, 2.0),
-                new Point(3.0, 2.0)));
-        Assert
-                .assertEquals(
-                        "A trim between references should produce exactly 2 semilines.",
-                        2, collection.size());
-    }
+	@Test
+	public void infiniteLineTrimsEndingPortionOfLineInitialEndClickLeft()
+			throws NullArgumentException, InvalidArgumentException {
 
-    @Test
-    public void infiniteLineTrimsEndingPortionOfLine ()
-            throws NullArgumentException, InvalidArgumentException {
+		InfiniteLine horizontalXLine = new InfiniteLine(new Point(-4.0, 2.0),
+				new Point(-2.0, 2.0));
+		Collection<Element> collection = trimmer.trim(horizontalXLine,
+				references, new Point(-5.0, 2.0));
 
-        InfiniteLine horizontalXLine = new InfiniteLine(new Point( -1.0, 2.0),
-                new Point(3.0, 2.0));
-        Collection<Element> collection = trimmer.trim(horizontalXLine,
-                references, new Point( -0.5, 2.0));
+		assertCollectionContains(collection, new Semiline(new Point(0.0, 2.0),
+				new Point(3.0, 2.0)));
+		Assert.assertEquals(
+				"A trim at the begging should produce exactly 1 semiline.", 1,
+				collection.size());
+	}
 
-        assertCollectionContains(collection, new Semiline(new Point(0.0, 2.0),
-                new Point(3.0, 2.0)));
-        Assert.assertEquals(
-                "A trim at the begging should produce exactly 1 semiline.", 1,
-                collection.size());
-    }
+	@Test
+	public void infiniteLineTrimsEndingPortionOfLineInitialEndClickInitial()
+			throws NullArgumentException, InvalidArgumentException {
 
-    @Test
-    public void infiniteLineTrimsLefterPartWhenClickingExactlyOnIntersectionPoint ()
-            throws NullArgumentException, InvalidArgumentException {
+		InfiniteLine horizontalXLine = new InfiniteLine(new Point(-4.0, 2.0),
+				new Point(-2.0, 2.0));
+		Collection<Element> collection = trimmer.trim(horizontalXLine,
+				references, new Point(-4.0, 2.0));
 
-        InfiniteLine horizontalXLine = new InfiniteLine(new Point( -1.0, 2.0),
-                new Point(3.0, 2.0));
-        Collection<Element> collection = trimmer.trim(horizontalXLine,
-                references, new Point(2.0, 2.0));
+		assertCollectionContains(collection, new Semiline(new Point(0.0, 2.0),
+				new Point(3.0, 2.0)));
+		Assert.assertEquals(
+				"A trim at the begging should produce exactly 1 semiline.", 1,
+				collection.size());
+	}
 
-        assertCollectionContains(collection, new Semiline(new Point(0.0, 2.0),
-                new Point( -1.0, 2.0)));
-        assertCollectionContains(collection, new Semiline(new Point(2.0, 2.0),
-                new Point(3.0, 2.0)));
-        Assert.assertEquals(
-                "A trim at an intersection point removes the lefter part.", 2,
-                collection.size());
-    }
+	@Test
+	public void infiniteLineTrimsEndingPortionOfLineInitialEndClickCenter()
+			throws NullArgumentException, InvalidArgumentException {
+
+		InfiniteLine horizontalXLine = new InfiniteLine(new Point(-4.0, 2.0),
+				new Point(-2.0, 2.0));
+		Collection<Element> collection = trimmer.trim(horizontalXLine,
+				references, new Point(-3.0, 2.0));
+
+		assertCollectionContains(collection, new Semiline(new Point(0.0, 2.0),
+				new Point(3.0, 2.0)));
+		Assert.assertEquals(
+				"A trim at the begging should produce exactly 1 semiline.", 1,
+				collection.size());
+	}
+
+	@Test
+	public void infiniteLineTrimsEndingPortionOfLineInitialEndClickEnd()
+			throws NullArgumentException, InvalidArgumentException {
+
+		InfiniteLine horizontalXLine = new InfiniteLine(new Point(-4.0, 2.0),
+				new Point(-2.0, 2.0));
+		Collection<Element> collection = trimmer.trim(horizontalXLine,
+				references, new Point(-2.0, 2.0));
+
+		assertCollectionContains(collection, new Semiline(new Point(0.0, 2.0),
+				new Point(3.0, 2.0)));
+		Assert.assertEquals(
+				"A trim at the begging should produce exactly 1 semiline.", 1,
+				collection.size());
+	}
+
+	@Test
+	public void infiniteLineTrimsEndingPortionOfLineInitialEndClickRight()
+			throws NullArgumentException, InvalidArgumentException {
+
+		InfiniteLine horizontalXLine = new InfiniteLine(new Point(-4.0, 2.0),
+				new Point(-2.0, 2.0));
+		Collection<Element> collection = trimmer.trim(horizontalXLine,
+				references, new Point(-1.0, 2.0));
+
+		assertCollectionContains(collection, new Semiline(new Point(0.0, 2.0),
+				new Point(3.0, 2.0)));
+		Assert.assertEquals(
+				"A trim at the begging should produce exactly 1 semiline.", 1,
+				collection.size());
+	}
+
+	@Test
+	public void infiniteLineTrimsEndingPortionOfLineEndInitialClickLeft()
+			throws NullArgumentException, InvalidArgumentException {
+
+		InfiniteLine horizontalXLine = new InfiniteLine(new Point(-2.0, 2.0),
+				new Point(-4.0, 2.0));
+		Collection<Element> collection = trimmer.trim(horizontalXLine,
+				references, new Point(-5.0, 2.0));
+
+		assertCollectionContains(collection, new Semiline(new Point(0.0, 2.0),
+				new Point(3.0, 2.0)));
+		Assert.assertEquals(
+				"A trim at the begging should produce exactly 1 semiline.", 1,
+				collection.size());
+	}
+
+	@Test
+	public void infiniteLineTrimsEndingPortionOfLineEndInitialClickInitial()
+			throws NullArgumentException, InvalidArgumentException {
+
+		InfiniteLine horizontalXLine = new InfiniteLine(new Point(-2.0, 2.0),
+				new Point(-4.0, 2.0));
+		Collection<Element> collection = trimmer.trim(horizontalXLine,
+				references, new Point(-4.0, 2.0));
+
+		assertCollectionContains(collection, new Semiline(new Point(0.0, 2.0),
+				new Point(3.0, 2.0)));
+		Assert.assertEquals(
+				"A trim at the begging should produce exactly 1 semiline.", 1,
+				collection.size());
+	}
+
+	@Test
+	public void infiniteLineTrimsEndingPortionOfLineEndInitialClickCenter()
+			throws NullArgumentException, InvalidArgumentException {
+
+		InfiniteLine horizontalXLine = new InfiniteLine(new Point(-2.0, 2.0),
+				new Point(-4.0, 2.0));
+		Collection<Element> collection = trimmer.trim(horizontalXLine,
+				references, new Point(-3.0, 2.0));
+
+		assertCollectionContains(collection, new Semiline(new Point(0.0, 2.0),
+				new Point(3.0, 2.0)));
+		Assert.assertEquals(
+				"A trim at the begging should produce exactly 1 semiline.", 1,
+				collection.size());
+	}
+
+	@Test
+	public void infiniteLineTrimsEndingPortionOfLineEndInitialClickEnd()
+			throws NullArgumentException, InvalidArgumentException {
+
+		InfiniteLine horizontalXLine = new InfiniteLine(new Point(-2.0, 2.0),
+				new Point(-4.0, 2.0));
+		Collection<Element> collection = trimmer.trim(horizontalXLine,
+				references, new Point(-2.0, 2.0));
+
+		assertCollectionContains(collection, new Semiline(new Point(0.0, 2.0),
+				new Point(3.0, 2.0)));
+		Assert.assertEquals(
+				"A trim at the begging should produce exactly 1 semiline.", 1,
+				collection.size());
+	}
+
+	@Test
+	public void infiniteLineTrimsEndingPortionOfLineEndInitialClickRight()
+			throws NullArgumentException, InvalidArgumentException {
+
+		InfiniteLine horizontalXLine = new InfiniteLine(new Point(-2.0, 2.0),
+				new Point(-4.0, 2.0));
+		Collection<Element> collection = trimmer.trim(horizontalXLine,
+				references, new Point(-1.0, 2.0));
+
+		assertCollectionContains(collection, new Semiline(new Point(0.0, 2.0),
+				new Point(3.0, 2.0)));
+		Assert.assertEquals(
+				"A trim at the begging should produce exactly 1 semiline.", 1,
+				collection.size());
+	}
+
+	@Ignore
+	@Test
+	public void infiniteLineTrimsLefterPartWhenClickingExactlyOnIntersectionPoint()
+			throws NullArgumentException, InvalidArgumentException {
+
+		InfiniteLine horizontalXLine = new InfiniteLine(new Point(-1.0, 2.0),
+				new Point(3.0, 2.0));
+		Collection<Element> collection = trimmer.trim(horizontalXLine,
+				references, new Point(2.0, 2.0));
+
+		assertCollectionContains(collection, new Semiline(new Point(0.0, 2.0),
+				new Point(-1.0, 2.0)));
+		assertCollectionContains(collection, new Semiline(new Point(2.0, 2.0),
+				new Point(3.0, 2.0)));
+		Assert.assertEquals(
+				"A trim at an intersection point removes the lefter part.", 2,
+				collection.size());
+	}
 }
