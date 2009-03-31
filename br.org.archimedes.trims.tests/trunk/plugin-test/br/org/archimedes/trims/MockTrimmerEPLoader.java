@@ -13,6 +13,7 @@
 package br.org.archimedes.trims;
 
 import java.util.Map;
+
 import br.org.archimedes.model.Element;
 import br.org.archimedes.trims.interfaces.Trimmer;
 import br.org.archimedes.trims.rcp.TrimmerEPLoader;
