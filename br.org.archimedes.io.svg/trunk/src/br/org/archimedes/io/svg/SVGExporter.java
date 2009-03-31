@@ -142,7 +142,7 @@ public class SVGExporter implements Exporter {
 
             output.write(endContainerTagBytes);
         }
-        output.write(("</drawing>" + "\n").getBytes(charset)); //$NON-NLS-1$ //$NON-NLS-2$
+        output.write(("</svg>" + "\n").getBytes(charset)); //$NON-NLS-1$ //$NON-NLS-2$
         output.close();
     }
 
