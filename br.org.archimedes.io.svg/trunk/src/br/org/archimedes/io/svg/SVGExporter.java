@@ -75,6 +75,10 @@ public class SVGExporter implements Exporter {
 
         }
 
+        if (boundaryRectangle == null) {
+            boundaryRectangle = new Rectangle(0, 0, 0, 0);
+        }
+
         return boundaryRectangle;
 
     }
