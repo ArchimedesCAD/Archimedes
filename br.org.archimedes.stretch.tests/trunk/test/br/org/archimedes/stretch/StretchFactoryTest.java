@@ -12,17 +12,17 @@
  */
 package br.org.archimedes.stretch;
 
-import java.util.HashSet;
+import br.org.archimedes.exceptions.InvalidArgumentException;
+import br.org.archimedes.helper.FactoryTester;
+import br.org.archimedes.model.Drawing;
+import br.org.archimedes.model.Element;
+import br.org.archimedes.stub.StubElement;
 
-import org.easymock.classextension.EasyMock;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import br.org.archimedes.exceptions.InvalidArgumentException;
-import br.org.archimedes.factories.FactoryTester;
-import br.org.archimedes.model.Drawing;
-import br.org.archimedes.model.Element;
+import java.util.HashSet;
 
 /**
  * Belongs to package br.org.archimedes.stretch.
@@ -38,9 +38,9 @@ public class StretchFactoryTest extends FactoryTester {
     public void setUp () throws Exception {
 
         Drawing drawing = new Drawing("Teste");
-        Element element1 = EasyMock.createMock(Element.class);
+        Element element1 = new StubElement();
         // TODO Usar o ponto new Point(1, 1)
-        Element element2 = EasyMock.createMock(Element.class);
+        Element element2 = new StubElement();
         putSafeElementOnDrawing(element1, drawing);
         putSafeElementOnDrawing(element2, drawing);
 

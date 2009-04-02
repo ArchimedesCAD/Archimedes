@@ -19,7 +19,7 @@ import org.junit.Test;
 
 import br.org.archimedes.exceptions.InvalidParameterException;
 import br.org.archimedes.factories.CommandFactory;
-import br.org.archimedes.factories.FactoryTester;
+import br.org.archimedes.helper.FactoryTester;
 import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Vector;

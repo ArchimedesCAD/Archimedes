@@ -9,10 +9,9 @@ Require-Bundle: br.org.archimedes.core,
  org.junit4,
  org.eclipse.core.runtime;bundle-version="3.4.0"
 Export-Package: br.org.archimedes,
- br.org.archimedes.factories,
- org.easymock,
- org.easymock.classextension
+ br.org.archimedes.stub,
+ br.org.archimedes.helper
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Bundle-ClassPath: .,
- easymock.jar,
- easymockclassextension.jar
+Bundle-ClassPath: easymock.jar,
+ easymockclassextension.jar,
+ .

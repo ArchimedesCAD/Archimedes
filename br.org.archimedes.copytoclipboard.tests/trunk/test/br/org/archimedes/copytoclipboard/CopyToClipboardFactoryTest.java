@@ -12,20 +12,20 @@
  */
 package br.org.archimedes.copytoclipboard;
 
-import java.util.Collection;
+import br.org.archimedes.factories.CommandFactory;
+import br.org.archimedes.gui.model.Workspace;
+import br.org.archimedes.helper.FactoryTester;
+import br.org.archimedes.model.Drawing;
+import br.org.archimedes.model.Element;
+import br.org.archimedes.model.Selection;
+import br.org.archimedes.stub.StubElement;
 
-import org.easymock.classextension.EasyMock;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import br.org.archimedes.factories.CommandFactory;
-import br.org.archimedes.factories.FactoryTester;
-import br.org.archimedes.gui.model.Workspace;
-import br.org.archimedes.model.Drawing;
-import br.org.archimedes.model.Element;
-import br.org.archimedes.model.Selection;
+import java.util.Collection;
 
 public class CopyToClipboardFactoryTest extends FactoryTester {
 
@@ -50,9 +50,9 @@ public class CopyToClipboardFactoryTest extends FactoryTester {
     @Test
     public void testCopy () {
 
-        Element element1 = EasyMock.createMock(Element.class);
+        Element element1 = new StubElement();
         putSafeElementOnDrawing(element1, drawing);
-        Element element2 = EasyMock.createMock(Element.class);
+        Element element2 = new StubElement();
         putSafeElementOnDrawing(element2, drawing);
 
         Selection selection = new Selection();

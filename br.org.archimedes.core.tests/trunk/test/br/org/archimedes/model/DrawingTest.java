@@ -13,24 +13,24 @@
  */
 package br.org.archimedes.model;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import br.org.archimedes.Constant;
+import br.org.archimedes.Tester;
+import br.org.archimedes.exceptions.IllegalActionException;
+import br.org.archimedes.exceptions.NullArgumentException;
+import br.org.archimedes.stub.StubElement;
 
-import java.io.File;
-import java.util.Collection;
-import java.util.Set;
-
-import org.easymock.EasyMock;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import br.org.archimedes.Constant;
-import br.org.archimedes.Tester;
-import br.org.archimedes.exceptions.IllegalActionException;
-import br.org.archimedes.exceptions.NullArgumentException;
+import java.io.File;
+import java.util.Collection;
+import java.util.Set;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class DrawingTest extends Tester {
 
@@ -43,7 +43,7 @@ public class DrawingTest extends Tester {
     public void setUp () {
 
         drawing = new Drawing(null);
-        element = EasyMock.createMock(Element.class);
+        element = new StubElement();
     }
 
     @After
@@ -113,7 +113,7 @@ public class DrawingTest extends Tester {
     @Test
     public void testRemoveElement () {
 
-        Element line = EasyMock.createMock(Element.class);
+        Element line = new StubElement();
         Collection<Element> contents = drawing.getUnlockedContents();
 
         // Put a line in there

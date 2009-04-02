@@ -12,19 +12,6 @@
  */
 package br.org.archimedes.undo;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Stack;
-
-import org.easymock.EasyMock;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-
 import br.org.archimedes.controller.commands.PutOrRemoveElementCommand;
 import br.org.archimedes.exceptions.IllegalActionException;
 import br.org.archimedes.exceptions.NullArgumentException;
@@ -33,6 +20,21 @@ import br.org.archimedes.interfaces.UndoableCommand;
 import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
+import br.org.archimedes.stub.StubCommand;
+import br.org.archimedes.stub.StubElement;
+import br.org.archimedes.stub.StubUndoableCommand;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Stack;
 
 /**
  * Belongs to package com.tarantulus.archimedes.model.commands.
@@ -58,7 +60,7 @@ public class UndoTest {
         commands = new ArrayList<Command>();
         Point p1 = new Point(0, 10);
         Point p2 = new Point(60, 48);
-        Element element = EasyMock.createMock(Element.class);
+        Element element = new StubElement();
         Collection<Point> points = new ArrayList<Point>();
         points.add(p1);
         points.add(p2);
@@ -66,8 +68,8 @@ public class UndoTest {
         commands.add(new PutOrRemoveElementCommand(element, false));
         Map<Element, Collection<Point>> pointsToMove = new HashMap<Element, Collection<Point>>();
         pointsToMove.put(element, points);
-        commands.add(EasyMock.createMock(UndoableCommand.class));
-        commands.add(EasyMock.createMock(Command.class));
+        commands.add(new StubUndoableCommand());
+        commands.add(new StubCommand());
         commands.add(new PutOrRemoveElementCommand(element, true));
 
         undo = new UndoCommand();

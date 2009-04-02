@@ -10,14 +10,14 @@
  * This file was created on 2007/05/21, 11:29:58, by Hugo Corbucci.<br>
  * It is part of package br.org.archimedes.controller on the br.org.archimedes.core.tests project.<br>
  */
+
 package br.org.archimedes.controller;
-
-import junit.framework.TestCase;
-
-import org.easymock.classextension.EasyMock;
 
 import br.org.archimedes.factories.CommandFactory;
 import br.org.archimedes.model.Drawing;
+import br.org.archimedes.stub.StubCommandFactory;
+
+import junit.framework.TestCase;
 
 /**
  * Belongs to package br.org.archimedes.controller.
@@ -42,8 +42,8 @@ public class ActiveStateTest extends TestCase {
 
         super.setUp();
         drawing = new Drawing("hi");
-        factory = EasyMock.createMock(CommandFactory.class);
-        state = EasyMock.createMock(IdleState.class);
+        factory = new StubCommandFactory();
+        state = new StubState();
         activeSate = new ActiveState(state, factory, drawing);
     }
 
@@ -69,8 +69,7 @@ public class ActiveStateTest extends TestCase {
     }
 
     /**
-     * Test method for
-     * {@link br.org.archimedes.controller.ActiveState#getNext()}.
+     * Test method for {@link br.org.archimedes.controller.ActiveState#getNext()}.
      */
     public void testGetNext () {
 
@@ -78,8 +77,7 @@ public class ActiveStateTest extends TestCase {
     }
 
     /**
-     * Test method for
-     * {@link br.org.archimedes.controller.ActiveState#gotSelection()}.
+     * Test method for {@link br.org.archimedes.controller.ActiveState#gotSelection()}.
      */
     public void testGotSelection () {
 
@@ -87,8 +85,7 @@ public class ActiveStateTest extends TestCase {
     }
 
     /**
-     * Test method for
-     * {@link br.org.archimedes.controller.ActiveState#nextShouldHandle()}.
+     * Test method for {@link br.org.archimedes.controller.ActiveState#nextShouldHandle()}.
      */
     public void testNextShouldHandle () {
 
@@ -97,7 +94,8 @@ public class ActiveStateTest extends TestCase {
 
     /**
      * Test method for
-     * {@link br.org.archimedes.controller.ActiveState#changedDrawing(br.org.archimedes.model.Drawing)}.
+     * {@link br.org.archimedes.controller.ActiveState#changedDrawing(br.org.archimedes.model.Drawing)}
+     * .
      */
     public void testChangedDrawing () {
 

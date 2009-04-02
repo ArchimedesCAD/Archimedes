@@ -12,21 +12,50 @@
  */
 package br.org.archimedes.offset;
 
-import java.util.HashSet;
-import java.util.Set;
+import br.org.archimedes.controller.Controller;
+import br.org.archimedes.exceptions.InvalidParameterException;
+import br.org.archimedes.exceptions.NullArgumentException;
+import br.org.archimedes.factories.CommandFactory;
+import br.org.archimedes.helper.FactoryTester;
+import br.org.archimedes.model.Drawing;
+import br.org.archimedes.model.Element;
+import br.org.archimedes.model.Offsetable;
+import br.org.archimedes.model.Point;
+import br.org.archimedes.stub.StubElement;
 
-import org.easymock.classextension.EasyMock;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import br.org.archimedes.controller.Controller;
-import br.org.archimedes.factories.CommandFactory;
-import br.org.archimedes.factories.FactoryTester;
-import br.org.archimedes.model.Drawing;
-import br.org.archimedes.model.Element;
+import java.util.HashSet;
+import java.util.Set;
 
 public class OffsetFactoryTest extends FactoryTester {
+
+    
+    /**
+     * Belongs to package br.org.archimedes.offset.
+     *
+     * @author "Hugo Corbucci"
+     */
+    public class OffsetableStubElement extends StubElement implements Offsetable {
+
+        /* (non-Javadoc)
+         * @see br.org.archimedes.model.Offsetable#cloneWithDistance(double)
+         */
+        public Element cloneWithDistance (double distance) throws InvalidParameterException {
+
+            return null;
+        }
+
+        /* (non-Javadoc)
+         * @see br.org.archimedes.model.Offsetable#isPositiveDirection(br.org.archimedes.model.Point)
+         */
+        public boolean isPositiveDirection (Point point) throws NullArgumentException {
+
+            return false;
+        }
+    }
 
     private Controller controller;
 
@@ -46,8 +75,7 @@ public class OffsetFactoryTest extends FactoryTester {
         drawing = new Drawing("Teste");
         controller.setActiveDrawing(drawing);
 
-        // TODO Fazer o mock ser offsetable
-        Element element = EasyMock.createMock(Element.class);
+        Element element = new OffsetableStubElement();
         putSafeElementOnDrawing(element, drawing);
 
         selection = new HashSet<Element>();

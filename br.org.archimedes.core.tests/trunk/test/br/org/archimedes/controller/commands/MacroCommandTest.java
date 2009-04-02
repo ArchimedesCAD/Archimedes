@@ -8,22 +8,11 @@
  * Hugo Corbucci - initial API and implementation<br>
  * <br>
  * This file was created on 2006/09/09, 10:14:27, by Hugo Corbucci.<br>
- * It is part of package br.org.archimedes.controller.commands on the br.org.archimedes.core.tests project.<br>
+ * It is part of package br.org.archimedes.controller.commands on the br.org.archimedes.core.tests
+ * project.<br>
  */
+
 package br.org.archimedes.controller.commands;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.easymock.classextension.EasyMock;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 import br.org.archimedes.Tester;
 import br.org.archimedes.exceptions.IllegalActionException;
@@ -34,8 +23,49 @@ import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Vector;
+import br.org.archimedes.stub.StubElement;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 public class MacroCommandTest extends Tester {
+
+    private class StubPointsEqualElement extends StubElement {
+
+        private LinkedList<Point> points;
+
+        public StubPointsEqualElement (Point... points) {
+            this.points = new LinkedList<Point>();
+            for (Point point : points) {
+                this.points.add(point);
+            }
+        }
+
+        @Override
+        public boolean equals (Object object) {
+            if(!(object instanceof Element))
+                    return false;
+            
+            Element other = (Element) object;
+            return getPoints().equals(other.getPoints());
+        }
+
+        @Override
+        public List<Point> getPoints () {
+
+            return points;
+        }
+    }
 
     private MacroCommand command;
 
@@ -53,11 +83,8 @@ public class MacroCommandTest extends Tester {
 
     private void makeMacroCommand () {
 
-        element = EasyMock.createMock(Element.class);
-        EasyMock.expect(element.getPoints()).andReturn(
-                Collections.singletonList(new Point(10, 10)));
-        EasyMock.replay(element);
-        
+        element = new StubPointsEqualElement(new Point(10, 10));
+
         List<UndoableCommand> cmds = new ArrayList<UndoableCommand>();
         try {
             cmds.add(new PutOrRemoveElementCommand(element, false));
@@ -95,8 +122,7 @@ public class MacroCommandTest extends Tester {
         }
         catch (NullArgumentException e) {}
         catch (IllegalActionException e) {
-            Assert
-                    .fail("Should throw a NullArgumentException not an IllegalActionException.");
+            Assert.fail("Should throw a NullArgumentException not an IllegalActionException.");
         }
 
         try {
@@ -104,15 +130,13 @@ public class MacroCommandTest extends Tester {
             Assert.fail("Should throw an IllegalActionException.");
         }
         catch (NullArgumentException e) {
-            Assert
-                    .fail("Should throw an IllegalActionException not a NullArgumentException.");
+            Assert.fail("Should throw an IllegalActionException not a NullArgumentException.");
         }
         catch (IllegalActionException e) {}
     }
 
     /*
-     * Test method for
-     * 'com.tarantulus.archimedes.controller.commands.MacroCommand.doIt(Drawing)'
+     * Test method for 'com.tarantulus.archimedes.controller.commands.MacroCommand.doIt(Drawing)'
      */
     @Test
     public void testDoIt () throws InvalidArgumentException {
@@ -122,27 +146,20 @@ public class MacroCommandTest extends Tester {
             Assert.fail("Should throw a NullArgumentException.");
         }
         catch (IllegalActionException e) {
-            Assert
-                    .fail("Should throw a NullArgumentException not an IllegalActionException.");
+            Assert.fail("Should throw a NullArgumentException not an IllegalActionException.");
         }
         catch (NullArgumentException e) {}
 
         safeDoIt();
 
         assertCollectionContains(drawing.getUnlockedContents(), element);
-        
-        Element expected = EasyMock.createMock(Element.class);
-        EasyMock.expect(expected.getPoints()).andReturn(
-                Collections.singletonList(new Point(20, 53)));
-        EasyMock.replay(element);
-        
-        Assert.assertEquals("The element should have been moved", expected,
-                this.element);
+
+        Element expected = new StubPointsEqualElement(new Point(20, 53));
+        Assert.assertEquals("The element should have been moved", expected, this.element);
     }
 
     /*
-     * Test method for
-     * 'com.tarantulus.archimedes.controller.commands.MacroCommand.undoIt(Drawing)'
+     * Test method for 'com.tarantulus.archimedes.controller.commands.MacroCommand.undoIt(Drawing)'
      */
     @Test
     public void testUndoIt () throws InvalidArgumentException {
@@ -152,8 +169,7 @@ public class MacroCommandTest extends Tester {
             Assert.fail("Should throw a NullArgumentException.");
         }
         catch (IllegalActionException e) {
-            Assert
-                    .fail("Should throw a NullArgumentException not an IllegalActionException.");
+            Assert.fail("Should throw a NullArgumentException not an IllegalActionException.");
         }
         catch (NullArgumentException e) {}
 
@@ -163,20 +179,14 @@ public class MacroCommandTest extends Tester {
         }
         catch (Exception e) {
             e.printStackTrace();
-            Assert.fail("Should not throw an exception with message: "
-                    + e.getMessage());
+            Assert.fail("Should not throw an exception with message: " + e.getMessage());
         }
 
-        assertCollectionTheSame(drawing.getUnlockedContents(), Collections
-                .emptyList());
-        
-        Element expected = EasyMock.createMock(Element.class);
-        EasyMock.expect(expected.getPoints()).andReturn(
-                Collections.singletonList(new Point(10, 10)));
-        EasyMock.replay(element);
-        
-        Assert.assertEquals("The element should have been moved", expected,
-                this.element);
+        assertCollectionTheSame(drawing.getUnlockedContents(), Collections.emptyList());
+
+        Element expected = new StubPointsEqualElement(new Point(10, 10));
+
+        Assert.assertEquals("The element should have been moved", expected, this.element);
     }
 
     private void safeDoIt () {

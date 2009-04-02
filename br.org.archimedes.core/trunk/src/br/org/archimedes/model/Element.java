@@ -13,12 +13,12 @@
  */
 package br.org.archimedes.model;
 
-import java.util.Collection;
-import java.util.List;
-
 import br.org.archimedes.exceptions.IllegalActionException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.gui.opengl.OpenGLWrapper;
+
+import java.util.Collection;
+import java.util.List;
 
 /**
  * Belongs to package br.org.archimedes.model.
@@ -114,17 +114,6 @@ public abstract class Element {
      * @return true if element is the same as this, false otherwise.
      */
     public abstract boolean equals (Object object);
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see java.lang.Object#hashCode()
-     */
-    public int hashCode () {
-
-        String stringRep = toString();
-        return stringRep.hashCode();
-    }
 
     /**
      * @return the rectangle that contains this element, or a rectangle with 0

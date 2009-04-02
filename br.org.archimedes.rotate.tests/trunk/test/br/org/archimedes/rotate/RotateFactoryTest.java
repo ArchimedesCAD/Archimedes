@@ -13,21 +13,21 @@
  */
 package br.org.archimedes.rotate;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import org.easymock.classextension.EasyMock;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
 import br.org.archimedes.controller.Controller;
 import br.org.archimedes.factories.CommandFactory;
-import br.org.archimedes.factories.FactoryTester;
+import br.org.archimedes.helper.FactoryTester;
 import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Vector;
+import br.org.archimedes.stub.StubElement;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Belongs to package br.org.archimedes.rotate.
@@ -48,8 +48,8 @@ public class RotateFactoryTest extends FactoryTester {
     @Before
     public void setUp () {
 
-        Element element1 = EasyMock.createMock(Element.class);
-        Element element2 = EasyMock.createMock(Element.class);
+        Element element1 = new StubElement();
+        Element element2 = new StubElement();
         factory = new RotateFactory();
 
         // Arguments

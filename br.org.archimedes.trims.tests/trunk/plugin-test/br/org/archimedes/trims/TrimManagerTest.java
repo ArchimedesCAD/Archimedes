@@ -25,6 +25,7 @@ import org.junit.Test;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
@@ -33,21 +34,21 @@ public class TrimManagerTest extends Tester {
     @Test
     public void returnSameElementForNoExistentTrimmer () throws Exception {
 
-        MockTrimmerEPLoader trimmerEPLoader = new MockTrimmerEPLoader(Collections.EMPTY_MAP);
+        Map<Class<? extends Element>, Trimmer> map = Collections.emptyMap();
+        MockTrimmerEPLoader trimmerEPLoader = new MockTrimmerEPLoader(map);
         TrimManager manager = new TrimManager(trimmerEPLoader);
         Line line = new Line(1.0, 0.0, -1.0, 0.0);
 
-        Collection<Element> collection = manager.getTrimOf(line, Collections.EMPTY_LIST, new Point(
-                0.0, 0.0));
+        Collection<Element> list = Collections.emptyList();
+        Collection<Element> collection = manager.getTrimOf(line, list, new Point(0.0, 0.0));
         assertCollectionTheSame(Collections.singleton(line), collection);
-
     }
 
     @Test
     public void returnMockedTrimmerAndCallTrimForIt () throws Exception {
 
         final Line line = new Line(1.0, 0.0, -1.0, 0.0);
-        final Collection<Element> reference = Collections.EMPTY_LIST;
+        final Collection<Element> reference = Collections.emptyList();
         final Point point = new Point(0.0, 0.0);
 
         Trimmer trimmerMockado = new Trimmer() {

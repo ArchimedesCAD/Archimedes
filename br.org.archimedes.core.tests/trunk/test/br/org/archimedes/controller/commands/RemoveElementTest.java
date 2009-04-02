@@ -12,12 +12,6 @@
  */
 package br.org.archimedes.controller.commands;
 
-import org.easymock.EasyMock;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-
 import br.org.archimedes.Tester;
 import br.org.archimedes.exceptions.IllegalActionException;
 import br.org.archimedes.exceptions.InvalidArgumentException;
@@ -26,6 +20,12 @@ import br.org.archimedes.interfaces.Command;
 import br.org.archimedes.interfaces.UndoableCommand;
 import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Element;
+import br.org.archimedes.stub.StubElement;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Belongs to package br.org.archimedes.controller.commands.
@@ -69,7 +69,7 @@ public class RemoveElementTest extends Tester {
         }
         catch (NullArgumentException e) {}
 
-        element = EasyMock.createMock(Element.class);
+        element = new StubElement();
         try {
             new PutOrRemoveElementCommand(element, true);
         }
@@ -85,7 +85,7 @@ public class RemoveElementTest extends Tester {
     @Test
     public void testDoIt () throws InvalidArgumentException {
 
-        Element element = EasyMock.createMock(Element.class);
+        Element element = new StubElement();
         Command removeElement = safeCommand(element);
 
         try {
@@ -167,7 +167,7 @@ public class RemoveElementTest extends Tester {
     @Test
     public void testUndoIt () throws InvalidArgumentException {
 
-        Element element = EasyMock.createMock(Element.class);
+        Element element = new StubElement();
         UndoableCommand removeElement = safeCommand(element);
         putSafeElementOnDrawing(element, drawing);
 
