@@ -643,11 +643,17 @@ public class InfiniteLineTest {
 			Assert.fail("Should not throw IllegalActionException");
 		}
 	}
-
+	
 	@Test
 	public void testInfiniteLineBoundaryRectangle() {
-
 		Rectangle boundary = infiniteLine.getBoundaryRectangle();
+		assertEquals(null, boundary);
+	}
+
+	@Test
+	public void testInfiniteLineCreationBoundaryRectangle() {
+
+		Rectangle boundary = infiniteLine.getCreationBoundaryRectangle();
 		assertEquals(boundary.getLowerLeft().getX(), 0);
 		assertEquals(boundary.getLowerLeft().getY(), -1);
 		assertEquals(boundary.getUpperRight().getX(), 1);

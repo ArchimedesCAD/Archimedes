@@ -195,6 +195,12 @@ public class InfiniteLine extends Element implements Offsetable {
 	@Override
 	public Rectangle getBoundaryRectangle() {
 
+		return null;
+
+	}
+
+	public Rectangle getCreationBoundaryRectangle() {
+
 		return new Rectangle(Math.min(initialPoint.getX(), endingPoint.getX()),
 				Math.min(initialPoint.getY(), endingPoint.getY()), Math.max(
 						initialPoint.getX(), endingPoint.getX()), Math.max(
