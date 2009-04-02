@@ -7,6 +7,7 @@
  * Contributors:<br>
  * Hugo Corbucci - initial API and implementation<br>
  * Bruno Klava and Luiz Real - changed behavior of its boundary rectangle<br>
+ * Ricardo Sider and Luiz Real - reverted the behavior of its boundary rectangle and corrected getPointsCrossing method<br>
  * <br>
  * This file was created on 2009/01/10, 11:16:48, by Hugo Corbucci.<br>
  * It is part of package br.org.archimedes.semiline on the br.org.archimedes.semiline project.<br>
@@ -175,7 +176,7 @@ public class Semiline extends Element implements Offsetable {
     }
 
     public Rectangle getBoundaryRectangle () {
-    	return new Rectangle(initialPoint.getX(), initialPoint.getY(), initialPoint.getX(), initialPoint.getY());
+    	return null;
     }
 
     /**
@@ -375,7 +376,7 @@ public class Semiline extends Element implements Offsetable {
             if (isWithinVerticalBoundsAndContained(rectangle, upperPoint)) {
                 points.add(upperPoint);
             }
-            if (isWithinVerticalBoundsAndContained(rectangle, lowerLeftModel)) {
+            if (isWithinVerticalBoundsAndContained(rectangle, lowerPoint)) {
                 points.add(lowerPoint);
             }
 
