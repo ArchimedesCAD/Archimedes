@@ -13,10 +13,6 @@
  */
 package br.org.archimedes;
 
-import java.util.Collection;
-import java.util.Locale;
-import java.util.Scanner;
-
 import br.org.archimedes.controller.Controller;
 import br.org.archimedes.controller.InputController;
 import br.org.archimedes.exceptions.NullArgumentException;
@@ -25,6 +21,10 @@ import br.org.archimedes.gui.opengl.OpenGLWrapper;
 import br.org.archimedes.gui.rca.Activator;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Rectangle;
+
+import java.util.Collection;
+import java.util.Locale;
+import java.util.Scanner;
 
 /**
  * Belongs to package br.org.archimedes.
@@ -271,7 +271,7 @@ public class Utils {
     public static InputController getInputController() {
         Activator current = Activator.getDefault();
         if(current == null) { // For the tests
-            return new InputController();
+            current = new Activator();
         }
         return current.getInputController();
     }
@@ -282,7 +282,7 @@ public class Utils {
     public static Controller getController() {
         Activator current = Activator.getDefault();
         if(current == null) { // For the tests
-            return new Controller();
+            current = new Activator();
         }
         return current.getController();
     }
@@ -293,7 +293,7 @@ public class Utils {
     public static OpenGLWrapper getOpenGLWrapper() {
         Activator current = Activator.getDefault();
         if(current == null) { // For the tests
-            return new OpenGLWrapper();
+            current = new Activator();
         }
         return Activator.getDefault().getOpenGLWrapper();
     }
