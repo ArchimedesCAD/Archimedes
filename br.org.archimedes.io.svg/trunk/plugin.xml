@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-   <extension-point id="br.org.archimedes.io.svg.svgExporter" name="svgExporter" schema="schema/br.org.archimedes.io.svg.svgExporter.exsd"/>
+   <extension-point id="svgElementExporter" name="SVG Element Exporter" schema="schema/svgElementExporter.exsd"/>
    <extension point="br.org.archimedes.core.exporter">
      <exporter id="br.org.archimedes.svg.exporter"
         extension="svg" name="%exporterName"

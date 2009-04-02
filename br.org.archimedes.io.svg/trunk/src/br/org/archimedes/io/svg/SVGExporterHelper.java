@@ -17,11 +17,8 @@ import br.org.archimedes.model.Rectangle;
 
 
 public class SVGExporterHelper {
-    private Rectangle documentArea;
-    private double zoom;
     
     public SVGExporterHelper (Rectangle documentArea) {
-        this.documentArea = documentArea;
     }
     
     public static String svgFor (final Point point) {

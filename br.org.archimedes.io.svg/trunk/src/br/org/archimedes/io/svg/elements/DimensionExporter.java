@@ -13,15 +13,14 @@
 
 package br.org.archimedes.io.svg.elements;
 
-import java.io.IOException;
-import java.util.Collection;
-
-import br.org.archimedes.circle.Circle;
 import br.org.archimedes.dimension.Dimension;
 import br.org.archimedes.exceptions.NotSupportedException;
 import br.org.archimedes.interfaces.ElementExporter;
 import br.org.archimedes.line.Line;
 import br.org.archimedes.model.Rectangle;
+
+import java.io.IOException;
+import java.util.Collection;
 
 /**
  * Belongs to package br.org.archimedes.io.pdf.

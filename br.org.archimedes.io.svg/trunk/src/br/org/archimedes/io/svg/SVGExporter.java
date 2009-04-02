@@ -13,13 +13,7 @@
 
 package br.org.archimedes.io.svg;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
-import java.util.Collection;
-
 import br.org.archimedes.exceptions.NotSupportedException;
-import br.org.archimedes.gui.opengl.Color;
 import br.org.archimedes.infiniteline.InfiniteLine;
 import br.org.archimedes.interfaces.ElementExporter;
 import br.org.archimedes.interfaces.Exporter;
@@ -30,6 +24,11 @@ import br.org.archimedes.model.Layer;
 import br.org.archimedes.model.Rectangle;
 import br.org.archimedes.rcp.extensionpoints.ElementEPLoader;
 import br.org.archimedes.semiline.Semiline;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.util.Collection;
 
 /**
  * Belongs to package br.org.archimedes.io.svg.
@@ -121,34 +120,6 @@ public class SVGExporter implements Exporter {
                 + (int) Math.ceil(boundaryRectangle.getHeight()) + "\">");
 
         output.write(drawingTag.toString().getBytes(charset));
-    }
-
-    /**
-     * @param builder
-     *            The stringbuilder that should be used to write
-     * @param color
-     *            The color that should be written
-     */
-    private void writeColor (StringBuilder builder, Color color) {
-
-        builder.append("\t" + "\t" + "<color>" + "\n"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-        writeComponent(builder, color.getRed());
-        writeComponent(builder, color.getGreen());
-        writeComponent(builder, color.getBlue());
-        builder.append("\t" + "\t" + "</color>" + "\n"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-    }
-
-    /**
-     * @param builder
-     *            The stringbuilder that should be used to write
-     * @param component
-     *            The component to be written
-     */
-    private void writeComponent (StringBuilder builder, int component) {
-
-        builder.append("\t" + "\t" + "\t" + "<unsignedByte>"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-        builder.append(component);
-        builder.append("</unsignedByte>" + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
     }
     
     private void writeLayersDefs (Collection<Layer> layers, OutputStream output, String encoding) throws IOException {
