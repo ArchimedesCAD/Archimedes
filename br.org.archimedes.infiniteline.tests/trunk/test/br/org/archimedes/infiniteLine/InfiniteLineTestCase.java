@@ -26,7 +26,7 @@ import br.org.archimedes.model.Element;
  * 
  * @author nitao
  */
-public abstract class InfiniteLineTestCase extends infiniteLineTest {
+public abstract class InfiniteLineTestCase extends InfiniteLineTest {
 
     protected InfiniteLine testedLine;
 
