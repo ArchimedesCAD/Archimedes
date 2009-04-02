@@ -71,32 +71,42 @@ public class InfiniteLineTrimmer implements Trimmer {
 		SortedSet<ComparablePoint> tailSet = sortedPointSet.tailSet(clickPoint);
 
 		try {
-			if (headSet.size() == 0 && tailSet.size() > 0) {
+
+			if (tailSet.size() > 0
+					&& tailSet.first().getPoint().equals(clickPoint.getPoint())) {
+
 				Point initialPoint = tailSet.first().getPoint();
-				
-				Element trimmedLine = generateSemiline(clickPoint,
-						initialPoint);
+
+				clickPoint.getPoint().setX(
+						clickPoint.getPoint().getX() + direction.getX());
+				clickPoint.getPoint().setY(
+						clickPoint.getPoint().getY() + direction.getY());
+
+				Element trimmedLine = generateSemiline(clickPoint, initialPoint);
+				trimmedLine.setLayer(xline.getLayer());
+				trimResult.add(trimmedLine);
+
+			} else if (headSet.size() == 0 && tailSet.size() > 0) {
+				Point initialPoint = tailSet.first().getPoint();
+				Element trimmedLine = generateSemiline(clickPoint, initialPoint);
 				trimmedLine.setLayer(xline.getLayer());
 				trimResult.add(trimmedLine);
 
 			} else if (tailSet.size() == 0 && headSet.size() > 0) {
 				Point initialPoint = headSet.last().getPoint();
-				
-				Element trimmedLine = generateSemiline(clickPoint,
-						initialPoint);
+				Element trimmedLine = generateSemiline(clickPoint, initialPoint);
 				trimmedLine.setLayer(xline.getLayer());
 				trimResult.add(trimmedLine);
 
 			} else if (headSet.size() > 0 && tailSet.size() > 0) {
+
 				Point initialPoint = headSet.last().getPoint();
-				Element trimmedLine = generateSemiline(clickPoint,
-						initialPoint);
+				Element trimmedLine = generateSemiline(clickPoint, initialPoint);
 				trimmedLine.setLayer(xline.getLayer());
 				trimResult.add(trimmedLine);
 
 				initialPoint = tailSet.first().getPoint();
-				trimmedLine = generateSemiline(clickPoint,
-						initialPoint);
+				trimmedLine = generateSemiline(clickPoint, initialPoint);
 				trimmedLine.setLayer(xline.getLayer());
 				trimResult.add(trimmedLine);
 			}
@@ -111,14 +121,13 @@ public class InfiniteLineTrimmer implements Trimmer {
 	private Element generateSemiline(ComparablePoint clickPoint,
 			Point initialPoint) throws NullArgumentException,
 			InvalidArgumentException {
-		Vector director = new Vector(clickPoint.getPoint(),
-				initialPoint);
-		Point endPoint = new Point(initialPoint.getX()
-				+ director.getX(), initialPoint.getY()
-				+ director.getY());
-		
+
+		Vector director = new Vector(clickPoint.getPoint(), initialPoint);
+		Point endPoint = new Point(initialPoint.getX() + director.getX(),
+				initialPoint.getY() + director.getY());
+
 		return new Semiline(initialPoint, endPoint);
-		
+
 	}
 
 	public SortedSet<ComparablePoint> getSortedPointSet(InfiniteLine line,

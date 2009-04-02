@@ -260,22 +260,37 @@ public class InfiniteLineTrimTest extends Tester {
 				collection.size());
 	}
 
-	@Ignore
 	@Test
 	public void infiniteLineTrimsLefterPartWhenClickingExactlyOnIntersectionPoint()
 			throws NullArgumentException, InvalidArgumentException {
 
 		InfiniteLine horizontalXLine = new InfiniteLine(new Point(-1.0, 2.0),
 				new Point(3.0, 2.0));
+
+		references.remove(new InfiniteLine(new Point(1.0, 4.0),
+				new Point(-1.0, 0.0)) );
+		
 		Collection<Element> collection = trimmer.trim(horizontalXLine,
 				references, new Point(2.0, 2.0));
 
-		assertCollectionContains(collection, new Semiline(new Point(0.0, 2.0),
-				new Point(-1.0, 2.0)));
 		assertCollectionContains(collection, new Semiline(new Point(2.0, 2.0),
-				new Point(3.0, 2.0)));
+				new Point(1.0, 2.0)));
+
 		Assert.assertEquals(
-				"A trim at an intersection point removes the lefter part.", 2,
+				"A trim at an intersection point removes the lefter part.", 1,
 				collection.size());
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
