@@ -13,17 +13,17 @@
  */
 package br.org.archimedes.arc;
 
-import static org.junit.Assert.assertEquals;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
 import br.org.archimedes.factories.CommandFactory;
 import br.org.archimedes.helper.FactoryTester;
 import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Vector;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Belongs to package com.tarantulus.archimedes.tests.commands.
@@ -50,7 +50,7 @@ public class ArcFactoryTest extends FactoryTester {
     }
 
     @Test
-    public void testCreateArcDefault () {
+    public void canCreateArcUsingDefaultPath () {
 
         // Begin
         assertBegin(factory, false);
@@ -93,7 +93,7 @@ public class ArcFactoryTest extends FactoryTester {
     }
 
     @Test
-    public void testCreateArcByCenter () {
+    public void canCreateArcByCenter () {
 
         // Begin
         assertBegin(factory, false);
@@ -148,7 +148,7 @@ public class ArcFactoryTest extends FactoryTester {
     }
 
     @Test
-    public void testCancelArcCreation () {
+    public void canCancelArcCreation () {
 
         Point point1 = new Point(2, 3);
         Point point2 = new Point(10, 3);

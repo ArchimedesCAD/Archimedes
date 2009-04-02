@@ -6,11 +6,13 @@
  * <br>
  * Contributors:<br>
  * Hugo Corbucci - initial API and implementation<br>
- * Victor D. Lopes, Marcos P. Moreti, Mariana V. Bravo, Eduardo O. de Souza, Jonas K. Hirata - later contributions<br>
+ * Victor D. Lopes, Marcos P. Moreti, Mariana V. Bravo, Eduardo O. de Souza, Jonas K. Hirata - later
+ * contributions<br>
  * <br>
  * This file was created on 2007/03/12, 07:51:43, by Hugo Corbucci.<br>
  * It is part of package br.org.archimedes.arc on the br.org.archimedes.arc project.<br>
  */
+
 package br.org.archimedes.arc;
 
 import br.org.archimedes.Constant;
@@ -36,9 +38,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Belongs to package br.org.archimedes.arc.
- * 
- * @author nitao
+ * This class represents an Arc of a circle. It is very similar to the circle but adds some
+ * complexity to restrict the start and end of the arc.
  */
 public class Arc extends CurvedShape implements Offsetable {
 
@@ -55,8 +56,8 @@ public class Arc extends CurvedShape implements Offsetable {
      * @param initialPoint
      *            The initial point
      * @param intermediatePoint
-     *            A point that is contained in the arc and is different from the
-     *            initial and ending point
+     *            A point that is contained in the arc and is different from the initial and ending
+     *            point
      * @param endingPoint
      *            The ending point
      * @throws NullArgumentException
@@ -67,13 +68,12 @@ public class Arc extends CurvedShape implements Offsetable {
     public Arc (Point initialPoint, Point intermediatePoint, Point endingPoint)
             throws NullArgumentException, InvalidArgumentException {
 
-        if (initialPoint == null || intermediatePoint == null
-                || endingPoint == null) {
+        if (initialPoint == null || intermediatePoint == null || endingPoint == null) {
             throw new NullArgumentException();
         }
 
-        createInternalRepresentation(initialPoint.clone(), intermediatePoint
-                .clone(), endingPoint.clone());
+        createInternalRepresentation(initialPoint.clone(), intermediatePoint.clone(), endingPoint
+                .clone());
     }
 
     /**
@@ -86,22 +86,19 @@ public class Arc extends CurvedShape implements Offsetable {
      * @param centerPoint
      *            The center point
      * @param counterclock
-     *            true if the points are in counter clock order, false
-     *            otherwise.
+     *            true if the points are in counter clock order, false otherwise.
      * @throws NullArgumentException
      *             Thrown if any argument is null
      * @throws InvalidArgumentException
      *             Throw if the arc is invalid.
      */
-    public Arc (Point initialPoint, Point endingPoint, Point centerPoint,
-            boolean counterclock) throws NullArgumentException,
-            InvalidArgumentException {
+    public Arc (Point initialPoint, Point endingPoint, Point centerPoint, boolean counterclock)
+            throws NullArgumentException, InvalidArgumentException {
 
         if (initialPoint == null || endingPoint == null || centerPoint == null) {
             throw new NullArgumentException();
         }
-        if (initialPoint.equals(endingPoint)
-                || initialPoint.equals(centerPoint)
+        if (initialPoint.equals(endingPoint) || initialPoint.equals(centerPoint)
                 || endingPoint.equals(centerPoint)) {
             throw new InvalidArgumentException();
         }
@@ -115,8 +112,7 @@ public class Arc extends CurvedShape implements Offsetable {
             this.endingPoint = initialPoint.clone();
         }
         this.centerPoint = centerPoint.clone();
-        this.intermediatePoint = calculateMidPoint(this.initialPoint,
-                this.endingPoint, centerPoint);
+        this.intermediatePoint = calculateMidPoint(this.initialPoint, this.endingPoint, centerPoint);
     }
 
     /**
@@ -125,8 +121,8 @@ public class Arc extends CurvedShape implements Offsetable {
      * @param initialPoint
      *            The initial point
      * @param intermediatePoint
-     *            A point that is contained in the arc and is different from the
-     *            initial and ending point
+     *            A point that is contained in the arc and is different from the initial and ending
+     *            point
      * @param endingPoint
      *            The ending point
      * @throws NullArgumentException
@@ -134,21 +130,16 @@ public class Arc extends CurvedShape implements Offsetable {
      * @throws InvalidArgumentException
      *             Thrown if the points are collinear
      */
-    private void createInternalRepresentation (Point initialPoint,
-            Point intermediatePoint, Point endingPoint)
-            throws InvalidArgumentException, NullArgumentException {
+    private void createInternalRepresentation (Point initialPoint, Point intermediatePoint,
+            Point endingPoint) throws InvalidArgumentException, NullArgumentException {
 
         this.initialPoint = initialPoint;
         this.endingPoint = endingPoint;
-        this.centerPoint = Geometrics.getCircumcenter(initialPoint,
-                intermediatePoint, endingPoint);
+        this.centerPoint = Geometrics.getCircumcenter(initialPoint, intermediatePoint, endingPoint);
 
-        double initialAngle = Geometrics.calculateAngle(centerPoint,
-                initialPoint);
-        double middleAngle = Geometrics.calculateAngle(centerPoint,
-                intermediatePoint);
-        double endingAngle = Geometrics
-                .calculateAngle(centerPoint, endingPoint);
+        double initialAngle = Geometrics.calculateAngle(centerPoint, initialPoint);
+        double middleAngle = Geometrics.calculateAngle(centerPoint, intermediatePoint);
+        double endingAngle = Geometrics.calculateAngle(centerPoint, endingPoint);
 
         boolean isClockwise = (endingAngle > initialAngle && (middleAngle < initialAngle || middleAngle > endingAngle));
         isClockwise = isClockwise
@@ -159,8 +150,8 @@ public class Arc extends CurvedShape implements Offsetable {
             this.initialPoint = this.endingPoint;
             this.endingPoint = tempPoint;
         }
-        this.intermediatePoint = calculateMidPoint(this.initialPoint,
-                this.endingPoint, this.centerPoint);
+        this.intermediatePoint = calculateMidPoint(this.initialPoint, this.endingPoint,
+                this.centerPoint);
     }
 
     /**
@@ -179,21 +170,16 @@ public class Arc extends CurvedShape implements Offsetable {
      * @throws InvalidArgumentException
      *             Thrown if the points are collinear
      */
-    public Arc (Point initialPoint, Point endingPoint, Point centerPoint,
-            Point direction) throws NullArgumentException,
-            InvalidArgumentException {
+    public Arc (Point initialPoint, Point endingPoint, Point centerPoint, Point direction)
+            throws NullArgumentException, InvalidArgumentException {
 
-        if (initialPoint == null || centerPoint == null || endingPoint == null
-                || direction == null) {
+        if (initialPoint == null || centerPoint == null || endingPoint == null || direction == null) {
             throw new NullArgumentException();
         }
 
-        if (Math.abs(Geometrics.calculateDeterminant(initialPoint, centerPoint,
-                endingPoint)) <= Constant.EPSILON) {
-            double initialToCenter = Geometrics.calculateDistance(initialPoint,
-                    centerPoint);
-            double endingToCenter = Geometrics.calculateDistance(endingPoint,
-                    centerPoint);
+        if (Math.abs(Geometrics.calculateDeterminant(initialPoint, centerPoint, endingPoint)) <= Constant.EPSILON) {
+            double initialToCenter = Geometrics.calculateDistance(initialPoint, centerPoint);
+            double endingToCenter = Geometrics.calculateDistance(endingPoint, centerPoint);
 
             if (Math.abs(initialToCenter - endingToCenter) > Constant.EPSILON) {
                 throw new InvalidArgumentException();
@@ -202,10 +188,8 @@ public class Arc extends CurvedShape implements Offsetable {
 
         this.centerPoint = centerPoint.clone();
 
-        double arcAngle = Geometrics.calculateRelativeAngle(centerPoint,
-                initialPoint, endingPoint);
-        double dirAngle = Geometrics.calculateRelativeAngle(centerPoint,
-                initialPoint, direction);
+        double arcAngle = Geometrics.calculateRelativeAngle(centerPoint, initialPoint, endingPoint);
+        double dirAngle = Geometrics.calculateRelativeAngle(centerPoint, initialPoint, direction);
 
         boolean isClockwise = (dirAngle > arcAngle);
 
@@ -218,8 +202,8 @@ public class Arc extends CurvedShape implements Offsetable {
             this.endingPoint = tempPoint;
         }
 
-        this.intermediatePoint = calculateMidPoint(this.initialPoint,
-                this.endingPoint, this.centerPoint);
+        this.intermediatePoint = calculateMidPoint(this.initialPoint, this.endingPoint,
+                this.centerPoint);
     }
 
     public Arc clone () {
@@ -227,8 +211,7 @@ public class Arc extends CurvedShape implements Offsetable {
         Arc arc = null;
 
         try {
-            arc = new Arc(initialPoint.clone(), intermediatePoint.clone(),
-                    endingPoint.clone());
+            arc = new Arc(initialPoint.clone(), intermediatePoint.clone(), endingPoint.clone());
             arc.setLayer(parentLayer);
         }
         catch (NullArgumentException e) {
@@ -260,44 +243,74 @@ public class Arc extends CurvedShape implements Offsetable {
         return result;
     }
 
+    /*
+     * (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode () {
+
+        final int prime = 31;
+        int result = 1 * prime;
+        result += ((this.endingPoint == null) ? 0 : this.endingPoint.hashCode());
+        result += ((this.initialPoint == null) ? 0 : this.initialPoint.hashCode());
+        result = prime * result
+                + ((this.intermediatePoint == null) ? 0 : this.intermediatePoint.hashCode());
+        return result;
+    }
+
     public boolean equals (Arc arc) {
 
-        boolean result = true;
+        boolean equal = (arc != null) && centerMatch(arc);
+        equal = equal && initialAndEndingMatch(arc);
+        equal = equal && sideMatch(arc);
+        return equal;
+    }
 
-        if (arc == null) {
-            result = false;
-        }
-        else if ( !this.centerPoint.equals(arc.centerPoint)) {
-            result = false;
-        }
-        else if ( !this.initialPoint.equals(arc.initialPoint)
-                && !this.initialPoint.equals(arc.endingPoint)) {
-            result = false;
-        }
-        else if ( !this.endingPoint.equals(arc.initialPoint)
-                && !this.endingPoint.equals(arc.endingPoint)) {
-            result = false;
-        }
-        else {
-            try {
-                double intermediatePointSign1 = Geometrics
-                        .calculateDeterminant(initialPoint, endingPoint,
-                                intermediatePoint);
-                double intermediatePointSign2 = Geometrics
-                        .calculateDeterminant(initialPoint, endingPoint,
-                                arc.intermediatePoint);
+    /**
+     * @param arc
+     *            The arc we want to match side with
+     * @return true if the arc is defined to the same side as me, false otherwise (This does NOT
+     *         check whether the initial and ending match).
+     */
+    private boolean sideMatch (Arc arc) {
 
-                if ((intermediatePointSign1 * intermediatePointSign2) < 0.0) {
-                    result = false;
-                }
-            }
-            catch (NullArgumentException e) {
-                // Should never happen
-                e.printStackTrace();
-            }
-        }
+        return this.intermediatePoint.equals(arc.intermediatePoint);
+    }
 
-        return result;
+    /**
+     * @param arc
+     *            The arc we want to match the center with
+     * @return true if the arc's center is the same as mine, false otherwise
+     */
+    private boolean centerMatch (Arc arc) {
+
+        return this.centerPoint.equals(arc.centerPoint);
+    }
+
+    /**
+     * @param arc
+     *            The arc we want to match with.
+     * @return true if the initial and ending point of the arc match with mine. They can match
+     *         perfectly or be switched. Otherwise, returns false.
+     */
+    private boolean initialAndEndingMatch (Arc arc) {
+
+        return matchInitialAndEnding(arc.initialPoint, arc.endingPoint)
+                || matchInitialAndEnding(arc.endingPoint, arc.initialPoint);
+    }
+
+    /**
+     * @param initial
+     *            The point we want to match to the initial
+     * @param ending
+     *            The point we want to match to the ending
+     * @return true if initial matches my initialPoint and ending matches my endingPoint, false
+     *         otherwise.
+     */
+    private boolean matchInitialAndEnding (Point initial, Point ending) {
+
+        return ((this.initialPoint.equals(initial)) && (this.endingPoint.equals(ending)));
     }
 
     /**
@@ -354,8 +367,7 @@ public class Arc extends CurvedShape implements Offsetable {
 
     /*
      * (non-Javadoc)
-     * @see
-     * com.tarantulus.archimedes.model.Element#getReferencePoints(com.tarantulus
+     * @see com.tarantulus.archimedes.model.Element#getReferencePoints(com.tarantulus
      * .archimedes.model.Rectangle)
      */
     public Collection<ReferencePoint> getReferencePoints (Rectangle area) {
@@ -374,8 +386,7 @@ public class Arc extends CurvedShape implements Offsetable {
                     references.add(new CirclePoint(centerPoint, allPoints));
                 }
                 if (intermediatePoint.isInside(area)) {
-                    references.add(new TrianglePoint(intermediatePoint,
-                            intermediatePoint));
+                    references.add(new TrianglePoint(intermediatePoint, intermediatePoint));
                 }
             }
             catch (NullArgumentException e) {
@@ -396,12 +407,10 @@ public class Arc extends CurvedShape implements Offsetable {
      *            The center point of the arc
      * @return The point corresponding to the mid point of this arc.
      */
-    private Point calculateMidPoint (Point initialPoint, Point endingPoint,
-            Point centerPoint) {
+    private Point calculateMidPoint (Point initialPoint, Point endingPoint, Point centerPoint) {
 
         Point midPoint;
-        double angle = Geometrics.calculateRelativeAngle(centerPoint,
-                initialPoint, endingPoint);
+        double angle = Geometrics.calculateRelativeAngle(centerPoint, initialPoint, endingPoint);
         angle /= 2;
         midPoint = initialPoint.clone();
         try {
@@ -416,9 +425,7 @@ public class Arc extends CurvedShape implements Offsetable {
 
     /*
      * (non-Javadoc)
-     * @see
-     * com.tarantulus.archimedes.model.Element#getProjectionOf(com.tarantulus
-     * .archimedes.model.Point)
+     * @see br.org.archimedes.model.Element#getProjectionOf(br.org.archimedes.model.Point)
      */
     public Point getProjectionOf (Point point) throws NullArgumentException {
 
@@ -426,7 +433,7 @@ public class Arc extends CurvedShape implements Offsetable {
             throw new NullArgumentException();
         }
 
-//        Point closer = null, farther = null;
+        // Point closer = null, farther = null;
         // FIXME Implementar a projecao
         // try {
         // Line line = new Line(centerPoint, point);
@@ -465,9 +472,7 @@ public class Arc extends CurvedShape implements Offsetable {
 
     /*
      * (non-Javadoc)
-     * @see
-     * com.tarantulus.archimedes.model.Element#contains(com.tarantulus.archimedes
-     * .model.Point)
+     * @see com.tarantulus.archimedes.model.Element#contains(com.tarantulus.archimedes .model.Point)
      */
     public boolean contains (Point point) throws NullArgumentException {
 
@@ -477,10 +482,9 @@ public class Arc extends CurvedShape implements Offsetable {
         double radius = Geometrics.calculateDistance(initialPoint, centerPoint);
 
         if (Math.abs(distance - radius) <= Constant.EPSILON) {
-            double intermediateSign = Geometrics.calculateDeterminant(
-                    initialPoint, endingPoint, intermediatePoint);
-            double pointSign = Geometrics.calculateDeterminant(initialPoint,
-                    endingPoint, point);
+            double intermediateSign = Geometrics.calculateDeterminant(initialPoint, endingPoint,
+                    intermediatePoint);
+            double pointSign = Geometrics.calculateDeterminant(initialPoint, endingPoint, point);
 
             result = ((intermediateSign * pointSign) >= 0.0);
         }
@@ -494,13 +498,8 @@ public class Arc extends CurvedShape implements Offsetable {
             throw new NullArgumentException();
         }
 
-        if (this.contains(arc.getInitialPoint())
-                && this.contains(arc.getIntermediatePoint())
-                && this.contains(arc.getEndingPoint())) {
-            return true;
-        }
-
-        return false;
+        return (this.contains(arc.getInitialPoint()) && this.contains(arc.getIntermediatePoint()) && this
+                .contains(arc.getEndingPoint()));
     }
 
     /**
@@ -542,8 +541,7 @@ public class Arc extends CurvedShape implements Offsetable {
         return isOutside;
     }
 
-    public Element cloneWithDistance (double distance)
-            throws InvalidParameterException {
+    public Element cloneWithDistance (double distance) throws InvalidParameterException {
 
         if (distance < 0) {
             if (Math.abs(getRadius() - distance) <= Constant.EPSILON
@@ -598,10 +596,8 @@ public class Arc extends CurvedShape implements Offsetable {
         double initialAngle = 0.0;
         double endingAngle = 0.0;
         try {
-            initialAngle = Geometrics.calculateAngle(center, this
-                    .getInitialPoint());
-            endingAngle = Geometrics.calculateAngle(center, this
-                    .getEndingPoint());
+            initialAngle = Geometrics.calculateAngle(center, this.getInitialPoint());
+            endingAngle = Geometrics.calculateAngle(center, this.getEndingPoint());
         }
         catch (NullArgumentException e) {
             // Should never reach this block
@@ -640,7 +636,7 @@ public class Arc extends CurvedShape implements Offsetable {
 
     /*
      * (non-Javadoc)
-     * @see com.tarantulus.archimedes.model.elements.Element#getPoints()
+     * @see br.org.archimedes.model.elements.Element#getPoints()
      */
     @Override
     public List<Point> getPoints () {
@@ -662,16 +658,13 @@ public class Arc extends CurvedShape implements Offsetable {
 
     /*
      * (non-Javadoc)
-     * @see com.tarantulus.archimedes.model.Element#move(Collection<Point>,
-     * Vector)
+     * @see br.org.archimedes.model.Element#move(Collection<Point>, Vector)
      */
-    public void move (Collection<Point> points, Vector vector)
-            throws NullArgumentException {
+    public void move (Collection<Point> points, Vector vector) throws NullArgumentException {
 
         super.move(points, vector);
         try {
-            createInternalRepresentation(initialPoint, intermediatePoint,
-                    endingPoint);
+            createInternalRepresentation(initialPoint, intermediatePoint, endingPoint);
         }
         catch (InvalidArgumentException e) {
             // If the arc is invalid, undoes the move
@@ -684,17 +677,15 @@ public class Arc extends CurvedShape implements Offsetable {
     }
 
     /**
-     * Este m�todo foi reescrito pois, apesar de o mirror ter sido feito, o arco
-     * ainda guardava as refer�ncias inalteradas para o ending point e
-     * initialPoint. Logo, para que o mirror funcionasse corretamente, havia a
-     * necessidade de trocar o initialPoint com o endingPoint.
+     * This method was overwritten because, although mirror is performed, the arc still kept
+     * unaltered references to the ending and initialPoint. However, when mirroring, those points
+     * are inverted. We have to apply this change here.
      * 
-     * @author Victor
-     * @author Eduardo
+     * @author Victor D. Lopes
+     * @author Eduardo O. de Souza
      */
     @Override
-    public void mirror (Point p1, Point p2) throws NullArgumentException,
-            IllegalActionException {
+    public void mirror (Point p1, Point p2) throws NullArgumentException, IllegalActionException {
 
         super.mirror(p1, p2);
 

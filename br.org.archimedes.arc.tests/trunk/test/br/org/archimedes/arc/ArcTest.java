@@ -13,18 +13,6 @@
  */
 package br.org.archimedes.arc;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
-
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-
 import br.org.archimedes.Tester;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
@@ -34,6 +22,18 @@ import br.org.archimedes.model.ReferencePoint;
 import br.org.archimedes.model.references.CirclePoint;
 import br.org.archimedes.model.references.SquarePoint;
 import br.org.archimedes.model.references.TrianglePoint;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public class ArcTest extends Tester {
 
@@ -185,7 +185,7 @@ public class ArcTest extends Tester {
     }
 
     @Test
-    public void testEquals () throws InvalidArgumentException,
+    public void equalsAndHashCodeDontCareAboutHowArcAreCreated () throws InvalidArgumentException,
             NullArgumentException {
 
         Assert.assertTrue(arc1.equals(arc1));
@@ -221,7 +221,7 @@ public class ArcTest extends Tester {
     }
 
     @Test
-    public void testClone () throws InvalidArgumentException,
+    public void cloneAlwaysReturnsAnEqualArc () throws InvalidArgumentException,
             NullArgumentException {
 
         Arc clone;
@@ -234,28 +234,37 @@ public class ArcTest extends Tester {
 
         clone = arc3.clone();
         Assert.assertEquals(arc3, clone);
+        
+        Arc arc = new Arc(new Point(-4,0), new Point(-2,2), new Point(0,0));
+        clone = arc.clone();
+        Assert.assertEquals(arc, clone);
     }
 
     @Test
-    public void testGetRadius () throws InvalidArgumentException,
+    public void radiusIsCalculatedCorrectly () throws InvalidArgumentException,
             NullArgumentException {
 
         Assert.assertEquals(1.0, arc1.getRadius());
         Assert.assertEquals(1.0, arc2.getRadius());
         Assert.assertEquals(1.0, arc3.getRadius());
+        
+        Arc arc = new Arc(new Point(-2,0), new Point(0,2), new Point(2,0));
+        Assert.assertEquals(2.0, arc.getRadius());
     }
 
     @Test
-    public void testGetCenter () throws InvalidArgumentException,
+    public void centerPointIsCalculatedCorrectly () throws InvalidArgumentException,
             NullArgumentException {
 
         Assert.assertEquals(center, arc1.getCenter());
         Assert.assertEquals(center, arc2.getCenter());
         Assert.assertEquals(center, arc3.getCenter());
+        Arc arc = new Arc(new Point(-4,0), new Point(-2,2), new Point(0,0));
+        Assert.assertEquals(new Point(-2,0), arc.getCenter());
     }
 
     @Test
-    public void testGetBoundaryRectangle () throws InvalidArgumentException,
+    public void boundaryRectangleIncludesTheWholeArc () throws InvalidArgumentException,
             NullArgumentException {
 
         Rectangle rect = new Rectangle( -1, 0, 1, 1);
@@ -319,20 +328,6 @@ public class ArcTest extends Tester {
     }
 
     @Test
-    public void arcsAreNeverColinearToAnything () throws Exception {
-
-        assertFalse("An arc should never be colinear with anything", arc1
-                .isCollinearWith(arc1Clone));
-    }
-
-    @Test
-    public void arcsAreNeverParallelToAnything () throws Exception {
-
-        assertFalse("An arc should never be parallel to anything", arc1
-                .isParallelTo(arc1Clone));
-    }
-
-    @Test
     public void anArcShouldContainAllPointsThatBelongToItAndNoOther ()
             throws Exception {
 
@@ -360,4 +355,16 @@ public class ArcTest extends Tester {
             // Expected
         }
     }
+    
+    // TODO Tests for the projection of a point on an arc
+    
+    // TODO Tests for contains another arc
+    
+    // TODO Tests for cloneWithDistance of an arc
+    
+    // TODO Tests for getPoints of an arc
+    
+    // TODO Tests for move of an arc
+    
+    // TODO Tests for mirror of an arc
 }
