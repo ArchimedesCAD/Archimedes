@@ -7,6 +7,7 @@
  * Contributors:<br>
  * Julien Renaut - initial API and implementation<br>
  * Marcos P. Moreti, Paulo L. Huaman, Hugo Corbucci - later contributions<br>
+ * Bruno da Hora and Bruno Klava - later contributions <br>
  * <br>
  * This file was created on 2007/03/22, 10:02:32, by Julien Renaut.<br>
  * It is part of package br.org.archimedes.infiniteline on the br.org.archimedes.infiniteline project.<br>
