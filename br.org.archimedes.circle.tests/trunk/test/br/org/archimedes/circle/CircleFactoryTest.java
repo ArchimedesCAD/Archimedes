@@ -12,15 +12,15 @@
  */
 package br.org.archimedes.circle;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
 import br.org.archimedes.factories.CommandFactory;
 import br.org.archimedes.helper.FactoryTester;
 import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Vector;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Belongs to package com.tarantulus.archimedes.tests.commands.
@@ -47,7 +47,7 @@ public class CircleFactoryTest extends FactoryTester {
     }
 
     @Test
-    public void testCreateCircle () {
+    public void canCreateCircleByDefault () {
 
         Point point1 = new Point(2, 3);
         Point point2 = new Point(0, 0);
@@ -75,7 +75,7 @@ public class CircleFactoryTest extends FactoryTester {
         assertSafeNext(factory, point1, false);
         assertSafeNext(factory, 5.0, true);
     }
-
+    
     @Test
     public void testCancel () {
 

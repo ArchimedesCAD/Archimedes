@@ -13,13 +13,13 @@
  */
 package br.org.archimedes.circle;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.model.Point;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 public class CircleTest {
 	
@@ -40,17 +40,30 @@ public class CircleTest {
 	}
 	
 	@Test
-	public void testExternalPoint() throws NullArgumentException {
-		Assert.assertEquals(new Point(0, 1), circle.getProjectionOf(externalPoint));
-	}
-	
-	@Test
-	public void testInternalPoint() throws NullArgumentException {
+	public void testProjectionOfAPointOnTheCircle() throws NullArgumentException {
+
+	    Assert.assertEquals(new Point(0, 1), circle.getProjectionOf(externalPoint));
+		
 		Assert.assertEquals(new Point(0, 1), circle.getProjectionOf(internalPoint));
+
+		Assert.assertEquals(new Point(1, 0), circle.getProjectionOf(centerPoint));
 	}
 	
-	@Test
-	public void testCenterPoint() throws NullArgumentException {
-		Assert.assertEquals(new Point(1, 0), circle.getProjectionOf(centerPoint));
-	}	
+	// TODO Test equals and hash code of a circle
+	
+	// TODO Test the boundary rectangle of a circle
+	
+	// TODO Test the reference points of a circle
+	
+	// TODO Test contains for a circle includes only the right points
+	
+	// TODO Test clone with distance for a circle
+	
+	// TODO Test isPositiveDirection regarding a circle
+	
+	// TODO Test scale for a circle
+	
+	// TODO Test getPoints for a circle
+	
+	// TODO Write a test to ensure isClosed will always return true for a circle
 }

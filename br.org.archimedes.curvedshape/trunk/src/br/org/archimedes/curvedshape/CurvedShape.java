@@ -11,19 +11,18 @@
  * This file was created on 2007/04/19, 09:00:09, by Victor D. Lopes.<br>
  * It is part of package br.org.archimedes.curvedshape on the br.org.archimedes.curvedShape project.<br>
  */
-package br.org.archimedes.curvedshape;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
+package br.org.archimedes.curvedshape;
 
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.gui.opengl.OpenGLWrapper;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
 
+import java.util.ArrayList;
+
 /**
- * @author vidlopes
+ * @author Victor D. Lopes
  */
 public abstract class CurvedShape extends Element {
 
@@ -39,94 +38,13 @@ public abstract class CurvedShape extends Element {
     }
 
     /**
-     * @return The radius of the arc
+     * @return The radius of the CurvedShape
      */
     public abstract double getRadius ();
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.tarantulus.archimedes.model.Element#getIntersection(com.tarantulus.archimedes.model.Element)
-     */
-    @SuppressWarnings("unchecked")//$NON-NLS-1$
-    public Collection<Point> getIntersection (Element element)
-            throws NullArgumentException {
-
-        if (element == null) {
-            throw new NullArgumentException();
-        }
-
-        // TODO Implementar a interseccao
-        return Collections.EMPTY_LIST;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.tarantulus.archimedes.model.Element#getProjectionOf(com.tarantulus.archimedes.model.Point)
-     */
-    public Point getProjectionOf (Point point) throws NullArgumentException {
-
-        if (point == null) {
-            throw new NullArgumentException();
-        }
-
-        Point closer = null, farther = null;
-        // TODO Implementar a projecao
-        // try {
-        // Line line = new Line(centerPoint, point);
-        // Collection<Point> intersectionWithLine =
-        // getIntersectionWithLine(line);
-        // double closestDist = Double.MAX_VALUE;
-        // for (Point intersection : intersectionWithLine) {
-        // double dist = Geometrics.calculateDistance(point, intersection);
-        // if (dist < closestDist) {
-        // if (closer != null) {
-        // farther = closer;
-        // }
-        // closer = intersection;
-        // closestDist = dist;
-        // }
-        // else {
-        // farther = intersection;
-        // }
-        // }
-        // }
-        // catch (InvalidArgumentException e) {
-        // // May happen
-        // e.printStackTrace();
-        // }
-
-        Point projection = null;
-        if (contains(closer) || !contains(farther)) {
-            projection = closer;
-        }
-        else {
-            projection = farther;
-        }
-
-        return projection;
-    }
-
-    public boolean isCollinearWith (Element element) {
-
-        return false;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.tarantulus.archimedes.model.elements.Element#isParallelTo(com.tarantulus.archimedes.model.elements.Element)
-     */
-    public boolean isParallelTo (Element element) {
-
-        return false;
-    }
-
     /**
-     * Draws a curved shape from an initial angle to an ending angle assuming
-     * those are passed in a counter clockwise order.<BR>
-     * TODO Check if this is true
+     * Draws a curved shape from an initial angle to an ending angle assuming those are passed in a
+     * counter clockwise order.
      * 
      * @param wrapper
      *            The wrapper to be used to draw the curved shape
@@ -137,8 +55,8 @@ public abstract class CurvedShape extends Element {
      * @param endingAngle
      *            The ending angle of that shape
      */
-    protected void drawCurvedShape (OpenGLWrapper wrapper, Point center,
-            double initialAngle, double endingAngle) {
+    protected void drawCurvedShape (OpenGLWrapper wrapper, Point center, double initialAngle,
+            double endingAngle) {
 
         ArrayList<Point> points = new ArrayList<Point>();
         double increment = Math.PI / 360;

@@ -11,6 +11,7 @@
  * This file was created on 2006/06/22, 13:06:39, by Eduardo O. de Souza.<br>
  * It is part of package br.org.archimedes.circle on the br.org.archimedes.circle project.<br>
  */
+
 package br.org.archimedes.circle;
 
 import br.org.archimedes.Constant;
@@ -21,8 +22,6 @@ import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.InvalidParameterException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.gui.opengl.OpenGLWrapper;
-import br.org.archimedes.model.ComparablePoint;
-import br.org.archimedes.model.DoubleKey;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Layer;
 import br.org.archimedes.model.Offsetable;
@@ -35,9 +34,8 @@ import br.org.archimedes.model.references.RhombusPoint;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 /**
  * Belongs to package com.tarantulus.archimedes.model.
@@ -76,7 +74,7 @@ public class Circle extends CurvedShape implements Offsetable {
         this.radius = Math.abs(radius);
     }
 
-    public CurvedShape clone() {
+    public CurvedShape clone () {
 
         Circle circle = null;
 
@@ -132,39 +130,39 @@ public class Circle extends CurvedShape implements Offsetable {
 
     /*
      * (non-Javadoc)
-     * 
      * @see com.tarantulus.archimedes.model.Element#getBoundaryRectangle()
      */
     public Rectangle getBoundaryRectangle () {
 
-        double left = center.getX() - radius;
-        double right = center.getX() + radius;
-        double bottom = center.getY() - radius;
-        double top = center.getY() + radius;
+        Point myCenter = this.getCenter();
+        double myRadius = this.getRadius();
+        double left = myCenter.getX() - myRadius;
+        double right = myCenter.getX() + myRadius;
+        double bottom = myCenter.getY() - myRadius;
+        double top = myCenter.getY() + myRadius;
 
         return new Rectangle(left, bottom, right, top);
     }
 
-
-
     /*
      * (non-Javadoc)
-     * 
-     * @see com.tarantulus.archimedes.model.Element#getReferencePoints(com.tarantulus.archimedes.model.Rectangle)
+     * @see
+     * com.tarantulus.archimedes.model.Element#getReferencePoints(com.tarantulus.archimedes.model
+     * .Rectangle)
      */
     public Collection<ReferencePoint> getReferencePoints (Rectangle area) {
 
         Collection<ReferencePoint> references = new ArrayList<ReferencePoint>();
         try {
-            ReferencePoint reference = new CirclePoint(center, center);
+            ReferencePoint reference = new CirclePoint(this.getCenter(), this.getCenter());
             if (reference.isInside(area)) {
                 references.add(reference);
             }
             for (double angle = 0; angle < 360; angle += 90) {
                 double radians = (angle / 180) * Math.PI;
-                Point point = new Point(radius * Math.cos(radians)
-                        + center.getX(), radius * Math.sin(radians)
-                        + center.getY());
+                double x = this.getRadius() * Math.cos(radians) + this.getCenter().getX();
+                double y = this.getRadius() * Math.sin(radians) + this.getCenter().getY();
+                Point point = new Point(x, y);
                 reference = new RhombusPoint(point);
                 if (reference.isInside(area)) {
                     references.add(reference);
@@ -181,8 +179,9 @@ public class Circle extends CurvedShape implements Offsetable {
 
     /*
      * (non-Javadoc)
-     * 
-     * @see com.tarantulus.archimedes.model.Element#getProjectionOf(com.tarantulus.archimedes.model.Point)
+     * @see
+     * com.tarantulus.archimedes.model.Element#getProjectionOf(com.tarantulus.archimedes.model.Point
+     * )
      */
     public Point getProjectionOf (Point point) throws NullArgumentException {
 
@@ -191,12 +190,12 @@ public class Circle extends CurvedShape implements Offsetable {
         }
 
         Point projection = null;
-        if(getCenter().equals(point)) {
-        	return new Point(getCenter().getX() + getRadius(), getCenter().getY());
+        if (getCenter().equals(point)) {
+            return new Point(getCenter().getX() + getRadius(), getCenter().getY());
         }
-        
-    	Collection<Point> intersectionWithLine = getCirclePoints(point);
-    	
+
+        Collection<Point> intersectionWithLine = getCirclePoints(point);
+
         double closestDist = Double.MAX_VALUE;
         for (Point intersection : intersectionWithLine) {
             double dist = Geometrics.calculateDistance(point, intersection);
@@ -205,50 +204,52 @@ public class Circle extends CurvedShape implements Offsetable {
                 closestDist = dist;
             }
         }
-        
+
         return projection;
     }
 
     /**
-     * Returns the Points that are on the circle and on the line
-     * defined by the given Point and the center of the Circle.
+     * Returns the Points that are on the circle and on the line defined by the given Point and the
+     * center of the Circle.
      * 
-     * @param point Point
-     * 
-     * @return Collection
-     * @throws NullArgumentException If the given argument is null
+     * @param point
+     *            a Point
+     * @return a Collection with the intersections of the infinite line formed by the center of this
+     *         circle with the point.
+     * @throws NullArgumentException
+     *             If the given argument is null
      */
-    private Collection<Point> getCirclePoints(Point point) throws NullArgumentException {
+    private Collection<Point> getCirclePoints (Point point) throws NullArgumentException {
+
         if (point == null) {
             throw new NullArgumentException();
         }
-        
+
         Collection<Point> points = new ArrayList<Point>();
-        
+
         Vector vec = new Vector(getCenter(), point);
         vec = Geometrics.normalize(vec);
         vec.multiply(getRadius());
-        
+
         Point p1 = getCenter().addVector(vec);
         points.add(p1);
-        vec.multiply(-1);
+        vec.multiply( -1);
         Point p2 = getCenter().addVector(vec);
-        if(!p2.equals(p1)) {
-        	points.add(p2);
+        if ( !p2.equals(p1)) {
+            points.add(p2);
         }
-        
-    	return points;
-	}
 
-	/*
+        return points;
+    }
+
+    /*
      * (non-Javadoc)
-     * 
      * @see com.tarantulus.archimedes.model.Element#contains(com.tarantulus.archimedes.model.Point)
      */
     public boolean contains (Point point) throws NullArgumentException {
 
         double distance = Geometrics.calculateDistance(getCenter(), point);
-        return Math.abs(distance - radius) <= Constant.EPSILON;
+        return Math.abs(distance - this.getRadius()) <= Constant.EPSILON;
     }
 
     /**
@@ -270,15 +271,15 @@ public class Circle extends CurvedShape implements Offsetable {
     public Element cloneWithDistance (double distance) throws InvalidParameterException {
 
         if (distance < 0) {
-            if (Math.abs(radius - distance) <= Constant.EPSILON
-                    || Math.abs(distance) > radius) {
+            if (Math.abs(this.getRadius() - distance) <= Constant.EPSILON
+                    || Math.abs(distance) > this.getRadius()) {
                 throw new InvalidParameterException();
             }
         }
-        
+
         Circle clone = null;
         try {
-            clone = new Circle(center.clone(), radius + distance);
+            clone = new Circle(this.getCenter().clone(), this.getRadius() + distance);
             clone.setLayer(parentLayer);
         }
         catch (NullArgumentException e) {
@@ -297,7 +298,7 @@ public class Circle extends CurvedShape implements Offsetable {
         boolean isOutside = false;
 
         try {
-            if (Geometrics.calculateDistance(center, point) > radius) {
+            if (Geometrics.calculateDistance(this.getCenter(), point) > this.getRadius()) {
                 isOutside = true;
             }
         }
@@ -307,9 +308,9 @@ public class Circle extends CurvedShape implements Offsetable {
         }
         return isOutside;
     }
-    
-    public void scale (Point reference, double proportion)
-            throws NullArgumentException, IllegalActionException {
+
+    public void scale (Point reference, double proportion) throws NullArgumentException,
+            IllegalActionException {
 
         center.scale(reference, proportion);
         radius *= proportion;
@@ -317,20 +318,17 @@ public class Circle extends CurvedShape implements Offsetable {
 
     /*
      * (non-Javadoc)
-     * 
      * @see com.tarantulus.archimedes.model.elements.Element#getPoints()
      */
     public @Override
     List<Point> getPoints () {
 
-        List<Point> points = new ArrayList<Point>();
-        points.add(center);
-        return points;
+        return Collections.singletonList(this.getCenter());
     }
 
     public String toString () {
 
-        return center.toString() + " with radius " + radius; //$NON-NLS-1$
+        return this.getCenter().toString() + " with radius " + this.getRadius(); //$NON-NLS-1$
     }
 
     public boolean isClosed () {
@@ -338,40 +336,9 @@ public class Circle extends CurvedShape implements Offsetable {
         return true;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.tarantulus.archimedes.model.PointSortable#getSortedPointSet(com.tarantulus.archimedes.model.Point,
-     *      java.util.Collection)
-     */
-    public SortedSet<ComparablePoint> getSortedPointSet (Point referencePoint,
-            Collection<Point> intersectionPoints) {
+    @Override
+    public void draw (OpenGLWrapper wrapper) {
 
-        SortedSet<ComparablePoint> sortedSet = new TreeSet<ComparablePoint>();
-
-        for (Point point : intersectionPoints) {
-            try {
-                double key = Geometrics.calculateRelativeAngle(center,
-                        referencePoint, point);
-                ComparablePoint orderedPoint = new ComparablePoint(point,
-                        new DoubleKey(key));
-                sortedSet.add(orderedPoint);
-            }
-            catch (NullArgumentException e) {
-                // Should not catch this exception
-                e.printStackTrace();
-            }
-
-        }
-
-        return sortedSet;
-        
+        this.drawCurvedShape(wrapper, this.getCenter(), 0, 2 * Math.PI);
     }
-
-	@Override
-	public void draw(OpenGLWrapper wrapper) {
-		Point center = this.getCenter();
-
-		this.drawCurvedShape(wrapper, center, 0, 2 * Math.PI);		
-	}
 }
