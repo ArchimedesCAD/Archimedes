@@ -73,7 +73,7 @@ public class CopyPasteFactoryTest extends FactoryTester {
     }
 
     @Test
-    public void testCopyPaste () {
+    public void canCopyPaste () {
 
         // Begin
         assertBegin(factory, false);
@@ -122,7 +122,7 @@ public class CopyPasteFactoryTest extends FactoryTester {
     }
 
     @Test
-    public void testCancel () {
+    public void canCancel () {
 
         assertBegin(factory, false);
         assertCancel(factory, false);

@@ -13,16 +13,16 @@
  */
 package br.org.archimedes.copytoclipboard;
 
-import java.util.List;
-import java.util.Set;
-
 import br.org.archimedes.exceptions.InvalidParameterException;
 import br.org.archimedes.factories.SelectorFactory;
 import br.org.archimedes.interfaces.Command;
 import br.org.archimedes.model.Element;
 
+import java.util.List;
+import java.util.Set;
+
 /**
- * @author cesarse
+ * @author César Seragiotto
  */
 public class CopyToClipboardFactory extends SelectorFactory {
 
@@ -43,7 +43,7 @@ public class CopyToClipboardFactory extends SelectorFactory {
 
     public List<Command> getCommands () {
 
-        // TODO Auto-generated method stub
+        // This doesn't generate commands since it only changes the clipboard
         return null;
     }
 
