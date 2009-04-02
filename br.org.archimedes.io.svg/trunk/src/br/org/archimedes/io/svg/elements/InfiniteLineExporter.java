@@ -6,6 +6,7 @@
  * <br>
  * Contributors:<br>
  * Bruno Klava, Ricardo Sider - initial API and implementation<br>
+ * Bruno da Hora - later contributions <br>
  * <br>
  * This file was created on 2009/03/26, 12:05:56, by Ricardo Sider.<br>
  * It is part of package br.org.archimedes.io.svg.elements on the br.org.archimedes.io.svg project.<br>
@@ -42,6 +43,10 @@ public class InfiniteLineExporter implements ElementExporter<InfiniteLine> {
 
     public void exportElement (InfiniteLine infiniteLine, Object outputObject, Rectangle boundingBox)
             throws IOException {
+    	
+    	if(boundingBox == null){
+    		boundingBox = infiniteLine.getCreationBoundaryRectangle();
+    	}
 
         List<Point> points = infiniteLine.getPointsCrossing(boundingBox);
 
