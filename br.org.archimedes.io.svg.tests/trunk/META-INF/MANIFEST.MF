@@ -15,4 +15,5 @@ Require-Bundle: br.org.archimedes.core,
  br.org.archimedes.leader;bundle-version="0.57.4",
  br.org.archimedes.line;bundle-version="0.57.4",
  br.org.archimedes.polyline;bundle-version="0.57.4",
- br.org.archimedes.semiline;bundle-version="0.57.4"
+ br.org.archimedes.semiline;bundle-version="0.57.4",
+ br.org.archimedes.infiniteline;bundle-version="0.57.4"
