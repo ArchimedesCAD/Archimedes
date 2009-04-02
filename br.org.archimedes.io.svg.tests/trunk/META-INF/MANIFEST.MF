@@ -11,4 +11,5 @@ Require-Bundle: br.org.archimedes.core,
  org.junit4;bundle-version="4.3.1",
  br.org.archimedes.arc;bundle-version="0.57.4",
  br.org.archimedes.circle;bundle-version="0.57.4",
- br.org.archimedes.dimension;bundle-version="0.57.4"
+ br.org.archimedes.dimension;bundle-version="0.57.4",
+ br.org.archimedes.leader;bundle-version="0.57.4"
