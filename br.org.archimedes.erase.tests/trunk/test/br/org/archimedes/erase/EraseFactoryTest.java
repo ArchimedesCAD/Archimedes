@@ -17,6 +17,7 @@ import br.org.archimedes.factories.CommandFactory;
 import br.org.archimedes.helper.FactoryTester;
 import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Element;
+import br.org.archimedes.model.Selection;
 import br.org.archimedes.stub.StubElement;
 
 import org.junit.After;
@@ -49,12 +50,11 @@ public class EraseFactoryTest extends FactoryTester {
     }
 
     @Test
-    public void testErase () {
+    public void canErasePasingSelection () {
 
         // Arguments
         Element element1 = new StubElement();
         putSafeElementOnDrawing(element1, drawing);
-        // TODO Usar o ponto new Point(1, 1)
         Element element2 = new StubElement();
         putSafeElementOnDrawing(element2, drawing);
         Set<Element> selection = new HashSet<Element>();
@@ -77,8 +77,38 @@ public class EraseFactoryTest extends FactoryTester {
         assertBegin(factory, false);
         assertSafeNext(factory, selection, true);
     }
+    
+    @Test
+    public void canEraseWithPresetSelection () {
 
-    public void testCancel () throws InvalidArgumentException {
+        // Arguments
+        Element element1 = new StubElement();
+        putSafeElementOnDrawing(element1, drawing);
+        Element element2 = new StubElement();
+        putSafeElementOnDrawing(element2, drawing);
+        Selection selection = new Selection();
+        selection.add(element2);
+        drawing.setSelection(selection);
+
+        // Begin
+        assertBegin(factory, false);
+
+        assertInvalidNext(factory, null);
+        assertInvalidNext(factory, new Object());
+
+        // Selection
+        assertSafeNext(factory, selection, true);
+
+        assertInvalidNext(factory, null);
+        assertInvalidNext(factory, new Object());
+        assertInvalidNext(factory, selection);
+
+        // Again
+        assertBegin(factory, false);
+        assertSafeNext(factory, selection, true);
+    }
+    
+    public void canCancelAtAnytimeWithoutPreset () throws InvalidArgumentException {
 
         Element element = new StubElement();
         putSafeElementOnDrawing(element, drawing);
