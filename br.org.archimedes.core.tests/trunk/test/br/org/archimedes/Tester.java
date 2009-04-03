@@ -13,11 +13,6 @@
  */
 package br.org.archimedes;
 
-import java.util.Collection;
-
-import org.junit.Assert;
-import org.junit.Before;
-
 import br.org.archimedes.exceptions.IllegalActionException;
 import br.org.archimedes.exceptions.NoActiveDrawingException;
 import br.org.archimedes.exceptions.NullArgumentException;
@@ -26,6 +21,11 @@ import br.org.archimedes.gui.rca.Activator;
 import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
+
+import org.junit.Assert;
+import org.junit.Before;
+
+import java.util.Collection;
 
 /**
  * This is a helper class for tests. It contains useful Assert.assertions for
@@ -42,6 +42,15 @@ public abstract class Tester {
     protected final double COS_30 = Math.sqrt(3.0) / 2.0;
 
     protected final double COS_60 = 0.5;
+    
+    
+    /**
+     * Constructor.
+     */
+    public Tester () {
+        // To ensure Constant will be correctly loaded for tests.
+        Assert.assertNotNull(Constant.DEFAULT_FONT);
+    }
 
 
     @Before
