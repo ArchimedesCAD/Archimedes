@@ -18,6 +18,7 @@ import br.org.archimedes.helper.FactoryTester;
 import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
+import br.org.archimedes.model.Selection;
 import br.org.archimedes.model.Vector;
 import br.org.archimedes.stub.StubElement;
 
@@ -26,6 +27,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.HashSet;
+import java.util.Set;
 
 public class CopyPasteFactoryTest extends FactoryTester {
 
@@ -34,8 +36,6 @@ public class CopyPasteFactoryTest extends FactoryTester {
     private Controller controller;
 
     private CommandFactory factory;
-
-    private HashSet<Element> selection;
 
     private Point point1;
 
@@ -53,15 +53,11 @@ public class CopyPasteFactoryTest extends FactoryTester {
         controller = br.org.archimedes.Utils.getController();
         controller.setActiveDrawing(drawing);
 
-        Element line = new StubElement();
-
         // Arguments
         point1 = new Point(0, 0);
         Point point2 = new Point(10, 10);
         vector = new Vector(point1, point2);
         vector2 = new Vector(point2, new Point(15, 15));
-        selection = new HashSet<Element>();
-        selection.add(line);
     }
 
     @After
@@ -73,7 +69,9 @@ public class CopyPasteFactoryTest extends FactoryTester {
     }
 
     @Test
-    public void canCopyPaste () {
+    public void canCopyPastePassingSelection () {
+        Set<Element> selection = new HashSet<Element>();
+        selection.add(new StubElement());
 
         // Begin
         assertBegin(factory, false);
@@ -120,9 +118,57 @@ public class CopyPasteFactoryTest extends FactoryTester {
         assertSafeNext(factory, vector, false, true);
         assertSafeNext(factory, null, true, false);
     }
+    
 
     @Test
-    public void canCancel () {
+    public void canCopyPasteWithPresetSelection () {
+        Selection preset = new Selection();
+        preset.add(new StubElement());
+        drawing.setSelection(preset);
+        
+        // Begin
+        assertBegin(factory, false);
+
+        assertInvalidNext(factory, new Object());
+        assertInvalidNext(factory, preset);
+        assertInvalidNext(factory, vector);
+
+        // Reference point
+        assertSafeNext(factory, point1, false);
+
+        assertInvalidNext(factory, new Object());
+        assertInvalidNext(factory, preset);
+        assertInvalidNext(factory, point1);
+
+        // Vector
+        assertSafeNext(factory, vector, false, true);
+
+        assertInvalidNext(factory, new Object());
+        assertInvalidNext(factory, preset);
+        assertInvalidNext(factory, point1);
+
+        // Another vector
+        assertSafeNext(factory, vector2, false, true);
+
+        assertInvalidNext(factory, new Object());
+        assertInvalidNext(factory, preset);
+        assertInvalidNext(factory, point1);
+
+        // Cancel
+        assertCancel(factory, false);
+
+        drawing.setSelection(preset);
+        // Again
+        factory.begin();
+        assertSafeNext(factory, point1, false);
+        assertSafeNext(factory, vector, false, true);
+        assertSafeNext(factory, null, true, false);
+    }
+
+    @Test
+    public void canCancelWithoutPreset () {
+        Set<Element> selection = new HashSet<Element>();
+        selection.add(new StubElement());
 
         assertBegin(factory, false);
         assertCancel(factory, false);
@@ -138,6 +184,25 @@ public class CopyPasteFactoryTest extends FactoryTester {
 
         assertBegin(factory, false);
         assertSafeNext(factory, selection, false);
+        assertSafeNext(factory, point1, false);
+        assertSafeNext(factory, vector, false, true);
+        assertCancel(factory, false);
+    }
+    
+    @Test
+    public void canCancelWithPreset () {
+        Selection preset = new Selection();
+        preset.add(new StubElement());
+        drawing.setSelection(preset);
+
+        assertBegin(factory, false);
+        assertCancel(factory, false);
+
+        assertBegin(factory, false);
+        assertSafeNext(factory, point1, false);
+        assertCancel(factory, false);
+
+        assertBegin(factory, false);
         assertSafeNext(factory, point1, false);
         assertSafeNext(factory, vector, false, true);
         assertCancel(factory, false);
