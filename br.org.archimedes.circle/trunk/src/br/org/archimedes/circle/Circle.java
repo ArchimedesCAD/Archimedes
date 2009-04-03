@@ -94,6 +94,20 @@ public class Circle extends CurvedShape implements Offsetable {
         return circle;
     }
 
+    /*
+     * (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode () {
+
+        final int prime = 31;
+        int result = 1 * prime;
+        result = prime * result + getCenter().hashCode();
+        result = prime * result + Double.valueOf(getRadius()).hashCode();
+        return result;
+    }
+
     public boolean equals (Object object) {
 
         boolean result = false;
@@ -328,7 +342,7 @@ public class Circle extends CurvedShape implements Offsetable {
 
     public String toString () {
 
-        return this.getCenter().toString() + " with radius " + this.getRadius(); //$NON-NLS-1$
+        return "Circle centered at " + this.getCenter().toString() + " with radius " + this.getRadius(); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     public boolean isClosed () {

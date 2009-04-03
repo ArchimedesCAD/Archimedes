@@ -651,7 +651,7 @@ public class Arc extends CurvedShape implements Offsetable {
 
     public String toString () {
 
-        return centerPoint.toString() + " with radius " + getRadius() //$NON-NLS-1$
+        return "Arc centered at " + centerPoint.toString() + " with radius " + getRadius() //$NON-NLS-1$ //$NON-NLS-2$
                 + " from " + initialPoint.toString() + " to " //$NON-NLS-1$ //$NON-NLS-2$
                 + endingPoint.toString();
     }
