@@ -547,7 +547,7 @@ public class Dimension extends Element {
         for (Line line : linesToDraw) {
             try {
                 wrapper.drawFromModel(new ArrayList<Point>(line
-                        .getExtremePoints()));
+                        .getPoints()));
             }
             catch (NullArgumentException e) {
                 // Won't happen, but anyway...
