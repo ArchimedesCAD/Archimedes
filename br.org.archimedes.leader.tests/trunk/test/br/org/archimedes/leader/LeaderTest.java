@@ -13,11 +13,6 @@
  */
 package br.org.archimedes.leader;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-
-import org.junit.Test;
-
 import br.org.archimedes.Tester;
 import br.org.archimedes.exceptions.IllegalActionException;
 import br.org.archimedes.exceptions.InvalidArgumentException;
@@ -25,12 +20,45 @@ import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Rectangle;
 
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
 /**
  * Belongs to package com.tarantulus.archimedes.model.elements.
  * 
- * @author jefsilva
+ * @author Jeferson R. Silva
  */
 public class LeaderTest extends Tester {
+
+    // TODO Tests for moving a leader
+    
+    @Test
+    public void boundaryRectangleShouldIncludeBothLines () throws Exception {
+    
+        Leader leader = new Leader(new Point(0, 0), new Point(1, 1), new Point(
+                3, 1));
+        Rectangle boundaryRectangle = leader.getBoundaryRectangle();
+        assertEquals(new Rectangle(0, 0, 3, 1), boundaryRectangle);
+        
+        leader = new Leader(new Point(0, 0), new Point(1, 1), new Point(
+                4, -2));
+        boundaryRectangle = leader.getBoundaryRectangle();
+        assertEquals(new Rectangle(0, -2, 4, 1), boundaryRectangle);
+    }
+    
+    // TODO Test the reference points of a leader
+    
+    // TODO Test the project of a point on a leader
+    
+    // TODO Test a leader contains the correct points
+    
+    // TODO Test cloning a leader produces and equal leader of a different instance
+    
+    // TODO Test equals and hashcode are working for a leader
+    
+    // TODO Test getPoints of a leader return the right points
 
     @Test
     public void rotatingALeaderRotatesBothLines ()
@@ -154,19 +182,5 @@ public class LeaderTest extends Tester {
         catch (IllegalActionException e) {
             fail("Should not throw IllegalActionException");
         }
-    }
-
-    @Test
-    public void boundaryRectangleShouldIncludeBothLines () throws Exception {
-
-        Leader leader = new Leader(new Point(0, 0), new Point(1, 1), new Point(
-                3, 1));
-        Rectangle boundaryRectangle = leader.getBoundaryRectangle();
-        assertEquals(new Rectangle(0, 0, 3, 1), boundaryRectangle);
-        
-        leader = new Leader(new Point(0, 0), new Point(1, 1), new Point(
-                4, -2));
-        boundaryRectangle = leader.getBoundaryRectangle();
-        assertEquals(new Rectangle(0, -2, 4, 1), boundaryRectangle);
     }
 }
