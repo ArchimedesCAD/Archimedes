@@ -11,15 +11,8 @@
  * This file was created on 2006/09/10, 10:04:05, by Victor D. Lopes.<br>
  * It is part of package br.org.archimedes.io.xml.parsers on the br.org.archimedes.io.xml project.<br>
  */
+
 package br.org.archimedes.io.xml.parsers;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 import br.org.archimedes.Constant;
 import br.org.archimedes.exceptions.ElementCreationException;
@@ -29,6 +22,14 @@ import br.org.archimedes.gui.opengl.Color;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Layer;
 import br.org.archimedes.model.LineStyle;
+
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * Belongs to package com.tarantulus.archimedes.xml.
@@ -76,29 +77,23 @@ public class LayerParser {
      */
     private void parseLayerColors (NodeList childNodes, Layer layer) {
 
-        NodeList nodesCollection = ((org.w3c.dom.Element) childNodes)
-                .getElementsByTagName("color"); //$NON-NLS-1$
-        List<org.w3c.dom.Element> colorList = XMLUtils
-                .nodeListToList(nodesCollection);
+        NodeList nodesCollection = ((org.w3c.dom.Element) childNodes).getElementsByTagName("color"); //$NON-NLS-1$
+        List<org.w3c.dom.Element> colorList = XMLUtils.nodeListToList(nodesCollection);
         Color screenColor = XMLUtils.nodeToColor(colorList.get(0));
         layer.setColor(screenColor);
+        
+        Color printColor = screenColor;
         if (colorList.size() > 1) {
-            Color printColor = XMLUtils.nodeToColor(colorList.get(1));
-            layer.setPrintColor(printColor);
+            printColor = XMLUtils.nodeToColor(colorList.get(1));
         }
-        else {
-            if (screenColor.equals(Constant.WHITE)) {
-                layer.setPrintColor(Constant.BLACK);
-            }
-            else {
-                layer.setPrintColor(screenColor);
-            }
+        else if (screenColor.equals(Constant.WHITE)) {
+            printColor = Constant.BLACK;
         }
+        layer.setPrintColor(printColor);
     }
 
     /**
-     * Extracts the attributes from a container node and create the
-     * corresponding layer.
+     * Extracts the attributes from a container node and create the corresponding layer.
      * 
      * @param parsingNode
      *            The container node
@@ -117,8 +112,7 @@ public class LayerParser {
         double thickness = XMLUtils.nodeToDouble(thicknessNode);
 
         LineStyle[] styles = LineStyle.values();
-        Layer layer = new Layer(Constant.WHITE, name, styles[lineStyle],
-                thickness);
+        Layer layer = new Layer(Constant.WHITE, name, styles[lineStyle], thickness);
 
         Node visibleNode = attributes.getNamedItem("visible"); //$NON-NLS-1$
         if (visibleNode != null) {
@@ -149,8 +143,7 @@ public class LayerParser {
         for (int i = 0; i < containerNodeList.getLength(); i++) {
             Node childNode = containerNodeList.item(i);
 
-            ElementParser parser = ElementParser.getParser(childNode
-                    .getNodeName());
+            ElementParser parser = ElementParser.getParser(childNode.getNodeName());
             if (parser != null) {
                 Element archElement;
                 try {

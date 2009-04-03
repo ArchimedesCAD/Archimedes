@@ -13,10 +13,6 @@
  */
 package br.org.archimedes.io.xml;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
-
 import br.org.archimedes.exceptions.NotSupportedException;
 import br.org.archimedes.gui.opengl.Color;
 import br.org.archimedes.interfaces.ElementExporter;
@@ -28,10 +24,14 @@ import br.org.archimedes.model.Layer;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.rcp.extensionpoints.ElementEPLoader;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+
 /**
  * Belongs to package br.org.archimedes.io.xml.
  * 
- * @author night
+ * @author Hugo Corbucci
  */
 public class XMLExporter implements Exporter {
 
