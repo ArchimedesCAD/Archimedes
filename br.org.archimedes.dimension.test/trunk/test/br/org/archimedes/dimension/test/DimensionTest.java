@@ -9,14 +9,13 @@
  * Hugo Corbucci, Luiz C. Real - later contributions<br>
  * <br>
  * This file was created on 2007/04/27, 11:08:06, by Mariana V. Bravo.<br>
- * It is part of package br.org.archimedes.dimension.test on the br.org.archimedes.dimension.test project.<br>
+ * It is part of package br.org.archimedes.dimension.test on the br.org.archimedes.dimension.test
+ * project.<br>
  */
+
 package br.org.archimedes.dimension.test;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-
+import br.org.archimedes.Constant;
 import br.org.archimedes.Tester;
 import br.org.archimedes.dimension.Dimension;
 import br.org.archimedes.exceptions.InvalidArgumentException;
@@ -25,6 +24,10 @@ import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Rectangle;
 import br.org.archimedes.model.Vector;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 public class DimensionTest extends Tester {
 
@@ -35,12 +38,17 @@ public class DimensionTest extends Tester {
     private Point point2;
 
     private Point distance;
-    
+
     private double ddistance;
 
 
     @Before
     public void setUp () {
+
+        // To load the correct font within the controller.
+        // This hack is needed since the singletons within Utils set an activator so the Constant
+        // cant find out it is a test.
+        Assert.assertNotNull(Constant.DEFAULT_FONT);
 
         point1 = new Point(50, 50);
         point2 = new Point(50, 70);
@@ -106,7 +114,7 @@ public class DimensionTest extends Tester {
             Assert.fail("Should not throw InvalidArgumentException");
         }
     }
-    
+
     @Test
     public void testDimensionConstructorWithDouble () {
 
@@ -153,6 +161,8 @@ public class DimensionTest extends Tester {
             Assert.fail("Should not throw InvalidArgumentException");
         }
     }
+    
+    // TODO Test dimension constructor that receives a font (Mock it)
 
     /**
      * Creates a dimension. Fails if any exception is thrown.
@@ -165,8 +175,7 @@ public class DimensionTest extends Tester {
      *            The distance
      * @return The new dimension
      */
-    private Dimension createSafeDimension (Point initial, Point ending,
-            Point distance) {
+    private Dimension createSafeDimension (Point initial, Point ending, Point distance) {
 
         Dimension dim = null;
         try {
@@ -187,13 +196,18 @@ public class DimensionTest extends Tester {
         Dimension toClone = createSafeDimension(point1, point2, distance);
         Element clone = toClone.clone();
         Assert.assertNotNull("The clone should not be null", clone);
-        Assert.assertEquals(
-                "The cloned dimension should be equal to the original",
-                toClone, clone);
-        Assert
-                .assertFalse(
-                        "The cloned dimension should not be the same instance as the original",
-                        toClone == clone);
+        Assert.assertEquals("The cloned dimension should be equal to the original", toClone, clone);
+        Assert.assertFalse("The cloned dimension should not be the same instance as the original",
+                toClone == clone);
+    }
+
+    /**
+     * Test method for
+     * {@link br.org.archimedes.model.elements.Dimension#contains(br.org.archimedes.model.Point)}.
+     */
+    public void testContains () {
+    
+        // TODO Test a dimension contains the right points
     }
 
     @Test
@@ -201,50 +215,36 @@ public class DimensionTest extends Tester {
 
         // Equal to self and not null
         Element dimension1 = createSafeDimension(point1, point2, distance);
-        Assert.assertFalse("Should not be equal to null", dimension1
-                .equals(null));
-        Assert.assertTrue("Should be equal to itself", dimension1
-                .equals(dimension1));
+        Assert.assertFalse("Should not be equal to null", dimension1.equals(null));
+        Assert.assertTrue("Should be equal to itself", dimension1.equals(dimension1));
 
         // Equal to clone
-        Element dimension2 = createSafeDimension(point1.clone(),
-                point2.clone(), distance);
-        Assert.assertTrue(
-                "Should be equal to a dimension with the same arguments",
-                dimension1.equals(dimension2));
-        Assert.assertTrue(
-                "Should be equal to a dimension with the same arguments",
-                dimension2.equals(dimension1));
+        Element dimension2 = createSafeDimension(point1.clone(), point2.clone(), distance);
+        Assert.assertTrue("Should be equal to a dimension with the same arguments", dimension1
+                .equals(dimension2));
+        Assert.assertTrue("Should be equal to a dimension with the same arguments", dimension2
+                .equals(dimension1));
 
         // Change first point
         Vector vector = new Vector(new Point(2, 2));
-        dimension2 = createSafeDimension(point1.addVector(vector), point2,
-                distance);
-        Assert.assertFalse(
-                "Should not be equal to a dimension with different arguments",
+        dimension2 = createSafeDimension(point1.addVector(vector), point2, distance);
+        Assert.assertFalse("Should not be equal to a dimension with different arguments",
                 dimension1.equals(dimension2));
-        Assert.assertFalse(
-                "Should not be equal to a dimension with different arguments",
+        Assert.assertFalse("Should not be equal to a dimension with different arguments",
                 dimension2.equals(dimension1));
 
         // Change second point
-        dimension2 = createSafeDimension(point1, point2.addVector(vector),
-                distance);
-        Assert.assertFalse(
-                "Should not be equal to a dimension with different arguments",
+        dimension2 = createSafeDimension(point1, point2.addVector(vector), distance);
+        Assert.assertFalse("Should not be equal to a dimension with different arguments",
                 dimension1.equals(dimension2));
-        Assert.assertFalse(
-                "Should not be equal to a dimension with different arguments",
+        Assert.assertFalse("Should not be equal to a dimension with different arguments",
                 dimension2.equals(dimension1));
 
         // Change distance
-        dimension2 = createSafeDimension(point1, point2, distance
-                .addVector(vector));
-        Assert.assertFalse(
-                "Should not be equal to a dimension with different arguments",
+        dimension2 = createSafeDimension(point1, point2, distance.addVector(vector));
+        Assert.assertFalse("Should not be equal to a dimension with different arguments",
                 dimension1.equals(dimension2));
-        Assert.assertFalse(
-                "Should not be equal to a dimension with different arguments",
+        Assert.assertFalse("Should not be equal to a dimension with different arguments",
                 dimension2.equals(dimension1));
     }
 
@@ -260,117 +260,39 @@ public class DimensionTest extends Tester {
         distX = distance.getX() + Dimension.DIST_AFTER_LINE;
         distY = point2.getY() + Dimension.DIST_AFTER_LINE;
         Point p2 = new Point(distX, distY);
-        Rectangle expected = new Rectangle(p1.getX(), p1.getY(), p2.getX(), p2
-                .getY());
-        Assert.assertEquals("Boundary should be as expected", expected,
-                boundary);
+        Rectangle expected = new Rectangle(p1.getX(), p1.getY(), p2.getX(), p2.getY());
+        Assert.assertEquals("Boundary should be as expected", expected, boundary);
+    }
+
+    /**
+     * Test method for {@link br.org.archimedes.model.elements.Dimension#getPoints()}.
+     */
+    public void testGetPoints () {
+    
+        // TODO Test get points for a diension gives all relevant points
     }
 
     /**
      * Test method for
-     * {@link com.tarantulus.archimedes.model.elements.Dimension#getReferencePoints(com.tarantulus.archimedes.model.Rectangle)}.
+     * {@link br.org.archimedes.model.elements.Dimension#getProjectionOf(br.org.archimedes.model.Point)}
+     * .
+     */
+    public void testGetProjectionOf () {
+    
+        // TODO Test project of a point over a dimension
+    }
+
+    /**
+     * Test method for
+     * {@link br.org.archimedes.model.elements.Dimension#getReferencePoints(br.org.archimedes.model.Rectangle)}
+     * .
      */
     public void testGetReferencePoints () {
 
-        Assert.fail("Not yet implemented"); // TODO
+        // TODO Test reference points for dimension
     }
-
-    /**
-     * Test method for
-     * {@link com.tarantulus.archimedes.model.elements.Dimension#getProjectionOf(com.tarantulus.archimedes.model.Point)}.
-     */
-    public void testGetProjectionOf () {
-
-        Assert.fail("Not yet implemented"); // TODO
-    }
-
-    /**
-     * Test method for
-     * {@link com.tarantulus.archimedes.model.elements.Dimension#contains(com.tarantulus.archimedes.model.Point)}.
-     */
-    public void testContains () {
-
-        Assert.fail("Not yet implemented"); // TODO
-    }
-
-    /**
-     * Test method for
-     * {@link com.tarantulus.archimedes.model.elements.Dimension#isCollinearWith(com.tarantulus.archimedes.model.elements.Element)}.
-     */
-    public void testIsCollinearWith () {
-
-        Assert.fail("Not yet implemented"); // TODO
-    }
-
-    /**
-     * Test method for
-     * {@link com.tarantulus.archimedes.model.elements.Dimension#isCollinearWithLine(com.tarantulus.archimedes.model.elements.Line)}.
-     */
-    public void testIsCollinearWithLine () {
-
-        Assert.fail("Not yet implemented"); // TODO
-    }
-
-    /**
-     * Test method for
-     * {@link com.tarantulus.archimedes.model.elements.Dimension#isCollinearWithPolyLine(com.tarantulus.archimedes.model.elements.PolyLine)}.
-     */
-    public void testIsCollinearWithPolyLine () {
-
-        Assert.fail("Not yet implemented"); // TODO
-    }
-
-    /**
-     * Test method for
-     * {@link com.tarantulus.archimedes.model.elements.Dimension#isParallelTo(com.tarantulus.archimedes.model.elements.Element)}.
-     */
-    public void testIsParallelTo () {
-
-        Assert.fail("Not yet implemented"); // TODO
-    }
-
-    /**
-     * Test method for
-     * {@link com.tarantulus.archimedes.model.elements.Dimension#isParallelToLine(com.tarantulus.archimedes.model.elements.Line)}.
-     */
-    public void testIsParallelToLine () {
-
-        Assert.fail("Not yet implemented"); // TODO
-    }
-
-    /**
-     * Test method for
-     * {@link com.tarantulus.archimedes.model.elements.Dimension#isParallelToPolyLine(com.tarantulus.archimedes.model.elements.PolyLine)}.
-     */
-    public void testIsParallelToPolyLine () {
-
-        Assert.fail("Not yet implemented"); // TODO
-    }
-
-    /**
-     * Test method for
-     * {@link com.tarantulus.archimedes.model.elements.Dimension#write(com.tarantulus.archimedes.model.writers.Writer)}.
-     */
-    public void testWrite () {
-
-        Assert.fail("Not yet implemented"); // TODO
-    }
-
-    /**
-     * Test method for
-     * {@link com.tarantulus.archimedes.model.elements.Dimension#getPoints()}.
-     */
-    public void testGetPoints () {
-
-        Assert.fail("Not yet implemented"); // TODO
-    }
-
-    /**
-     * Test method for
-     * {@link com.tarantulus.archimedes.model.elements.Dimension#getNearestExtremePoint(com.tarantulus.archimedes.model.Point)}.
-     */
-    public void testGetNearestExtremePoint () {
-
-        Assert.fail("Not yet implemented"); // TODO
-    }
+    
+    // TODO Test moving a dimension
+    
+    // TODO Test dimensions return the correct lines to draw
 }

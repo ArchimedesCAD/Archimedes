@@ -13,13 +13,6 @@
  */
 package br.org.archimedes.dimension;
 
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
-import org.apache.batik.svggen.font.Font;
-
 import br.org.archimedes.Constant;
 import br.org.archimedes.Geometrics;
 import br.org.archimedes.exceptions.InvalidArgumentException;
@@ -33,6 +26,13 @@ import br.org.archimedes.model.ReferencePoint;
 import br.org.archimedes.model.Vector;
 import br.org.archimedes.model.references.SquarePoint;
 import br.org.archimedes.text.Text;
+
+import org.apache.batik.svggen.font.Font;
+
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * @author marivb
@@ -320,37 +320,19 @@ public class Dimension extends Element {
     }
 
     /**
+     * @return Returns the initialPoint.
+     */
+    public Point getInitialPoint () {
+    
+        return this.initialPoint;
+    }
+
+    /**
      * @return Returns the endingPoint.
      */
     public Point getEndingPoint () {
 
         return this.endingPoint;
-    }
-
-    /**
-     * @param endingPoint
-     *            The endingPoint to set.
-     */
-    public void setEndingPoint (Point endingPoint) {
-
-        this.endingPoint = endingPoint;
-    }
-
-    /**
-     * @return Returns the initialPoint.
-     */
-    public Point getInitialPoint () {
-
-        return this.initialPoint;
-    }
-
-    /**
-     * @param initialPoint
-     *            The initialPoint to set.
-     */
-    public void setInitialPoint (Point initialPoint) {
-
-        this.initialPoint = initialPoint;
     }
 
     /*

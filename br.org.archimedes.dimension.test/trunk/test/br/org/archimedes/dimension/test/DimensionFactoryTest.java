@@ -8,23 +8,27 @@
  * Hugo Corbucci - initial API and implementation<br>
  * <br>
  * This file was created on 2007/06/16, 15:45:48, by Hugo Corbucci.<br>
- * It is part of package br.org.archimedes.dimension.test on the br.org.archimedes.dimension.test project.<br>
+ * It is part of package br.org.archimedes.dimension.test on the br.org.archimedes.dimension.test
+ * project.<br>
  */
+
 package br.org.archimedes.dimension.test;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
+import br.org.archimedes.Constant;
 import br.org.archimedes.dimension.DimensionFactory;
 import br.org.archimedes.helper.FactoryTester;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Vector;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
 /**
  * Belongs to package br.org.archimedes.dimension.test.
  * 
- * @author nitao
+ * @author Hugo Corbucci
  */
 public class DimensionFactoryTest extends FactoryTester {
 
@@ -45,6 +49,11 @@ public class DimensionFactoryTest extends FactoryTester {
     @Before
     @Override
     public void setUp () throws Exception {
+
+        // To load the correct font within the controller.
+        // This hack is needed since the singletons within Utils set an activator so the Constant
+        // cant find out it is a test.
+        Assert.assertNotNull(Constant.DEFAULT_FONT);
 
         super.setUp();
         factory = new DimensionFactory();
@@ -70,7 +79,7 @@ public class DimensionFactoryTest extends FactoryTester {
      * Tests the default behaviour of the dimension factory.
      */
     @Test
-    public void testFactoryUntilEnd () {
+    public void canCreateDimensionFromRegularPath () {
 
         assertBegin(factory, false);
 
@@ -105,15 +114,13 @@ public class DimensionFactoryTest extends FactoryTester {
         assertSafeNext(factory, secondVector, false);
         assertSafeNext(factory, null, true);
         assertFinished(factory, true);
-        
-        // TODO Por uma fonte para os testes
     }
 
     /**
      * Tests that cancel works at any time.
      */
     @Test
-    public void testFactoryCancel () {
+    public void canCancelAtAnyPoint () {
 
         assertBegin(factory, false);
         assertCancel(factory, false);
