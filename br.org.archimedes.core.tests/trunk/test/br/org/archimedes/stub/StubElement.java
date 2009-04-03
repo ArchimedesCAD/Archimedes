@@ -10,6 +10,7 @@
  * This file was created on Apr 2, 2009, 12:13:46 PM.<br>
  * It is part of br.org.archimedes.model on the br.org.archimedes.core.tests project.<br>
  */
+
 package br.org.archimedes.stub;
 
 import br.org.archimedes.exceptions.NullArgumentException;
@@ -23,15 +24,15 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-
 /**
  * Belongs to package br.org.archimedes.model.
- *
+ * 
  * @author "Hugo Corbucci"
  */
 public class StubElement extends Element {
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      * @see br.org.archimedes.model.Element#clone()
      */
     @Override
@@ -40,7 +41,8 @@ public class StubElement extends Element {
         return new StubElement();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      * @see br.org.archimedes.model.Element#contains(br.org.archimedes.model.Point)
      */
     @Override
@@ -49,7 +51,8 @@ public class StubElement extends Element {
         return false;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      * @see br.org.archimedes.model.Element#draw(br.org.archimedes.gui.opengl.OpenGLWrapper)
      */
     @Override
@@ -57,7 +60,8 @@ public class StubElement extends Element {
 
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      * @see br.org.archimedes.model.Element#equals(java.lang.Object)
      */
     @Override
@@ -66,16 +70,18 @@ public class StubElement extends Element {
         return this == object;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      * @see br.org.archimedes.model.Element#getBoundaryRectangle()
      */
     @Override
     public Rectangle getBoundaryRectangle () {
 
-        return null;
+        return new Rectangle(0, 0, 1, 1);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      * @see br.org.archimedes.model.Element#getPoints()
      */
     @Override
@@ -84,7 +90,8 @@ public class StubElement extends Element {
         return Collections.emptyList();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      * @see br.org.archimedes.model.Element#getProjectionOf(br.org.archimedes.model.Point)
      */
     @Override
@@ -93,7 +100,8 @@ public class StubElement extends Element {
         return null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      * @see br.org.archimedes.model.Element#getReferencePoints(br.org.archimedes.model.Rectangle)
      */
     @Override
