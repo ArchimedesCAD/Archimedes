@@ -11,6 +11,7 @@
  * This file was created on 2006/04/18, 11:32:46, by Hugo Corbucci.<br>
  * It is part of package br.org.archimedes on the br.org.archimedes.core.tests project.<br>
  */
+
 package br.org.archimedes;
 
 import br.org.archimedes.exceptions.IllegalActionException;
@@ -26,11 +27,11 @@ import org.junit.Assert;
 import org.junit.Before;
 
 import java.util.Collection;
+import java.util.LinkedList;
 
 /**
- * This is a helper class for tests. It contains useful Assert.assertions for
- * our model. Any test that wishes to use such Assert.assertions must subclass
- * this test.<br>
+ * This is a helper class for tests. It contains useful Assert.assertions for our model. Any test
+ * that wishes to use such Assert.assertions must subclass this test.<br>
  * Belongs to package com.tarantulus.archimedes.
  * 
  * @author oshiro
@@ -42,16 +43,16 @@ public abstract class Tester {
     protected final double COS_30 = Math.sqrt(3.0) / 2.0;
 
     protected final double COS_60 = 0.5;
-    
-    
+
+
     /**
      * Constructor.
      */
     public Tester () {
+
         // To ensure Constant will be correctly loaded for tests.
         Assert.assertNotNull(Constant.DEFAULT_FONT);
     }
-
 
     @Before
     public void setUp () throws Exception {
@@ -79,10 +80,8 @@ public abstract class Tester {
         }
         else {
             Assert.assertNotNull(realPoint);
-            assertWithinDelta("Point: is not same x", expectedPoint.getX(),
-                    realPoint.getX());
-            assertWithinDelta("Point: is not same y", expectedPoint.getY(),
-                    realPoint.getY());
+            assertWithinDelta("Point: is not same x", expectedPoint.getX(), realPoint.getX());
+            assertWithinDelta("Point: is not same y", expectedPoint.getY(), realPoint.getY());
         }
     }
 
@@ -90,8 +89,7 @@ public abstract class Tester {
      * Asserts the difference between two double values is at most EPSILON.
      * 
      * @param message
-     *            The message to be displayed in case the Assert.assertion
-     *            fails.
+     *            The message to be displayed in case the Assert.assertion fails.
      * @param value1
      *            One of the doubles to be compared.
      * @param value2
@@ -99,9 +97,7 @@ public abstract class Tester {
      */
     public void assertWithinDelta (String message, double value1, double value2) {
 
-        Assert
-                .assertTrue(message,
-                        Math.abs(value1 - value2) < Constant.EPSILON);
+        Assert.assertTrue(message, Math.abs(value1 - value2) < Constant.EPSILON);
     }
 
     /**
@@ -112,15 +108,19 @@ public abstract class Tester {
      * @param real
      *            The collection with the real elements
      */
-    public void assertCollectionTheSame (Collection<?> expected,
-            Collection<?> real) {
+    public void assertCollectionTheSame (Collection<? extends Object> expected,
+            Collection<? extends Object> real) {
 
-        Assert.assertTrue("The expected collection " + expected
-                + " should contain the actual one " + real, expected
-                .containsAll(real));
-        Assert.assertTrue("The actual collection " + real
-                + " should contain the expected one " + expected, real
-                .containsAll(expected));
+        Collection<Object> expectedList = new LinkedList<Object>();
+        expectedList.addAll(expected);
+
+        Collection<Object> realList = new LinkedList<Object>();
+        realList.addAll(real);
+
+        Assert.assertTrue("The expected collection " + expectedList
+                + " should contain the actual one " + realList, expectedList.containsAll(realList));
+        Assert.assertTrue("The actual collection " + realList + " should contain the expected one "
+                + expectedList, realList.containsAll(expectedList));
     }
 
     /**
@@ -131,12 +131,11 @@ public abstract class Tester {
      * @param real
      *            The collection with the real elements
      */
-    public void assertCollectionNotTheSame (Collection<?> expected,
-            Collection<?> real) {
+    public void assertCollectionNotTheSame (Collection<?> expected, Collection<?> real) {
 
         Assert.assertFalse("The expected collection " + expected
-                + " should not contain the real one " + real
-                + " and vice-versa.", expected.containsAll(real)
+                + " should not contain the real one " + real + " and vice-versa.", expected
+                .containsAll(real)
                 || real.containsAll(expected));
     }
 
@@ -148,8 +147,7 @@ public abstract class Tester {
      * @param element
      *            The element
      */
-    public void assertCollectionContains (Collection<Element> collection,
-            Element element) {
+    public void assertCollectionContains (Collection<Element> collection, Element element) {
 
         boolean foundOne = false;
         for (Element existingElement : collection) {
@@ -158,8 +156,8 @@ public abstract class Tester {
                 break;
             }
         }
-        Assert.assertTrue("Should have found the element " + element
-                + " in the collection " + collection, foundOne);
+        Assert.assertTrue("Should have found the element " + element + " in the collection "
+                + collection, foundOne);
     }
 
     /**
@@ -170,8 +168,7 @@ public abstract class Tester {
      * @param element
      *            The element
      */
-    public void assertCollectionNotContains (Collection<Element> collection,
-            Element element) {
+    public void assertCollectionNotContains (Collection<Element> collection, Element element) {
 
         boolean foundOne = false;
         for (Element existingElement : collection) {
@@ -180,8 +177,8 @@ public abstract class Tester {
                 break;
             }
         }
-        Assert.assertFalse("Should not have found the element " + element
-                + " in the collection " + collection, foundOne);
+        Assert.assertFalse("Should not have found the element " + element + " in the collection "
+                + collection, foundOne);
     }
 
     /**
@@ -195,8 +192,7 @@ public abstract class Tester {
     protected void safeSelect (Point point, boolean invertSelection) {
 
         try {
-            br.org.archimedes.Utils.getController().select(point,
-                    invertSelection);
+            br.org.archimedes.Utils.getController().select(point, invertSelection);
         }
         catch (NullArgumentException e) {
             e.printStackTrace();
@@ -218,12 +214,11 @@ public abstract class Tester {
      * @param invertSelection
      *            Indicates if the selection is to be inverted
      */
-    protected void safeSelect (Point firstPoint, Point secondPoint,
-            boolean invertSelection) {
+    protected void safeSelect (Point firstPoint, Point secondPoint, boolean invertSelection) {
 
         try {
-            br.org.archimedes.Utils.getController().select(firstPoint,
-                    secondPoint, invertSelection);
+            br.org.archimedes.Utils.getController()
+                    .select(firstPoint, secondPoint, invertSelection);
         }
         catch (NullArgumentException e) {
             e.printStackTrace();
@@ -236,8 +231,7 @@ public abstract class Tester {
     }
 
     /**
-     * Puts an element known to be safe in the drawing. Fails if any exception
-     * is thrown.
+     * Puts an element known to be safe in the drawing. Fails if any exception is thrown.
      * 
      * @param element
      *            The element to put in the drawing.
@@ -260,8 +254,8 @@ public abstract class Tester {
     }
 
     /**
-     * Safely rotates an element around a reference point, by an angle. Fails if
-     * the operation throws any exception
+     * Safely rotates an element around a reference point, by an angle. Fails if the operation
+     * throws any exception
      * 
      * @param element
      *            The element to be rotated

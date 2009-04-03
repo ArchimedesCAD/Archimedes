@@ -260,7 +260,7 @@ public class Utils {
 	public static Workspace getWorkspace() {
 	    Activator current = Activator.getDefault();
 	    if(current == null) { // For the tests
-	        return new Workspace();
+	        current = new Activator();
 	    }
         return current.getWorkspace();
 	}
