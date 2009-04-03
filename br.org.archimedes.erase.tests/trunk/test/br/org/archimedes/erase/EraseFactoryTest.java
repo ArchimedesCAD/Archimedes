@@ -10,6 +10,7 @@
  * This file was created on 2007/04/17, 10:07:39, by Hugo Corbucci.<br>
  * It is part of package br.org.archimedes.erase on the br.org.archimedes.erase.tests project.<br>
  */
+
 package br.org.archimedes.erase;
 
 import br.org.archimedes.exceptions.InvalidArgumentException;
@@ -77,7 +78,7 @@ public class EraseFactoryTest extends FactoryTester {
         assertBegin(factory, false);
         assertSafeNext(factory, selection, true);
     }
-    
+
     @Test
     public void canEraseWithPresetSelection () {
 
@@ -91,23 +92,16 @@ public class EraseFactoryTest extends FactoryTester {
         drawing.setSelection(selection);
 
         // Begin
-        assertBegin(factory, false);
-
-        assertInvalidNext(factory, null);
-        assertInvalidNext(factory, new Object());
-
-        // Selection
-        assertSafeNext(factory, selection, true);
+        assertBegin(factory, true);
 
         assertInvalidNext(factory, null);
         assertInvalidNext(factory, new Object());
         assertInvalidNext(factory, selection);
 
         // Again
-        assertBegin(factory, false);
-        assertSafeNext(factory, selection, true);
+        assertBegin(factory, true);
     }
-    
+
     public void canCancelAtAnytimeWithoutPreset () throws InvalidArgumentException {
 
         Element element = new StubElement();
