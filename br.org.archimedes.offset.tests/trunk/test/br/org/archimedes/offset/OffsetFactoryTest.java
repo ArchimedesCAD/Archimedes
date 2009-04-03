@@ -21,6 +21,7 @@ import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Offsetable;
 import br.org.archimedes.model.Point;
+import br.org.archimedes.model.Selection;
 import br.org.archimedes.stub.StubElement;
 
 import org.junit.After;
@@ -28,7 +29,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.HashSet;
-import java.util.Set;
 
 public class OffsetFactoryTest extends FactoryTester {
 
@@ -63,9 +63,6 @@ public class OffsetFactoryTest extends FactoryTester {
 
     private CommandFactory factory;
 
-    private Set<Element> selection;
-
-
     @Before
     public void setUp () {
 
@@ -74,12 +71,6 @@ public class OffsetFactoryTest extends FactoryTester {
         controller = br.org.archimedes.Utils.getController();
         drawing = new Drawing("Teste");
         controller.setActiveDrawing(drawing);
-
-        Element element = new OffsetableStubElement();
-        putSafeElementOnDrawing(element, drawing);
-
-        selection = new HashSet<Element>();
-        selection.add(element);
     }
 
     @After
@@ -91,6 +82,11 @@ public class OffsetFactoryTest extends FactoryTester {
 
     @Test
     public void testOffset () {
+        Element element = new OffsetableStubElement();
+        putSafeElementOnDrawing(element, drawing);
+
+        HashSet<Element> selection = new HashSet<Element>();
+        selection.add(element);
 
         // Begin
         assertBegin(factory, false);
@@ -132,7 +128,53 @@ public class OffsetFactoryTest extends FactoryTester {
     }
 
     @Test
+    public void testOffsetWithSelection () {
+        Element element = new OffsetableStubElement();
+        putSafeElementOnDrawing(element, drawing);
+
+        Selection selection = new Selection();
+        selection.add(element);
+        drawing.setSelection(selection);
+
+        // Begin
+        assertBegin(factory, false);
+
+        assertInvalidNext(factory, new Object());
+        assertInvalidNext(factory, selection);
+        assertInvalidNext(factory, true);
+
+        // Distance
+        assertSafeNext(factory, 10.0, false);
+
+        assertInvalidNext(factory, new Object());
+        assertInvalidNext(factory, 10.0);
+        assertInvalidNext(factory, selection);
+
+        // true/false
+        assertSafeNext(factory, true, false, true);
+
+        assertInvalidNext(factory, new Object());
+        assertInvalidNext(factory, 10.0);
+        assertInvalidNext(factory, selection);
+
+        // true/false
+        assertSafeNext(factory, false, false, true);
+
+        assertInvalidNext(factory, new Object());
+        assertInvalidNext(factory, 10.0);
+        assertInvalidNext(factory, selection);
+
+        // Cancel
+        assertCancel(factory, false);
+    }
+
+    @Test
     public void testCancel () {
+        Element element = new OffsetableStubElement();
+        putSafeElementOnDrawing(element, drawing);
+
+        HashSet<Element> selection = new HashSet<Element>();
+        selection.add(element);
 
         assertBegin(factory, false);
         assertCancel(factory, false);
@@ -149,6 +191,28 @@ public class OffsetFactoryTest extends FactoryTester {
         assertBegin(factory, false);
         assertSafeNext(factory, 10.0, false);
         assertSafeNext(factory, selection, false);
+        assertSafeNext(factory, true, false, true);
+        assertCancel(factory, false);
+    }
+    
+    @Test
+    public void testCancelWithSelection () {
+        Element element = new OffsetableStubElement();
+        putSafeElementOnDrawing(element, drawing);
+
+        Selection selection = new Selection();
+        selection.add(element);
+        drawing.setSelection(selection);
+
+        assertBegin(factory, false);
+        assertCancel(factory, false);
+
+        assertBegin(factory, false);
+        assertSafeNext(factory, 10.0, false);
+        assertCancel(factory, false);
+
+        assertBegin(factory, false);
+        assertSafeNext(factory, 10.0, false);
         assertSafeNext(factory, true, false, true);
         assertCancel(factory, false);
     }

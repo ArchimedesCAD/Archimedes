@@ -11,21 +11,14 @@
  * This file was created on 2007/04/27, 01:04:27, by Hugo Corbucci.<br>
  * It is part of package br.org.archimedes.rotate on the br.org.archimedes.rotate.tests project.<br>
  */
+
 package br.org.archimedes.rotate;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-
+import br.org.archimedes.Constant;
 import br.org.archimedes.Tester;
 import br.org.archimedes.exceptions.IllegalActionException;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
-import br.org.archimedes.gui.opengl.Color;
 import br.org.archimedes.interfaces.Command;
 import br.org.archimedes.interfaces.UndoableCommand;
 import br.org.archimedes.model.Drawing;
@@ -33,6 +26,14 @@ import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Layer;
 import br.org.archimedes.model.LineStyle;
 import br.org.archimedes.model.Point;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Belongs to package com.tarantulus.archimedes.model.commands.
@@ -72,8 +73,7 @@ public class RotateTest extends Tester {
      * @throws NullArgumentException
      *             Not thrown
      */
-    private void createOriginalSelection () throws NullArgumentException,
-            InvalidArgumentException {
+    private void createOriginalSelection () throws NullArgumentException, InvalidArgumentException {
 
         selection = new ArrayList<Element>();
         // selection.add(new Line(10, 0, 20, 0));
@@ -91,8 +91,7 @@ public class RotateTest extends Tester {
      * @throws InvalidArgumentException
      *             Not thrown.
      */
-    private void createOriginalExpected () throws NullArgumentException,
-            InvalidArgumentException {
+    private void createOriginalExpected () throws NullArgumentException, InvalidArgumentException {
 
         expected = new ArrayList<Element>();
         // expected.add(new Line(0, 10, 0, 20));
@@ -152,8 +151,7 @@ public class RotateTest extends Tester {
     }
 
     /*
-     * Test method for
-     * 'com.tarantulus.archimedes.model.commands.MoveElementCommand.doIt(Drawing)'
+     * Test method for 'com.tarantulus.archimedes.model.commands.MoveElementCommand.doIt(Drawing)'
      */
     public void testDoIt () throws InvalidArgumentException {
 
@@ -264,8 +262,7 @@ public class RotateTest extends Tester {
     }
 
     /*
-     * Test method for
-     * 'com.tarantulus.archimedes.model.commands.MoveElementCommand.undoIt(Drawing)'
+     * Test method for 'com.tarantulus.archimedes.model.commands.MoveElementCommand.undoIt(Drawing)'
      */
     public void testUndoIt () throws InvalidArgumentException {
 
@@ -320,13 +317,13 @@ public class RotateTest extends Tester {
             Assert.fail("Should not throw any exception");
         }
 
-        drawing.addLayer(new Layer(new Color(0, 0, 0), "Layer2",
-                LineStyle.CONTINUOUS, 1.0));
+        drawing.addLayer(new Layer(Constant.BLACK, "Layer2", LineStyle.CONTINUOUS, 1.0));
         try {
-			drawing.setCurrentLayer(1);
-		} catch (IllegalActionException e1) {
-			Assert.fail("Should not throw any exception");
-		}
+            drawing.setCurrentLayer(1);
+        }
+        catch (IllegalActionException e1) {
+            Assert.fail("Should not throw any exception");
+        }
         addsSelectionToDrawing();
         try {
             moveElement = new RotateCommand(selection, reference, angle);

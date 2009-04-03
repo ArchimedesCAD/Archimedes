@@ -11,14 +11,11 @@
  * This file was created on 2006/08/18, 01:04:27, by Jeferson R. Silva.<br>
  * It is part of package br.org.archimedes.move on the br.org.archimedes.move project.<br>
  */
+
 package br.org.archimedes.move;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-
 import br.org.archimedes.exceptions.IllegalActionException;
+import br.org.archimedes.exceptions.IllegalActionsException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.interfaces.UndoableCommand;
 import br.org.archimedes.model.Drawing;
@@ -27,6 +24,10 @@ import br.org.archimedes.model.Layer;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Vector;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Belongs to package br.org.archimedes.model.commands.
@@ -52,8 +53,8 @@ public class MoveCommand implements UndoableCommand {
      * @throws NullArgumentException
      *             Thrown if any argument is null.
      */
-    public MoveCommand (Map<Element, Collection<Point>> pointsToMove,
-            Vector vector) throws NullArgumentException {
+    public MoveCommand (Map<Element, Collection<Point>> pointsToMove, Vector vector)
+            throws NullArgumentException {
 
         if (pointsToMove == null || vector == null) {
             throw new NullArgumentException();
@@ -62,8 +63,7 @@ public class MoveCommand implements UndoableCommand {
         this.elementsToMove = new ArrayList<Element>(pointsToMove.keySet());
         this.pointsToMove = new ArrayList<Collection<Point>>();
         for (int i = 0; i < elementsToMove.size(); i++) {
-            Collection<Point> pointsOfTheElement = pointsToMove
-                    .get(elementsToMove.get(i));
+            Collection<Point> pointsOfTheElement = pointsToMove.get(elementsToMove.get(i));
             this.pointsToMove.add(i, pointsOfTheElement);
         }
         this.vector = vector;
@@ -71,11 +71,9 @@ public class MoveCommand implements UndoableCommand {
 
     /*
      * (non-Javadoc)
-     * 
      * @see br.org.archimedes.model.commands.Command#doIt(br.org.archimedes.model.Drawing)
      */
-    public void doIt (Drawing drawing) throws IllegalActionException,
-            NullArgumentException {
+    public void doIt (Drawing drawing) throws IllegalActionException, NullArgumentException {
 
         moveElements(drawing, vector);
     }
@@ -90,31 +88,36 @@ public class MoveCommand implements UndoableCommand {
      * @throws IllegalActionException
      *             Thrown if some element is not in the drawing.
      */
-    private void moveElements (Drawing drawing, Vector vector)
-            throws NullArgumentException, IllegalActionException {
+    private void moveElements (Drawing drawing, Vector vector) throws NullArgumentException,
+            IllegalActionException {
 
         if (drawing == null) {
             throw new NullArgumentException();
         }
+        IllegalActionsException exceptions = new IllegalActionsException();
 
         for (int i = 0; i < elementsToMove.size(); i++) {
             Element element = elementsToMove.get(i);
             Layer layer = element.getLayer();
-            if ( layer != null && !layer.isLocked() && drawing.contains(layer)
+            if (layer != null && !layer.isLocked() && drawing.contains(layer)
                     && layer.contains(element)) {
                 element.move(pointsToMove.get(i), vector);
             }
+            else {
+                exceptions.add(new IllegalActionException("Cant move the element '" + element
+                        + "' because it is not on the drawing"));
+            }
         }
-
+        
+        if(exceptions.size() > 0)
+            throw exceptions;
     }
 
     /*
      * (non-Javadoc)
-     * 
      * @see br.org.archimedes.model.commands.UndoableCommand#undoIt(br.org.archimedes.model.Drawing)
      */
-    public void undoIt (Drawing drawing) throws IllegalActionException,
-            NullArgumentException {
+    public void undoIt (Drawing drawing) throws IllegalActionException, NullArgumentException {
 
         moveElements(drawing, vector.multiply( -1));
     }

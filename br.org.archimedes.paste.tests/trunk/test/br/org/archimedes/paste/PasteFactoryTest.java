@@ -12,11 +12,14 @@
  */
 package br.org.archimedes.paste;
 
+import br.org.archimedes.Constant;
 import br.org.archimedes.controller.Controller;
 import br.org.archimedes.factories.CommandFactory;
 import br.org.archimedes.helper.FactoryTester;
 import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Element;
+import br.org.archimedes.model.Layer;
+import br.org.archimedes.model.LineStyle;
 import br.org.archimedes.stub.StubElement;
 
 import org.junit.After;
@@ -54,14 +57,18 @@ public class PasteFactoryTest extends FactoryTester {
 
     @Test
     public void testPaste () {
+        Layer defaultLayer = new Layer(Constant.WHITE, "", LineStyle.CONTINUOUS, 1);
 
         Element element = new StubElement();
+        element.setLayer(defaultLayer);
+        
         Collection<Element> clipboard = br.org.archimedes.Utils.getWorkspace().getClipboard();
         clipboard.add(element);
 
         assertBegin(factory, true);
 
         Element element2 = new StubElement();
+        element2.setLayer(defaultLayer);
         clipboard.clear();
         clipboard.add(element2);
 

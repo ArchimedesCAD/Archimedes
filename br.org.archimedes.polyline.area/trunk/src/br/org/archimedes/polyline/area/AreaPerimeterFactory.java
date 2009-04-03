@@ -13,19 +13,29 @@
  */
 package br.org.archimedes.polyline.area;
 
-import java.util.List;
-
 import br.org.archimedes.Geometrics;
+import br.org.archimedes.exceptions.InvalidParameterException;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.polyline.PolylineFactory;
+
+import java.util.List;
 
 /**
  * Belongs to package br.org.archimedes.polyline.area.
  * 
- * @author jefsilva
+ * @author Jeferson R. Silva
  */
 public class AreaPerimeterFactory extends PolylineFactory {
 
+    /* (non-Javadoc)
+     * @see br.org.archimedes.polyline.PolylineFactory#next(java.lang.Object)
+     */
+    @Override
+    public String next (Object parameter) throws InvalidParameterException {
+    
+        return super.next(parameter);
+    }
+    
     protected String createCommand (List<Point> points) {
 
         String result;
@@ -40,7 +50,7 @@ public class AreaPerimeterFactory extends PolylineFactory {
             }
             double area = Geometrics.calculateArea(points);
             double perimeter = Geometrics.calculatePerimeter(points);
-            result = Messages.Area + " " + area + " , ";  //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
+            result = Messages.Area + " " + area + ", ";  //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
             result += Messages.Perimeter + " " + perimeter; //$NON-NLS-2$ //$NON-NLS-1$
         }
         catch (Exception e) {

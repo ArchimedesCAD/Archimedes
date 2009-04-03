@@ -23,7 +23,7 @@ import br.org.archimedes.model.Drawing;
  * 
  * @author night
  */
-public class OrtoTest extends TestCase {
+public class OrtoCommandTest extends TestCase {
 
     /*
      * Test method for
