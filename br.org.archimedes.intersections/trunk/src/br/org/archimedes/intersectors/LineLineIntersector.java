@@ -12,16 +12,16 @@
  */
 package br.org.archimedes.intersectors;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.LinkedList;
-
 import br.org.archimedes.Constant;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.intersections.interfaces.Intersector;
 import br.org.archimedes.line.Line;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
+
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.LinkedList;
 
 public class LineLineIntersector implements Intersector {
 
@@ -56,11 +56,11 @@ public class LineLineIntersector implements Intersector {
         double a1, b1, c1;
         double a2, b2, c2;
 
-        Collection<Point> linePoints = firstLine.getExtremePoints();
+        Collection<Point> linePoints = firstLine.getPoints();
         Point initialPoint;
         Point endingPoint;
 
-        Collection<Point> secondLinePoints = secondLine.getExtremePoints();
+        Collection<Point> secondLinePoints = secondLine.getPoints();
         Point secondInitialPoint;
         Point secondEndingPoint;
 

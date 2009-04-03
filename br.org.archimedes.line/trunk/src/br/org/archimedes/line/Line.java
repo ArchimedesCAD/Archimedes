@@ -11,11 +11,8 @@
  * This file was created on 2006/03/23, 22:12:54, by Hugo Corbucci.<br>
  * It is part of package br.org.archimedes.line on the br.org.archimedes.line project.<br>
  */
-package br.org.archimedes.line;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+package br.org.archimedes.line;
 
 import br.org.archimedes.Constant;
 import br.org.archimedes.Geometrics;
@@ -31,6 +28,10 @@ import br.org.archimedes.model.ReferencePoint;
 import br.org.archimedes.model.Vector;
 import br.org.archimedes.model.references.SquarePoint;
 import br.org.archimedes.model.references.TrianglePoint;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * Belongs to package br.org.archimedes.line.
@@ -58,8 +59,7 @@ public class Line extends Element implements Offsetable {
      * @throws InvalidArgumentException
      *             Thrown if (x1,y1) equals (x2,y2)
      */
-    public Line (double x1, double y1, double x2, double y2)
-            throws InvalidArgumentException {
+    public Line (double x1, double y1, double x2, double y2) throws InvalidArgumentException {
 
         this.initialPoint = new Point(x1, y1);
         this.endingPoint = new Point(x2, y2);
@@ -81,8 +81,8 @@ public class Line extends Element implements Offsetable {
      * @throws InvalidArgumentException
      *             In case both points are equal.
      */
-    public Line (Point initialPoint, Point endingPoint)
-            throws NullArgumentException, InvalidArgumentException {
+    public Line (Point initialPoint, Point endingPoint) throws NullArgumentException,
+            InvalidArgumentException {
 
         if (initialPoint == null || endingPoint == null) {
             throw new NullArgumentException();
@@ -94,32 +94,6 @@ public class Line extends Element implements Offsetable {
 
         this.initialPoint = initialPoint.clone();
         this.endingPoint = endingPoint.clone();
-    }
-
-    /**
-     * Constructor
-     * 
-     * @param initialPoint
-     *            The first point
-     * @param length
-     *            The length of the line
-     * @param angle
-     *            The angle between the line and the x axis
-     * @throws NullArgumentException
-     *             In case some argument is null.
-     */
-    public Line (Point initialPoint, double length, double angle)
-            throws NullArgumentException {
-
-        if (initialPoint != null) {
-            this.initialPoint = initialPoint.clone();
-            double x = length * Math.cos(angle) + getInitialPoint().getX();
-            double y = length * Math.sin(angle) + getInitialPoint().getY();
-            this.endingPoint = new Point(x, y);
-        }
-        else {
-            throw new NullArgumentException();
-        }
     }
 
     /**
@@ -152,12 +126,10 @@ public class Line extends Element implements Offsetable {
 
         if (point != null) {
             if ( !point.equals(getInitialPoint())) {
-                double angle = Geometrics.calculateAngle(getInitialPoint(),
-                        point);
+                double angle = Geometrics.calculateAngle(getInitialPoint(), point);
 
                 if (Math.abs(getAngle() - angle) <= Constant.EPSILON) {
-                    double distance = Geometrics.calculateDistance(
-                            getInitialPoint(), point);
+                    double distance = Geometrics.calculateDistance(getInitialPoint(), point);
                     if (distance <= getLength() + Constant.EPSILON) {
                         contains = true;
                     }
@@ -176,17 +148,35 @@ public class Line extends Element implements Offsetable {
     /**
      * @return Return the angle between the line and the x-axis.
      */
-    public double getAngle () {
+    private double getAngle () {
 
-        return Geometrics.calculateAngle(initialPoint.getX(), initialPoint
-                .getY(), endingPoint.getX(), endingPoint.getY());
+        return Geometrics.calculateAngle(initialPoint.getX(), initialPoint.getY(), endingPoint
+                .getX(), endingPoint.getY());
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see com.tarantulus.archimedes.model.Element#clone()
+     */
+    public Element clone () {
+
+        Line clone = null;
+        try {
+            clone = new Line(initialPoint, endingPoint);
+            clone.setLayer(parentLayer);
+        }
+        catch (Exception e) {
+            // Should never happen
+            e.printStackTrace();
+        }
+        return clone;
     }
 
     /**
      * @param distance
      *            The distance where the line should be copied to
-     * @return A copied line that is parallel to this one but passes by a point
-     *         that is orthogonally distant of "distance" from the initial point
+     * @return A copied line that is parallel to this one but passes by a point that is orthogonally
+     *         distant of "distance" from the initial point
      */
     public Line cloneWithDistance (double distance) {
 
@@ -205,20 +195,35 @@ public class Line extends Element implements Offsetable {
     /**
      * @param point
      *            The point to be checked
-     * @return false if the determinant between the initial, the ending and the
-     *         point is negative, true otherwise.<BR>
-     *         Assuming you are heading from the initial to the ending point,
-     *         false if the point is at your right, true otherwise.
+     * @return false if the determinant between the initial, the ending and the point is negative,
+     *         true otherwise.<BR>
+     *         Assuming you are heading from the initial to the ending point, false if the point is
+     *         at your right, true otherwise.
      * @throws NullArgumentException
      *             Thrown if the point is null
      */
-    public boolean isPositiveDirection (Point point)
-            throws NullArgumentException {
+    public boolean isPositiveDirection (Point point) throws NullArgumentException {
 
-        double determinant = Geometrics.calculateDeterminant(getInitialPoint(),
-                getEndingPoint(), point);
+        double determinant = Geometrics.calculateDeterminant(getInitialPoint(), getEndingPoint(),
+                point);
 
         return (determinant >= 0);
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see com.tarantulus.archimedes.model.Element#equals(com.tarantulus.archimedes.model.Element)
+     */
+    public boolean equals (Object object) {
+
+        boolean equals = false;
+        try {
+            equals = this.equals((Line) object);
+        }
+        catch (ClassCastException e) {
+            // It's not equal.
+        }
+        return equals;
     }
 
     /**
@@ -228,73 +233,48 @@ public class Line extends Element implements Offsetable {
      */
     public boolean equals (Line line) {
 
-        boolean equals = false;
-        equals = (Math.abs(line.getInitialPoint().getX()
-                - this.getInitialPoint().getX()) <= Constant.EPSILON)
-                && (Math.abs(line.getInitialPoint().getY()
-                        - this.getInitialPoint().getY()) <= Constant.EPSILON)
-                && (Math.abs(line.getEndingPoint().getX()
-                        - this.getEndingPoint().getX()) <= Constant.EPSILON)
-                && (Math.abs(line.getEndingPoint().getY()
-                        - this.getEndingPoint().getY()) <= Constant.EPSILON);
-
-        if ( !equals) {
-            equals = (Math.abs(line.getInitialPoint().getX()
-                    - this.getEndingPoint().getX()) <= Constant.EPSILON)
-                    && (Math.abs(line.getInitialPoint().getY()
-                            - this.getEndingPoint().getY()) <= Constant.EPSILON)
-                    && (Math.abs(line.getEndingPoint().getX()
-                            - this.getInitialPoint().getX()) <= Constant.EPSILON)
-                    && (Math.abs(line.getEndingPoint().getY()
-                            - this.getInitialPoint().getY()) <= Constant.EPSILON);
+        if (line == null) {
+            return false;
         }
 
-        return equals;
+        return pointsMatch(line.getInitialPoint(), line.getEndingPoint())
+                || pointsMatch(line.getEndingPoint(), line.getInitialPoint());
+    }
+
+    /**
+     * @param initial
+     *            Point to match with my initial point
+     * @param ending
+     *            Point to match with my ending point
+     * @return true if the initial point matches my initial and the ending matches my ending, false
+     *         otherwise
+     */
+    private boolean pointsMatch (Point initial, Point ending) {
+
+        return getInitialPoint().equals(initial) && getEndingPoint().equals(ending);
     }
 
     /**
      * @return The length of the line
      */
-    public double getLength () {
+    private double getLength () {
 
-        return Geometrics.calculateDistance(initialPoint.getX(), initialPoint
-                .getY(), endingPoint.getX(), endingPoint.getY());
+        return Geometrics.calculateDistance(initialPoint.getX(), initialPoint.getY(), endingPoint
+                .getX(), endingPoint.getY());
     }
 
     /*
      * (non-Javadoc)
-     * 
-     * @see com.tarantulus.archimedes.model.Element#clone()
-     */
-    public Element clone () {
-
-        Line clone = null;
-        try {
-            clone = new Line(initialPoint, endingPoint);
-            clone.setLayer(parentLayer);
-        }
-        catch (Exception e) {
-            // Should never happen
-            e.printStackTrace();
-        }
-        return clone;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.tarantulus.archimedes.model.Element#isInside(com.tarantulus.archimedes.model.Rectangle)
+     * @see br.org.archimedes.model.Element#isInside(br.org.archimedes.model.Rectangle)
      */
     public boolean isInside (Rectangle rectangle) {
 
-        return getInitialPoint().isInside(rectangle)
-                && getEndingPoint().isInside(rectangle);
+        return getInitialPoint().isInside(rectangle) && getEndingPoint().isInside(rectangle);
     }
 
     /*
      * (non-Javadoc)
-     * 
-     * @see com.tarantulus.archimedes.model.Element#move(double, double)
+     * @see br.org.archimedes.model.Element#move(double, double)
      */
     public void move (double deltaX, double deltaY) {
 
@@ -304,40 +284,10 @@ public class Line extends Element implements Offsetable {
         getEndingPoint().setY(getEndingPoint().getY() + deltaY);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.tarantulus.archimedes.model.Element#equals(com.tarantulus.archimedes.model.Element)
-     */
-    public boolean equals (Object object) {
-
-        boolean equals = false;
-        try {
-            equals = ((Line) object).equals(this);
-        }
-        catch (ClassCastException e) {
-            // It's not equal.
-        }
-        return equals;
-    }
-
     public Rectangle getBoundaryRectangle () {
 
-        return new Rectangle(getInitialPoint().getX(),
-                getInitialPoint().getY(), getEndingPoint().getX(),
-                getEndingPoint().getY());
-    }
-
-    /**
-     * @return the extreme points of the line.
-     */
-    public Collection<Point> getExtremePoints () {
-
-        Collection<Point> extremePoints = new ArrayList<Point>();
-        extremePoints.add(getInitialPoint());
-        extremePoints.add(getEndingPoint());
-
-        return extremePoints;
+        return new Rectangle(getInitialPoint().getX(), getInitialPoint().getY(), getEndingPoint()
+                .getX(), getEndingPoint().getY());
     }
 
     /**
@@ -345,7 +295,7 @@ public class Line extends Element implements Offsetable {
      */
     private Point getCentralPoint () {
 
-        Collection<Point> points = getExtremePoints();
+        Collection<Point> points = getPoints();
         Point point = null;
 
         try {
@@ -370,15 +320,16 @@ public class Line extends Element implements Offsetable {
 
     /*
      * (non-Javadoc)
-     * 
-     * @see com.tarantulus.archimedes.model.Element#getProjectionOf(com.tarantulus.archimedes.model.Point)
+     * @see
+     * com.tarantulus.archimedes.model.Element#getProjectionOf(com.tarantulus.archimedes.model.Point
+     * )
      */
     public Point getProjectionOf (Point point) throws NullArgumentException {
 
-        if(point == null) {
+        if (point == null) {
             throw new NullArgumentException();
         }
-        
+
         Vector direction = new Vector(initialPoint, endingPoint);
         Vector distance = new Vector(initialPoint, point);
         direction = direction.multiply(1.0 / direction.getNorm());
@@ -393,8 +344,9 @@ public class Line extends Element implements Offsetable {
 
     /*
      * (non-Javadoc)
-     * 
-     * @see com.tarantulus.archimedes.model.Element#getReferencePoints(com.tarantulus.archimedes.model.Rectangle)
+     * @see
+     * com.tarantulus.archimedes.model.Element#getReferencePoints(com.tarantulus.archimedes.model
+     * .Rectangle)
      */
     public Collection<ReferencePoint> getReferencePoints (Rectangle area) {
 
@@ -436,7 +388,6 @@ public class Line extends Element implements Offsetable {
 
     /*
      * (non-Javadoc)
-     * 
      * @see com.tarantulus.archimedes.model.elements.Element#getPoints()
      */
     public @Override
@@ -450,46 +401,6 @@ public class Line extends Element implements Offsetable {
 
     /*
      * (non-Javadoc)
-     * 
-     * @see com.tarantulus.archimedes.model.FilletableElement#getFilletSegment(com.tarantulus.archimedes.model.Point,
-     *      com.tarantulus.archimedes.model.Point)
-     */
-    public Line getFilletSegment (Point intersection, Point click) {
-
-        Line segment = null;
-
-        try {
-            double determinant = Geometrics.calculateDeterminant(initialPoint,
-                    endingPoint, intersection);
-            if (Math.abs(determinant) < Constant.EPSILON) {
-                double distToInitial = Geometrics.calculateDistance(
-                        initialPoint, intersection);
-                double distToEnding = Geometrics.calculateDistance(endingPoint,
-                        intersection);
-
-                Point extremePoint = endingPoint;
-                if (distToInitial < distToEnding) {
-                    extremePoint = initialPoint;
-                }
-
-                segment = new Line(extremePoint, intersection);
-            }
-        }
-        catch (NullArgumentException e) {
-            // Should never happen
-            e.printStackTrace();
-        }
-        catch (InvalidArgumentException e) {
-            // Should never happen
-            e.printStackTrace();
-        }
-
-        return segment;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
      * @see br.org.archimedes.model.Element#draw(br.org.archimedes.gui.opengl.OpenGLWrapper)
      */
     @Override

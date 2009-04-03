@@ -11,10 +11,8 @@
  * This file was created on 2006/03/23, 10:09:12, by Cristiane M. Sato.<br>
  * It is part of package br.org.archimedes.line on the br.org.archimedes.line.tests project.<br>
  */
-package br.org.archimedes.line;
 
-import org.junit.Assert;
-import org.junit.Test;
+package br.org.archimedes.line;
 
 import br.org.archimedes.Constant;
 import br.org.archimedes.Tester;
@@ -23,48 +21,42 @@ import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.model.Point;
 
+import org.junit.Assert;
+import org.junit.Test;
+
 /**
  * Belongs to package br.org.archimedes.line.
  * 
- * @author cris e oshiro
+ * @author Cristiane M. Sato and Marcio Oshiro
  */
 public class LineTest extends Tester {
 
     Line line;
 
 
-    /**
-     * Test the creation of a line, given two points.
-     */
     @Test
-    public void testCreateLine () {
+    public void canCreateALineFrom4Coordinates () {
 
         /* simple cases */
 
-        testLineCase(0, 1, 2, 3);
-        testLineCase(0, 1, -1, 0);
+        testLineCreation(0, 1, 2, 3);
+        testLineCreation(0, 1, -1, 0);
 
         /* oblique cases */
 
-        testLineCase(0, 2, 4, 5);
-        testLineCase(0, 2, 4, 3);
-        testLineCase(0, 2, 4, 1);
-        testLineCase(0, 2, 4, -1);
+        testLineCreation(0, 2, 4, 5);
+        testLineCreation(0, 2, 4, 3);
+        testLineCreation(0, 2, 4, 1);
+        testLineCreation(0, 2, 4, -1);
 
         /* horizontal lines */
 
-        testLineCase(0, 0, 5, 0);
-        testLineCase(0, 1, 5, 1);
+        testLineCreation(0, 0, 5, 0);
+        testLineCreation(0, 1, 5, 1);
 
         /* vertical lines */
-
-        testLineCase(0, 0, 0, 4);
-        testLineCase(1, 2, 1, 4);
-
-        /* the line is just a point */
-
-        // TODO Teste invalido. Testar que falha.
-        // testLineCase(0, 0, 0, 0);
+        testLineCreation(0, 0, 0, 4);
+        testLineCreation(1, 2, 1, 4);
     }
 
     /**
@@ -79,7 +71,7 @@ public class LineTest extends Tester {
      * @param y2
      *            the y coordinate of the second point
      */
-    private void testLineCase (double x1, double y1, double x2, double y2) {
+    private void testLineCreation (double x1, double y1, double x2, double y2) {
 
         line = createSafeLine(x1, y1, x2, y2);
 
@@ -87,31 +79,82 @@ public class LineTest extends Tester {
 
         Point firstPoint = line.getInitialPoint();
 
-        Assert.assertEquals("The x coordinate of the first point is wrong!",
-                firstPoint.getX(), x1);
-        Assert.assertEquals("The y coordinate of the first point is wrong!",
-                firstPoint.getY(), y1);
+        Assert.assertEquals("The x coordinate of the first point is wrong!", firstPoint.getX(), x1);
+        Assert.assertEquals("The y coordinate of the first point is wrong!", firstPoint.getY(), y1);
 
         Point secondPoint = line.getEndingPoint();
 
-        Assert.assertEquals("The x coordinate of the second point is wrong!",
-                secondPoint.getX(), x2);
-        Assert.assertEquals("The y coordinate of the second point is wrong!",
-                secondPoint.getY(), y2);
+        Assert.assertEquals("The x coordinate of the second point is wrong!", secondPoint.getX(),
+                x2);
+        Assert.assertEquals("The y coordinate of the second point is wrong!", secondPoint.getY(),
+                y2);
+    }
 
+    @Test(expected = InvalidArgumentException.class)
+    public void cantCreateALineFromEqualPointsPassingCoordinates () throws Exception {
+
+        new Line(0, 0, 0, 0);
+    }
+
+    @Test(expected = NullArgumentException.class)
+    public void cantCreateALineFromPassingBothNullPoints () throws Exception {
+
+        new Line(null, null);
+    }
+
+    @Test(expected = NullArgumentException.class)
+    public void cantCreateALineFromPassingTheFirstPointNull () throws Exception {
+
+        new Line(null, new Point(0, 0));
+    }
+
+    @Test(expected = NullArgumentException.class)
+    public void cantCreateALineFromPassingTheSecondPointNull () throws Exception {
+
+        new Line(new Point(0, 0), null);
+    }
+
+    @Test(expected = InvalidArgumentException.class)
+    public void cantCreateALineFromEqualPointsPassingPoints () throws Exception {
+
+        new Line(new Point(0, 0), new Point(0, 0));
+    }
+
+    // TODO Test creation of line from Point,Point constructor
+
+    // TODO Test a line contains the points in it and not others
+
+    // TODO Test cloning a line makes an equal line with
+
+    @Test
+    public void lineContainsPointsBetweenItsInitialAndEndingPoints () throws Exception {
+
+        testContainsPointsButNotOutside(1, 1, 5, 5);
+        testContainsPointsButNotOutside(0, 1, 0, 5);
+        testContainsPointsButNotOutside(1, 0, 5, 0);
+    }
+
+    /**
+     * @param x1
+     *            X coordinate of point 1
+     * @param y1
+     *            Y coordinate of point 1
+     * @param x2
+     *            X coordinate of point 2
+     * @param y2
+     *            Y coordinate of point 2
+     */
+    private void testContainsPointsButNotOutside (int x1, int y1, int x2, int y2) {
+
+        line = createSafeLine(x1, y1, x2, y2);
         testContains(x1, y1);
-
         testContains(x2, y2);
-
         testContains((x1 + x2) / 2, (y1 + y2) / 2); // mid point
 
         if ( !(Math.abs(x2 - x1) <= Constant.EPSILON && Math.abs(y2 - y1) <= Constant.EPSILON)) {
             testNotContains(2 * x1 - x2, 2 * y1 - y2); // outside of bounders
-
             testNotContains(2 * x2 - x1, 2 * y2 - y1); // outside of bounders
-
             testNotContains(x1 + (y1 - y2), y1 + (x2 - x1));
-
             testNotContains(x1 - (y1 - y2), y1 - (x2 - x1));
         }
         else {
@@ -137,8 +180,8 @@ public class LineTest extends Tester {
         Point point = new Point(x, y);
 
         try {
-            Assert.assertTrue("The point " + point.toString()
-                    + "does not belong to the line", line.contains(point));
+            Assert.assertTrue("The point " + point.toString() + "does not belong to the line", line
+                    .contains(point));
         }
         catch (NullArgumentException e) {
             Assert.fail();
@@ -156,8 +199,8 @@ public class LineTest extends Tester {
         Point point = new Point(x, y);
 
         try {
-            Assert.assertFalse("The point " + point.toString()
-                    + " belongs to the line", line.contains(point));
+            Assert.assertFalse("The point " + point.toString() + " belongs to the line", line
+                    .contains(point));
         }
         catch (NullArgumentException e) {
             Assert.fail();
@@ -165,121 +208,65 @@ public class LineTest extends Tester {
     }
 
     @Test
-    public void testCopy () {
+    public void clonesWithDistanceMakingParallelLineToCorrectSideAndDistance () {
 
         /* horizontal line */
         line = createSafeLine(0.0, 0.0, 1.0, 0.0);
         Line expected = createSafeLine(0.0, 0.5, 1.0, 0.5);
         Line copyLine = (Line) line.cloneWithDistance(0.5);
-        Assert
-                .assertEquals("The lines should be the same.", expected,
-                        copyLine);
+        Assert.assertEquals("The lines should be the same.", expected, copyLine);
 
         expected = createSafeLine(0.0, -0.5, 1.0, -0.5);
         copyLine = (Line) line.cloneWithDistance( -0.5);
-        Assert
-                .assertEquals("The lines should be the same.", expected,
-                        copyLine);
+        Assert.assertEquals("The lines should be the same.", expected, copyLine);
 
         /* vertical line */
         line = createSafeLine(0.0, 0.0, 0.0, 1.0);
         expected = createSafeLine( -0.5, 0.0, -0.5, 1.0);
         copyLine = (Line) line.cloneWithDistance(0.5);
-        Assert
-                .assertEquals("The lines should be the same.", expected,
-                        copyLine);
+        Assert.assertEquals("The lines should be the same.", expected, copyLine);
 
         expected = createSafeLine(0.5, 0.0, 0.5, 1.0);
         copyLine = (Line) line.cloneWithDistance( -0.5);
-        Assert
-                .assertEquals("The lines should be the same.", expected,
-                        copyLine);
+        Assert.assertEquals("The lines should be the same.", expected, copyLine);
 
         /* oblique line */
         line = createSafeLine(0.0, 0.0, 1.0, 1.0);
-        double sqr2 = Math.sqrt(2);
-        Point initialPoint = new Point( -0.5 / sqr2, 0.5 / sqr2);
-        expected = createSafeLine(initialPoint, line.getLength(), line
-                .getAngle());
+        double movement = 0.5 / Math.sqrt(2);
+        expected = createSafeLine( -movement, movement, 1 - movement, 1 + movement);
         copyLine = (Line) line.cloneWithDistance(0.5);
-        Assert
-                .assertEquals("The lines should be the same.", expected,
-                        copyLine);
+        Assert.assertEquals("The lines should be the same.", expected, copyLine);
 
-        initialPoint = new Point(0.5 / sqr2, -0.5 / sqr2);
-        expected = createSafeLine(initialPoint, line.getLength(), line
-                .getAngle());
+        expected = createSafeLine(movement, -movement, 1 + movement, 1 - movement);
         copyLine = (Line) line.cloneWithDistance( -0.5);
-        Assert
-                .assertEquals("The lines should be the same.", expected,
-                        copyLine);
+        Assert.assertEquals("The lines should be the same.", expected, copyLine);
 
         line = createSafeLine(0.0, 0.0, -1.0, 1.0);
-        initialPoint = new Point( -0.5 / sqr2, -0.5 / sqr2);
-        expected = createSafeLine(initialPoint, line.getLength(), line
-                .getAngle());
+        expected = createSafeLine( -movement, -movement, -1 - movement, 1 - movement);
         copyLine = (Line) line.cloneWithDistance(0.5);
-        Assert.assertEquals("The lines should be aproximately the same.",
-                expected, copyLine);
+        Assert.assertEquals("The lines should be aproximately the same.", expected, copyLine);
 
-        initialPoint = new Point(0.5 / sqr2, 0.5 / sqr2);
-        expected = createSafeLine(initialPoint, line.getLength(), line
-                .getAngle());
+        expected = createSafeLine(movement, movement, -1 + movement, 1 + movement);
         copyLine = (Line) line.cloneWithDistance( -0.5);
-        Assert.assertEquals("The lines should be aproximately the same.",
-                expected, copyLine);
+        Assert.assertEquals("The lines should be aproximately the same.", expected, copyLine);
 
         line = createSafeLine(0.0, 0.0, -1.0, -1.0);
-        initialPoint = new Point(0.5 / sqr2, -0.5 / sqr2);
-        expected = createSafeLine(initialPoint, line.getLength(), line
-                .getAngle());
+        expected = createSafeLine(movement, -movement, -1 + movement, -1 - movement);
         copyLine = (Line) line.cloneWithDistance(0.5);
-        Assert.assertEquals("The lines should be aproximately the same.",
-                expected, copyLine);
+        Assert.assertEquals("The lines should be aproximately the same.", expected, copyLine);
 
-        initialPoint = new Point( -0.5 / sqr2, 0.5 / sqr2);
-        expected = createSafeLine(initialPoint, line.getLength(), line
-                .getAngle());
+        expected = createSafeLine( -movement, movement, -1 - movement, -1 + movement);
         copyLine = (Line) line.cloneWithDistance( -0.5);
-        Assert.assertEquals("The lines should be aproximately the same.",
-                expected, copyLine);
+        Assert.assertEquals("The lines should be aproximately the same.", expected, copyLine);
 
         line = createSafeLine(0.0, 0.0, 1.0, -1.0);
-        initialPoint = new Point(0.5 / sqr2, 0.5 / sqr2);
-        expected = createSafeLine(initialPoint, line.getLength(), line
-                .getAngle());
+        expected = createSafeLine( movement, movement, 1 + movement, -1 + movement);
         copyLine = (Line) line.cloneWithDistance(0.5);
-        Assert.assertEquals("The lines should be aproximately the same.",
-                expected, copyLine);
+        Assert.assertEquals("The lines should be aproximately the same.", expected, copyLine);
 
-        initialPoint = new Point( -0.5 / sqr2, -0.5 / sqr2);
-        expected = createSafeLine(initialPoint, line.getLength(), line
-                .getAngle());
+        expected = createSafeLine( -movement, -movement, 1 - movement, -1 - movement);
         copyLine = (Line) line.cloneWithDistance( -0.5);
-        Assert.assertEquals("The lines should be aproximately the same.",
-                expected, copyLine);
-    }
-
-    /**
-     * @param initialPoint
-     *            The initial point
-     * @param length
-     *            The length of the line
-     * @param angle
-     *            The angle relative to the X axis
-     * @return The corresponding line
-     */
-    private Line createSafeLine (Point initialPoint, double length, double angle) {
-
-        Line result = null;
-        try {
-            result = new Line(initialPoint, length, angle);
-        }
-        catch (NullArgumentException e) {
-            Assert
-                    .fail("Should not throw a NullArgumentException creating this line.");
-        }
-        return result;
+        Assert.assertEquals("The lines should be aproximately the same.", expected, copyLine);
     }
 
     @Test
@@ -288,57 +275,45 @@ public class LineTest extends Tester {
         /* horizontal line */
         line = createSafeLine(0.0, 0.0, 1.0, 0.0);
         Point point = new Point(0.0, 1.0);
-        Assert.assertTrue("The point should be at the left of the line",
-                getDirection(point));
+        Assert.assertTrue("The point should be at the left of the line", getDirection(point));
 
         point = new Point(0.0, -1.0);
-        Assert.assertFalse("The point should be at the right of the line",
-                getDirection(point));
+        Assert.assertFalse("The point should be at the right of the line", getDirection(point));
 
         point = new Point(0.5, 0.0);
-        Assert.assertTrue("The point should be at the left of the line",
-                getDirection(point));
+        Assert.assertTrue("The point should be at the left of the line", getDirection(point));
 
         /* vertical line */
         line = createSafeLine(0.0, 0.0, 0.0, 1.0);
         point = new Point( -1.0, 0.0);
-        Assert.assertTrue("The point should be at the left of the line",
-                getDirection(point));
+        Assert.assertTrue("The point should be at the left of the line", getDirection(point));
 
         point = new Point(1.0, 0.0);
-        Assert.assertFalse("The point should be at the right of the line",
-                getDirection(point));
+        Assert.assertFalse("The point should be at the right of the line", getDirection(point));
 
         point = new Point(0.0, 0.5);
-        Assert.assertTrue("The point should be at the left of the line",
-                getDirection(point));
+        Assert.assertTrue("The point should be at the left of the line", getDirection(point));
 
         /* oblique line */
         line = createSafeLine(0.0, 0.0, 1.0, 1.0);
         point = new Point(0.0, 1.0);
-        Assert.assertTrue("The point should be at the left of the line",
-                getDirection(point));
+        Assert.assertTrue("The point should be at the left of the line", getDirection(point));
 
         point = new Point(1.0, 0.0);
-        Assert.assertFalse("The point should be at the right of the line",
-                getDirection(point));
+        Assert.assertFalse("The point should be at the right of the line", getDirection(point));
 
         point = new Point(0.5, 0.5);
-        Assert.assertTrue("The point should be at the left of the line",
-                getDirection(point));
+        Assert.assertTrue("The point should be at the left of the line", getDirection(point));
 
         line = createSafeLine(0.0, 0.0, -1.0, 1.0);
         point = new Point(0.0, 1.0);
-        Assert.assertFalse("The point should be at the right of the line",
-                getDirection(point));
+        Assert.assertFalse("The point should be at the right of the line", getDirection(point));
 
         point = new Point( -1.0, 0.0);
-        Assert.assertTrue("The point should be at the left of the line",
-                getDirection(point));
+        Assert.assertTrue("The point should be at the left of the line", getDirection(point));
 
         point = new Point( -0.5, 0.5);
-        Assert.assertTrue("The point should be at the left of the line",
-                getDirection(point));
+        Assert.assertTrue("The point should be at the left of the line", getDirection(point));
     }
 
     /**
@@ -366,12 +341,20 @@ public class LineTest extends Tester {
         Line line3 = createSafeLine(2.4, 2.4, 1.5, 1.5);
         Line line4 = createSafeLine(1.55, 1.55, 2.4, 2.4);
 
+        Assert.assertFalse("These lines should be equal.", line1.equals(null));
+        Assert.assertFalse("These lines should be equal.", line1.equals(new Object()));
+        Assert.assertTrue("These lines should be equal.", line1.equals(line1));
         Assert.assertTrue("These lines should be equal.", line1.equals(line2));
         Assert.assertTrue("These lines should be equal.", line1.equals(line3));
-        Assert.assertFalse("These lines should not be equal.", line1
-                .equals(line4));
+        Assert.assertFalse("These lines should not be equal.", line1.equals(line4));
     }
-
+    
+    // TODO Test a line can tell if it is inside a rectangle
+    
+    // TODO Test a line can be moved correctly
+    
+    // TODO Test a line knows its boundary rectangle
+    
     @Test
     public void testProjection () {
 
@@ -444,7 +427,7 @@ public class LineTest extends Tester {
             Assert.fail("Should not reach this point");
         }
         catch (NullArgumentException e) {
-            // This is excpected behavior
+            // This is expected behavior
         }
     }
 
@@ -468,7 +451,13 @@ public class LineTest extends Tester {
         }
         return projection;
     }
-
+    
+    // TODO Test a line is its own segment
+    
+    // TODO Test the reference points of a line only consider the points withint the rectangle
+    
+    // TODO Test the points of a line are the initial and ending
+    
     @Test
     public void testRotate () {
 
@@ -511,24 +500,23 @@ public class LineTest extends Tester {
 
     /**
      * @param x1
-     * @param x2
+     *            X coordinate of point 1
      * @param y1
+     *            Y coordinate of point 1
+     * @param x2
+     *            X coordinate of point 2
      * @param y2
+     *            Y coordinate of point 2
      * @return The corresponding line
      */
-    private Line createSafeLine (double i, double j, double k, double l) {
+    private Line createSafeLine (double x1, double y1, double x2, double y2) {
 
         Line result = null;
         try {
-            result = new Line(new Point(i, j), new Point(k, l));
-        }
-        catch (NullArgumentException e) {
-            Assert
-                    .fail("Should not thrown a NullArgumentException creating a line.");
+            result = new Line(x1, y1, x2, y2);
         }
         catch (InvalidArgumentException e) {
-            Assert
-                    .fail("Should not thrown an InvalidArgumentException creating a line.");
+            Assert.fail("Should not thrown an InvalidArgumentException creating a line.");
         }
         return result;
     }

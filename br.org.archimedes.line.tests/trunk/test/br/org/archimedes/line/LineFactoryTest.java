@@ -13,18 +13,18 @@
  */
 package br.org.archimedes.line;
 
-import org.junit.Before;
-import org.junit.Test;
-
 import br.org.archimedes.factories.CommandFactory;
 import br.org.archimedes.helper.FactoryTester;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Vector;
 
+import org.junit.Before;
+import org.junit.Test;
+
 /**
  * Belongs to package com.tarantulus.archimedes.tests.commands.
  * 
- * @author marivb
+ * @author Mariana V. Bravo
  */
 public class LineFactoryTest extends FactoryTester {
 
@@ -108,4 +108,6 @@ public class LineFactoryTest extends FactoryTester {
         assertSafeNext(factory, vector2, false, true);
         assertSafeNext(factory, null, true, false);
     }
+    
+    // TODO Test undoing on the factory
 }
