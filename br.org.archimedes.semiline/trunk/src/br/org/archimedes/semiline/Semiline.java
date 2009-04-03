@@ -7,11 +7,13 @@
  * Contributors:<br>
  * Hugo Corbucci - initial API and implementation<br>
  * Bruno Klava and Luiz Real - changed behavior of its boundary rectangle<br>
- * Ricardo Sider and Luiz Real - reverted the behavior of its boundary rectangle and corrected getPointsCrossing method<br>
+ * Ricardo Sider and Luiz Real - reverted the behavior of its boundary rectangle and corrected
+ * getPointsCrossing method<br>
  * <br>
  * This file was created on 2009/01/10, 11:16:48, by Hugo Corbucci.<br>
  * It is part of package br.org.archimedes.semiline on the br.org.archimedes.semiline project.<br>
  */
+
 package br.org.archimedes.semiline;
 
 import br.org.archimedes.Constant;
@@ -44,8 +46,7 @@ public class Semiline extends Element implements Offsetable {
     private Layer parentLayer;
 
 
-    public Semiline (double x1, double y1, double x2, double y2)
-            throws InvalidArgumentException {
+    public Semiline (double x1, double y1, double x2, double y2) throws InvalidArgumentException {
 
         initialPoint = new Point(x1, y1);
         directionPoint = new Point(x2, y2);
@@ -55,8 +56,8 @@ public class Semiline extends Element implements Offsetable {
         }
     }
 
-    public Semiline (Point initialPoint, Point directionPoint)
-            throws NullArgumentException, InvalidArgumentException {
+    public Semiline (Point initialPoint, Point directionPoint) throws NullArgumentException,
+            InvalidArgumentException {
 
         if (initialPoint == null || directionPoint == null) {
             throw new NullArgumentException();
@@ -114,8 +115,7 @@ public class Semiline extends Element implements Offsetable {
             contain = false;
         }
 
-        double determinant = Geometrics.calculateDeterminant(initialPoint,
-                directionPoint, point);
+        double determinant = Geometrics.calculateDeterminant(initialPoint, directionPoint, point);
         if (Math.abs(determinant) > Constant.EPSILON) {
             contain = false;
         }
@@ -130,8 +130,8 @@ public class Semiline extends Element implements Offsetable {
      */
     private double getAngle () {
 
-        return Geometrics.calculateAngle(initialPoint.getX(), initialPoint
-                .getY(), directionPoint.getX(), directionPoint.getY());
+        return Geometrics.calculateAngle(initialPoint.getX(), initialPoint.getY(), directionPoint
+                .getX(), directionPoint.getY());
     }
 
     public void move (double deltaX, double deltaY) {
@@ -141,25 +141,51 @@ public class Semiline extends Element implements Offsetable {
         directionPoint.setX(directionPoint.getX() + deltaX);
         directionPoint.setY(directionPoint.getY() + deltaY);
     }
+    
+    /*
+     * (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode () {
+
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + this.getInitialPoint().hashCode();
+        result = prime * result + Double.valueOf(this.getAngle()).hashCode();
+        return result;
+    }
 
     public boolean equals (Object object) {
 
         boolean equal = false;
 
-        if (object != null && object.getClass() == this.getClass()) {
-            Semiline sl = (Semiline) object;
-            equal = sl.getInitialPoint().equals(this.getInitialPoint());
-            double myAngle = this.getAngle();
-            double hisAngle = sl.getAngle();
-            equal = equal && (Math.abs(hisAngle - myAngle) <= Constant.EPSILON);
+        if (object instanceof Semiline) {
+            equal = equal((Semiline) object);
         }
 
         return equal;
     }
 
     /**
-     * @return The initial point of the semi line - that is, the point it
-     *         starts.
+     * @param sl
+     *            The semiline to compare to
+     * @return true if this semiline has the same starting point and angle
+     */
+    private boolean equal (Semiline sl) {
+
+        if (sl == null)
+            return false;
+
+        boolean equal = sl.getInitialPoint().equals(this.getInitialPoint());
+        double myAngle = this.getAngle();
+        double hisAngle = sl.getAngle();
+        equal = equal && (Math.abs(hisAngle - myAngle) <= Constant.EPSILON);
+        return equal;
+    }
+
+    /**
+     * @return The initial point of the semi line - that is, the point it starts.
      */
     public Point getInitialPoint () {
 
@@ -167,8 +193,8 @@ public class Semiline extends Element implements Offsetable {
     }
 
     /**
-     * @return The direction point of the semi line - that is, the point that
-     *         defines that semi line direction relative to the initial point
+     * @return The direction point of the semi line - that is, the point that defines that semi line
+     *         direction relative to the initial point
      */
     public Point getDirectionPoint () {
 
@@ -176,21 +202,21 @@ public class Semiline extends Element implements Offsetable {
     }
 
     public Rectangle getBoundaryRectangle () {
-    	return null;
+
+        return null;
     }
 
     /**
      * @param point
      *            The point to be checked
-     * @return false if the determinant between the initial, the ending and the
-     *         point is negative, true otherwise.<BR>
-     *         Assuming you are heading from the initial to the ending point,
-     *         false if the point is at your right, true otherwise.
+     * @return false if the determinant between the initial, the ending and the point is negative,
+     *         true otherwise.<BR>
+     *         Assuming you are heading from the initial to the ending point, false if the point is
+     *         at your right, true otherwise.
      * @throws NullArgumentException
      *             Thrown if the point is null
      */
-    public boolean isPositiveDirection (Point point)
-            throws NullArgumentException {
+    public boolean isPositiveDirection (Point point) throws NullArgumentException {
 
         boolean isPositive = false;
         Line line = null;
@@ -214,8 +240,8 @@ public class Semiline extends Element implements Offsetable {
         try {
             referenceLine = new Line(initialPoint, directionPoint);
             copiedReference = (Line) referenceLine.cloneWithDistance(distance);
-            copied = new Semiline(copiedReference.getInitialPoint(),
-                    copiedReference.getEndingPoint());
+            copied = new Semiline(copiedReference.getInitialPoint(), copiedReference
+                    .getEndingPoint());
             copied.setLayer(parentLayer);
         }
         catch (Exception e) {
@@ -228,8 +254,7 @@ public class Semiline extends Element implements Offsetable {
 
     /*
      * (non-Javadoc)
-     * @see
-     * com.tarantulus.archimedes.model.Element#getProjectionOf(com.tarantulus
+     * @see com.tarantulus.archimedes.model.Element#getProjectionOf(com.tarantulus
      * .archimedes.model.Point)
      */
     public Point getProjectionOf (Point point) throws NullArgumentException {
@@ -249,14 +274,13 @@ public class Semiline extends Element implements Offsetable {
 
     public String toString () {
 
-        return Messages.bind(Messages.Semiline_toString, initialPoint
-                .toString(), directionPoint.toString());
+        return Messages.bind(Messages.Semiline_toString, initialPoint.toString(), directionPoint
+                .toString());
     }
 
     /*
      * (non-Javadoc)
-     * @see
-     * com.tarantulus.archimedes.model.Element#getReferencePoints(com.tarantulus
+     * @see com.tarantulus.archimedes.model.Element#getReferencePoints(com.tarantulus
      * .archimedes.model.Rectangle)
      */
     public Collection<ReferencePoint> getReferencePoints (Rectangle area) {
@@ -265,8 +289,7 @@ public class Semiline extends Element implements Offsetable {
 
         try {
             if (initialPoint.isInside(area)) {
-                references.add(new SquarePoint(initialPoint, initialPoint,
-                        directionPoint));
+                references.add(new SquarePoint(initialPoint, initialPoint, directionPoint));
             }
         }
         catch (NullArgumentException e) {
@@ -292,14 +315,12 @@ public class Semiline extends Element implements Offsetable {
 
     /*
      * (non-Javadoc)
-     * @seebr.org.archimedes.model.Element#draw(br.org.archimedes.gui.opengl.
-     * OpenGLWrapper)
+     * @seebr.org.archimedes.model.Element#draw(br.org.archimedes.gui.opengl. OpenGLWrapper)
      */
     @Override
     public void draw (OpenGLWrapper wrapper) {
 
-        Rectangle modelRect = br.org.archimedes.Utils.getWorkspace()
-                .getCurrentViewportArea();
+        Rectangle modelRect = br.org.archimedes.Utils.getWorkspace().getCurrentViewportArea();
 
         try {
             List<Point> pointsToDraw = getPointsCrossing(modelRect);
@@ -317,16 +338,14 @@ public class Semiline extends Element implements Offsetable {
     /**
      * @param rectangle
      *            The rectangle that we are looking to match to
-     * @return null if this semi line does not cross the rectangle, crosses it
-     *         on infinite points or crosses it on a corner. Otherwise it will
-     *         return two points that constitute the intersections of this
-     *         semiline with the rectangle or the starting point with an
+     * @return null if this semi line does not cross the rectangle, crosses it on infinite points or
+     *         crosses it on a corner. Otherwise it will return two points that constitute the
+     *         intersections of this semiline with the rectangle or the starting point with an
      *         intersection.
      * @throws NullArgumentException
      *             Thrown if the rectangle is null
      */
-    public List<Point> getPointsCrossing (Rectangle rectangle)
-            throws NullArgumentException {
+    public List<Point> getPointsCrossing (Rectangle rectangle) throws NullArgumentException {
 
         if (rectangle == null)
             throw new NullArgumentException();
@@ -337,17 +356,13 @@ public class Semiline extends Element implements Offsetable {
 
         Vector direction = new Vector(initialPoint, directionPoint);
         if (isVertical(direction)) {
-            firstSideInter = new Point(directionPoint.getX(), rectangle
-                    .getUpperLeft().getY());
-            otherSideInter = new Point(directionPoint.getX(), rectangle
-                    .getLowerLeft().getY());
+            firstSideInter = new Point(directionPoint.getX(), rectangle.getUpperLeft().getY());
+            otherSideInter = new Point(directionPoint.getX(), rectangle.getLowerLeft().getY());
             condition = goingUp(direction);
         }
         else if (isHorizontal(direction)) {
-            firstSideInter = new Point(rectangle.getLowerLeft().getX(),
-                    directionPoint.getY());
-            otherSideInter = new Point(rectangle.getLowerRight().getX(),
-                    directionPoint.getY());
+            firstSideInter = new Point(rectangle.getLowerLeft().getX(), directionPoint.getY());
+            otherSideInter = new Point(rectangle.getLowerRight().getX(), directionPoint.getY());
             condition = goingLeft(direction);
         }
         else { // biased line
@@ -357,14 +372,11 @@ public class Semiline extends Element implements Offsetable {
             Point lowerLeftModel = rectangle.getLowerLeft();
             Point upperRightModel = rectangle.getUpperRight();
 
-            Point lefterPoint = new Point(lowerLeftModel.getX(), (tan
-                    * lowerLeftModel.getX() + b));
-            Point righterPoint = new Point(upperRightModel.getX(), (tan
-                    * upperRightModel.getX() + b));
-            Point lowerPoint = new Point((lowerLeftModel.getY() - b) / tan,
-                    lowerLeftModel.getY());
-            Point upperPoint = new Point((upperRightModel.getY() - b) / tan,
-                    upperRightModel.getY());
+            Point lefterPoint = new Point(lowerLeftModel.getX(), (tan * lowerLeftModel.getX() + b));
+            Point righterPoint = new Point(upperRightModel.getX(),
+                    (tan * upperRightModel.getX() + b));
+            Point lowerPoint = new Point((lowerLeftModel.getY() - b) / tan, lowerLeftModel.getY());
+            Point upperPoint = new Point((upperRightModel.getY() - b) / tan, upperRightModel.getY());
 
             List<Point> points = new LinkedList<Point>();
             if (isWithinHorizontalBoundsAndContained(rectangle, lefterPoint)) {
@@ -391,8 +403,7 @@ public class Semiline extends Element implements Offsetable {
             condition = true;
         }
 
-        return ifTrueReturnsFirstAndCheckOther(condition, rectangle,
-                firstSideInter, otherSideInter);
+        return ifTrueReturnsFirstAndCheckOther(condition, rectangle, firstSideInter, otherSideInter);
     }
 
     /**
@@ -400,18 +411,15 @@ public class Semiline extends Element implements Offsetable {
      *            The rectangle that sets the vertical boundaries
      * @param point
      *            The point that should be checked
-     * @return true if and only if the point is not to the left the lefter
-     *         vertical boundary and not righter to the righter vertical
-     *         boundary and the point is on the same side of the intial point as
-     *         the direction one.
+     * @return true if and only if the point is not to the left the lefter vertical boundary and not
+     *         righter to the righter vertical boundary and the point is on the same side of the
+     *         intial point as the direction one.
      */
-    private boolean isWithinVerticalBoundsAndContained (Rectangle rectangle,
-            Point point) {
+    private boolean isWithinVerticalBoundsAndContained (Rectangle rectangle, Point point) {
 
         try {
             return point.getX() <= rectangle.getUpperRight().getX()
-                    && point.getX() >= rectangle.getUpperLeft().getX()
-                    && contains(point);
+                    && point.getX() >= rectangle.getUpperLeft().getX() && contains(point);
         }
         catch (NullArgumentException e) {
             // Should never happen since I created it
@@ -425,18 +433,15 @@ public class Semiline extends Element implements Offsetable {
      *            The rectangle that sets the horizontal boundaries
      * @param point
      *            The point that should be checked
-     * @return true if and only if the point is not below the lower horizontal
-     *         boundary and not above the upper horizontal boundary and the
-     *         point is on the same side of the intial point as the direction
-     *         one.
+     * @return true if and only if the point is not below the lower horizontal boundary and not
+     *         above the upper horizontal boundary and the point is on the same side of the intial
+     *         point as the direction one.
      */
-    private boolean isWithinHorizontalBoundsAndContained (Rectangle rectangle,
-            Point point) {
+    private boolean isWithinHorizontalBoundsAndContained (Rectangle rectangle, Point point) {
 
         try {
             return point.getY() <= rectangle.getUpperLeft().getY()
-                    && point.getY() >= rectangle.getLowerLeft().getY()
-                    && contains(point);
+                    && point.getY() >= rectangle.getLowerLeft().getY() && contains(point);
         }
         catch (NullArgumentException e) {
             // Should never happen since I created the point
@@ -447,21 +452,17 @@ public class Semiline extends Element implements Offsetable {
 
     /**
      * @param addFirst
-     *            true if the first point is always added, false if the second
-     *            is.
+     *            true if the first point is always added, false if the second is.
      * @param rectangle
-     *            The rectangle that will decide wether the other point should
-     *            be added or not
+     *            The rectangle that will decide wether the other point should be added or not
      * @param trueCasePoint
-     *            The point that should ALWAYS be added in case the argument is
-     *            true
+     *            The point that should ALWAYS be added in case the argument is true
      * @param falseCasePoint
-     *            The point that should ALWAYS be added in case the argument is
-     *            false
+     *            The point that should ALWAYS be added in case the argument is false
      * @return The points added that matched the condition
      */
-    private List<Point> ifTrueReturnsFirstAndCheckOther (boolean addFirst,
-            Rectangle rectangle, Point trueCasePoint, Point falseCasePoint) {
+    private List<Point> ifTrueReturnsFirstAndCheckOther (boolean addFirst, Rectangle rectangle,
+            Point trueCasePoint, Point falseCasePoint) {
 
         List<Point> points = new LinkedList<Point>();
         Point otherBound = null;
@@ -483,8 +484,7 @@ public class Semiline extends Element implements Offsetable {
     /**
      * @param direction
      *            The direction to be verified
-     * @return True if and only if adding this vector to a point decreases its x
-     *         coordinate
+     * @return True if and only if adding this vector to a point decreases its x coordinate
      */
     private boolean goingLeft (Vector direction) {
 
@@ -494,8 +494,7 @@ public class Semiline extends Element implements Offsetable {
     /**
      * @param direction
      *            The direction to be verified
-     * @return True if and only if adding this vector to a point increases its y
-     *         coordinate
+     * @return True if and only if adding this vector to a point increases its y coordinate
      */
     private boolean goingUp (Vector direction) {
 
