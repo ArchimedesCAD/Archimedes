@@ -23,6 +23,8 @@ import org.apache.batik.svggen.font.table.GlyphDescription;
  */
 public class MockFont extends Font {
 
+    // TODO Improve coverage of all intersection tests.
+    
     private int fontAdvanceWidth;
 
 
