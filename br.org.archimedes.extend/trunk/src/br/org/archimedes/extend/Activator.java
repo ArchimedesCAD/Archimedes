@@ -17,6 +17,7 @@ import org.osgi.framework.BundleContext;
 
 /**
  * The activator class controls the plug-in life cycle
+ * TODO Test the extend plugin
  */
 public class Activator extends AbstractUIPlugin {
 
