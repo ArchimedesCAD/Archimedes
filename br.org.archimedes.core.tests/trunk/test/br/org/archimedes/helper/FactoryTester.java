@@ -14,6 +14,7 @@
 
 package br.org.archimedes.helper;
 
+import br.org.archimedes.Constant;
 import br.org.archimedes.Tester;
 import br.org.archimedes.exceptions.InvalidParameterException;
 import br.org.archimedes.factories.CommandFactory;
@@ -31,6 +32,17 @@ import java.util.List;
  * @author marivb
  */
 public abstract class FactoryTester extends Tester {
+
+    /**
+     * Constructor.
+     */
+    public FactoryTester () {
+
+        // To load the correct font within the controller.
+        // This hack is needed since the singletons within Utils set an activator so the Constant
+        // cant find out it is a test.
+        Assert.assertNotNull(Constant.DEFAULT_FONT);
+    }
 
     /**
      * Asserts the factory begins properly. Fails if a message is not returned or if the finish

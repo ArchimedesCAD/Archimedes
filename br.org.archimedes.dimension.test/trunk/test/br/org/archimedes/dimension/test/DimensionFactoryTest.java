@@ -14,14 +14,12 @@
 
 package br.org.archimedes.dimension.test;
 
-import br.org.archimedes.Constant;
 import br.org.archimedes.dimension.DimensionFactory;
 import br.org.archimedes.helper.FactoryTester;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Vector;
 
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -49,12 +47,6 @@ public class DimensionFactoryTest extends FactoryTester {
     @Before
     @Override
     public void setUp () throws Exception {
-
-        // To load the correct font within the controller.
-        // This hack is needed since the singletons within Utils set an activator so the Constant
-        // cant find out it is a test.
-        Assert.assertNotNull(Constant.DEFAULT_FONT);
-
         super.setUp();
         factory = new DimensionFactory();
         firstPoint = new Point(0, 0);
