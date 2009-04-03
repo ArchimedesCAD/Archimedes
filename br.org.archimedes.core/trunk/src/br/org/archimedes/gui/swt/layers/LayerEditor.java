@@ -13,8 +13,13 @@
  */
 package br.org.archimedes.gui.swt.layers;
 
-import java.util.HashMap;
-import java.util.Map;
+import br.org.archimedes.Constant;
+import br.org.archimedes.exceptions.NoActiveDrawingException;
+import br.org.archimedes.gui.opengl.Color;
+import br.org.archimedes.gui.rca.Activator;
+import br.org.archimedes.gui.swt.Messages;
+import br.org.archimedes.model.Layer;
+import br.org.archimedes.model.LineStyle;
 
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.swt.SWT;
@@ -33,24 +38,20 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 
-import br.org.archimedes.exceptions.NoActiveDrawingException;
-import br.org.archimedes.gui.opengl.Color;
-import br.org.archimedes.gui.rca.Activator;
-import br.org.archimedes.gui.swt.Messages;
-import br.org.archimedes.model.Layer;
-import br.org.archimedes.model.LineStyle;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Belongs to package br.org.archimedes.gui.swt.
  * 
- * @author fabsn
+ * @author Fabricio S. Nascimento
  */
 public class LayerEditor {
 
     protected static final Image ERROR_ICON = Activator.getImageDescriptor(
             "icons/error.png").createImage(); //$NON-NLS-1$
 
-    protected static final Color DEFAULT_COLOR = new Color(1.0, 1.0, 1.0);
+    protected static final Color DEFAULT_COLOR = Constant.WHITE;
 
     protected static final String DEFAULT_NAME = Messages.LayerEditor_Layer;
 

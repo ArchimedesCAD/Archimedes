@@ -12,6 +12,12 @@
  */
 package br.org.archimedes.gui.swt;
 
+import br.org.archimedes.Constant;
+import br.org.archimedes.exceptions.NullArgumentException;
+import br.org.archimedes.gui.opengl.Color;
+import br.org.archimedes.gui.opengl.OpenGLWrapper;
+import br.org.archimedes.model.Rectangle;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -24,11 +30,6 @@ import org.eclipse.swt.opengl.GLData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Slider;
-
-import br.org.archimedes.exceptions.NullArgumentException;
-import br.org.archimedes.gui.opengl.Color;
-import br.org.archimedes.gui.opengl.OpenGLWrapper;
-import br.org.archimedes.model.Rectangle;
 
 /**
  * Belongs to package br.org.archimedes.gui.swt.
@@ -96,8 +97,7 @@ public class CanvasWithSlider {
     public CanvasWithSlider (Composite parent, int canvasSize,
             int defaultValue, int lineStyle) {
 
-        this(parent, canvasSize, defaultValue, lineStyle, new Color(1.0,
-                1.0, 1.0));
+        this(parent, canvasSize, defaultValue, lineStyle, Constant.WHITE);
     }
 
     /**

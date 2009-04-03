@@ -13,18 +13,18 @@
  */
 package br.org.archimedes;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.util.Collections;
+import br.org.archimedes.gui.opengl.Color;
+import br.org.archimedes.gui.rca.Activator;
 
 import org.apache.batik.svggen.font.Font;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.osgi.framework.Bundle;
 
-import br.org.archimedes.gui.opengl.Color;
-import br.org.archimedes.gui.rca.Activator;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.util.Collections;
 
 /**
  * Belongs to package br.org.archimedes.
@@ -55,7 +55,6 @@ public class Constant {
 
     public static final double LEADER_RADIUS = 0.8;
 
-    // TODO Replace all blacks and whites for the constants
     public static final Color WHITE = new Color(1.0, 1.0, 1.0);
 
     public static final Color RED = new Color(1.0, 0.0, 0.0);

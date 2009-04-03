@@ -11,7 +11,21 @@
  * This file was created on 2006/03/24, 00:03:02, by Hugo Corbucci.<br>
  * It is part of package br.org.archimedes.model on the br.org.archimedes.core project.<br>
  */
+
 package br.org.archimedes.model;
+
+import br.org.archimedes.Constant;
+import br.org.archimedes.exceptions.IllegalActionException;
+import br.org.archimedes.exceptions.NullArgumentException;
+import br.org.archimedes.gui.model.Workspace;
+import br.org.archimedes.gui.opengl.OpenGLWrapper;
+import br.org.archimedes.gui.swt.Messages;
+import br.org.archimedes.interfaces.Command;
+import br.org.archimedes.interfaces.IntersectionManager;
+import br.org.archimedes.interfaces.UndoableCommand;
+import br.org.archimedes.rcp.extensionpoints.IntersectionManagerEPLoader;
+
+import org.eclipse.swt.opengl.GLCanvas;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -26,20 +40,6 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.Set;
 import java.util.Stack;
-
-import org.eclipse.swt.opengl.GLCanvas;
-
-import br.org.archimedes.Constant;
-import br.org.archimedes.exceptions.IllegalActionException;
-import br.org.archimedes.exceptions.NullArgumentException;
-import br.org.archimedes.gui.model.Workspace;
-import br.org.archimedes.gui.opengl.Color;
-import br.org.archimedes.gui.opengl.OpenGLWrapper;
-import br.org.archimedes.gui.swt.Messages;
-import br.org.archimedes.interfaces.Command;
-import br.org.archimedes.interfaces.IntersectionManager;
-import br.org.archimedes.interfaces.UndoableCommand;
-import br.org.archimedes.rcp.extensionpoints.IntersectionManagerEPLoader;
 
 /**
  * Belongs to package br.org.archimedes.model.
@@ -97,14 +97,13 @@ public class Drawing extends Observable implements Observer {
         this.undoHistory = new Stack<UndoableCommand>();
         this.redoHistory = new Stack<UndoableCommand>();
         this.setSaved(false);
-        this.helperLayer = new Layer(new Color(1.0, 1.0, 1.0), "Helper Layer", //$NON-NLS-1$
+        this.helperLayer = new Layer(Constant.WHITE, "Helper Layer", //$NON-NLS-1$
                 LineStyle.CONTINUOUS, 1.0);
 
         if (layers == null || layers.isEmpty()) {
             this.layers = new HashMap<String, Layer>();
-            this.currentLayer = new Layer(new Color(1.0, 1.0, 1.0),
-                    Messages.LayerEditor_Layer + " 0", //$NON-NLS-1$
-                    LineStyle.CONTINUOUS, 1.0);
+            this.currentLayer = new Layer(Constant.WHITE, Messages.bind(Messages.LayerEditor_Layer,
+                    0), LineStyle.CONTINUOUS, 1.0);
             this.layers.put(currentLayer.getName(), currentLayer);
             currentLayer.addObserver(this);
         }
@@ -120,8 +119,7 @@ public class Drawing extends Observable implements Observer {
     }
 
     /**
-     * @return A clone of this drawing (won't consider selection, file and
-     *         histories.)
+     * @return A clone of this drawing (won't consider selection, file and histories.)
      */
     public synchronized Drawing clone () {
 
@@ -143,8 +141,7 @@ public class Drawing extends Observable implements Observer {
         clone.setViewportPosition(viewportPosition.clone());
         clone.setZoom(zoom);
         try {
-            clone.setCurrentLayer(getLayerNames().indexOf(
-                    currentLayer.getName()));
+            clone.setCurrentLayer(getLayerNames().indexOf(currentLayer.getName()));
         }
         catch (IllegalActionException e) {
             // Should never happen since I'm OK.
@@ -162,8 +159,7 @@ public class Drawing extends Observable implements Observer {
 
         final int prime = 31;
         int result = 1;
-        result = prime * result
-                + ((this.file == null) ? 0 : this.file.hashCode());
+        result = prime * result + ((this.file == null) ? 0 : this.file.hashCode());
         return result;
     }
 
@@ -190,21 +186,16 @@ public class Drawing extends Observable implements Observer {
 
     /*
      * (non-Javadoc)
-     * @see
-     * br.org.archimedes.model.Drawing#putElement(br.org.archimedes.model.Element
-     * )
+     * @see br.org.archimedes.model.Drawing#putElement(br.org.archimedes.model.Element )
      */
-    public void putElement (Element element) throws NullArgumentException,
-            IllegalActionException {
+    public void putElement (Element element) throws NullArgumentException, IllegalActionException {
 
         putElement(element, currentLayer);
     }
 
     /*
      * (non-Javadoc)
-     * @see
-     * br.org.archimedes.model.Drawing#removeElement(br.org.archimedes.model
-     * .Element)
+     * @see br.org.archimedes.model.Drawing#removeElement(br.org.archimedes.model .Element)
      */
     public void removeElement (Element element) throws NullArgumentException,
             IllegalActionException {
@@ -283,8 +274,8 @@ public class Drawing extends Observable implements Observer {
     }
 
     /**
-     * This method returns the selection that contains the selected objects that
-     * are completely inside the rectangle.
+     * This method returns the selection that contains the selected objects that are completely
+     * inside the rectangle.
      * 
      * @param rect
      *            The rectangle considered to the selection.
@@ -292,8 +283,7 @@ public class Drawing extends Observable implements Observer {
      * @throws NullArgumentException
      *             In case the rectangle is null.
      */
-    public Set<Element> getSelectionInside (Rectangle rect)
-            throws NullArgumentException {
+    public Set<Element> getSelectionInside (Rectangle rect) throws NullArgumentException {
 
         Set<Element> selection = new HashSet<Element>();
 
@@ -313,8 +303,8 @@ public class Drawing extends Observable implements Observer {
     }
 
     /**
-     * This method returns the selection that contains the selected objects that
-     * intersect the rectangle.
+     * This method returns the selection that contains the selected objects that intersect the
+     * rectangle.
      * 
      * @param rect
      *            The rectangle to be considered to select.
@@ -322,8 +312,7 @@ public class Drawing extends Observable implements Observer {
      * @throws NullArgumentException
      *             In case the rectangle is null.
      */
-    public Set<Element> getSelectionIntersection (Rectangle rect)
-            throws NullArgumentException {
+    public Set<Element> getSelectionIntersection (Rectangle rect) throws NullArgumentException {
 
         Set<Element> selection = new HashSet<Element>();
 
@@ -391,9 +380,7 @@ public class Drawing extends Observable implements Observer {
 
     /*
      * (non-Javadoc)
-     * @see
-     * br.org.archimedes.model.Drawing#setViewportPosition(br.org.archimedes
-     * .model.Point)
+     * @see br.org.archimedes.model.Drawing#setViewportPosition(br.org.archimedes .model.Point)
      */
     public void setViewportPosition (Point viewportPosition) {
 
@@ -404,8 +391,8 @@ public class Drawing extends Observable implements Observer {
     }
 
     /**
-     * @return Calculates and returns the boundary rectangle. Returns null if
-     *         the drawing has no bound element.
+     * @return Calculates and returns the boundary rectangle. Returns null if the drawing has no
+     *         bound element.
      */
     public Rectangle getBoundary () {
 
@@ -419,15 +406,15 @@ public class Drawing extends Observable implements Observer {
             Rectangle elementBoundary = iterator.next().getBoundaryRectangle();
 
             if (elementBoundary != null) {
-                double x1 = Math.min(boundary.getLowerLeft().getX(),
-                        elementBoundary.getLowerLeft().getX());
-                double y1 = Math.min(boundary.getLowerLeft().getY(),
-                        elementBoundary.getLowerLeft().getY());
+                double x1 = Math.min(boundary.getLowerLeft().getX(), elementBoundary.getLowerLeft()
+                        .getX());
+                double y1 = Math.min(boundary.getLowerLeft().getY(), elementBoundary.getLowerLeft()
+                        .getY());
 
-                double x2 = Math.max(boundary.getUpperRight().getX(),
-                        elementBoundary.getUpperRight().getX());
-                double y2 = Math.max(boundary.getUpperRight().getY(),
-                        elementBoundary.getUpperRight().getY());
+                double x2 = Math.max(boundary.getUpperRight().getX(), elementBoundary
+                        .getUpperRight().getX());
+                double y2 = Math.max(boundary.getUpperRight().getY(), elementBoundary
+                        .getUpperRight().getY());
 
                 boundary = new Rectangle(x1, y1, x2, y2);
             }
@@ -515,9 +502,7 @@ public class Drawing extends Observable implements Observer {
 
     /*
      * (non-Javadoc)
-     * @see
-     * br.org.archimedes.model.Drawing#setSelection(br.org.archimedes.model.
-     * Selection)
+     * @see br.org.archimedes.model.Drawing#setSelection(br.org.archimedes.model. Selection)
      */
     public void setSelection (Selection selection) {
 
@@ -551,8 +536,8 @@ public class Drawing extends Observable implements Observer {
     }
 
     /**
-     * @return A List of the drawing layer names from the current drawing
-     *         (sorted in alphabetical order).
+     * @return A List of the drawing layer names from the current drawing (sorted in alphabetical
+     *         order).
      */
     public List<String> getLayerNames () {
 
@@ -563,8 +548,7 @@ public class Drawing extends Observable implements Observer {
 
     /*
      * (non-Javadoc)
-     * @see
-     * br.org.archimedes.model.Drawing#addLayer(br.org.archimedes.model.Layer)
+     * @see br.org.archimedes.model.Drawing#addLayer(br.org.archimedes.model.Layer)
      */
     public void addLayer (Layer layer) {
 
@@ -603,8 +587,7 @@ public class Drawing extends Observable implements Observer {
      * (non-Javadoc)
      * @see br.org.archimedes.model.Drawing#setCurrentLayer(int)
      */
-    public void setCurrentLayer (int selectionIndex)
-            throws IllegalActionException {
+    public void setCurrentLayer (int selectionIndex) throws IllegalActionException {
 
         Layer layerTemp;
         List<String> layerNames = getLayerNames();
@@ -631,12 +614,10 @@ public class Drawing extends Observable implements Observer {
 
     /*
      * (non-Javadoc)
-     * @see
-     * br.org.archimedes.model.Drawing#putHelperElement(br.org.archimedes.model
-     * .Element)
+     * @see br.org.archimedes.model.Drawing#putHelperElement(br.org.archimedes.model .Element)
      */
-    public void putHelperElement (Element element)
-            throws NullArgumentException, IllegalActionException {
+    public void putHelperElement (Element element) throws NullArgumentException,
+            IllegalActionException {
 
         helperLayer.putElement(element);
     }
@@ -661,12 +642,11 @@ public class Drawing extends Observable implements Observer {
 
     /*
      * (non-Javadoc)
-     * @see
-     * br.org.archimedes.model.Drawing#putElement(br.org.archimedes.model.Element
-     * , br.org.archimedes.model.Layer)
+     * @see br.org.archimedes.model.Drawing#putElement(br.org.archimedes.model.Element ,
+     * br.org.archimedes.model.Layer)
      */
-    public void putElement (Element element, Layer layer)
-            throws NullArgumentException, IllegalActionException {
+    public void putElement (Element element, Layer layer) throws NullArgumentException,
+            IllegalActionException {
 
         if ( !layers.containsKey(layer.getName())) {
             layers.put(layer.getName(), layer);
@@ -688,8 +668,8 @@ public class Drawing extends Observable implements Observer {
      * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
      */
     /**
-     * The drawing observer the layer. If the layer has been locked, all its
-     * elements are removed from the selection.
+     * The drawing observer the layer. If the layer has been locked, all its elements are removed
+     * from the selection.
      */
     public void update (Observable o, Object arg) {
 
@@ -795,8 +775,7 @@ public class Drawing extends Observable implements Observer {
      * @param drawableArea
      *            The drawable area
      */
-    private void drawSelectedElements (OpenGLWrapper openGL,
-            Rectangle drawableArea) {
+    private void drawSelectedElements (OpenGLWrapper openGL, Rectangle drawableArea) {
 
         for (Element element : getSelection().getSelectedElements()) {
             openGL.setLineStyle(OpenGLWrapper.CONTINUOUS_LINE);
@@ -811,8 +790,7 @@ public class Drawing extends Observable implements Observer {
             openGL.setLineWidth(OpenGLWrapper.GRIP_WIDTH);
             openGL.setLineStyle(OpenGLWrapper.CONTINUOUS_LINE);
             openGL.setPrimitiveType(OpenGLWrapper.PRIMITIVE_LINE_LOOP);
-            for (ReferencePoint reference : element
-                    .getReferencePoints(drawableArea)) {
+            for (ReferencePoint reference : element.getReferencePoints(drawableArea)) {
                 reference.draw();
             }
             openGL.setLineWidth(OpenGLWrapper.NORMAL_WIDTH);
