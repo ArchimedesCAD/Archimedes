@@ -12,7 +12,16 @@
  */
 package br.org.archimedes.intersectors;
 
-import static org.junit.Assert.fail;
+import br.org.archimedes.Tester;
+import br.org.archimedes.exceptions.InvalidArgumentException;
+import br.org.archimedes.exceptions.NullArgumentException;
+import br.org.archimedes.infiniteline.InfiniteLine;
+import br.org.archimedes.intersections.interfaces.Intersector;
+import br.org.archimedes.model.Point;
+import br.org.archimedes.polyline.Polyline;
+
+import org.junit.Before;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -21,16 +30,7 @@ import java.util.List;
 
 import junit.framework.Assert;
 
-import org.junit.Before;
-import org.junit.Test;
-
-import br.org.archimedes.Tester;
-import br.org.archimedes.exceptions.InvalidArgumentException;
-import br.org.archimedes.exceptions.NullArgumentException;
-import br.org.archimedes.infiniteline.InfiniteLine;
-import br.org.archimedes.intersections.interfaces.Intersector;
-import br.org.archimedes.model.Point;
-import br.org.archimedes.polyline.Polyline;
+import static org.junit.Assert.fail;
 
 public class InfiniteLinePolylineIntersectorTest extends Tester {
 
@@ -98,7 +98,7 @@ public class InfiniteLinePolylineIntersectorTest extends Tester {
 		polyPoints.add(new Point(-1.0, 0.0));
 		Polyline testPoly = new Polyline(polyPoints);
 
-		assertCollectionTheSame(Collections.EMPTY_LIST, intersector
+		assertCollectionTheSame(Collections.emptyList(), intersector
 				.getIntersections(testPoly, infiniteLine));
 	}
 
@@ -129,7 +129,7 @@ public class InfiniteLinePolylineIntersectorTest extends Tester {
 		polyPoints.add(new Point(0.0, 0.0));
 		Polyline testPoly = new Polyline(polyPoints);
 
-		assertCollectionTheSame(Collections.EMPTY_LIST, intersector
+		assertCollectionTheSame(Collections.emptyList(), intersector
 				.getIntersections(testPoly, infiniteLine));
 	}
 }

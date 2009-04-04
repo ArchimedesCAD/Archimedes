@@ -12,16 +12,6 @@
  */
 package br.org.archimedes.intersectors;
 
-import static org.junit.Assert.fail;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-
 import br.org.archimedes.Tester;
 import br.org.archimedes.arc.Arc;
 import br.org.archimedes.exceptions.InvalidArgumentException;
@@ -29,6 +19,16 @@ import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.infiniteline.InfiniteLine;
 import br.org.archimedes.intersections.interfaces.Intersector;
 import br.org.archimedes.model.Point;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+
+import static org.junit.Assert.fail;
 
 public class ArcInfiniteLineIntersectorTest extends Tester{
 
@@ -88,7 +88,7 @@ public class ArcInfiniteLineIntersectorTest extends Tester{
 		InfiniteLine infiniteline = new InfiniteLine(new Point(-5.0, 10.0), new Point(5.0, 10.0));
 		
 		Collection<Point> intersections = intersector.getIntersections(testArc, infiniteline);
-		assertCollectionTheSame(Collections.EMPTY_LIST, intersections);
+		assertCollectionTheSame(Collections.emptyList(), intersections);
 	}
 	
 	@Test

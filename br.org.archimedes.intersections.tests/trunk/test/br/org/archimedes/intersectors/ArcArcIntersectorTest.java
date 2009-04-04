@@ -12,22 +12,22 @@
  */
 package br.org.archimedes.intersectors;
 
-import static org.junit.Assert.fail;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-
 import br.org.archimedes.Tester;
 import br.org.archimedes.arc.Arc;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.intersections.interfaces.Intersector;
 import br.org.archimedes.model.Point;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+
+import static org.junit.Assert.fail;
 
 public class ArcArcIntersectorTest extends Tester {
 
@@ -78,7 +78,7 @@ public class ArcArcIntersectorTest extends Tester {
         Arc arc = new Arc(new Point(1.0, 0.5), new Point(2.0, -0.5), new Point(
                 3.0, 0.5));
 
-        assertCollectionTheSame(Collections.EMPTY_LIST, intersector
+        assertCollectionTheSame(Collections.emptyList(), intersector
                 .getIntersections(arc, baseArc));
     }
 
@@ -89,7 +89,7 @@ public class ArcArcIntersectorTest extends Tester {
         Arc arc = new Arc(new Point(4.0, 0.0), new Point(3.0, 1.0), new Point(
                 1.0, 1.1));
 
-        assertCollectionTheSame(Collections.EMPTY_LIST, intersector
+        assertCollectionTheSame(Collections.emptyList(), intersector
                 .getIntersections(arc, baseArc));
     }
 
@@ -151,7 +151,7 @@ public class ArcArcIntersectorTest extends Tester {
         Arc arc = new Arc(new Point(0.0, 0.0), new Point(1.0, -1.0), new Point(
                 1.0, 1.0));
 
-        assertCollectionTheSame(Collections.EMPTY_LIST, intersector
+        assertCollectionTheSame(Collections.emptyList(), intersector
                 .getIntersections(arc, baseArc));
     }
 

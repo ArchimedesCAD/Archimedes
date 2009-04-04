@@ -12,15 +12,6 @@
  */
 package br.org.archimedes.intersectors;
 
-import static org.junit.Assert.fail;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-
-import org.junit.Before;
-import org.junit.Test;
-
 import br.org.archimedes.Tester;
 import br.org.archimedes.arc.Arc;
 import br.org.archimedes.exceptions.InvalidArgumentException;
@@ -28,6 +19,15 @@ import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.intersections.interfaces.Intersector;
 import br.org.archimedes.line.Line;
 import br.org.archimedes.model.Point;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+
+import static org.junit.Assert.fail;
 
 public class ArcLineIntersectorTest extends Tester {
 	Arc testArc = null;
@@ -85,14 +85,14 @@ public class ArcLineIntersectorTest extends Tester {
 	public void testNoIntersectionsArcAsCircle() throws NullArgumentException, InvalidArgumentException{
 		Line testLine = new Line(new Point(-1.0, 10.0), new Point(-1.0, -10.0));
 		
-		assertCollectionTheSame(Collections.EMPTY_LIST, intersector.getIntersections(testArc, testLine));
+		assertCollectionTheSame(Collections.emptyList(), intersector.getIntersections(testArc, testLine));
 	}
 	
 	@Test
 	public void testNoIntersectionsArcWouldIfCircle() throws NullArgumentException, InvalidArgumentException{
 		Line testLine = new Line(new Point(-1.0, -1.0), new Point(10.0, -1.0));
 		
-		assertCollectionTheSame(Collections.EMPTY_LIST, intersector.getIntersections(testArc, testLine));
+		assertCollectionTheSame(Collections.emptyList(), intersector.getIntersections(testArc, testLine));
 	}
 	
 	@Test
