@@ -87,7 +87,7 @@ public class OffsetFactory implements CommandFactory {
     /*
      * (non-Javadoc)
      * 
-     * @see com.tarantulus.archimedes.interpreter.Command#begin()
+     * @see br.org.archimedes.interpreter.Command#begin()
      */
     public String begin () {
 
@@ -115,7 +115,7 @@ public class OffsetFactory implements CommandFactory {
     /*
      * (non-Javadoc)
      * 
-     * @see com.tarantulus.archimedes.interpreter.Command#next(java.lang.String)
+     * @see br.org.archimedes.interpreter.Command#next(java.lang.String)
      */
     public String next (Object parameter) throws InvalidParameterException {
 
@@ -368,7 +368,7 @@ public class OffsetFactory implements CommandFactory {
     private String makeUndo () {
 
         ResourceBundle undoMessages = ResourceBundle
-                .getBundle("com.tarantulus.archimedes.i18n.factory.UndoMessages"); //$NON-NLS-1$
+                .getBundle("br.org.archimedes.i18n.factory.UndoMessages"); //$NON-NLS-1$
         String returnMessage = undoMessages.getString(Messages
                 .getString("OffsetFactory.UndoPerformed")) //$NON-NLS-1$
                 + Constant.NEW_LINE;
@@ -402,7 +402,7 @@ public class OffsetFactory implements CommandFactory {
     /*
      * (non-Javadoc)
      * 
-     * @see com.tarantulus.archimedes.interpreter.Command#isDone()
+     * @see br.org.archimedes.interpreter.Command#isDone()
      */
     public boolean isDone () {
 
@@ -412,7 +412,7 @@ public class OffsetFactory implements CommandFactory {
     /*
      * (non-Javadoc)
      * 
-     * @see com.tarantulus.archimedes.interpreter.Command#cancel()
+     * @see br.org.archimedes.interpreter.Command#cancel()
      */
     public String cancel () {
 
@@ -442,7 +442,7 @@ public class OffsetFactory implements CommandFactory {
     /*
      * (non-Javadoc)
      * 
-     * @see com.tarantulus.archimedes.interpreter.Command#toString()
+     * @see br.org.archimedes.interpreter.Command#toString()
      */
     public String toString () {
 
@@ -452,7 +452,7 @@ public class OffsetFactory implements CommandFactory {
     /*
      * (non-Javadoc)
      * 
-     * @see com.tarantulus.archimedes.commands.Command#getNextParser()
+     * @see br.org.archimedes.commands.Command#getNextParser()
      */
     public Parser getNextParser () {
 
@@ -480,7 +480,7 @@ public class OffsetFactory implements CommandFactory {
     /*
      * (non-Javadoc)
      * 
-     * @see com.tarantulus.archimedes.factories.CommandFactory#getCommands()
+     * @see br.org.archimedes.factories.CommandFactory#getCommands()
      */
     public List<Command> getCommands () {
 

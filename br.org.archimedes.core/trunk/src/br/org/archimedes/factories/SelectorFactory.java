@@ -22,7 +22,7 @@ import br.org.archimedes.model.Element;
 import br.org.archimedes.parser.SimpleSelectionParser;
 
 /**
- * Belongs to package com.tarantulus.archimedes.factories. NOTA: Factories that
+ * Belongs to package br.org.archimedes.factories. NOTA: Factories that
  * will handle double clicks must extend SelectorFactory. After all, it makes
  * sense that the first step of a factory that will handle double clicks is a
  * selection... Otherwise in what should you be double clicking?
@@ -125,7 +125,7 @@ public abstract class SelectorFactory implements CommandFactory {
     /*
      * (non-Javadoc)
      * 
-     * @see com.tarantulus.archimedes.commands.Command#getNextParser()
+     * @see br.org.archimedes.commands.Command#getNextParser()
      */
     public Parser getNextParser () {
 

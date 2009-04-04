@@ -5,6 +5,7 @@ Bundle-SymbolicName: br.org.archimedes.polyline.explode.tests
 Bundle-Version: 0.57.4
 Bundle-Vendor: Tarantulus Corp.
 Require-Bundle: br.org.archimedes.core,
+ br.org.archimedes.line,
  br.org.archimedes.polyline,
  br.org.archimedes.polyline.explode,
  br.org.archimedes.core.tests,

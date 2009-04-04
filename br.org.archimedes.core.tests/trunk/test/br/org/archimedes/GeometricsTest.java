@@ -25,7 +25,7 @@ import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Vector;
 
 /**
- * Belongs to package com.tarantulus.archimedes.
+ * Belongs to package br.org.archimedes.
  * 
  * @author marivb
  */
@@ -33,8 +33,8 @@ public class GeometricsTest extends Tester {
 
     /*
      * Test method for
-     * 'com.tarantulus.archimedes.Geometrics.calculateAngle(Point, Point)' and
-     * 'com.tarantulus.archimedes.Geometrics.calculateAngle(double, double,
+     * 'br.org.archimedes.Geometrics.calculateAngle(Point, Point)' and
+     * 'br.org.archimedes.Geometrics.calculateAngle(double, double,
      * double, double)'
      */
     @Test
@@ -86,8 +86,8 @@ public class GeometricsTest extends Tester {
 
     /*
      * Test method for
-     * 'com.tarantulus.archimedes.Geometrics.calculateDistance(Point, Point)'
-     * and 'com.tarantulus.archimedes.Geometrics.calculateDistance(double,
+     * 'br.org.archimedes.Geometrics.calculateDistance(Point, Point)'
+     * and 'br.org.archimedes.Geometrics.calculateDistance(double,
      * double, double, double)'
      */
     @Test

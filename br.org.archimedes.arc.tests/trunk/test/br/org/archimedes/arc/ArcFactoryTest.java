@@ -26,7 +26,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Belongs to package com.tarantulus.archimedes.tests.commands.
+ * Belongs to package br.org.archimedes.tests.commands.
  */
 public class ArcFactoryTest extends FactoryTester {
 

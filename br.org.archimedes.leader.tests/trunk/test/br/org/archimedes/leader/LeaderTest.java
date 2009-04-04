@@ -26,7 +26,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 /**
- * Belongs to package com.tarantulus.archimedes.model.elements.
+ * Belongs to package br.org.archimedes.model.elements.
  * 
  * @author Jeferson R. Silva
  */

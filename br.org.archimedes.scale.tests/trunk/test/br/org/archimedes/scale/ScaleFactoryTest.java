@@ -28,7 +28,7 @@ import org.junit.Test;
 import java.util.HashSet;
 
 /**
- * Belongs to package com.tarantulus.archimedes.factories.
+ * Belongs to package br.org.archimedes.factories.
  * 
  * @author marivb
  */

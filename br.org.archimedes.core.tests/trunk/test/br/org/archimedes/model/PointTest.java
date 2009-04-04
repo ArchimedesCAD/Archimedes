@@ -17,7 +17,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * Belongs to package com.tarantulus.archimedes.tests.model.
+ * Belongs to package br.org.archimedes.tests.model.
  * 
  * @author cris e oshiro
  */

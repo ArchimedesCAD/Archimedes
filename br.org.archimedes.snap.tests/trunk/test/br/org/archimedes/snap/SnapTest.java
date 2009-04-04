@@ -28,7 +28,7 @@ public class SnapTest {
 
     /*
      * Test method for
-     * 'com.tarantulus.archimedes.model.commands.OrtoCommand.doIt(Drawing)'
+     * 'br.org.archimedes.model.commands.OrtoCommand.doIt(Drawing)'
      */
     @Test
     public void testDoIt () {

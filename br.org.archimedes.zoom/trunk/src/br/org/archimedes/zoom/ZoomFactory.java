@@ -33,7 +33,7 @@ import br.org.archimedes.parser.VectorParser;
 import br.org.archimedes.parser.ZoomParser;
 
 /**
- * Belongs to package com.tarantulus.archimedes.commands.
+ * Belongs to package br.org.archimedes.commands.
  */
 public class ZoomFactory implements CommandFactory {
 
@@ -242,7 +242,7 @@ public class ZoomFactory implements CommandFactory {
     /*
      * (non-Javadoc)
      * 
-     * @see com.tarantulus.archimedes.commands.Command#getNextParser()
+     * @see br.org.archimedes.commands.Command#getNextParser()
      */
     public Parser getNextParser () {
 

@@ -26,7 +26,7 @@ import br.org.archimedes.gui.opengl.Color;
 import br.org.archimedes.model.Point;
 
 /**
- * Belongs to package com.tarantulus.archimedes.xml.
+ * Belongs to package br.org.archimedes.xml.
  * 
  * @author Mariana
  * 

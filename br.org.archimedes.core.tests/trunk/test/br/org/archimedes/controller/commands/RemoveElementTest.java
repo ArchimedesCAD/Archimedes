@@ -57,7 +57,7 @@ public class RemoveElementTest extends Tester {
 
     /*
      * Test method for
-     * 'com.tarantulus.archimedes.model.commands.PutElementCommand.PutElementCommand(Element)'
+     * 'br.org.archimedes.model.commands.PutElementCommand.PutElementCommand(Element)'
      */
     @Test
     public void testRemoveElementCommand () throws InvalidArgumentException {
@@ -80,7 +80,7 @@ public class RemoveElementTest extends Tester {
 
     /*
      * Test method for
-     * 'com.tarantulus.archimedes.model.commands.PutElementCommand.doIt(Drawing)'
+     * 'br.org.archimedes.model.commands.PutElementCommand.doIt(Drawing)'
      */
     @Test
     public void testDoIt () throws InvalidArgumentException {
@@ -162,7 +162,7 @@ public class RemoveElementTest extends Tester {
 
     /*
      * Test method for
-     * 'com.tarantulus.archimedes.model.commands.PutElementCommand.undoIt(Drawing)'
+     * 'br.org.archimedes.model.commands.PutElementCommand.undoIt(Drawing)'
      */
     @Test
     public void testUndoIt () throws InvalidArgumentException {

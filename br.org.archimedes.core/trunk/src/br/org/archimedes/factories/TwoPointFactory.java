@@ -30,7 +30,7 @@ import br.org.archimedes.parser.ReturnDecoratorParser;
 import br.org.archimedes.parser.VectorParser;
 
 /**
- * Belongs to package com.tarantulus.archimedes.commands.
+ * Belongs to package br.org.archimedes.commands.
  */
 public abstract class TwoPointFactory implements CommandFactory {
 
@@ -177,7 +177,7 @@ public abstract class TwoPointFactory implements CommandFactory {
     /*
      * (non-Javadoc)
      * 
-     * @see com.tarantulus.archimedes.interpreter.Command#done()
+     * @see br.org.archimedes.interpreter.Command#done()
      */
     public boolean isDone () {
 
@@ -222,7 +222,7 @@ public abstract class TwoPointFactory implements CommandFactory {
     /*
      * (non-Javadoc)
      * 
-     * @see com.tarantulus.archimedes.commands.Command#getNextParser()
+     * @see br.org.archimedes.commands.Command#getNextParser()
      */
     public Parser getNextParser () {
 
@@ -242,7 +242,7 @@ public abstract class TwoPointFactory implements CommandFactory {
     /*
      * (non-Javadoc)
      * 
-     * @see com.tarantulus.archimedes.factories.CommandFactory#getCommands()
+     * @see br.org.archimedes.factories.CommandFactory#getCommands()
      */
     public abstract List<Command> getCommands ();
 

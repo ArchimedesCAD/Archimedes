@@ -26,7 +26,7 @@ import com.lowagie.text.pdf.PdfContentByte;
 import com.lowagie.text.pdf.PdfWriter;
 
 /**
- * Belongs to package com.tarantulus.archimedes.exporter.
+ * Belongs to package br.org.archimedes.exporter.
  * 
  * @author night
  */

@@ -28,7 +28,7 @@ import org.junit.Test;
 import junit.framework.TestCase;
 
 /**
- * Belongs to package com.tarantulus.archimedes.model.commands.
+ * Belongs to package br.org.archimedes.model.commands.
  * 
  * @author night
  */
@@ -56,7 +56,7 @@ public class PutElementTest extends TestCase {
 
 	/*
 	 * Test method for
-	 * 'com.tarantulus.archimedes.model.commands.PutElementCommand.PutElementCommand(Element)'
+	 * 'br.org.archimedes.model.commands.PutElementCommand.PutElementCommand(Element)'
 	 */
     @Test
 	public void testPutElementCommand() throws InvalidArgumentException {
@@ -78,7 +78,7 @@ public class PutElementTest extends TestCase {
 
 	/*
 	 * Test method for
-	 * 'com.tarantulus.archimedes.model.commands.PutElementCommand.doIt(Drawing)'
+	 * 'br.org.archimedes.model.commands.PutElementCommand.doIt(Drawing)'
 	 */
     @Test
 	public void testDoIt() throws InvalidArgumentException {
@@ -147,7 +147,7 @@ public class PutElementTest extends TestCase {
 
 	/*
 	 * Test method for
-	 * 'com.tarantulus.archimedes.model.commands.PutElementCommand.undoIt(Drawing)'
+	 * 'br.org.archimedes.model.commands.PutElementCommand.undoIt(Drawing)'
 	 */
     @Test
 	public void testUndoIt() throws InvalidArgumentException {

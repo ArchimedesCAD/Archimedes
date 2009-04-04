@@ -17,17 +17,24 @@ import br.org.archimedes.Tester;
 import br.org.archimedes.model.Drawing;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Locale;
 
 /**
  * @author Bruno da Hora, Luiz Real
  */
 public class SVGExporterTest extends Tester {
+    
+    @Before
+    public void setUp() {
+        Locale.setDefault(Locale.US);
+    }
 
     @Test
     public void emptyDrawingAsSVGShouldCreateSimpleSVG () throws Exception {
@@ -46,7 +53,6 @@ public class SVGExporterTest extends Tester {
         expected = expected.replaceAll("\\s", "");
 
         Assert.assertEquals("An empty drawing is not being generate as expected", expected, result);
-
     }
 
     private String readFromFile (String filename) throws IOException {
@@ -60,7 +66,5 @@ public class SVGExporterTest extends Tester {
         }
 
         return builder.toString();
-
     }
-
 }

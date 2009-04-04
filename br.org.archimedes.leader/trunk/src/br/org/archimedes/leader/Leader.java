@@ -65,7 +65,7 @@ public class Leader extends Element {
 
     /*
      * (non-Javadoc)
-     * @see com.tarantulus.archimedes.model.elements.Element#move(double,
+     * @see br.org.archimedes.model.elements.Element#move(double,
      * double)
      */
     @Override
@@ -78,7 +78,7 @@ public class Leader extends Element {
     /*
      * (non-Javadoc)
      * @see
-     * com.tarantulus.archimedes.model.elements.Element#getBoundaryRectangle()
+     * br.org.archimedes.model.elements.Element#getBoundaryRectangle()
      */
     @Override
     public Rectangle getBoundaryRectangle () {
@@ -104,7 +104,7 @@ public class Leader extends Element {
     /*
      * (non-Javadoc)
      * @see
-     * com.tarantulus.archimedes.model.elements.Element#getReferencePoints(com
+     * br.org.archimedes.model.elements.Element#getReferencePoints(com
      * .tarantulus.archimedes.model.Rectangle)
      */
     @Override
@@ -126,7 +126,7 @@ public class Leader extends Element {
     /*
      * (non-Javadoc)
      * @see
-     * com.tarantulus.archimedes.model.elements.Element#getProjectionOf(com.
+     * br.org.archimedes.model.elements.Element#getProjectionOf(com.
      * tarantulus.archimedes.model.Point)
      */
     @Override
@@ -142,7 +142,7 @@ public class Leader extends Element {
     /*
      * (non-Javadoc)
      * @see
-     * com.tarantulus.archimedes.model.elements.Element#contains(com.tarantulus
+     * br.org.archimedes.model.elements.Element#contains(br.org
      * .archimedes.model.Point)
      */
     @Override
@@ -202,7 +202,7 @@ public class Leader extends Element {
 
     /*
      * (non-Javadoc)
-     * @see com.tarantulus.archimedes.model.elements.Element#getPoints()
+     * @see br.org.archimedes.model.elements.Element#getPoints()
      */
     public @Override
     List<Point> getPoints () {

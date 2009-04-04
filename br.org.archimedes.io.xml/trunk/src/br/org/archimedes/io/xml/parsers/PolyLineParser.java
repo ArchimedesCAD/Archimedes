@@ -20,7 +20,7 @@ import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
 
 /**
- * Belongs to package com.tarantulus.archimedes.xml.
+ * Belongs to package br.org.archimedes.xml.
  * 
  * @author Mariana
  * 
@@ -37,7 +37,7 @@ public class PolyLineParser extends NPointsParser {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.tarantulus.archimedes.xml.NPointsParser#createElement(java.util.List)
+	 * @see br.org.archimedes.xml.NPointsParser#createElement(java.util.List)
 	 */
 	@Override
 	protected Element createElement(List<Point> points) throws ElementCreationException {

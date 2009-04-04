@@ -32,7 +32,7 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * Belongs to package com.tarantulus.archimedes.xml.
+ * Belongs to package br.org.archimedes.xml.
  * 
  * @author Mariana
  */

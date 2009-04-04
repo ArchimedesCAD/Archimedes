@@ -75,7 +75,7 @@ public class EditTextFactory extends SelectorFactory {
     /*
      * (non-Javadoc)
      * 
-     * @see com.tarantulus.archimedes.factories.CommandFactory#getCommands()
+     * @see br.org.archimedes.factories.CommandFactory#getCommands()
      */
     public List<Command> getCommands () {
 
@@ -93,7 +93,7 @@ public class EditTextFactory extends SelectorFactory {
     /*
      * (non-Javadoc)
      * 
-     * @see com.tarantulus.archimedes.factories.SelectorFactory#finishFactory(java.util.Set)
+     * @see br.org.archimedes.factories.SelectorFactory#finishFactory(java.util.Set)
      */
     @Override
     protected String finishFactory (Set<Element> selection)

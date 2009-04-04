@@ -333,7 +333,7 @@ public class Arc extends CurvedShape implements Offsetable {
 
     /*
      * (non-Javadoc)
-     * @see com.tarantulus.archimedes.model.Element#getBoundaryRectangle()
+     * @see br.org.archimedes.model.Element#getBoundaryRectangle()
      */
     public Rectangle getBoundaryRectangle () {
 
@@ -367,7 +367,7 @@ public class Arc extends CurvedShape implements Offsetable {
 
     /*
      * (non-Javadoc)
-     * @see com.tarantulus.archimedes.model.Element#getReferencePoints(com.tarantulus
+     * @see br.org.archimedes.model.Element#getReferencePoints(br.org
      * .archimedes.model.Rectangle)
      */
     public Collection<ReferencePoint> getReferencePoints (Rectangle area) {
@@ -472,7 +472,7 @@ public class Arc extends CurvedShape implements Offsetable {
 
     /*
      * (non-Javadoc)
-     * @see com.tarantulus.archimedes.model.Element#contains(com.tarantulus.archimedes .model.Point)
+     * @see br.org.archimedes.model.Element#contains(br.org.archimedes .model.Point)
      */
     public boolean contains (Point point) throws NullArgumentException {
 

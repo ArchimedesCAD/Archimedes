@@ -47,7 +47,7 @@ public class LineFactory extends TwoPointFactory {
     /*
      * (non-Javadoc)
      * 
-     * @see com.tarantulus.archimedes.factories.TwoPointFactory#next(java.lang.Object)
+     * @see br.org.archimedes.factories.TwoPointFactory#next(java.lang.Object)
      */
     public String begin () {
 
@@ -59,7 +59,7 @@ public class LineFactory extends TwoPointFactory {
     /*
      * (non-Javadoc)
      * 
-     * @see com.tarantulus.archimedes.factories.TwoPointFactory#next(java.lang.Object)
+     * @see br.org.archimedes.factories.TwoPointFactory#next(java.lang.Object)
      */
     public String next (Object parameter) throws InvalidParameterException {
 
@@ -90,8 +90,8 @@ public class LineFactory extends TwoPointFactory {
     /*
      * (non-Javadoc)
      * 
-     * @see com.tarantulus.archimedes.factories.TwoPointCommandFactory#completeCommand(com.tarantulus.archimedes.model.Point,
-     *      com.tarantulus.archimedes.model.Point)
+     * @see br.org.archimedes.factories.TwoPointCommandFactory#completeCommand(br.org.archimedes.model.Point,
+     *      br.org.archimedes.model.Point)
      */
     @Override
     protected String completeCommand (Point p1, Point p2) {
@@ -117,7 +117,7 @@ public class LineFactory extends TwoPointFactory {
     /*
      * (non-Javadoc)
      * 
-     * @see com.tarantulus.archimedes.factories.CommandFactory#getCommands()
+     * @see br.org.archimedes.factories.CommandFactory#getCommands()
      */
     public List<Command> getCommands () {
 
@@ -135,9 +135,9 @@ public class LineFactory extends TwoPointFactory {
     /*
      * (non-Javadoc)
      * 
-     * @see com.tarantulus.archimedes.factories.TwoPointFactory#drawVisualHelper(com.tarantulus.archimedes.model.writers.Writer,
-     *      com.tarantulus.archimedes.model.Point,
-     *      com.tarantulus.archimedes.model.Point)
+     * @see br.org.archimedes.factories.TwoPointFactory#drawVisualHelper(br.org.archimedes.model.writers.Writer,
+     *      br.org.archimedes.model.Point,
+     *      br.org.archimedes.model.Point)
      */
     protected void drawVisualHelper (Point start, Point end) {
 
@@ -156,7 +156,7 @@ public class LineFactory extends TwoPointFactory {
     /*
      * (non-Javadoc)
      * 
-     * @see com.tarantulus.archimedes.factories.TwoPointFactory#getNextParser()
+     * @see br.org.archimedes.factories.TwoPointFactory#getNextParser()
      */
     public Parser getNextParser () {
 

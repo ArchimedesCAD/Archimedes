@@ -111,9 +111,9 @@ public class MoveFactory extends SelectionPointVectorFactory {
     /*
      * (non-Javadoc)
      * 
-     * @see com.tarantulus.archimedes.factories.SelectionPointVectorFactory#drawVisualHelper(com.tarantulus.archimedes.model.writers.Writer,
-     *      java.util.Set, com.tarantulus.archimedes.model.Point,
-     *      com.tarantulus.archimedes.model.Vector)
+     * @see br.org.archimedes.factories.SelectionPointVectorFactory#drawVisualHelper(br.org.archimedes.model.writers.Writer,
+     *      java.util.Set, br.org.archimedes.model.Point,
+     *      br.org.archimedes.model.Vector)
      */
     @Override
     protected void drawVisualHelper (Set<Element> selection, Point reference,
@@ -129,7 +129,7 @@ public class MoveFactory extends SelectionPointVectorFactory {
     /*
      * (non-Javadoc)
      * 
-     * @see com.tarantulus.archimedes.factories.SelectionPointVectorFactory#getUniqueCommand()
+     * @see br.org.archimedes.factories.SelectionPointVectorFactory#getUniqueCommand()
      */
     @Override
     protected Command getUniqueCommand () {

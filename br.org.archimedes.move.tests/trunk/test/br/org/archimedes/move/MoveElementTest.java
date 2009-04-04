@@ -285,7 +285,7 @@ public class MoveElementTest extends Tester {
     }
 
     /*
-     * Test method for 'com.tarantulus.archimedes.model.commands.MoveElementCommand.undoIt(Drawing)'
+     * Test method for 'br.org.archimedes.model.commands.MoveElementCommand.undoIt(Drawing)'
      */
     public void testUndoIt () throws InvalidArgumentException, NullArgumentException {
 

@@ -43,7 +43,7 @@ public class EditTextCommand implements UndoableCommand {
     /*
      * (non-Javadoc)
      * 
-     * @see com.tarantulus.archimedes.controller.commands.UndoableCommand#undoIt(com.tarantulus.archimedes.model.Drawing)
+     * @see br.org.archimedes.controller.commands.UndoableCommand#undoIt(br.org.archimedes.model.Drawing)
      */
     public void undoIt (Drawing drawing) throws IllegalActionException,
             NullArgumentException {
@@ -84,7 +84,7 @@ public class EditTextCommand implements UndoableCommand {
     /*
      * (non-Javadoc)
      * 
-     * @see com.tarantulus.archimedes.controller.commands.Command#doIt(com.tarantulus.archimedes.model.Drawing)
+     * @see br.org.archimedes.controller.commands.Command#doIt(br.org.archimedes.model.Drawing)
      */
     public void doIt (Drawing drawing) throws IllegalActionException,
             NullArgumentException {

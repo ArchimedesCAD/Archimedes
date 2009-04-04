@@ -25,7 +25,7 @@ public class UndoCommand implements Command {
     /*
      * (non-Javadoc)
      * 
-     * @see com.tarantulus.archimedes.model.commands.Command#doIt(com.tarantulus.archimedes.model.Drawing)
+     * @see br.org.archimedes.model.commands.Command#doIt(br.org.archimedes.model.Drawing)
      */
     public void doIt (Drawing drawing) throws IllegalActionException,
             NullArgumentException {

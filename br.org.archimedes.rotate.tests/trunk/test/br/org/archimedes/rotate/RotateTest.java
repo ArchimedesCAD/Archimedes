@@ -36,7 +36,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Belongs to package com.tarantulus.archimedes.model.commands.
+ * Belongs to package br.org.archimedes.model.commands.
  * 
  * @author night
  */
@@ -115,7 +115,7 @@ public class RotateTest extends Tester {
 
     /*
      * Test method for
-     * 'com.tarantulus.archimedes.model.commands.MoveElementCommand.MoveElementCommand(Set<Element>,
+     * 'br.org.archimedes.model.commands.MoveElementCommand.MoveElementCommand(Set<Element>,
      * Vector)'
      */
     @Test
@@ -151,7 +151,7 @@ public class RotateTest extends Tester {
     }
 
     /*
-     * Test method for 'com.tarantulus.archimedes.model.commands.MoveElementCommand.doIt(Drawing)'
+     * Test method for 'br.org.archimedes.model.commands.MoveElementCommand.doIt(Drawing)'
      */
     public void testDoIt () throws InvalidArgumentException {
 
@@ -262,7 +262,7 @@ public class RotateTest extends Tester {
     }
 
     /*
-     * Test method for 'com.tarantulus.archimedes.model.commands.MoveElementCommand.undoIt(Drawing)'
+     * Test method for 'br.org.archimedes.model.commands.MoveElementCommand.undoIt(Drawing)'
      */
     public void testUndoIt () throws InvalidArgumentException {
 

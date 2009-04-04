@@ -23,7 +23,7 @@ import br.org.archimedes.interfaces.Parser;
 import br.org.archimedes.model.Point;
 
 /**
- * Belongs to package com.tarantulus.archimedes.parser.
+ * Belongs to package br.org.archimedes.parser.
  * 
  * @author marivb
  */

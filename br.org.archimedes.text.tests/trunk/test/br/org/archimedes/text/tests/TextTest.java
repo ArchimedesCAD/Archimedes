@@ -140,7 +140,7 @@ public class TextTest extends Tester {
 
     /**
      * Test method for
-     * {@link br.org.archimedes.text.Text#Text(java.lang.String, com.tarantulus.archimedes.model.Point, double)}.
+     * {@link br.org.archimedes.text.Text#Text(java.lang.String, br.org.archimedes.model.Point, double)}.
      */
     @Test
     public void testText () {
@@ -200,7 +200,7 @@ public class TextTest extends Tester {
 
     /**
      * Test method for
-     * {@link br.org.archimedes.text.Element#scale(com.tarantulus.archimedes.model.Point, double)}.
+     * {@link br.org.archimedes.text.Element#scale(br.org.archimedes.model.Point, double)}.
      */
     @Test
     public void testScale () {

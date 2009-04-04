@@ -21,7 +21,7 @@ import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
 
 /**
- * Belongs to package com.tarantulus.archimedes.xml.
+ * Belongs to package br.org.archimedes.xml.
  * 
  * @author Mariana
  */
@@ -29,7 +29,7 @@ public class TextParser extends ElementParser {
 
     /*
      * (non-Javadoc)
-     * @see com.tarantulus.archimedes.xml.ElementParser#parse(org.w3c.dom.Node)
+     * @see br.org.archimedes.xml.ElementParser#parse(org.w3c.dom.Node)
      */
     @Override
     public Element parse (Node node) throws ElementCreationException {

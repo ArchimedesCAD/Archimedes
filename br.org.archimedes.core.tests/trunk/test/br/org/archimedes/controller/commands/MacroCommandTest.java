@@ -111,7 +111,7 @@ public class MacroCommandTest extends Tester {
 
     /*
      * Test method for
-     * 'com.tarantulus.archimedes.controller.commands.MacroCommand.MacroCommand(List<UndoableCommand>)'
+     * 'br.org.archimedes.controller.commands.MacroCommand.MacroCommand(List<UndoableCommand>)'
      */
     @Test
     public void testMacroCommand () {
@@ -136,7 +136,7 @@ public class MacroCommandTest extends Tester {
     }
 
     /*
-     * Test method for 'com.tarantulus.archimedes.controller.commands.MacroCommand.doIt(Drawing)'
+     * Test method for 'br.org.archimedes.controller.commands.MacroCommand.doIt(Drawing)'
      */
     @Test
     public void testDoIt () throws InvalidArgumentException {
@@ -159,7 +159,7 @@ public class MacroCommandTest extends Tester {
     }
 
     /*
-     * Test method for 'com.tarantulus.archimedes.controller.commands.MacroCommand.undoIt(Drawing)'
+     * Test method for 'br.org.archimedes.controller.commands.MacroCommand.undoIt(Drawing)'
      */
     @Test
     public void testUndoIt () throws InvalidArgumentException {

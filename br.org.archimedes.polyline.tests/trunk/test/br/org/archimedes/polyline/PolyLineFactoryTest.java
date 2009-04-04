@@ -24,7 +24,7 @@ import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Vector;
 
 /**
- * Belongs to package com.tarantulus.archimedes.tests.commands.
+ * Belongs to package br.org.archimedes.tests.commands.
  * 
  * @author marivb
  */

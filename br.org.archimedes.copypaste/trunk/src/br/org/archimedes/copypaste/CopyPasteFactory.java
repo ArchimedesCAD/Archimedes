@@ -29,7 +29,7 @@ import br.org.archimedes.parser.ReturnDecoratorParser;
 import br.org.archimedes.undo.UndoCommand;
 
 /**
- * Belongs to package com.tarantulus.archimedes.commands.
+ * Belongs to package br.org.archimedes.commands.
  */
 public class CopyPasteFactory extends SelectionPointVectorFactory {
 
@@ -45,7 +45,7 @@ public class CopyPasteFactory extends SelectionPointVectorFactory {
     /**
      * Just overrides to handle the "u" and enter.
      * 
-     * @see com.tarantulus.archimedes.factories.CommandFactory#next(java.lang.Object)
+     * @see br.org.archimedes.factories.CommandFactory#next(java.lang.Object)
      */
     public String next (Object parameter) throws InvalidParameterException {
 
@@ -108,7 +108,7 @@ public class CopyPasteFactory extends SelectionPointVectorFactory {
     /*
      * (non-Javadoc)
      * 
-     * @see com.tarantulus.archimedes.commands.Command#getNextParser()
+     * @see br.org.archimedes.commands.Command#getNextParser()
      */
     public Parser getNextParser () {
 
@@ -124,9 +124,9 @@ public class CopyPasteFactory extends SelectionPointVectorFactory {
     /*
      * (non-Javadoc)
      * 
-     * @see com.tarantulus.archimedes.factories.SelectionPointVectorFactory#drawVisualHelper(com.tarantulus.archimedes.model.writers.Writer,
-     *      java.util.Set, com.tarantulus.archimedes.model.Point,
-     *      com.tarantulus.archimedes.model.Vector)
+     * @see br.org.archimedes.factories.SelectionPointVectorFactory#drawVisualHelper(br.org.archimedes.model.writers.Writer,
+     *      java.util.Set, br.org.archimedes.model.Point,
+     *      br.org.archimedes.model.Vector)
      */
     @Override
     protected void drawVisualHelper (Set<Element> selection,
@@ -142,7 +142,7 @@ public class CopyPasteFactory extends SelectionPointVectorFactory {
     /*
      * (non-Javadoc)
      * 
-     * @see com.tarantulus.archimedes.factories.SelectionPointVectorFactory#getUniqueCommand()
+     * @see br.org.archimedes.factories.SelectionPointVectorFactory#getUniqueCommand()
      */
     @Override
     protected Command getUniqueCommand () {

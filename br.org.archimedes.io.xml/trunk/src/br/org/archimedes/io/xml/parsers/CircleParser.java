@@ -21,7 +21,7 @@ import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
 
 /**
- * Belongs to package com.tarantulus.archimedes.xml.
+ * Belongs to package br.org.archimedes.xml.
  * 
  * @author Mariana
  */

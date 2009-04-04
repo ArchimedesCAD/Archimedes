@@ -69,7 +69,7 @@ public class PanFactory implements CommandFactory, Observer {
     /*
      * (non-Javadoc)
      * 
-     * @see com.tarantulus.archimedes.commands.Command#begin()
+     * @see br.org.archimedes.commands.Command#begin()
      */
     public String begin () {
 
@@ -105,7 +105,7 @@ public class PanFactory implements CommandFactory, Observer {
     /*
      * (non-Javadoc)
      * 
-     * @see com.tarantulus.archimedes.commands.Command#next(java.lang.Object)
+     * @see br.org.archimedes.commands.Command#next(java.lang.Object)
      */
     public String next (Object parameter) throws InvalidParameterException {
 
@@ -234,7 +234,7 @@ public class PanFactory implements CommandFactory, Observer {
     /*
      * (non-Javadoc)
      * 
-     * @see com.tarantulus.archimedes.commands.Command#getNextParser()
+     * @see br.org.archimedes.commands.Command#getNextParser()
      */
     public Parser getNextParser () {
 
@@ -251,7 +251,7 @@ public class PanFactory implements CommandFactory, Observer {
     /*
      * (non-Javadoc)
      * 
-     * @see com.tarantulus.archimedes.factories.CommandFactory#getCommands()
+     * @see br.org.archimedes.factories.CommandFactory#getCommands()
      */
     public List<Command> getCommands () {
 

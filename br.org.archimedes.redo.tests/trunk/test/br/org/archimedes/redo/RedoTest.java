@@ -92,7 +92,7 @@ public class RedoTest {
 
     /*
      * Test method for
-     * 'com.tarantulus.archimedes.model.commands.RedoCommand.doIt(Drawing)'
+     * 'br.org.archimedes.model.commands.RedoCommand.doIt(Drawing)'
      */
     @Test
     public void testDoIt () {

@@ -27,7 +27,7 @@ import java.util.List;
 
 /**
  * This class is used to test command factories.<br>
- * Belongs to package com.tarantulus.archimedes.factories.
+ * Belongs to package br.org.archimedes.factories.
  * 
  * @author marivb
  */

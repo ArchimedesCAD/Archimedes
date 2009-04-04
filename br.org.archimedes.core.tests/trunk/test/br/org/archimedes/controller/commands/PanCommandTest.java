@@ -40,7 +40,7 @@ public class PanCommandTest extends TestCase {
 
 	/*
 	 * Test method for
-	 * 'com.tarantulus.archimedes.controller.commands.PanCommand.PanCommand(Point,
+	 * 'br.org.archimedes.controller.commands.PanCommand.PanCommand(Point,
 	 * Point)'
 	 */
 	public void testPanCommand() {
@@ -63,7 +63,7 @@ public class PanCommandTest extends TestCase {
 
 	/*
 	 * Test method for
-	 * 'com.tarantulus.archimedes.controller.commands.PanCommand.doIt(Drawing)'
+	 * 'br.org.archimedes.controller.commands.PanCommand.doIt(Drawing)'
 	 */
 	public void testDoIt() {
 		try {
@@ -91,7 +91,7 @@ public class PanCommandTest extends TestCase {
 
 	/*
 	 * Test method for
-	 * 'com.tarantulus.archimedes.controller.commands.PanCommand.undoIt(Drawing)'
+	 * 'br.org.archimedes.controller.commands.PanCommand.undoIt(Drawing)'
 	 */
 	public void testUndoIt() {
 		try {

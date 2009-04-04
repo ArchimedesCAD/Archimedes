@@ -52,7 +52,7 @@ public class ZoomByAreaCommandTest {
 
     /*
      * Test method for
-     * 'com.tarantulus.archimedes.controller.commands.ZoomByAreaCommand.ZoomByAreaCommand(Point,
+     * 'br.org.archimedes.controller.commands.ZoomByAreaCommand.ZoomByAreaCommand(Point,
      * Point)'
      */
     @Test
@@ -112,7 +112,7 @@ public class ZoomByAreaCommandTest {
 
     /*
      * Test method for
-     * 'com.tarantulus.archimedes.model.commands.ZoomCommand.doIt(Drawing)'
+     * 'br.org.archimedes.model.commands.ZoomCommand.doIt(Drawing)'
      */
     public void testDoIt () {
 
@@ -170,7 +170,7 @@ public class ZoomByAreaCommandTest {
 
     /*
      * Test method for
-     * 'com.tarantulus.archimedes.model.commands.ZoomCommand.undoIt(Drawing)'
+     * 'br.org.archimedes.model.commands.ZoomCommand.undoIt(Drawing)'
      */
     public void testUndoIt () {
 

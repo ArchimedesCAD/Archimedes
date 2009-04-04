@@ -115,7 +115,7 @@ public class Polyline extends Element {
     /*
      * (non-Javadoc)
      * 
-     * @see com.tarantulus.archimedes.model.Element#move(double, double)
+     * @see br.org.archimedes.model.Element#move(double, double)
      */
     public void move (double deltaX, double deltaY) {
 
@@ -128,7 +128,7 @@ public class Polyline extends Element {
     /*
      * (non-Javadoc)
      * 
-     * @see com.tarantulus.archimedes.model.Element#getBoundaryRectangle()
+     * @see br.org.archimedes.model.Element#getBoundaryRectangle()
      */
     public Rectangle getBoundaryRectangle () {
 
@@ -151,7 +151,7 @@ public class Polyline extends Element {
     /*
      * (non-Javadoc)
      * 
-     * @see com.tarantulus.archimedes.model.Element#getSegment()
+     * @see br.org.archimedes.model.Element#getSegment()
      */
     public Line getSegment () {
 
@@ -161,7 +161,7 @@ public class Polyline extends Element {
     /*
      * (non-Javadoc)
      * 
-     * @see com.tarantulus.archimedes.model.Element#getProjectionOf(com.tarantulus.archimedes.model.Point)
+     * @see br.org.archimedes.model.Element#getProjectionOf(br.org.archimedes.model.Point)
      */
     /**
      * @return null if the polyline is closed and the projection is not
@@ -192,7 +192,7 @@ public class Polyline extends Element {
     /*
      * (non-Javadoc)
      * 
-     * @see com.tarantulus.archimedes.model.Element#contains(com.tarantulus.archimedes.model.Point)
+     * @see br.org.archimedes.model.Element#contains(br.org.archimedes.model.Point)
      */
     public boolean contains (Point point) throws NullArgumentException {
 
@@ -211,7 +211,7 @@ public class Polyline extends Element {
     /*
      * (non-Javadoc)
      * 
-     * @see com.tarantulus.archimedes.model.Element#clone()
+     * @see br.org.archimedes.model.Element#clone()
      */
     public Element clone () {
 
@@ -263,7 +263,7 @@ public class Polyline extends Element {
     /*
      * (non-Javadoc)
      * 
-     * @see com.tarantulus.archimedes.model.Element#getReferencePoints(com.tarantulus.archimedes.model.Rectangle)
+     * @see br.org.archimedes.model.Element#getReferencePoints(br.org.archimedes.model.Rectangle)
      */
     public Collection<ReferencePoint> getReferencePoints (Rectangle area) {
 
@@ -330,7 +330,7 @@ public class Polyline extends Element {
     /*
      * (non-Javadoc)
      * 
-     * @see com.tarantulus.archimedes.model.Offsetable#isPositiveDirection(com.tarantulus.archimedes.model.Point)
+     * @see br.org.archimedes.model.Offsetable#isPositiveDirection(br.org.archimedes.model.Point)
      */
     public boolean isPositiveDirection (Point point) {
 
@@ -379,7 +379,7 @@ public class Polyline extends Element {
     /*
      * (non-Javadoc)
      * 
-     * @see com.tarantulus.archimedes.model.Offsetable#cloneWithDistance(double)
+     * @see br.org.archimedes.model.Offsetable#cloneWithDistance(double)
      */
     public Element cloneWithDistance (double distance)
             throws InvalidParameterException {
@@ -465,7 +465,7 @@ public class Polyline extends Element {
     /*
      * (non-Javadoc)
      * 
-     * @see com.tarantulus.archimedes.model.PointSortable#getSortedPointSet(com.tarantulus.archimedes.model.Point,
+     * @see br.org.archimedes.model.PointSortable#getSortedPointSet(br.org.archimedes.model.Point,
      *      java.util.Collection)
      */
     public SortedSet<ComparablePoint> getSortedPointSet (Point referencePoint,

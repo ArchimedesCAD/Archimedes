@@ -22,7 +22,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Belongs to package com.tarantulus.archimedes.tests.commands.
+ * Belongs to package br.org.archimedes.tests.commands.
  * 
  * @author Mariana V. Bravo
  */

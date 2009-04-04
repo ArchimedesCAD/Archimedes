@@ -19,7 +19,7 @@ import br.org.archimedes.model.Drawing;
 
 
 /**
- * Belongs to package com.tarantulus.archimedes.model.commands.
+ * Belongs to package br.org.archimedes.model.commands.
  * 
  * @author night
  */
@@ -27,7 +27,7 @@ public class OrtoCommandTest extends TestCase {
 
     /*
      * Test method for
-     * 'com.tarantulus.archimedes.model.commands.OrtoCommand.doIt(Drawing)'
+     * 'br.org.archimedes.model.commands.OrtoCommand.doIt(Drawing)'
      */
     public void testDoIt () {
 

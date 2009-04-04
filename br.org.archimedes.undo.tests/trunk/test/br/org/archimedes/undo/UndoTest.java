@@ -37,7 +37,7 @@ import java.util.Map;
 import java.util.Stack;
 
 /**
- * Belongs to package com.tarantulus.archimedes.model.commands.
+ * Belongs to package br.org.archimedes.model.commands.
  * 
  * @author night
  */
@@ -88,7 +88,7 @@ public class UndoTest {
 
     /*
      * Test method for
-     * 'com.tarantulus.archimedes.model.commands.UndoCommand.doIt(Drawing)'
+     * 'br.org.archimedes.model.commands.UndoCommand.doIt(Drawing)'
      */
     @Test
     public void testDoIt () {

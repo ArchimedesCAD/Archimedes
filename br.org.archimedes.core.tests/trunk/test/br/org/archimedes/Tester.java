@@ -32,7 +32,7 @@ import java.util.LinkedList;
 /**
  * This is a helper class for tests. It contains useful Assert.assertions for our model. Any test
  * that wishes to use such Assert.assertions must subclass this test.<br>
- * Belongs to package com.tarantulus.archimedes.
+ * Belongs to package br.org.archimedes.
  * 
  * @author oshiro
  */

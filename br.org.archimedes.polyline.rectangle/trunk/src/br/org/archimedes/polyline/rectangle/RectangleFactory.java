@@ -24,7 +24,7 @@ import br.org.archimedes.model.Rectangle;
 import br.org.archimedes.polyline.Polyline;
 
 /**
- * Belongs to package com.tarantulus.archimedes.commands.
+ * Belongs to package br.org.archimedes.commands.
  */
 public class RectangleFactory extends TwoPointFactory {
 
@@ -42,8 +42,8 @@ public class RectangleFactory extends TwoPointFactory {
     /*
      * (non-Javadoc)
      * 
-     * @see com.tarantulus.archimedes.factories.TwoPointCommandFactory#completeCommand(com.tarantulus.archimedes.model.Point,
-     *      com.tarantulus.archimedes.model.Point)
+     * @see br.org.archimedes.factories.TwoPointCommandFactory#completeCommand(br.org.archimedes.model.Point,
+     *      br.org.archimedes.model.Point)
      */
     @Override
     protected String completeCommand (Point p1, Point p2) {
@@ -70,7 +70,7 @@ public class RectangleFactory extends TwoPointFactory {
     /*
      * (non-Javadoc)
      * 
-     * @see com.tarantulus.archimedes.factories.CommandFactory#getCommands()
+     * @see br.org.archimedes.factories.CommandFactory#getCommands()
      */
     public List<Command> getCommands () {
 

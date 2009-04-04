@@ -254,7 +254,7 @@ public class Semiline extends Element implements Offsetable {
 
     /*
      * (non-Javadoc)
-     * @see com.tarantulus.archimedes.model.Element#getProjectionOf(com.tarantulus
+     * @see br.org.archimedes.model.Element#getProjectionOf(br.org
      * .archimedes.model.Point)
      */
     public Point getProjectionOf (Point point) throws NullArgumentException {
@@ -280,7 +280,7 @@ public class Semiline extends Element implements Offsetable {
 
     /*
      * (non-Javadoc)
-     * @see com.tarantulus.archimedes.model.Element#getReferencePoints(com.tarantulus
+     * @see br.org.archimedes.model.Element#getReferencePoints(br.org
      * .archimedes.model.Rectangle)
      */
     public Collection<ReferencePoint> getReferencePoints (Rectangle area) {
@@ -302,7 +302,7 @@ public class Semiline extends Element implements Offsetable {
 
     /*
      * (non-Javadoc)
-     * @see com.tarantulus.archimedes.model.elements.Element#getPoints()
+     * @see br.org.archimedes.model.elements.Element#getPoints()
      */
     public @Override
     List<Point> getPoints () {

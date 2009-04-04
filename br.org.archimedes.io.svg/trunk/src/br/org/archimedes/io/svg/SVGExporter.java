@@ -33,7 +33,7 @@ import java.util.Collection;
 /**
  * Belongs to package br.org.archimedes.io.svg.
  * 
- * @author klava, sider
+ * @author Bruno Klava and Ricardo Sider
  */
 public class SVGExporter implements Exporter {
 

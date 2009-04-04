@@ -21,7 +21,7 @@ import br.org.archimedes.interfaces.Command;
 import br.org.archimedes.interfaces.Parser;
 
 /**
- * Belongs to package com.tarantulus.archimedes.commands.
+ * Belongs to package br.org.archimedes.commands.
  * 
  * @author night
  */

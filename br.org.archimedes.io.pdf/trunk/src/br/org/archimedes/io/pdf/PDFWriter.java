@@ -28,7 +28,7 @@ import com.lowagie.text.Rectangle;
 import com.lowagie.text.pdf.PdfContentByte;
 
 /**
- * Belongs to package com.tarantulus.archimedes.model.writers.
+ * Belongs to package br.org.archimedes.model.writers.
  * 
  * @author night
  */
@@ -50,7 +50,7 @@ public class PDFWriter {
 
     /*
      * (non-Javadoc)
-     * @seecom.tarantulus.archimedes.model.writers.Writer#write(com.tarantulus.
+     * @seebr.org.archimedes.model.writers.Writer#write(br.org.
      * archimedes.model.Drawing)
      */
     public void write (Drawing drawing) {
@@ -67,7 +67,7 @@ public class PDFWriter {
 
     /*
      * (non-Javadoc)
-     * @seecom.tarantulus.archimedes.model.writers.Writer#write(com.tarantulus.
+     * @seebr.org.archimedes.model.writers.Writer#write(br.org.
      * archimedes.model.Layer)
      */
     public void write (Layer layer) {
