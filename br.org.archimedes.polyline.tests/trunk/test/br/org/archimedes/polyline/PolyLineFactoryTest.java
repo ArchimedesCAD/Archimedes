@@ -13,20 +13,20 @@
  */
 package br.org.archimedes.polyline;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
 import br.org.archimedes.factories.CommandFactory;
 import br.org.archimedes.helper.FactoryTester;
 import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Vector;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 /**
  * Belongs to package br.org.archimedes.tests.commands.
  * 
- * @author marivb
+ * @author Mariana V. Bravo
  */
 public class PolyLineFactoryTest extends FactoryTester {
 
@@ -87,6 +87,62 @@ public class PolyLineFactoryTest extends FactoryTester {
         assertSafeNext(factory, vector1, false);
         assertSafeNext(factory, vector2, false);
         assertSafeNext(factory, null, true);
+    }
+    
+
+    @Test
+    public void testCreateClosedPolyLineWithC () {
+
+        // Arguments
+        Point point1 = new Point(2, 3);
+        Point point2 = new Point(3, 7);
+        Vector vector1 = new Vector(point1, point2);
+        Vector vector2 = new Vector(point2, new Point(5, 5));
+
+        // Begin
+        assertBegin(factory, false);
+
+        assertInvalidNext(factory, new Object());
+        assertInvalidNext(factory, null);
+        assertInvalidNext(factory, vector1);
+        assertInvalidNext(factory, "c");
+
+        // Point
+        assertSafeNext(factory, point1, false);
+
+        assertInvalidNext(factory, new Object());
+        assertInvalidNext(factory, null);
+        assertInvalidNext(factory, point1);
+        assertInvalidNext(factory, "c");
+
+        // Vector
+        assertSafeNext(factory, vector1, false);
+
+        assertInvalidNext(factory, new Object());
+        assertInvalidNext(factory, point1);
+        assertInvalidNext(factory, "c");
+
+        // Vector
+        assertSafeNext(factory, vector1, false);
+
+        assertInvalidNext(factory, new Object());
+        assertInvalidNext(factory, point1);
+        
+        // Close
+        assertSafeNext(factory, "c", true);
+
+        assertInvalidNext(factory, new Object());
+        assertInvalidNext(factory, null);
+        assertInvalidNext(factory, point1);
+        assertInvalidNext(factory, vector1);
+        assertInvalidNext(factory, "c");
+
+        // Again
+        assertBegin(factory, false);
+        assertSafeNext(factory, point1, false);
+        assertSafeNext(factory, vector1, false);
+        assertSafeNext(factory, vector2, false);
+        assertSafeNext(factory, "c", true);
     }
 
     @Test

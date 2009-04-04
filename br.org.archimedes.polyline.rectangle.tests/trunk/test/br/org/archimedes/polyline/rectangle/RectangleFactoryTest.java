@@ -13,10 +13,6 @@
  */
 package br.org.archimedes.polyline.rectangle;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
 import br.org.archimedes.controller.Controller;
 import br.org.archimedes.factories.CommandFactory;
 import br.org.archimedes.helper.FactoryTester;
@@ -24,10 +20,14 @@ import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Vector;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 /**
  * Belongs to package br.org.archimedes.polyline.rectangle.
  * 
- * @author marivb
+ * @author Mariana V. Bravo
  */
 public class RectangleFactoryTest extends FactoryTester {
 
