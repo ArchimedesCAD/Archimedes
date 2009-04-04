@@ -17,6 +17,7 @@ import br.org.archimedes.factories.CommandFactory;
 import br.org.archimedes.interfaces.Command;
 import br.org.archimedes.interfaces.Parser;
 
+import java.util.Collections;
 import java.util.List;
 
 
@@ -33,7 +34,7 @@ public class StubCommandFactory implements CommandFactory {
      */
     public String begin () {
 
-        return null;
+        return "begin";
     }
 
     /* (non-Javadoc)
@@ -41,7 +42,7 @@ public class StubCommandFactory implements CommandFactory {
      */
     public String cancel () {
 
-        return null;
+        return "cancel";
     }
 
     /* (non-Javadoc)
@@ -56,7 +57,7 @@ public class StubCommandFactory implements CommandFactory {
      */
     public List<Command> getCommands () {
 
-        return null;
+        return Collections.emptyList();
     }
 
     /* (non-Javadoc)
@@ -64,7 +65,7 @@ public class StubCommandFactory implements CommandFactory {
      */
     public String getName () {
 
-        return null;
+        return "stub";
     }
 
     /* (non-Javadoc)

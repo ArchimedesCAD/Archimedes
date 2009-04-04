@@ -10,19 +10,21 @@
  * This file was created on 2006/05/19, 10:14:27, by Hugo Corbucci.<br>
  * It is part of package br.org.archimedes.gui.model on the br.org.archimedes.core.tests project.<br>
  */
-package br.org.archimedes.gui.model;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+package br.org.archimedes.gui.model;
 
 import br.org.archimedes.Tester;
 import br.org.archimedes.controller.Controller;
 import br.org.archimedes.exceptions.InvalidArgumentException;
+import br.org.archimedes.line.Line;
 import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Rectangle;
 import br.org.archimedes.model.ReferencePoint;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Belongs to package br.org.archimedes.gui.model.
@@ -75,7 +77,7 @@ public class MousePositionManagerTest extends Tester {
 
         ReferencePoint refPoint;
         Point mouse, grip, actual, expected;
-        // putSafeElementOnDrawing(new Line(0, 0, 100, 100), drawing);
+        putSafeElementOnDrawing(new Line(0, 0, 100, 100), drawing);
 
         // Grip to an extreme
         mouse = new Point(0.1, 0.1);
@@ -115,8 +117,8 @@ public class MousePositionManagerTest extends Tester {
     public void testWithTwoLines () throws InvalidArgumentException {
 
         Point mouse, grip, actual, expected;
-        // putSafeElementOnDrawing(new Line(0, 0, 100, 100), drawing);
-        // putSafeElementOnDrawing(new Line(50, 75, 150, 75), drawing);
+        putSafeElementOnDrawing(new Line(0, 0, 100, 100), drawing);
+        putSafeElementOnDrawing(new Line(50, 75, 150, 75), drawing);
 
         // Grip to intersection
         mouse = new Point(74.9, 74.9);

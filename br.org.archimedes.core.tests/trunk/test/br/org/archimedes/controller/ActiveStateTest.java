@@ -43,7 +43,7 @@ public class ActiveStateTest extends TestCase {
         super.setUp();
         drawing = new Drawing("hi");
         factory = new StubCommandFactory();
-        state = new StubState();
+        state = new IdleState(null);
         activeSate = new ActiveState(state, factory, drawing);
     }
 
@@ -59,38 +59,13 @@ public class ActiveStateTest extends TestCase {
         activeSate = null;
     }
 
-    /**
-     * Test method for
-     * {@link br.org.archimedes.controller.ActiveState#receiveText(java.lang.String)}.
-     */
-    public void testReceiveText () {
+    // TODO Test active state text receiving
 
-        fail("Not yet implemented"); // TODO Tests for all states.
-    }
+    // TODO Test active state next state
 
-    /**
-     * Test method for {@link br.org.archimedes.controller.ActiveState#getNext()}.
-     */
-    public void testGetNext () {
+    // TODO Test active state selection listener
 
-        fail("Not yet implemented"); // TODO
-    }
-
-    /**
-     * Test method for {@link br.org.archimedes.controller.ActiveState#gotSelection()}.
-     */
-    public void testGotSelection () {
-
-        fail("Not yet implemented"); // TODO
-    }
-
-    /**
-     * Test method for {@link br.org.archimedes.controller.ActiveState#nextShouldHandle()}.
-     */
-    public void testNextShouldHandle () {
-
-        fail("Not yet implemented"); // TODO
-    }
+    // TODO Test active state argument delegation
 
     /**
      * Test method for
@@ -100,7 +75,7 @@ public class ActiveStateTest extends TestCase {
     public void testChangedDrawing () {
 
         InputState newState = activeSate.changedDrawing(new Drawing("oi"));
-        assertEquals(LockedState.class, newState);
+        assertEquals(LockedState.class, newState.getClass());
     }
 
     /**
@@ -110,7 +85,7 @@ public class ActiveStateTest extends TestCase {
 
         String string = activeSate.cancel();
         assertNotNull(string);
-        assertEquals(IdleState.class, activeSate.getNext().getClass());
+        assertTrue(activeSate.getNext() instanceof IdleState);
         assertFalse(activeSate.nextShouldHandle());
     }
 }

@@ -16,8 +16,6 @@ package br.org.archimedes.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.org.archimedes.exceptions.NullArgumentException;
-
 public class Rectangle {
 
     private double x;
@@ -100,32 +98,6 @@ public class Rectangle {
         return inside;
     }
 
-    public boolean intersects (Rectangle rectangle) throws NullArgumentException {
-
-        if (rectangle == null) {
-            throw new NullArgumentException();
-        }
-
-        double x1 = x;
-        double y1 = y;
-        double w1 = width;
-        double h1 = height;
-
-        double x2 = rectangle.x;
-        double y2 = rectangle.y;
-        double w2 = rectangle.width;
-        double h2 = rectangle.height;
-
-        boolean intersects = (x1 <= x2 && (x1 + w1) >= x2)
-                && ((y1 <= y2 && y1 + h1 >= y2) || (y2 <= y1 && y2 + h2 >= y1));
-        if ( !intersects) {
-            intersects = (x2 <= x1 && (x2 + w2) >= x1)
-                    && ((y1 <= y2 && y1 + h1 >= y2) || (y2 <= y1 && y2 + h2 >= y1));
-        }
-
-        return intersects;
-    }
-
     /**
      * @return The point that is in the lower left corner of the Rectangle.
      */
@@ -173,23 +145,4 @@ public class Rectangle {
 
         return height;
     }
-
-    /**
-     * Computes the union of this Rectangle with the specified Rectangle.
-     * 
-     * @param other
-     *            the Rectangle to be merged
-     * @return the union of this Rectangle with other
-     */
-    public Rectangle union (Rectangle other) {
-
-        double x = Math.min(this.x, other.x);
-        double y = Math.min(this.y, other.y);
-        double width = Math.max(this.x + this.width, other.x + other.width);
-        double height = Math.max(this.y + this.height, other.y + other.height);
-
-        return new Rectangle(x, y, width, height);
-
-    }
-
 }

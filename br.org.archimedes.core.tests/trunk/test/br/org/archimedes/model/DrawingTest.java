@@ -11,6 +11,7 @@
  * This file was created on 2006/03/24, 10:14:27, by Hugo Corbucci.<br>
  * It is part of package br.org.archimedes.model on the br.org.archimedes.core.tests project.<br>
  */
+
 package br.org.archimedes.model;
 
 import br.org.archimedes.Constant;
@@ -33,6 +34,51 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class DrawingTest extends Tester {
+
+    public class BoundedStubElement extends StubElement {
+
+        private Rectangle bounds;
+
+
+        public BoundedStubElement (double x1, double y1, double x2, double y2) {
+
+            this(new Rectangle(x1, y1, x2, y2));
+        }
+
+        public BoundedStubElement (Rectangle rectangle) {
+
+            this.bounds = rectangle;
+        }
+
+        public BoundedStubElement () {
+
+            this(null);
+        }
+
+        @Override
+        public Rectangle getBoundaryRectangle () {
+
+            return bounds;
+        }
+    }
+
+    public class ContainedStubElement extends StubElement {
+
+        private boolean inside;
+
+
+        public ContainedStubElement (boolean inside) {
+
+            this.inside = inside;
+        }
+
+        @Override
+        public boolean isInside (Rectangle rectangle) {
+
+            return inside;
+        }
+    }
+
 
     Drawing drawing;
 
@@ -83,8 +129,7 @@ public class DrawingTest extends Tester {
         try {
             drawing.putElement(element);
             Collection<Element> contents = drawing.getUnlockedContents();
-            Assert.assertTrue("The element should be in the drawing!", contents
-                    .contains(element));
+            Assert.assertTrue("The element should be in the drawing!", contents.contains(element));
         }
         catch (NullArgumentException e) {
             e.printStackTrace();
@@ -133,8 +178,7 @@ public class DrawingTest extends Tester {
         }
 
         // Make sure it's not there
-        Assert.assertFalse("The drawing should not contain this line.",
-                contents.contains(line));
+        Assert.assertFalse("The drawing should not contain this line.", contents.contains(line));
 
         // Remove it again
         try {
@@ -166,55 +210,14 @@ public class DrawingTest extends Tester {
     }
 
     @Test
-    public void testSelectionIntersection () {
-
-        // TODO Arrumar quando tiver interseccao
-        // Element line1 = createSafeLine(0.1, 0.1, 0.9, 0.9);
-        // Element line2 = createSafeLine(0.5, 0.5, 2, 2);
-        Element line1 = null;
-        Element line2 = null;
-        Rectangle rect1 = new Rectangle(0, 0, 1, 1);
-        Rectangle rect2 = new Rectangle(0, 0, -0.5, -0.5);
-        try {
-            putSafeElementOnDrawing(line1, drawing);
-            Set<Element> sel = drawing.getSelectionIntersection(rect1);
-            Assert.assertTrue("The line should be selected", sel
-                    .contains(line1));
-
-            putSafeElementOnDrawing(line2, drawing);
-            sel = drawing.getSelectionIntersection(rect1);
-            Assert.assertTrue("The lines should be selected", sel
-                    .contains(line1)
-                    && sel.contains(line2));
-
-            sel = drawing.getSelectionIntersection(rect2);
-            Assert.assertTrue("The lines should not be selected",
-                    sel.size() == 0);
-        }
-        catch (NullArgumentException e) {
-            e.printStackTrace();
-            Assert.fail("Should not throw this exception.");
-        }
-
-        try {
-            drawing.getSelectionIntersection(null);
-            Assert.fail("Should not accept null rectangle.");
-        }
-        catch (NullArgumentException e) {
-            /* Should throw this exception */
-        }
-    }
-
-    @Test
     public void testSelectionInside () {
 
-        // TODO arrumar com mock certo
-        Element line1 = null;// createSafeLine(0.1, 0.1, 14.9, 14.9);
-        Element line2 = null;// createSafeLine(15, 0, 15, 15);
-        Element line3 = null;// createSafeLine(1, 2, 2, 3);
-        Element line4 = null;// createSafeLine(1, 0, 1, 16);
-        Element line5 = null;// createSafeLine(16, 16, 17, 17);
-        Element infiniteLine = null;// createSafeInfiniteLine(0, 0, 15, 15);
+        Element line1 = new ContainedStubElement(true);
+        Element line2 = new ContainedStubElement(false);
+        Element line3 = new ContainedStubElement(true);
+        Element line4 = new ContainedStubElement(false);
+        Element line5 = new ContainedStubElement(false);
+        Element infiniteLine = new ContainedStubElement(false);
 
         Rectangle rectSelection = new Rectangle(0, 0, 15, 15);
 
@@ -239,25 +242,20 @@ public class DrawingTest extends Tester {
 
         Assert.assertTrue("The line should be selected", sel.contains(line1));
         Assert.assertTrue("The line should be selected", sel.contains(line3));
-        Assert.assertTrue("The line should not be selected", sel
-                .contains(line2));
 
-        Assert.assertFalse("The line should not be selected", sel
-                .contains(line4));
-        Assert.assertFalse("The line should not be selected", sel
-                .contains(line5));
-        Assert.assertFalse("The line should not be selected", sel
-                .contains(infiniteLine));
+        Assert.assertFalse("The line should not be selected", sel.contains(line2));
+        Assert.assertFalse("The line should not be selected", sel.contains(line4));
+        Assert.assertFalse("The line should not be selected", sel.contains(line5));
+        Assert.assertFalse("The line should not be selected", sel.contains(infiniteLine));
     }
 
     @Test
     public void testBoundaryCalculations () {
 
-        // TODO Arrumar
-        Element line0 = null;// createSafeLine(10.0, 5.0, 10.0, 10.0);
-        Element line1 = null;// createSafeLine(0.0, 0.0, 15.0, 20.0);
-        Element line2 = null;// createSafeLine( -5.0, -2.0, 16.0, 17.0);
-        Element xLine = null;// createSafeInfiniteLine(0.0, 0.0, 1.0, -1.0);
+        Element line0 = new BoundedStubElement(10.0, 5.0, 10.0, 10.0);
+        Element line1 = new BoundedStubElement(0.0, 0.0, 15.0, 20.0);
+        Element line2 = new BoundedStubElement( -5.0, -2.0, 16.0, 17.0);
+        Element xLine = new BoundedStubElement();
 
         Rectangle expectedBoundary = null;
         Rectangle realBoundary = null;
@@ -287,17 +285,12 @@ public class DrawingTest extends Tester {
         Assert.assertEquals(expectedBoundary, realBoundary);
     }
 
-    @Test
-    public void testUndo () {
-
-        // TODO Refazer
-    }
+    // TODO Test undo on the drawing
 
     @Test
     public void testSetCurrentLayer () {
 
-        Layer layer = new Layer(Constant.RED, "layerTest",
-                LineStyle.CONTINUOUS, 2);
+        Layer layer = new Layer(Constant.RED, "layerTest", LineStyle.CONTINUOUS, 2);
         Layer otherLayer = drawing.getCurrentLayer();
         drawing.addLayer(layer);
 
@@ -321,8 +314,7 @@ public class DrawingTest extends Tester {
     }
 
     /**
-     * Removes an element known to be safe in the drawing. Fails if any
-     * exception is thrown.
+     * Removes an element known to be safe in the drawing. Fails if any exception is thrown.
      * 
      * @param element
      *            The element to remove from the drawing.
@@ -346,31 +338,26 @@ public class DrawingTest extends Tester {
     public void equalsOnlyIfHasTheSameFile () throws Exception {
 
         assertTrue("A drawing equals itself", drawing.equals(drawing));
-        assertEquals("The hashcode of a drawing must be the same of itself",
-                drawing.hashCode(), drawing.hashCode());
+        assertEquals("The hashcode of a drawing must be the same of itself", drawing.hashCode(),
+                drawing.hashCode());
 
         assertFalse("A drawing is never equal null", drawing.equals(null));
-        assertFalse("A drawing is never equal a random Object", drawing
-                .equals(new Object()));
+        assertFalse("A drawing is never equal a random Object", drawing.equals(new Object()));
 
         Drawing other = new Drawing(null);
-        assertFalse("A new drawing does not equal a new drawing", drawing
-                .equals(other));
+        assertFalse("A new drawing does not equal a new drawing", drawing.equals(other));
 
         other.setFile(new File("test.xml"));
-        assertFalse("A new drawing does not equal a drawing with a file",
-                drawing.equals(other));
+        assertFalse("A new drawing does not equal a drawing with a file", drawing.equals(other));
 
         drawing.setFile(new File("another.xml"));
-        assertFalse(
-                "A drawing with a file does not equal a drawing with another file",
-                drawing.equals(other));
+        assertFalse("A drawing with a file does not equal a drawing with another file", drawing
+                .equals(other));
 
         drawing.setFile(new File("test.xml"));
-        assertTrue("A drawing with a file equals a drawing with the same file",
-                drawing.equals(other));
-        assertEquals(
-                "The hashcode of a drawing must be the same of an equal drawing",
-                drawing.hashCode(), other.hashCode());
+        assertTrue("A drawing with a file equals a drawing with the same file", drawing
+                .equals(other));
+        assertEquals("The hashcode of a drawing must be the same of an equal drawing", drawing
+                .hashCode(), other.hashCode());
     }
 }

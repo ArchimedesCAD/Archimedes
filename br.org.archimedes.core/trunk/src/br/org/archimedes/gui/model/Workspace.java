@@ -10,7 +10,17 @@
  * This file was created on 2006/03/30, 00:03:02, by Hugo Corbucci.<br>
  * It is part of package br.org.archimedes.gui.model on the br.org.archimedes.core project.<br>
  */
+
 package br.org.archimedes.gui.model;
+
+import br.org.archimedes.exceptions.NoActiveDrawingException;
+import br.org.archimedes.exceptions.NullArgumentException;
+import br.org.archimedes.model.Drawing;
+import br.org.archimedes.model.Element;
+import br.org.archimedes.model.Point;
+import br.org.archimedes.model.Rectangle;
+import br.org.archimedes.model.ReferencePoint;
+import br.org.archimedes.model.Vector;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -22,15 +32,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Observable;
 import java.util.Properties;
-
-import br.org.archimedes.exceptions.NoActiveDrawingException;
-import br.org.archimedes.exceptions.NullArgumentException;
-import br.org.archimedes.model.Drawing;
-import br.org.archimedes.model.Element;
-import br.org.archimedes.model.Point;
-import br.org.archimedes.model.Rectangle;
-import br.org.archimedes.model.ReferencePoint;
-import br.org.archimedes.model.Vector;
 
 /**
  * Class that models the user interface.<BR>
@@ -62,9 +63,8 @@ public class Workspace extends Observable {
      */
     public Workspace () {
 
-        currentZoom = -1;
         mouseDown = false;
-        /* Tests depends on the size of the initial viewport */
+        currentZoom = -1;
         currentViewport = new Point(0.0, 0.0);
         clipboard = new ArrayList<Element>();
         mousePositionManager = new MousePositionManager();
@@ -143,8 +143,8 @@ public class Workspace extends Observable {
      * @param property
      *            Property to be set.
      * @param value
-     *            The value this property should become. (Will use the toString
-     *            method of this value).
+     *            The value this property should become. (Will use the toString method of this
+     *            value).
      */
     private void setProperty (String property, Object value) {
 
@@ -200,8 +200,8 @@ public class Workspace extends Observable {
      * @throws NoActiveDrawingException
      *             Thrown if there is no active drawing
      */
-    public void setViewport (Point viewportPosition, double zoom)
-            throws NullArgumentException, NoActiveDrawingException {
+    public void setViewport (Point viewportPosition, double zoom) throws NullArgumentException,
+            NoActiveDrawingException {
 
         if (viewportPosition == null) {
             throw new NullArgumentException();
@@ -223,8 +223,7 @@ public class Workspace extends Observable {
     }
 
     /**
-     * Converts a point from the model coordinate system to the screen
-     * coordinate system.
+     * Converts a point from the model coordinate system to the screen coordinate system.
      * 
      * @param modelPoint
      *            Point in the model coordinate system
@@ -238,14 +237,10 @@ public class Workspace extends Observable {
             throw new NullArgumentException();
         }
         updateCurrentZoom();
-        double xScreen = (modelPoint.getX() - currentViewport.getX())
-                * currentZoom;
-        double yScreen = (modelPoint.getY() - currentViewport.getY())
-                * currentZoom;
+        double xScreen = (modelPoint.getX() - currentViewport.getX()) * currentZoom;
+        double yScreen = (modelPoint.getY() - currentViewport.getY()) * currentZoom;
 
-        Point screenPoint = new Point(xScreen, yScreen);
-
-        return screenPoint;
+        return new Point(xScreen, yScreen);
     }
 
     /**
@@ -277,8 +272,7 @@ public class Workspace extends Observable {
     }
 
     /**
-     * Converts a point from the screen coordinate system to the model
-     * coordinate system.
+     * Converts a point from the screen coordinate system to the model coordinate system.
      * 
      * @param screenPoint
      *            Point in the screen coordinate system
@@ -294,19 +288,14 @@ public class Workspace extends Observable {
         updateCurrentZoom();
         double zoomFactor = 1.0 / currentZoom;
 
-        double xModel = zoomFactor * screenPoint.getX()
-                + currentViewport.getX();
-        double yModel = zoomFactor * screenPoint.getY()
-                + currentViewport.getY();
+        double xModel = zoomFactor * screenPoint.getX() + currentViewport.getX();
+        double yModel = zoomFactor * screenPoint.getY() + currentViewport.getY();
 
-        Point modelPoint = new Point(xModel, yModel);
-
-        return modelPoint;
+        return new Point(xModel, yModel);
     }
 
     /**
-     * Converts a vector from the screen coordinate system to the model
-     * coordinate system.
+     * Converts a vector from the screen coordinate system to the model coordinate system.
      * 
      * @param screenVector
      *            Vector in the screen coordinate system
@@ -314,8 +303,7 @@ public class Workspace extends Observable {
      * @throws NullArgumentException
      *             Thrown if the screen vector is null
      */
-    public Vector screenToModel (Vector screenVector)
-            throws NullArgumentException {
+    public Vector screenToModel (Vector screenVector) throws NullArgumentException {
 
         if (screenVector == null) {
             throw new NullArgumentException();
@@ -326,9 +314,7 @@ public class Workspace extends Observable {
 
         Point endingPoint = new Point(x, y);
 
-        Vector modelVector = new Vector(new Point(0, 0), endingPoint);
-
-        return modelVector;
+        return new Vector(new Point(0, 0), endingPoint);
     }
 
     /**
@@ -381,18 +367,16 @@ public class Workspace extends Observable {
             double zoomFactor = 1 / currentZoom;
             double width = windowSize.getWidth();
             double height = windowSize.getHeight();
-            result = new Rectangle(currentViewport.getX()
-                    - (width * zoomFactor) / 2, currentViewport.getY()
-                    - (height * zoomFactor) / 2, currentViewport.getX()
-                    + (width * zoomFactor) / 2, currentViewport.getY()
-                    + (height * zoomFactor) / 2);
+            result = new Rectangle(currentViewport.getX() - (width * zoomFactor) / 2,
+                    currentViewport.getY() - (height * zoomFactor) / 2, currentViewport.getX()
+                            + (width * zoomFactor) / 2, currentViewport.getY()
+                            + (height * zoomFactor) / 2);
         }
         return result;
     }
 
     /**
-     * @return Returns the gripped mouse position, or the actual if there's
-     *         nothing to grip.
+     * @return Returns the gripped mouse position, or the actual if there's nothing to grip.
      */
     public Point getMousePosition () {
 
@@ -408,8 +392,7 @@ public class Workspace extends Observable {
     }
 
     /**
-     * @return Returns the gripped mouse position, or null if there's nothing to
-     *         grip.
+     * @return Returns the gripped mouse position, or null if there's nothing to grip.
      */
     public ReferencePoint getGripMousePosition () {
 
@@ -499,8 +482,8 @@ public class Workspace extends Observable {
             NoActiveDrawingException {
 
         if (nextViewport != null) {
-            setViewport(nextViewport, br.org.archimedes.Utils.getController()
-                    .getActiveDrawing().getZoom());
+            setViewport(nextViewport, br.org.archimedes.Utils.getController().getActiveDrawing()
+                    .getZoom());
         }
         else {
             throw new NullArgumentException();
@@ -558,8 +541,8 @@ public class Workspace extends Observable {
     }
 
     /**
-     * @return The absolute path to the temporary folder that should be used
-     *         (always finished by a file separator).
+     * @return The absolute path to the temporary folder that should be used (always finished by a
+     *         file separator).
      */
     public String getTmpFolder () {
 
@@ -703,9 +686,8 @@ public class Workspace extends Observable {
     }
 
     /**
-     * Attempts to open the workspace properties file. If the .archimedes
-     * directory doesn't exist, creates one. If the file doesn't exist, creates
-     * it.
+     * Attempts to open the workspace properties file. If the .archimedes directory doesn't exist,
+     * creates one. If the file doesn't exist, creates it.
      * 
      * @return The workspace properties file.
      */
@@ -723,16 +705,14 @@ public class Workspace extends Observable {
             System.err.println("DotArchimedesDirNotExist"); //$NON-NLS-1$
         }
         else {
-            propertiesFile = new File(dirPath + File.separator
-                    + "workspace.properties"); //$NON-NLS-1$
+            propertiesFile = new File(dirPath + File.separator + "workspace.properties"); //$NON-NLS-1$
         }
 
         return propertiesFile;
     }
 
     /**
-     * @return A collection with the drawings that were open at the last session
-     *         of Archimedes.
+     * @return A collection with the drawings that were open at the last session of Archimedes.
      */
     public Collection<Drawing> getLastSessionDrawings () {
 
@@ -744,15 +724,13 @@ public class Workspace extends Observable {
         Collection<Drawing> openDrawings = new ArrayList<Drawing>();
 
         /*
-         * for (String filePath : filePaths) { Drawing drawing = null; String
-         * fileToOpen; if (restore) { fileToOpen = getTmpFolder() +
-         * filePath.hashCode() + ".tmp"; //$NON-NLS-1$ File file = new
-         * File(fileToOpen); // TODO load file } if (drawing == null) {
-         * fileToOpen = filePath; File file = new File(fileToOpen); // TODO Load
-         * file } if (drawing != null) { openDrawings.add(drawing); String
-         * tmpFilePath = getTmpFolder() + drawing.getFile().hashCode() + ".tmp";
-         * //$NON-NLS-1$ File tmpFile = new File(tmpFilePath); try {
-         * tmpFile.delete(); } catch (Exception e) {} } }
+         * for (String filePath : filePaths) { Drawing drawing = null; String fileToOpen; if
+         * (restore) { fileToOpen = getTmpFolder() + filePath.hashCode() + ".tmp"; //$NON-NLS-1$
+         * File file = new File(fileToOpen); // TODO load file } if (drawing == null) { fileToOpen =
+         * filePath; File file = new File(fileToOpen); // TODO Load file } if (drawing != null) {
+         * openDrawings.add(drawing); String tmpFilePath = getTmpFolder() +
+         * drawing.getFile().hashCode() + ".tmp"; //$NON-NLS-1$ File tmpFile = new
+         * File(tmpFilePath); try { tmpFile.delete(); } catch (Exception e) {} } }
          */
         return openDrawings;
     }
