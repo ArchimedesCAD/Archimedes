@@ -17,8 +17,6 @@ package br.org.archimedes;
 import br.org.archimedes.exceptions.IllegalActionException;
 import br.org.archimedes.exceptions.NoActiveDrawingException;
 import br.org.archimedes.exceptions.NullArgumentException;
-import br.org.archimedes.gui.model.Workspace;
-import br.org.archimedes.gui.rca.Activator;
 import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
@@ -55,16 +53,10 @@ public abstract class Tester {
     }
 
     @Before
-    public void setUp () throws Exception {
-
-        if (Activator.getDefault() != null) { // plugin tests
-            Workspace workspace = br.org.archimedes.Utils.getWorkspace();
-            if (workspace.isOrtoOn()) {
-                workspace.setOrtoOn(false);
-            }
-        }
+    public void setUp() throws Exception{
+        // Nothing to set I think
     }
-
+    
     /**
      * Asserts two points are the same, considering precision errors.
      * 

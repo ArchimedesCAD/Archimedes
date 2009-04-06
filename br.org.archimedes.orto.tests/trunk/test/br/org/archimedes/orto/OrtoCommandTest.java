@@ -12,10 +12,11 @@
  */
 package br.org.archimedes.orto;
 
-import junit.framework.TestCase;
 import br.org.archimedes.gui.model.Workspace;
 import br.org.archimedes.interfaces.Command;
 import br.org.archimedes.model.Drawing;
+
+import junit.framework.TestCase;
 
 
 /**
@@ -42,7 +43,7 @@ public class OrtoCommandTest extends TestCase {
             ortoCommand.doIt(null);
         }
         catch (Exception e) {
-            fail("Should not throw any Exception.");
+            fail("Should not throw any Exception but threw " + e.getMessage());
         }
         assertEquals("The orto state should have changed.", !orto, workspace
                 .isOrtoOn());
@@ -51,7 +52,7 @@ public class OrtoCommandTest extends TestCase {
             ortoCommand.doIt(drawing);
         }
         catch (Exception e) {
-            fail("Should not throw any exception");
+            fail("Should not throw any Exception but threw " + e.getMessage());
         }
 
         assertEquals("The orto state should have changed.", orto, workspace

@@ -10,21 +10,29 @@
  * This file was created on 2007/04/07, 17:21:49, by Hugo Corbucci.<br>
  * It is part of package br.org.archimedes.orto on the br.org.archimedes.orto project.<br>
  */
+
 package br.org.archimedes.orto;
 
+import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.IHandler;
 import org.eclipse.core.commands.IHandlerListener;
+import org.eclipse.core.commands.State;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.commands.ICommandService;
+import org.eclipse.ui.commands.IElementUpdater;
+import org.eclipse.ui.menus.UIElement;
 
-import br.org.archimedes.gui.model.Workspace;
+import java.util.Map;
 
 /**
  * Belongs to package br.org.archimedes.orto.
  * 
- * @author nitao
+ * @author Hugo Corbucci
  */
-public class OrtoHandler implements IHandler {
+public class OrtoHandler implements IHandler, IElementUpdater {
+
 
     /**
      * @see org.eclipse.core.commands.IHandler#addHandlerListener(org.eclipse.core.commands.IHandlerListener)
@@ -48,11 +56,14 @@ public class OrtoHandler implements IHandler {
      */
     public Object execute (ExecutionEvent event) throws ExecutionException {
 
-        Workspace workspace = br.org.archimedes.Utils.getWorkspace();
-        boolean orto = workspace.isOrtoOn();
-        workspace.setOrtoOn( !orto);
+        ICommandService service = (ICommandService) PlatformUI.getWorkbench().getService(
+                ICommandService.class);
+        Command command = service.getCommand(Activator.ORTO_COMMAND_ID);
+        State state = command.getState(Activator.ORTO_STATE);
+        boolean newValue = !(Boolean) state.getValue();
+        state.setValue(newValue);
 
-        return !orto;
+        return newValue;
     }
 
     /**
@@ -78,5 +89,19 @@ public class OrtoHandler implements IHandler {
 
         // Ignores attempts to remove handlers
 
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see org.eclipse.ui.commands.IElementUpdater#updateElement(org.eclipse.ui.menus.UIElement,
+     * java.util.Map)
+     */
+    @SuppressWarnings("unchecked")
+    public void updateElement (UIElement element, Map parameters) {
+
+        Boolean newOrtoValue = (Boolean) parameters.get(Activator.ORTO_STATE);
+        if(newOrtoValue != null) {
+            element.setChecked(newOrtoValue);
+        }
     }
 }

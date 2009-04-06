@@ -10,6 +10,7 @@
  * This file was created on 2007/03/25, 11:08:12, by Hugo Corbucci.<br>
  * It is part of package br.org.archimedes.orto on the br.org.archimedes.orto project.<br>
  */
+
 package br.org.archimedes.orto;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
@@ -20,43 +21,54 @@ import org.osgi.framework.BundleContext;
  */
 public class Activator extends AbstractUIPlugin {
 
-	// The plug-in ID
-	public static final String PLUGIN_ID = "br.org.archimedes.orto"; //$NON-NLS-1$
+    // The plug-in ID
+    public static final String PLUGIN_ID = "br.org.archimedes.orto"; //$NON-NLS-1$
 
-	// The shared instance
-	private static Activator plugin;
-	
-	/**
-	 * The constructor
-	 */
-	public Activator() {
-		plugin = this;
-	}
+    // The orto command ID
+    public static final String ORTO_COMMAND_ID = "br.org.archimedes.orto.command";
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
-	 */
-	public void start(BundleContext context) throws Exception {
-		super.start(context);
-	}
+    // The orto state ID
+    public static final String ORTO_STATE = "br.org.archimedes.orto.state";
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
-	 */
-	public void stop(BundleContext context) throws Exception {
-		plugin = null;
-		super.stop(context);
-	}
+    // The shared instance
+    private static Activator plugin;
 
-	/**
-	 * Returns the shared instance
-	 *
-	 * @return the shared instance
-	 */
-	public static Activator getDefault() {
-		return plugin;
-	}
+
+    /**
+     * The constructor
+     */
+    public Activator () {
+
+        plugin = this;
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
+     */
+    public void start (BundleContext context) throws Exception {
+
+        super.start(context);
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
+     */
+    public void stop (BundleContext context) throws Exception {
+
+        plugin = null;
+        super.stop(context);
+    }
+
+    /**
+     * Returns the shared instance
+     * 
+     * @return the shared instance
+     */
+    public static Activator getDefault () {
+
+        return plugin;
+    }
 
 }

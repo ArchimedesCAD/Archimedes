@@ -10,6 +10,7 @@
  * This file was created on 2007/04/08, 17:40:08, by Hugo Corbucci.<br>
  * It is part of package br.org.archimedes.snap on the br.org.archimedes.snap project.<br>
  */
+
 package br.org.archimedes.snap;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
@@ -20,43 +21,54 @@ import org.osgi.framework.BundleContext;
  */
 public class Activator extends AbstractUIPlugin {
 
-	// The plug-in ID
-	public static final String PLUGIN_ID = "br.org.archimedes.snap"; //$NON-NLS-1$
+    // The plug-in ID
+    public static final String PLUGIN_ID = "br.org.archimedes.snap"; //$NON-NLS-1$
 
-	// The shared instance
-	private static Activator plugin;
-	
-	/**
-	 * The constructor
-	 */
-	public Activator() {
-		plugin = this;
-	}
+    // The snap command id
+    public static final String SNAP_COMMAND_ID = "br.org.archimedes.snap.command"; //$NON-NLS-1$
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
-	 */
-	public void start(BundleContext context) throws Exception {
-		super.start(context);
-	}
+    // The snap state id
+    public static final String SNAP_STATE = "br.org.archimedes.snap.state"; //$NON-NLS-1$
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
-	 */
-	public void stop(BundleContext context) throws Exception {
-		plugin = null;
-		super.stop(context);
-	}
+    // The shared instance
+    private static Activator plugin;
 
-	/**
-	 * Returns the shared instance
-	 *
-	 * @return the shared instance
-	 */
-	public static Activator getDefault() {
-		return plugin;
-	}
+
+    /**
+     * The constructor
+     */
+    public Activator () {
+
+        plugin = this;
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
+     */
+    public void start (BundleContext context) throws Exception {
+
+        super.start(context);
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
+     */
+    public void stop (BundleContext context) throws Exception {
+
+        plugin = null;
+        super.stop(context);
+    }
+
+    /**
+     * Returns the shared instance
+     * 
+     * @return the shared instance
+     */
+    public static Activator getDefault () {
+
+        return plugin;
+    }
 
 }

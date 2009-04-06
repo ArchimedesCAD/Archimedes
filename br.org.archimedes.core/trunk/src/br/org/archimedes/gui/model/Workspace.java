@@ -22,6 +22,11 @@ import br.org.archimedes.model.Rectangle;
 import br.org.archimedes.model.ReferencePoint;
 import br.org.archimedes.model.Vector;
 
+import org.eclipse.core.commands.Command;
+import org.eclipse.core.commands.State;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.commands.ICommandService;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -38,6 +43,14 @@ import java.util.Properties;
  * Belongs to package br.org.archimedes.gui.model.
  */
 public class Workspace extends Observable {
+
+    private static final String SNAP_STATE = "br.org.archimedes.snap.state";
+
+    private static final String ORTO_STATE = "br.org.archimedes.orto.state";
+
+    private static final String SNAP_COMMAND_ID = "br.org.archimedes.snap.command";
+
+    private static final String ORTO_COMMAND_ID = "br.org.archimedes.orto.command";
 
     private Properties workspaceProperties;
 
@@ -72,23 +85,29 @@ public class Workspace extends Observable {
 
         workspaceProperties = new Properties();
         loadProperties();
+
+        setValueOf(ORTO_COMMAND_ID, ORTO_STATE, false);
+        setValueOf(SNAP_COMMAND_ID, SNAP_STATE, true);
     }
 
     /**
-     * Retrieves a boolean property from the workspace properties.
-     * 
-     * @param property
-     *            The property to be retreived.
-     * @param defaultValue
-     *            The default value of this property.
-     * @return the value of this property.
+     * @param commandId
+     *            The command id that keeps the state
+     * @param stateId
+     *            The state id to retrieve
+     * @param newValue
+     *            The new value for this state (true or false)
      */
-    private boolean getBooleanProperty (String property, boolean defaultValue) {
+    private void setValueOf (String commandId, String stateId, boolean newValue) {
 
-        String propertyValue = workspaceProperties.getProperty(property, "" //$NON-NLS-1$
-                + defaultValue);
-
-        return Boolean.parseBoolean(propertyValue);
+        ICommandService service = (ICommandService) PlatformUI.getWorkbench().getService(
+                ICommandService.class);
+        Command command = service.getCommand(commandId);
+        if(command == null)
+            return;
+        
+        State state = command.getState(stateId);
+        state.setValue(newValue);
     }
 
     /**
@@ -156,21 +175,35 @@ public class Workspace extends Observable {
      */
     public boolean isOrtoOn () {
 
-        return getBooleanProperty("orto", false); //$NON-NLS-1$
+        return getValueOf(ORTO_COMMAND_ID, ORTO_STATE); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     /**
-     * @param ortoOn
-     *            True if the orto should be On, false otherwise.
+     * @return Returns true if snap is on, false otherwise
      */
-    public void setOrtoOn (boolean ortoOn) {
+    public boolean isSnapOn () {
 
-        if (ortoOn != isOrtoOn()) {
-            String propetyName = "orto"; //$NON-NLS-1$
-            setProperty(propetyName, ortoOn); //$NON-NLS-1$
-            setChanged();
-            notifyObservers(propetyName); //$NON-NLS-1$
-        }
+        return getValueOf(SNAP_COMMAND_ID, SNAP_STATE); //$NON-NLS-1$ //$NON-NLS-2$
+    }
+
+    /**
+     * @param commandId
+     *            The command id that keeps the state
+     * @param stateId
+     *            The state id to retrieve
+     * @return The value of this state (true or false)
+     */
+    private boolean getValueOf (String commandId, String stateId) {
+
+        ICommandService service = (ICommandService) PlatformUI.getWorkbench().getService(
+                ICommandService.class);
+        Command command = service.getCommand(commandId);
+        if(command == null)
+            return false;
+        
+        State state = command.getState(stateId);
+
+        return (Boolean) state.getValue();
     }
 
     /**
@@ -487,30 +520,6 @@ public class Workspace extends Observable {
         }
         else {
             throw new NullArgumentException();
-        }
-    }
-
-    /**
-     * @return Returns true if snap is on, false otherwise
-     */
-    public boolean isSnapOn () {
-
-        return getBooleanProperty("snap", true); //$NON-NLS-1$
-    }
-
-    /**
-     * Sets the value of snap on.
-     * 
-     * @param snapOn
-     *            The new value.
-     */
-    public void setSnapOn (boolean snapOn) {
-
-        if (snapOn != isSnapOn()) {
-            String propertyName = "snap"; //$NON-NLS-1$
-            setProperty(propertyName, snapOn); //$NON-NLS-1$
-            setChanged();
-            notifyObservers(propertyName); //$NON-NLS-1$
         }
     }
 

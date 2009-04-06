@@ -10,21 +10,28 @@
  * This file was created on 2007/04/07, 17:21:49, by Hugo Corbucci.<br>
  * It is part of package br.org.archimedes.snap on the br.org.archimedes.snap project.<br>
  */
+
 package br.org.archimedes.snap;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.IHandler;
 import org.eclipse.core.commands.IHandlerListener;
+import org.eclipse.core.commands.State;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.commands.ICommandService;
+import org.eclipse.ui.commands.IElementUpdater;
+import org.eclipse.ui.menus.UIElement;
 
-import br.org.archimedes.gui.model.Workspace;
+import java.util.Collections;
+import java.util.Map;
 
 /**
  * Belongs to package br.org.archimedes.snap.
  * 
  * @author nitao
  */
-public class SnapHandler implements IHandler {
+public class SnapHandler implements IHandler, IElementUpdater {
 
     /**
      * @see org.eclipse.core.commands.IHandler#addHandlerListener(org.eclipse.core.commands.IHandlerListener)
@@ -48,11 +55,16 @@ public class SnapHandler implements IHandler {
      */
     public Object execute (ExecutionEvent event) throws ExecutionException {
 
-        Workspace workspace = br.org.archimedes.Utils.getWorkspace();
-        boolean snap = workspace.isSnapOn();
-        workspace.setSnapOn( !snap);
+        ICommandService service = (ICommandService) PlatformUI.getWorkbench().getService(
+                ICommandService.class);
+        org.eclipse.core.commands.Command command = service.getCommand(Activator.SNAP_COMMAND_ID);
+        State state = command.getState(Activator.SNAP_STATE);
+        Boolean newValue = !(Boolean) state.getValue();
+        state.setValue(newValue);
 
-        return !snap;
+        service.refreshElements(Activator.SNAP_COMMAND_ID, Collections.singletonMap(
+                Activator.SNAP_STATE, newValue));
+        return newValue;
     }
 
     /**
@@ -78,5 +90,19 @@ public class SnapHandler implements IHandler {
 
         // Ignores attempts to remove handlers
 
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see org.eclipse.ui.commands.IElementUpdater#updateElement(org.eclipse.ui.menus.UIElement,
+     * java.util.Map)
+     */
+    @SuppressWarnings("unchecked")
+    public void updateElement (UIElement element, Map parameters) {
+
+        Boolean newOrtoValue = (Boolean) parameters.get(Activator.SNAP_STATE);
+        if (newOrtoValue != null) {
+            element.setChecked(newOrtoValue);
+        }
     }
 }
