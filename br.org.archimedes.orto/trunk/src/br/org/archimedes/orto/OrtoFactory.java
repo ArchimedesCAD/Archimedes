@@ -10,15 +10,16 @@
  * This file was created on 2006/03/30, 11:08:12, by Hugo Corbucci.<br>
  * It is part of package br.org.archimedes.orto on the br.org.archimedes.orto project.<br>
  */
-package br.org.archimedes.orto;
 
-import java.util.ArrayList;
-import java.util.List;
+package br.org.archimedes.orto;
 
 import br.org.archimedes.exceptions.InvalidParameterException;
 import br.org.archimedes.factories.CommandFactory;
 import br.org.archimedes.interfaces.Command;
 import br.org.archimedes.interfaces.Parser;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Belongs to package br.org.archimedes.commands.
@@ -26,6 +27,10 @@ import br.org.archimedes.interfaces.Parser;
  * @author night
  */
 public class OrtoFactory implements CommandFactory {
+
+    public static final String ORTO_COMMAND_ID = "br.org.archimedes.orto.command";
+
+    public static final String ORTO_STATE = "br.org.archimedes.orto.state";
 
     private Command command;
 

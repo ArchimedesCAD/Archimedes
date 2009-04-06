@@ -53,5 +53,5 @@
             commandId="br.org.archimedes.snap.command"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="F3"/>
-   </extension>   
+   </extension>
 </plugin>

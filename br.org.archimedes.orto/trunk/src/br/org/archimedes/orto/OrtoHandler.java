@@ -13,6 +13,8 @@
 
 package br.org.archimedes.orto;
 
+import br.org.archimedes.Utils;
+
 import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -32,7 +34,6 @@ import java.util.Map;
  * @author Hugo Corbucci
  */
 public class OrtoHandler implements IHandler, IElementUpdater {
-
 
     /**
      * @see org.eclipse.core.commands.IHandler#addHandlerListener(org.eclipse.core.commands.IHandlerListener)
@@ -58,11 +59,12 @@ public class OrtoHandler implements IHandler, IElementUpdater {
 
         ICommandService service = (ICommandService) PlatformUI.getWorkbench().getService(
                 ICommandService.class);
-        Command command = service.getCommand(Activator.ORTO_COMMAND_ID);
-        State state = command.getState(Activator.ORTO_STATE);
+        Command command = service.getCommand(OrtoFactory.ORTO_COMMAND_ID);
+        State state = command.getState(OrtoFactory.ORTO_STATE);
         boolean newValue = !(Boolean) state.getValue();
         state.setValue(newValue);
 
+        service.refreshElements(OrtoFactory.ORTO_COMMAND_ID, null);
         return newValue;
     }
 
@@ -88,7 +90,6 @@ public class OrtoHandler implements IHandler, IElementUpdater {
     public void removeHandlerListener (IHandlerListener handlerListener) {
 
         // Ignores attempts to remove handlers
-
     }
 
     /*
@@ -99,9 +100,6 @@ public class OrtoHandler implements IHandler, IElementUpdater {
     @SuppressWarnings("unchecked")
     public void updateElement (UIElement element, Map parameters) {
 
-        Boolean newOrtoValue = (Boolean) parameters.get(Activator.ORTO_STATE);
-        if(newOrtoValue != null) {
-            element.setChecked(newOrtoValue);
-        }
+        element.setChecked(Utils.getWorkspace().isOrtoOn());
     }
 }

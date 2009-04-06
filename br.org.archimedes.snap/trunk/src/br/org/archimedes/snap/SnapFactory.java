@@ -12,13 +12,13 @@
  */
 package br.org.archimedes.snap;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import br.org.archimedes.exceptions.InvalidParameterException;
 import br.org.archimedes.factories.CommandFactory;
 import br.org.archimedes.interfaces.Command;
 import br.org.archimedes.interfaces.Parser;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Belongs to package br.org.archimedes.snap.
@@ -27,6 +27,10 @@ import br.org.archimedes.interfaces.Parser;
  */
 public class SnapFactory implements CommandFactory {
 
+    public static final String SNAP_COMMAND_ID = "br.org.archimedes.snap.command";
+    
+    public static final String SNAP_STATE = "br.org.archimedes.snap.state";
+    
     private Command command;
 
 

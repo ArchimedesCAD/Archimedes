@@ -3,8 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Snap Plug-in
 Bundle-SymbolicName: br.org.archimedes.snap;singleton:=true
 Bundle-Version: 0.57.4
-Bundle-Activator: br.org.archimedes.snap.Activator
-Bundle-Vendor: Tarantulus Corp.
+Bundle-Vendor: Hugo Corbucci
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,

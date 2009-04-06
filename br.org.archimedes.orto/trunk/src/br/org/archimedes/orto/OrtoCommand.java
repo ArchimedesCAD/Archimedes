@@ -23,12 +23,10 @@ import org.eclipse.core.commands.State;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
 
-import java.util.Collections;
-
 /**
  * Belongs to package br.org.archimedes.factories.
  * 
- * @author jefsilva
+ * @author Jeferson R. Silva
  */
 public class OrtoCommand implements Command {
 
@@ -40,12 +38,11 @@ public class OrtoCommand implements Command {
 
         ICommandService service = (ICommandService) PlatformUI.getWorkbench().getService(
                 ICommandService.class);
-        org.eclipse.core.commands.Command command = service.getCommand(Activator.ORTO_COMMAND_ID);
-        State state = command.getState(Activator.ORTO_STATE);
+        org.eclipse.core.commands.Command command = service.getCommand(OrtoFactory.ORTO_COMMAND_ID);
+        State state = command.getState(OrtoFactory.ORTO_STATE);
         Boolean newValue = !(Boolean) state.getValue();
         state.setValue(newValue);
 
-        service.refreshElements(Activator.ORTO_COMMAND_ID, Collections.singletonMap(
-                Activator.ORTO_STATE, newValue));
+        service.refreshElements(OrtoFactory.ORTO_COMMAND_ID, null);
     }
 }

@@ -23,8 +23,6 @@ import org.eclipse.core.commands.State;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
 
-import java.util.Collections;
-
 /**
  * Belongs to package br.org.archimedes.factories.
  * 
@@ -40,12 +38,11 @@ public class SnapCommand implements Command {
 
         ICommandService service = (ICommandService) PlatformUI.getWorkbench().getService(
                 ICommandService.class);
-        org.eclipse.core.commands.Command command = service.getCommand(Activator.SNAP_COMMAND_ID);
-        State state = command.getState(Activator.SNAP_STATE);
+        org.eclipse.core.commands.Command command = service.getCommand(SnapFactory.SNAP_COMMAND_ID);
+        State state = command.getState(SnapFactory.SNAP_STATE);
         Boolean newValue = !(Boolean) state.getValue();
         state.setValue(newValue);
 
-        service.refreshElements(Activator.SNAP_COMMAND_ID, Collections.singletonMap(
-                Activator.SNAP_STATE, newValue));
+        service.refreshElements(SnapFactory.SNAP_COMMAND_ID, null);
     }
 }

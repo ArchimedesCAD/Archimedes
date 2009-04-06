@@ -44,13 +44,13 @@ import java.util.Properties;
  */
 public class Workspace extends Observable {
 
-    private static final String SNAP_STATE = "br.org.archimedes.snap.state";
-
+    private static final String ORTO_COMMAND_ID = "br.org.archimedes.orto.command";
+    
     private static final String ORTO_STATE = "br.org.archimedes.orto.state";
-
+    
     private static final String SNAP_COMMAND_ID = "br.org.archimedes.snap.command";
 
-    private static final String ORTO_COMMAND_ID = "br.org.archimedes.orto.command";
+    private static final String SNAP_STATE = "br.org.archimedes.snap.state";
 
     private Properties workspaceProperties;
 
@@ -85,7 +85,7 @@ public class Workspace extends Observable {
 
         workspaceProperties = new Properties();
         loadProperties();
-
+        
         setValueOf(ORTO_COMMAND_ID, ORTO_STATE, false);
         setValueOf(SNAP_COMMAND_ID, SNAP_STATE, true);
     }
@@ -105,9 +105,11 @@ public class Workspace extends Observable {
         Command command = service.getCommand(commandId);
         if(command == null)
             return;
-        
+
         State state = command.getState(stateId);
         state.setValue(newValue);
+        
+        service.refreshElements(commandId, null);
     }
 
     /**
@@ -198,9 +200,9 @@ public class Workspace extends Observable {
         ICommandService service = (ICommandService) PlatformUI.getWorkbench().getService(
                 ICommandService.class);
         Command command = service.getCommand(commandId);
-        if(command == null)
+        if (command == null)
             return false;
-        
+
         State state = command.getState(stateId);
 
         return (Boolean) state.getValue();

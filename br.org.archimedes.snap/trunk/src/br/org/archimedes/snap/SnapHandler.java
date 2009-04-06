@@ -13,6 +13,8 @@
 
 package br.org.archimedes.snap;
 
+import br.org.archimedes.Utils;
+
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.IHandler;
@@ -23,7 +25,6 @@ import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.ui.commands.IElementUpdater;
 import org.eclipse.ui.menus.UIElement;
 
-import java.util.Collections;
 import java.util.Map;
 
 /**
@@ -57,13 +58,12 @@ public class SnapHandler implements IHandler, IElementUpdater {
 
         ICommandService service = (ICommandService) PlatformUI.getWorkbench().getService(
                 ICommandService.class);
-        org.eclipse.core.commands.Command command = service.getCommand(Activator.SNAP_COMMAND_ID);
-        State state = command.getState(Activator.SNAP_STATE);
+        org.eclipse.core.commands.Command command = service.getCommand(SnapFactory.SNAP_COMMAND_ID);
+        State state = command.getState(SnapFactory.SNAP_STATE);
         Boolean newValue = !(Boolean) state.getValue();
         state.setValue(newValue);
 
-        service.refreshElements(Activator.SNAP_COMMAND_ID, Collections.singletonMap(
-                Activator.SNAP_STATE, newValue));
+        service.refreshElements(SnapFactory.SNAP_COMMAND_ID, null);
         return newValue;
     }
 
@@ -100,9 +100,6 @@ public class SnapHandler implements IHandler, IElementUpdater {
     @SuppressWarnings("unchecked")
     public void updateElement (UIElement element, Map parameters) {
 
-        Boolean newOrtoValue = (Boolean) parameters.get(Activator.SNAP_STATE);
-        if (newOrtoValue != null) {
-            element.setChecked(newOrtoValue);
-        }
+        element.setChecked(Utils.getWorkspace().isSnapOn());
     }
 }
