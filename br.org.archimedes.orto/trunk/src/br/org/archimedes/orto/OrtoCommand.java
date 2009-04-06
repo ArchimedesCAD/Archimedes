@@ -38,11 +38,11 @@ public class OrtoCommand implements Command {
 
         ICommandService service = (ICommandService) PlatformUI.getWorkbench().getService(
                 ICommandService.class);
-        org.eclipse.core.commands.Command command = service.getCommand(OrtoFactory.ORTO_COMMAND_ID);
-        State state = command.getState(OrtoFactory.ORTO_STATE);
+        org.eclipse.core.commands.Command command = service.getCommand(Activator.ORTO_COMMAND_ID);
+        State state = command.getState(Activator.ORTO_STATE);
         Boolean newValue = !(Boolean) state.getValue();
         state.setValue(newValue);
 
-        service.refreshElements(OrtoFactory.ORTO_COMMAND_ID, null);
+        service.refreshElements(Activator.ORTO_COMMAND_ID, null);
     }
 }

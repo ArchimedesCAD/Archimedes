@@ -59,12 +59,12 @@ public class OrtoHandler implements IHandler, IElementUpdater {
 
         ICommandService service = (ICommandService) PlatformUI.getWorkbench().getService(
                 ICommandService.class);
-        Command command = service.getCommand(OrtoFactory.ORTO_COMMAND_ID);
-        State state = command.getState(OrtoFactory.ORTO_STATE);
+        Command command = service.getCommand(Activator.ORTO_COMMAND_ID);
+        State state = command.getState(Activator.ORTO_STATE);
         boolean newValue = !(Boolean) state.getValue();
         state.setValue(newValue);
 
-        service.refreshElements(OrtoFactory.ORTO_COMMAND_ID, null);
+        service.refreshElements(Activator.ORTO_COMMAND_ID, null);
         return newValue;
     }
 
@@ -73,7 +73,7 @@ public class OrtoHandler implements IHandler, IElementUpdater {
      */
     public boolean isEnabled () {
 
-        return (br.org.archimedes.Utils.getController().isThereActiveDrawing());
+        return true;
     }
 
     /**

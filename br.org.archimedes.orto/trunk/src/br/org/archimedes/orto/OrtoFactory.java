@@ -28,10 +28,6 @@ import java.util.List;
  */
 public class OrtoFactory implements CommandFactory {
 
-    public static final String ORTO_COMMAND_ID = "br.org.archimedes.orto.command";
-
-    public static final String ORTO_STATE = "br.org.archimedes.orto.state";
-
     private Command command;
 
 

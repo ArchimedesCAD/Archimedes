@@ -17,6 +17,7 @@
                   commandId="br.org.archimedes.snap.command"
                   id="br.org.archimedes.snap.button"
                   label="%action.snap.label"
+                  mnemonic="%action.snap.mnemonic"
                   style="toggle"
                   tooltip="%action.snap.tooltip">
             </command>
@@ -28,7 +29,7 @@
                commandId="br.org.archimedes.snap.command"
                id="br.org.archimedes.snap.menubutton"
                label="%action.snap.label"
-               mnemonic="S"
+               mnemonic="%action.snap.mnemonic"
                style="toggle"
                tooltip="%action.snap.tooltip">
          </command>
@@ -53,5 +54,9 @@
             commandId="br.org.archimedes.snap.command"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="F3"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.startup">
+      <startup></startup>
    </extension>
 </plugin>

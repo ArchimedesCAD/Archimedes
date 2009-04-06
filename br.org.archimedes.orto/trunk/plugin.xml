@@ -18,6 +18,7 @@
                 commandId="br.org.archimedes.orto.command"
                 id="br.org.archimedes.orto.button"
                 label="%action.orto.label"
+                mnemonic="%action.orto.mnemonic"
                 style="toggle"
                 tooltip="%action.orto.tooltip">
           </command>
@@ -29,7 +30,7 @@
                commandId="br.org.archimedes.orto.command"
                id="br.org.archimedes.orto.menubutton"
                label="%action.orto.label"
-               mnemonic="S"
+               mnemonic="%action.snap.mnemonic"
                style="toggle"
                tooltip="%action.orto.tooltip">
          </command>
@@ -54,5 +55,9 @@
             commandId="br.org.archimedes.orto.command"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="F8"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.startup">
+      <startup></startup>
    </extension>
 </plugin>

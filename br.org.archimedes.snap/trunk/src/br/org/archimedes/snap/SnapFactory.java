@@ -27,10 +27,6 @@ import java.util.List;
  */
 public class SnapFactory implements CommandFactory {
 
-    public static final String SNAP_COMMAND_ID = "br.org.archimedes.snap.command";
-    
-    public static final String SNAP_STATE = "br.org.archimedes.snap.state";
-    
     private Command command;
 
 
