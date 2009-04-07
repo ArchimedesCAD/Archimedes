@@ -16,6 +16,11 @@
 
 package br.org.archimedes.semiline;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
+
 import br.org.archimedes.Constant;
 import br.org.archimedes.Geometrics;
 import br.org.archimedes.exceptions.InvalidArgumentException;
@@ -31,11 +36,6 @@ import br.org.archimedes.model.Rectangle;
 import br.org.archimedes.model.ReferencePoint;
 import br.org.archimedes.model.Vector;
 import br.org.archimedes.model.references.SquarePoint;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
 
 public class Semiline extends Element implements Offsetable {
 
@@ -141,7 +141,7 @@ public class Semiline extends Element implements Offsetable {
         directionPoint.setX(directionPoint.getX() + deltaX);
         directionPoint.setY(directionPoint.getY() + deltaY);
     }
-    
+
     /*
      * (non-Javadoc)
      * @see java.lang.Object#hashCode()
@@ -254,8 +254,7 @@ public class Semiline extends Element implements Offsetable {
 
     /*
      * (non-Javadoc)
-     * @see br.org.archimedes.model.Element#getProjectionOf(br.org
-     * .archimedes.model.Point)
+     * @see br.org.archimedes.model.Element#getProjectionOf(br.org .archimedes.model.Point)
      */
     public Point getProjectionOf (Point point) throws NullArgumentException {
 
@@ -280,8 +279,7 @@ public class Semiline extends Element implements Offsetable {
 
     /*
      * (non-Javadoc)
-     * @see br.org.archimedes.model.Element#getReferencePoints(br.org
-     * .archimedes.model.Rectangle)
+     * @see br.org.archimedes.model.Element#getReferencePoints(br.org .archimedes.model.Rectangle)
      */
     public Collection<ReferencePoint> getReferencePoints (Rectangle area) {
 
@@ -338,10 +336,9 @@ public class Semiline extends Element implements Offsetable {
     /**
      * @param rectangle
      *            The rectangle that we are looking to match to
-     * @return null if this semi line does not cross the rectangle, crosses it on infinite points or
-     *         crosses it on a corner. Otherwise it will return two points that constitute the
-     *         intersections of this semiline with the rectangle or the starting point with an
-     *         intersection.
+     * @return An empty list, if this line does not cross the rectangle; a list with one point, if
+     *         the starting point is inside the rectangle; or a list with two points, if the
+     *         semiline crosses the rectangle
      * @throws NullArgumentException
      *             Thrown if the rectangle is null
      */
@@ -358,11 +355,23 @@ public class Semiline extends Element implements Offsetable {
         if (isVertical(direction)) {
             firstSideInter = new Point(directionPoint.getX(), rectangle.getUpperLeft().getY());
             otherSideInter = new Point(directionPoint.getX(), rectangle.getLowerLeft().getY());
+
+            if (firstSideInter.getX() < rectangle.getUpperLeft().getX()
+                    || firstSideInter.getX() > rectangle.getUpperRight().getX()) {
+                firstSideInter = null;
+                otherSideInter = null;
+            }
+
             condition = goingUp(direction);
         }
         else if (isHorizontal(direction)) {
             firstSideInter = new Point(rectangle.getLowerLeft().getX(), directionPoint.getY());
             otherSideInter = new Point(rectangle.getLowerRight().getX(), directionPoint.getY());
+
+            if (firstSideInter.getY() < rectangle.getLowerLeft().getY()
+                    || firstSideInter.getY() > rectangle.getUpperLeft().getY())
+                otherSideInter = null;
+
             condition = goingLeft(direction);
         }
         else { // biased line
@@ -454,7 +463,7 @@ public class Semiline extends Element implements Offsetable {
      * @param addFirst
      *            true if the first point is always added, false if the second is.
      * @param rectangle
-     *            The rectangle that will decide wether the other point should be added or not
+     *            The rectangle that will decide whether the other point should be added or not
      * @param trueCasePoint
      *            The point that should ALWAYS be added in case the argument is true
      * @param falseCasePoint

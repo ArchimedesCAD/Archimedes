@@ -435,17 +435,22 @@ public class SemilineTest extends Tester {
     @Test
     public void testGetNoPointsCrossing () throws Exception {
 
-        // on the side of the initial point but before
         Collection<Point> pointsCrossing = sl
                 .getPointsCrossing(new Rectangle( -100, -100, -50, -50));
         assertEquals(Collections.emptyList(), pointsCrossing);
 
-        // above the semiline
         pointsCrossing = sl.getPointsCrossing(new Rectangle( -100, 0, -50, 50));
         assertEquals(Collections.emptyList(), pointsCrossing);
 
-        // below the semiline
-        pointsCrossing = sl.getPointsCrossing(new Rectangle( -100, 0, -50, 50));
+        pointsCrossing = sl.getPointsCrossing(new Rectangle(0, -50, 50, -100));
+        assertEquals(Collections.emptyList(), pointsCrossing);
+
+        pointsCrossing = new Semiline(new Point( -50, -100), new Point(100, -100))
+                .getPointsCrossing(new Rectangle(0, 0, 100, 100));
+        assertEquals(Collections.emptyList(), pointsCrossing);
+
+        pointsCrossing = new Semiline(new Point(150, 0), new Point(150, 100))
+                .getPointsCrossing(new Rectangle(0, 0, 100, 100));
         assertEquals(Collections.emptyList(), pointsCrossing);
     }
 
