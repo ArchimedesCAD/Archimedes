@@ -6,6 +6,7 @@
  * <br>
  * Contributors:<br>
  * Hugo Corbucci - initial API and implementation<br>
+ * Kenzo Yamada, Bruno Klava, Wesley Seidel - later contributions<br>
  * <br>
  * This file was created on 2009/01/10, 11:16:48, by Hugo Corbucci.<br>
  * It is part of package br.org.archimedes.trim on the br.org.archimedes.trims.tests project.<br>
@@ -16,7 +17,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import br.org.archimedes.Tester;
@@ -80,8 +80,6 @@ public class InfiniteLineTrimTest extends Tester {
 	}
 
 	@Test
-	@Ignore
-	// FIXME: make it work even if initial and ending points are very close.
 	public void infiniteLineDefinedVerySmallTrimsCenter()
 			throws NullArgumentException, InvalidArgumentException {
 
@@ -191,6 +189,7 @@ public class InfiniteLineTrimTest extends Tester {
 
 		assertCollectionContains(collection, new Semiline(new Point(0.0, 2.0),
 				new Point(3.0, 2.0)));
+
 		Assert.assertEquals(
 				"A trim at the begging should produce exactly 1 semiline.", 1,
 				collection.size());
@@ -267,9 +266,30 @@ public class InfiniteLineTrimTest extends Tester {
 		InfiniteLine horizontalXLine = new InfiniteLine(new Point(-1.0, 2.0),
 				new Point(3.0, 2.0));
 
-		references.remove(new InfiniteLine(new Point(1.0, 4.0),
-				new Point(-1.0, 0.0)) );
-		
+		references.remove(new InfiniteLine(new Point(1.0, 4.0), new Point(-1.0,
+				0.0)));
+
+		Collection<Element> collection = trimmer.trim(horizontalXLine,
+				references, new Point(2.0, 2.0));
+
+		assertCollectionContains(collection, new Semiline(new Point(2.0, 2.0),
+				new Point(1.0, 2.0)));
+
+		Assert.assertEquals(
+				"A trim at an intersection point removes the lefter part.", 1,
+				collection.size());
+	}
+
+	@Test
+	public void infiniteLineInverseDirectionTrimsLefterPartWhenClickingExactlyOnIntersectionPoint()
+			throws NullArgumentException, InvalidArgumentException {
+
+		InfiniteLine horizontalXLine = new InfiniteLine(new Point(3.0, 2.0),
+				new Point(-1.0, 2.0));
+
+		references.remove(new InfiniteLine(new Point(1.0, 4.0), new Point(-1.0,
+				0.0)));
+
 		Collection<Element> collection = trimmer.trim(horizontalXLine,
 				references, new Point(2.0, 2.0));
 
@@ -281,16 +301,3 @@ public class InfiniteLineTrimTest extends Tester {
 				collection.size());
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

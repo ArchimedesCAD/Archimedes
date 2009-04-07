@@ -6,7 +6,7 @@
  * <br>
  * Contributors:<br>
  * Hugo Corbucci - initial API and implementation<br>
- * Ricardo Sider - later contributions<br>
+ * Ricardo Sider, Kenzo Yamada, Bruno Klava, Wesley Seidel - later contributions<br>
  * <br>
  * This file was created on 2009/01/10, 11:16:48, by Hugo Corbucci.<br>
  * It is part of package br.org.archimedes.trim on the br.org.archimedes.trims project.<br>
@@ -49,15 +49,17 @@ public class InfiniteLineTrimmer implements Trimmer {
 			throw new NullArgumentException();
 		}
 
-		InfiniteLine xline = (InfiniteLine) element;
+		InfiniteLine line = (InfiniteLine) element;
 		Collection<Element> trimResult = new ArrayList<Element>();
-		SortedSet<ComparablePoint> sortedPointSet = getSortedPointSet(xline,
-				xline.getInitialPoint(), intersectionManager
-						.getIntersectionsBetween(xline, references));
 
-		Vector direction = new Vector(xline.getInitialPoint(), xline
+		SortedSet<ComparablePoint> sortedPointSet = getSortedPointSet(line,
+				line.getInitialPoint(), intersectionManager
+						.getIntersectionsBetween(line, references));
+
+		Vector direction = new Vector(line.getInitialPoint(), line
 				.getEndingPoint());
-		Vector clickVector = new Vector(xline.getInitialPoint(), click);
+
+		Vector clickVector = new Vector(line.getInitialPoint(), click);
 		double key = direction.dotProduct(clickVector);
 		ComparablePoint clickPoint = null;
 		try {
@@ -77,37 +79,45 @@ public class InfiniteLineTrimmer implements Trimmer {
 
 				Point initialPoint = tailSet.first().getPoint();
 
+				if (line.getInitialPoint().compareTo(line.getEndingPoint()) < 0) {
+					direction = new Vector(line.getInitialPoint(), line
+							.getEndingPoint());
+				} else {
+					direction = new Vector(line.getEndingPoint(), line
+							.getInitialPoint());
+				}
+
 				clickPoint.getPoint().setX(
 						clickPoint.getPoint().getX() + direction.getX());
 				clickPoint.getPoint().setY(
 						clickPoint.getPoint().getY() + direction.getY());
 
 				Element trimmedLine = generateSemiline(clickPoint, initialPoint);
-				trimmedLine.setLayer(xline.getLayer());
+				trimmedLine.setLayer(line.getLayer());
 				trimResult.add(trimmedLine);
 
 			} else if (headSet.size() == 0 && tailSet.size() > 0) {
 				Point initialPoint = tailSet.first().getPoint();
 				Element trimmedLine = generateSemiline(clickPoint, initialPoint);
-				trimmedLine.setLayer(xline.getLayer());
+				trimmedLine.setLayer(line.getLayer());
 				trimResult.add(trimmedLine);
 
 			} else if (tailSet.size() == 0 && headSet.size() > 0) {
 				Point initialPoint = headSet.last().getPoint();
 				Element trimmedLine = generateSemiline(clickPoint, initialPoint);
-				trimmedLine.setLayer(xline.getLayer());
+				trimmedLine.setLayer(line.getLayer());
 				trimResult.add(trimmedLine);
 
 			} else if (headSet.size() > 0 && tailSet.size() > 0) {
 
 				Point initialPoint = headSet.last().getPoint();
 				Element trimmedLine = generateSemiline(clickPoint, initialPoint);
-				trimmedLine.setLayer(xline.getLayer());
+				trimmedLine.setLayer(line.getLayer());
 				trimResult.add(trimmedLine);
 
 				initialPoint = tailSet.first().getPoint();
 				trimmedLine = generateSemiline(clickPoint, initialPoint);
-				trimmedLine.setLayer(xline.getLayer());
+				trimmedLine.setLayer(line.getLayer());
 				trimResult.add(trimmedLine);
 			}
 		} catch (Exception e) {
@@ -156,4 +166,5 @@ public class InfiniteLineTrimmer implements Trimmer {
 
 		return sortedPointSet;
 	}
+
 }
