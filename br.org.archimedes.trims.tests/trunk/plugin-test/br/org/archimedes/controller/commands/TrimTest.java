@@ -8,20 +8,11 @@
  * Hugo Corbucci - initial API and implementation<br>
  * <br>
  * This file was created on 2006/05/15, 11:16:48, by Hugo Corbucci.<br>
- * It is part of package br.org.archimedes.controller.commands on the br.org.archimedes.trims.tests project.<br>
+ * It is part of package br.org.archimedes.controller.commands on the br.org.archimedes.trims.tests
+ * project.<br>
  */
+
 package br.org.archimedes.controller.commands;
-
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
-
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
 
 import br.org.archimedes.Tester;
 import br.org.archimedes.Utils;
@@ -38,6 +29,17 @@ import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Rectangle;
 import br.org.archimedes.polyline.Polyline;
 import br.org.archimedes.trims.TrimCommand;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
+
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
 
 public class TrimTest extends Tester {
 
@@ -63,8 +65,7 @@ public class TrimTest extends Tester {
         drawing = null;
     }
 
-    private void doTrim (Element element, Collection<Element> references,
-            Point click) {
+    private void doTrim (Element element, Collection<Element> references, Point click) {
 
         for (Element reference : references) {
             putSafeElementOnDrawing(reference, drawing);
@@ -104,8 +105,8 @@ public class TrimTest extends Tester {
         click = new Point(5, 0);
         doTrim(line, references, click);
 
-        Assert.assertEquals("Drawing should contains only three elements.", 3,
-                drawing.getUnlockedContents().size());
+        Assert.assertEquals("Drawing should contains only three elements.", 3, drawing
+                .getUnlockedContents().size());
         resultLine1 = new Line(10, 0, 50, 0);
         assertCollectionContains(drawing.getUnlockedContents(), resultLine1);
         assertCollectionContains(drawing.getUnlockedContents(), reference1);
@@ -117,8 +118,8 @@ public class TrimTest extends Tester {
         click = new Point(15, 0);
         doTrim(line, references, click);
 
-        Assert.assertEquals("Drawing should contains only four elements.", 4,
-                drawing.getUnlockedContents().size());
+        Assert.assertEquals("Drawing should contains only four elements.", 4, drawing
+                .getUnlockedContents().size());
         resultLine1 = new Line(0, 0, 10, 0);
         resultLine2 = new Line(20, 0, 50, 0);
         assertCollectionContains(drawing.getUnlockedContents(), resultLine1);
@@ -132,8 +133,8 @@ public class TrimTest extends Tester {
         click = new Point(30, 0);
         doTrim(line, references, click);
 
-        Assert.assertEquals("Drawing should contains only three elements.", 3,
-                drawing.getUnlockedContents().size());
+        Assert.assertEquals("Drawing should contains only three elements.", 3, drawing
+                .getUnlockedContents().size());
         resultLine1 = new Line(0, 0, 20, 0);
         assertCollectionContains(drawing.getUnlockedContents(), resultLine1);
         assertCollectionContains(drawing.getUnlockedContents(), reference1);
@@ -162,8 +163,8 @@ public class TrimTest extends Tester {
         click = new Point(0, 0);
         doTrim(line, references, click);
 
-        Assert.assertEquals("Drawing should contains only three elements.", 3,
-                drawing.getUnlockedContents().size());
+        Assert.assertEquals("Drawing should contains only three elements.", 3, drawing
+                .getUnlockedContents().size());
         resultLine1 = new Line(0, 100, 0, 500);
         assertCollectionContains(drawing.getUnlockedContents(), resultLine1);
         assertCollectionContains(drawing.getUnlockedContents(), reference1);
@@ -175,8 +176,8 @@ public class TrimTest extends Tester {
         click = new Point(0, 150);
         doTrim(line, references, click);
 
-        Assert.assertEquals("Drawing should contains only four elements.", 4,
-                drawing.getUnlockedContents().size());
+        Assert.assertEquals("Drawing should contains only four elements.", 4, drawing
+                .getUnlockedContents().size());
         resultLine1 = new Line(0, 0, 0, 100);
         resultLine2 = new Line(0, 200, 0, 500);
         assertCollectionContains(drawing.getUnlockedContents(), resultLine1);
@@ -190,8 +191,8 @@ public class TrimTest extends Tester {
         click = new Point(0, 300);
         doTrim(line, references, click);
 
-        Assert.assertEquals("Drawing should contains only three elements.", 3,
-                drawing.getUnlockedContents().size());
+        Assert.assertEquals("Drawing should contains only three elements.", 3, drawing
+                .getUnlockedContents().size());
         resultLine1 = new Line(0, 0, 0, 200);
         assertCollectionContains(drawing.getUnlockedContents(), resultLine1);
         assertCollectionContains(drawing.getUnlockedContents(), reference1);
@@ -217,8 +218,8 @@ public class TrimTest extends Tester {
         click = new Point(30, 30);
         doTrim(line, references, click);
 
-        Assert.assertEquals("Drawing should contains only three elements.", 3,
-                drawing.getUnlockedContents().size());
+        Assert.assertEquals("Drawing should contains only three elements.", 3, drawing
+                .getUnlockedContents().size());
         resultLine1 = new Line(50, 50, 500, 500);
         assertCollectionContains(drawing.getUnlockedContents(), resultLine1);
         assertCollectionContains(drawing.getUnlockedContents(), reference1);
@@ -229,8 +230,8 @@ public class TrimTest extends Tester {
         click = new Point(70, 70);
         doTrim(line, references, click);
 
-        Assert.assertEquals("Drawing should contains only four elements.", 4,
-                drawing.getUnlockedContents().size());
+        Assert.assertEquals("Drawing should contains only four elements.", 4, drawing
+                .getUnlockedContents().size());
         resultLine1 = new Line(0, 0, 50, 50);
         resultLine2 = new Line(100, 100, 500, 500);
         assertCollectionContains(drawing.getUnlockedContents(), resultLine1);
@@ -243,8 +244,8 @@ public class TrimTest extends Tester {
         click = new Point(300, 300);
         doTrim(line, references, click);
 
-        Assert.assertEquals("Drawing should contains only three elements.", 3,
-                drawing.getUnlockedContents().size());
+        Assert.assertEquals("Drawing should contains only three elements.", 3, drawing
+                .getUnlockedContents().size());
         resultLine1 = new Line(0, 0, 100, 100);
         assertCollectionContains(drawing.getUnlockedContents(), resultLine1);
         assertCollectionContains(drawing.getUnlockedContents(), reference1);
@@ -594,23 +595,23 @@ public class TrimTest extends Tester {
         Point click;
 
         references = new LinkedList<Element>();
-        reference1 = new InfiniteLine( -COS_45 * 100, 0, -COS_45 * 100, 100);
+        reference1 = createSafeInfiniteLine( -COS_45 * 100, 0, -COS_45 * 100, 100);
         references.add(reference1);
-        reference2 = new InfiniteLine(COS_45 * 100, 0, COS_45 * 100, 100);
+        reference2 = createSafeInfiniteLine(COS_45 * 100, 0, COS_45 * 100, 100);
         references.add(reference2);
 
         click = new Point(0, 100);
         doTrim(arc, references, click);
 
-        Assert.assertEquals("Drawing should contains only four elements.", 4,
-                drawing.getUnlockedContents().size());
+        Assert.assertEquals("Drawing should contains only four elements.", 4, drawing
+                .getUnlockedContents().size());
 
-        resultElement1 = new Arc(init, new Point( -COS_30 * 100, COS_60 * 100),
-                new Point( -COS_45 * 100, COS_45 * 100));
+        resultElement1 = new Arc(init, new Point( -COS_30 * 100, COS_60 * 100), new Point(
+                -COS_45 * 100, COS_45 * 100));
         assertCollectionContains(drawing.getUnlockedContents(), resultElement1);
 
-        resultElement2 = new Arc(new Point(COS_45 * 100, COS_45 * 100),
-                new Point(COS_30 * 100, COS_60 * 100), end);
+        resultElement2 = new Arc(new Point(COS_45 * 100, COS_45 * 100), new Point(COS_30 * 100,
+                COS_60 * 100), end);
         assertCollectionContains(drawing.getUnlockedContents(), resultElement2);
 
         drawing = new Drawing("");
@@ -618,18 +619,17 @@ public class TrimTest extends Tester {
 
         arc = new Arc(init, mid, end);
         references = new LinkedList<Element>();
-        reference1 = new InfiniteLine(0, 0, 0, 100);
+        reference1 = createSafeInfiniteLine(0, 0, 0, 100);
         references.add(reference1);
 
         click = new Point( -100, 0);
 
         doTrim(arc, references, click);
 
-        Assert.assertEquals("Drawing should contains only two elements.", 2,
-                drawing.getUnlockedContents().size());
+        Assert.assertEquals("Drawing should contains only two elements.", 2, drawing
+                .getUnlockedContents().size());
 
-        resultElement1 = new Arc(mid, new Point(COS_45 * 100, COS_45 * 100),
-                end);
+        resultElement1 = new Arc(mid, new Point(COS_45 * 100, COS_45 * 100), end);
         assertCollectionContains(drawing.getUnlockedContents(), resultElement1);
 
         drawing = new Drawing("");
@@ -637,18 +637,17 @@ public class TrimTest extends Tester {
 
         arc = new Arc(init, mid, end);
         references = new LinkedList<Element>();
-        reference1 = new InfiniteLine(0, 0, 0, 100);
+        reference1 = createSafeInfiniteLine(0, 0, 0, 100);
         references.add(reference1);
 
         click = new Point(100, 0);
 
         doTrim(arc, references, click);
 
-        Assert.assertEquals("Drawing should contains only two elements.", 2,
-                drawing.getUnlockedContents().size());
+        Assert.assertEquals("Drawing should contains only two elements.", 2, drawing
+                .getUnlockedContents().size());
 
-        resultElement1 = new Arc(init, new Point( -COS_45 * 100, COS_45 * 100),
-                mid);
+        resultElement1 = new Arc(init, new Point( -COS_45 * 100, COS_45 * 100), mid);
         assertCollectionContains(drawing.getUnlockedContents(), resultElement1);
 
         drawing = new Drawing("");
@@ -661,25 +660,47 @@ public class TrimTest extends Tester {
         arc = new Arc(init, mid, end);
 
         references = new LinkedList<Element>();
-        reference1 = new InfiniteLine(0, COS_45 * 100, 100, COS_45 * 100);
+        reference1 = createSafeInfiniteLine(0, COS_45 * 100, 100, COS_45 * 100);
         references.add(reference1);
-        reference2 = new InfiniteLine(0, -COS_45 * 100, 100, -COS_45 * 100);
+        reference2 = createSafeInfiniteLine(0, -COS_45 * 100, 100, -COS_45 * 100);
         references.add(reference2);
 
         click = new Point(100, 0);
 
         doTrim(arc, references, click);
 
-        Assert.assertEquals("Drawing should contains only four elements.", 4,
-                drawing.getUnlockedContents().size());
+        Assert.assertEquals("Drawing should contains only four elements.", 4, drawing
+                .getUnlockedContents().size());
 
-        resultElement1 = new Arc(init, new Point(COS_60 * 100, -COS_30 * 100),
-                new Point(COS_45 * 100, -COS_45 * 100));
+        resultElement1 = new Arc(init, new Point(COS_60 * 100, -COS_30 * 100), new Point(
+                COS_45 * 100, -COS_45 * 100));
         assertCollectionContains(drawing.getUnlockedContents(), resultElement1);
 
-        resultElement2 = new Arc(new Point(COS_45 * 100, COS_45 * 100),
-                new Point(COS_60 * 100, COS_30 * 100), end);
+        resultElement2 = new Arc(new Point(COS_45 * 100, COS_45 * 100), new Point(COS_60 * 100,
+                COS_30 * 100), end);
         assertCollectionContains(drawing.getUnlockedContents(), resultElement2);
+    }
+
+    /**
+     * @param x1
+     * @param y1
+     * @param x2
+     * @param y2
+     * @return The created infinite line
+     * @throws InvalidArgumentException
+     *             Thrown if the coordinates x1,y1 equal x2,y2
+     */
+    private Element createSafeInfiniteLine (double x1, double y1, double x2, double y2)
+            throws InvalidArgumentException {
+
+        try {
+            return new InfiniteLine(new Point(x1, y1), new Point(x2, y2));
+        }
+        catch (NullArgumentException e) {
+            // Should never happen since I'm creating the points
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Test
@@ -702,8 +723,8 @@ public class TrimTest extends Tester {
         doTrim(polyline, references, click);
         polyline = (Polyline) getElementAt(0, 0);
 
-        Assert.assertEquals("Drawing should contains only four elements.", 4,
-                drawing.getUnlockedContents().size());
+        Assert.assertEquals("Drawing should contains only four elements.", 4, drawing
+                .getUnlockedContents().size());
 
         points = new LinkedList<Point>();
         points.add(new Point(0, 0));
@@ -717,8 +738,8 @@ public class TrimTest extends Tester {
         click = new Point(0, 30);
         doTrim(polyline, references, click);
 
-        Assert.assertEquals("Drawing should contains only five elements.", 5,
-                drawing.getUnlockedContents().size());
+        Assert.assertEquals("Drawing should contains only five elements.", 5, drawing
+                .getUnlockedContents().size());
 
         points = new LinkedList<Point>();
         points.add(new Point(0, 0));
@@ -745,15 +766,15 @@ public class TrimTest extends Tester {
         Polyline polyline = new Polyline(points);
 
         Collection<Element> references = new LinkedList<Element>();
-        Element reference1 = new InfiniteLine( -100, 25, 300, 25);
+        Element reference1 = createSafeInfiniteLine( -100, 25, 300, 25);
         references.add(reference1);
 
         Point click = new Point(0, 0);
         doTrim(polyline, references, click);
         polyline = (Polyline) getElementAt(200, 0);
 
-        Assert.assertEquals("Drawing should contains only two elements.", 2,
-                drawing.getUnlockedContents().size());
+        Assert.assertEquals("Drawing should contains only two elements.", 2, drawing
+                .getUnlockedContents().size());
 
         points = new LinkedList<Point>();
         points.add(new Point(25, 25));
@@ -771,8 +792,8 @@ public class TrimTest extends Tester {
         doTrim(polyline, references, click);
         polyline = (Polyline) getElementAt(200, 0);
 
-        Assert.assertEquals("Drawing should contains only three elements.", 3,
-                drawing.getUnlockedContents().size());
+        Assert.assertEquals("Drawing should contains only three elements.", 3, drawing
+                .getUnlockedContents().size());
 
         points = new LinkedList<Point>();
         points.add(new Point(25, 25));
@@ -794,8 +815,8 @@ public class TrimTest extends Tester {
         click = new Point(200, 0);
         doTrim(polyline, references, click);
 
-        Assert.assertEquals("Drawing should contains only three elements.", 2,
-                drawing.getUnlockedContents().size());
+        Assert.assertEquals("Drawing should contains only three elements.", 2, drawing
+                .getUnlockedContents().size());
 
         points = new LinkedList<Point>();
         points.add(new Point(125, 25));
@@ -816,17 +837,17 @@ public class TrimTest extends Tester {
         polyline = new Polyline(points);
 
         references = new LinkedList<Element>();
-        reference1 = new InfiniteLine(50, 0, 50, 10);
+        reference1 = createSafeInfiniteLine(50, 0, 50, 10);
         references.add(reference1);
-        Element reference2 = new InfiniteLine(150, 0, 150, 10);
+        Element reference2 = createSafeInfiniteLine(150, 0, 150, 10);
         references.add(reference2);
 
         click = new Point(0, 0);
         doTrim(polyline, references, click);
         polyline = (Polyline) getElementAt(200, 0);
 
-        Assert.assertEquals("Drawing should contains only three elements.", 3,
-                drawing.getUnlockedContents().size());
+        Assert.assertEquals("Drawing should contains only three elements.", 3, drawing
+                .getUnlockedContents().size());
 
         points = new LinkedList<Point>();
         points.add(new Point(50, 50));
@@ -842,8 +863,8 @@ public class TrimTest extends Tester {
         click = new Point(200, 0);
         doTrim(polyline, references, click);
 
-        Assert.assertEquals("Drawing should contains only three elements.", 3,
-                drawing.getUnlockedContents().size());
+        Assert.assertEquals("Drawing should contains only three elements.", 3, drawing
+                .getUnlockedContents().size());
 
         points = new LinkedList<Point>();
         points.add(new Point(50, 50));
@@ -864,16 +885,16 @@ public class TrimTest extends Tester {
         polyline = new Polyline(points);
 
         references = new LinkedList<Element>();
-        reference1 = new InfiniteLine(50, 0, 50, 10);
+        reference1 = createSafeInfiniteLine(50, 0, 50, 10);
         references.add(reference1);
-        reference2 = new InfiniteLine(150, 0, 150, 10);
+        reference2 = createSafeInfiniteLine(150, 0, 150, 10);
         references.add(reference2);
 
         click = new Point(100, 0);
         doTrim(polyline, references, click);
 
-        Assert.assertEquals("Drawing should contains only four elements.", 4,
-                drawing.getUnlockedContents().size());
+        Assert.assertEquals("Drawing should contains only four elements.", 4, drawing
+                .getUnlockedContents().size());
 
         points = new LinkedList<Point>();
         points.add(new Point(0, 0));
@@ -925,16 +946,16 @@ public class TrimTest extends Tester {
         click = new Point(COS_45 * 100, COS_45 * 100);
         doTrim(circle, references, click);
 
-        Assert.assertEquals("Drawing should contains only three elements.", 3,
-                drawing.getUnlockedContents().size());
-        resultArc = new Arc(new Point(0, 100), new Point( -100, 0), new Point(
-                100, 0));
+        Assert.assertEquals("Drawing should contains only three elements.", 3, drawing
+                .getUnlockedContents().size());
+        resultArc = new Arc(new Point(0, 100), new Point( -100, 0), new Point(100, 0));
         assertCollectionContains(drawing.getUnlockedContents(), resultArc);
         assertCollectionContains(drawing.getUnlockedContents(), reference1);
         assertCollectionContains(drawing.getUnlockedContents(), reference2);
     }
 
-    @Test @Ignore
+    @Test
+    @Ignore
     // FIXME: Closed Polyline have different behaviour on trim.
     public void testTrimClosedPolyLine () throws Exception {
 
@@ -961,8 +982,8 @@ public class TrimTest extends Tester {
         click = new Point( -100, -70);
         doTrim(polyLine, references, click);
 
-        Assert.assertEquals("Drawing should contains only three elements.", 3,
-                drawing.getUnlockedContents().size());
+        Assert.assertEquals("Drawing should contains only three elements.", 3, drawing
+                .getUnlockedContents().size());
 
         List<Point> resultPoints = new LinkedList<Point>();
         resultPoints.add(new Point( -100, -50));
@@ -983,8 +1004,8 @@ public class TrimTest extends Tester {
         click = new Point( -70, -100);
         doTrim(polyLine, references, click);
 
-        Assert.assertEquals("Drawing should contains only three elements.", 3,
-                drawing.getUnlockedContents().size());
+        Assert.assertEquals("Drawing should contains only three elements.", 3, drawing
+                .getUnlockedContents().size());
 
         assertCollectionContains(drawing.getUnlockedContents(), resultPolyLine);
         assertCollectionContains(drawing.getUnlockedContents(), reference1);
@@ -996,8 +1017,8 @@ public class TrimTest extends Tester {
         click = new Point(100, 70);
         doTrim(polyLine, references, click);
 
-        Assert.assertEquals("Drawing should contains only three elements.", 3,
-                drawing.getUnlockedContents().size());
+        Assert.assertEquals("Drawing should contains only three elements.", 3, drawing
+                .getUnlockedContents().size());
 
         resultPoints = new LinkedList<Point>();
         resultPoints.add(new Point(100, -50));
