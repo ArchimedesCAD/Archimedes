@@ -89,6 +89,7 @@
 <project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.snap.tests/trunk,br.org.archimedes.snap.tests"/>
 <project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.stretch/trunk,br.org.archimedes.stretch"/>
 <project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.stretch.tests/trunk,br.org.archimedes.stretch.tests"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.tests.feature/trunk,br.org.archimedes.tests.feature"/>
 <project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.text/trunk,br.org.archimedes.text"/>
 <project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.text.edittext/trunk,br.org.archimedes.text.edittext"/>
 <project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.text.tests/trunk,br.org.archimedes.text.tests"/>
@@ -132,6 +133,7 @@
 <item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/br.org.archimedes.lines.feature" type="4"/>
 <item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/br.org.archimedes.calculus.feature" type="4"/>
 <item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/br.org.archimedes.comunication.feature" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/br.org.archimedes.tests.feature" type="4"/>
 </workingSets>
 <workingSets editPageId="org.eclipse.pde.ui.pluginWorkingSet" label="Plugins - Archimedes IO Feature And Tests" name="Plugins - Archimedes IO Feature And Tests">
 <item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.io.pdf"/>
