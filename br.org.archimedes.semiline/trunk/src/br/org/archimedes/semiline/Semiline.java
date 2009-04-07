@@ -369,8 +369,10 @@ public class Semiline extends Element implements Offsetable {
             otherSideInter = new Point(rectangle.getLowerRight().getX(), directionPoint.getY());
 
             if (firstSideInter.getY() < rectangle.getLowerLeft().getY()
-                    || firstSideInter.getY() > rectangle.getUpperLeft().getY())
+                    || firstSideInter.getY() > rectangle.getUpperLeft().getY()) {
+                firstSideInter = null;
                 otherSideInter = null;
+            }
 
             condition = goingLeft(direction);
         }
