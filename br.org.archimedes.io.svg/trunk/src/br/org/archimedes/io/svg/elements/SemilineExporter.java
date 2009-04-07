@@ -26,9 +26,9 @@ import br.org.archimedes.model.Rectangle;
 import br.org.archimedes.semiline.Semiline;
 
 /**
- * Belongs to package br.org.archimedes.io.pdf.
+ * Belongs to package br.org.archimedes.io.svg.
  * 
- * @author klava, sider
+ * @author lreal, rsider
  */
 public class SemilineExporter implements ElementExporter<Semiline> {
 
@@ -41,71 +41,32 @@ public class SemilineExporter implements ElementExporter<Semiline> {
     public void exportElement (Semiline semiline, Object outputObject, Rectangle boundingBox)
             throws IOException {
 
-        List<Point> points;
         try {
-            points = semiline.getPointsCrossing(boundingBox);
+            List<Point> points = semiline.getPointsCrossing(boundingBox);
 
-            Line line = null;
-
-            if (points == null) {
-
-                line = getIntersection(semiline, boundingBox.getLowerLeft(), boundingBox
-                        .getLowerRight());
-                if (line == null) {
-                    line = getIntersection(semiline, boundingBox.getLowerRight(), boundingBox
-                            .getUpperRight());
-                    if (line == null) {
-                        line = getIntersection(semiline, boundingBox.getUpperRight(), boundingBox
-                                .getUpperLeft());
-                        if (line == null) {
-                            line = getIntersection(semiline, boundingBox.getUpperLeft(),
-                                    boundingBox.getLowerLeft());
-                        }
-                    }
-                }
-
-            }
-            else {
-                try {
-                    line = new Line(points.get(0), points.get(1));
-                }
-                catch (Exception e) {
-                    // wont reach here
-                }
-            }
-
-            if (line != null) {
+            if (points.size() > 0) {
                 LineExporter lineExporter = new LineExporter();
-                lineExporter.exportElement(line, outputObject);
-            }
-
-        }
-        catch (NullArgumentException e1) {
-            // wont reach here
-        }
-
-    }
-
-    private Line getIntersection (Semiline semiline, Point point1, Point point2) {
-
-        try {
-            if (semiline.contains(point1) && semiline.contains(point2)) {
-                return new Line(point1, point2);
-            }
-            else if (semiline.contains(point1)) {
-                return new Line(point1, semiline.getInitialPoint());
-            }
-            else if (semiline.contains(point2)) {
-                return new Line(point2, semiline.getInitialPoint());
+                Point start, end;
+                if (points.size() == 1) {
+                    start = semiline.getInitialPoint();
+                }
+                else {
+                    start = points.get(1);
+                }
+                end = points.get(0);
+                if ( !start.equals(end)) {
+                    lineExporter.exportElement(new Line(start, end), outputObject);
+                }
             }
         }
         catch (NullArgumentException e) {
-            // wont reach here
+            // void Bounding box
+            e.printStackTrace();
         }
         catch (InvalidArgumentException e) {
-            // ignore
+            // Should not happen
+            e.printStackTrace();
         }
 
-        return null;
     }
 }

@@ -13,6 +13,7 @@
 
 package br.org.archimedes.io.svg.elements;
 
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 
 import java.io.ByteArrayOutputStream;
@@ -65,5 +66,77 @@ public class SemilineExporterTest extends Tester {
 
         String result = stream.toString().replaceAll("\\s", "");
         assertEquals(expected, result);
+    }
+    
+    @Test
+    public void exportSemilineCrossingBoundaryRectangleInTwoPointsAsSVG () throws Exception {
+
+        Semiline semiline = new Semiline(new Point(50, -50), new Point(50, 50));
+        exporter.exportElement(semiline, stream, boundaryRectangle);
+
+        String expected = "<line x1=\"50\" y1=\"0\" x2=\"50\" y2=\"-100\" />";
+
+        expected = expected.replaceAll("\\s", "");
+
+        String result = stream.toString().replaceAll("\\s", "");
+        assertEquals(expected, result);
+    }
+    
+    @Test
+    public void exportSemilineOverlapingBoundaryRectangleAsSVG () throws Exception {
+
+        Semiline semiline = new Semiline(new Point(-50, 100), new Point(100, 100));
+        exporter.exportElement(semiline, stream, boundaryRectangle);
+
+        String expected = "<line x1=\"0\" y1=\"-100\" x2=\"100\" y2=\"-100\" />";
+
+        expected = expected.replaceAll("\\s", "");
+
+        String result = stream.toString().replaceAll("\\s", "");
+        assertEquals(expected, result);
+    }
+    
+    @Test
+    public void exportSemilineNotInBoundaryRectangleAsSVG () throws Exception {
+
+        Semiline semiline = new Semiline(new Point(-50, -100), new Point(100, -100));
+        exporter.exportElement(semiline, stream, boundaryRectangle);
+
+        String result = stream.toString().replaceAll("\\s", "");
+        assertEquals("", result);
+    }
+
+    @Test
+    public void exportSemilineTouchingBoundaryInOneSideAndCrossingAsSVG () throws Exception {
+
+        Semiline semiline = new Semiline(new Point(100, 0), new Point(0, 100));
+        exporter.exportElement(semiline, stream, boundaryRectangle);
+
+        String expected = "<line x1=\"100\" y1=\"0\" x2=\"0\" y2=\"-100\" />";
+
+        expected = expected.replaceAll("\\s", "");
+
+        String result = stream.toString().replaceAll("\\s", "");
+        assertEquals(expected, result);
+    }
+    
+    @Test
+    public void exportSemilineTouchingBoundaryInOneSideAndGoingOutsideAsSVG () throws Exception {
+
+        Semiline semiline = new Semiline(new Point(100, 0), new Point(100, -100));
+        exporter.exportElement(semiline, stream, boundaryRectangle);
+
+        String result = stream.toString().replaceAll("\\s", "");
+        assertEquals("", result);
+    }
+    
+    @Test
+    public void exportSemilinePassingOutsideRectangleAndTouchingItInOnePointAsSVG () throws Exception {
+
+        Semiline semiline = new Semiline(new Point(200, 0), new Point(100, 100));
+        exporter.exportElement(semiline, stream, boundaryRectangle);
+
+        String result = stream.toString().replaceAll("\\s", "");
+        assertEquals("", result);
     }
 }
