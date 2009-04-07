@@ -11,6 +11,7 @@
  * This file was created on 2006/05/26, 00:03:02, by Hugo Corbucci.<br>
  * It is part of package br.org.archimedes.model on the br.org.archimedes.core project.<br>
  */
+
 package br.org.archimedes.model;
 
 /**
@@ -33,9 +34,8 @@ public class Vector {
      */
     public Vector (Point initialPoint, Point endingPoint) {
 
-        // TODO Nao aceitar (0,0) ???
-        point = new Point((endingPoint.getX() - initialPoint.getX()),
-                (endingPoint.getY() - initialPoint.getY()));
+        this(new Point((endingPoint.getX() - initialPoint.getX()),
+                (endingPoint.getY() - initialPoint.getY())));
     }
 
     /**
@@ -46,6 +46,7 @@ public class Vector {
      */
     public Vector (Point point) {
 
+        // TODO Nao aceitar (0,0) ???
         this.point = point.clone();
     }
 
@@ -107,8 +108,8 @@ public class Vector {
     }
 
     /**
-     * @return A vector orthogonal to this vector. The original vector rotated
-     *         90 degrees counter-clockwise.
+     * @return A vector orthogonal to this vector. The original vector rotated 90 degrees
+     *         counter-clockwise.
      */
     public Vector getOrthogonalVector () {
 
@@ -140,22 +141,29 @@ public class Vector {
 
     /*
      * (non-Javadoc)
-     * 
      * @see java.lang.Object#equals(java.lang.Object)
      */
     public boolean equals (Object object) {
 
-        boolean equal = (this == object);
-        if ( !equal && object.getClass() == this.getClass()) {
+        boolean equal = false;
+        if ((object != null) && Vector.class.isAssignableFrom(object.getClass())) {
             Vector vector = (Vector) object;
             equal = getPoint().equals(vector.getPoint());
         }
         return equal;
     }
+    
+    /* (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode () {
+    
+        return getPoint().hashCode();
+    }
 
     /*
      * (non-Javadoc)
-     * 
      * @see java.lang.Object#clone()
      */
     public Vector clone () {

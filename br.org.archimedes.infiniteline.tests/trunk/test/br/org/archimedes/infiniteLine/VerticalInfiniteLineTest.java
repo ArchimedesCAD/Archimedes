@@ -24,7 +24,7 @@ import org.junit.Test;
 /**
  * Belongs to package br.org.archimedes.infiniteLine.
  * 
- * @author nitao
+ * @author Hugo Corbucci
  */
 public class VerticalInfiniteLineTest extends InfiniteLineTestCase {
 
@@ -66,10 +66,12 @@ public class VerticalInfiniteLineTest extends InfiniteLineTestCase {
                 copiedXLine);
     }
 
-/**
+    /**
      * Test method for
-     * {@link br.org.archimedes.infiniteline.InfiniteLine#isPositiveDirection(Point)
-     * @throws Exception Thrown in case of error
+     * {@link br.org.archimedes.infiniteline.InfiniteLine#isPositiveDirection(Point)}.
+     * 
+     * @throws Exception
+     *             Thrown in case of error
      */
     @Test
     public void testIsPositiveDirection () throws Exception {
@@ -102,10 +104,13 @@ public class VerticalInfiniteLineTest extends InfiniteLineTestCase {
         InfiniteLine xLine = new InfiniteLine(1.0, 1.0, 1.0, 2.0);
 
         InfiniteLine xLine1 = new InfiniteLine(2.0, 1.0, 2.0, 2.0);
-        Assert.assertFalse("Should not be equal", xLine.equals(xLine1));
+        Assert.assertFalse("" + xLine + " shouldn't be equal to " + xLine1, xLine.equals(xLine1));
+        
         InfiniteLine xLine2 = new InfiniteLine(1.0, 3.0, 1.0, 2.0);
-        Assert.assertTrue("Should be equal", xLine.equals(xLine2));
+        Assert.assertTrue("" + xLine + " should be equal to " + xLine2, xLine.equals(xLine2));
+        Assert.assertEquals(xLine.hashCode(), xLine2.hashCode());
+        
         InfiniteLine xLine3 = new InfiniteLine(0.0, 0.0, 1.0, 1.0);
-        Assert.assertFalse("Should not be equal", xLine.equals(xLine3));
+        Assert.assertFalse("" + xLine + " shouldn't be equal to " + xLine3, xLine.equals(xLine3));
     }
 }

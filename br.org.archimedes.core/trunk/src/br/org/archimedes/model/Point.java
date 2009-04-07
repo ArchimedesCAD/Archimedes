@@ -11,6 +11,7 @@
  * This file was created on 2006/03/23, 00:03:02, by Hugo Corbucci.<br>
  * It is part of package br.org.archimedes.model on the br.org.archimedes.core project.<br>
  */
+
 package br.org.archimedes.model;
 
 import br.org.archimedes.Constant;
@@ -20,10 +21,9 @@ import br.org.archimedes.exceptions.NullArgumentException;
 /**
  * Belongs to package br.org.archimedes.model.
  * 
- * @author cris e oshiro
+ * @author Cristiane M. Sato e Marcio Oshiro
  */
-@SuppressWarnings("unchecked")
-public class Point implements Comparable {
+public class Point implements Comparable<Point> {
 
     private double x;
 
@@ -79,8 +79,7 @@ public class Point implements Comparable {
     }
 
     /**
-     * This method verify if this point is inside the rectangle in the
-     * parameter.
+     * This method verify if this point is inside the rectangle in the parameter.
      * 
      * @param rect
      *            The rectangle to test.
@@ -90,8 +89,8 @@ public class Point implements Comparable {
 
         Point lowerLeft = rect.getLowerLeft();
         Point upperRight = rect.getUpperRight();
-        if (this.x >= lowerLeft.getX() && this.x <= upperRight.getX()
-                && this.y >= lowerLeft.getY() && this.y <= upperRight.getY()) {
+        if (this.x >= lowerLeft.getX() && this.x <= upperRight.getX() && this.y >= lowerLeft.getY()
+                && this.y <= upperRight.getY()) {
             return true;
         }
 
@@ -112,11 +111,8 @@ public class Point implements Comparable {
      */
     public double area (Point a, Point b, Point c) {
 
-        double returnValue = (a.getX() * b.getY() + b.getX() * c.getY() + c
-                .getX()
-                * a.getY())
-                - (a.getX() * c.getY() + b.getX() * a.getY() + c.getX()
-                        * b.getY());
+        double returnValue = (a.getX() * b.getY() + b.getX() * c.getY() + c.getX() * a.getY())
+                - (a.getX() * c.getY() + b.getX() * a.getY() + c.getX() * b.getY());
 
         return returnValue;
     }
@@ -146,11 +142,10 @@ public class Point implements Comparable {
     }
 
     /**
-     * This method compares this point with the parameter and, if the x
-     * coordinate is bigger than the x coordiante of the parameter return 1.
-     * Otherwise the return value is -1. If the coordinates are equals, the
-     * method do the same comparison with the y coordinates. Return 0 if the
-     * points are equals.
+     * This method compares this point with the parameter and, if the x coordinate is bigger than
+     * the x coordiante of the parameter return 1. Otherwise the return value is -1. If the
+     * coordinates are equals, the method do the same comparison with the y coordinates. Return 0 if
+     * the points are equals.
      * 
      * @param o
      *            The point to be compared
@@ -158,7 +153,7 @@ public class Point implements Comparable {
      * @throws ClassCastException
      *             if cannot convert the object passed to a point
      */
-    public int compareTo (Object o) throws ClassCastException {
+    public int compareTo (Point o) throws ClassCastException {
 
         Point point = (Point) o;
 
@@ -201,8 +196,8 @@ public class Point implements Comparable {
      * @throws IllegalActionException
      *             In case the proportion is not positive
      */
-    public void scale (Point scaleReference, double proportion)
-            throws NullArgumentException, IllegalActionException {
+    public void scale (Point scaleReference, double proportion) throws NullArgumentException,
+            IllegalActionException {
 
         if (scaleReference == null) {
             throw new NullArgumentException();
@@ -230,8 +225,7 @@ public class Point implements Comparable {
      * @throws NullArgumentException
      *             Thrown if the reference is null.
      */
-    public void rotate (Point reference, double angle)
-            throws NullArgumentException {
+    public void rotate (Point reference, double angle) throws NullArgumentException {
 
         if (reference == null) {
             throw new NullArgumentException();
@@ -259,22 +253,6 @@ public class Point implements Comparable {
     }
 
     /**
-     * @see java.lang.Object#hashCode()
-     */
-    @Override
-    public int hashCode () {
-
-        final int PRIME = 31;
-        int result = 1;
-        long temp;
-        temp = Double.doubleToLongBits(this.x);
-        result = PRIME * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(this.y);
-        result = PRIME * result + (int) (temp ^ (temp >>> 32));
-        return result;
-    }
-
-    /**
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
@@ -284,13 +262,29 @@ public class Point implements Comparable {
             return true;
         if (obj == null)
             return false;
-        if (getClass() != obj.getClass())
+        if ( !Point.class.isAssignableFrom(obj.getClass()))
             return false;
-        final Point other = (Point) obj;
+
+        Point other = (Point) obj;
         if (Math.abs(this.x - other.x) > Constant.EPSILON)
             return false;
         if (Math.abs(this.y - other.y) > Constant.EPSILON)
             return false;
         return true;
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode () {
+
+        final int prime = 31;
+        int result = 1;
+        double errorInsertion = Constant.EPSILON + 1;
+        result = prime * result + (int) (this.x / errorInsertion);
+        result = prime * result + (int) (this.y / errorInsertion);
+        return result;
     }
 }

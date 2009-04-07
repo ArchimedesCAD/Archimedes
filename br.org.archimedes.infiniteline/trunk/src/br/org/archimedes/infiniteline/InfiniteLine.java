@@ -93,6 +93,96 @@ public class InfiniteLine extends Element implements Offsetable {
         this.endingPoint = endingPoint.clone();
     }
 
+    @Override
+    public Element clone () {
+
+        InfiniteLine clone = null;
+        try {
+            clone = new InfiniteLine(getInitialPoint(), getEndingPoint());
+            clone.setLayer(getLayer());
+        }
+        catch (Exception e) {
+            // Should never happen
+            e.printStackTrace();
+        }
+        return clone;
+    }
+
+    /**
+     * (non-Javadoc).
+     * 
+     * @see br.org.archimedes.model.Offsetable#cloneWithDistance(double)
+     */
+    public Element cloneWithDistance (double distance) {
+
+        Vector direction = new Vector(getInitialPoint(), getEndingPoint());
+
+        direction = Geometrics.normalize(direction);
+        direction = direction.getOrthogonalVector();
+        direction = direction.multiply(distance);
+
+        InfiniteLine returnLine = (InfiniteLine) this.clone();
+        returnLine.move(direction.getX(), direction.getY());
+        returnLine.setLayer(parentLayer);
+
+        return returnLine;
+    }
+
+    @Override
+    public boolean equals (Object object) {
+
+        boolean equals = false;
+        if (object != null && InfiniteLine.class.isAssignableFrom(object.getClass())) {
+            equals = this.equals(((InfiniteLine) object));
+        }
+
+        return equals;
+    }
+
+    private boolean equals (InfiniteLine other) {
+
+        if (other == null)
+            return false;
+
+        try {
+            Vector direction = getDirectionVector();
+            Vector otherDirection = other.getDirectionVector();
+            boolean sameSense = direction.equals(otherDirection);
+            boolean oppositeSense = direction.multiply(-1).equals(otherDirection);
+            boolean sameDirection = sameSense || oppositeSense;
+            return sameDirection && contains(other.getInitialPoint());
+        }
+        catch (NullArgumentException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     * @return The vector formed by my initial to my ending point
+     */
+    private Vector getDirectionVector () {
+
+        Vector direction = new Vector(getInitialPoint(), getEndingPoint());
+        return direction.multiply(1.0/direction.getNorm());
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode () {
+
+        int prime = 31;
+        int result = 1;
+        Vector direction = getDirectionVector();
+        if (direction.getX() < 0 || (direction.getX() <= Constant.EPSILON && direction.getY() < 0))
+            direction = direction.multiply(-1);
+        result = prime * result + direction.hashCode();
+        return result;
+    }
+
     /**
      * @param point
      *            The point to be tested.
@@ -125,63 +215,10 @@ public class InfiniteLine extends Element implements Offsetable {
         return contains;
     }
 
-    /**
-     * @return Return the angle between the line and the x-axis.
-     */
-    public double getAngle () {
-
-        return Geometrics.calculateAngle(initialPoint.getX(), initialPoint.getY(), endingPoint
-                .getX(), endingPoint.getY());
-    }
-
-    private boolean equals (InfiniteLine line) {
-
-        try {
-            double alpha = Math.abs(this.getAngle() - line.getAngle());
-            if (alpha >= Constant.EPSILON && Math.PI - alpha >= Constant.EPSILON)
-                return false;
-
-            return contains(line.getInitialPoint());
-        }
-        catch (NullArgumentException e) {
-            e.printStackTrace();
-            return false;
-        }
-
-    }
-
-    @Override
-    public Element clone () {
-
-        InfiniteLine clone = null;
-        try {
-            clone = new InfiniteLine(getInitialPoint(), getEndingPoint());
-            clone.setLayer(getLayer());
-        }
-        catch (Exception e) {
-            // Should never happen
-            e.printStackTrace();
-        }
-        return clone;
-    }
-
     @Override
     public boolean isInside (Rectangle rectangle) {
 
         return false;
-    }
-
-    @Override
-    public boolean equals (Object object) {
-
-        boolean equals = false;
-        try {
-            equals = ((InfiniteLine) object).equals(this);
-        }
-        catch (ClassCastException e) {
-            // It's not equal.
-        }
-        return equals;
     }
 
     @Override
@@ -197,35 +234,6 @@ public class InfiniteLine extends Element implements Offsetable {
                 initialPoint.getY(), endingPoint.getY()), Math.max(initialPoint.getX(), endingPoint
                 .getX()), Math.max(initialPoint.getY(), endingPoint.getY()));
 
-    }
-
-    public String toString () {
-
-        return "Infinite Line: angle =" + getAngle(); //$NON-NLS-1$
-    }
-
-    /**
-     * @return the initialPoint
-     */
-    public Point getInitialPoint () {
-
-        return initialPoint;
-    }
-
-    @Override
-    public void draw (OpenGLWrapper wrapper) {
-
-        Rectangle modelRect = br.org.archimedes.Utils.getWorkspace().getCurrentViewportArea();
-        List<Point> pointsToDraw = getPointsCrossing(modelRect);
-        if (pointsToDraw != null) {
-            try {
-                wrapper.drawFromModel(pointsToDraw);
-            }
-            catch (NullArgumentException e) {
-                // Should not happen since I checked for null
-                e.printStackTrace();
-            }
-        }
     }
 
     /**
@@ -317,6 +325,31 @@ public class InfiniteLine extends Element implements Offsetable {
         return points;
     }
 
+    /**
+     * @return Return the angle between the line and the x-axis.
+     */
+    public double getAngle () {
+
+        return Geometrics.calculateAngle(initialPoint.getX(), initialPoint.getY(), endingPoint
+                .getX(), endingPoint.getY());
+    }
+
+    /**
+     * @return the initialPoint
+     */
+    public Point getInitialPoint () {
+
+        return initialPoint;
+    }
+
+    /**
+     * @return the endingPoint
+     */
+    public Point getEndingPoint () {
+
+        return endingPoint;
+    }
+
     @Override
     public List<Point> getPoints () {
 
@@ -386,26 +419,6 @@ public class InfiniteLine extends Element implements Offsetable {
     /**
      * (non-Javadoc).
      * 
-     * @see br.org.archimedes.model.Offsetable#cloneWithDistance(double)
-     */
-    public Element cloneWithDistance (double distance) {
-
-        Vector direction = new Vector(getInitialPoint(), getEndingPoint());
-
-        direction = Geometrics.normalize(direction);
-        direction = direction.getOrthogonalVector();
-        direction = direction.multiply(distance);
-
-        InfiniteLine returnLine = (InfiniteLine) this.clone();
-        returnLine.move(direction.getX(), direction.getY());
-        returnLine.setLayer(parentLayer);
-
-        return returnLine;
-    }
-
-    /**
-     * (non-Javadoc).
-     * 
      * @see br.org.archimedes.model.Offsetable#isPositiveDirection(br.org.archimedes.model.Point)
      */
     public boolean isPositiveDirection (Point point) throws NullArgumentException {
@@ -416,11 +429,24 @@ public class InfiniteLine extends Element implements Offsetable {
         return (determinant >= 0);
     }
 
-    /**
-     * @return the endingPoint
-     */
-    public Point getEndingPoint () {
+    @Override
+    public void draw (OpenGLWrapper wrapper) {
 
-        return endingPoint;
+        Rectangle modelRect = br.org.archimedes.Utils.getWorkspace().getCurrentViewportArea();
+        List<Point> pointsToDraw = getPointsCrossing(modelRect);
+        if (pointsToDraw != null) {
+            try {
+                wrapper.drawFromModel(pointsToDraw);
+            }
+            catch (NullArgumentException e) {
+                // Should not happen since I checked for null
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public String toString () {
+
+        return "Infinite Line: from =" + getInitialPoint() + " moving by " + getDirectionVector(); //$NON-NLS-1$ //$NON-NLS-2$
     }
 }

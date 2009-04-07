@@ -18,14 +18,12 @@ package br.org.archimedes.infiniteLine;
 
 import br.org.archimedes.Constant;
 import br.org.archimedes.exceptions.IllegalActionException;
-import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.infiniteline.InfiniteLine;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Rectangle;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -38,12 +36,6 @@ import static org.junit.Assert.assertEquals;
  * @author Marcos P. Moreti
  */
 public class HorizontalInfiniteLineTest extends InfiniteLineTestCase {
-
-    private Point referencePoint1;
-
-    private Point referencePoint2;
-
-    private InfiniteLine infiniteLine;
 
     private InfiniteLine line;
 
@@ -156,21 +148,13 @@ public class HorizontalInfiniteLineTest extends InfiniteLineTestCase {
         return projection;
     }
 
-    @Before
-    public void setUp () {
-
-        referencePoint1 = new Point(1, 0);
-        referencePoint2 = new Point(0, -1);
-
-        try {
-            infiniteLine = new InfiniteLine(referencePoint1, referencePoint2);
-        }
-        catch (NullArgumentException e) {
-            e.printStackTrace();
-        }
-        catch (InvalidArgumentException e) {
-            e.printStackTrace();
-        }
+    /* (non-Javadoc)
+     * @see br.org.archimedes.infiniteLine.InfiniteLineTestCase#makeLine()
+     */
+    @Override
+    protected InfiniteLine makeLine () throws Exception {
+    
+        return new InfiniteLine(0, 10, 10, 10);
     }
 
     @Test
@@ -195,40 +179,7 @@ public class HorizontalInfiniteLineTest extends InfiniteLineTestCase {
         testInfiniteLineCase(1, 2, 1, 4);
     }
 
-    @Test
-    public void testContains () {
-
-        safeContains(infiniteLine, new Point(2, 1), true);
-        safeContains(infiniteLine, new Point( -1, -2), true);
-        safeContains(infiniteLine, new Point(0, 0), false);
-        safeContains(infiniteLine, new Point(1, -1), false);
-        safeContains(infiniteLine, new Point(2.1, 1), false);
-        safeContains(infiniteLine, new Point( -1.1, -2), false);
-        safeContains(infiniteLine, new Point(2, 1.1), false);
-        safeContains(infiniteLine, new Point( -1, -2.1), false);
-        safeContains(infiniteLine, new Point(1, 0), true);
-        safeContains(infiniteLine, new Point(0, -1), true);
-    }
-
-    /**
-     * Testes containg
-     * 
-     * @param myInfiniteLine
-     *            The infinite line to test
-     * @param point
-     *            The point to be tested
-     * @param expected
-     *            true if it should be contained, false otherwise.
-     */
-    private void safeContains (InfiniteLine myInfiniteLine, Point point, boolean expected) {
-
-        try {
-            Assert.assertEquals(expected, infiniteLine.contains(point));
-        }
-        catch (NullArgumentException e) {
-            Assert.fail("Should not have thrown a NullArgumentException.");
-        }
-    }
+    // TODO Horizontal infinite line contains points on same y
 
     @Test
     public void testEquals () throws Exception {
@@ -252,22 +203,6 @@ public class HorizontalInfiniteLineTest extends InfiniteLineTestCase {
         Assert.assertTrue("Should be equal", xLine.equals(xLine2));
         xLine3 = new InfiniteLine(0.1, 0.0, 1.0, 1.0);
         Assert.assertFalse("Should not be equal", xLine.equals(xLine3));
-
-        try {
-            InfiniteLine il2 = new InfiniteLine(new Point(2, 1), new Point( -1, -2));
-            Assert.assertTrue(infiniteLine.equals(il2));
-
-            InfiniteLine il3 = new InfiniteLine(new Point( -1, -2), new Point(2, 1));
-            Assert.assertTrue(infiniteLine.equals(il3));
-
-        }
-        catch (NullArgumentException e) {
-            Assert.fail("Should not have thrown any exception.");
-        }
-        catch (InvalidArgumentException e) {
-            Assert.fail("Should not have thrown any exception.");
-        }
-
     }
 
     @Test
@@ -525,28 +460,14 @@ public class HorizontalInfiniteLineTest extends InfiniteLineTestCase {
         }
     }
 
-    @Test
-    public void testInfiniteLineBoundaryRectangle () {
-
-        assertEquals(null, infiniteLine.getBoundaryRectangle());
-    }
 
     @Test
     public void testInfiniteLineCreationBoundaryRectangle () {
 
-        Rectangle boundary = infiniteLine.getCreationBoundaryRectangle();
+        Rectangle boundary = testedLine.getCreationBoundaryRectangle();
         assertEquals(boundary.getLowerLeft().getX(), 0);
         assertEquals(boundary.getLowerLeft().getY(), -1);
         assertEquals(boundary.getUpperRight().getX(), 1);
         assertEquals(boundary.getUpperRight().getY(), 0);
-    }
-
-    /* (non-Javadoc)
-     * @see br.org.archimedes.infiniteLine.InfiniteLineTestCase#makeLine()
-     */
-    @Override
-    protected InfiniteLine makeLine () throws Exception {
-
-        return new InfiniteLine(0, 10, 10, 10);
     }
 }

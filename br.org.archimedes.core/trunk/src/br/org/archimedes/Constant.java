@@ -33,7 +33,7 @@ import java.util.Collections;
  */
 public class Constant {
 
-    public static final double EPSILON = 10e-7;
+    public static final double EPSILON = 1.0/(1<<25); // 2^-25
 
     public static final int METER = -1;
 

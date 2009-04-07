@@ -107,6 +107,8 @@ public abstract class InfiniteLineTestCase {
 
         Assert.assertNull(testedLine.getBoundaryRectangle());
     }
+    
+    // TODO Test creation boundary rectangle is correct
 
     // TODO Test the reference point for infinite lines
 
