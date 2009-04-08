@@ -11,14 +11,8 @@
  * This file was created on 2007/05/07, 13:15:26, by Wellington R. Pinheiro.<br>
  * It is part of package br.org.archimedes.text.tests on the br.org.archimedes.text.tests project.<br>
  */
+
 package br.org.archimedes.text.tests;
-
-import junit.framework.Assert;
-
-import org.apache.batik.svggen.font.Font;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
 import br.org.archimedes.Constant;
 import br.org.archimedes.Tester;
@@ -27,7 +21,15 @@ import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Rectangle;
+import br.org.archimedes.stub.StubFont;
 import br.org.archimedes.text.Text;
+
+import org.apache.batik.svggen.font.Font;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import junit.framework.Assert;
 
 /**
  * Belongs to package br.org.archimedes.text.tests.
@@ -46,8 +48,7 @@ public class TextTest extends Tester {
 
 
     /**
-     * Creates a text element with arguments know to be safe. Fails if any
-     * exception is thrown.
+     * Creates a text element with arguments know to be safe. Fails if any exception is thrown.
      * 
      * @param content
      *            The text's content
@@ -124,7 +125,7 @@ public class TextTest extends Tester {
         Assert.assertEquals(LOWER_LEFT, t.getLowerLeft());
         Assert.assertEquals(10.0, t.getSize());
 
-        // Assert.assertNotNull(t.getFont());
+        Assert.assertNotNull(t.getFont());
         Assert.assertEquals(Constant.DEFAULT_FONT, t.getFont());
     }
 
@@ -140,7 +141,8 @@ public class TextTest extends Tester {
 
     /**
      * Test method for
-     * {@link br.org.archimedes.text.Text#Text(java.lang.String, br.org.archimedes.model.Point, double)}.
+     * {@link br.org.archimedes.text.Text#Text(java.lang.String, br.org.archimedes.model.Point, double)}
+     * .
      */
     @Test
     public void testText () {
@@ -210,14 +212,12 @@ public class TextTest extends Tester {
             text = createSafeText("Archimedes", new Point(0, 0), 1);
             text.scale(new Point(0, 0), 0.7);
             expected = createSafeText("Archimedes", new Point(0, 0), 0.7);
-            Assert.assertEquals("The text should be as expected", expected,
-                    text);
+            Assert.assertEquals("The text should be as expected", expected, text);
 
             text = createSafeText("Archimedes", new Point(0, 0), 1);
             text.scale(new Point(2, 2), 0.5);
             expected = createSafeText("Archimedes", new Point(1, 1), 0.5);
-            Assert.assertEquals("The text should be as expected", expected,
-                    text);
+            Assert.assertEquals("The text should be as expected", expected, text);
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -270,9 +270,8 @@ public class TextTest extends Tester {
     }
 
     /**
-     * TODO esse teste parece que ta meio inutil. sera que nao � melhor carregar
-     * uma fonte de verdade e fazer a conta do width da fonte e comparar com o
-     * retornado pelo Text?
+     * TODO esse teste parece que ta meio inutil. sera que nao � melhor carregar uma fonte de
+     * verdade e fazer a conta do width da fonte e comparar com o retornado pelo Text?
      */
     @Test
     public void testWidth () {
@@ -282,25 +281,21 @@ public class TextTest extends Tester {
         double SIZE = 10;
         double expected = ARCHIMEDES.length() * SIZE;
 
-        Font f1 = new MockFont("fonts/arial.ttf", FONT_ADVANCE_WIDTH_100);
+        Font f1 = new StubFont("fonts/arial.ttf", FONT_ADVANCE_WIDTH_100);
         Text t1 = createSafeText(ARCHIMEDES, POINT, SIZE, f1);
-        Assert.assertTrue("Deveria voltar true!", equals(t1.getWidth(),
-                expected));
+        Assert.assertTrue("Deveria voltar true!", equals(t1.getWidth(), expected));
 
-        Font f2 = new MockFont("fonts/arial.ttf", FONT_ADVANCE_WIDTH_200);
+        Font f2 = new StubFont("fonts/arial.ttf", FONT_ADVANCE_WIDTH_200);
         Text t2 = createSafeText("Archimedes", POINT, SIZE, f2);
-        Assert.assertTrue("Deveria voltar true!", equals(t2.getWidth(),
-                expected));
+        Assert.assertTrue("Deveria voltar true!", equals(t2.getWidth(), expected));
 
-        Font f3 = new MockFont("fonts/arial.ttf", FONT_ADVANCE_WIDTH_300);
+        Font f3 = new StubFont("fonts/arial.ttf", FONT_ADVANCE_WIDTH_300);
         Text t3 = createSafeText("Archimedes", POINT, SIZE, f3);
-        Assert.assertTrue("Deveria voltar true!", equals(t3.getWidth(),
-                expected));
+        Assert.assertTrue("Deveria voltar true!", equals(t3.getWidth(), expected));
     }
 
     /**
-     * Creates a text element with arguments know to be safe. Fails if any
-     * exception is thrown.
+     * Creates a text element with arguments know to be safe. Fails if any exception is thrown.
      * 
      * @param content
      *            The text's content
@@ -310,8 +305,7 @@ public class TextTest extends Tester {
      *            The height of the text
      * @return The created element
      */
-    private Text createSafeText (String content, Point lowerLeft, double size,
-            Font font) {
+    private Text createSafeText (String content, Point lowerLeft, double size, Font font) {
 
         Text text = null;
         try {
@@ -335,7 +329,7 @@ public class TextTest extends Tester {
         final Point POINT = new Point(0, 0);
         final double HEIGHT = 10;
 
-        Font f1 = new MockFont("fonts/arial.ttf", FONT_ADVANCE_WIDTH_100);
+        Font f1 = new StubFont("fonts/arial.ttf", FONT_ADVANCE_WIDTH_100);
         Text t1 = createSafeText(ARCHIMEDES, POINT, HEIGHT, f1);
 
         Rectangle rectangle;
@@ -356,7 +350,7 @@ public class TextTest extends Tester {
 
         t1.rotate(POINT, Math.PI / 4);
 
-        rectangle = new Rectangle(-55 * sqrt_2, -5 * sqrt_2, 0, 50 * sqrt_2);
+        rectangle = new Rectangle( -55 * sqrt_2, -5 * sqrt_2, 0, 50 * sqrt_2);
         Assert.assertEquals(rectangle, t1.getBoundaryRectangle());
 
         t1.rotate(POINT, Math.PI / 4);

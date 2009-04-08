@@ -12,23 +12,23 @@
  */
 package br.org.archimedes.intersectors;
 
-import static org.junit.Assert.fail;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-
-import org.junit.Before;
-import org.junit.Test;
-
 import br.org.archimedes.Tester;
 import br.org.archimedes.dimension.Dimension;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.intersections.interfaces.Intersector;
 import br.org.archimedes.line.Line;
-import br.org.archimedes.mock.MockFont;
 import br.org.archimedes.model.Point;
+import br.org.archimedes.stub.StubFont;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+
+import static org.junit.Assert.fail;
 
 public class DimensionLineIntersectorTests extends Tester {
 
@@ -39,7 +39,7 @@ public class DimensionLineIntersectorTests extends Tester {
 
     @Before
     public void setUp () throws NullArgumentException, InvalidArgumentException {
-        MockFont mockFont = new MockFont("fonts/arial.ttf", 100);
+        StubFont mockFont = new StubFont("fonts/arial.ttf", 100);
         testDimension = new Dimension(new Point( -100.0, 0.0), new Point(100.0,
                 0.0), -30.0, 12.0, mockFont);
         intersector = new DimensionLineIntersector();

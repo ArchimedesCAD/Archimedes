@@ -18,4 +18,5 @@ Require-Bundle: br.org.archimedes.core,
  br.org.archimedes.leader,
  br.org.archimedes.intersections,
  br.org.archimedes.core.tests,
+ br.org.archimedes.text.tests,
  org.junit4;bundle-version="3.4.0"

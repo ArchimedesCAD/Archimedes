@@ -12,30 +12,30 @@
  */
 package br.org.archimedes.intersectors;
 
-import static org.junit.Assert.assertTrue;
+import br.org.archimedes.Tester;
+import br.org.archimedes.line.Line;
+import br.org.archimedes.model.Point;
+import br.org.archimedes.stub.StubFont;
+import br.org.archimedes.text.Text;
+
+import org.junit.Before;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
-import org.junit.Before;
-import org.junit.Test;
-
-import br.org.archimedes.Tester;
-import br.org.archimedes.line.Line;
-import br.org.archimedes.mock.MockFont;
-import br.org.archimedes.model.Point;
-import br.org.archimedes.text.Text;
+import static org.junit.Assert.assertTrue;
 
 public class LineTextIntersectorTest extends Tester {
 
 	LineTextIntersector lti;
-	MockFont font;
+	StubFont font;
 	
 	@Before
 	public void setUp() {
 		lti = new LineTextIntersector();
-		font = new MockFont("fonts/arial.ttf", 100);
+		font = new StubFont("fonts/arial.ttf", 100);
 	}
 	
 	@Test

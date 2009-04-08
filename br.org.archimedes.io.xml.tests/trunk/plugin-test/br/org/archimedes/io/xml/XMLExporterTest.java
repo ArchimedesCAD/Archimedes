@@ -12,15 +12,17 @@
  */
 package br.org.archimedes.io.xml;
 
-import java.io.ByteArrayOutputStream;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.OutputStream;
+import br.org.archimedes.model.Drawing;
 
 import org.junit.Assert;
 import org.junit.Test;
 
-import br.org.archimedes.model.Drawing;
+import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 /**
  * Belongs to package br.org.archimedes.io.xml.
@@ -59,7 +61,7 @@ public class XMLExporterTest {
     private String readFromFile (String filename) throws IOException {
 
         StringBuilder builder = new StringBuilder();
-        FileReader input = new FileReader(filename);
+        InputStream input = readFile(filename);
 
         int c;
         while ((c = input.read()) >= 0) {
@@ -67,5 +69,21 @@ public class XMLExporterTest {
         }
 
         return builder.toString();
+    }
+
+    /**
+     * @param fileName The file name to load
+     * @return An input stream to the start of the file or null if no file could be found
+     * @throws FileNotFoundException Thrown if there was a problem loading the file
+     */
+    private InputStream readFile (String fileName) throws FileNotFoundException {
+
+        InputStream input;
+        if (TestActivator.getDefault() == null) { // Non plugin test
+            input = new FileInputStream(fileName);
+        } else {
+            input = TestActivator.locateFile(fileName);
+        }
+        return input;
     }
 }
