@@ -29,9 +29,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Infinite line tests.<br>
- * TODO Add tests for different lines such as orthogonal lines and inclined lines with "strange"
- * angles
+ * Horizontal infinite line tests
  * 
  * @author Marcos P. Moreti
  */
@@ -466,8 +464,8 @@ public class HorizontalInfiniteLineTest extends InfiniteLineTestCase {
 
         Rectangle boundary = testedLine.getCreationBoundaryRectangle();
         assertEquals(boundary.getLowerLeft().getX(), 0);
-        assertEquals(boundary.getLowerLeft().getY(), -1);
-        assertEquals(boundary.getUpperRight().getX(), 1);
-        assertEquals(boundary.getUpperRight().getY(), 0);
+        assertEquals(boundary.getLowerLeft().getY(), 10);
+        assertEquals(boundary.getUpperRight().getX(), 10);
+        assertEquals(boundary.getUpperRight().getY(), 10);
     }
 }
