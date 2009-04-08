@@ -90,7 +90,7 @@ public class AreaPerimeterFactoryTest extends FactoryTester {
         assertInvalidNext(factory, p2);
 
         // Done
-        assertSafeNext(factory, null, true);
+        assertSafeNext(factory, null, true, false);
 
         assertInvalidNext(factory, null);
         assertInvalidNext(factory, new Object());
@@ -101,10 +101,10 @@ public class AreaPerimeterFactoryTest extends FactoryTester {
         // Again
         assertBegin(factory, false);
         assertSafeNext(factory, p1, false);
-        assertSafeNext(factory, p2, false);
-        assertSafeNext(factory, p3, false);
-        assertSafeNext(factory, p1, false); // Should also work if I close it manually
-        assertSafeNext(factory, null, true);
+        assertSafeNext(factory, new Vector(p1, p2), false);
+        assertSafeNext(factory, new Vector(p2, p3), false);
+        assertSafeNext(factory, new Vector(p3, p1), false); // Should also work if I close it manually
+        assertSafeNext(factory, null, true, false);
     }
 
     @Test
@@ -146,7 +146,7 @@ public class AreaPerimeterFactoryTest extends FactoryTester {
         assertInvalidNext(factory, p1);
 
         // Closing
-        assertSafeNext(factory, "c", true);
+        assertSafeNext(factory, "c", true, false);
 
         assertInvalidNext(factory, null);
         assertInvalidNext(factory, new Object());
@@ -157,9 +157,9 @@ public class AreaPerimeterFactoryTest extends FactoryTester {
         // Again
         assertBegin(factory, false);
         assertSafeNext(factory, p1, false);
-        assertSafeNext(factory, p2, false);
-        assertSafeNext(factory, p3, false);
-        assertSafeNext(factory, "c", true);
+        assertSafeNext(factory, new Vector(p1, p2), false);
+        assertSafeNext(factory, new Vector(p2, p3), false);
+        assertSafeNext(factory, "c", true, false);
     }
 
     @Test

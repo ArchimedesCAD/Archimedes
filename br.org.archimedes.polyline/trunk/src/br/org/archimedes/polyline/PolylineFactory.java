@@ -13,9 +13,6 @@
  */
 package br.org.archimedes.polyline;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import br.org.archimedes.Constant;
 import br.org.archimedes.Utils;
 import br.org.archimedes.controller.Controller;
@@ -36,6 +33,9 @@ import br.org.archimedes.parser.PointParser;
 import br.org.archimedes.parser.ReturnDecoratorParser;
 import br.org.archimedes.parser.StringDecoratorParser;
 import br.org.archimedes.parser.VectorParser;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Belongs to package br.org.archimedes.polyline.
@@ -95,7 +95,7 @@ public class PolylineFactory implements CommandFactory {
 
         if ( !isDone()) {
             if (parameter == null) {
-                if (points.size() > 1) {
+                if (getPointsSize() > 1) {
                     result = createCommand(points);
                     deactivate();
                 }
@@ -104,7 +104,7 @@ public class PolylineFactory implements CommandFactory {
                 }
             }
             else if (isStringParameter(parameter, Messages.undoInitial)) {
-                if (points.size() > 0) {
+                if (getPointsSize() > 0) {
                     result = makeUndo();
                 }
                 else {
@@ -112,14 +112,14 @@ public class PolylineFactory implements CommandFactory {
                 }
             }
             else if (isStringParameter(parameter, Messages.closeInitial)) {
-                if (points.size() > 2) {
+                if (getPointsSize() > 2) {
                     result = closePolyLine();
                 }
                 else {
                     throw new InvalidParameterException();
                 }
             }
-            else if (points.size() == 0) {
+            else if (getPointsSize() == 0) {
                 result = tryGetFirstPoint(parameter);
             }
             else {
@@ -131,6 +131,14 @@ public class PolylineFactory implements CommandFactory {
         }
 
         return result;
+    }
+
+    /**
+     * @return The amount of points collected
+     */
+    protected int getPointsSize () {
+
+        return points.size();
     }
 
     /**
@@ -153,7 +161,7 @@ public class PolylineFactory implements CommandFactory {
             throw new InvalidParameterException(Messages.ExpectedPoint);
         }
 
-        Point point = points.get(points.size() - 1);
+        Point point = points.get(getPointsSize() - 1);
         Point newPoint = point.addVector(vector);
         points.add(newPoint);
         workspace.setPerpendicularGripReferencePoint(newPoint);
@@ -169,12 +177,12 @@ public class PolylineFactory implements CommandFactory {
     protected String makeUndo () {
 
         String message = Messages.PointRemoved + Constant.NEW_LINE;
-        int lastIndex = points.size() - 1;
+        int lastIndex = getPointsSize() - 1;
         if (lastIndex >= 0) {
             points.remove(lastIndex);
         }
-        if (points.size() > 0) {
-            Point point = points.get(points.size() - 1);
+        if (getPointsSize() > 0) {
+            Point point = points.get(getPointsSize() - 1);
             workspace.setPerpendicularGripReferencePoint(point);
         }
 
@@ -188,7 +196,7 @@ public class PolylineFactory implements CommandFactory {
      */
     private String getNextIterationMessage () {
 
-        int iteration = points.size() + 1;
+        int iteration = getPointsSize() + 1;
         switch (iteration) {
             case 1:
                 return Messages.CreatePolyLineIteration1;
@@ -322,7 +330,7 @@ public class PolylineFactory implements CommandFactory {
 
         String result = Messages.PolyLineCancel;
 
-        if (points.size() > 1) {
+        if (getPointsSize() > 1) {
             result = createCommand(points);
         }
 
@@ -350,7 +358,7 @@ public class PolylineFactory implements CommandFactory {
 
         drawing.clearHelperLayer();
 
-        if (points.size() > 0 && !isDone()) {
+        if (getPointsSize() > 0 && !isDone()) {
             List<Point> points = new ArrayList<Point>(this.points);
 
             try {
@@ -395,25 +403,24 @@ public class PolylineFactory implements CommandFactory {
 
         Parser parser = null;
         if (active) {
-            if (points.size() == 0) {
+            if (getPointsSize() == 0) {
                 parser = new PointParser();
             }
-            else if (points.size() == 1) {
-                Parser decoratedParser = new VectorParser(points.get(points
-                        .size() - 1), false);
+            else if (getPointsSize() == 1) {
+                Parser decoratedParser = new VectorParser(points.get(getPointsSize() - 1), false);
                 parser = new StringDecoratorParser(decoratedParser,
                         Messages.undoInitial);
             }
-            else if (points.size() == 2) {
+            else if (getPointsSize() == 2) {
                 Parser vectorParser = new VectorParser(points
-                        .get(points.size() - 1));
+                        .get(getPointsSize() - 1));
                 Parser decoratedParser = new ReturnDecoratorParser(vectorParser);
                 parser = new StringDecoratorParser(decoratedParser,
                         Messages.undoInitial);
             }
             else {
                 Parser vectorParser = new VectorParser(points
-                        .get(points.size() - 1));
+                        .get(getPointsSize() - 1));
                 Parser decoratedParser = new ReturnDecoratorParser(vectorParser);
                 String[] patterns = new String[] {Messages.undoInitial,
                         Messages.closeInitial};

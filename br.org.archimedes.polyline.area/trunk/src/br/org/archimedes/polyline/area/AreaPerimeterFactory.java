@@ -9,8 +9,10 @@
  * Hugo Corbucci, Mariana V. Bravo - later contributions<br>
  * <br>
  * This file was created on 2006/09/29, 08:39:53, by Jeferson R. Silva.<br>
- * It is part of package br.org.archimedes.polyline.area on the br.org.archimedes.polyline.area project.<br>
+ * It is part of package br.org.archimedes.polyline.area on the br.org.archimedes.polyline.area
+ * project.<br>
  */
+
 package br.org.archimedes.polyline.area;
 
 import br.org.archimedes.Geometrics;
@@ -27,15 +29,22 @@ import java.util.List;
  */
 public class AreaPerimeterFactory extends PolylineFactory {
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      * @see br.org.archimedes.polyline.PolylineFactory#next(java.lang.Object)
      */
     @Override
     public String next (Object parameter) throws InvalidParameterException {
-    
+
+        // Contrary to the polyline factory, an Area Perimeter factory cant finish with less than 3
+        // points because it is unable to generate an area from 2 points.
+        if (parameter == null && getPointsSize() < 3) {
+            throw new InvalidParameterException();
+        }
+
         return super.next(parameter);
     }
-    
+
     protected String createCommand (List<Point> points) {
 
         String result;
@@ -50,7 +59,7 @@ public class AreaPerimeterFactory extends PolylineFactory {
             }
             double area = Geometrics.calculateArea(points);
             double perimeter = Geometrics.calculatePerimeter(points);
-            result = Messages.Area + " " + area + ", ";  //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
+            result = Messages.Area + " " + area + ", "; //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
             result += Messages.Perimeter + " " + perimeter; //$NON-NLS-2$ //$NON-NLS-1$
         }
         catch (Exception e) {
