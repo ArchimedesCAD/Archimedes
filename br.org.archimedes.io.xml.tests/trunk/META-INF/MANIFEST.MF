@@ -20,3 +20,4 @@ Require-Bundle: br.org.archimedes.core,
 Export-Package: br.org.archimedes.io.xml
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
+Bundle-Activator: br.org.archimedes.io.xml.TestActivator
