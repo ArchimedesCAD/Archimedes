@@ -13,13 +13,6 @@
  */
 package br.org.archimedes.factories;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-
 import br.org.archimedes.controller.commands.QuickMoveCommand;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.gui.opengl.OpenGLWrapper;
@@ -27,6 +20,13 @@ import br.org.archimedes.interfaces.Command;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Vector;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 public class QuickMoveFactory extends TwoPointFactory {
 
@@ -61,18 +61,33 @@ public class QuickMoveFactory extends TwoPointFactory {
                 pointsToMove.size());
         for (Element element : pointsToMove.keySet()) {
             Element clone = element.clone();
-            Collection<Point> points = pointsToMove.get(element);
-            Collection<Point> clonesToMove = new LinkedList<Point>();
-            List<Point> clonesPoints = clone.getPoints();
-            for (Point point : points) {
-                int pointIndex = clonesPoints.indexOf(point);
-                if (pointIndex >= 0) {
-                    clonesToMove.add(clonesPoints.get(pointIndex));
-                }
-            }
-            clones.put(clone, clonesToMove);
+            Collection<Point> originalPoints = pointsToMove.get(element);
+            
+            clones.put(clone, extractedClonedPointsToMove(clone, originalPoints));
         }
         return clones;
+    }
+
+    /**
+     * @param clone The cloned element from which we want to obtain the points from
+     * @param points Points from the original element that we wish to move on the clone
+     * @return A collection of points from the clone that we wish to move
+     */
+    private Collection<Point> extractedClonedPointsToMove (Element clone, Collection<Point> points) {
+
+        Collection<Point> clonesToMove = new LinkedList<Point>();
+        // Need a new list since I don't want to modify the element's point list
+        List<Point> clonesPoints = new LinkedList<Point>(clone.getPoints());
+        for (Point point : points) {
+            int pointIndex = clonesPoints.indexOf(point);
+            if (pointIndex >= 0) {
+                // If there are repeated points to move, I don't want to find this one again
+                // Bug fix for Bug ID 2747591
+                Point toMove = clonesPoints.remove(pointIndex);
+                clonesToMove.add(toMove);
+            }
+        }
+        return clonesToMove;
     }
 
     @Override
