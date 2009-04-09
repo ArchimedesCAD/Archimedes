@@ -8,14 +8,11 @@
  * Hugo Corbucci - initial API and implementation<br>
  * <br>
  * This file was created on 2006/04/04, 22:53:23, by Hugo Corbucci.<br>
- * It is part of package br.org.archimedes.polyline.explode on the br.org.archimedes.polyline.explode project.<br>
+ * It is part of package br.org.archimedes.polyline.explode on the
+ * br.org.archimedes.polyline.explode project.<br>
  */
-package br.org.archimedes.polyline.explode;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
+package br.org.archimedes.polyline.explode;
 
 import br.org.archimedes.controller.commands.MacroCommand;
 import br.org.archimedes.controller.commands.PutOrRemoveElementCommand;
@@ -27,6 +24,11 @@ import br.org.archimedes.interfaces.UndoableCommand;
 import br.org.archimedes.line.Line;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.polyline.Polyline;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Belongs to package br.org.archimedes.polyline.explode.
@@ -50,7 +52,6 @@ public class ExplodeFactory extends SelectorFactory {
 
     /*
      * (non-Javadoc)
-     * 
      * @see br.org.archimedes.factories.CommandFactory#getCommands()
      */
     public List<Command> getCommands () {
@@ -68,47 +69,65 @@ public class ExplodeFactory extends SelectorFactory {
 
     /*
      * (non-Javadoc)
-     * 
      * @see br.org.archimedes.factories.SelectorFactory#finishFactory(java.util.Set)
      */
     @Override
-    protected String finishFactory (Set<Element> selection) {
+    protected String finishFactory (Set<Element> selection) throws IllegalActionException {
 
         String returnValue = Messages.NoPolylineSelected;
-        try {
-            List<UndoableCommand> commands = new ArrayList<UndoableCommand>();
+        List<UndoableCommand> commands = new ArrayList<UndoableCommand>();
 
+        try {
             for (Element element : selection) {
                 if (Polyline.class.isAssignableFrom(element.getClass())) {
                     Polyline polyLine = (Polyline) element;
 
-                    List<Line> lines = polyLine.getLines();
-                    Collection<Element> toInsert = new ArrayList<Element>(lines);
-
-                    UndoableCommand insertCmd = new PutOrRemoveElementCommand(
-                            toInsert, false);
-                    UndoableCommand removeCmd = new PutOrRemoveElementCommand(
-                            element, true);
-
-                    commands.add(insertCmd);
-                    commands.add(removeCmd);
+                    commands.add(remove(polyLine));
+                    commands.add(explode(polyLine));
                 }
-            }
-
-            if (commands.size() > 0) {
-                command = new MacroCommand(commands);
-                returnValue = Messages.Exploded;
             }
         }
         catch (NullArgumentException e) {
             // Should never happen
             e.printStackTrace();
         }
-        catch (IllegalActionException e) {
+
+        try {
+            command = new MacroCommand(commands);
+            returnValue = Messages.Exploded;
+        }
+        catch (NullArgumentException e) {
             // Should never happen
             e.printStackTrace();
         }
 
         return returnValue;
+    }
+
+    /**
+     * @param polyLine
+     *            The polyline to remove
+     * @return An undoable command removing the polyline
+     * @throws NullArgumentException
+     *             Should never be thrown
+     */
+    private UndoableCommand remove (Polyline polyLine) throws NullArgumentException {
+
+        return new PutOrRemoveElementCommand(polyLine, true);
+    }
+
+    /**
+     * @param polyLine
+     *            The polyline to exploe
+     * @return An undoable command that inserts all lines composing this polyline
+     * @throws NullArgumentException
+     *             Should never be thrown
+     */
+    private UndoableCommand explode (Polyline polyLine) throws NullArgumentException {
+
+        List<Line> lines = polyLine.getLines();
+        Collection<Element> toInsert = new ArrayList<Element>(lines);
+
+        return new PutOrRemoveElementCommand(toInsert, false);
     }
 }

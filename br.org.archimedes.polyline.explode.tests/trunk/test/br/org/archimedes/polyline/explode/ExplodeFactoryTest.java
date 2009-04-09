@@ -138,8 +138,7 @@ public class ExplodeFactoryTest extends FactoryTester {
         Set<Element> newSelection = new HashSet<Element>();
         newSelection.add(line);
         // Invalid Selection
-        assertSafeNext(factory, newSelection, false);
-        
+        assertInvalidNext(factory, newSelection);
         assertInvalidNext(factory, null);
         assertInvalidNext(factory, new Object());
         
