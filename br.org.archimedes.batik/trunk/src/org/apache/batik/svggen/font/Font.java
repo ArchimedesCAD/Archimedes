@@ -178,7 +178,7 @@ public class Font {
     protected void readFile (File file) throws FileNotFoundException {
 
         if ( !file.exists()) {
-            throw new FileNotFoundException();
+            throw new FileNotFoundException("Couldn't load file '" + file.getPath() + "'.");
         }
 
         try {

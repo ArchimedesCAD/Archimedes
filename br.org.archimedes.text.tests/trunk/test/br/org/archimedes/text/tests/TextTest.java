@@ -258,9 +258,11 @@ public class TextTest extends Tester {
         Text t1 = createSafeText(ARCHIMEDES, POINT, SIZE);
         Text t2 = createSafeText(ARCHIMEDES, POINT, SIZE);
         Assert.assertTrue(t1.equals(t2));
+        Assert.assertEquals(t1.hashCode(), t2.hashCode());
 
-        Text t3 = createSafeText(ARCHIMEDES, POINT, SIZE + 10e-8);
+        Text t3 = createSafeText(ARCHIMEDES, POINT, SIZE + 10e-10);
         Assert.assertTrue(t1.equals(t3));
+        Assert.assertEquals(t1.hashCode(), t3.hashCode());
 
         t3 = createSafeText(ARCHIMEDES, POINT, SIZE + 10e-6);
         Assert.assertFalse(t1.equals(t3));

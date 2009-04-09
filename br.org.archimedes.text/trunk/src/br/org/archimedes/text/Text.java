@@ -11,13 +11,8 @@
  * This file was created on 2007/05/03, 10:45:11, by Wellington R. Pinheiro.<br>
  * It is part of package br.org.archimedes.text on the br.org.archimedes.text project.<br>
  */
+
 package br.org.archimedes.text;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
-import org.apache.batik.svggen.font.Font;
 
 import br.org.archimedes.Constant;
 import br.org.archimedes.Geometrics;
@@ -31,6 +26,12 @@ import br.org.archimedes.model.Rectangle;
 import br.org.archimedes.model.ReferencePoint;
 import br.org.archimedes.model.Vector;
 import br.org.archimedes.model.references.CirclePoint;
+
+import org.apache.batik.svggen.font.Font;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 public class Text extends Element {
 
@@ -59,8 +60,8 @@ public class Text extends Element {
      * @throws InvalidArgumentException
      *             Thrown if the size if not bigger than 0
      */
-    public Text (String text, Point originPoint, Double size)
-            throws NullArgumentException, InvalidArgumentException {
+    public Text (String text, Point originPoint, Double size) throws NullArgumentException,
+            InvalidArgumentException {
 
         this(text, originPoint, size, null);
     }
@@ -90,10 +91,8 @@ public class Text extends Element {
         this.text = text;
         this.originPoint = originPoint;
 
-        this.horizontalPoint = originPoint.addVector(new Vector(new Point(size,
-                0)));
-        this.verticalPoint = originPoint.addVector(new Vector(
-                new Point(0, size)));
+        this.horizontalPoint = originPoint.addVector(new Vector(new Point(size, 0)));
+        this.verticalPoint = originPoint.addVector(new Vector(new Point(0, size)));
 
         if (font == null) {
             this.font = Constant.DEFAULT_FONT;
@@ -127,8 +126,8 @@ public class Text extends Element {
 
         if (cachedWidth == null) {
             OpenGLWrapper openGl = br.org.archimedes.Utils.getOpenGLWrapper();
-            cachedWidth = Double.valueOf(openGl.calculateWidth(font,
-                    new Vector(originPoint, verticalPoint).getNorm(), text));
+            cachedWidth = Double.valueOf(openGl.calculateWidth(font, new Vector(originPoint,
+                    verticalPoint).getNorm(), text));
         }
 
         return cachedWidth.doubleValue();
@@ -196,9 +195,8 @@ public class Text extends Element {
     public void draw (OpenGLWrapper wrapper) {
 
         try {
-            wrapper.drawFromModel(text, originPoint, new Vector(originPoint,
-                    verticalPoint), new Vector(originPoint, horizontalPoint),
-                    font);
+            wrapper.drawFromModel(text, originPoint, new Vector(originPoint, verticalPoint),
+                    new Vector(originPoint, horizontalPoint), font);
         }
         catch (NullArgumentException e) {
             // Nothing should be null since I throw exception on constructor
@@ -213,24 +211,32 @@ public class Text extends Element {
             return true;
         }
 
-        boolean equal = object.getClass() == this.getClass();
-        if (equal) {
-            Text otherText = (Text) object;
-            equal = Math.abs(otherText.getHeight() - getHeight()) < Constant.EPSILON;
-            if (otherText.font != null) {
-                equal = equal && otherText.font.equals(font);
-            }
-            else {
-                equal = equal && font == null;
-            }
-            equal = equal && otherText.text.equalsIgnoreCase(text);
-            equal = equal
-                    && otherText.horizontalPoint.equals(this.horizontalPoint);
-            equal = equal && otherText.verticalPoint.equals(this.verticalPoint);
-
-            equal = equal && otherText.originPoint.equals(originPoint);
+        if (!Text.class.isAssignableFrom(object.getClass())) {
+            return false;
         }
+
+        Text otherText = (Text) object;
+        boolean equal = text.equalsIgnoreCase(otherText.text);
+        equal = equal && originPoint.equals(otherText.originPoint);
+        equal = equal && horizontalPoint.equals(otherText.horizontalPoint);
+        equal = equal && verticalPoint.equals(otherText.verticalPoint);
         return equal;
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode () {
+
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + this.originPoint.hashCode();
+        result = prime * result + this.text.hashCode();
+        result = prime * result + this.verticalPoint.hashCode();
+        result = prime * result + this.horizontalPoint.hashCode();
+        return result;
     }
 
     @Override
@@ -308,30 +314,11 @@ public class Text extends Element {
     }
 
     @Override
-    public void scale (Point scaleReference, double proportion)
-            throws NullArgumentException, IllegalActionException {
+    public void scale (Point scaleReference, double proportion) throws NullArgumentException,
+            IllegalActionException {
 
         super.scale(scaleReference, proportion);
         resetWidthCache();
-    }
-
-    /**
-     * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.model.Element#hashCode()
-     */
-    @Override
-    public int hashCode () {
-
-        int hash = super.hashCode();
-
-        hash += originPoint.hashCode();
-        hash += text.hashCode();
-        hash += horizontalPoint.hashCode();
-        hash += verticalPoint.hashCode();
-        hash += font.hashCode();
-
-        return hash;
     }
 
     /**
