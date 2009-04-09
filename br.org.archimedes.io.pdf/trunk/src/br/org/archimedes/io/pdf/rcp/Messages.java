@@ -24,7 +24,7 @@ public class Messages extends NLS {
 
     public static String PDFFilePickerPage_BrowseButtonTooltip;
 
-    public static String PDFFilePickerPage_BrwoseButtonText;
+    public static String PDFFilePickerPage_BrowseButtonText;
 
     public static String PDFFilePickerPage_ChooseWindowMessage;
 

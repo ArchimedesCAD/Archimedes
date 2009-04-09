@@ -12,6 +12,8 @@
  */
 package br.org.archimedes.io.pdf.rcp;
 
+import br.org.archimedes.interfaces.FileModel;
+
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -26,8 +28,6 @@ import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
-
-import br.org.archimedes.interfaces.FileModel;
 
 /**
  * Belongs to package br.org.archimedes.io.pdf.
@@ -98,7 +98,7 @@ public class PDFFilePickerPage extends WizardPage {
         filePathText.setLayoutData(data);
 
         Button browse = new Button(group, SWT.PUSH);
-        browse.setText(Messages.PDFFilePickerPage_BrwoseButtonText);
+        browse.setText(Messages.PDFFilePickerPage_BrowseButtonText);
         browse.setToolTipText(Messages.PDFFilePickerPage_BrowseButtonTooltip);
         browse.setAlignment(SWT.CENTER);
         browse.setEnabled(true);
