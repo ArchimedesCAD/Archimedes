@@ -27,12 +27,11 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class QuickMoveFactory extends TwoPointFactory {
 
     private Map<Element, Collection<Point>> pointsToMove;
-
-    private Map<Element, Collection<Point>> clonedToMove;
 
     private Command command;
 
@@ -45,7 +44,6 @@ public class QuickMoveFactory extends TwoPointFactory {
         }
 
         this.pointsToMove = pointsToMove;
-        this.clonedToMove = createClones(pointsToMove);
         setP1(mousePosition);
     }
 
@@ -113,18 +111,24 @@ public class QuickMoveFactory extends TwoPointFactory {
         
         Vector vector = new Vector(start, end);
         OpenGLWrapper wrapper = br.org.archimedes.Utils.getOpenGLWrapper();
-        for (Element clone : clonedToMove.keySet()) {
-            Collection<Point> points = clonedToMove.get(clone);
+        
+        // Moves other elements so that the map can stay unaltered
+        // Bug Fix for Bug ID 2747780
+        Map<Element, Collection<Point>> movableClones = createClones(pointsToMove);
+        
+        for (Entry<Element, Collection<Point>> association : movableClones.entrySet()) {
+            Element toMove = association.getKey();
+            Collection<Point> points = association.getValue();
             try {
-                clone.move(points, vector);
-                clone.draw(wrapper);
-                clone.move(points, vector.multiply( -1));
+                toMove.move(points, vector);
+                toMove.draw(wrapper);
             }
             catch (NullArgumentException e) {
                 // Should not happen
                 e.printStackTrace();
             }
         }
+            
         wrapper.setLineStyle(OpenGLWrapper.STIPPLED_LINE);
         wrapper.drawFromModel(start,end);
         wrapper.setLineStyle(OpenGLWrapper.CONTINUOUS_LINE);
@@ -143,7 +147,6 @@ public class QuickMoveFactory extends TwoPointFactory {
     @Override
     public String getName () {
 
-        return ""; //$NON-NLS-1$
+        return "QuickMove"; //$NON-NLS-1$
     }
-
 }
