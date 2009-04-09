@@ -12,17 +12,17 @@
  */
 package br.org.archimedes.rcp.extensionpoints;
 
-import java.util.HashMap;
-import java.util.Map;
+import br.org.archimedes.factories.CommandFactory;
+import br.org.archimedes.model.Element;
+import br.org.archimedes.rcp.ExtensionLoader;
+import br.org.archimedes.rcp.ExtensionTagHandler;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.InvalidRegistryObjectException;
 
-import br.org.archimedes.factories.CommandFactory;
-import br.org.archimedes.model.Element;
-import br.org.archimedes.rcp.ExtensionLoader;
-import br.org.archimedes.rcp.ExtensionTagHandler;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Belongs to package br.org.archimedes.rcp.extensionpoints.
@@ -32,10 +32,6 @@ import br.org.archimedes.rcp.ExtensionTagHandler;
 public class ElementEPLoader implements ExtensionTagHandler {
 
     private static final String ELEMENT_EXTENSION_POINT_ID = "br.org.archimedes.core.element"; //$NON-NLS-1$
-
-    private static final String FACTORY_ATTRIBUTE_NAME = "factory"; //$NON-NLS-1$
-
-    private static final String SHORTCUT_ATTRIBUTE_NAME = "shortcut"; //$NON-NLS-1$
 
     private static final String ELEMENT_ID_ATTRIBUTE_NAME = "id"; //$NON-NLS-1$
 
@@ -79,8 +75,6 @@ public class ElementEPLoader implements ExtensionTagHandler {
                     .forName(elementTag.getAttribute(CLASS_ATTRIBUTE));
             elementToIdMap.put(elementClass, elementId);
             idToElementClassMap.put(elementId, elementClass);
-
-            loadFactoryIfPresent(elementTag);
         }
         catch (InvalidRegistryObjectException e) {
             e.printStackTrace();
@@ -88,45 +82,6 @@ public class ElementEPLoader implements ExtensionTagHandler {
         catch (ClassNotFoundException e) {
             // Element's plugin not loaded. Just ignoring
             e.printStackTrace();
-        }
-    }
-
-    /**
-     * @param elementTag Tag that contains the element definition
-     */
-    private void loadFactoryIfPresent (IConfigurationElement elementTag){
-
-        try {
-            CommandFactory factory = (CommandFactory) elementTag
-                    .createExecutableExtension(FACTORY_ATTRIBUTE_NAME);
-            if (factory != null) {
-                loadElementFactory(elementTag, factory);
-            }
-        }
-        catch (CoreException e) {
-            // No factory defined for this element.
-        }
-    }
-
-    /**
-     * @param elementTag
-     *            The tag that contains the info
-     * @param factory
-     *            The command factory to be added
-     */
-    private void loadElementFactory (IConfigurationElement elementTag,
-            CommandFactory factory) {
-
-        String factoryName = factory.getName();
-        if (factoryName != null) {
-            elementFactoryMap.put(factoryName, factory);
-            elementFactoryMap.put(elementTag
-                    .getAttribute(ELEMENT_ID_ATTRIBUTE_NAME), factory);
-        }
-
-        String shortcutName = elementTag.getAttribute(SHORTCUT_ATTRIBUTE_NAME); //$NON-NLS-1$
-        if (shortcutName != null) {
-            elementFactoryMap.put(shortcutName, factory);
         }
     }
 
