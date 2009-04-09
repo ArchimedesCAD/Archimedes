@@ -99,18 +99,4 @@
 	<target name="-unpack.eclipse.linux" unless="is.windows" depends="-set.eclipse.local.tar.server,-set.eclipse.local.tar.non.server">
 		<untar src="${eclipse.local.tar}" overwrite="true" dest="${eclipse.installation.dir}/.." compression="gzip"/>		
 	</target>
-	
-	<target name="test">
-		<property name="buildDirectory" value="C:/Temp/tst"/>
-		<mkdir dir="${buildDirectory}"/>
-		<property name="eclipse.download.cache" value="C:/Temp/downloadcache"/>
-		<property name="pluginbuilder.is.server" value="true"/>
-		<property name="pluginbuilder.eclipse.url" value="http://mirror.yoxos-eclipse-distribution.de/eclipse.org/eclipse/downloads/drops/R-3.2.2-200702121330/eclipse-PDE-3.2.2.zip"/>
-		
-		<property name="eclipse.installation.dir" value="C:/Temp/eclipse_root/eclipse"/>
-		<delete dir="${eclipse.installation.dir}" failonerror="false"/>
-		<property name="pluginbuilder.feature.urls" value="http://self.pluginbuilder.org/0.2.0/org.pluginbuilder.feature-0.2.0.20070218PRD.zip,http://mirror.yoxos-eclipse-distribution.de/eclipse.org/eclipse/downloads/drops/R-3.2.2-200702121330/eclipse-examples-3.2.2.zip"/>
-		<antcall target="unpack.eclipse"/>
-	</target>
-	
 </project>
