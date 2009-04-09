@@ -51,7 +51,8 @@ public class Arc extends CurvedShape implements Offsetable {
 
 
     /**
-     * Constructor. Always build the arc in the counter clockwise order.
+     * Constructor. Always build the arc in the counter clockwise order. Will NOT use the instances
+     * of points passed but clones of them.
      * 
      * @param initialPoint
      *            The initial point
@@ -73,11 +74,11 @@ public class Arc extends CurvedShape implements Offsetable {
         }
 
         createInternalRepresentation(initialPoint.clone(), intermediatePoint.clone(), endingPoint
-                .clone());
+                .clone(), Geometrics.getCircumcenter(initialPoint, intermediatePoint, endingPoint));
     }
 
     /**
-     * Constructor.
+     * Constructor. Will NOT use the instances of points passed but clones of them.
      * 
      * @param initialPoint
      *            The initial point
@@ -116,7 +117,9 @@ public class Arc extends CurvedShape implements Offsetable {
     }
 
     /**
-     * Adjusts the arc points so that they are in counter clockwise order.
+     * Adjusts the arc points so that they are in counter clockwise order. It DOES NOT change the
+     * instances of the points passed but rather move them to the correct location (this way, we
+     * always rely on the same points for the arc). Bug Fix for Bug ID 2746056.
      * 
      * @param initialPoint
      *            The initial point
@@ -125,17 +128,23 @@ public class Arc extends CurvedShape implements Offsetable {
      *            point
      * @param endingPoint
      *            The ending point
+     * @param center
      * @throws NullArgumentException
      *             Thrown if any of the points is null
      * @throws InvalidArgumentException
      *             Thrown if the points are collinear
      */
     private void createInternalRepresentation (Point initialPoint, Point intermediatePoint,
-            Point endingPoint) throws InvalidArgumentException, NullArgumentException {
+            Point endingPoint, Point center) throws InvalidArgumentException, NullArgumentException {
 
         this.initialPoint = initialPoint;
         this.endingPoint = endingPoint;
-        this.centerPoint = Geometrics.getCircumcenter(initialPoint, intermediatePoint, endingPoint);
+        this.intermediatePoint = intermediatePoint;
+        this.centerPoint = center;
+
+        Point newCenter = Geometrics.getCircumcenter(initialPoint, intermediatePoint, endingPoint);
+        this.centerPoint.setX(newCenter.getX());
+        this.centerPoint.setY(newCenter.getY());
 
         double initialAngle = Geometrics.calculateAngle(centerPoint, initialPoint);
         double middleAngle = Geometrics.calculateAngle(centerPoint, intermediatePoint);
@@ -150,12 +159,13 @@ public class Arc extends CurvedShape implements Offsetable {
             this.initialPoint = this.endingPoint;
             this.endingPoint = tempPoint;
         }
-        this.intermediatePoint = calculateMidPoint(this.initialPoint, this.endingPoint,
-                this.centerPoint);
+        Point newMidPoint = calculateMidPoint(this.initialPoint, this.endingPoint, this.centerPoint);
+        this.intermediatePoint.setX(newMidPoint.getX());
+        this.intermediatePoint.setY(newMidPoint.getY());
     }
 
     /**
-     * Constructor.
+     * Constructor. Will NOT use the instances of points passed but clones of them.
      * 
      * @param initialPoint
      *            The initial point
@@ -367,8 +377,7 @@ public class Arc extends CurvedShape implements Offsetable {
 
     /*
      * (non-Javadoc)
-     * @see br.org.archimedes.model.Element#getReferencePoints(br.org
-     * .archimedes.model.Rectangle)
+     * @see br.org.archimedes.model.Element#getReferencePoints(br.org .archimedes.model.Rectangle)
      */
     public Collection<ReferencePoint> getReferencePoints (Rectangle area) {
 
@@ -664,7 +673,7 @@ public class Arc extends CurvedShape implements Offsetable {
 
         super.move(points, vector);
         try {
-            createInternalRepresentation(initialPoint, intermediatePoint, endingPoint);
+            createInternalRepresentation(initialPoint, intermediatePoint, endingPoint, centerPoint);
         }
         catch (InvalidArgumentException e) {
             // If the arc is invalid, undoes the move

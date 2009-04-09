@@ -11,6 +11,7 @@
  * This file was created on 2007/04/09, 13:02:39, by Wellington R. Pinheiro.<br>
  * It is part of package br.org.archimedes.arc on the br.org.archimedes.arc.tests project.<br>
  */
+
 package br.org.archimedes.arc;
 
 import br.org.archimedes.Tester;
@@ -19,6 +20,7 @@ import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Rectangle;
 import br.org.archimedes.model.ReferencePoint;
+import br.org.archimedes.model.Vector;
 import br.org.archimedes.model.references.CirclePoint;
 import br.org.archimedes.model.references.SquarePoint;
 import br.org.archimedes.model.references.TrianglePoint;
@@ -81,7 +83,7 @@ public class ArcTest extends Tester {
     }
 
     @Test
-    public void incorrectCreation () throws Exception {
+    public void incorrectNullCreation () throws Exception {
 
         incorrectNullArcInstantiation(null, initial, center);
         incorrectNullArcInstantiation(ending, null, center);
@@ -99,22 +101,20 @@ public class ArcTest extends Tester {
         incorrectNullArcInstantiation(null, initial, center, false);
         incorrectNullArcInstantiation(ending, null, center, false);
         incorrectNullArcInstantiation(ending, initial, null, false);
+    }
 
-        try {
-            new Arc(ending, initial, ending, true);
-            fail("Should have failed because cannot create an arc with equal points");
-        }
-        catch (InvalidArgumentException e) {
-            // Expected behaviour
-        }
+    @Test(expected = InvalidArgumentException.class)
+    public void shouldThrowInvalidArgumentWhenCreatingAnArcWithSameInitialAndEnding ()
+            throws Exception {
 
-        try {
-            new Arc(ending, initial, new Point(50, 0), initial);
-            fail("Should have failed because cannot create an arc with equal points");
-        }
-        catch (InvalidArgumentException e) {
-            // Expected behaviour
-        }
+        new Arc(ending, initial, ending, true);
+    }
+
+    @Test(expected = InvalidArgumentException.class)
+    public void shouldThrowInvalidArgumentWhenCreatingAnArcWithDirectionEqualToInitialOrEnding ()
+            throws Exception {
+
+        new Arc(ending, initial, new Point(50, 0), initial);
     }
 
     /**
@@ -126,8 +126,8 @@ public class ArcTest extends Tester {
      *            First argument to the contructor
      * @throws InvalidArgumentException
      */
-    private void incorrectNullArcInstantiation (Point first, Point second,
-            Point third) throws InvalidArgumentException {
+    private void incorrectNullArcInstantiation (Point first, Point second, Point third)
+            throws InvalidArgumentException {
 
         try {
             new Arc(first, second, third);
@@ -149,8 +149,8 @@ public class ArcTest extends Tester {
      *            First argument to the contructor
      * @throws InvalidArgumentException
      */
-    private void incorrectNullArcInstantiation (Point first, Point second,
-            Point third, Point fourth) throws InvalidArgumentException {
+    private void incorrectNullArcInstantiation (Point first, Point second, Point third, Point fourth)
+            throws InvalidArgumentException {
 
         try {
             new Arc(first, second, third, fourth);
@@ -172,8 +172,8 @@ public class ArcTest extends Tester {
      *            First argument to the contructor
      * @throws InvalidArgumentException
      */
-    private void incorrectNullArcInstantiation (Point first, Point second,
-            Point third, boolean fourth) throws InvalidArgumentException {
+    private void incorrectNullArcInstantiation (Point first, Point second, Point third,
+            boolean fourth) throws InvalidArgumentException {
 
         try {
             new Arc(first, second, third, fourth);
@@ -234,8 +234,8 @@ public class ArcTest extends Tester {
 
         clone = arc3.clone();
         Assert.assertEquals(arc3, clone);
-        
-        Arc arc = new Arc(new Point(-4,0), new Point(-2,2), new Point(0,0));
+
+        Arc arc = new Arc(new Point( -4, 0), new Point( -2, 2), new Point(0, 0));
         clone = arc.clone();
         Assert.assertEquals(arc, clone);
     }
@@ -247,8 +247,8 @@ public class ArcTest extends Tester {
         Assert.assertEquals(1.0, arc1.getRadius());
         Assert.assertEquals(1.0, arc2.getRadius());
         Assert.assertEquals(1.0, arc3.getRadius());
-        
-        Arc arc = new Arc(new Point(-2,0), new Point(0,2), new Point(2,0));
+
+        Arc arc = new Arc(new Point( -2, 0), new Point(0, 2), new Point(2, 0));
         Assert.assertEquals(2.0, arc.getRadius());
     }
 
@@ -259,8 +259,8 @@ public class ArcTest extends Tester {
         Assert.assertEquals(center, arc1.getCenter());
         Assert.assertEquals(center, arc2.getCenter());
         Assert.assertEquals(center, arc3.getCenter());
-        Arc arc = new Arc(new Point(-4,0), new Point(-2,2), new Point(0,0));
-        Assert.assertEquals(new Point(-2,0), arc.getCenter());
+        Arc arc = new Arc(new Point( -4, 0), new Point( -2, 2), new Point(0, 0));
+        Assert.assertEquals(new Point( -2, 0), arc.getCenter());
     }
 
     @Test
@@ -290,17 +290,13 @@ public class ArcTest extends Tester {
 
         Rectangle rect = new Rectangle(30, 30, 60, 60);
         Collection<ReferencePoint> expected = new LinkedList<ReferencePoint>();
-        Assert
-                .assertEquals(
-                        "No reference point should be returned for a far away rectangle",
-                        expected, arc1.getReferencePoints(rect));
+        Assert.assertEquals("No reference point should be returned for a far away rectangle",
+                expected, arc1.getReferencePoints(rect));
 
         expected.add(new SquarePoint(ending, ending));
         rect = new Rectangle( -1.5, -0.5, -0.5, 0.5);
-        Assert
-                .assertEquals(
-                        "Only the initial should be returned for a rectangle surrounding it",
-                        expected, arc1.getReferencePoints(rect));
+        Assert.assertEquals("Only the initial should be returned for a rectangle surrounding it",
+                expected, arc1.getReferencePoints(rect));
 
         expected.add(new SquarePoint(initial, initial));
         expected.add(new CirclePoint(center, points));
@@ -316,11 +312,9 @@ public class ArcTest extends Tester {
         Point inside = new Point(0.5, 0);
         Point outside = new Point(2, 0);
 
-        assertTrue(
-                "A point outside the circle that contains the arc should be positive direction",
+        assertTrue("A point outside the circle that contains the arc should be positive direction",
                 arc1.isPositiveDirection(outside));
-        assertFalse(
-                "A point inside the circle that contains the arc should be negative direction",
+        assertFalse("A point inside the circle that contains the arc should be negative direction",
                 arc1.isPositiveDirection(inside));
         assertFalse(
                 "A point contained in the circle that contains the arc should be negative direction",
@@ -328,23 +322,19 @@ public class ArcTest extends Tester {
     }
 
     @Test
-    public void anArcShouldContainAllPointsThatBelongToItAndNoOther ()
-            throws Exception {
+    public void anArcShouldContainAllPointsThatBelongToItAndNoOther () throws Exception {
 
-        assertTrue("An arc should contain its own initial point", arc1
-                .contains(arc1.getInitialPoint()));
-        assertTrue("An arc should contain its own ending point", arc1
-                .contains(arc1.getEndingPoint()));
-        assertTrue("An arc should contain its own intermediate point", arc1
-                .contains(arc1.getIntermediatePoint()));
+        assertTrue("An arc should contain its own initial point", arc1.contains(arc1
+                .getInitialPoint()));
+        assertTrue("An arc should contain its own ending point", arc1.contains(arc1
+                .getEndingPoint()));
+        assertTrue("An arc should contain its own intermediate point", arc1.contains(arc1
+                .getIntermediatePoint()));
         Point intermediate = new Point(Math.sqrt(2) / 2.0, Math.sqrt(2) / 2.0);
-        assertTrue("An arc should contain other points in it", arc1
-                .contains(intermediate));
+        assertTrue("An arc should contain other points in it", arc1.contains(intermediate));
 
-        assertFalse("An arc should not contain external points", arc1
-                .contains(new Point(1, 1)));
-        assertFalse("An arc should not contain internal points", arc1
-                .contains(center));
+        assertFalse("An arc should not contain external points", arc1.contains(new Point(1, 1)));
+        assertFalse("An arc should not contain internal points", arc1.contains(center));
 
         Point p = null;
         try {
@@ -355,16 +345,55 @@ public class ArcTest extends Tester {
             // Expected
         }
     }
-    
+
+    // TODO Tests for the creation of an arc with 3 points
+
+    // TODO Tests for the creation of an arc with 3 points and a boolean
+
+    // TODO Tests for the creation of an arc with 4 points
+
     // TODO Tests for the projection of a point on an arc
-    
+
     // TODO Tests for contains another arc
-    
+
     // TODO Tests for cloneWithDistance of an arc
-    
-    // TODO Tests for getPoints of an arc
-    
-    // TODO Tests for move of an arc
-    
+
+    @Test
+    public void getPointsReturnsThePointsInstancesThatDefineTheArc () throws Exception {
+
+        List<Point> arcPoints = arc.getPoints();
+        for (Point point : arcPoints) {
+            // Can't be the same instance as for creation.
+            Assert.assertFalse(point == initial);
+            Assert.assertFalse(point == ending);
+            Assert.assertFalse(point == middle);
+            Assert.assertFalse(point == center);
+        }
+
+        Vector vector = new Vector(new Point(1, 1));
+        for (Point point : arcPoints) {
+            point.addVector(vector);
+        }
+
+        List<Point> newPoints = arc.getPoints();
+        assertCollectionTheSame(arcPoints, newPoints);
+    }
+
+    @Test
+    public void moveMaitainsTheSameInstancesOfPointsForTheArc () throws Exception {
+
+        List<Point> arcPoints = arc.getPoints();
+        arc.move(1, 1);
+        List<Point> newPoints = arc.getPoints();
+        assertCollectionTheSame(arcPoints, newPoints);
+        
+        List<Point> pointsToMove = new LinkedList<Point>(arcPoints);
+        pointsToMove.remove(0); // Not moving the initial
+        Vector vector = new Vector(new Point(-5,0));
+        arc.move(pointsToMove, vector);
+        newPoints = arc.getPoints();
+        assertCollectionTheSame(arcPoints, newPoints);
+    }
+
     // TODO Tests for mirror of an arc
 }
