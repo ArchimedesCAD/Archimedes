@@ -82,7 +82,7 @@ public class TrimTest extends Tester {
             trimCommand.doIt(drawing);
         }
         catch (Exception e) {
-            Assert.fail("Should not throw any exception");
+            Assert.fail("Should not throw any exception but threw " + e.getMessage());
         }
     }
 

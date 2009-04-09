@@ -11,14 +11,8 @@
  * This file was created on 2007/03/27, 00:03:02, by Hugo Corbucci.<br>
  * It is part of package br.org.archimedes.controller on the br.org.archimedes.core project.<br>
  */
-package br.org.archimedes.controller;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+package br.org.archimedes.controller;
 
 import br.org.archimedes.Utils;
 import br.org.archimedes.exceptions.IllegalActionException;
@@ -34,6 +28,14 @@ import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Rectangle;
 import br.org.archimedes.model.ReferencePoint;
 import br.org.archimedes.model.Selection;
+import br.org.archimedes.model.Vector;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Belongs to package br.org.archimedes.controller.
@@ -44,12 +46,14 @@ public class Controller {
 
     private static int defaultDrawingNumber = 1;
 
+
     /**
      * Default constructor. Does nothing.<br>
      * Do NOT call this constructor. This only exists to allow the Activator to call it.<br>
      * To acquire an instance of this controller, refer to Utils.getController().
      */
     public Controller () {
+
         // Empty constructor
     }
 
@@ -87,8 +91,8 @@ public class Controller {
     }
 
     /**
-     * Sets the current drawing. Also sets the br.org.archimedes.Utils.getWorkspace() viewport
-     * to this drawing's viewport.
+     * Sets the current drawing. Also sets the br.org.archimedes.Utils.getWorkspace() viewport to
+     * this drawing's viewport.
      * 
      * @param drawing
      *            The drawing to be set active.
@@ -98,8 +102,8 @@ public class Controller {
         activeDrawing = drawing;
         if (drawing != null) {
             try {
-                br.org.archimedes.Utils.getWorkspace().setViewport(
-                        drawing.getViewportPosition(), drawing.getZoom());
+                br.org.archimedes.Utils.getWorkspace().setViewport(drawing.getViewportPosition(),
+                        drawing.getZoom());
             }
             catch (NullArgumentException e) {
                 System.err.println("NullArgumentException caught."); //$NON-NLS-1$
@@ -131,8 +135,8 @@ public class Controller {
      * @throws IllegalActionException
      *             Thrown if the action is not legal
      */
-    public void execute (List<Command> commands)
-            throws NoActiveDrawingException, IllegalActionException {
+    public void execute (List<Command> commands) throws NoActiveDrawingException,
+            IllegalActionException {
 
         Drawing drawing = getActiveDrawing();
         drawing.execute(commands);
@@ -163,20 +167,47 @@ public class Controller {
      *            The point used to select the element
      * @param name
      *            The class or interface the element must be
-     * @return The selected element or null if the selection was invalid
+     * @return The selected element (closest to the point) or null if the selection was invalid
      * @throws NoActiveDrawingException
      *             In case there is no active drawing
      */
-    public Element getElementUnder (Point point, Class<?> name)
-            throws NoActiveDrawingException {
+    public Element getElementUnder (Point point, Class<?> name) throws NoActiveDrawingException {
 
         Collection<Element> elementsUnder = getElementsUnder(point, name);
-        Element element = null;
-        if ( !elementsUnder.isEmpty()) {
-            element = elementsUnder.iterator().next();
-        }
-        return element;
+        return getClosests(elementsUnder, point);
+    }
 
+    /**
+     * @param elements
+     *            Elements to judge with
+     * @param point
+     *            The point to be close from
+     * @return The closest element or null if there is nothing in the collection
+     */
+    private Element getClosests (Collection<Element> elements, Point point) {
+
+        double dist = Double.MAX_VALUE;
+        Element closest = null;
+        for (Element element : elements) {
+            try {
+                if (element.contains(point)) {
+                    return element;
+                }
+
+                Point projection = element.getProjectionOf(point);
+                Vector distanceVector = new Vector(point, projection);
+                if (dist > distanceVector.getNorm()) {
+                    dist = distanceVector.getNorm();
+                    closest = element;
+                }
+            }
+            catch (NullArgumentException e) {
+                System.err.println("Couldnt calculate a distance for " + element
+                        + ". Ignoring it as a closest element.");
+                e.printStackTrace();
+            }
+        }
+        return closest;
     }
 
     /**
@@ -184,8 +215,7 @@ public class Controller {
      *            The point used to select the element
      * @param name
      *            The class or interface the element must be
-     * @return The selected elements or an empty list if the selection was
-     *         invalid
+     * @return The selected elements or an empty list if the selection was invalid
      * @throws NoActiveDrawingException
      *             In case there is no active drawing
      */
@@ -212,8 +242,7 @@ public class Controller {
 
         if (selected != null && !selected.isEmpty()) {
             for (Element element : selected) {
-                if (Utils.isSubclassOf(element, name)
-                        || Utils.isInterfaceOf(element, name)) {
+                if (Utils.isSubclassOf(element, name) || Utils.isInterfaceOf(element, name)) {
                     elements.add(element);
                 }
             }
@@ -235,8 +264,8 @@ public class Controller {
      * @throws NoActiveDrawingException
      *             In case there's no active drawing
      */
-    public boolean select (Point point, boolean invertSelection)
-            throws NullArgumentException, NoActiveDrawingException {
+    public boolean select (Point point, boolean invertSelection) throws NullArgumentException,
+            NoActiveDrawingException {
 
         double delta = br.org.archimedes.Utils.getWorkspace().getSelectionSize() / 2.0;
         delta = br.org.archimedes.Utils.getWorkspace().screenToModel(delta);
@@ -273,8 +302,7 @@ public class Controller {
             throw new NullArgumentException();
         }
 
-        Rectangle rect = new Rectangle(p1.getX(), p1.getY(), p2.getX(), p2
-                .getY());
+        Rectangle rect = new Rectangle(p1.getX(), p1.getY(), p2.getX(), p2.getY());
         Set<Element> selected;
         Selection selection = new Selection(rect, invertSelection);
 
@@ -311,18 +339,15 @@ public class Controller {
      * @throws NoActiveDrawingException
      *             In case there's no active drawing
      */
-    protected boolean movePoint (Point mousePosition)
-            throws NoActiveDrawingException {
+    protected boolean movePoint (Point mousePosition) throws NoActiveDrawingException {
 
         double delta = br.org.archimedes.Utils.getWorkspace().getMouseSize() / 2.0;
         delta = br.org.archimedes.Utils.getWorkspace().screenToModel(delta);
-        Rectangle selectionArea = Utils
-                .getSquareFromDelta(mousePosition, delta);
+        Rectangle selectionArea = Utils.getSquareFromDelta(mousePosition, delta);
         Map<Element, Collection<Point>> pointsToMove = new HashMap<Element, Collection<Point>>();
         Set<Element> selectedElements = getCurrentSelectedElements();
         for (Element element : selectedElements) {
-            Collection<Point> pointsFromElement = getPointsToMove(element,
-                    selectionArea);
+            Collection<Point> pointsFromElement = getPointsToMove(element, selectionArea);
             if (pointsFromElement != null && !pointsFromElement.isEmpty()) {
                 pointsToMove.put(element, pointsFromElement);
             }
@@ -331,10 +356,8 @@ public class Controller {
         boolean shouldMove = !pointsToMove.isEmpty();
         if (shouldMove) {
             try {
-                CommandFactory quickMoveFactory = new QuickMoveFactory(
-                        pointsToMove, mousePosition);
-                br.org.archimedes.Utils.getInputController().setCurrentFactory(
-                        quickMoveFactory);
+                CommandFactory quickMoveFactory = new QuickMoveFactory(pointsToMove, mousePosition);
+                br.org.archimedes.Utils.getInputController().setCurrentFactory(quickMoveFactory);
             }
             catch (Exception e) {
                 // Should not happen
@@ -352,15 +375,13 @@ public class Controller {
      *            The area in which the points must be to be moved.
      * @return The collection of points that should be moved.
      */
-    private Collection<Point> getPointsToMove (Element element,
-            Rectangle selectionArea) {
+    private Collection<Point> getPointsToMove (Element element, Rectangle selectionArea) {
 
         Rectangle modelDrawingArea = br.org.archimedes.Utils.getWorkspace()
                 .getCurrentViewportArea();
 
         Collection<Point> points = new ArrayList<Point>();
-        for (ReferencePoint referencePoint : element
-                .getReferencePoints(modelDrawingArea)) {
+        for (ReferencePoint referencePoint : element.getReferencePoints(modelDrawingArea)) {
             if (referencePoint.isInside(selectionArea)) {
                 points.addAll(referencePoint.getPointsToMove());
                 break;
@@ -371,12 +392,12 @@ public class Controller {
     }
 
     /**
-     * Auxiliar method. Changes the current selection to the recieved parameter,
-     * according to the invertSelection parameter.
+     * Auxiliar method. Changes the current selection to the recieved parameter, according to the
+     * invertSelection parameter.
      * 
      * @param selection
-     *            The selection that was just made. It will only be used if the
-     *            current selection is empty.
+     *            The selection that was just made. It will only be used if the current selection is
+     *            empty.
      * @param selectedElements
      *            The elements to be considered.
      * @param invertSelection
@@ -386,9 +407,8 @@ public class Controller {
      * @throws NoActiveDrawingException
      *             In case there's no active drawing
      */
-    private void changeSelection (Selection selection,
-            Set<Element> selectedElements, boolean invertSelection)
-            throws NullArgumentException, NoActiveDrawingException {
+    private void changeSelection (Selection selection, Set<Element> selectedElements,
+            boolean invertSelection) throws NullArgumentException, NoActiveDrawingException {
 
         if (selectedElements == null) {
             throw new NullArgumentException();
@@ -429,8 +449,7 @@ public class Controller {
      * @throws NoActiveDrawingException
      *             In case there's no active drawing
      */
-    public Set<Element> getCurrentSelectedElements ()
-            throws NoActiveDrawingException {
+    public Set<Element> getCurrentSelectedElements () throws NoActiveDrawingException {
 
         return getActiveDrawing().getSelection().getSelectedElements();
     }
