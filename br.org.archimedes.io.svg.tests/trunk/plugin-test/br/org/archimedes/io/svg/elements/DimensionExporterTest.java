@@ -13,16 +13,16 @@
 
 package br.org.archimedes.io.svg.elements;
 
-import static org.junit.Assert.assertEquals;
-
-import java.io.ByteArrayOutputStream;
+import br.org.archimedes.Tester;
+import br.org.archimedes.dimension.Dimension;
+import br.org.archimedes.model.Point;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import br.org.archimedes.Tester;
-import br.org.archimedes.dimension.Dimension;
-import br.org.archimedes.model.Point;
+import java.io.ByteArrayOutputStream;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author Luiz Real and Ricardo Sider
@@ -49,6 +49,7 @@ public class DimensionExporterTest extends Tester {
 
         exporter.exportElement(dimension, stream);
 
+        // Depends on calculate width to set the right text x so it is a plug-in test
         String expected = "<line x1=\"-10\" y1=\"-100\" x2=\"110\" y2=\"-100\" />"
                 + "<line x1=\"0\" y1=\"-10\" x2=\"0\" y2=\"-110\" />"
                 + "<line x1=\"100\" y1=\"-10\" x2=\"100\" y2=\"-110\" />"
