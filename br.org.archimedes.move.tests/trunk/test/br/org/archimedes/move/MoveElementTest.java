@@ -239,17 +239,19 @@ public class MoveElementTest extends Tester {
             moveElement.doIt(drawing);
             Assert.fail("Should throw an IllegalActionException");
         }
-        catch (IllegalActionException e) {}
+        catch (IllegalActionException e) {
+            // Should throw an exception for the circle
+        }
         catch (NullArgumentException e) {
             Assert.fail("Should not throw a NullArgumentException");
         }
 
         expected = new ArrayList<Element>();
-        expected.add(new Line(108, 38, 795, 3));
-        expected.add(new InfiniteLine( -546, 336, 123, -12));
-        expected.add(new Semiline(165, 9, 192, 8));
+        expected.add(new Line(20, 20, 120, 120));
+        expected.add(new InfiniteLine(30, 30, 70, 70));
+        expected.add(new Semiline(30, 10, 70, 70));
         expected.add(circle);
-        expected.add(new Arc(new Point(8, -12), new Point(108, 88), new Point(208, -12)));
+        expected.add(new Arc(new Point( -80, 20), new Point(20, 120), new Point(120, 20)));
 
         assertCollectionTheSame(expected, selection.getSelectedElements());
     }
@@ -287,6 +289,7 @@ public class MoveElementTest extends Tester {
     /*
      * Test method for 'br.org.archimedes.model.commands.MoveElementCommand.undoIt(Drawing)'
      */
+    @Test
     public void testUndoIt () throws InvalidArgumentException, NullArgumentException {
 
         UndoableCommand moveElement = null;
@@ -314,13 +317,13 @@ public class MoveElementTest extends Tester {
             Assert.fail("Should throw an IllegalActionException");
         }
 
-        testDoIt(); // Do it
-
         try {
+            addsSelectionToDrawing();
+            moveElement.doIt(drawing);
             createOriginalExpected();
         }
-        catch (Exception e) {
-            Assert.fail("Should not throw any exception.");
+        catch (IllegalActionException e) {
+            Assert.fail("Should not throw an IllegalActionException");
         }
 
         try {

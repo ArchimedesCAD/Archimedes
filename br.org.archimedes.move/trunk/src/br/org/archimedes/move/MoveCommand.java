@@ -32,7 +32,7 @@ import java.util.Map;
 /**
  * Belongs to package br.org.archimedes.model.commands.
  * 
- * @author jefsilva
+ * @author Jeferson R. Silva
  */
 public class MoveCommand implements UndoableCommand {
 
