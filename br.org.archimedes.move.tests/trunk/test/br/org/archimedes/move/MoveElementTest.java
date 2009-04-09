@@ -19,7 +19,6 @@ import br.org.archimedes.Tester;
 import br.org.archimedes.arc.Arc;
 import br.org.archimedes.circle.Circle;
 import br.org.archimedes.exceptions.IllegalActionException;
-import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.infiniteline.InfiniteLine;
 import br.org.archimedes.interfaces.Command;
@@ -44,6 +43,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Belongs to package br.org.archimedes.move.
@@ -54,11 +54,7 @@ public class MoveElementTest extends Tester {
 
     private Drawing drawing;
 
-    private Selection selection;
-
     private Vector vector;
-
-    private Collection<Element> expected;
 
     private Circle circle;
 
@@ -70,44 +66,30 @@ public class MoveElementTest extends Tester {
     public void setUp () throws Exception {
 
         drawing = new Drawing("Drawing");
-        createOriginalSelection();
-
-        createOriginalExpected();
-
         vector = new Vector(new Point(10, 10));
     }
 
-    /**
-     * @throws InvalidArgumentException
-     *             Not thrown
-     * @throws NullArgumentException
-     *             Not thrown
-     */
-    private void createOriginalSelection () throws NullArgumentException, InvalidArgumentException {
+    private Selection createOriginalSelection () throws Exception {
 
-        selection = new Selection();
+        Selection selection = new Selection();
         selection.add(new Line(0, 0, 100, 100));
         selection.add(new InfiniteLine(10, 10, 50, 50));
         selection.add(new Semiline(10, -10, 50, 50));
         selection.add(new Arc(new Point( -100, 0), new Point(0, 100), new Point(100, 0)));
         circle = new Circle(new Point(0, 0), 50.0);
         selection.add(circle);
+        return selection;
     }
 
-    /**
-     * @throws NullArgumentException
-     *             Not thrown.
-     * @throws InvalidArgumentException
-     *             Not thrown.
-     */
-    private void createOriginalExpected () throws NullArgumentException, InvalidArgumentException {
+    private Collection<Element> createOriginalExpected () throws Exception {
 
-        expected = new HashSet<Element>();
+        Set<Element> expected = new HashSet<Element>();
         expected.add(new Line(10, 10, 110, 110));
         expected.add(new InfiniteLine(20, 20, 60, 60));
         expected.add(new Semiline(20, 0, 60, 60));
         expected.add(new Arc(new Point( -90, 10), new Point(10, 110), new Point(110, 10)));
         expected.add(new Circle(new Point(10, 10), 50.0));
+        return expected;
     }
 
     /*
@@ -117,7 +99,6 @@ public class MoveElementTest extends Tester {
     public void tearDown () throws Exception {
 
         drawing = null;
-        selection = null;
         vector = null;
     }
 
@@ -127,7 +108,7 @@ public class MoveElementTest extends Tester {
      * Vector)'
      */
     @Test
-    public void moveElementCommand () {
+    public void moveElementCommand () throws Exception {
 
         Selection elements = null;
         Vector vector = null;
@@ -151,13 +132,7 @@ public class MoveElementTest extends Tester {
         }
         catch (NullArgumentException e) {}
 
-        try {
-            new MoveCommand(getPoints(elements), vector);
-        }
-        catch (NullArgumentException e) {
-            Assert.fail("Should not throw a NullArgumentException");
-        }
-
+        new MoveCommand(getPoints(elements), vector);
     }
 
     /**
@@ -183,15 +158,11 @@ public class MoveElementTest extends Tester {
      * Test method for 'br.org.archimedes.model.commands.MoveElementCommand.doIt(Drawing)'
      */
     @Test
-    public void testDoIt () throws InvalidArgumentException, NullArgumentException {
-
-        Command moveElement = null;
-        try {
-            moveElement = new MoveCommand(getPoints(selection), vector);
-        }
-        catch (Exception e) {
-            Assert.fail("Should not throw any Exception");
-        }
+    public void testDoIt () throws Exception {
+        
+        
+        Selection selection = createOriginalSelection();
+        Command moveElement = new MoveCommand(getPoints(selection), vector);
 
         try {
             moveElement.doIt(drawing);
@@ -202,21 +173,12 @@ public class MoveElementTest extends Tester {
             Assert.fail("Should not throw a NullArgumentException");
         }
 
-        addsSelectionToDrawing();
-
-        try {
-            moveElement.doIt(drawing);
-        }
-        catch (IllegalActionException e) {
-            Assert.fail("Should not throw an IllegalActionException");
-        }
-        catch (NullArgumentException e) {
-            Assert.fail("Should not throw a NullArgumentException");
-        }
-
+        addsSelectionToDrawing(selection);
+        moveElement.doIt(drawing);
+        Collection<Element> expected = createOriginalExpected();
         assertCollectionTheSame(expected, selection.getSelectedElements());
 
-        removesSelectionToDrawing();
+        removesSelectionToDrawing(selection);
 
         try {
             moveElement.doIt(drawing);
@@ -227,13 +189,8 @@ public class MoveElementTest extends Tester {
             Assert.fail("Should not throw a NullArgumentException");
         }
 
-        addsSelectionToDrawing();
-        try {
-            drawing.removeElement(circle);
-        }
-        catch (Exception e) {
-            Assert.fail("Should not throw any exception");
-        }
+        addsSelectionToDrawing(selection);
+        drawing.removeElement(circle);
 
         try {
             moveElement.doIt(drawing);
@@ -258,31 +215,23 @@ public class MoveElementTest extends Tester {
 
     /**
      * Adds the selection to the drawing.
+     * @param selection The selection  to add 
      */
-    private void addsSelectionToDrawing () {
+    private void addsSelectionToDrawing (Selection selection) throws Exception {
 
         for (Element element : selection.getSelectedElements()) {
-            try {
-                drawing.putElement(element);
-            }
-            catch (Exception e) {
-                Assert.fail("Should not throw any exception.");
-            }
+            drawing.putElement(element);
         }
     }
 
     /**
-     * Adds the selection to the drawing.
+     * Removes the selection from the drawing.
+     * @param selection The selection to remove
      */
-    private void removesSelectionToDrawing () {
+    private void removesSelectionToDrawing (Selection selection) throws Exception {
 
         for (Element element : selection.getSelectedElements()) {
-            try {
-                drawing.removeElement(element);
-            }
-            catch (Exception e) {
-                Assert.fail("Should not throw any exception.");
-            }
+            drawing.removeElement(element);
         }
     }
 
@@ -290,15 +239,10 @@ public class MoveElementTest extends Tester {
      * Test method for 'br.org.archimedes.model.commands.MoveElementCommand.undoIt(Drawing)'
      */
     @Test
-    public void testUndoIt () throws InvalidArgumentException, NullArgumentException {
+    public void testUndoIt () throws Exception {
+        Selection selection = createOriginalSelection();
+        UndoableCommand moveElement = new MoveCommand(getPoints(selection), vector);
 
-        UndoableCommand moveElement = null;
-        try {
-            moveElement = new MoveCommand(getPoints(selection), vector);
-        }
-        catch (Exception e) {
-            Assert.fail("Should not throw any Exception");
-        }
         try {
             moveElement.undoIt(null);
             Assert.fail("Should throw a NullArgumentException");
@@ -313,54 +257,28 @@ public class MoveElementTest extends Tester {
             Assert.fail("Should throw an IllegalActionException");
         }
         catch (IllegalActionException e) {}
-        catch (NullArgumentException e1) {
-            Assert.fail("Should throw an IllegalActionException");
-        }
-
-        try {
-            addsSelectionToDrawing();
-            moveElement.doIt(drawing);
-            createOriginalExpected();
-        }
-        catch (IllegalActionException e) {
-            Assert.fail("Should not throw an IllegalActionException");
-        }
-
-        try {
-            moveElement.undoIt(drawing);
-            Assert.fail("Should throw an IllegalActionException");
-        }
-        catch (IllegalActionException e) {}
         catch (NullArgumentException e) {
             Assert.fail("Should throw an IllegalActionException");
         }
+
+        addsSelectionToDrawing(selection);
+        moveElement.doIt(drawing);
+        moveElement.undoIt(drawing);
+
+        Collection<Element> expected = createOriginalSelection().getSelectedElements();
         assertCollectionTheSame(expected, selection.getSelectedElements());
 
-        try {
-            createOriginalSelection();
-        }
-        catch (Exception e) {
-            Assert.fail("Should not throw any exception");
-        }
-
+        selection = createOriginalSelection();
         drawing.addLayer(new Layer(Constant.BLACK, "Layer2", LineStyle.CONTINUOUS, 1.0));
-        try {
-            drawing.setCurrentLayer(1);
-        }
-        catch (IllegalActionException e1) {
-            Assert.fail("Should not throw any exception");
-        }
-        addsSelectionToDrawing();
-        try {
-            moveElement = new MoveCommand(getPoints(selection), vector);
-            moveElement.doIt(drawing);
-            moveElement.doIt(drawing);
-            moveElement.undoIt(drawing);
-        }
-        catch (Exception e) {
-            Assert.fail("Should not throw any exception");
-        }
+        drawing.setCurrentLayer(1);
+        addsSelectionToDrawing(selection);
 
+        moveElement = new MoveCommand(getPoints(selection), vector);
+        moveElement.doIt(drawing);
+        moveElement.doIt(drawing);
+        moveElement.undoIt(drawing);
+
+        expected = createOriginalExpected();
         assertCollectionTheSame(expected, selection.getSelectedElements());
     }
 
