@@ -60,6 +60,11 @@
 <point x="4" y="62" />
 <point x="-170" y="8" />
 </polyline>
+<leader>
+<point x="100" y="100" />
+<point x="130" y="0" />
+<point x="250" y="0" />
+</leader>
 </container>
 <container name="Layer 3" lineStyle="1" thickness="1" >
 <color><unsignedByte>255</unsignedByte>
