@@ -8,4 +8,51 @@
         class="br.org.archimedes.io.svg.SVGExporter"/>
    </extension>
 
+   <extension
+         point="br.org.archimedes.io.svg.svgElementExporter">
+         <exporter 
+            id="br.org.archimedes.line.svg.exporter" 
+            elementId="br.org.archimedes.line"
+            class="br.org.archimedes.io.svg.elements.LineExporter"/>
+         <exporter 
+            id="br.org.archimedes.arc.svg.exporter" 
+            elementId="br.org.archimedes.arc"
+            class="br.org.archimedes.io.svg.elements.ArcExporter"/>
+         <exporter 
+            id="br.org.archimedes.circle.svg.exporter"
+            elementId="br.org.archimedes.circle"
+            class="br.org.archimedes.io.svg.elements.CircleExporter"/>
+         <exporter 
+            id="br.org.archimedes.dimension.svg.exporter" 
+            elementId="br.org.archimedes.dimension"
+            class="br.org.archimedes.io.svg.elements.DimensionExporter"/>
+         <exporter 
+            id="br.org.archimedes.infiniteline.svg.exporter"
+            elementId="br.org.archimedes.infiniteline"
+            class="br.org.archimedes.io.svg.elements.InfiniteLineExporter"/>
+        <exporter 
+            id="br.org.archimedes.leader.svg.exporter"
+            elementId="br.org.archimedes.leader"
+            class="br.org.archimedes.io.svg.elements.LeaderExporter"/>
+         <exporter 
+            id="br.org.archimedes.polyline.svg.exporter"
+            elementId="br.org.archimedes.polyline"
+            class="br.org.archimedes.io.svg.elements.PolylineExporter"/>
+         <exporter 
+            id="br.org.archimedes.semiline.svg.exporter"
+            elementId="br.org.archimedes.semiline"
+            class="br.org.archimedes.io.svg.elements.SemilineExporter"/>
+         <exporter 
+            id="br.org.archimedes.text.svg.exporter"
+            elementId="br.org.archimedes.text"
+            class="br.org.archimedes.io.svg.elements.TextExporter"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.exportWizards">
+      <wizard
+            class="br.org.archimedes.io.svg.rcp.SVGWizardExporter"
+            id="br.org.archimedes.io.svg.wizard"
+            name="%exporterName">
+      </wizard>
+   </extension>
 </plugin>

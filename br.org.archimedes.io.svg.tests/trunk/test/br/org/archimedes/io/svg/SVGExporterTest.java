@@ -57,6 +57,8 @@ public class SVGExporterTest extends Tester {
 
         Assert.assertEquals("An empty drawing is not being generate as expected", expected, result);
     }
+    
+    // TODO An integration test for SVG exporting to ensure all elements are correctly registered.
 
     /**
      * @param filename

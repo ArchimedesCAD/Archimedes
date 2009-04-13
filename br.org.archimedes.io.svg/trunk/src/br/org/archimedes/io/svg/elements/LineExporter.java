@@ -43,8 +43,8 @@ public class LineExporter implements ElementExporter<Line> {
         int x2 = (int) line.getEndingPoint().getX();
         int y2 = (int) line.getEndingPoint().getY();
 
-        lineTag.append("<line x1=\"" + x1 + "\" y1=\"" + -y1 + "\" x2=\"" + x2 + "\" y2=\"" + -y2
-                + "\" />\n");
+        lineTag.append("<line x1=\"" + x1 + "\" y1=\"" + -y1 + "\" x2=\"" + x2 + "\" y2=\"" + -y2 //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+                + "\" />\n"); //$NON-NLS-1$
 
         output.write(lineTag.toString().getBytes());
 

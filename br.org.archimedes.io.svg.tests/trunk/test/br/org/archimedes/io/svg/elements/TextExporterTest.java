@@ -13,23 +13,22 @@
 
 package br.org.archimedes.io.svg.elements;
 
-import static org.junit.Assert.assertEquals;
-
-import java.io.ByteArrayOutputStream;
+import br.org.archimedes.Tester;
+import br.org.archimedes.model.Point;
+import br.org.archimedes.text.Text;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import br.org.archimedes.Tester;
-import br.org.archimedes.model.Point;
-import br.org.archimedes.text.Text;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author Bruno da Hora and Ricardo Sider
  */
 public class TextExporterTest extends Tester {
-
-    private Text text;
 
     private TextExporter exporter;
 
@@ -39,19 +38,45 @@ public class TextExporterTest extends Tester {
     @Before
     public void setUp () throws Exception {
 
-        text = new Text("Testando exportador", new Point(0.0, 0.0), 2.0);
         exporter = new TextExporter();
         stream = new ByteArrayOutputStream();
     }
 
     @Test
-    public void exportTextAsSVG () throws Exception {
+    public void exportTextOn0AsSVG () throws Exception {
 
-        exporter.exportElement(text, stream);
-        
         String expected = "<text x=\"0.0\" y=\"0.0\" font-size=\"2.0\" font-family=\"Courier\">Testando exportador</text>";
-        expected = expected.replaceAll("\\s", "");
+        Text text = new Text("Testando exportador", new Point(0.0, 0.0), 2.0);
 
+        assertExportEquals(expected, text);
+    }
+    
+    @Test
+    public void exportTextOnPositiveYAsSVG () throws Exception {
+
+        String expected = "<text x=\"0.0\" y=\"-10.0\" font-size=\"2.0\" font-family=\"Courier\">Testando exportador</text>";
+        Text text = new Text("Testando exportador", new Point(0.0, 10.0), 2.0);
+
+        assertExportEquals(expected, text);
+    }
+    
+    @Test
+    public void exportTextOnNegativeYAndXAsSVG () throws Exception {
+
+        String expected = "<text x=\"-10.0\" y=\"10.0\" font-size=\"2.0\" font-family=\"Courier\">Testando exportador</text>";
+        Text text = new Text("Testando exportador", new Point(-10.0, -10.0), 2.0);
+
+        assertExportEquals(expected, text);
+    }
+    /**
+     * @param expected The spaced export string
+     * @param text The text to be exported
+     * @throws IOException Thrown in case of problems
+     */
+    private void assertExportEquals (String expected, Text text) throws IOException {
+
+        expected = expected.replaceAll("\\s", "");
+        exporter.exportElement(text, stream);
         String result = stream.toString().replaceAll("\\s", "");
         assertEquals(expected, result);
     }

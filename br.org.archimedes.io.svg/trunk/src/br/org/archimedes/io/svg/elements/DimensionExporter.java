@@ -23,9 +23,9 @@ import java.io.IOException;
 import java.util.Collection;
 
 /**
- * Belongs to package br.org.archimedes.io.pdf.
+ * Belongs to package br.org.archimedes.io.svg.
  * 
- * @author night
+ * @author Hugo Corbucci
  */
 public class DimensionExporter implements ElementExporter<Dimension> {
 

@@ -18,6 +18,7 @@ import br.org.archimedes.infiniteline.InfiniteLine;
 import br.org.archimedes.interfaces.ElementExporter;
 import br.org.archimedes.interfaces.Exporter;
 import br.org.archimedes.io.svg.rcp.ElementExporterEPLoader;
+import br.org.archimedes.io.svg.rcp.Messages;
 import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Layer;
@@ -61,7 +62,7 @@ public class SVGExporter implements Exporter {
 
         for (Layer layer : drawing.getLayerMap().values()) {
 
-        	String header = "<g class=\"" + escapeName(layer.getName()) + "\" fill=\"none\">\n";
+        	String header = "<g class=\"" + escapeName(layer.getName()) + "\" fill=\"none\">\n"; //$NON-NLS-1$ //$NON-NLS-2$
             output.write(header.getBytes(charset));
 
             for (Element element : layer.getElements()) {
@@ -81,14 +82,15 @@ public class SVGExporter implements Exporter {
                         }
                     }
                     catch (NotSupportedException e) {
-                        // wont reach here
+                        // Should never throw this exception
+                        e.printStackTrace();
                     }
 
                 }
 
             }
 
-            output.write("</g>\n".getBytes(charset));
+            output.write("</g>\n".getBytes(charset)); //$NON-NLS-1$
         }
         output.write(("</svg>" + "\n").getBytes(charset)); //$NON-NLS-1$ //$NON-NLS-2$
         output.close();
@@ -108,16 +110,16 @@ public class SVGExporter implements Exporter {
     private void exportSVGHeader (Drawing drawing, OutputStream output, String charset,
             Rectangle boundaryRectangle) throws IOException, UnsupportedEncodingException {
 
-        StringBuilder drawingTag = new StringBuilder("<?xml version=\"1.0\" encoding=\"" + charset
-                + "\"?>" + "\n");
+        StringBuilder drawingTag = new StringBuilder("<?xml version=\"1.0\" encoding=\"" + charset //$NON-NLS-1$
+                + "\"?>" + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
 
-        drawingTag.append("<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\""
+        drawingTag.append("<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\"" //$NON-NLS-1$
                 // + " width="10cm" height="3cm"
 
-                + " viewBox=\"" + (int) Math.ceil(boundaryRectangle.getLowerLeft().getX()) + " "
-                + (int) Math.ceil(boundaryRectangle.getLowerLeft().getY()) + " "
-                + (int) Math.ceil(boundaryRectangle.getWidth()) + " "
-                + (int) Math.ceil(boundaryRectangle.getHeight()) + "\">");
+                + " viewBox=\"" + (int) Math.ceil(boundaryRectangle.getLowerLeft().getX()) + " " //$NON-NLS-1$ //$NON-NLS-2$
+                + (int) Math.ceil(boundaryRectangle.getLowerLeft().getY()) + " " //$NON-NLS-1$
+                + (int) Math.ceil(boundaryRectangle.getWidth()) + " " //$NON-NLS-1$
+                + (int) Math.ceil(boundaryRectangle.getHeight()) + "\">"); //$NON-NLS-1$
 
         output.write(drawingTag.toString().getBytes(charset));
     }
@@ -125,17 +127,17 @@ public class SVGExporter implements Exporter {
     private void writeLayersDefs (Collection<Layer> layers, OutputStream output, String encoding) throws IOException {
 
     	StringBuilder builder = new StringBuilder();
-        builder.append("<defs>\n" + "<style type=\"text/css\">\n" + "<![CDATA[\n");
+        builder.append("<defs>\n" + "<style type=\"text/css\">\n" + "<![CDATA[\n"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         for (Layer layer : layers) {
             String printColor = layer.getPrintColor().toHexString();
-            builder.append("." + escapeName(layer.getName()) + " {stroke:#" + printColor + ";stroke-width:"
-                    + ((int) layer.getThickness()) + "}\n");
+            builder.append("." + escapeName(layer.getName()) + " {stroke:#" + printColor + ";stroke-width:" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                    + ((int) layer.getThickness()) + "}\n"); //$NON-NLS-1$
         }
-        builder.append("]]>\n" + "</style>\n" + "</defs>\n");
+        builder.append("]]>\n" + "</style>\n" + "</defs>\n"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         output.write(builder.toString().getBytes(encoding));
     }
     
     private String escapeName(String name) {
-    	return name.replaceAll(" ", "-_-");
+    	return name.replaceAll(" ", "-_-"); //$NON-NLS-1$ //$NON-NLS-2$
     }
 }

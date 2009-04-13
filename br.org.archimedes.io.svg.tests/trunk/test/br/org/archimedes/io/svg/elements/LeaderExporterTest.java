@@ -13,16 +13,16 @@
 
 package br.org.archimedes.io.svg.elements;
 
-import static org.junit.Assert.assertEquals;
-
-import java.io.ByteArrayOutputStream;
+import br.org.archimedes.Tester;
+import br.org.archimedes.leader.Leader;
+import br.org.archimedes.model.Point;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import br.org.archimedes.Tester;
-import br.org.archimedes.leader.Leader;
-import br.org.archimedes.model.Point;
+import java.io.ByteArrayOutputStream;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author Luiz Real and Ricardo Sider
@@ -49,7 +49,8 @@ public class LeaderExporterTest extends Tester {
 
         exporter.exportElement(leader, stream);
 
-        String expected = "<line x1=\"100\" y1=\"0\" x2=\"0\" y2=\"0\" />"
+        String expected = "<circle fill=\"none\" cx=\"100\" cy=\"0\" r=\"5\"/>"
+                + "<line x1=\"100\" y1=\"0\" x2=\"0\" y2=\"0\" />"
                 + "<line x1=\"0\" y1=\"0\" x2=\"100\" y2=\"-100\" />";
 
         expected = expected.replaceAll("\\s", "");

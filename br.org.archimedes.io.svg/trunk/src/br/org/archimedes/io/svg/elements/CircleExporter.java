@@ -37,8 +37,8 @@ public class CircleExporter implements ElementExporter<Circle> {
         int y = (int) circle.getCenter().getY();
         int r = (int) circle.getRadius();
 
-        lineTag.append("<circle fill=\"none\" cx=\"" + x + "\" cy=\"" + -y + "\" r=\"" + r
-                + "\"/>\n");
+        lineTag.append("<circle fill=\"none\" cx=\"" + x + "\" cy=\"" + -y + "\" r=\"" + r //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                + "\"/>\n"); //$NON-NLS-1$
 
         output.write(lineTag.toString().getBytes());
     }

@@ -17,7 +17,7 @@ import br.org.archimedes.rcp.AbstractElementExporterEPLoader;
 /**
  * Belongs to package br.org.archimedes.io.svg.rcp.
  * 
- * @author night
+ * @author Hugo Corbucci
  */
 public class ElementExporterEPLoader extends AbstractElementExporterEPLoader {
 

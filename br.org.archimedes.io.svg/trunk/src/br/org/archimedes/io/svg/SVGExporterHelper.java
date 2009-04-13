@@ -27,6 +27,6 @@ public class SVGExporterHelper {
         x = (int) point.getX();
         y = (int) point.getY();
         
-        return String.format("%d,%d", x, -y);
+        return String.format("%d,%d", x, -y); //$NON-NLS-1$
     }
 }

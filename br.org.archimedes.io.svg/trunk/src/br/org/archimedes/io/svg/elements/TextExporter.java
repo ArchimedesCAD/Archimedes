@@ -13,13 +13,15 @@
 
 package br.org.archimedes.io.svg.elements;
 
-import java.io.IOException;
-import java.io.OutputStream;
-
+import br.org.archimedes.Constant;
 import br.org.archimedes.exceptions.NotSupportedException;
 import br.org.archimedes.interfaces.ElementExporter;
+import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Rectangle;
 import br.org.archimedes.text.Text;
+
+import java.io.IOException;
+import java.io.OutputStream;
 
 /**
  * Belongs to package br.org.archimedes.io.svg.
@@ -38,15 +40,30 @@ public class TextExporter implements ElementExporter<Text> {
         OutputStream output = (OutputStream) outputObject;
         StringBuilder textTag = new StringBuilder();
 
-        textTag.append("<text x=\"" + text.getLowerLeft().getX() + "\" y=\""
-                + text.getLowerLeft().getY() + "\" font-size=\"" + text.getSize()
-                + "\" font-family=\"Courier\">");
+        Point lowerLeft = text.getLowerLeft();
+        double x = lowerLeft.getX();
+        double y = -lowerLeft.getY();
+        
+        textTag.append("<text x=\"" + clean(x) + "\" y=\"" //$NON-NLS-1$ //$NON-NLS-2$
+                + clean(y) + "\" font-size=\"" + text.getSize() //$NON-NLS-1$
+                + "\" font-family=\"Courier\">"); //$NON-NLS-1$
 
         textTag.append(text.getText());
-        textTag.append("</text>");
+        textTag.append("</text>"); //$NON-NLS-1$
 
         output.write(textTag.toString().getBytes());
 
+    }
+
+    /**
+     * @param number
+     * @return The number without useless signs (-0.0)
+     */
+    private double clean (double number) {
+
+        if(Math.abs(number) < Constant.EPSILON)
+            return 0.0;
+        return number;
     }
 
     public void exportElement (Text element, Object outputObject, Rectangle boundingBox)

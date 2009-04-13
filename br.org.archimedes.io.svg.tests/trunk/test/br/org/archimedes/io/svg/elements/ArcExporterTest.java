@@ -21,15 +21,14 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author Luiz Real and Bruno Klava
  */
 public class ArcExporterTest extends Tester {
-
-    private Arc arc;
 
     private ArcExporter exporter;
 
@@ -39,17 +38,33 @@ public class ArcExporterTest extends Tester {
     @Before
     public void setUp () throws Exception {
 
-        arc = new Arc(new Point(2.0, 0.0), new Point(1.0, 1.0), new Point(0.0, 0.0));
         exporter = new ArcExporter();
         stream = new ByteArrayOutputStream();
     }
 
     @Test
-    public void exportArcAsSVG () throws Exception {
+    public void exportMidSizedArcAsSVG () throws Exception {
+
+        Arc arc = new Arc(new Point(2.0, 0.0), new Point(1.0, 1.0), new Point(0.0, 0.0));
+        assertSVGExportMatch("<path d=\"M2,0 A1,1 0 1 0 0,0\"/>", arc);
+    }
+
+    /**
+     * @param arc The arc to export
+     * @throws IOException Throw if there is any problem writing the arc
+     */
+    private void assertSVGExportMatch (String spacedExpected, Arc arc) throws IOException {
 
         exporter.exportElement(arc, stream);
-        String expected = "<path d=\"M 2,0 0,0 A 1 1 0 1 0\"/>".replaceAll("\\s", "");
+        String expected = spacedExpected.replaceAll("\\s", "");
         String result = stream.toString().replaceAll("\\s", "");
         assertEquals(expected, result);
+    }
+    
+    @Test
+    public void exportArcAsSVG () throws Exception {
+
+        Arc arc = new Arc(new Point(2.0, 0.0), new Point(1.0, 1.0), new Point(1.0, -1.0));
+        assertSVGExportMatch("<path d=\"M2,0 A1,1 0 1 0 1,1\"/>", arc);
     }
 }

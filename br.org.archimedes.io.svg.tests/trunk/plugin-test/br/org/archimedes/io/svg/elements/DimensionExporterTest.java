@@ -53,7 +53,7 @@ public class DimensionExporterTest extends Tester {
         String expected = "<line x1=\"-10\" y1=\"-100\" x2=\"110\" y2=\"-100\" />"
                 + "<line x1=\"0\" y1=\"-10\" x2=\"0\" y2=\"-110\" />"
                 + "<line x1=\"100\" y1=\"-10\" x2=\"100\" y2=\"-110\" />"
-                + "<text x=\"41.691683569979716\" y=\"110.0\" font-size=\"8.0\" font-family=\"Courier\">100</text>";
+                + "<text x=\"41.691683569979716\" y=\"-110.0\" font-size=\"8.0\" font-family=\"Courier\">100</text>";
         
         expected = expected.replaceAll("\\s", "");
 

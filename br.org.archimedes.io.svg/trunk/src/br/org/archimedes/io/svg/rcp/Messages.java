@@ -6,40 +6,45 @@
  * <br>
  * Contributors:<br>
  * Ricardo Sider - initial API and implementation<br>
+ * Hugo Corbucci - later contributions<br>
  * <br>
- * This file was created on 2009/01/10, 12:05:56, by Ricardo Sider.<br>
+ * This file was created on 2009/03/26, 12:05:56, by Ricardo Sider.<br>
  * It is part of package br.org.archimedes.io.svg on the br.org.archimedes.io.svg project.<br>
  */
-package br.org.archimedes.io.svg;
+
+package br.org.archimedes.io.svg.rcp;
 
 import org.eclipse.osgi.util.NLS;
 
 /*
  * Belongs to package br.org.archimedes.io.svg.
- * @author night
+ * @author Hugo Corbucci
  */
 public class Messages extends NLS {
 
     private static final String BUNDLE_NAME = "br.org.archimedes.io.svg.messages"; //$NON-NLS-1$
 
-    public static String SVGExporter_FontCreatingError;
-    
+    public static String SVGWizardExporter_ErrorBoxTitle;
+
     public static String SVGExporter_NoExporter;
+
+    public static String SVGWizardExporter_ErrorBoxMessage;
+
+    public static String SVGWizardExporter_ExporterName;
+
+    public static String SVGFilePickerPage_WindowTitle;
+
+    public static String SVGFilePickerPage_WindowMessage;
+
+    public static String SVGFilePickerPage_Extension;
+
+    public static String SVGFilePickerPage_ExtensionName;
+
+    public static String SVGFilePickerPage_ChooseWindowMessage;
 
     public static String SVGFilePickerPage_BrowseButtonText;
 
     public static String SVGFilePickerPage_BrowseButtonTooltip;
-
-    public static String SVGFilePickerPage_ChooseExportFile;
-
-    public static String SVGFilePickerPage_DialogText;
-
-    public static String SVGFilePickerPage_Title;
-
-    public static String SVGImporter_SchemaFileName;
-    public static String SVGWizardExporter_WriteErrorBoxMessage;
-
-    public static String SVGWizardExporter_WriteErrorBoxTitle;
     static {
         // initialize resource bundle
         NLS.initializeMessages(BUNDLE_NAME, Messages.class);
