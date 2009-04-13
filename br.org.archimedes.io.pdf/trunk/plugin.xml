@@ -31,10 +31,10 @@
             id="br.org.archimedes.infiniteline.pdf.exporter"
             elementId="br.org.archimedes.infiniteline"
             class="br.org.archimedes.io.pdf.elements.InfiniteLineExporter"/>
-<!--         <exporter 
+         <exporter 
             id="br.org.archimedes.leader.pdf.exporter"
             elementId="br.org.archimedes.leader"
-            class="br.org.archimedes.io.pdf.elements.LeaderExporter"/> -->
+            class="br.org.archimedes.io.pdf.elements.LeaderExporter"/>
          <exporter 
             id="br.org.archimedes.polyline.pdf.exporter"
             elementId="br.org.archimedes.polyline"
