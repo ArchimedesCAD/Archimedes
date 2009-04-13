@@ -53,7 +53,7 @@ public class Constant {
 
     public static final String NEW_LINE = System.getProperty("line.separator"); //$NON-NLS-1$
 
-    public static final double LEADER_RADIUS = 0.8;
+    public static final double LEADER_RADIUS = 5.0;
 
     public static final Color WHITE = new Color(1.0, 1.0, 1.0);
 

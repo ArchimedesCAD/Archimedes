@@ -10,21 +10,22 @@
  * This file was created on 2009/01/10, 11:16:48, by Hugo Corbucci.<br>
  * It is part of package br.org.archimedes.rcp on the br.org.archimedes.core project.<br>
  */
+
 package br.org.archimedes.rcp;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IConfigurationElement;
 
 import br.org.archimedes.interfaces.ElementExporter;
 import br.org.archimedes.model.Element;
 
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Belongs to package br.org.archimedes.rcp.
- *
+ * 
  * @author night
  */
 public abstract class AbstractElementExporterEPLoader implements ExtensionTagHandler {
@@ -33,8 +34,9 @@ public abstract class AbstractElementExporterEPLoader implements ExtensionTagHan
 
     private static final String ELEMENT_ID_ATTRIBUTE_NAME = "elementId"; //$NON-NLS-1$
 
-    private final static Map<String, ElementExporter<Element>> exporters = new HashMap<String, ElementExporter<Element>>();
-    
+    private static final Map<String, ElementExporter<Element>> exporters = new HashMap<String, ElementExporter<Element>>();
+
+
     /**
      * @return The Extension point ID to an exporter of an element
      */
@@ -43,19 +45,31 @@ public abstract class AbstractElementExporterEPLoader implements ExtensionTagHan
     /**
      * Default constructor.
      */
-    public AbstractElementExporterEPLoader() {
+    public AbstractElementExporterEPLoader () {
 
-        if (exporters.isEmpty()) {
-            ExtensionLoader loader = new ExtensionLoader(
-                    getElementExporterExtensionPointID());
+        if ( !hasKeysFor(getElementExporterExtensionPointID())) {
+            ExtensionLoader loader = new ExtensionLoader(getElementExporterExtensionPointID());
             loader.loadExtension(this);
         }
     }
 
+    /**
+     * @param elementExporterExtensionPointID
+     * @return true if there is at least one key for that exporter, false otherwise
+     */
+    private boolean hasKeysFor (String elementExporterExtensionPointID) {
+
+        Set<String> keySet = exporters.keySet();
+        for (String key : keySet) {
+            if (key.startsWith(elementExporterExtensionPointID))
+                return true;
+        }
+        return false;
+    }
+
     /*
      * (non-Javadoc)
-     * @see
-     * br.org.archimedes.rcp.ExtensionTagHandler#handleTag(org.eclipse.core.
+     * @see br.org.archimedes.rcp.ExtensionTagHandler#handleTag(org.eclipse.core.
      * runtime.IConfigurationElement)
      */
     @SuppressWarnings("unchecked")
@@ -67,11 +81,21 @@ public abstract class AbstractElementExporterEPLoader implements ExtensionTagHan
         try {
             exporter = (ElementExporter<Element>) element
                     .createExecutableExtension(CLASS_ATTRIBUTE_NAME);
-            exporters.put(elementId, exporter);
+            exporters.put(composeKey(elementId), exporter);
         }
         catch (CoreException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * @param elementId
+     *            The element the be key
+     * @return The composed key
+     */
+    private String composeKey (String elementId) {
+
+        return getElementExporterExtensionPointID() + ":" + elementId;
     }
 
     /**
@@ -81,7 +105,7 @@ public abstract class AbstractElementExporterEPLoader implements ExtensionTagHan
      */
     public ElementExporter<Element> getExporter (String elementId) {
 
-        return exporters.get(elementId);
+        return exporters.get(composeKey(elementId));
     }
 
 }
