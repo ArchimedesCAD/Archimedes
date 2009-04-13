@@ -2,8 +2,8 @@
 <feature
       id="br.org.archimedes.lines.feature"
       label="Lines feature"
-      version="0.57.3"
-      provider-name="Tarantulus Corporation">
+      version="0.58.0"
+      provider-name="Hugo Corbucci">
 
    <description>
       This feature is reponsible to contribute with straigh line elements such as line, infinite line, semi line and polyline.
@@ -19,7 +19,7 @@
    </license>
 
    <url>
-      <update label="Archimedes Update" url="http://arquimedes.sourceforge.net/update/"/>
+      <update label="Archimedes Update" url="http://update.archimedes.org.br/site/"/>
    </url>
 
    <includes

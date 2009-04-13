@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Tests Plug-in
 Bundle-SymbolicName: br.org.archimedes.pan.tests
-Bundle-Version: 0.57.4
+Bundle-Version: 0.58.0
 Require-Bundle: org.eclipse.core.runtime,
  br.org.archimedes.core,
  br.org.archimedes.pan,

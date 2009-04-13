@@ -2,9 +2,9 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Move Elements Plug-in
 Bundle-SymbolicName: br.org.archimedes.move;singleton:=true
-Bundle-Version: 0.57.4
+Bundle-Version: 0.58.0
 Bundle-Activator: br.org.archimedes.move.Activator
-Bundle-Vendor: Tarantulus Corporation
+Bundle-Vendor: Hugo Corbucci
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,

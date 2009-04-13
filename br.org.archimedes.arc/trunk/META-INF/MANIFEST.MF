@@ -2,8 +2,8 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Arc Plug-in
 Bundle-SymbolicName: br.org.archimedes.arc;singleton:=true
-Bundle-Version: 0.57.4
-Bundle-Vendor: Tarantulus Corporation
+Bundle-Version: 0.58.0
+Bundle-Vendor: Hugo Corbucci
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,

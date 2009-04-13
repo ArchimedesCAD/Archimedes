@@ -2,8 +2,8 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Polyline Tests Plug-in
 Bundle-SymbolicName: br.org.archimedes.polyline.tests
-Bundle-Version: 0.57.4
-Bundle-Vendor: Tarantulus Corp.
+Bundle-Version: 0.58.0
+Bundle-Vendor: Hugo Corbucci
 Require-Bundle: br.org.archimedes.core,
  br.org.archimedes.polyline,
  br.org.archimedes.core.tests,

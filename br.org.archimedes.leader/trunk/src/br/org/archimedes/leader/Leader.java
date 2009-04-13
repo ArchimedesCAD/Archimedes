@@ -13,10 +13,7 @@
  */
 package br.org.archimedes.leader;
 
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
-
+import br.org.archimedes.Constant;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.gui.opengl.OpenGLWrapper;
@@ -27,6 +24,11 @@ import br.org.archimedes.model.Rectangle;
 import br.org.archimedes.model.ReferencePoint;
 import br.org.archimedes.model.references.SquarePoint;
 import br.org.archimedes.model.references.XPoint;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Belongs to package package br.org.archimedes.leader.
@@ -221,8 +223,38 @@ public class Leader extends Element {
     @Override
     public void draw (OpenGLWrapper wrapper) {
 
+        List<Point> circle = getPointsForCircle(pointer.getInitialPoint(), Constant.LEADER_RADIUS);
+        
+        try {
+            wrapper.drawFromModel(circle);
+        }
+        catch (NullArgumentException e) {
+            // Should not happen since I created the list
+            e.printStackTrace();
+        }
         pointer.draw(wrapper);
         textBase.draw(wrapper);
+    }
+
+    /**
+     * @param center The center of the circle 
+     * @param radius The radius of the circle 
+     * @return The points that draw a circle
+     */
+    private List<Point> getPointsForCircle (Point center, double radius) {
+
+        ArrayList<Point> points = new ArrayList<Point>();
+        double increment = Math.PI / 360;
+
+        for (double angle = 0; angle <= Math.PI*2; angle += increment) {
+            double x = center.getX() + radius * Math.cos(angle);
+            double y = center.getY() + radius * Math.sin(angle);
+            points.add(new Point(x, y));
+        }
+        double x = center.getX() + radius * Math.cos(Math.PI*2);
+        double y = center.getY() + radius * Math.sin(Math.PI*2);
+        points.add(new Point(x, y));
+        return points;
     }
 
     /**

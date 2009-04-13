@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Rotate Plug-in
 Bundle-SymbolicName: br.org.archimedes.rotate;singleton:=true
-Bundle-Version: 0.57.4
+Bundle-Version: 0.58.0
 Bundle-Activator: br.org.archimedes.rotate.Activator
 Bundle-Vendor: Tarantulus Corporation
 Bundle-Localization: plugin

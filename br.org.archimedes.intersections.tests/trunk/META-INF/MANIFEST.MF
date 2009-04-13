@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Intersectiors Tests Plug-in
 Bundle-SymbolicName: br.org.archimedes.intersections.tests
-Bundle-Version: 0.57.4
+Bundle-Version: 0.58.0
 Bundle-Vendor: Hugo Corbucci
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Require-Bundle: br.org.archimedes.core,

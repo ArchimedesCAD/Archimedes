@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Undo Plug-in
 Bundle-SymbolicName: br.org.archimedes.undo;singleton:=true
-Bundle-Version: 0.57.4
+Bundle-Version: 0.58.0
 Bundle-Activator: br.org.archimedes.undo.Activator
 Bundle-Vendor: Tarantulus Corporation
 Bundle-Localization: plugin

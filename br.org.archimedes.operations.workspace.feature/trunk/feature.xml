@@ -2,8 +2,8 @@
 <feature
       id="br.org.archimedes.operations.workspace.feature"
       label="Workspace Operations Feature"
-      version="0.57.3"
-      provider-name="Tarantulus Corp.">
+      version="0.58.0"
+      provider-name="Hugo Corbucci">
 
    <description>
       The workspace feature is a set of plugins whose actions are related to the basic user workspace in Archimedes. This will contain operations regarding most action one can want in their drawing (not the elements themselves) or in their workspace.
@@ -312,7 +312,7 @@ POSSIBILITY OF SUCH DAMAGES.
    </license>
 
    <url>
-      <update label="Archimedes Update" url="http://arquimedes.sourceforge.net/update/"/>
+      <update label="Archimedes Update" url="http://update.archimedes.org.br/site/"/>
    </url>
 
    <requires>

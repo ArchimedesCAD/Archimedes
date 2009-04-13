@@ -2,7 +2,8 @@
 <feature
       id="br.org.archimedes.intersections.feature"
       label="Intersections Feature"
-      version="0.57.3">
+      version="0.58.0"
+      provider-name="Hugo Corbucci">
 
    <description>
       This feature provides an intersection finder for Archimedes.
@@ -21,6 +22,10 @@ under the GPL v2 license and is, therefore, copyleft.
       All the code is licensed under the GNU Public License version
 2.
    </license>
+
+   <url>
+      <update label="Archimedes Update" url="http://update.archimedes.org.br/site/"/>
+   </url>
 
    <requires>
       <import feature="br.org.archimedes.core.feature"/>

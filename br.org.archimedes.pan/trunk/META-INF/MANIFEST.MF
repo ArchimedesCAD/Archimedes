@@ -2,13 +2,13 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Pan Plug-in
 Bundle-SymbolicName: br.org.archimedes.pan;singleton:=true
-Bundle-Version: 0.57.4
+Bundle-Version: 0.58.0
 Bundle-Activator: br.org.archimedes.pan.Activator
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  br.org.archimedes.core
 Export-Package: br.org.archimedes.pan
-Bundle-Vendor: Tarantulus Corp.
+Bundle-Vendor: Hugo Corbucci
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy

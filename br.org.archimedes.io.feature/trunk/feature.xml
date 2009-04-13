@@ -2,7 +2,7 @@
 <feature
       id="br.org.archimedes.io.feature"
       label="Basic IO Feature"
-      version="0.57.4"
+      version="0.58.0"
       provider-name="Hugo Corbucci">
 
    <description>
@@ -240,7 +240,7 @@ POSSIBILITY OF SUCH DAMAGES.
    </license>
 
    <url>
-      <update label="Archimedes Update" url="http://arquimedes.sourceforge.net/update/"/>
+      <update label="Archimedes Update" url="http://update.archimedes.org.br/site/"/>
    </url>
 
    <requires>

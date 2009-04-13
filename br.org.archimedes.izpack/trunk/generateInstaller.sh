@@ -34,9 +34,6 @@ izpack archimedes-full-installer.xml -b ./ \
 	-o target/archimedes-online-installer-${VERSION}.jar -k web
 izpack archimedes-light-installer.xml -b ./ \
 	-o target/archimedes-light-installer-${VERSION}.jar
-create_deployed_zip "linux.gtk.x86"
-create_deployed_zip "macosx.carbon.x86"
-create_deployed_zip "win32.win32.x86"
 scp target/archimedes-online-installer-${VERSION}.pack*.jar \
 	${SHELL_DESTINATION}
 rsync -avP -e ssh target/archimedes-full-installer-${VERSION}.jar \

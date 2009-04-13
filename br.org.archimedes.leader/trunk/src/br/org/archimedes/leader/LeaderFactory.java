@@ -12,9 +12,7 @@
  */
 package br.org.archimedes.leader;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import br.org.archimedes.Constant;
 import br.org.archimedes.Geometrics;
 import br.org.archimedes.Utils;
 import br.org.archimedes.controller.Controller;
@@ -29,6 +27,9 @@ import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Vector;
 import br.org.archimedes.parser.PointParser;
 import br.org.archimedes.parser.VectorParser;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Belongs to package br.org.archimedes.leader.
@@ -178,6 +179,9 @@ public class LeaderFactory implements CommandFactory {
             Point initial = p1;
 
             try {
+                List<Point> circle = getPointsForCircle(p1, Constant.LEADER_RADIUS);
+                Utils.getOpenGLWrapper().drawFromModel(circle);
+                
                 if (p2 != null) {
                     Utils.getOpenGLWrapper().drawFromModel(p1, p2);
                     initial = p2;
@@ -195,10 +199,32 @@ public class LeaderFactory implements CommandFactory {
             }
         }
     }
+    
+    // TODO Refactor to extract this functionality somewhere everyone can use it
+    /**
+     * @param center The center of the circle 
+     * @param radius The radius of the circle 
+     * @return The points that draw a circle
+     */
+    private List<Point> getPointsForCircle (Point center, double radius) {
+
+        ArrayList<Point> points = new ArrayList<Point>();
+        double increment = Math.PI / 360;
+
+        for (double angle = 0; angle <= Math.PI*2; angle += increment) {
+            double x = center.getX() + radius * Math.cos(angle);
+            double y = center.getY() + radius * Math.sin(angle);
+            points.add(new Point(x, y));
+        }
+        double x = center.getX() + radius * Math.cos(Math.PI*2);
+        double y = center.getY() + radius * Math.sin(Math.PI*2);
+        points.add(new Point(x, y));
+        return points;
+    }
 
     public String getName () {
 
-        return "leader";
+        return "leader"; //NON-NLS-1$
     }
 
     /*

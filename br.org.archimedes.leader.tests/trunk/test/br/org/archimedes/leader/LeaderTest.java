@@ -32,6 +32,8 @@ import static org.junit.Assert.fail;
  */
 public class LeaderTest extends Tester {
 
+    // TODO Tests for creating a leader
+    
     // TODO Tests for moving a leader
     
     @Test
