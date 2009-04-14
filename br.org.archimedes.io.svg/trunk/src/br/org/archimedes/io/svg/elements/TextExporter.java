@@ -13,15 +13,17 @@
 
 package br.org.archimedes.io.svg.elements;
 
+import java.io.IOException;
+import java.io.OutputStream;
+
 import br.org.archimedes.Constant;
+import br.org.archimedes.Geometrics;
 import br.org.archimedes.exceptions.NotSupportedException;
+import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.interfaces.ElementExporter;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Rectangle;
 import br.org.archimedes.text.Text;
-
-import java.io.IOException;
-import java.io.OutputStream;
 
 /**
  * Belongs to package br.org.archimedes.io.svg.
@@ -30,45 +32,64 @@ import java.io.OutputStream;
  */
 public class TextExporter implements ElementExporter<Text> {
 
-    /*
-     * (non-Javadoc)
-     * @see br.org.archimedes.interfaces.ElementExporter#exportElement(br.org.archimedes
-     * .model.Element, java.lang.Object)
-     */
-    public void exportElement (Text text, Object outputObject) throws IOException {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.org.archimedes.interfaces.ElementExporter#exportElement(br.org.archimedes
+	 * .model.Element, java.lang.Object)
+	 */
+	public void exportElement(Text text, Object outputObject)
+			throws IOException {
 
-        OutputStream output = (OutputStream) outputObject;
-        StringBuilder textTag = new StringBuilder();
+		OutputStream output = (OutputStream) outputObject;
+		StringBuilder textTag = new StringBuilder();
 
-        Point lowerLeft = text.getLowerLeft();
-        double x = lowerLeft.getX();
-        double y = -lowerLeft.getY();
-        
-        textTag.append("<text x=\"" + clean(x) + "\" y=\"" //$NON-NLS-1$ //$NON-NLS-2$
-                + clean(y) + "\" font-size=\"" + text.getSize() //$NON-NLS-1$
-                + "\" font-family=\"Courier\">"); //$NON-NLS-1$
+		// TODO try to use origin, not lower left
+		Point lowerLeft = text.getLowerLeft();
+		double x = lowerLeft.getX();
+		double y = -lowerLeft.getY();
 
-        textTag.append(text.getText());
-        textTag.append("</text>"); //$NON-NLS-1$
+		textTag.append("<text x=\"" + clean(x) + "\" y=\"" //$NON-NLS-1$ //$NON-NLS-2$
+				+ clean(y) + "\" font-size=\"" + text.getSize() //$NON-NLS-1$
+				+ "\" font-family=\"Courier\""); //$NON-NLS-1$
 
-        output.write(textTag.toString().getBytes());
+		try {
+			double angle = Geometrics.calculateAngle(text.getLowerLeft(), text
+					.getLowerLeft().addVector(text.getDirection()));
 
-    }
+			if (!Geometrics.isHorizontal(angle)) {
+				angle = -(angle * 180 / Math.PI);
+				textTag.append(" transform=\"rotate(" + angle + ")\"");
+			}
 
-    /**
-     * @param number
-     * @return The number without useless signs (-0.0)
-     */
-    private double clean (double number) {
+		} catch (NullArgumentException e) {
+			// wont reach here
+		}
 
-        if(Math.abs(number) < Constant.EPSILON)
-            return 0.0;
-        return number;
-    }
+		textTag.append(">"); //$NON-NLS-1$
 
-    public void exportElement (Text element, Object outputObject, Rectangle boundingBox)
-            throws NotSupportedException {
+		textTag.append(text.getText());
+		textTag.append("</text>"); //$NON-NLS-1$
 
-        throw new NotSupportedException();
-    }
+		output.write(textTag.toString().getBytes());
+
+	}
+
+	/**
+	 * @param number
+	 * @return The number without useless signs (-0.0)
+	 */
+	private double clean(double number) {
+
+		if (Math.abs(number) < Constant.EPSILON)
+			return 0.0;
+		return number;
+	}
+
+	public void exportElement(Text element, Object outputObject,
+			Rectangle boundingBox) throws NotSupportedException {
+
+		throw new NotSupportedException();
+	}
 }
