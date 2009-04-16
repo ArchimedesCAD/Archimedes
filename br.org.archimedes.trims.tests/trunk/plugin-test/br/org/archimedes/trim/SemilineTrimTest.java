@@ -1,0 +1,108 @@
+/**
+ * Copyright (c) 2009 Hugo Corbucci and others.<br>
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html<br>
+ * <br>
+ * Contributors:<br>
+ * Hugo Corbucci - initial API and implementation<br>
+ * Kenzo Yamada, Ricardo Sider - later contributions<br>
+ * <br>
+ * This file was created on 2009/01/10, 11:16:48, by Hugo Corbucci.<br>
+ * It is part of package br.org.archimedes.trim on the br.org.archimedes.trims.tests project.<br>
+ */
+
+package br.org.archimedes.trim;
+
+import java.util.ArrayList;
+import java.util.Collection;
+
+import org.junit.Assert;
+import org.junit.Test;
+
+import br.org.archimedes.Tester;
+import br.org.archimedes.exceptions.InvalidArgumentException;
+import br.org.archimedes.exceptions.NullArgumentException;
+import br.org.archimedes.infiniteline.InfiniteLine;
+import br.org.archimedes.line.Line;
+import br.org.archimedes.model.Element;
+import br.org.archimedes.model.Point;
+import br.org.archimedes.semiline.Semiline;
+import br.org.archimedes.trims.interfaces.Trimmer;
+
+public class SemilineTrimTest extends Tester {
+
+    Trimmer trimmer = new SemilineTrimmer();
+
+    Collection<Element> references = new ArrayList<Element>();
+
+
+    @Override
+    public void setUp () throws NullArgumentException, InvalidArgumentException {
+
+        InfiniteLine y = new InfiniteLine(new Point(0.0, 0.0), new Point(0.0, 100.0));
+        InfiniteLine y2 = new InfiniteLine(new Point(50.0, 0.0), new Point(50.0, 10.0));
+        references.add(y);
+        references.add(y2);
+    }
+
+    @Test(expected = NullArgumentException.class)
+    public void testNullLineArgument () throws NullArgumentException {
+
+        trimmer.trim(null, references, new Point(0.0, 0.0));
+    }
+
+    @Test(expected = NullArgumentException.class)
+    public void testNullReferencesArgument () throws NullArgumentException,
+            InvalidArgumentException {
+
+        Semiline xline3 = new Semiline(new Point( -1.0, 2.0), new Point(3.0, 2.0));
+
+        trimmer.trim(xline3, null, new Point(0.0, 0.0));
+    }
+
+    @Test
+    public void semilineTrimsCenter () throws NullArgumentException, InvalidArgumentException {
+
+        Semiline horizontalLine = new Semiline(new Point( -1.0, 2.0), new Point(3.0, 2.0));
+        Collection<Element> collection = trimmer.trim(horizontalLine, references, new Point(1.0,
+                2.0));
+
+        assertCollectionContains(collection, new Line(new Point( -1.0, 2.0), new Point(0.0, 2.0)));
+
+        assertCollectionContains(collection, new Semiline(new Point(50.0, 2.0), new Point(100.0,
+                2.0)));
+
+        Assert.assertEquals(
+                "A trim between references should produce exactly 1 Line and 1 Semiline.", 2,
+                collection.size());
+    }
+
+    @Test
+    public void semilineTrimsFinitePart () throws NullArgumentException, InvalidArgumentException {
+
+        Semiline horizontalLine = new Semiline(new Point( -1.0, 2.0), new Point(3.0, 2.0));
+        Collection<Element> collection = trimmer.trim(horizontalLine, references, new Point( -0.5,
+                2.0));
+
+        assertCollectionContains(collection,
+                new Semiline(new Point(0.0, 2.0), new Point(10.0, 2.0)));
+
+        Assert.assertEquals("A trim between references should produce exactly 1 Semiline.", 1,
+                collection.size());
+    }
+
+    @Test
+    public void semilineTrimsInfinitePart () throws NullArgumentException, InvalidArgumentException {
+
+        Semiline horizontalLine = new Semiline(new Point( -1.0, 2.0), new Point(3.0, 2.0));
+        Collection<Element> collection = trimmer.trim(horizontalLine, references, new Point(69.0,
+                2.0));
+
+        assertCollectionContains(collection, new Line(new Point( -1.0, 2.0), new Point(50.0, 2.0)));
+
+        Assert.assertEquals("A trim between references should produce exactly 1 Line.", 1,
+                collection.size());
+    }
+
+}
