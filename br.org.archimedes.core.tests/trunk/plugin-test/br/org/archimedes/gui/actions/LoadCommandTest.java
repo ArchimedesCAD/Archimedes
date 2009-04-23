@@ -18,6 +18,7 @@ import br.org.archimedes.exceptions.InvalidFileFormatException;
 import br.org.archimedes.interfaces.Importer;
 import br.org.archimedes.model.Drawing;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
@@ -28,6 +29,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author Luiz Real
@@ -38,10 +40,14 @@ public class LoadCommandTest extends Tester {
 
 
     private class MockedLoadCommand extends LoadCommand {
+        
+        int testCount = 0;
+        boolean throwException = false;
+        boolean showedMessage = false;
 
         public MockedLoadCommand () {
 
-            super(null);
+            super(new Shell());
         }
 
         /*
@@ -50,12 +56,11 @@ public class LoadCommandTest extends Tester {
          */
         @Override
         protected FileDialog createFileDialog () {
-            Shell shell;
-            shell = new Shell();
 
-            return new FileDialog(shell) {
+            return new FileDialog(parent) {
                 
                 /* (non-Javadoc)
+                 * Overriden to allow us to mock this class
                  * @see org.eclipse.swt.widgets.Dialog#checkSubclass()
                  */
                 @Override
@@ -73,46 +78,74 @@ public class LoadCommandTest extends Tester {
 
         /*
          * (non-Javadoc)
-         * @see br.org.archimedes.gui.actions.LoadCommand#createErrorMessageBox()
-         */
-        @Override
-        protected MessageBox createErrorMessageBox () {
-
-            return null;
-
-        }
-
-        /*
-         * (non-Javadoc)
          * @see br.org.archimedes.gui.actions.LoadCommand#getImporterFor(java.io.File)
          */
         @Override
         protected Importer getImporterFor (File file) {
-
-            // return super.getImporterFor(file);
 
             return new Importer() {
 
                 @Override
                 public Drawing importDrawing (InputStream input) throws InvalidFileFormatException,
                         IOException {
-
+                    if (throwException) {
+                        throwException = false;
+                        throw new InvalidFileFormatException();
+                    }
+                    if (0 == testCount++)
+                        return null;
                     return drawing;
                 }
 
             };
 
         }
+        
+        /* (non-Javadoc)
+         * @see br.org.archimedes.gui.actions.LoadCommand#createErrorMessageBox()
+         */
+        @Override
+        protected MessageBox createErrorMessageBox () {
+        
+            return new MessageBox(parent) {
+                /* (non-Javadoc)
+                 * Overriden to allow us to mock this class
+                 * @see org.eclipse.swt.widgets.Dialog#checkSubclass()
+                 */
+                @Override
+                protected void checkSubclass () {
+                }
+                
+                /* (non-Javadoc)
+                 * @see org.eclipse.swt.widgets.MessageBox#open()
+                 */
+                @Override
+                public int open () {
+                    showedMessage = true;
+                    return SWT.OK;
+                }
+            };
+        }
     }
 
 
     @Test
-    public void shouldCreateAFileStreamForASelectedFileAndCallImporter () throws Exception {
+    public void doesNotFailIfImporterFailsAndReturnsImportedDrawingWhenSuccessful () throws Exception {
 
-        LoadCommand command = new MockedLoadCommand();
+        MockedLoadCommand command = new MockedLoadCommand();
         Drawing result = command.execute();
+        assertTrue(command.showedMessage);
         assertEquals(drawing, result);
         assertEquals("emptyDrawing.arc", result.getFile().getName());
+    }
+    
+    @Test
+    public void doesNotFailIfFileHasInvalidFormat() throws Exception{
+        MockedLoadCommand command = new MockedLoadCommand();
+        command.testCount = 1;
+        command.throwException = true;
+        command.execute();
+        assertTrue(command.showedMessage);
     }
 
     

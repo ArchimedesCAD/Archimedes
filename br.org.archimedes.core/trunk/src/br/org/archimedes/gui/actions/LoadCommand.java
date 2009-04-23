@@ -14,24 +14,23 @@
  */
 package br.org.archimedes.gui.actions;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.LinkedList;
-import java.util.List;
+import br.org.archimedes.exceptions.InvalidFileFormatException;
+import br.org.archimedes.gui.model.Workspace;
+import br.org.archimedes.interfaces.Importer;
+import br.org.archimedes.model.Drawing;
+import br.org.archimedes.rcp.extensionpoints.NativeFormatEPLoader;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 
-import br.org.archimedes.exceptions.InvalidFileFormatException;
-import br.org.archimedes.gui.model.Workspace;
-import br.org.archimedes.interfaces.Importer;
-import br.org.archimedes.model.Drawing;
-import br.org.archimedes.rcp.extensionpoints.NativeFormatEPLoader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Belongs to package br.org.archimedes.gui.actions.
@@ -40,7 +39,7 @@ import br.org.archimedes.rcp.extensionpoints.NativeFormatEPLoader;
  */
 public class LoadCommand {
 
-    private Shell parent;
+    protected Shell parent;
 
     private MessageBox error;
 
@@ -62,7 +61,8 @@ public class LoadCommand {
     }
 
     /**
-     * 
+     * Creates the error message box that will be show when the file cannot be loaded
+     * @return The created message box
      */
     protected MessageBox createErrorMessageBox () {
 
@@ -100,23 +100,20 @@ public class LoadCommand {
                     try {
                         InputStream input = new FileInputStream(filePath);
                         drawing = importer.importDrawing(input);
-                        drawing.setFile(file);
-                    }
-                    catch (FileNotFoundException e) {
-                        // Shouldn't happen since I checked just before
-                        e.printStackTrace();
                     }
                     catch (InvalidFileFormatException e) {
                         // TODO Auto-generated catch block
                         e.printStackTrace();
                     }
                     catch (IOException e) {
-                        // TODO Auto-generated catch block
+                        // Shouldn't happen since I checked just before
                         e.printStackTrace();
                     }
 
                     if (drawing == null) {
                         error.open();
+                    } else {
+                        drawing.setFile(file);
                     }
                 }
             }
@@ -127,8 +124,8 @@ public class LoadCommand {
     }
 
     /**
-     * @param file
-     * @return
+     * @param file The file to be imported
+     * @return An importer for this type of file (type deduced from extension)
      */
     protected Importer getImporterFor (File file) {
 
