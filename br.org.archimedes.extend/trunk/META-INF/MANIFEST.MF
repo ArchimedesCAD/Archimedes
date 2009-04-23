@@ -14,6 +14,6 @@ Require-Bundle: org.eclipse.ui,
  br.org.archimedes.semiline
 Export-Package: br.org.archimedes.extend,
  br.org.archimedes.extend.interfaces,
- br.org.archimedes.extend.line,
+ br.org.archimedes.extenders,
  br.org.archimedes.extend.rcp
 Bundle-RequiredExecutionEnvironment: J2SE-1.5

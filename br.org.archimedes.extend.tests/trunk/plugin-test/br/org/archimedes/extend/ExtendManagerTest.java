@@ -16,6 +16,7 @@ package br.org.archimedes.extend;
 import br.org.archimedes.Tester;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.extend.interfaces.Extender;
+import br.org.archimedes.extend.ExtendManager;
 import br.org.archimedes.line.Line;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;

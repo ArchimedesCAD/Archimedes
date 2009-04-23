@@ -14,6 +14,7 @@
 package br.org.archimedes.extend.line;
 
 import br.org.archimedes.Tester;
+import br.org.archimedes.extenders.LineExtender;
 import br.org.archimedes.line.Line;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
