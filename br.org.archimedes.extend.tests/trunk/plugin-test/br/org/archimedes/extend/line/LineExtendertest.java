@@ -1,0 +1,102 @@
+/**
+ * Copyright (c) 2008, 2009 Hugo Corbucci and others.<br>
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html<br>
+ * <br>
+ * Contributors:<br>
+ * Bruno da Hora - initial API and implementation<br>
+ * <br>
+ * This file was created on 2009/04/23, 11:28:00, by Bruno da Hora, Bruno klava.<br>
+ * It is part of package br.org.archimedes.extend.line on the br.org.archimedes.extend.test project.<br>
+ */
+
+package br.org.archimedes.extend.line;
+
+import br.org.archimedes.Tester;
+import br.org.archimedes.line.Line;
+import br.org.archimedes.model.Element;
+import br.org.archimedes.model.Point;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.util.Collection;
+import java.util.Vector;
+
+public class LineExtendertest extends Tester {
+
+    private static Collection<Element> referencesArray;
+
+    private static Line verticalWithIntersection;
+
+    private static LineExtender extender;
+
+
+    @Before
+    public void setUp () throws Exception {
+
+        extender = new LineExtender();
+        referencesArray = new Vector<Element>(2);
+        Line upReference = new Line(0, 7, 2, 7);
+        Line downReference = new Line(0, 1, 2, 1);
+        verticalWithIntersection = new Line(1, 2, 1, 6);
+        referencesArray.add(upReference);
+        referencesArray.add(downReference);
+
+    }
+
+    @Test
+    public void extendsToUpperReferenceClickingUp () {
+
+        try {
+            extender.extend(verticalWithIntersection, referencesArray, new Point(1, 5));
+            Assert.assertEquals(verticalWithIntersection, new Line(1, 2, 1, 7));
+        }
+        catch (Exception e) {
+            // Won't reach here
+        }
+
+    }
+
+    @Test
+    public void extendsToLowerReferenceClickingDown () {
+
+        try {
+            extender.extend(verticalWithIntersection, referencesArray, new Point(1, 3));
+            Assert.assertEquals(verticalWithIntersection, new Line(1, 1, 1, 6));
+        }
+        catch (Exception e) {
+            // Won't reach here
+        }
+
+    }
+
+    @Test
+    public void extendsToIntersectionFollowingTheDirectionVectorClickingMiddle () {
+
+        try {
+            extender.extend(verticalWithIntersection, referencesArray, new Point(1, 4));
+            Assert.assertEquals(verticalWithIntersection, new Line(1, 2, 1, 7));
+        }
+        catch (Exception e) {
+            // Won't reach here
+        }
+
+    }
+
+    @Test
+    public void dontExtendsWithReference () {
+
+        try {
+            Line verticalWithoutIntersection = new Line(4, 1, 4, 6);
+            extender.extend(verticalWithoutIntersection, referencesArray, new Point(4, 4));
+            Assert.assertEquals(verticalWithoutIntersection, new Line(4, 1, 4, 6));
+        }
+        catch (Exception e) {
+            // Won't reach here
+        }
+
+    }
+}
