@@ -29,7 +29,7 @@
 		<appname>Archimedes - The Open CAD</appname>
 		<appversion>@{version}</appversion>
 		<authors>
-			<author name="Tarantulus Corp."
+			<author name="Hugo Corbucci and others"
 				email="archimedesproject@googlegroups.com" />
 			<author name="Translations - Archimedes' Translator team"
 				email="arquimedes-translators@lists.sourceforge.net" />
