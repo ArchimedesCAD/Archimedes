@@ -25,7 +25,7 @@ import org.junit.Test;
 import java.util.Collection;
 import java.util.Vector;
 
-public class LineExtendertest extends Tester {
+public class LineExtenderTest extends Tester {
 
     private static Collection<Element> referencesArray;
 
@@ -52,7 +52,7 @@ public class LineExtendertest extends Tester {
 
         try {
             extender.extend(verticalWithIntersection, referencesArray, new Point(1, 5));
-            Assert.assertEquals(verticalWithIntersection, new Line(1, 2, 1, 7));
+            Assert.assertEquals(new Line(1, 2, 1, 7), verticalWithIntersection);
         }
         catch (Exception e) {
             // Won't reach here
@@ -65,7 +65,7 @@ public class LineExtendertest extends Tester {
 
         try {
             extender.extend(verticalWithIntersection, referencesArray, new Point(1, 3));
-            Assert.assertEquals(verticalWithIntersection, new Line(1, 1, 1, 6));
+            Assert.assertEquals(new Line(1, 1, 1, 6), verticalWithIntersection);
         }
         catch (Exception e) {
             // Won't reach here
@@ -78,7 +78,7 @@ public class LineExtendertest extends Tester {
 
         try {
             extender.extend(verticalWithIntersection, referencesArray, new Point(1, 4));
-            Assert.assertEquals(verticalWithIntersection, new Line(1, 2, 1, 7));
+            Assert.assertEquals(new Line(1, 2, 1, 7), verticalWithIntersection);
         }
         catch (Exception e) {
             // Won't reach here
@@ -92,7 +92,7 @@ public class LineExtendertest extends Tester {
         try {
             Line verticalWithoutIntersection = new Line(4, 1, 4, 6);
             extender.extend(verticalWithoutIntersection, referencesArray, new Point(4, 4));
-            Assert.assertEquals(verticalWithoutIntersection, new Line(4, 1, 4, 6));
+            Assert.assertEquals(new Line(4, 1, 4, 6), verticalWithoutIntersection);
         }
         catch (Exception e) {
             // Won't reach here
