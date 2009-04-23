@@ -17,6 +17,7 @@ import br.org.archimedes.Tester;
 import br.org.archimedes.exceptions.InvalidFileFormatException;
 import br.org.archimedes.interfaces.Importer;
 import br.org.archimedes.model.Drawing;
+import br.org.archimedes.rcp.extensionpoints.NativeFormatEPLoader;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
@@ -27,6 +28,9 @@ import org.junit.Test;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -40,10 +44,13 @@ public class LoadCommandTest extends Tester {
 
 
     private class MockedLoadCommand extends LoadCommand {
-        
+
         int testCount = 0;
+
         boolean throwException = false;
+
         boolean showedMessage = false;
+
 
         public MockedLoadCommand () {
 
@@ -55,16 +62,17 @@ public class LoadCommandTest extends Tester {
          * @see br.org.archimedes.gui.actions.LoadCommand#createFileDialog()
          */
         @Override
-        protected FileDialog createFileDialog () {
+        public FileDialog createFileDialog () {
 
             return new FileDialog(parent) {
-                
-                /* (non-Javadoc)
-                 * Overriden to allow us to mock this class
+
+                /*
+                 * (non-Javadoc) Overriden to allow us to mock this class
                  * @see org.eclipse.swt.widgets.Dialog#checkSubclass()
                  */
                 @Override
                 protected void checkSubclass () {
+
                 }
 
                 @Override
@@ -88,6 +96,7 @@ public class LoadCommandTest extends Tester {
                 @Override
                 public Drawing importDrawing (InputStream input) throws InvalidFileFormatException,
                         IOException {
+
                     if (throwException) {
                         throwException = false;
                         throw new InvalidFileFormatException();
@@ -100,27 +109,32 @@ public class LoadCommandTest extends Tester {
             };
 
         }
-        
-        /* (non-Javadoc)
+
+        /*
+         * (non-Javadoc)
          * @see br.org.archimedes.gui.actions.LoadCommand#createErrorMessageBox()
          */
         @Override
         protected MessageBox createErrorMessageBox () {
-        
+
             return new MessageBox(parent) {
-                /* (non-Javadoc)
-                 * Overriden to allow us to mock this class
+
+                /*
+                 * (non-Javadoc) Overriden to allow us to mock this class
                  * @see org.eclipse.swt.widgets.Dialog#checkSubclass()
                  */
                 @Override
                 protected void checkSubclass () {
+
                 }
-                
-                /* (non-Javadoc)
+
+                /*
+                 * (non-Javadoc)
                  * @see org.eclipse.swt.widgets.MessageBox#open()
                  */
                 @Override
                 public int open () {
+
                     showedMessage = true;
                     return SWT.OK;
                 }
@@ -130,7 +144,8 @@ public class LoadCommandTest extends Tester {
 
 
     @Test
-    public void doesNotFailIfImporterFailsAndReturnsImportedDrawingWhenSuccessful () throws Exception {
+    public void doesNotFailIfImporterFailsAndReturnsImportedDrawingWhenSuccessful ()
+            throws Exception {
 
         MockedLoadCommand command = new MockedLoadCommand();
         Drawing result = command.execute();
@@ -138,9 +153,10 @@ public class LoadCommandTest extends Tester {
         assertEquals(drawing, result);
         assertEquals("emptyDrawing.arc", result.getFile().getName());
     }
-    
+
     @Test
-    public void doesNotFailIfFileHasInvalidFormat() throws Exception{
+    public void doesNotFailIfFileHasInvalidFormat () throws Exception {
+
         MockedLoadCommand command = new MockedLoadCommand();
         command.testCount = 1;
         command.throwException = true;
@@ -148,6 +164,23 @@ public class LoadCommandTest extends Tester {
         assertTrue(command.showedMessage);
     }
 
-    
-    
+    @Test
+    public void createdFileDialogFiltersCorrectExtensions () throws Exception {
+
+        LoadCommand command = new LoadCommand(new Shell());
+        FileDialog filedialog = command.createFileDialog();
+        String[] extensions = new NativeFormatEPLoader().getExtensionsArray();
+        
+        List<String> expected = new LinkedList<String>();
+        for (String extension : extensions) {
+            String filter = "*." + extension;
+            expected.add(filter);
+        }
+
+        
+        assertCollectionTheSame(expected, Arrays.asList(filedialog
+                .getFilterExtensions()));
+
+    }
+
 }

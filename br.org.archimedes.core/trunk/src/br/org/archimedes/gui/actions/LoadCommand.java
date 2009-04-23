@@ -139,7 +139,7 @@ public class LoadCommand {
     /**
      * @return A dialog for the user to choose a file to open
      */
-    protected FileDialog createFileDialog () {
+    public FileDialog createFileDialog () {
 
         FileDialog dialog = new FileDialog(parent, SWT.OPEN);
         List<String> filters = new LinkedList<String>();
