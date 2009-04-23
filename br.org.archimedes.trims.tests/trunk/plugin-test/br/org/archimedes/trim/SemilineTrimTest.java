@@ -81,7 +81,7 @@ public class SemilineTrimTest extends Tester {
     @Test
     public void semilineTrimsFinitePart () throws NullArgumentException, InvalidArgumentException {
 
-        Semiline horizontalLine = new Semiline(new Point( -1.0, 2.0), new Point(3.0, 2.0));
+        Semiline horizontalLine = new Semiline(new Point( -100.0, 2.0), new Point(-50.0, 2.0));
         Collection<Element> collection = trimmer.trim(horizontalLine, references, new Point( -0.5,
                 2.0));
 

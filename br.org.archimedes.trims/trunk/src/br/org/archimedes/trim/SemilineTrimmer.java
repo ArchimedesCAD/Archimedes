@@ -76,28 +76,39 @@ public class SemilineTrimmer implements Trimmer {
 
         try {
 
-            if (headSet.size() == 0 && tailSet.size() > 0) {
-                Point initialPoint = tailSet.first().getPoint();
+            Vector dir = new Vector(new Point(line.getDirectionPoint().getX()
+                    - line.getInitialPoint().getX(), line.getDirectionPoint().getY()
+                    - line.getInitialPoint().getY()));
+
+            if (tailSet.size() == 0 && headSet.size() > 0) {
+                Point initialPoint = headSet.last().getPoint();
                 Element trimmedLine = new Line(line.getInitialPoint(), initialPoint);
                 trimmedLine.setLayer(line.getLayer());
                 trimResult.add(trimmedLine);
 
             }
-            else if (tailSet.size() == 0 && headSet.size() > 0) {
-                Point initialPoint = headSet.last().getPoint();
-                Element trimmedLine = new Semiline(initialPoint, line.getDirectionPoint());
+            else if (headSet.size() == 0 && tailSet.size() > 0) {
+                Point initialPoint = tailSet.first().getPoint();
+                Point directionPoint = new Point(initialPoint.getX() + dir.getX(), initialPoint
+                        .getY()
+                        + dir.getY());
+                Element trimmedLine = new Semiline(initialPoint, directionPoint);
                 trimmedLine.setLayer(line.getLayer());
                 trimResult.add(trimmedLine);
 
             }
             else if (headSet.size() > 0 && tailSet.size() > 0) {
 
-                Point initialPoint = headSet.last().getPoint();
-                Element trimmedLine = new Semiline(initialPoint, line.getDirectionPoint());
+                Point initialPoint = tailSet.first().getPoint();
+                Point directionPoint = new Point(initialPoint.getX() + dir.getX(), initialPoint
+                        .getY()
+                        + dir.getY());
+
+                Element trimmedLine = new Semiline(initialPoint, directionPoint);
                 trimmedLine.setLayer(line.getLayer());
                 trimResult.add(trimmedLine);
 
-                initialPoint = tailSet.first().getPoint();
+                initialPoint = headSet.last().getPoint();
                 trimmedLine = new Line(line.getInitialPoint(), initialPoint);
                 trimmedLine.setLayer(line.getLayer());
                 trimResult.add(trimmedLine);
