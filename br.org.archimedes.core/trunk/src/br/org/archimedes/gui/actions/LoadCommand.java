@@ -7,6 +7,7 @@
  * Contributors:<br>
  * Fernando R. Barbosa - initial API and implementation<br>
  * Hugo Corbucci - later contributions<br>
+ * Luiz Real and Wesley Seidel - refactoring and tests<br>
  * <br>
  * This file was created on 2006/07/11, 00:03:02, by Hugo Corbucci.<br>
  * It is part of package br.org.archimedes.gui.actions on the br.org.archimedes.core project.<br>
@@ -57,9 +58,18 @@ public class LoadCommand {
         nativeLoader = new NativeFormatEPLoader();
         this.parent = shell;
 
-        error = new MessageBox(parent, SWT.OK | SWT.ICON_ERROR);
+        error = createErrorMessageBox();
+    }
+
+    /**
+     * 
+     */
+    protected MessageBox createErrorMessageBox () {
+
+        MessageBox error = new MessageBox(parent, SWT.OK | SWT.ICON_ERROR);
         error.setMessage(Messages.Load_InvalidFileTitle);
         error.setText(Messages.Load_InvalidFileText);
+        return error;
     }
 
     /*
@@ -69,16 +79,7 @@ public class LoadCommand {
      */
     public Drawing execute () {
 
-        FileDialog dialog = new FileDialog(parent, SWT.OPEN);
-        List<String> filters = new LinkedList<String>();
-        for (String extension : nativeLoader.getExtensionsArray()) {
-			String filter = "*." + extension;
-			filters.add(filter);
-		}
-        String[] filtersArray = filters.toArray(new String[0]);
-		dialog.setFilterExtensions(filtersArray);
-
-        dialog.setText(Messages.Load_OpenDialog);
+        FileDialog dialog = createFileDialog();
 
         Workspace workspace = br.org.archimedes.Utils.getWorkspace();
         String lastDirectory = workspace.getLastUsedDirectory()
@@ -94,10 +95,7 @@ public class LoadCommand {
                 File file = new File(filePath);
                 lastDirectory = file.getParent();
                 if (file.exists() && file.canRead()) {
-                    String filename = file.getName();
-                    String extension = filename.substring(filename
-                            .lastIndexOf(".") + 1); //$NON-NLS-1$
-                    Importer importer = nativeLoader.getImporter(extension);
+                    Importer importer = getImporterFor(file);
 
                     try {
                         InputStream input = new FileInputStream(filePath);
@@ -126,5 +124,36 @@ public class LoadCommand {
         while (drawing == null && filePath != null);
 
         return drawing;
+    }
+
+    /**
+     * @param file
+     * @return
+     */
+    protected Importer getImporterFor (File file) {
+
+        String filename = file.getName();
+        String extension = filename.substring(filename
+                .lastIndexOf(".") + 1); //$NON-NLS-1$
+        Importer importer = nativeLoader.getImporter(extension);
+        return importer;
+    }
+
+    /**
+     * @return A dialog for the user to choose a file to open
+     */
+    protected FileDialog createFileDialog () {
+
+        FileDialog dialog = new FileDialog(parent, SWT.OPEN);
+        List<String> filters = new LinkedList<String>();
+        for (String extension : nativeLoader.getExtensionsArray()) {
+			String filter = "*." + extension;
+			filters.add(filter);
+		}
+        String[] filtersArray = filters.toArray(new String[0]);
+		dialog.setFilterExtensions(filtersArray);
+
+        dialog.setText(Messages.Load_OpenDialog);
+        return dialog;
     }
 }
