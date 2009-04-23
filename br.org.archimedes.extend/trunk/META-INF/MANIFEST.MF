@@ -11,7 +11,10 @@ Require-Bundle: org.eclipse.ui,
  br.org.archimedes.line,
  br.org.archimedes.infiniteline,
  br.org.archimedes.polyline,
- br.org.archimedes.semiline
+ br.org.archimedes.semiline,
+ br.org.archimedes.arc;bundle-version="0.58.0",
+ br.org.archimedes.curvedshape;bundle-version="0.58.0",
+ br.org.archimedes.circle;bundle-version="0.58.0"
 Export-Package: br.org.archimedes.extend,
  br.org.archimedes.extend.interfaces,
  br.org.archimedes.extenders,
