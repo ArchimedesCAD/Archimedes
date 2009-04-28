@@ -397,7 +397,7 @@ public class ArcTest extends Tester {
     }
 
     @Test
-    public void testExtremePoint () throws Exception {
+    public void testExtremePoints () throws Exception {
 
         List<Point> extremes = new LinkedList<Point>();
         extremes.add(initial);
