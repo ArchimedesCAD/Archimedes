@@ -93,7 +93,6 @@ public class LoadCommandTest extends Tester {
 
             return new Importer() {
 
-                @Override
                 public Drawing importDrawing (InputStream input) throws InvalidFileFormatException,
                         IOException {
 
