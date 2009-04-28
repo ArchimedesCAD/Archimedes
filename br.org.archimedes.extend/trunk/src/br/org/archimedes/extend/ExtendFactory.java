@@ -6,11 +6,12 @@
  * <br>
  * Contributors:<br>
  * Jonas K. Hirata - initial API and implementation<br>
- * Hugo Corbucci - later contributions<br>
+ * Hugo Corbucci, Bruno Klava, Kenzo Yamada - later contributions<br>
  * <br>
  * This file was created on 2008/07/16, 23:59:46, by Jonas K. Hirata.<br>
  * It is part of package br.org.archimedes.extend on the br.org.archimedes.extend project.<br>
  */
+
 package br.org.archimedes.extend;
 
 import java.io.Writer;
@@ -60,8 +61,7 @@ public class ExtendFactory implements CommandFactory {
 
     public ExtendFactory () {
 
-        intersectionManager = new IntersectionManagerEPLoader()
-                .getIntersectionManager();
+        intersectionManager = new IntersectionManagerEPLoader().getIntersectionManager();
         deactivate();
     }
 
@@ -125,8 +125,7 @@ public class ExtendFactory implements CommandFactory {
      */
     private String makeUndo () {
 
-        String returnMessage = br.org.archimedes.undo.Messages.UndoPerformed
-                + Constant.NEW_LINE;
+        String returnMessage = br.org.archimedes.undo.Messages.UndoPerformed + Constant.NEW_LINE;
 
         command = null;
         if (count > 0) {
@@ -156,16 +155,14 @@ public class ExtendFactory implements CommandFactory {
      *             In case the parameter was not the reference elements.
      */
     @SuppressWarnings("unchecked")
-    private String tryGetReference (Object parameter)
-            throws InvalidParameterException {
+    private String tryGetReference (Object parameter) throws InvalidParameterException {
 
         Set<Element> collection = null;
         try {
             collection = (Set<Element>) parameter;
         }
         catch (ClassCastException e) {
-            throw new InvalidParameterException(Messages
-                    .SelectRefs);
+            throw new InvalidParameterException(Messages.SelectRefs);
         }
 
         references = new HashSet<Element>();
@@ -186,14 +183,12 @@ public class ExtendFactory implements CommandFactory {
      * @throws InvalidParameterException
      *             In case the parameter was not the elements to be cut.
      */
-    private String tryGetSelection (Object parameter)
-            throws InvalidParameterException {
+    private String tryGetSelection (Object parameter) throws InvalidParameterException {
 
         String result = null;
         try {
             if (parameter == null) {
-                throw new InvalidParameterException(Messages
-                        .ExtendSelectElements);
+                throw new InvalidParameterException(Messages.ExtendSelectElements);
             }
             Selection selection = (Selection) parameter;
             calculatePoints(selection);
@@ -220,8 +215,8 @@ public class ExtendFactory implements CommandFactory {
      * @throws InvalidArgumentException
      * @throws NullArgumentException
      */
-    private void calculatePoints (Selection selection)
-            throws NullArgumentException, InvalidArgumentException {
+    private void calculatePoints (Selection selection) throws NullArgumentException,
+            InvalidArgumentException {
 
         points = new ArrayList<Point>();
 
@@ -233,17 +228,17 @@ public class ExtendFactory implements CommandFactory {
             borderPoints.add(area.getUpperRight());
             borderPoints.add(area.getLowerRight());
             borderPoints.add(area.getLowerLeft());
+            borderPoints.add(area.getUpperLeft());
             Polyline areaPl = new Polyline(borderPoints);
 
             Set<Element> elements = selection.getSelectedElements();
             for (Element element : elements) {
                 Collection<Point> intersections = new ArrayList<Point>();
                 try {
-                    intersections = intersectionManager
-                            .getIntersectionsBetween(element, areaPl);
+                    // TODO use element.getExtremePoints() and ...
+                    intersections = intersectionManager.getIntersectionsBetween(element, areaPl);
                     for (Point intersection : intersections) {
-                        if (element.contains(intersection)
-                                && areaPl.contains(intersection)) {
+                        if (element.contains(intersection) && areaPl.contains(intersection)) {
                             points.add(intersection);
                         }
                     }
@@ -292,7 +287,6 @@ public class ExtendFactory implements CommandFactory {
 
     /*
      * (non-Javadoc)
-     * 
      * @see br.org.archimedes.commands.Command#getNextParser()
      */
     public Parser getNextParser () {
@@ -303,9 +297,9 @@ public class ExtendFactory implements CommandFactory {
                 parser = new SimpleSelectionParser();
             }
             else {
+                // TODO change parser
                 Parser selectionParser = new SelectionParser();
-                Parser decoratedParser = new ReturnDecoratorParser(
-                        selectionParser);
+                Parser decoratedParser = new ReturnDecoratorParser(selectionParser);
                 parser = new StringDecoratorParser(decoratedParser, "u");
             }
         }
