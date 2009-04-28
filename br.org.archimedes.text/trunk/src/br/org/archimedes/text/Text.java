@@ -108,7 +108,8 @@ public class Text extends Element {
 
         Text clone = null;
         try {
-            clone = new Text(new String(text), originPoint.clone(), getHeight());
+            clone = new Text(new String(text), originPoint.clone(), getHeight(), getFont());
+            applyRotation(clone);
             clone.setLayer(parentLayer);
         }
         catch (Exception e) {
@@ -117,6 +118,16 @@ public class Text extends Element {
         }
 
         return clone;
+    }
+
+    /**
+     * @param clone
+     *            The text to apply the same rotation as mine
+     */
+    private void applyRotation (Text clone) {
+
+        clone.verticalPoint = verticalPoint.clone();
+        clone.horizontalPoint = horizontalPoint.clone();
     }
 
     /**
@@ -211,7 +222,7 @@ public class Text extends Element {
             return true;
         }
 
-        if (!Text.class.isAssignableFrom(object.getClass())) {
+        if (object == null || !Text.class.isAssignableFrom(object.getClass())) {
             return false;
         }
 
@@ -220,6 +231,7 @@ public class Text extends Element {
         equal = equal && originPoint.equals(otherText.originPoint);
         equal = equal && horizontalPoint.equals(otherText.horizontalPoint);
         equal = equal && verticalPoint.equals(otherText.verticalPoint);
+        equal = equal && font.equals(otherText.font);
         return equal;
     }
 

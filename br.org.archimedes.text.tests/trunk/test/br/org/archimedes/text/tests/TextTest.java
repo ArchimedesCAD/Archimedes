@@ -133,10 +133,23 @@ public class TextTest extends Tester {
      * Test method for {@link br.org.archimedes.text.Text#clone()}.
      */
     @Test
-    public void testClone () {
+    public void testClone () throws Exception {
 
         Text textClone = this.safeClone(text);
         Assert.assertEquals(text, textClone);
+        
+        Point rotateReference = text.getLowerLeft();
+        text.rotate(rotateReference, Math.PI);
+        
+        textClone = this.safeClone(text);
+        Assert.assertEquals(text, textClone);
+        
+        Text offsetText = new Text("Test", new Point(10,10), 10.0, new StubFont("", 10));
+        rotateReference = offsetText.getLowerLeft();
+        offsetText.rotate(rotateReference, Math.PI);
+        
+        textClone = this.safeClone(offsetText);
+        Assert.assertEquals(offsetText, textClone);
     }
 
     /**
@@ -199,7 +212,7 @@ public class TextTest extends Tester {
             Assert.fail("Should not throw a NullArgumentException.");
         }
     }
-
+    
     /**
      * Test method for
      * {@link br.org.archimedes.text.Element#scale(br.org.archimedes.model.Point, double)}.
@@ -249,26 +262,38 @@ public class TextTest extends Tester {
     }
 
     @Test
-    public void testEquals () {
+    public void followsEqualsAndHashCodeContract () {
 
         final String ARCHIMEDES = "Archimedes";
         final Point POINT = new Point(0, 0);
         double SIZE = 10;
 
-        Text t1 = createSafeText(ARCHIMEDES, POINT, SIZE);
-        Text t2 = createSafeText(ARCHIMEDES, POINT, SIZE);
-        Assert.assertTrue(t1.equals(t2));
-        Assert.assertEquals(t1.hashCode(), t2.hashCode());
+        Text text = createSafeText(ARCHIMEDES, POINT, SIZE);
+        Assert.assertFalse(text.equals(null));
+        Assert.assertFalse(text.equals(new Object()));
+        
+        Assert.assertTrue(text.equals(text));
+        Assert.assertEquals(text.hashCode(), text.hashCode());
+        
+        Text equalText = createSafeText(ARCHIMEDES, POINT, SIZE);
+        Assert.assertTrue(text.equals(equalText));
+        Assert.assertEquals(text.hashCode(), equalText.hashCode());
 
-        Text t3 = createSafeText(ARCHIMEDES, POINT, SIZE + 10e-10);
-        Assert.assertTrue(t1.equals(t3));
-        Assert.assertEquals(t1.hashCode(), t3.hashCode());
+        Text equalWithinEpsilonText = createSafeText(ARCHIMEDES, POINT, SIZE + 10e-10);
+        Assert.assertTrue(text.equals(equalWithinEpsilonText));
+        Assert.assertEquals(text.hashCode(), equalWithinEpsilonText.hashCode());
 
-        t3 = createSafeText(ARCHIMEDES, POINT, SIZE + 10e-6);
-        Assert.assertFalse(t1.equals(t3));
+        Text biggerText = createSafeText(ARCHIMEDES, POINT, SIZE + 10e-6);
+        Assert.assertFalse(text.equals(biggerText));
 
-        t3 = createSafeText(ARCHIMEDES, new Point(0, 0.1), SIZE + 10e-6);
-        Assert.assertFalse(t1.equals(t3));
+        Text offsetText = createSafeText(ARCHIMEDES, new Point(0, 0.1), SIZE);
+        Assert.assertFalse(text.equals(offsetText));
+        
+        Text otherText = createSafeText("Other", new Point(0, 0), SIZE);
+        Assert.assertFalse(text.equals(otherText));
+        
+        Text textWithOtherFont = createSafeText(ARCHIMEDES, new Point(0, 0), SIZE, new StubFont("", 1));
+        Assert.assertFalse(text.equals(textWithOtherFont));
     }
 
     /**
@@ -285,15 +310,15 @@ public class TextTest extends Tester {
 
         Font f1 = new StubFont("fonts/arial.ttf", FONT_ADVANCE_WIDTH_100);
         Text t1 = createSafeText(ARCHIMEDES, POINT, SIZE, f1);
-        Assert.assertTrue("Deveria voltar true!", equals(t1.getWidth(), expected));
+        Assert.assertEquals(t1.getWidth(), expected, Constant.EPSILON);
 
         Font f2 = new StubFont("fonts/arial.ttf", FONT_ADVANCE_WIDTH_200);
         Text t2 = createSafeText("Archimedes", POINT, SIZE, f2);
-        Assert.assertTrue("Deveria voltar true!", equals(t2.getWidth(), expected));
+        Assert.assertEquals(t2.getWidth(), expected, Constant.EPSILON);
 
         Font f3 = new StubFont("fonts/arial.ttf", FONT_ADVANCE_WIDTH_300);
         Text t3 = createSafeText("Archimedes", POINT, SIZE, f3);
-        Assert.assertTrue("Deveria voltar true!", equals(t3.getWidth(), expected));
+        Assert.assertEquals(t3.getWidth(), expected, Constant.EPSILON);
     }
 
     /**
@@ -374,10 +399,5 @@ public class TextTest extends Tester {
 
         rectangle = new Rectangle(0, -50 * sqrt_2, 55 * sqrt_2, 5 * sqrt_2);
         Assert.assertEquals(rectangle, t1.getBoundaryRectangle());
-    }
-
-    private boolean equals (double a, double b) {
-
-        return Math.abs(a - b) < Constant.EPSILON;
     }
 }
