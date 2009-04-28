@@ -14,6 +14,7 @@ package br.org.archimedes.extenders;
 
 import br.org.archimedes.Tester;
 import br.org.archimedes.exceptions.InvalidArgumentException;
+import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.line.Line;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
@@ -33,27 +34,30 @@ public class SemilineExtenderTest extends Tester {
     private static final Collection<Element> EMPTY_LIST = Collections.emptyList();
     SemilineExtender extender = new SemilineExtender();
     Semiline semiline;
+    Collection<Element> references = new ArrayList<Element>();
 
     @Before
     public void setUp() throws InvalidArgumentException{
         semiline = new Semiline(0,0,1,1);
     }
     
-    @Test
+    @Test(expected = NullArgumentException.class)
     public void doesntDoAnythingWithNoReferences() throws Exception{
         extender.extend(semiline, EMPTY_LIST, new Point(1,1));
-        assertEquals(semiline, new Semiline(0,0,1,1));
     }
     
     @Test
     public void doesntDoAnythingWhenReferenceIsOnTheExtremePoint() throws Exception{
-        Collection<Element> references = new ArrayList<Element>();
         Line line = new Line(-1,1,1,-1);
         references.add(line);
         extender.extend(semiline, references, new Point (1,1));
         assertEquals(semiline, new Semiline(0,0,1,1));
     }
     
-    
-    
+    @Test
+    public void extendsToReferenceBelow() throws Exception{
+        references.add(new Line(-2, 0, 0, -2));
+        extender.extend(semiline, references, new Point (1,1));
+        assertEquals(semiline, new Semiline(-1,-1,1,1));
+    }
 }
