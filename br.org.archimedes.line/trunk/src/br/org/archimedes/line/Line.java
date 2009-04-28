@@ -6,13 +6,18 @@
  * <br>
  * Contributors:<br>
  * Hugo Corbucci - initial API and implementation<br>
- * Luiz C. Real - later contributions<br>
+ * Luiz C. Real, Bruno Klava, Kenzo Yamada - later contributions<br>
  * <br>
  * This file was created on 2006/03/23, 22:12:54, by Hugo Corbucci.<br>
  * It is part of package br.org.archimedes.line on the br.org.archimedes.line project.<br>
  */
 
 package br.org.archimedes.line;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
 
 import br.org.archimedes.Constant;
 import br.org.archimedes.Geometrics;
@@ -28,10 +33,6 @@ import br.org.archimedes.model.ReferencePoint;
 import br.org.archimedes.model.Vector;
 import br.org.archimedes.model.references.SquarePoint;
 import br.org.archimedes.model.references.TrianglePoint;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 /**
  * Belongs to package br.org.archimedes.line.
@@ -210,7 +211,8 @@ public class Line extends Element implements Offsetable {
         return (determinant >= 0);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -333,9 +335,7 @@ public class Line extends Element implements Offsetable {
 
     /*
      * (non-Javadoc)
-     * @see
-     * br.org.archimedes.model.Element#getProjectionOf(br.org.archimedes.model.Point
-     * )
+     * @see br.org.archimedes.model.Element#getProjectionOf(br.org.archimedes.model.Point )
      */
     public Point getProjectionOf (Point point) throws NullArgumentException {
 
@@ -357,9 +357,7 @@ public class Line extends Element implements Offsetable {
 
     /*
      * (non-Javadoc)
-     * @see
-     * br.org.archimedes.model.Element#getReferencePoints(br.org.archimedes.model
-     * .Rectangle)
+     * @see br.org.archimedes.model.Element#getReferencePoints(br.org.archimedes.model .Rectangle)
      */
     public Collection<ReferencePoint> getReferencePoints (Rectangle area) {
 
@@ -428,5 +426,14 @@ public class Line extends Element implements Offsetable {
         catch (NullArgumentException e) {
             // Should not happen
         }
+    }
+
+    @Override
+    public List<Point> getExtremePoints () {
+
+        List<Point> extremes = new LinkedList<Point>();
+        extremes.add(getInitialPoint());
+        extremes.add(getEndingPoint());
+        return extremes;
     }
 }

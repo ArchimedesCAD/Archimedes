@@ -6,7 +6,7 @@
  * <br>
  * Contributors:<br>
  * Cristiane M. Sato - initial API and implementation<br>
- * Marcio Oshiro, Hugo Corbucci, Mariana V. Bravo - later contributions<br>
+ * Marcio Oshiro, Hugo Corbucci, Mariana V. Bravo, Bruno Klava, Kenzo Yamada - later contributions<br>
  * <br>
  * This file was created on 2006/03/23, 10:09:12, by Cristiane M. Sato.<br>
  * It is part of package br.org.archimedes.line on the br.org.archimedes.line.tests project.<br>
@@ -14,15 +14,18 @@
 
 package br.org.archimedes.line;
 
+import java.util.LinkedList;
+import java.util.List;
+
+import org.junit.Assert;
+import org.junit.Test;
+
 import br.org.archimedes.Constant;
 import br.org.archimedes.Tester;
 import br.org.archimedes.exceptions.IllegalActionException;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.model.Point;
-
-import org.junit.Assert;
-import org.junit.Test;
 
 /**
  * Belongs to package br.org.archimedes.line.
@@ -260,7 +263,7 @@ public class LineTest extends Tester {
         Assert.assertEquals("The lines should be aproximately the same.", expected, copyLine);
 
         line = createSafeLine(0.0, 0.0, 1.0, -1.0);
-        expected = createSafeLine( movement, movement, 1 + movement, -1 + movement);
+        expected = createSafeLine(movement, movement, 1 + movement, -1 + movement);
         copyLine = (Line) line.cloneWithDistance(0.5);
         Assert.assertEquals("The lines should be aproximately the same.", expected, copyLine);
 
@@ -348,13 +351,13 @@ public class LineTest extends Tester {
         Assert.assertTrue("These lines should be equal.", line1.equals(line3));
         Assert.assertFalse("These lines should not be equal.", line1.equals(line4));
     }
-    
+
     // TODO Test a line can tell if it is inside a rectangle
-    
+
     // TODO Test a line can be moved correctly
-    
+
     // TODO Test a line knows its boundary rectangle
-    
+
     @Test
     public void testProjection () {
 
@@ -451,13 +454,13 @@ public class LineTest extends Tester {
         }
         return projection;
     }
-    
+
     // TODO Test a line is its own segment
-    
+
     // TODO Test the reference points of a line only consider the points withint the rectangle
-    
+
     // TODO Test the points of a line are the initial and ending
-    
+
     @Test
     public void testRotate () {
 
@@ -580,4 +583,22 @@ public class LineTest extends Tester {
             Assert.fail("Should not throw IllegalActionException");
         }
     }
+
+    @Test
+    public void testExtremePoints () throws Exception {
+
+        Point p1 = new Point(2, 8);
+        Point p2 = new Point(1.7, -7);
+        Line line = new Line(p1, p2);
+
+        List<Point> extremes = new LinkedList<Point>();
+        extremes.add(p1);
+        extremes.add(p2);
+
+        List<Point> extremesComputed = line.getExtremePoints();
+
+        assertCollectionTheSame(extremes, extremesComputed);
+
+    }
+
 }
