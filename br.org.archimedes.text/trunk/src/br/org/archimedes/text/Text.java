@@ -88,8 +88,8 @@ public class Text extends Element {
             throw new InvalidArgumentException();
         }
 
-        this.text = text;
-        this.originPoint = originPoint;
+        this.text = new String(text);
+        this.originPoint = originPoint.clone();
 
         this.horizontalPoint = originPoint.addVector(new Vector(new Point(size, 0)));
         this.verticalPoint = originPoint.addVector(new Vector(new Point(0, size)));
@@ -100,7 +100,6 @@ public class Text extends Element {
         else {
             this.font = font;
         }
-
     }
 
     @Override

@@ -123,6 +123,9 @@ public class TextTest extends Tester {
 
         Assert.assertEquals(TEXT, t.getText());
         Assert.assertEquals(LOWER_LEFT, t.getLowerLeft());
+        LOWER_LEFT.setX(10);
+        // Shouldn't use the reference given
+        Assert.assertFalse(LOWER_LEFT.equals(t.getLowerLeft()));
         Assert.assertEquals(10.0, t.getSize());
 
         Assert.assertNotNull(t.getFont());
