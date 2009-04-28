@@ -8,6 +8,7 @@
  * Hugo Corbucci - initial API and implementation<br>
  * Bruno Klava and Luiz Real - changed behavior of its boundary rectangle<br>
  * Ricardo Sider and Luiz Real - reverted the behavior of its boundary rectangle<br>
+ * Bruno Klava and Kenzo Yamada - later contributions<br>
  * <br>
  * This file was created on 2009/01/10, 11:16:48, by Hugo Corbucci.<br>
  * It is part of package br.org.archimedes.semiline on the br.org.archimedes.semiline.tests project.<br>
@@ -25,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -615,5 +617,17 @@ public class SemilineTest extends Tester {
         expected.add(new Point(10, 10));
         expected.add(new Point(60, 60));
         assertCollectionTheSame(expected, pointsCrossing);
+    }
+
+    @Test
+    public void testExtremePoints () throws Exception {
+
+        List<Point> extremes = new LinkedList<Point>();
+        extremes.add(point);
+
+        List<Point> extremesComputed = sl.getExtremePoints();
+
+        assertCollectionTheSame(extremes, extremesComputed);
+
     }
 }

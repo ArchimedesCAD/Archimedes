@@ -9,6 +9,7 @@
  * Bruno Klava and Luiz Real - changed behavior of its boundary rectangle<br>
  * Ricardo Sider and Luiz Real - reverted the behavior of its boundary rectangle and corrected
  * getPointsCrossing method<br>
+ * Bruno Klava and Kenzo Yamada - later contributions<br>
  * <br>
  * This file was created on 2009/01/10, 11:16:48, by Hugo Corbucci.<br>
  * It is part of package br.org.archimedes.semiline on the br.org.archimedes.semiline project.<br>
@@ -530,6 +531,14 @@ public class Semiline extends Element implements Offsetable {
     private boolean isHorizontal (Vector direction) {
 
         return Math.abs(direction.getY()) < Constant.EPSILON;
+    }
+
+    @Override
+    public List<Point> getExtremePoints () {
+
+        List<Point> extremes = new LinkedList<Point>();
+        extremes.add(initialPoint);
+        return extremes;
     }
 
 }
