@@ -19,6 +19,8 @@ import br.org.archimedes.Constant;
 import org.junit.Assert;
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
+
 /**
  * Belongs to package br.org.archimedes.tests.model.
  * 
@@ -149,5 +151,18 @@ public class PointTest {
         point = new Point(1.0, 1.0);
         other = new Point(1.0 + (2 * Constant.EPSILON), 1.0 - (2 * Constant.EPSILON));
         Assert.assertFalse(point.equals(other));
+    }
+    
+    // TODO Tests for the rotate
+    
+    @Test
+    public void rotateShouldUseAReferenceClone () throws Exception {
+
+        Point point = new Point(10,10);
+        point.rotate(point, Math.PI);
+        assertEquals(new Point(10,10), point);
+        
+        point.rotate(new Point(0,0), Math.PI);
+        assertEquals(new Point(-10,-10), point);
     }
 }

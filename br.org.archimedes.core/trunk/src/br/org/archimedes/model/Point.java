@@ -230,12 +230,13 @@ public class Point implements Comparable<Point> {
         if (reference == null) {
             throw new NullArgumentException();
         }
+        Point clonedRef = reference.clone(); // If the reference is myself, I still work.
 
-        move( -reference.getX(), -reference.getY());
+        move( -clonedRef.getX(), -clonedRef.getY());
         double x = getX() * Math.cos(angle) - getY() * Math.sin(angle);
         double y = getX() * Math.sin(angle) + getY() * Math.cos(angle);
-        setX(x + reference.getX());
-        setY(y + reference.getY());
+        setX(x + clonedRef.getX());
+        setY(y + clonedRef.getY());
     }
 
     /**
