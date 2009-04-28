@@ -13,19 +13,18 @@
 
 package br.org.archimedes.extenders;
 
-import java.util.Collection;
-import java.util.Vector;
+import br.org.archimedes.Tester;
+import br.org.archimedes.arc.Arc;
+import br.org.archimedes.line.Line;
+import br.org.archimedes.model.Element;
+import br.org.archimedes.model.Point;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import br.org.archimedes.Tester;
-import br.org.archimedes.arc.Arc;
-import br.org.archimedes.extenders.ArcExtender;
-import br.org.archimedes.line.Line;
-import br.org.archimedes.model.Element;
-import br.org.archimedes.model.Point;
+import java.util.Collection;
+import java.util.Vector;
 
 public class ArcExtenderTest extends Tester {
 

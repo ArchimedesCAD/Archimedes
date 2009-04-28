@@ -10,4 +10,5 @@ Require-Bundle: br.org.archimedes.core;bundle-version="0.57.4",
  org.junit4;bundle-version="4.3.1",
  br.org.archimedes.line;bundle-version="0.57.4",
  br.org.archimedes.arc;bundle-version="0.58.0",
- br.org.archimedes.curvedshape;bundle-version="0.58.0"
+ br.org.archimedes.curvedshape;bundle-version="0.58.0",
+ br.org.archimedes.semiline;bundle-version="0.58.0"
