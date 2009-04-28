@@ -6,14 +6,18 @@
  * <br>
  * Contributors:<br>
  * Hugo Corbucci - initial API and implementation<br>
- * Victor D. Lopes, Marcos P. Moreti, Mariana V. Bravo, Eduardo O. de Souza, Jonas K. Hirata - later
- * contributions<br>
+ * Victor D. Lopes, Marcos P. Moreti, Mariana V. Bravo, Eduardo O. de Souza, Jonas K. Hirata, Bruno
+ * Klava, Kenzo Yamada - later contributions<br>
  * <br>
  * This file was created on 2007/03/12, 07:51:43, by Hugo Corbucci.<br>
  * It is part of package br.org.archimedes.arc on the br.org.archimedes.arc project.<br>
  */
 
 package br.org.archimedes.arc;
+
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
 
 import br.org.archimedes.Constant;
 import br.org.archimedes.Geometrics;
@@ -32,10 +36,6 @@ import br.org.archimedes.model.Vector;
 import br.org.archimedes.model.references.CirclePoint;
 import br.org.archimedes.model.references.SquarePoint;
 import br.org.archimedes.model.references.TrianglePoint;
-
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * This class represents an Arc of a circle. It is very similar to the circle but adds some
@@ -434,7 +434,7 @@ public class Arc extends CurvedShape implements Offsetable {
 
     /*
      * (non-Javadoc)
-     * @see br.org.archimedes.model.Element#getProjectionOf(br.org.archimedes.model.Point)
+     * @see br.org.archimedes.model.Element#getProjectionOf(br.org.archimedes.model .Point)
      */
     public Point getProjectionOf (Point point) throws NullArgumentException {
 
@@ -702,5 +702,14 @@ public class Arc extends CurvedShape implements Offsetable {
 
         initialPoint = endingPoint;
         endingPoint = auxiliarPoint;
+    }
+
+    @Override
+    public List<Point> getExtremePoints () {
+
+        List<Point> extremes = new LinkedList<Point>();
+        extremes.add(getInitialPoint());
+        extremes.add(getEndingPoint());
+        return extremes;
     }
 }

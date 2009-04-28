@@ -6,13 +6,26 @@
  * <br>
  * Contributors:<br>
  * Wellington R. Pinheiro - initial API and implementation<br>
- * César Seragiotto, Victor D. Lopes, Mariana V. Bravo, Hugo Corbucci - later contributions<br>
+ * César Seragiotto, Victor D. Lopes, Mariana V. Bravo, Hugo Corbucci, Bruno Klava, Kenzo Yamada -
+ * later contributions<br>
  * <br>
  * This file was created on 2007/04/09, 13:02:39, by Wellington R. Pinheiro.<br>
  * It is part of package br.org.archimedes.arc on the br.org.archimedes.arc.tests project.<br>
  */
 
 package br.org.archimedes.arc;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 import br.org.archimedes.Tester;
 import br.org.archimedes.exceptions.InvalidArgumentException;
@@ -24,18 +37,6 @@ import br.org.archimedes.model.Vector;
 import br.org.archimedes.model.references.CirclePoint;
 import br.org.archimedes.model.references.SquarePoint;
 import br.org.archimedes.model.references.TrianglePoint;
-
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
-
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 public class ArcTest extends Tester {
 
@@ -386,13 +387,26 @@ public class ArcTest extends Tester {
         arc.move(1, 1);
         List<Point> newPoints = arc.getPoints();
         assertCollectionTheSame(arcPoints, newPoints);
-        
+
         List<Point> pointsToMove = new LinkedList<Point>(arcPoints);
         pointsToMove.remove(0); // Not moving the initial
-        Vector vector = new Vector(new Point(-5,0));
+        Vector vector = new Vector(new Point( -5, 0));
         arc.move(pointsToMove, vector);
         newPoints = arc.getPoints();
         assertCollectionTheSame(arcPoints, newPoints);
+    }
+
+    @Test
+    public void testExtremePoint () throws Exception {
+
+        List<Point> extremes = new LinkedList<Point>();
+        extremes.add(initial);
+        extremes.add(ending);
+
+        List<Point> extremesComputed = arc.getExtremePoints();
+
+        assertCollectionTheSame(extremes, extremesComputed);
+
     }
 
     // TODO Tests for mirror of an arc
