@@ -11,7 +11,7 @@
  * It is part of package br.org.archimedes.extend.line on the br.org.archimedes.extend.test project.<br>
  */
 
-package br.org.archimedes.extend.line;
+package br.org.archimedes.extenders;
 
 import java.util.Collection;
 import java.util.Vector;

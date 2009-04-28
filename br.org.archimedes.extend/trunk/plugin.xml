@@ -43,7 +43,7 @@
          <elementExtender
 			id="br.org.archimedes.extend.line"
 			element="br.org.archimedes.line"
-			class="br.org.archimedes.extend.line.LineExtender"/>
+			class="br.org.archimedes.extenders.LineExtender"/>
    </extension>
 
 </plugin>

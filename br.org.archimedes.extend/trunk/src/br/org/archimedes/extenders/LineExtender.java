@@ -54,20 +54,55 @@ public class LineExtender implements Extender {
         Collection<Point> intersectionPoints = intersectionManager.getIntersectionsBetween(
                 semiline, references);
 
+        boolean extended = false;
         if (intersectionPoints.size() != 0) {
-            Point nearestReferencePoint = null;
-            double minDistance = Double.MAX_VALUE;
+            extended = doExtend(line, nearestExtremePoint, intersectionPoints);
+        }
+        if ( !extended ) {
 
-            for (Point point : intersectionPoints) {
-                double distanceToRef = Geometrics.calculateDistance(point, nearestExtremePoint);
-                if (distanceToRef < minDistance) {
-                    nearestReferencePoint = point;
-                    minDistance = distanceToRef;
-                }
+            if (nearestExtremePoint == line.getEndingPoint()) {
+                nearestExtremePoint = line.getInitialPoint();
+            }
+            else {
+                nearestExtremePoint = line.getEndingPoint();
             }
 
-            // nearestExtremePoint = nearestReferencePoint;
+            try {
+                semiline = new Semiline(click, nearestExtremePoint);
+            }
+            catch (InvalidArgumentException e) {
+                e.printStackTrace();
+            }
 
+            intersectionPoints = intersectionManager.getIntersectionsBetween(semiline, references);
+
+            if (intersectionPoints.size() != 0) {
+                doExtend(line, nearestExtremePoint, intersectionPoints);
+            }
+
+        }
+    }
+
+    private boolean doExtend (Line line, Point nearestExtremePoint,
+            Collection<Point> intersectionPoints) throws NullArgumentException {
+
+        Point nearestReferencePoint = null;
+        double minDistance = Double.MAX_VALUE;
+
+        for (Point point : intersectionPoints) {
+
+            if (line.contains(point)) {
+                continue;
+            }
+
+            double distanceToRef = Geometrics.calculateDistance(point, nearestExtremePoint);
+            if (distanceToRef < minDistance) {
+                nearestReferencePoint = point;
+                minDistance = distanceToRef;
+            }
+        }
+
+        if (nearestReferencePoint != null) {
             if (nearestExtremePoint == line.getEndingPoint()) {
                 line.getEndingPoint().setX(nearestReferencePoint.getX());
                 line.getEndingPoint().setY(nearestReferencePoint.getY());
@@ -76,8 +111,9 @@ public class LineExtender implements Extender {
                 line.getInitialPoint().setX(nearestReferencePoint.getX());
                 line.getInitialPoint().setY(nearestReferencePoint.getY());
             }
-
+            return true;
         }
+        return false;
     }
 
     Point getNearestExtremePoint (Line line, Point point) throws NullArgumentException {
