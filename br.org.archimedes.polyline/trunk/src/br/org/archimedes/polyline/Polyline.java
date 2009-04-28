@@ -6,12 +6,21 @@
  * <br>
  * Contributors:<br>
  * Hugo Corbucci - initial API and implementation<br>
- * Luiz C. Real - later contributions<br>
+ * Luiz C. Real, Bruno Klava, Kenzo Yamada - later contributions<br>
  * <br>
  * This file was created on 2006/06/05, 22:53:43, by Hugo Corbucci.<br>
  * It is part of package br.org.archimedes.polyline on the br.org.archimedes.polyline project.<br>
  */
+
 package br.org.archimedes.polyline;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import br.org.archimedes.Geometrics;
 import br.org.archimedes.exceptions.InvalidArgumentException;
@@ -33,13 +42,6 @@ import br.org.archimedes.model.references.TrianglePoint;
 import br.org.archimedes.model.references.XPoint;
 import br.org.archimedes.rcp.extensionpoints.IntersectionManagerEPLoader;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
-
 /**
  * Belongs to package br.org.archimedes.polyline.
  * 
@@ -59,15 +61,14 @@ public class Polyline extends Element {
      * Constructor.
      * 
      * @param points
-     *            A list with the points that define the polyline. The polyline
-     *            will use copies of those points.
+     *            A list with the points that define the polyline. The polyline will use copies of
+     *            those points.
      * @throws NullArgumentException
      *             Thrown if the argument is null.
      * @throws InvalidArgumentException
      *             Thrown if the argument contains less than 2 points.
      */
-    public Polyline (List<Point> points) throws NullArgumentException,
-            InvalidArgumentException {
+    public Polyline (List<Point> points) throws NullArgumentException, InvalidArgumentException {
 
         if (points == null) {
             throw new NullArgumentException();
@@ -114,7 +115,6 @@ public class Polyline extends Element {
 
     /*
      * (non-Javadoc)
-     * 
      * @see br.org.archimedes.model.Element#move(double, double)
      */
     public void move (double deltaX, double deltaY) {
@@ -127,7 +127,6 @@ public class Polyline extends Element {
 
     /*
      * (non-Javadoc)
-     * 
      * @see br.org.archimedes.model.Element#getBoundaryRectangle()
      */
     public Rectangle getBoundaryRectangle () {
@@ -150,7 +149,6 @@ public class Polyline extends Element {
 
     /*
      * (non-Javadoc)
-     * 
      * @see br.org.archimedes.model.Element#getSegment()
      */
     public Line getSegment () {
@@ -160,12 +158,11 @@ public class Polyline extends Element {
 
     /*
      * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.model.Element#getProjectionOf(br.org.archimedes.model.Point)
+     * @see br.org.archimedes.model.Element#getProjectionOf(br.org.archimedes.model .Point)
      */
     /**
-     * @return null if the polyline is closed and the projection is not
-     *         contained. The result specified on Element otherwise.
+     * @return null if the polyline is closed and the projection is not contained. The result
+     *         specified on Element otherwise.
      */
     public Point getProjectionOf (Point point) throws NullArgumentException {
 
@@ -191,7 +188,6 @@ public class Polyline extends Element {
 
     /*
      * (non-Javadoc)
-     * 
      * @see br.org.archimedes.model.Element#contains(br.org.archimedes.model.Point)
      */
     public boolean contains (Point point) throws NullArgumentException {
@@ -210,7 +206,6 @@ public class Polyline extends Element {
 
     /*
      * (non-Javadoc)
-     * 
      * @see br.org.archimedes.model.Element#clone()
      */
     public Element clone () {
@@ -262,8 +257,7 @@ public class Polyline extends Element {
 
     /*
      * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.model.Element#getReferencePoints(br.org.archimedes.model.Rectangle)
+     * @see br.org.archimedes.model.Element#getReferencePoints(br.org.archimedes. model.Rectangle)
      */
     public Collection<ReferencePoint> getReferencePoints (Rectangle area) {
 
@@ -313,11 +307,9 @@ public class Polyline extends Element {
         for (Line line : getLines()) {
             Collection<Point> intersections;
             try {
-                intersections = intersectionManager.getIntersectionsBetween(
-                        line, this);
+                intersections = intersectionManager.getIntersectionsBetween(line, this);
                 for (Point intersectionPoint : intersections)
-                    references.add(new XPoint(intersectionPoint,
-                            intersectionPoint));
+                    references.add(new XPoint(intersectionPoint, intersectionPoint));
             }
             catch (NullArgumentException e) {
                 // TODO Auto-generated catch block
@@ -329,8 +321,7 @@ public class Polyline extends Element {
 
     /*
      * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.model.Offsetable#isPositiveDirection(br.org.archimedes.model.Point)
+     * @see br.org.archimedes.model.Offsetable#isPositiveDirection(br.org.archimedes .model.Point)
      */
     public boolean isPositiveDirection (Point point) {
 
@@ -339,13 +330,12 @@ public class Polyline extends Element {
             int leftSide = 0;
             List<Line> lines = getLines();
             for (Line segment : lines) {
-                Vector orthogonal = new Vector(segment.getInitialPoint(),
-                        segment.getEndingPoint());
+                Vector orthogonal = new Vector(segment.getInitialPoint(), segment.getEndingPoint());
                 orthogonal = orthogonal.getOrthogonalVector();
                 orthogonal = Geometrics.normalize(orthogonal);
 
-                Point meanPoint = Geometrics.getMeanPoint(segment
-                        .getInitialPoint(), segment.getEndingPoint());
+                Point meanPoint = Geometrics.getMeanPoint(segment.getInitialPoint(), segment
+                        .getEndingPoint());
                 Point helper = meanPoint.addVector(orthogonal);
 
                 Line ray = new Line(point, helper);
@@ -378,11 +368,9 @@ public class Polyline extends Element {
 
     /*
      * (non-Javadoc)
-     * 
      * @see br.org.archimedes.model.Offsetable#cloneWithDistance(double)
      */
-    public Element cloneWithDistance (double distance)
-            throws InvalidParameterException {
+    public Element cloneWithDistance (double distance) throws InvalidParameterException {
 
         Element result = null;
         List<Point> polyLine = new ArrayList<Point>();
@@ -403,8 +391,7 @@ public class Polyline extends Element {
 
             for (int i = 0; i < segments.size(); i++) {
                 Line currentSegment = segments.get(i);
-                currentSegment = (Line) currentSegment
-                        .cloneWithDistance(distance);
+                currentSegment = (Line) currentSegment.cloneWithDistance(distance);
                 // currentSegment = getCorrectOffset(lastPoint, distance,
                 // currentSegment);
 
@@ -413,8 +400,8 @@ public class Polyline extends Element {
 
                 Point newPoint = intersections.iterator().next();
 
-                Vector originalDirection = new Vector(currentSegment
-                        .getInitialPoint(), currentSegment.getEndingPoint());
+                Vector originalDirection = new Vector(currentSegment.getInitialPoint(),
+                        currentSegment.getEndingPoint());
                 Vector newDirection = new Vector(lastPoint, newPoint);
 
                 double dotProduct = originalDirection.dotProduct(newDirection);
@@ -464,9 +451,8 @@ public class Polyline extends Element {
 
     /*
      * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.model.PointSortable#getSortedPointSet(br.org.archimedes.model.Point,
-     *      java.util.Collection)
+     * @see br.org.archimedes.model.PointSortable#getSortedPointSet(br.org.archimedes .model.Point,
+     * java.util.Collection)
      */
     public SortedSet<ComparablePoint> getSortedPointSet (Point referencePoint,
             Collection<Point> intersectionPoints) {
@@ -482,8 +468,7 @@ public class Polyline extends Element {
                 int i = getIntersectionIndex(invertOrder, intersection);
 
                 if (i < lines.size()) {
-                    ComparablePoint point = generateComparablePoint(
-                            intersection, invertOrder, i);
+                    ComparablePoint point = generateComparablePoint(intersection, invertOrder, i);
                     sortedPointSet.add(point);
                 }
             }
@@ -497,20 +482,18 @@ public class Polyline extends Element {
     }
 
     /**
-     * Looks for a segment that contains the intersection, if none is found
-     * tries to discover an extension that contains it.
+     * Looks for a segment that contains the intersection, if none is found tries to discover an
+     * extension that contains it.
      * 
      * @param invertOrder
      *            true if the order is to be inversed, false otherwise.
      * @param intersection
      *            The intersection point
-     * @return The index of the segment that contains the intersection. If no
-     *         segment contains the intersection three things can happen:
-     *         <LI> return 0 if the intersection is in the extension of the
-     *         first segment
-     *         <LI> return the index of the last segment if the intersection is
-     *         in the extension of the last segment
-     *         <LI> the number of segments (which is an invalid index).
+     * @return The index of the segment that contains the intersection. If no segment contains the
+     *         intersection three things can happen: <LI>return 0 if the intersection is in the
+     *         extension of the first segment <LI>return the index of the last segment if the
+     *         intersection is in the extension of the last segment <LI>the number of segments
+     *         (which is an invalid index).
      * @throws NullArgumentException
      *             Thrown if something is null.
      */
@@ -569,8 +552,8 @@ public class Polyline extends Element {
      * @throws NullArgumentException
      *             Thrown if something is null.
      */
-    private ComparablePoint generateComparablePoint (Point point,
-            boolean invertOrder, int i) throws NullArgumentException {
+    private ComparablePoint generateComparablePoint (Point point, boolean invertOrder, int i)
+            throws NullArgumentException {
 
         List<Line> lines = getLines();
         Line line = lines.get(i);
@@ -588,8 +571,8 @@ public class Polyline extends Element {
         ComparablePoint element = null;
         try {
             Vector pointVector = new Vector(initialPoint, point);
-            PolyLinePointKey key = new PolyLinePointKey(segmentNumber,
-                    direction.dotProduct(pointVector));
+            PolyLinePointKey key = new PolyLinePointKey(segmentNumber, direction
+                    .dotProduct(pointVector));
             element = new ComparablePoint(point, key);
         }
         catch (NullArgumentException e) {
@@ -602,8 +585,7 @@ public class Polyline extends Element {
     /**
      * @param point
      *            The point
-     * @return The index of the nearest segment to the point or -1 if the point
-     *         is null.
+     * @return The index of the nearest segment to the point or -1 if the point is null.
      */
     public int getNearestSegment (Point point) {
 
@@ -619,10 +601,10 @@ public class Polyline extends Element {
                 Point projection = segment.getProjectionOf(point);
 
                 if (projection == null) {
-                    double distToInitial = Geometrics.calculateDistance(point,
-                            segment.getInitialPoint());
-                    double distToEnding = Geometrics.calculateDistance(point,
-                            segment.getEndingPoint());
+                    double distToInitial = Geometrics.calculateDistance(point, segment
+                            .getInitialPoint());
+                    double distToEnding = Geometrics.calculateDistance(point, segment
+                            .getEndingPoint());
 
                     dist = Math.min(distToInitial, distToEnding);
                 }
@@ -643,17 +625,16 @@ public class Polyline extends Element {
 
         return result;
     }
-    
-        /**
-     * Cuts the polyline in the specified points. Returns the resulting
-     * polylines ordered from the initial point to the ending point.
+
+    /**
+     * Cuts the polyline in the specified points. Returns the resulting polylines ordered from the
+     * initial point to the ending point.
      * 
      * @param firstCut
      *            The point of the first cut
      * @param secondCut
      *            The point of the second cut
-     * @return The resulting polylines ordered from the initial point to the
-     *         ending point.
+     * @return The resulting polylines ordered from the initial point to the ending point.
      */
     public Collection<Polyline> split (Point firstCut, Point secondCut) {
 
@@ -668,8 +649,7 @@ public class Polyline extends Element {
             Point tmpPoint = points.get(firstSegment);
             try {
                 distToFirst = Geometrics.calculateDistance(tmpPoint, firstCut);
-                distToSecond = Geometrics
-                        .calculateDistance(tmpPoint, secondCut);
+                distToSecond = Geometrics.calculateDistance(tmpPoint, secondCut);
             }
             catch (NullArgumentException e) {
                 // Should not happen
@@ -757,11 +737,11 @@ public class Polyline extends Element {
 
         return polyLines;
     }
-    
+
     /**
      * @param point
-     * @return Return the index of the segment that contains the point or -1 if
-     *         the polyline does not contain the point.
+     * @return Return the index of the segment that contains the point or -1 if the polyline does
+     *         not contain the point.
      */
     public int getPointSegment (Point point) {
 
@@ -800,5 +780,14 @@ public class Polyline extends Element {
         for (Line line : getLines()) {
             line.draw(wrapper);
         }
+    }
+
+    @Override
+    public List<Point> getExtremePoints () {
+
+        List<Point> extremes = new LinkedList<Point>();
+        extremes.add(points.get(0));
+        extremes.add(points.get(points.size() - 1));
+        return extremes;
     }
 }
