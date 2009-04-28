@@ -70,12 +70,22 @@ public class TextExporterTest extends Tester {
     }
 
     @Test
-    public void exportRotatedTextSVG () throws Exception {
+    public void exportRotatedText () throws Exception {
 
-        String expected = "<text x=\"0.0\" y=\"0.0\" font-size=\"2.0\" font-family=\"Courier\" transform=\"rotate(-90.0)\">Testando exportador</text>";
         Text text = new Text("Testando exportador", new Point(0.0, 0.0), 2.0);
         text.rotate(text.getLowerLeft(), Math.PI / 2);
 
+        String expected = "<text x=\"0.0\" y=\"0.0\" font-size=\"2.0\" font-family=\"Courier\" transform=\"rotate(-90.0 0.0 0.0)\">Testando exportador</text>";
+        assertExportEquals(expected, text);
+    }
+    
+    @Test
+    public void exportRotatedTextOutsideOfCenter () throws Exception {
+
+        Text text = new Text("Testando exportador", new Point(10.0, 0.0), 5.0);
+        text.rotate(text.getLowerLeft(), Math.PI / 2);
+
+        String expected = "<text x=\"10.0\" y=\"0.0\" font-size=\"5.0\" font-family=\"Courier\" transform=\"rotate(-90.0 10.0 0.0)\">Testando exportador</text>";
         assertExportEquals(expected, text);
     }
 

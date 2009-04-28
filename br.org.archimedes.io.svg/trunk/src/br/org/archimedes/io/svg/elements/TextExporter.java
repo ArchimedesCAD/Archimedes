@@ -13,9 +13,6 @@
 
 package br.org.archimedes.io.svg.elements;
 
-import java.io.IOException;
-import java.io.OutputStream;
-
 import br.org.archimedes.Constant;
 import br.org.archimedes.Geometrics;
 import br.org.archimedes.exceptions.NotSupportedException;
@@ -25,6 +22,9 @@ import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Rectangle;
 import br.org.archimedes.text.Text;
 
+import java.io.IOException;
+import java.io.OutputStream;
+
 /**
  * Belongs to package br.org.archimedes.io.svg.
  * 
@@ -32,64 +32,61 @@ import br.org.archimedes.text.Text;
  */
 public class TextExporter implements ElementExporter<Text> {
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * br.org.archimedes.interfaces.ElementExporter#exportElement(br.org.archimedes
-	 * .model.Element, java.lang.Object)
-	 */
-	public void exportElement(Text text, Object outputObject)
-			throws IOException {
+    /*
+     * (non-Javadoc)
+     * @see br.org.archimedes.interfaces.ElementExporter#exportElement(br.org.archimedes
+     * .model.Element, java.lang.Object)
+     */
+    public void exportElement (Text text, Object outputObject) throws IOException {
 
-		OutputStream output = (OutputStream) outputObject;
-		StringBuilder textTag = new StringBuilder();
+        OutputStream output = (OutputStream) outputObject;
+        StringBuilder textTag = new StringBuilder();
 
-		// TODO try to use origin, not lower left
-		Point lowerLeft = text.getLowerLeft();
-		double x = lowerLeft.getX();
-		double y = -lowerLeft.getY();
+        Point lowerLeft = text.getLowerLeft();
+        double x = clean(lowerLeft.getX());
+        double y = clean( -lowerLeft.getY());
 
-		textTag.append("<text x=\"" + clean(x) + "\" y=\"" //$NON-NLS-1$ //$NON-NLS-2$
-				+ clean(y) + "\" font-size=\"" + text.getSize() //$NON-NLS-1$
-				+ "\" font-family=\"Courier\""); //$NON-NLS-1$
+        textTag.append("<text x=\"" + x + "\" y=\"" //$NON-NLS-1$ //$NON-NLS-2$
+                + y + "\" font-size=\"" + text.getSize() //$NON-NLS-1$
+                + "\" font-family=\"Courier\""); //$NON-NLS-1$
 
-		try {
-			double angle = Geometrics.calculateAngle(text.getLowerLeft(), text
-					.getLowerLeft().addVector(text.getDirection()));
+        try {
+            double angle = Geometrics.calculateAngle(text.getLowerLeft(), text.getLowerLeft()
+                    .addVector(text.getDirection()));
 
-			if (!Geometrics.isHorizontal(angle)) {
-				angle = -(angle * 180 / Math.PI);
-				textTag.append(" transform=\"rotate(" + angle + ")\"");
-			}
+            if ( !Geometrics.isHorizontal(angle)) {
+                angle = -(angle * 180 / Math.PI);
+                textTag.append(" transform=\"rotate(" + angle + " " + x + " " + y + ")\"");
+            }
 
-		} catch (NullArgumentException e) {
-			// wont reach here
-		}
+        }
+        catch (NullArgumentException e) {
+            // wont reach here
+            e.printStackTrace();
+        }
 
-		textTag.append(">"); //$NON-NLS-1$
+        textTag.append(">"); //$NON-NLS-1$
 
-		textTag.append(text.getText());
-		textTag.append("</text>"); //$NON-NLS-1$
+        textTag.append(text.getText());
+        textTag.append("</text>\n"); //$NON-NLS-1$
 
-		output.write(textTag.toString().getBytes());
+        output.write(textTag.toString().getBytes());
+    }
 
-	}
+    /**
+     * @param number
+     * @return The number without useless signs (-0.0)
+     */
+    private double clean (double number) {
 
-	/**
-	 * @param number
-	 * @return The number without useless signs (-0.0)
-	 */
-	private double clean(double number) {
+        if (Math.abs(number) < Constant.EPSILON)
+            return 0.0;
+        return number;
+    }
 
-		if (Math.abs(number) < Constant.EPSILON)
-			return 0.0;
-		return number;
-	}
+    public void exportElement (Text element, Object outputObject, Rectangle boundingBox)
+            throws NotSupportedException {
 
-	public void exportElement(Text element, Object outputObject,
-			Rectangle boundingBox) throws NotSupportedException {
-
-		throw new NotSupportedException();
-	}
+        throw new NotSupportedException();
+    }
 }
