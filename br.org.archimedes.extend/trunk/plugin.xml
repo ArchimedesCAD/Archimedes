@@ -44,6 +44,10 @@
 			id="br.org.archimedes.extend.line"
 			element="br.org.archimedes.line"
 			class="br.org.archimedes.extenders.LineExtender"/>
+         <elementExtender
+            class="br.org.archimedes.extenders.ArcExtender"
+            element="br.org.archimedes.arc"
+            id="br.org.archimedes.extend.Arc"/>
    </extension>
 
 </plugin>
