@@ -48,6 +48,10 @@
             class="br.org.archimedes.extenders.ArcExtender"
             element="br.org.archimedes.arc"
             id="br.org.archimedes.extend.Arc"/>
+         <elementExtender
+            class="br.org.archimedes.extenders.SemilineExtender"
+            element="br.org.archimedes.semiline"
+            id="br.org.archimedes.extend.Semiline"/>
    </extension>
 
 </plugin>

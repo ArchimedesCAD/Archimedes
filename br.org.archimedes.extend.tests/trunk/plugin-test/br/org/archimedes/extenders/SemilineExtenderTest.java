@@ -1,13 +1,11 @@
-/* Copyright (c) 2008, 2009 Hugo Corbucci and others.<br>
- * All rights reserved. This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html<br>
- * <br>
- * Contributors:<br>
- * Bruno da Hora, Luiz Real - initial API and implementation<br>
- * <br>
- * This file was created on 2009/04/28, 14:00:00, by Bruno da Hora, Luiz real.<br>
- * It is part of package br.org.archimedes.extenders on the br.org.archimedes.extend.test project.<br>
+/*
+ * Copyright (c) 2008, 2009 Hugo Corbucci and others.<br> All rights reserved. This program and the
+ * accompanying materials are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html<br> <br> Contributors:<br> Bruno da Hora, Luiz Real -
+ * initial API and implementation<br> <br> This file was created on 2009/04/28, 14:00:00, by Bruno
+ * da Hora, Luiz real.<br> It is part of package br.org.archimedes.extenders on the
+ * br.org.archimedes.extend.test project.<br>
  */
 
 package br.org.archimedes.extenders;
@@ -25,39 +23,60 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 
 import static org.junit.Assert.assertEquals;
 
 public class SemilineExtenderTest extends Tester {
-    
-    private static final Collection<Element> EMPTY_LIST = Collections.emptyList();
+
     SemilineExtender extender = new SemilineExtender();
+
     Semiline semiline;
+
     Collection<Element> references = new ArrayList<Element>();
 
+
     @Before
-    public void setUp() throws InvalidArgumentException{
-        semiline = new Semiline(0,0,1,1);
+    public void setUp () throws InvalidArgumentException {
+
+        semiline = new Semiline(0, 0, 1, 1);
     }
-    
+
     @Test(expected = NullArgumentException.class)
-    public void doesntDoAnythingWithNoReferences() throws Exception{
-        extender.extend(semiline, EMPTY_LIST, new Point(1,1));
+    public void doesntDoAnythingWithNoReferences () throws Exception {
+
+        extender.extend(semiline, null, new Point(1, 1));
     }
-    
+
     @Test
-    public void doesntDoAnythingWhenReferenceIsOnTheExtremePoint() throws Exception{
-        Line line = new Line(-1,1,1,-1);
+    public void doesntDoAnythingWhenReferenceIsOnTheExtremePoint () throws Exception {
+
+        Line line = new Line( -1, 1, 1, -1);
         references.add(line);
-        extender.extend(semiline, references, new Point (1,1));
-        assertEquals(semiline, new Semiline(0,0,1,1));
+        extender.extend(semiline, references, new Point(1, 1));
+        assertEquals(semiline, new Semiline(0, 0, 1, 1));
     }
-    
+
     @Test
-    public void extendsToReferenceBelow() throws Exception{
-        references.add(new Line(-2, 0, 0, -2));
-        extender.extend(semiline, references, new Point (1,1));
-        assertEquals(semiline, new Semiline(-1,-1,1,1));
+    public void extendsToReferenceBelow () throws Exception {
+
+        references.add(new Line( -2, 0, 0, -2));
+        extender.extend(semiline, references, new Point(1, 1));
+        assertEquals(semiline, new Semiline( -1, -1, 1, 1));
+    }
+
+    @Test
+    public void doesntDoAnythingWhenReferenceIntersectsSemiline () throws Exception {
+
+        references.add(new Line(2, 0, 0, 2));
+        extender.extend(semiline, references, new Point(1, 1));
+        assertEquals(semiline, new Semiline(0, 0, 1, 1));
+    }
+
+    @Test
+    public void doesntDoAnythingWhenReferenceDoesntIntersectSemiline () throws Exception {
+
+        references.add(new Line(0, -1, 1, 0));
+        extender.extend(semiline, references, new Point(1, 1));
+        assertEquals(semiline, new Semiline(0, 0, 1, 1));
     }
 }
