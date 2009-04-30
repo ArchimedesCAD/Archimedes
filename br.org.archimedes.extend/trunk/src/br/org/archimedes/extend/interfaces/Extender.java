@@ -26,11 +26,11 @@ public interface Extender {
      *            The element to be extended.
      * @param references
      *            References to extend the element
-     * @param click
-     * 			  Point where user clicked to choose which parts of the element shall be extended
+     * @param extremePoint
+     * 			  Extreme point of the element that shall be extended
      * @throws NullArgumentException
      *             If element, references or click is null
      */
 	public void extend(Element element,
-			Collection<Element> references, Point click) throws NullArgumentException;
+			Collection<Element> references, Point extremePoint) throws NullArgumentException;
 }
