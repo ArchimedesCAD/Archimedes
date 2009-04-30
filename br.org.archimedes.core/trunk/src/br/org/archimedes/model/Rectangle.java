@@ -6,6 +6,7 @@
  * <br>
  * Contributors:<br>
  * Hugo Corbucci - initial API and implementation<br>
+ * Bruno Klava e Kenzo Yamada - contains() method<br>
  * <br>
  * This file was created on 2006/03/30, 00:03:02, by Hugo Corbucci.<br>
  * It is part of package br.org.archimedes.model on the br.org.archimedes.core project.<br>
@@ -96,6 +97,13 @@ public class Rectangle {
         inside = inside && ((y - rectangle.y) + height <= rectangle.height);
 
         return inside;
+    }
+
+    public boolean contains (Point point) {
+
+        return point.getX() > this.x && point.getX() < this.x + this.width && point.getY() > this.y
+                && point.getY() < this.y + this.height;
+
     }
 
     /**
