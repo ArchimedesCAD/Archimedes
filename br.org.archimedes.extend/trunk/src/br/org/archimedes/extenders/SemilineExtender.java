@@ -39,7 +39,7 @@ public class SemilineExtender implements Extender {
         Semiline semiline = (Semiline) element;
 
         try {
-            Semiline offset = new Semiline(click, semiline.getInitialPoint());
+            Semiline offset = new Semiline(semiline.getDirectionPoint(), semiline.getInitialPoint());
             Collection<Point> intersectionPoints = intersectionManager.getIntersectionsBetween(
                     offset, references);
 

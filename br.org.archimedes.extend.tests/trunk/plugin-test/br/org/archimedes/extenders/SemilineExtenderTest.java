@@ -42,17 +42,30 @@ public class SemilineExtenderTest extends Tester {
     }
 
     @Test(expected = NullArgumentException.class)
-    public void doesntDoAnythingWithNoReferences () throws Exception {
+    public void returnNullArgumentExceptionWithNullReferences () throws Exception {
 
-        extender.extend(semiline, null, new Point(1, 1));
+        extender.extend(semiline, null, new Point(0, 0));
     }
+    
+    @Test(expected = NullArgumentException.class)
+    public void returnNullArgumentExceptionWithNullPoint () throws Exception {
+
+        extender.extend(semiline, references, null);
+    }
+
+    @Test(expected = NullArgumentException.class)
+    public void returnNullArgumentExceptionWithNullSemiline () throws Exception {
+
+        extender.extend(null, references, new Point(0, 0));
+    }
+
 
     @Test
     public void doesntDoAnythingWhenReferenceIsOnTheExtremePoint () throws Exception {
 
         Line line = new Line( -1, 1, 1, -1);
         references.add(line);
-        extender.extend(semiline, references, new Point(1, 1));
+        extender.extend(semiline, references, new Point(0, 0));
         assertEquals(semiline, new Semiline(0, 0, 1, 1));
     }
 
@@ -60,7 +73,7 @@ public class SemilineExtenderTest extends Tester {
     public void extendsToReferenceBelow () throws Exception {
 
         references.add(new Line( -2, 0, 0, -2));
-        extender.extend(semiline, references, new Point(1, 1));
+        extender.extend(semiline, references, new Point(0, 0));
         assertEquals(semiline, new Semiline( -1, -1, 1, 1));
     }
 
@@ -68,7 +81,7 @@ public class SemilineExtenderTest extends Tester {
     public void doesntDoAnythingWhenReferenceIntersectsSemiline () throws Exception {
 
         references.add(new Line(2, 0, 0, 2));
-        extender.extend(semiline, references, new Point(1, 1));
+        extender.extend(semiline, references, new Point(0, 0));
         assertEquals(semiline, new Semiline(0, 0, 1, 1));
     }
 
@@ -76,7 +89,7 @@ public class SemilineExtenderTest extends Tester {
     public void doesntDoAnythingWhenReferenceDoesntIntersectSemiline () throws Exception {
 
         references.add(new Line(0, -1, 1, 0));
-        extender.extend(semiline, references, new Point(1, 1));
+        extender.extend(semiline, references, new Point(0, 0));
         assertEquals(semiline, new Semiline(0, 0, 1, 1));
     }
 }
