@@ -52,10 +52,10 @@ public class LineExtenderTest extends Tester {
     }
 
     @Test
-    public void extendsToUpperReferenceClickingUp () {
+    public void extendsUpperExtremeToUpperReference () {
 
         try {
-            extender.extend(verticalWithIntersection, referencesArray, new Point(1, 5));
+            extender.extend(verticalWithIntersection, referencesArray, new Point(1, 6));
             Assert.assertEquals(new Line(1, 2, 1, 7), verticalWithIntersection);
         }
         catch (Exception e) {
@@ -65,24 +65,11 @@ public class LineExtenderTest extends Tester {
     }
 
     @Test
-    public void extendsToLowerReferenceClickingDown () {
+    public void extendsLowerExtremeToLowerReference () {
 
         try {
-            extender.extend(verticalWithIntersection, referencesArray, new Point(1, 3));
+            extender.extend(verticalWithIntersection, referencesArray, new Point(1, 2));
             Assert.assertEquals(new Line(1, 1, 1, 6), verticalWithIntersection);
-        }
-        catch (Exception e) {
-            // Won't reach here
-        }
-
-    }
-
-    @Test
-    public void extendsToIntersectionFollowingTheDirectionVectorClickingMiddle () {
-
-        try {
-            extender.extend(verticalWithIntersection, referencesArray, new Point(1, 4));
-            Assert.assertEquals(new Line(1, 2, 1, 7), verticalWithIntersection);
         }
         catch (Exception e) {
             // Won't reach here
@@ -132,5 +119,19 @@ public class LineExtenderTest extends Tester {
         }
 
     }
+    
+    @Test
+    public void extendsClickingExtremePoint () {
+
+        try {
+            extender.extend(verticalWithIntersection, referencesArray, new Point(1, 6));
+            Assert.assertEquals(new Line(1, 2, 1, 7), verticalWithIntersection);
+        }
+        catch (Exception e) {
+            // Won't reach here
+        }
+
+    }
+
 
 }
