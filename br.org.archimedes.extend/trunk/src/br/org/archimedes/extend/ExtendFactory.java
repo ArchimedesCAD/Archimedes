@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Set;
 
 import br.org.archimedes.Constant;
+import br.org.archimedes.Geometrics;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.InvalidParameterException;
 import br.org.archimedes.exceptions.NoActiveDrawingException;
@@ -223,6 +224,7 @@ public class ExtendFactory implements CommandFactory {
         Rectangle area = selection.getRectangle();
 
         if (area != null) {
+
             List<Point> borderPoints = new ArrayList<Point>();
             borderPoints.add(area.getUpperLeft());
             borderPoints.add(area.getUpperRight());
@@ -233,19 +235,44 @@ public class ExtendFactory implements CommandFactory {
 
             Set<Element> elements = selection.getSelectedElements();
             for (Element element : elements) {
-                Collection<Point> intersections = new ArrayList<Point>();
-                try {
-                    // TODO use element.getExtremePoints() and ...
-                    intersections = intersectionManager.getIntersectionsBetween(element, areaPl);
-                    for (Point intersection : intersections) {
-                        if (element.contains(intersection) && areaPl.contains(intersection)) {
-                            points.add(intersection);
-                        }
+
+                boolean contains = false;
+
+                for (Point extreme : element.getExtremePoints()) {
+                    if (area.contains(extreme)) {
+                        points.add(extreme);
+                        contains = true;
                     }
                 }
-                catch (NullArgumentException e) {
-                    // Should not happen
-                    e.printStackTrace();
+
+                if ( !contains) {
+                    Collection<Point> intersections = new ArrayList<Point>();
+                    try {
+                        intersections = intersectionManager
+                                .getIntersectionsBetween(element, areaPl);
+                        Point nearestExtreme = null;
+                        double minDistance = Double.MAX_VALUE;
+                        double distance;
+
+                        for (Point extreme : element.getExtremePoints()) {
+                            for (Point intersection : intersections) {
+                                distance = Geometrics.calculateDistance(intersection, extreme);
+                                if (distance < minDistance) {
+                                    minDistance = distance;
+                                    nearestExtreme = extreme;
+                                }
+                            }
+                        }
+
+                        if (nearestExtreme != null) {
+                            points.add(nearestExtreme);
+                        }
+
+                    }
+                    catch (NullArgumentException e) {
+                        // Should not happen
+                        e.printStackTrace();
+                    }
                 }
             }
         }

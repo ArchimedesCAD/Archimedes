@@ -58,7 +58,7 @@ public class ExtendCommand implements UndoableCommand {
      * @param references
      *            The references for this extend
      * @param points
-     *            The points where a click ocurred
+     *            The points where a click occurred
      */
     public ExtendCommand (Collection<Element> references, List<Point> points) {
 
