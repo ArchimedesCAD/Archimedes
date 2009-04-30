@@ -22,7 +22,7 @@ import br.org.archimedes.model.Point;
 public class NullExtender implements Extender {
 
 	public void extend(Element element, Collection<Element> references,
-			Point click) throws NullArgumentException {
+			Point extremePoint) throws NullArgumentException {
 		// Does nothing
 	}
 
