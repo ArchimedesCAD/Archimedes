@@ -98,7 +98,7 @@ public class SaveCommand implements Command {
      * @throws IOException
      *             Thrown if something goes wrong while writting the file
      */
-    private boolean writeFile (File file) throws IOException {
+    protected boolean writeFile (File file) throws IOException {
 
         boolean finished = false;
 
@@ -125,7 +125,7 @@ public class SaveCommand implements Command {
      * 
      * @return true if it finished successfully, false if it was canceled.
      */
-    private File showDialog () {
+    protected File showDialog () {
 
         File file = null;
         File chosenFile;
