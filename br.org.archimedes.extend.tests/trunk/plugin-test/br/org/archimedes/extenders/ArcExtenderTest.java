@@ -59,35 +59,14 @@ public class ArcExtenderTest extends Tester {
     }
 
     @Test
-    public void extendsClockwiseWithClickOnArc () throws Exception {
-
-        extender.extend(originArc, referencesArray, new Point( -COS_45, -COS_45));
-        Assert.assertEquals(new Arc(rightQuarter, bottomQuarter, topQuarter), originArc);
-    }
-
-    @Test
-    public void extendsClockwiseWithClickOnBorder () throws Exception {
+    public void extendsClockwiseWithClickOnLeftQuarter () throws Exception {
 
         extender.extend(originArc, referencesArray, leftQuarter);
         Assert.assertEquals(new Arc(rightQuarter, bottomQuarter, topQuarter), originArc);
     }
 
     @Test
-    public void extendsCounterClockwiseWithClickOnArc () throws Exception {
-
-        extender.extend(originArc, referencesArray, new Point(COS_45, -COS_45));
-        Assert.assertEquals(new Arc(topQuarter, bottomQuarter, leftQuarter), originArc);
-    }
-
-    @Test
-    public void extendsCounterClockwiseWithClickOnMiddle () throws Exception {
-
-        extender.extend(originArc, referencesArray, bottomQuarter);
-        Assert.assertEquals(new Arc(topQuarter, bottomQuarter, leftQuarter), originArc);
-    }
-
-    @Test
-    public void extendsCounterClockwiseWithClickOnBorder () throws Exception {
+    public void extendsCounterClockwiseWithClickOnRightQuarter () throws Exception {
 
         extender.extend(originArc, referencesArray, rightQuarter);
         Assert.assertEquals(new Arc(topQuarter, bottomQuarter, leftQuarter), originArc);

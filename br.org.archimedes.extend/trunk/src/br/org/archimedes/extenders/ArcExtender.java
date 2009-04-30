@@ -14,9 +14,6 @@
 
 package br.org.archimedes.extenders;
 
-import java.util.Collection;
-import java.util.Collections;
-
 import br.org.archimedes.Geometrics;
 import br.org.archimedes.arc.Arc;
 import br.org.archimedes.circle.Circle;
@@ -29,27 +26,33 @@ import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Vector;
 import br.org.archimedes.rcp.extensionpoints.IntersectionManagerEPLoader;
 
+import java.util.Collection;
+import java.util.Collections;
+
 public class ArcExtender implements Extender {
 
-    public void extend (Element element, Collection<Element> references, Point click)
+    public void extend (Element element, Collection<Element> references, Point extremePoint)
             throws NullArgumentException {
 
-        if (element == null || references == null || click == null) {
+        if (element == null || references == null || extremePoint == null) {
             throw new NullArgumentException();
         }
 
         Arc arc = (Arc) element;
-        Point nearestExtremePoint = getNearestExtremePoint(arc, click);
+        if (extremePoint.equals(arc.getInitialPoint()))
+            extremePoint = arc.getInitialPoint();
+        else
+            extremePoint = arc.getEndingPoint();
 
         try {
             Collection<Point> intersectionPoints = getIntersectionPoints(references, arc);
 
             if ( !intersectionPoints.isEmpty()) {
-                Point nearestReferencePoint = getNearestReferencePoint(arc, nearestExtremePoint,
+                Point nearestReferencePoint = getNearestReferencePoint(arc, extremePoint,
                         intersectionPoints);
 
-                Vector offsetVector = new Vector(nearestExtremePoint, nearestReferencePoint);
-                arc.move(Collections.singletonList(nearestExtremePoint), offsetVector);
+                Vector offsetVector = new Vector(extremePoint, nearestReferencePoint);
+                arc.move(Collections.singletonList(extremePoint), offsetVector);
             }
         }
         catch (InvalidArgumentException e) {

@@ -105,7 +105,6 @@ public class PolylineExtender implements Extender {
         if (points.get(lastIndex).equals(extremePoint))
             return lastIndex;
         else {
-
             return 0;
         }
     }
