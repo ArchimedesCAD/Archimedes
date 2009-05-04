@@ -6,6 +6,7 @@
  *<br>
  * Contributors:<br>
  * Bruno da Hora, Luiz Real - initial API and implementation<br>
+ * Bruno Klava, Luiz Real - behavior fixed<br>
  * <br>
  * This file was created on 30/04/2009, 07:23:56.<br>
  * It is part of br.org.archimedes.extenders on the br.org.archimedes.extend project.<br>
@@ -32,49 +33,79 @@ import java.util.List;
  */
 public class PolylineExtender implements Extender {
 
+    private IntersectionManager intersectionManager;
+
     public void extend (Element element, Collection<Element> references, Point extremePoint)
             throws NullArgumentException {
 
         if (element == null || references == null || extremePoint == null) {
             throw new NullArgumentException();
         }
-
-        IntersectionManager intersectionManager = new IntersectionManagerEPLoader()
-                .getIntersectionManager();
+        
+        intersectionManager = new IntersectionManagerEPLoader().getIntersectionManager();
 
         Polyline polyline = (Polyline) element;
-        Point semilineInitial;
 
         List<Point> points = polyline.getPoints();
-        int index = getIndexInPolyline(polyline, extremePoint);
-        if (index == 0) {
-            semilineInitial = points.get(1);
-        }
-        else {
-            semilineInitial = points.get(points.size() - 2);
-        }
-        extremePoint = polyline.getPoints().get(index);
+        extremePoint = points.get(getIndexInPolyline(polyline, extremePoint));
 
-        Semiline semiline = null;
-        try {
-            semiline = new Semiline(semilineInitial, extremePoint);
+        if (!doExtend(polyline, references, extremePoint)) {
+            Point otherExtreme = getOtherExtreme(polyline, extremePoint);
+            
+            doExtend(polyline, references, otherExtreme);
         }
-        catch (InvalidArgumentException e) {
-            // Won't reach here
-            e.printStackTrace();
-        }
+
+    }
+    
+    private boolean doExtend(Polyline polyline, Collection<Element> references, Point extremePoint) throws NullArgumentException {
+        Semiline semiline = createHelperSemiline(polyline, extremePoint);
 
         Collection<Point> intersectionPoints = intersectionManager.getIntersectionsBetween(
                 semiline, references);
-
+        
         Point nearestReferencePoint = getNearestReferencePoint(extremePoint, polyline,
                 intersectionPoints);
 
         if (nearestReferencePoint != null) {
             extremePoint.setX(nearestReferencePoint.getX());
             extremePoint.setY(nearestReferencePoint.getY());
+            return true;
         }
+        return false;
+    }
+    
+    private Point getOtherExtreme (Polyline polyline, Point extremePoint) {
+        int index = getIndexInPolyline(polyline, extremePoint);
+        List<Point> points = polyline.getPoints();
+        return points.get(points.size() - 1 - index);
+    }
 
+    private Semiline createHelperSemiline(Polyline polyline, Point extremeToExtend) {
+        Point semilineInitial;
+        int index = getIndexInPolyline(polyline, extremeToExtend);
+        List<Point> points = polyline.getPoints();
+
+        if (index == 0) {
+            semilineInitial = points.get(1);
+        }
+        else {
+            semilineInitial = points.get(points.size() - 2);
+        }
+        Point extremePoint = polyline.getPoints().get(index);
+
+        Semiline semiline = null;
+        try {
+            semiline = new Semiline(semilineInitial, extremePoint);
+        }
+        catch (NullArgumentException e) {
+            // Won't reach here
+            e.printStackTrace();
+        }
+        catch (InvalidArgumentException e) {
+            // Should not happen
+            e.printStackTrace();
+        }
+        return semiline;
     }
 
     private Point getNearestReferencePoint (Point extremePoint, Polyline polyline,

@@ -114,19 +114,4 @@ public class LineExtender implements Extender {
         }
         return false;
     }
-
-    Point getNearestExtremePoint (Line line, Point point) throws NullArgumentException {
-
-        double distanceToInitial = Geometrics.calculateDistance(point, line.getInitialPoint());
-        double distanceToEnding = Geometrics.calculateDistance(point, line.getEndingPoint());
-
-        Point returnPoint = null;
-        if (distanceToEnding <= distanceToInitial) {
-            returnPoint = line.getEndingPoint();
-        }
-        else {
-            returnPoint = line.getInitialPoint();
-        }
-        return returnPoint;
-    }
 }

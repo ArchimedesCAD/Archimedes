@@ -6,6 +6,7 @@
  *<br>
  * Contributors:<br>
  * Bruno da Hora, Ricardo Sider, Luiz Real - initial API and implementation<br>
+ * Bruno Klava, Luiz Real - behavior fixed<br>
  * <br>
  * This file was created on 30/04/2009, 07:17:09.<br>
  * It is part of br.org.archimedes.extenders on the br.org.archimedes.extend.tests project.<br>
@@ -118,6 +119,16 @@ public class PolylineExtenderTest extends Tester {
         upperExtreme.move(-1, -3);
         polyline = new Polyline(points);
         upperExtreme.move(0, -1);
+        Polyline expected = new Polyline(points);
+        extender.extend(polyline, referencesArray, new Point(0, 0));
+        assertEquals(expected, polyline);
+    }
+    
+    @Test
+    public void extendsToUniqueReferenceWhenClickingOppositeSide () throws Exception {
+
+        referencesArray.remove(downReference);
+        upperExtreme.move(1, 1);
         Polyline expected = new Polyline(points);
         extender.extend(polyline, referencesArray, new Point(0, 0));
         assertEquals(expected, polyline);
