@@ -9,6 +9,7 @@
    <extension-point id="intersections" name="Intersections Manager" schema="schema/intersections.exsd"/>
    <extension-point id="trims" name="Element Trim" schema="schema/trims.exsd"/>
    <extension-point id="extends" name="Extend Manager" schema="schema/extends.exsd"/>
+   <extension-point id="fillets" name="Element Fillet" schema="schema/fillets.exsd"/>
    
    <extension
          point="org.eclipse.ui.perspectives">
