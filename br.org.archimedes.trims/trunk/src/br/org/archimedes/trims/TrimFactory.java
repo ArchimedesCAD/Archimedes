@@ -228,22 +228,15 @@ public class TrimFactory implements CommandFactory {
         Rectangle area = selection.getRectangle();
 
         if (area != null) {
-            List<Point> borderPoints = new ArrayList<Point>();
-            borderPoints.add(area.getUpperLeft());
-            borderPoints.add(area.getUpperRight());
-            borderPoints.add(area.getLowerRight());
-            borderPoints.add(area.getLowerLeft());
-            Polyline areaPl = new Polyline(borderPoints);
-
             Set<Element> elements = selection.getSelectedElements();
             for (Element element : elements) {
                 Collection<Point> intersections = new ArrayList<Point>();
                 try {
                     intersections = intersectionManager
-                            .getIntersectionsBetween(element, areaPl);
+                            .getIntersectionsBetween(element, new Polyline(area));
                     for (Point intersection : intersections) {
                         if (element.contains(intersection)
-                                && areaPl.contains(intersection)) {
+                                && area.contains(intersection)) {
                             points.add(intersection);
                         }
                     }

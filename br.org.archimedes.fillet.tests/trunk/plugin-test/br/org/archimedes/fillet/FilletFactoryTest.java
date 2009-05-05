@@ -17,6 +17,7 @@ import br.org.archimedes.helper.FactoryTester;
 import br.org.archimedes.line.Line;
 import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Element;
+import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Rectangle;
 import br.org.archimedes.model.Selection;
 
@@ -24,6 +25,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Collections;
 import java.util.HashSet;
 
 import static org.junit.Assert.*;
@@ -101,6 +103,18 @@ public class FilletFactoryTest extends FactoryTester {
         assertBegin(factory, false);
         assertSafeNext(factory, firstSelection, false);
         assertSafeNext(factory, secondSelection, true);
+    }
+    
+    @Test
+    public void createTheCorrectCommand () throws Exception {
+
+        factory.begin();
+        factory.next(firstSelection);
+        factory.next(secondSelection);
+        assertTrue(factory.isDone());
+        
+        FilletCommand expectedCommand = new FilletCommand(line1, new Point(0,1), line2, new Point(1,0));
+        assertCollectionTheSame(Collections.singleton(expectedCommand), factory.getCommands());
     }
     
     @Test

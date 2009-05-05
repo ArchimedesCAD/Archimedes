@@ -106,4 +106,44 @@ public class FilletCommand implements UndoableCommand {
         this.filleter = filleter;
     }
 
+    public Point getFirstClick () {
+
+        return firstClick;
+    }
+
+    public Point getSecondClick () {
+
+        return secondClick;
+    }
+
+    public Element getFirstElement () {
+
+        return firstElement;
+    }
+
+    public Element getSecondElement () {
+
+        return secondElement;
+    }
+
+    @Override
+    public boolean equals (Object obj) {
+
+        if (obj instanceof FilletCommand) {
+            FilletCommand otherCommand = (FilletCommand) obj;
+            return getFirstElement().equals(otherCommand.getFirstElement())
+                    && getSecondElement().equals(otherCommand.getSecondElement())
+                    && getFirstClick().equals(otherCommand.getFirstClick())
+                    && getSecondClick().equals(otherCommand.getSecondClick());
+        }
+        return false;
+    }
+    
+    @Override
+    public int hashCode () {
+    
+        // TODO implement and test this and the above
+        return getFirstElement().hashCode();
+    }
+
 }

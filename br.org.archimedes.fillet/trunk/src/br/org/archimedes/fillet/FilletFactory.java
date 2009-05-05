@@ -28,7 +28,6 @@ import br.org.archimedes.parser.SelectionParser;
 import br.org.archimedes.polyline.Polyline;
 import br.org.archimedes.rcp.extensionpoints.IntersectionManagerEPLoader;
 
-import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -148,17 +147,9 @@ public class FilletFactory implements CommandFactory {
                 }
             }
 
-            List<Point> borderPoints = new ArrayList<Point>();
-            borderPoints.add(area.getUpperLeft());
-            borderPoints.add(area.getUpperRight());
-            borderPoints.add(area.getLowerRight());
-            borderPoints.add(area.getLowerLeft());
-            borderPoints.add(area.getUpperLeft());
-            Polyline areaPl = new Polyline(borderPoints);
-
             Collection<Point> intersections = new ArrayList<Point>();
             try {
-                intersections = intersectionManager.getIntersectionsBetween(element, areaPl);
+                intersections = intersectionManager.getIntersectionsBetween(element, new Polyline(area));
                 storeParameters(element, intersections.iterator().next());
             }
             catch (NullArgumentException e) {
