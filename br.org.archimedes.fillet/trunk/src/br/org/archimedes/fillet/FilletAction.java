@@ -10,6 +10,7 @@
  * This file was created on 2009/05/05, 13:15:46, by Bruno Klava and Wesley Seidel.<br>
  * It is part of package br.org.archimedes.fillet on the br.org.archimedes.fillet project.<br>
  */
+
 package br.org.archimedes.fillet;
 
 import br.org.archimedes.interfaces.FactoryAction;
@@ -24,7 +25,8 @@ public class FilletAction extends FactoryAction {
     /**
      * Extend action activator.
      */
-	public FilletAction() {
-		super(Activator.PLUGIN_ID);
-	}
+    public FilletAction () {
+
+        super(Activator.PLUGIN_ID);
+    }
 }

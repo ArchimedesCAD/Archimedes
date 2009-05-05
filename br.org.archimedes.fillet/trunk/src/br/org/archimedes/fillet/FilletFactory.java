@@ -5,11 +5,10 @@
  * http://www.eclipse.org/legal/epl-v10.html<br>
  * <br>
  * Contributors:<br>
- * Jonas K. Hirata - initial API and implementation<br>
- * Hugo Corbucci, Bruno Klava, Kenzo Yamada - later contributions<br>
+ * Bruno Klava, Wesley Seidel - initial API and implementation<br>
  * <br>
- * This file was created on 2008/07/16, 23:59:46, by Jonas K. Hirata.<br>
- * It is part of package br.org.archimedes.extend on the br.org.archimedes.extend project.<br>
+ * This file was created on 2009/05/05, 14:15:46, by Bruno Klava, Wesley Seidel.<br>
+ * It is part of package br.org.archimedes.fillet on the br.org.archimedes.fillet project.<br>
  */
 
 package br.org.archimedes.fillet;
@@ -17,12 +16,10 @@ package br.org.archimedes.fillet;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import br.org.archimedes.Constant;
-import br.org.archimedes.Geometrics;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.InvalidParameterException;
 import br.org.archimedes.exceptions.NoActiveDrawingException;
@@ -35,27 +32,24 @@ import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Rectangle;
 import br.org.archimedes.model.Selection;
-import br.org.archimedes.parser.ReturnDecoratorParser;
-import br.org.archimedes.parser.SelectionParser;
 import br.org.archimedes.parser.SimpleSelectionParser;
-import br.org.archimedes.parser.StringDecoratorParser;
 import br.org.archimedes.polyline.Polyline;
 import br.org.archimedes.rcp.extensionpoints.IntersectionManagerEPLoader;
 import br.org.archimedes.undo.UndoCommand;
 
 public class FilletFactory implements CommandFactory {
 
-    private boolean gotRef;
+    private Element element1;
 
-    private Collection<Element> references;
+    private Point click1;
+
+    private Element element2;
+
+    private Point click2;
 
     private boolean active;
 
     private Command command;
-
-    private int count;
-
-    private ArrayList<Point> points;
 
     private IntersectionManager intersectionManager;
 
@@ -69,14 +63,9 @@ public class FilletFactory implements CommandFactory {
     public String begin () {
 
         active = true;
-        gotRef = false;
-
-        references = new ArrayList<Element>();
-
         command = null;
-        count = 0;
 
-        String returnValue = Messages.SelectRefs;
+        String returnValue = Messages.SelectElement;
         try {
             Set<Element> selection = br.org.archimedes.Utils.getController()
                     .getCurrentSelectedElements();
@@ -104,17 +93,13 @@ public class FilletFactory implements CommandFactory {
             if (parameter == null) {
                 active = false;
                 command = null;
-                result = Messages.Extended;
+                result = Messages.Filleted;
             }
             else if (parameter.equals("u") || parameter.equals("U")) {
                 result = makeUndo();
             }
-            else if ( !gotRef) {
-                result = tryGetReference(parameter);
-            }
-            else {
+            else if (element2 != null) {
                 result = tryGetSelection(parameter);
-                count++; // TODO Disconsider this when the command fails.
             }
         }
 
@@ -129,50 +114,16 @@ public class FilletFactory implements CommandFactory {
         String returnMessage = br.org.archimedes.undo.Messages.UndoPerformed + Constant.NEW_LINE;
 
         command = null;
-        if (count > 0) {
+        if (element2 != null) {
+
             command = new UndoCommand();
-            count--;
-            returnMessage += Messages.ExtendSelectElements;
-        }
-        else if (gotRef) {
-            references = null;
-            gotRef = false;
-            returnMessage += Messages.SelectRefs;
+            returnMessage += Messages.SelectElement;
         }
         else {
             returnMessage = br.org.archimedes.undo.Messages.notPerformed;
         }
 
         return returnMessage;
-    }
-
-    /**
-     * Tries to get the reference elements from the parameter.
-     * 
-     * @param parameter
-     *            The potential reference elements.
-     * @return A message to the user.
-     * @throws InvalidParameterException
-     *             In case the parameter was not the reference elements.
-     */
-    @SuppressWarnings("unchecked")
-    private String tryGetReference (Object parameter) throws InvalidParameterException {
-
-        Set<Element> collection = null;
-        try {
-            collection = (Set<Element>) parameter;
-        }
-        catch (ClassCastException e) {
-            throw new InvalidParameterException(Messages.SelectRefs);
-        }
-
-        references = new HashSet<Element>();
-        if (collection != null) {
-            references.addAll(collection);
-        }
-
-        gotRef = true;
-        return Messages.ExtendSelectElements;
     }
 
     /**
@@ -189,15 +140,22 @@ public class FilletFactory implements CommandFactory {
         String result = null;
         try {
             if (parameter == null) {
-                throw new InvalidParameterException(Messages.ExtendSelectElements);
+                throw new InvalidParameterException(Messages.SelectElement);
             }
             Selection selection = (Selection) parameter;
-            calculatePoints(selection);
-            command = new FilletCommand(references, points);
-            result = Messages.ExtendSelectElements;
+
+            if (element1 == null) {
+                calculatePoint(selection);
+                result = Messages.SelectOther;
+            }
+            else {
+                calculatePoint(selection);
+                command = new FilletCommand(element1, click1, element2, click2);
+                result = Messages.Filleted;
+            }
         }
         catch (ClassCastException e) {
-            throw new InvalidParameterException(Messages.ExtendSelectElements);
+            throw new InvalidParameterException(Messages.SelectElement);
         }
         catch (NullArgumentException e) {
             e.printStackTrace();
@@ -216,14 +174,21 @@ public class FilletFactory implements CommandFactory {
      * @throws InvalidArgumentException
      * @throws NullArgumentException
      */
-    private void calculatePoints (Selection selection) throws NullArgumentException,
+    private void calculatePoint (Selection selection) throws NullArgumentException,
             InvalidArgumentException {
-
-        points = new ArrayList<Point>();
 
         Rectangle area = selection.getRectangle();
 
+        Element element = selection.getSelectedElements().iterator().next();
+
         if (area != null) {
+
+            for (Point extreme : element.getExtremePoints()) {
+                if (area.contains(extreme)) {
+                    storeParameters(element, extreme);
+                    return;
+                }
+            }
 
             List<Point> borderPoints = new ArrayList<Point>();
             borderPoints.add(area.getUpperLeft());
@@ -233,48 +198,27 @@ public class FilletFactory implements CommandFactory {
             borderPoints.add(area.getUpperLeft());
             Polyline areaPl = new Polyline(borderPoints);
 
-            Set<Element> elements = selection.getSelectedElements();
-            for (Element element : elements) {
-
-                boolean contains = false;
-
-                for (Point extreme : element.getExtremePoints()) {
-                    if (area.contains(extreme)) {
-                        points.add(extreme);
-                        contains = true;
-                    }
-                }
-
-                if ( !contains) {
-                    Collection<Point> intersections = new ArrayList<Point>();
-                    try {
-                        intersections = intersectionManager
-                                .getIntersectionsBetween(element, areaPl);
-                        Point nearestExtreme = null;
-                        double minDistance = Double.MAX_VALUE;
-                        double distance;
-
-                        for (Point extreme : element.getExtremePoints()) {
-                            for (Point intersection : intersections) {
-                                distance = Geometrics.calculateDistance(intersection, extreme);
-                                if (distance < minDistance) {
-                                    minDistance = distance;
-                                    nearestExtreme = extreme;
-                                }
-                            }
-                        }
-
-                        if (nearestExtreme != null) {
-                            points.add(nearestExtreme);
-                        }
-
-                    }
-                    catch (NullArgumentException e) {
-                        // Should not happen
-                        e.printStackTrace();
-                    }
-                }
+            Collection<Point> intersections = new ArrayList<Point>();
+            try {
+                intersections = intersectionManager.getIntersectionsBetween(element, areaPl);
+                storeParameters(element, intersections.iterator().next());
             }
+            catch (NullArgumentException e) {
+                // Should not happen
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void storeParameters (Element element, Point point) {
+
+        if (element1 == null) {
+            element1 = element;
+            click1 = point;
+        }
+        else {
+            element2 = element;
+            click2 = point;
         }
     }
 
@@ -288,7 +232,7 @@ public class FilletFactory implements CommandFactory {
         String returnMsg = null;
 
         if ( !isDone()) {
-            returnMsg = Messages.ExtendCancel;
+            returnMsg = Messages.FilletCancel;
         }
 
         deactivate();
@@ -301,9 +245,8 @@ public class FilletFactory implements CommandFactory {
     private void deactivate () {
 
         active = false;
-        references = null;
-        gotRef = false;
-        count = 0;
+        element1 = null;
+        element2 = null;
 
     }
 
@@ -320,14 +263,8 @@ public class FilletFactory implements CommandFactory {
 
         Parser parser = null;
         if (active) {
-            if ( !gotRef) {
+            if (element2 == null) {
                 parser = new SimpleSelectionParser();
-            }
-            else {
-                // TODO change parser
-                Parser selectionParser = new SelectionParser();
-                Parser decoratedParser = new ReturnDecoratorParser(selectionParser);
-                parser = new StringDecoratorParser(decoratedParser, "u");
             }
         }
         return parser;
@@ -353,6 +290,6 @@ public class FilletFactory implements CommandFactory {
 
     public String getName () {
 
-        return "extend"; //$NON-NLS-1$
+        return "fillet"; //$NON-NLS-1$
     }
 }

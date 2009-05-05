@@ -5,23 +5,27 @@
  * http://www.eclipse.org/legal/epl-v10.html<br>
  * <br>
  * Contributors:<br>
- * Jonas K. Hirata - initial API and implementation<br>
+ * Bruno Klava, Wesley Seidel - initial API and implementation<br>
  * <br>
- * This file was created on 2008/07/16, 23:59:46, by Jonas K. Hirata.<br>
- * It is part of package br.org.archimedes.extend on the br.org.archimedes.extend project.<br>
+ * This file was created on 2009/05/05, 14:22:46, by Bruno Klava, Wesley Seidel.<br>
+ * It is part of package br.org.archimedes.fillet on the br.org.archimedes.fillet project.<br>
  */
+
 package br.org.archimedes.fillet;
 
 import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
 
-    private static final String BUNDLE_NAME = "br.org.archimedes.extend.messages"; //$NON-NLS-1$
+    private static final String BUNDLE_NAME = "br.org.archimedes.fillet.messages"; //$NON-NLS-1$
 
-    public static String SelectRefs;
-    public static String Extended;
-    public static String ExtendSelectElements;
-    public static String ExtendCancel;
+    public static String SelectElement;
+
+    public static String SelectOther;
+
+    public static String Filleted;
+
+    public static String FilletCancel;
     static {
         // initialize resource bundle
         NLS.initializeMessages(BUNDLE_NAME, Messages.class);
