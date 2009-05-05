@@ -3,221 +3,107 @@
  * All rights reserved. This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html<br>
- * <br>
+ *<br>
  * Contributors:<br>
- * Jeferson R. Silva - initial API and implementation<br>
- * Jonas K. Hirata, Hugo Corbucci - later contributions<br>
+ * Luiz Real, Ricardo Sider - initial API and implementation<br>
  * <br>
- * This file was created on 2006/08/25, 23:59:46, by Jonas K. Hirata.<br>
- * It is part of package br.org.archimedes.extend on the br.org.archimedes.extend project.<br>
+ * This file was created on 05/05/2009, 14:33:42.<br>
+ * It is part of br.org.archimedes.fillet on the br.org.archimedes.fillet project.<br>
  */
+
 package br.org.archimedes.fillet;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import br.org.archimedes.controller.commands.MacroCommand;
-import br.org.archimedes.controller.commands.PutOrRemoveElementCommand;
 import br.org.archimedes.exceptions.IllegalActionException;
-import br.org.archimedes.exceptions.NoActiveDrawingException;
+import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
-import br.org.archimedes.interfaces.ExtendManager;
+import br.org.archimedes.interfaces.Filleter;
 import br.org.archimedes.interfaces.UndoableCommand;
 import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
-import br.org.archimedes.rcp.extensionpoints.ExtendManagerEPLoader;
 
 /**
- * Belongs to package br.org.archimedes.model.commands.
- * 
- * @author jefsilva
+ * @author Luiz Real, Ricardo Sider
  */
 public class FilletCommand implements UndoableCommand {
 
-    private Collection<Element> references;
+    private final Element firstElement;
 
-    private List<Point> points;
+    private final Point firstClick;
 
-    private Map<Element, Set<Element>> extendMap;
+    private final Element secondElement;
 
-    private MacroCommand macro;
+    private final Point secondClick;
 
-    private boolean performedOnce;
-
-    private FilletManager extendManager;
+    private Filleter filleter;
 
 
     /**
-     * @param references
-     *            The references for this extend
-     * @param points
-     *            The points where a click occurred
-     */
-    public FilletCommand (Collection<Element> references, List<Point> points) {
-
-        extendManager = new ExtendManagerEPLoader().getExtendManager();
-        this.points = points;
-        macro = null;
-        performedOnce = false;
-        extendMap = new HashMap<Element, Set<Element>>();
-        this.references = references;
-    }
-
-    public void doIt (Drawing drawing) throws NullArgumentException,
-            IllegalActionException {
-
-        if (drawing == null) {
-            throw new NullArgumentException();
-        }
-
-        if ( !performedOnce) {
-            if (references.isEmpty()) {
-                references.addAll(drawing.getUnlockedContents());
-            }
-
-            for (Point point : points) {
-                computeExtend(drawing, point);
-            }
-
-            if (extendMap.keySet().size() == 0) {
-                throw new IllegalActionException();
-            }
-
-            Set<Element> allResults = new HashSet<Element>();
-            for (Element key : extendMap.keySet()) {
-                Set<Element> extendResult = extendMap.get(key);
-                allResults.addAll(extendResult);
-                if (references.contains(key)) {
-                    references.remove(key);
-                    references.addAll(extendResult);
-                }
-            }
-            buildMacro(extendMap.keySet(), allResults);
-            performedOnce = true;
-        }
-        if (macro != null) {
-            macro.doIt(drawing);
-        }
-    }
-
-    public void undoIt (Drawing drawing) throws IllegalActionException,
-            NullArgumentException {
-
-        if (drawing == null) {
-            throw new NullArgumentException();
-        }
-
-        if (macro != null) {
-            macro.undoIt(drawing);
-        }
-    }
-
-    /**
-     * Computes the extend
-     * 
-     * @param drawing
-     *            The base drawing
-     * @param click
-     *            A click point for the extend
-     * @throws IllegalActionException
-     *             In case no element was clicked
+     * @param firstElement
+     *            The first element selected by the user
+     * @param firstClick
+     *            The point clicked by the user to select the first element
+     * @param secondElement
+     *            The second element selected by the user
+     * @param secondClick
+     *            The point clicked by the user to select the second element
      * @throws NullArgumentException
-     *             In case that the references of extending are null
+     *             if one of the parameters is null
+     * @throws InvalidArgumentException
+     *             if one of the points is not part of their elements
      */
-    private void computeExtend (Drawing drawing, Point click)
-            throws IllegalActionException, NullArgumentException {
+    public FilletCommand (Element firstElement, Point firstClick, Element secondElement,
+            Point secondClick) throws NullArgumentException, InvalidArgumentException {
 
-        Element toExtend = getClickedElement(click);
-        Element key = null;
-        boolean isInMap = false;
-
-        if (toExtend == null) {
-            throw new IllegalActionException();
+        if (firstElement == null || secondElement == null || firstClick == null
+                || secondClick == null) {
+            throw new NullArgumentException();
         }
 
-        if (extendMap.containsKey(toExtend)) {
-            Set<Element> turnedTo = extendMap.get(toExtend);
-            for (Element element : turnedTo) {
-                try {
-                    if (element.contains(click)) {
-                        key = toExtend;
-                        toExtend = element;
-                        isInMap = true;
-                    }
-                }
-                catch (NullArgumentException e) {
-                    // Should really not happen
-                    e.printStackTrace();
-                }
-            }
+        if ( !firstElement.contains(firstClick) || !secondElement.contains(secondClick)) {
+            throw new InvalidArgumentException();
         }
 
-        if (key == null || isInMap) {
-            
-            extendManager.extend(toExtend, references, click);
-            
-            Set<Element> turnedTo;
-            if (isInMap) {
-                turnedTo = extendMap.get(key);
-            }
-            else {
-                turnedTo = new HashSet<Element>(Collections.singleton(toExtend));
-                key = toExtend;
-            }
-            extendMap.put(key, turnedTo);
+        this.firstElement = firstElement;
+        this.firstClick = firstClick;
+        this.secondElement = secondElement;
+        this.secondClick = secondClick;
+
+        // TODO set default filleter
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see br.org.archimedes.interfaces.UndoableCommand#undoIt(br.org.archimedes.model.Drawing)
+     */
+    @Override
+    public void undoIt (Drawing drawing) throws IllegalActionException, NullArgumentException {
+
+        // TODO Auto-generated method stub
+        System.out.println("Called FilletCommand.undoIt");
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see br.org.archimedes.interfaces.Command#doIt(br.org.archimedes.model.Drawing)
+     */
+    @Override
+    public void doIt (Drawing drawing) throws IllegalActionException, NullArgumentException {
+
+        if (drawing == null) {
+            throw new NullArgumentException();
         }
+
+        System.out.println("Called FilletCommand.doIt");
     }
 
     /**
-     * @param click
-     *            The click point
-     * @return The clicked element if there was any and it is Extendable, null
-     *         otherwise.
+     * @param filleter
+     *            The filleter to be used (if not the default)
      */
-    private Element getClickedElement (Point click) {
+    public void setFilleter (Filleter filleter) {
 
-        Element clickedElement = null;
-        try {
-            clickedElement = br.org.archimedes.Utils.getController().getElementUnder(click,
-                    Element.class);
-        }
-        catch (NoActiveDrawingException e) {
-            // Should not happen because I know there is a drawing
-            e.printStackTrace();
-        }
-
-        return clickedElement;
+        this.filleter = filleter;
     }
 
-    /**
-     * Build a macro-command to perform the necessary actions
-     * 
-     * @param toRemove
-     *            The elements to be removed
-     * @param toAdd
-     *            The elements to be added
-     */
-    private void buildMacro (Set<Element> toRemove, Set<Element> toAdd) {
-
-        try {
-            UndoableCommand remove = new PutOrRemoveElementCommand(toRemove,
-                    true);
-            UndoableCommand add = new PutOrRemoveElementCommand(toAdd, false);
-            List<UndoableCommand> cmds = new ArrayList<UndoableCommand>();
-            cmds.add(remove);
-            cmds.add(add);
-            macro = new MacroCommand(cmds);
-        }
-        catch (Exception e) {
-            // Should not happen
-            e.printStackTrace();
-        }
-    }
 }
