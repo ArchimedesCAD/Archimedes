@@ -13,16 +13,8 @@
 
 package br.org.archimedes.fillet;
 
-import java.io.Writer;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
-
-import br.org.archimedes.Constant;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.InvalidParameterException;
-import br.org.archimedes.exceptions.NoActiveDrawingException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.factories.CommandFactory;
 import br.org.archimedes.interfaces.Command;
@@ -32,10 +24,14 @@ import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Rectangle;
 import br.org.archimedes.model.Selection;
-import br.org.archimedes.parser.SimpleSelectionParser;
+import br.org.archimedes.parser.SelectionParser;
 import br.org.archimedes.polyline.Polyline;
 import br.org.archimedes.rcp.extensionpoints.IntersectionManagerEPLoader;
-import br.org.archimedes.undo.UndoCommand;
+
+import java.io.Writer;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 public class FilletFactory implements CommandFactory {
 
@@ -65,24 +61,9 @@ public class FilletFactory implements CommandFactory {
         active = true;
         command = null;
 
-        String returnValue = Messages.SelectElement;
-        try {
-            Set<Element> selection = br.org.archimedes.Utils.getController()
-                    .getCurrentSelectedElements();
+        br.org.archimedes.Utils.getController().deselectAll();
 
-            if (selection != null && !selection.isEmpty()) {
-                returnValue = next(selection);
-            }
-        }
-        catch (NoActiveDrawingException e) {
-            returnValue = cancel();
-        }
-        catch (InvalidParameterException e) {
-            // Should not happen
-            e.printStackTrace();
-        }
-
-        return returnValue;
+        return Messages.SelectElement;
     }
 
     public String next (Object parameter) throws InvalidParameterException {
@@ -90,40 +71,12 @@ public class FilletFactory implements CommandFactory {
         String result = null;
 
         if ( !isDone()) {
-            if (parameter == null) {
-                active = false;
-                command = null;
-                result = Messages.Filleted;
-            }
-            else if (parameter.equals("u") || parameter.equals("U")) {
-                result = makeUndo();
-            }
-            else if (element2 != null) {
-                result = tryGetSelection(parameter);
-            }
+            result = tryGetSelection(parameter);
+        } else {
+            throw new InvalidParameterException();
         }
 
         return result;
-    }
-
-    /**
-     * Makes an undo command.
-     */
-    private String makeUndo () {
-
-        String returnMessage = br.org.archimedes.undo.Messages.UndoPerformed + Constant.NEW_LINE;
-
-        command = null;
-        if (element2 != null) {
-
-            command = new UndoCommand();
-            returnMessage += Messages.SelectElement;
-        }
-        else {
-            returnMessage = br.org.archimedes.undo.Messages.notPerformed;
-        }
-
-        return returnMessage;
     }
 
     /**
@@ -139,11 +92,15 @@ public class FilletFactory implements CommandFactory {
 
         String result = null;
         try {
-            if (parameter == null) {
+            if (parameter == null || !parameter.getClass().equals(Selection.class)) {
                 throw new InvalidParameterException(Messages.SelectElement);
             }
             Selection selection = (Selection) parameter;
 
+            if (selection.getSelectedElements().size() != 1) {
+                throw new InvalidParameterException(Messages.SelectElement);
+            }
+            
             if (element1 == null) {
                 calculatePoint(selection);
                 result = Messages.SelectOther;
@@ -152,6 +109,7 @@ public class FilletFactory implements CommandFactory {
                 calculatePoint(selection);
                 command = new FilletCommand(element1, click1, element2, click2);
                 result = Messages.Filleted;
+                deactivate();
             }
         }
         catch (ClassCastException e) {
@@ -247,12 +205,8 @@ public class FilletFactory implements CommandFactory {
         active = false;
         element1 = null;
         element2 = null;
-
-    }
-
-    public void drawVisualHelper (Writer writer) {
-
-        // Nothing to do
+        click1 = null;
+        click2 = null;
     }
 
     /*
@@ -263,9 +217,7 @@ public class FilletFactory implements CommandFactory {
 
         Parser parser = null;
         if (active) {
-            if (element2 == null) {
-                parser = new SimpleSelectionParser();
-            }
+            parser = new SelectionParser();
         }
         return parser;
     }
