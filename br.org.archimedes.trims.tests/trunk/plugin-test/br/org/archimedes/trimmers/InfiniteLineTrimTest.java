@@ -11,7 +11,7 @@
  * This file was created on 2009/01/10, 11:16:48, by Hugo Corbucci.<br>
  * It is part of package br.org.archimedes.trim on the br.org.archimedes.trims.tests project.<br>
  */
-package br.org.archimedes.trim;
+package br.org.archimedes.trimmers;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -26,6 +26,7 @@ import br.org.archimedes.infiniteline.InfiniteLine;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.semiline.Semiline;
+import br.org.archimedes.trimmers.InfiniteLineTrimmer;
 import br.org.archimedes.trims.interfaces.Trimmer;
 
 public class InfiniteLineTrimTest extends Tester {

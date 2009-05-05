@@ -12,7 +12,7 @@
  * It is part of package br.org.archimedes.trim on the br.org.archimedes.trims.tests project.<br>
  */
 
-package br.org.archimedes.trim;
+package br.org.archimedes.trimmers;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -28,6 +28,7 @@ import br.org.archimedes.line.Line;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.semiline.Semiline;
+import br.org.archimedes.trimmers.SemilineTrimmer;
 import br.org.archimedes.trims.interfaces.Trimmer;
 
 public class SemilineTrimTest extends Tester {
