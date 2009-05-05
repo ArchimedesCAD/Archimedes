@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension-point id="filleter" name="Filleter" schema="schema/filleter.exsd"/>
+   <extension
+         id="br.org.archimedes.fillets.default"
+         name="The default filleter finder"
+         point="br.org.archimedes.core.fillets">
+         <manager class="br.org.archimedes.fillet.FilletManager"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            id="br.org.archimedes.fillet.actionSet"
+            label="Fillet Action Sets"
+            visible="true">
+         <action
+               class="br.org.archimedes.fillet.FilletAction"
+               icon="icons/fillet.png"
+               id="br.org.archimedes.fillet.action"
+               label="Fillet"
+               menubarPath="transform/simple1"
+               style="push"
+               toolbarPath="transform/simple1"
+               tooltip="Fillets the selected elements">
+            <enablement>
+               <objectClass
+                     name="br.org.archimedes.model.Drawing">
+               </objectClass>
+            </enablement>
+         </action>
+      </actionSet>
+   </extension>
+   <extension
+         point="br.org.archimedes.core.factory">
+         <factory id="br.org.archimedes.fillet"
+          class="br.org.archimedes.fillet.FilletFactory">
+         	<shortcut id="x"/>
+         </factory>
+   </extension>
+   <!--
+   <extension
+         point="br.org.archimedes.fillet.filleter">
+         <elementExtender
+			id="br.org.archimedes.extend.line"
+			element="br.org.archimedes.line"
+			class="br.org.archimedes.extenders.LineExtender"/>
+         <elementExtender
+            class="br.org.archimedes.extenders.ArcExtender"
+            element="br.org.archimedes.arc"
+            id="br.org.archimedes.extend.Arc"/>
+         <elementExtender
+            class="br.org.archimedes.extenders.SemilineExtender"
+            element="br.org.archimedes.semiline"
+            id="br.org.archimedes.extend.Semiline"/>
+   </extension>
+   -->
+
+</plugin>
