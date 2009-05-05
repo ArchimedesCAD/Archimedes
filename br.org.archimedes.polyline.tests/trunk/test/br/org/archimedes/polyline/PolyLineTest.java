@@ -13,13 +13,15 @@
 
 package br.org.archimedes.polyline;
 
-import java.util.LinkedList;
-import java.util.List;
+import br.org.archimedes.Tester;
+import br.org.archimedes.exceptions.InvalidArgumentException;
+import br.org.archimedes.model.Point;
+import br.org.archimedes.model.Rectangle;
 
 import org.junit.Test;
 
-import br.org.archimedes.Tester;
-import br.org.archimedes.model.Point;
+import java.util.LinkedList;
+import java.util.List;
 
 public class PolyLineTest extends Tester {
 
@@ -45,5 +47,41 @@ public class PolyLineTest extends Tester {
 
         assertCollectionTheSame(extremes, extremesComputed);
 
+    }
+
+    @Test
+    public void testCreatePolylineFromRectangle () throws Exception {
+
+        Rectangle rectangle = new Rectangle(1, 1, 5, 5);
+        Polyline polyline = new Polyline(rectangle);
+
+        LinkedList<Point> expectedPoints = new LinkedList<Point>();
+        expectedPoints.add(new Point(1, 5));
+        expectedPoints.add(new Point(5, 5));
+        expectedPoints.add(new Point(5, 1));
+        expectedPoints.add(new Point(1, 1));
+        expectedPoints.add(new Point(1, 5));
+
+        assertCollectionTheSame(expectedPoints, polyline.getPoints());
+    }
+
+    @Test
+    public void testCreatePolylineFromNoHeightRectangle () throws Exception {
+
+        Rectangle rectangle = new Rectangle(1, 1, 5, 1);
+        Polyline polyline = new Polyline(rectangle);
+
+        LinkedList<Point> expectedPoints = new LinkedList<Point>();
+        expectedPoints.add(new Point(1, 1));
+        expectedPoints.add(new Point(5, 1));
+        expectedPoints.add(new Point(1, 1));
+
+        assertCollectionTheSame(expectedPoints, polyline.getPoints());
+    }
+
+    @Test(expected = InvalidArgumentException.class)
+    public void throwsExceptionIfCreatingPolylineFromEmptyRectangle () throws Exception {
+
+        new Polyline(new Rectangle(0, 0, 0, 0));
     }
 }

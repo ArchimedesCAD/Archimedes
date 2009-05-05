@@ -14,14 +14,6 @@
 
 package br.org.archimedes.polyline;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
-
 import br.org.archimedes.Geometrics;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.InvalidParameterException;
@@ -41,6 +33,14 @@ import br.org.archimedes.model.references.SquarePoint;
 import br.org.archimedes.model.references.TrianglePoint;
 import br.org.archimedes.model.references.XPoint;
 import br.org.archimedes.rcp.extensionpoints.IntersectionManagerEPLoader;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 /**
  * Belongs to package br.org.archimedes.polyline.
@@ -77,19 +77,49 @@ public class Polyline extends Element {
             throw new InvalidArgumentException();
         }
         else {
-            Point lastPoint = null;
+            fillPoints(points);
+        }
+    }
 
-            this.points = new ArrayList<Point>();
-            for (Point point : points) {
-                if ( !point.equals(lastPoint)) {
-                    this.points.add(point.clone());
-                    lastPoint = point;
-                }
-            }
+    /**
+     * Constructor from Rectangle.
+     * 
+     * @param rectangle
+     *            A rectangle to be represented by the polyline.
+     * @throws NullArgumentException
+     *             Thrown if the argument is null.
+     * @throws InvalidArgumentException
+     *             If the rectangle has width and height zero
+     */
+    public Polyline (Rectangle rectangle) throws NullArgumentException, InvalidArgumentException {
 
-            if (this.points.size() <= 1) {
-                throw new InvalidArgumentException();
+        if (rectangle == null) {
+            throw new NullArgumentException();
+        }
+        List<Point> borderPoints = new ArrayList<Point>();
+        borderPoints.add(rectangle.getUpperLeft());
+        borderPoints.add(rectangle.getUpperRight());
+        borderPoints.add(rectangle.getLowerRight());
+        borderPoints.add(rectangle.getLowerLeft());
+        borderPoints.add(rectangle.getUpperLeft());
+
+        fillPoints(borderPoints);
+    }
+
+    private void fillPoints (List<Point> points) throws InvalidArgumentException {
+
+        Point lastPoint = null;
+
+        this.points = new ArrayList<Point>();
+        for (Point point : points) {
+            if ( !point.equals(lastPoint)) {
+                this.points.add(point.clone());
+                lastPoint = point;
             }
+        }
+
+        if (this.points.size() <= 1) {
+            throw new InvalidArgumentException();
         }
     }
 
