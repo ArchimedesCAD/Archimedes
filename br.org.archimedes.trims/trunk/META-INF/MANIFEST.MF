@@ -16,7 +16,7 @@ Require-Bundle: br.org.archimedes.core,
  br.org.archimedes.circle,
  br.org.archimedes.curvedshape,
  br.org.archimedes.arc
-Export-Package: br.org.archimedes.trim,
+Export-Package: br.org.archimedes.trimmers,
  br.org.archimedes.trims,
  br.org.archimedes.trims.interfaces,
  br.org.archimedes.trims.rcp

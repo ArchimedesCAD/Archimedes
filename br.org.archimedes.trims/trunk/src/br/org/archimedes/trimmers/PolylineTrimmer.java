@@ -10,7 +10,7 @@
  * This file was created on 2009/01/10, 11:16:48, by Hugo Corbucci.<br>
  * It is part of package br.org.archimedes.trim on the br.org.archimedes.trims project.<br>
  */
-package br.org.archimedes.trim;
+package br.org.archimedes.trimmers;
 
 import java.util.ArrayList;
 import java.util.Collection;

@@ -11,7 +11,7 @@
  * It is part of package br.org.archimedes.trim on the br.org.archimedes.trims project.<br>
  */
 
-package br.org.archimedes.trim;
+package br.org.archimedes.trimmers;
 
 import java.util.ArrayList;
 import java.util.Collection;
