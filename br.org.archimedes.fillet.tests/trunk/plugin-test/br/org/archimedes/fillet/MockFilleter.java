@@ -32,7 +32,6 @@ public class MockFilleter implements Filleter {
     /* (non-Javadoc)
      * @see br.org.archimedes.interfaces.Filleter#fillet(br.org.archimedes.model.Element, br.org.archimedes.model.Point, br.org.archimedes.model.Element, br.org.archimedes.model.Point)
      */
-    @Override
     public void fillet (Element e1, Point click1, Element e2, Point click2) {
         this.receivedE1 = e1;
         this.receivedClick1 = click1;

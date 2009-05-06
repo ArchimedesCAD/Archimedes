@@ -76,7 +76,6 @@ public class FilletCommand implements UndoableCommand {
      * (non-Javadoc)
      * @see br.org.archimedes.interfaces.UndoableCommand#undoIt(br.org.archimedes.model.Drawing)
      */
-    @Override
     public void undoIt (Drawing drawing) throws IllegalActionException, NullArgumentException {
 
         // TODO Auto-generated method stub
@@ -87,7 +86,6 @@ public class FilletCommand implements UndoableCommand {
      * (non-Javadoc)
      * @see br.org.archimedes.interfaces.Command#doIt(br.org.archimedes.model.Drawing)
      */
-    @Override
     public void doIt (Drawing drawing) throws IllegalActionException, NullArgumentException {
 
         if (drawing == null) {
