@@ -52,6 +52,10 @@
             class="br.org.archimedes.extenders.SemilineExtender"
             element="br.org.archimedes.semiline"
             id="br.org.archimedes.extend.Semiline"/>
+         <elementExtender
+            class="br.org.archimedes.extenders.PolylineExtender"
+            element="br.org.archimedes.polyline"
+            id="br.org.archimedes.extend.Polyline"/>
    </extension>
 
 </plugin>
