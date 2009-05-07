@@ -190,11 +190,10 @@ public class TrimFactory implements CommandFactory {
             throws InvalidParameterException {
 
         String result = null;
+        if (parameter == null) {
+            throw new InvalidParameterException(Messages.TrimSelectElements);
+        }
         try {
-            if (parameter == null) {
-                throw new InvalidParameterException(Messages
-                        .TrimSelectElements);
-            }
             Selection selection = (Selection) parameter;
             calculatePoints(selection);
             command = new TrimCommand(references, points);
@@ -228,15 +227,17 @@ public class TrimFactory implements CommandFactory {
         Rectangle area = selection.getRectangle();
 
         if (area != null) {
+            Polyline areaPl = new Polyline(area);
+            
             Set<Element> elements = selection.getSelectedElements();
             for (Element element : elements) {
                 Collection<Point> intersections = new ArrayList<Point>();
                 try {
                     intersections = intersectionManager
-                            .getIntersectionsBetween(element, new Polyline(area));
+                            .getIntersectionsBetween(element, areaPl);
                     for (Point intersection : intersections) {
                         if (element.contains(intersection)
-                                && area.contains(intersection)) {
+                                && areaPl.contains(intersection)) {
                             points.add(intersection);
                         }
                     }
