@@ -7,11 +7,24 @@
  * Contributors:<br>
  * Jeferson R. Silva - initial API and implementation<br>
  * Jonas K. Hirata, Hugo Corbucci - later contributions<br>
+ * Bruno da Hora, Kenzo Yamada - later contributions<br>
  * <br>
  * This file was created on 2006/08/25, 23:59:46, by Jonas K. Hirata.<br>
  * It is part of package br.org.archimedes.extend on the br.org.archimedes.extend project.<br>
  */
+
 package br.org.archimedes.extend;
+
+import br.org.archimedes.controller.commands.MacroCommand;
+import br.org.archimedes.controller.commands.PutOrRemoveElementCommand;
+import br.org.archimedes.exceptions.IllegalActionException;
+import br.org.archimedes.exceptions.NullArgumentException;
+import br.org.archimedes.interfaces.ExtendManager;
+import br.org.archimedes.interfaces.UndoableCommand;
+import br.org.archimedes.model.Drawing;
+import br.org.archimedes.model.Element;
+import br.org.archimedes.model.Point;
+import br.org.archimedes.rcp.extensionpoints.ExtendManagerEPLoader;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -22,18 +35,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import br.org.archimedes.controller.commands.MacroCommand;
-import br.org.archimedes.controller.commands.PutOrRemoveElementCommand;
-import br.org.archimedes.exceptions.IllegalActionException;
-import br.org.archimedes.exceptions.NoActiveDrawingException;
-import br.org.archimedes.exceptions.NullArgumentException;
-import br.org.archimedes.interfaces.ExtendManager;
-import br.org.archimedes.interfaces.UndoableCommand;
-import br.org.archimedes.model.Drawing;
-import br.org.archimedes.model.Element;
-import br.org.archimedes.model.Point;
-import br.org.archimedes.rcp.extensionpoints.ExtendManagerEPLoader;
-
 /**
  * Belongs to package br.org.archimedes.model.commands.
  * 
@@ -43,7 +44,7 @@ public class ExtendCommand implements UndoableCommand {
 
     private Collection<Element> references;
 
-    private List<Point> points;
+    private HashMap<Point, Element> elementsToExtend;
 
     private Map<Element, Set<Element>> extendMap;
 
@@ -53,16 +54,20 @@ public class ExtendCommand implements UndoableCommand {
 
     private ExtendManager extendManager;
 
+    private List<Point> points;
+
 
     /**
      * @param references
      *            The references for this extend
-     * @param points
+     * @param pointstoelements
      *            The points where a click occurred
      */
-    public ExtendCommand (Collection<Element> references, List<Point> points) {
+    public ExtendCommand (Collection<Element> references, HashMap<Point, Element> elementsToExtend,
+            List<Point> points) {
 
         extendManager = new ExtendManagerEPLoader().getExtendManager();
+        this.elementsToExtend = elementsToExtend;
         this.points = points;
         macro = null;
         performedOnce = false;
@@ -70,8 +75,7 @@ public class ExtendCommand implements UndoableCommand {
         this.references = references;
     }
 
-    public void doIt (Drawing drawing) throws NullArgumentException,
-            IllegalActionException {
+    public void doIt (Drawing drawing) throws NullArgumentException, IllegalActionException {
 
         if (drawing == null) {
             throw new NullArgumentException();
@@ -107,8 +111,7 @@ public class ExtendCommand implements UndoableCommand {
         }
     }
 
-    public void undoIt (Drawing drawing) throws IllegalActionException,
-            NullArgumentException {
+    public void undoIt (Drawing drawing) throws IllegalActionException, NullArgumentException {
 
         if (drawing == null) {
             throw new NullArgumentException();
@@ -131,10 +134,10 @@ public class ExtendCommand implements UndoableCommand {
      * @throws NullArgumentException
      *             In case that the references of extending are null
      */
-    private void computeExtend (Drawing drawing, Point click)
-            throws IllegalActionException, NullArgumentException {
+    private void computeExtend (Drawing drawing, Point click) throws IllegalActionException,
+            NullArgumentException {
 
-        Element toExtend = getClickedElement(click);
+        Element toExtend = elementsToExtend.get(click);
         Element key = null;
         boolean isInMap = false;
 
@@ -160,9 +163,9 @@ public class ExtendCommand implements UndoableCommand {
         }
 
         if (key == null || isInMap) {
-            
+
             extendManager.extend(toExtend, references, click);
-            
+
             Set<Element> turnedTo;
             if (isInMap) {
                 turnedTo = extendMap.get(key);
@@ -176,27 +179,6 @@ public class ExtendCommand implements UndoableCommand {
     }
 
     /**
-     * @param click
-     *            The click point
-     * @return The clicked element if there was any and it is Extendable, null
-     *         otherwise.
-     */
-    private Element getClickedElement (Point click) {
-
-        Element clickedElement = null;
-        try {
-            clickedElement = br.org.archimedes.Utils.getController().getElementUnder(click,
-                    Element.class);
-        }
-        catch (NoActiveDrawingException e) {
-            // Should not happen because I know there is a drawing
-            e.printStackTrace();
-        }
-
-        return clickedElement;
-    }
-
-    /**
      * Build a macro-command to perform the necessary actions
      * 
      * @param toRemove
@@ -207,8 +189,7 @@ public class ExtendCommand implements UndoableCommand {
     private void buildMacro (Set<Element> toRemove, Set<Element> toAdd) {
 
         try {
-            UndoableCommand remove = new PutOrRemoveElementCommand(toRemove,
-                    true);
+            UndoableCommand remove = new PutOrRemoveElementCommand(toRemove, true);
             UndoableCommand add = new PutOrRemoveElementCommand(toAdd, false);
             List<UndoableCommand> cmds = new ArrayList<UndoableCommand>();
             cmds.add(remove);

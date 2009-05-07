@@ -14,13 +14,6 @@
 
 package br.org.archimedes.extend;
 
-import java.io.Writer;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import br.org.archimedes.Constant;
 import br.org.archimedes.Geometrics;
 import br.org.archimedes.exceptions.InvalidArgumentException;
@@ -43,6 +36,14 @@ import br.org.archimedes.polyline.Polyline;
 import br.org.archimedes.rcp.extensionpoints.IntersectionManagerEPLoader;
 import br.org.archimedes.undo.UndoCommand;
 
+import java.io.Writer;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 public class ExtendFactory implements CommandFactory {
 
     private boolean gotRef;
@@ -56,7 +57,9 @@ public class ExtendFactory implements CommandFactory {
     private int count;
 
     private ArrayList<Point> points;
-
+    
+    private HashMap<Point, Element> elementsToExtend;
+    
     private IntersectionManager intersectionManager;
 
 
@@ -193,7 +196,7 @@ public class ExtendFactory implements CommandFactory {
             }
             Selection selection = (Selection) parameter;
             calculatePoints(selection);
-            command = new ExtendCommand(references, points);
+            command = new ExtendCommand(references, elementsToExtend, points);
             result = Messages.ExtendSelectElements;
         }
         catch (ClassCastException e) {
@@ -220,6 +223,7 @@ public class ExtendFactory implements CommandFactory {
             InvalidArgumentException {
 
         points = new ArrayList<Point>();
+        elementsToExtend = new HashMap<Point, Element>();
 
         Rectangle area = selection.getRectangle();
 
@@ -257,6 +261,7 @@ public class ExtendFactory implements CommandFactory {
 
                         if (nearestExtreme != null) {
                             points.add(nearestExtreme);
+                            elementsToExtend.put(nearestExtreme, element);
                         }
 
                     }
