@@ -23,7 +23,8 @@ import br.org.archimedes.model.Point;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author Luiz Real, Ricardo Sider
@@ -31,11 +32,17 @@ import static org.junit.Assert.*;
 public class FilletCommandTest extends Tester {
 
     private Drawing drawing;
+
     private Line line1;
+
     private Line line2;
+
     private FilletCommand command;
+
     private MockFilleter mockFilleter;
+
     private Point click1;
+
     private Point click2;
 
 
@@ -65,51 +72,61 @@ public class FilletCommandTest extends Tester {
 
         new FilletCommand(line1, new Point(0, 0), line2, null);
     }
-    
+
     @Test(expected = NullArgumentException.class)
     public void throwsNullArgumentExceptionIfFirstElementIsNull () throws Exception {
 
         new FilletCommand(null, new Point(0, 0), line2, new Point(0, 0));
     }
-    
+
     @Test(expected = NullArgumentException.class)
     public void throwsNullArgumentExceptionIfSecondElementIsNull () throws Exception {
 
         new FilletCommand(line1, new Point(0, 0), null, new Point(0, 0));
     }
-    
+
     @Test(expected = InvalidArgumentException.class)
-    public void throwsInvalidArgumentExceptionIfFirstPointIsNotInsideFirstElement () throws Exception {
+    public void throwsInvalidArgumentExceptionIfFirstPointIsNotInsideFirstElement ()
+            throws Exception {
 
         new FilletCommand(line1, new Point(0, 0), line2, new Point(1, 0));
     }
-    
+
     @Test(expected = InvalidArgumentException.class)
-    public void throwsInvalidArgumentExceptionIfSecondPointIsNotInsideSecondElement () throws Exception {
+    public void throwsInvalidArgumentExceptionIfSecondPointIsNotInsideSecondElement ()
+            throws Exception {
 
         new FilletCommand(line1, new Point(0, 1), line2, new Point(0, 0));
     }
-    
+
     @Test(expected = NullArgumentException.class)
-    public void throwsNullArgumentExceptionIfDrawingIsNull () throws Exception {
+    public void throwsNullArgumentOnDoItExceptionIfDrawingIsNull () throws Exception {
 
         command.doIt(null);
     }
-    
+
+    @Test(expected = NullArgumentException.class)
+    public void throwsNullArgumentOnUndoItExceptionIfDrawingIsNull () throws Exception {
+
+        command.undoIt(null);
+    }
+
     @Test(expected = InvalidArgumentException.class)
-    public void throwsInvalidArgumentExceptionIfDrawingDoesNotContainFirstElement () throws Exception {
+    public void throwsInvalidArgumentExceptionIfDrawingDoesNotContainFirstElement ()
+            throws Exception {
 
         drawing.removeElement(line1);
         command.doIt(drawing);
     }
 
     @Test(expected = InvalidArgumentException.class)
-    public void throwsInvalidArgumentExceptionIfDrawingDoesNotContainSecomdElement () throws Exception {
+    public void throwsInvalidArgumentExceptionIfDrawingDoesNotContainSecomdElement ()
+            throws Exception {
 
         drawing.removeElement(line2);
         command.doIt(drawing);
     }
-    
+
     @Test
     public void testDoIt () throws Exception {
 
