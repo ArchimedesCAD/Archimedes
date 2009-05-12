@@ -43,7 +43,7 @@ public class MacroCommand implements UndoableCommand {
 	 *             In case the command list is empty<br>
 	 *             TODO Change to Invalid Parameter?
 	 */
-	public MacroCommand(List<UndoableCommand> commandList)
+	public MacroCommand(List<? extends UndoableCommand> commandList)
 			throws NullArgumentException, IllegalActionException {
 
 		if (commandList == null) {

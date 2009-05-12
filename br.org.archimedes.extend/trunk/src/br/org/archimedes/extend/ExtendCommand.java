@@ -5,26 +5,13 @@
  * http://www.eclipse.org/legal/epl-v10.html<br>
  * <br>
  * Contributors:<br>
- * Jeferson R. Silva - initial API and implementation<br>
- * Jonas K. Hirata, Hugo Corbucci - later contributions<br>
- * Bruno da Hora, Kenzo Yamada - later contributions<br>
+ * Bruno da Hora, Kenzo Yamada - initial API and implementation<br>
  * <br>
- * This file was created on 2006/08/25, 23:59:46, by Jonas K. Hirata.<br>
+ * This file was created on 2009/04/28, 11:00:00, by Bruno da Hora.<br>
  * It is part of package br.org.archimedes.extend on the br.org.archimedes.extend project.<br>
  */
 
 package br.org.archimedes.extend;
-
-import br.org.archimedes.controller.commands.MacroCommand;
-import br.org.archimedes.controller.commands.PutOrRemoveElementCommand;
-import br.org.archimedes.exceptions.IllegalActionException;
-import br.org.archimedes.exceptions.NullArgumentException;
-import br.org.archimedes.interfaces.ExtendManager;
-import br.org.archimedes.interfaces.UndoableCommand;
-import br.org.archimedes.model.Drawing;
-import br.org.archimedes.model.Element;
-import br.org.archimedes.model.Point;
-import br.org.archimedes.rcp.extensionpoints.ExtendManagerEPLoader;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -35,12 +22,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import br.org.archimedes.controller.commands.MacroCommand;
+import br.org.archimedes.controller.commands.PutOrRemoveElementCommand;
+import br.org.archimedes.exceptions.IllegalActionException;
+import br.org.archimedes.exceptions.NullArgumentException;
+import br.org.archimedes.interfaces.Command;
+import br.org.archimedes.interfaces.ExtendManager;
+import br.org.archimedes.interfaces.UndoableCommand;
+import br.org.archimedes.model.Drawing;
+import br.org.archimedes.model.Element;
+import br.org.archimedes.model.Point;
+import br.org.archimedes.rcp.extensionpoints.ExtendManagerEPLoader;
+
 /**
- * Belongs to package br.org.archimedes.model.commands.
- * 
- * @author jefsilva
+ * @author Bruno da Hora, Kenzo Yamada
  */
-public class ExtendCommand implements UndoableCommand {
+public class ExtendCommand implements Command {
 
     private Collection<Element> references;
 
@@ -111,7 +108,8 @@ public class ExtendCommand implements UndoableCommand {
         }
     }
 
-    public void undoIt (Drawing drawing) throws IllegalActionException, NullArgumentException {
+    //TODO Make this undoable
+    /*public void undoIt (Drawing drawing) throws IllegalActionException, NullArgumentException {
 
         if (drawing == null) {
             throw new NullArgumentException();
@@ -120,7 +118,7 @@ public class ExtendCommand implements UndoableCommand {
         if (macro != null) {
             macro.undoIt(drawing);
         }
-    }
+    }*/
 
     /**
      * Computes the extend

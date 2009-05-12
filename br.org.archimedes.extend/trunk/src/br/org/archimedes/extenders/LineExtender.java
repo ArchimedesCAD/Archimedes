@@ -14,8 +14,6 @@
 
 package br.org.archimedes.extenders;
 
-import java.util.Collection;
-
 import br.org.archimedes.Geometrics;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
@@ -24,8 +22,11 @@ import br.org.archimedes.interfaces.IntersectionManager;
 import br.org.archimedes.line.Line;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
+import br.org.archimedes.model.Vector;
 import br.org.archimedes.rcp.extensionpoints.IntersectionManagerEPLoader;
 import br.org.archimedes.semiline.Semiline;
+
+import java.util.Collection;
 
 public class LineExtender implements Extender {
 
@@ -43,7 +44,7 @@ public class LineExtender implements Extender {
         Semiline semiline = null;
 
         Point otherExtreme;
-        if (extremePoint == line.getInitialPoint()) {
+        if (extremePoint.equals(line.getInitialPoint())) {
             otherExtreme = line.getEndingPoint();
         }
         else {
@@ -73,8 +74,7 @@ public class LineExtender implements Extender {
                 e.printStackTrace();
             }
 
-            intersectionPoints = intersectionManager.getIntersectionsBetween(
-                    semiline, references);
+            intersectionPoints = intersectionManager.getIntersectionsBetween(semiline, references);
 
             if (intersectionPoints.size() != 0) {
                 doExtend(line, otherExtreme, intersectionPoints);
@@ -93,7 +93,7 @@ public class LineExtender implements Extender {
 
             if (line.contains(intersection))
                 continue;
-          
+
             double distanceToRef = Geometrics.calculateDistance(intersection, extremePoint);
             if (distanceToRef < minDistance) {
                 nearestReferencePoint = intersection;
@@ -102,13 +102,14 @@ public class LineExtender implements Extender {
         }
 
         if (nearestReferencePoint != null) {
+            Vector offset;
             if (extremePoint.equals(line.getEndingPoint())) {
-                line.getEndingPoint().setX(nearestReferencePoint.getX());
-                line.getEndingPoint().setY(nearestReferencePoint.getY());
+                offset = new Vector(line.getEndingPoint(), nearestReferencePoint);
+                line.getEndingPoint().move(offset.getX(), offset.getY());
             }
             else {
-                line.getInitialPoint().setX(nearestReferencePoint.getX());
-                line.getInitialPoint().setY(nearestReferencePoint.getY());
+                offset = new Vector(line.getInitialPoint(), nearestReferencePoint);
+                line.getInitialPoint().move(offset.getX(), offset.getY());
             }
             return true;
         }
