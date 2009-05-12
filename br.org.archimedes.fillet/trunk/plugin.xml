@@ -34,26 +34,8 @@
    <extension
          point="br.org.archimedes.core.factory">
          <factory id="br.org.archimedes.fillet"
-          class="br.org.archimedes.fillet.FilletFactory">
-         	<shortcut id="x"/>
+        	  class="br.org.archimedes.fillet.FilletFactory">
+         	<shortcut id="f"/>
          </factory>
    </extension>
-   <!--
-   <extension
-         point="br.org.archimedes.fillet.filleter">
-         <elementExtender
-			id="br.org.archimedes.extend.line"
-			element="br.org.archimedes.line"
-			class="br.org.archimedes.extenders.LineExtender"/>
-         <elementExtender
-            class="br.org.archimedes.extenders.ArcExtender"
-            element="br.org.archimedes.arc"
-            id="br.org.archimedes.extend.Arc"/>
-         <elementExtender
-            class="br.org.archimedes.extenders.SemilineExtender"
-            element="br.org.archimedes.semiline"
-            id="br.org.archimedes.extend.Semiline"/>
-   </extension>
-   -->
-
 </plugin>
