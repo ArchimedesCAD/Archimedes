@@ -6,6 +6,7 @@
  * <br>
  * Contributors:<br>
  * Hugo Corbucci - initial API and implementation<br>
+ * Luiz Real, Bruno Klava - later contributions<br>
  * <br>
  * This file was created on 2009/01/10, 11:16:48, by Hugo Corbucci.<br>
  * It is part of package br.org.archimedes.trim on the br.org.archimedes.trims project.<br>
@@ -54,7 +55,7 @@ public class ArcTrimmer implements Trimmer {
         
         if (intersectionPoints.size() == 0)
         	return Collections.singleton(element);
-        
+
         SortedSet<ComparablePoint> sortedPointSet = getSortedPointSet(arc,
                 arc.getInitialPoint(), intersectionPoints);
 
@@ -80,9 +81,6 @@ public class ArcTrimmer implements Trimmer {
             if (negativeIntersections.size() == 0
                     && positiveIntersections.size() > 0) {
                 Point firstPositive = positiveIntersections.first().getPoint();
-                Collection<Point> points = new ArrayList<Point>();
-                points.add(firstPositive);
-                points.add(arc.getEndingPoint());
                 Element resultArc = new Arc(firstPositive, arc.getEndingPoint(), arc.getCenter(),
                         true);
                 resultArc.setLayer(arc.getLayer());
@@ -92,9 +90,6 @@ public class ArcTrimmer implements Trimmer {
             else if (positiveIntersections.size() == 0
                     && negativeIntersections.size() > 0) {
                 Point lastNegative = negativeIntersections.last().getPoint();
-                Collection<Point> points = new ArrayList<Point>();
-                points.add(lastNegative);
-                points.add(arc.getInitialPoint());
                 Element resultArc = new Arc(arc.getInitialPoint(), lastNegative, arc.getCenter(),
                         true);
                 resultArc.setLayer(arc.getLayer());
@@ -105,18 +100,12 @@ public class ArcTrimmer implements Trimmer {
                     && positiveIntersections.size() > 0) {
                 Point firstPositive = positiveIntersections.first().getPoint();
                 Point lastNegative = negativeIntersections.last().getPoint();
-                Collection<Point> points = new ArrayList<Point>();
-                points.add(lastNegative);
-                points.add(arc.getInitialPoint());
                 Element arc1 = new Arc(arc.getInitialPoint(), lastNegative, arc.getCenter(),
                         true);
                 arc1.setLayer(arc.getLayer());
 
                 trimResult.add(arc1);
 
-                points = new ArrayList<Point>();
-                points.add(firstPositive);
-                points.add(arc.getEndingPoint());
                 Element arc2 = new Arc(firstPositive, arc.getEndingPoint(), arc.getCenter(),
                         true);
                 arc2.setLayer(arc.getLayer());
@@ -129,8 +118,9 @@ public class ArcTrimmer implements Trimmer {
             e.printStackTrace();
         }
         catch (InvalidArgumentException e) {
-            // Should not catch this exception
-            e.printStackTrace();
+            // The intersection is exactly at one extreme of the arc; does nothing
+            trimResult.clear();
+            trimResult.add(arc);
         }
 
         return trimResult;
