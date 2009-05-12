@@ -13,18 +13,19 @@
 
 package br.org.archimedes.fillet;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Before;
+import org.junit.Test;
+
 import br.org.archimedes.Tester;
+import br.org.archimedes.exceptions.IllegalActionException;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.line.Line;
 import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Point;
-
-import org.junit.Before;
-import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 /**
  * @author Luiz Real, Ricardo Sider
@@ -120,5 +121,22 @@ public class FilletCommandTest extends Tester {
         assertEquals(line2, mockFilleter.getReceivedE2());
         assertEquals(click1, mockFilleter.getReceivedClick1());
         assertEquals(click2, mockFilleter.getReceivedClick2());
+        assertTrue(mockFilleter.getGeneratedMacroCommand().calledDoIt());
+    }
+
+    @Test
+    public void testUndoIt () throws Exception {
+
+        command.doIt(drawing);
+        command.undoIt(drawing);
+        assertTrue(mockFilleter.calledFillet());
+        assertTrue(mockFilleter.getGeneratedMacroCommand().calledDoIt());
+        assertTrue(mockFilleter.getGeneratedMacroCommand().calledUndoIt());
+    }
+
+    @Test(expected = IllegalActionException.class)
+    public void undoItThrowsIllegalActionExceptionIfCommandWasNotDone () throws Exception {
+
+        command.undoIt(drawing);
     }
 }

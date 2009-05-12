@@ -40,6 +40,7 @@ public class FilletCommand implements UndoableCommand {
 
     private MacroCommand macro;
 
+
     /**
      * @param firstElement
      *            The first element selected by the user
@@ -89,6 +90,9 @@ public class FilletCommand implements UndoableCommand {
         if (macro != null) {
             macro.undoIt(drawing);
         }
+        else {
+            throw new IllegalActionException();
+        }
     }
 
     /*
@@ -97,11 +101,12 @@ public class FilletCommand implements UndoableCommand {
      */
     public void doIt (Drawing drawing) throws IllegalActionException, NullArgumentException {
 
-        if(drawing == null){
-               throw new NullArgumentException();
+        if (drawing == null) {
+            throw new NullArgumentException();
         }
-        
-        filleter.fillet(firstElement, firstClick, secondElement, secondClick);
+
+        macro = filleter.fillet(firstElement, firstClick, secondElement, secondClick);
+        macro.doIt(drawing);
     }
 
     /**

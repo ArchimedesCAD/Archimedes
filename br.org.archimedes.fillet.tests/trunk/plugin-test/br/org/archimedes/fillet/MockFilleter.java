@@ -33,6 +33,8 @@ public class MockFilleter implements Filleter {
 
     private Point receivedClick2;
 
+    private MockMacroCommand macroCommand;
+
 
     /*
      * (non-Javadoc)
@@ -47,8 +49,15 @@ public class MockFilleter implements Filleter {
         this.receivedE2 = e2;
         this.receivedClick2 = click2;
         called = true;
+        try {
+            macroCommand = new MockMacroCommand();
+        }
+        catch (Exception e) {
+            // Should not happen
+            e.printStackTrace();
+        }
 
-        return null;
+        return macroCommand;
     }
 
     public boolean calledFillet () {
@@ -86,6 +95,11 @@ public class MockFilleter implements Filleter {
     public Point getReceivedClick2 () {
 
         return receivedClick2;
+    }
+
+    public MockMacroCommand getGeneratedMacroCommand () {
+
+        return macroCommand;
     }
 
 }
