@@ -111,22 +111,6 @@ public class FilletCommandTest extends Tester {
         command.undoIt(null);
     }
 
-    @Test(expected = InvalidArgumentException.class)
-    public void throwsInvalidArgumentExceptionIfDrawingDoesNotContainFirstElement ()
-            throws Exception {
-
-        drawing.removeElement(line1);
-        command.doIt(drawing);
-    }
-
-    @Test(expected = InvalidArgumentException.class)
-    public void throwsInvalidArgumentExceptionIfDrawingDoesNotContainSecomdElement ()
-            throws Exception {
-
-        drawing.removeElement(line2);
-        command.doIt(drawing);
-    }
-
     @Test
     public void testDoIt () throws Exception {
 

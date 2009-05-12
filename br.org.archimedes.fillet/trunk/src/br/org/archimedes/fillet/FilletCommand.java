@@ -14,7 +14,6 @@
 package br.org.archimedes.fillet;
 
 import br.org.archimedes.controller.commands.MacroCommand;
-import br.org.archimedes.controller.commands.PutOrRemoveElementCommand;
 import br.org.archimedes.exceptions.IllegalActionException;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
@@ -23,14 +22,6 @@ import br.org.archimedes.interfaces.UndoableCommand;
 import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * @author Luiz Real, Ricardo Sider
@@ -48,11 +39,6 @@ public class FilletCommand implements UndoableCommand {
     private Filleter filleter;
 
     private MacroCommand macro;
-
-    private boolean performedOnce;
-
-    private Map<Element, Set<Element>> filletMap;
-
 
     /**
      * @param firstElement
@@ -86,10 +72,8 @@ public class FilletCommand implements UndoableCommand {
         this.secondClick = secondClick;
 
         macro = null;
-        performedOnce = false;
-        filletMap = new HashMap<Element, Set<Element>>();
 
-        // TODO set default filleter
+        this.filleter = new DefaultFilleter();
     }
 
     /*
@@ -113,83 +97,11 @@ public class FilletCommand implements UndoableCommand {
      */
     public void doIt (Drawing drawing) throws IllegalActionException, NullArgumentException {
 
-        if (drawing == null) {
-            throw new NullArgumentException();
+        if(drawing == null){
+               throw new NullArgumentException();
         }
-
-        if ( !performedOnce) {
-
-            computeFillet(drawing);
-
-            if (filletMap.keySet().size() == 0) {
-                throw new IllegalActionException();
-            }
-
-            Set<Element> allResults = new HashSet<Element>();
-            for (Element key : filletMap.keySet()) {
-                Set<Element> extendResult = filletMap.get(key);
-                allResults.addAll(extendResult);
-            }
-            buildMacro(filletMap.keySet(), allResults);
-            performedOnce = true;
-
-        }
-        if (macro != null) {
-            macro.doIt(drawing);
-        }
-
-    }
-
-    /**
-     * Computes the extend
-     * 
-     * @param drawing
-     *            The base drawing
-     * @param click
-     *            A click point for the extend
-     * @throws IllegalActionException
-     *             In case no element was clicked
-     * @throws NullArgumentException
-     *             In case that the references of extending are null
-     */
-    private void computeFillet (Drawing drawing) throws IllegalActionException,
-            NullArgumentException {
-
-        Element toFillet = firstElement;
-        Element key = null;
-        boolean isInMap = false;
-
-        if (filletMap.containsKey(toFillet)) {
-            Set<Element> turnedTo = filletMap.get(toFillet);
-            for (Element element : turnedTo) {
-                try {
-                    if (element.contains(firstClick)) {
-                        key = toFillet;
-                        toFillet = element;
-                        isInMap = true;
-                    }
-                }
-                catch (NullArgumentException e) {
-                    // Should really not happen
-                    e.printStackTrace();
-                }
-            }
-        }
-
-        if (key == null || isInMap) {
-
-            filleter.fillet(firstElement, firstClick, secondElement, secondClick);
-
-            Set<Element> turnedTo;
-            if (isInMap) {
-                turnedTo = filletMap.get(key);
-            }
-            else {
-                turnedTo = new HashSet<Element>(Collections.singleton(toFillet));
-                key = toFillet;
-            }
-            filletMap.put(key, turnedTo);
-        }
+        
+        filleter.fillet(firstElement, firstClick, secondElement, secondClick);
     }
 
     /**
@@ -240,29 +152,4 @@ public class FilletCommand implements UndoableCommand {
         // TODO implement and test this and the above
         return getFirstElement().hashCode();
     }
-
-    /**
-     * Build a macro-command to perform the necessary actions
-     * 
-     * @param toRemove
-     *            The elements to be removed
-     * @param toAdd
-     *            The elements to be added
-     */
-    private void buildMacro (Set<Element> toRemove, Set<Element> toAdd) {
-
-        try {
-            UndoableCommand remove = new PutOrRemoveElementCommand(toRemove, true);
-            UndoableCommand add = new PutOrRemoveElementCommand(toAdd, false);
-            List<UndoableCommand> cmds = new ArrayList<UndoableCommand>();
-            cmds.add(remove);
-            cmds.add(add);
-            macro = new MacroCommand(cmds);
-        }
-        catch (Exception e) {
-            // Should not happen
-            e.printStackTrace();
-        }
-    }
-
 }
