@@ -8,4 +8,5 @@ Require-Bundle: br.org.archimedes.fillet;bundle-version="0.58.0",
  br.org.archimedes.core.tests;bundle-version="0.58.0",
  org.junit4,
  br.org.archimedes.core;bundle-version="0.58.0",
- br.org.archimedes.line;bundle-version="0.58.0"
+ br.org.archimedes.line;bundle-version="0.58.0",
+ br.org.archimedes.move;bundle-version="0.58.0"
