@@ -70,7 +70,7 @@ public class StretchFactory implements CommandFactory {
     public String begin () {
 
         active = true;
-        String returnValue = "Iteration1";
+        String returnValue = Messages.getString("SelectElements"); //$NON-NLS-1$
 
         return returnValue;
     }
@@ -127,7 +127,7 @@ public class StretchFactory implements CommandFactory {
             vector = (Vector) parameter;
         }
         catch (ClassCastException e) {
-            throw new InvalidParameterException("TargetExpected");
+            throw new InvalidParameterException("TargetExpected"); //$NON-NLS-1$
         }
     }
 
@@ -148,10 +148,10 @@ public class StretchFactory implements CommandFactory {
             reference = (Point) parameter;
         }
         catch (ClassCastException e) {
-            throw new InvalidParameterException("ExpectedPoint");
+            throw new InvalidParameterException("ExpectedPoint"); //$NON-NLS-1$
         }
 
-        result = "Iteration3";
+        result = Messages.getString("Move"); //$NON-NLS-1$
         workspace.setPerpendicularGripReferencePoint(reference);
         return result;
     }
@@ -173,17 +173,17 @@ public class StretchFactory implements CommandFactory {
             selection = (Selection) parameter;
         }
         catch (ClassCastException e) {
-            throw new InvalidParameterException("SelectionExpected");
+            throw new InvalidParameterException("SelectionExpected"); //$NON-NLS-1$
         }
 
         pointsToMove = getPointsToMove(selection);
         if (pointsToMove.isEmpty()) {
             pointsToMove = null;
             selection = null;
-            result = "Iteration1";
+            result = Messages.getString("SelectElements"); //$NON-NLS-1$
         }
         else {
-            result = "Iteration2";
+            result = Messages.getString("SelectPoint"); //$NON-NLS-1$
         }
         return result;
     }
@@ -226,7 +226,7 @@ public class StretchFactory implements CommandFactory {
     protected String completeCommand (
             Map<Element, Collection<Point>> pointsToMove2, Vector vector) {
 
-        String result = "CommandFinished";
+        String result = Messages.getString("Stretched"); //$NON-NLS-1$
 
         try {
             command = new MoveCommand(pointsToMove2, vector);
@@ -248,7 +248,7 @@ public class StretchFactory implements CommandFactory {
 
         deactivate();
 
-        return "CancelStretch";
+        return Messages.getString("StretchCancel"); //$NON-NLS-1$
     }
 
     public void drawVisualHelper () {
@@ -340,6 +340,6 @@ public class StretchFactory implements CommandFactory {
      */
     public String getName () {
 
-        return "stretch";
+        return "stretch"; //$NON-NLS-1$
     }
 }
