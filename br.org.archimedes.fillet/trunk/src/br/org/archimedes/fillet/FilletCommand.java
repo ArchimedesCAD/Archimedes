@@ -13,7 +13,6 @@
 
 package br.org.archimedes.fillet;
 
-import br.org.archimedes.controller.commands.MacroCommand;
 import br.org.archimedes.exceptions.IllegalActionException;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
@@ -22,6 +21,8 @@ import br.org.archimedes.interfaces.UndoableCommand;
 import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
+
+import java.util.List;
 
 /**
  * @author Luiz Real, Ricardo Sider
@@ -38,7 +39,7 @@ public class FilletCommand implements UndoableCommand {
 
     private Filleter filleter;
 
-    private MacroCommand macro;
+    private List<? extends UndoableCommand> commands;
 
 
     /**
@@ -72,7 +73,7 @@ public class FilletCommand implements UndoableCommand {
         this.secondElement = secondElement;
         this.secondClick = secondClick;
 
-        macro = null;
+        commands = null;
 
         this.filleter = new DefaultFilleter();
     }
@@ -87,8 +88,10 @@ public class FilletCommand implements UndoableCommand {
             throw new NullArgumentException();
         }
 
-        if (macro != null) {
-            macro.undoIt(drawing);
+        if (commands != null) {
+            for (UndoableCommand cmd : commands) {
+                cmd.undoIt(drawing);
+            }
         }
         else {
             throw new IllegalActionException();
@@ -105,8 +108,11 @@ public class FilletCommand implements UndoableCommand {
             throw new NullArgumentException();
         }
 
-        macro = filleter.fillet(firstElement, firstClick, secondElement, secondClick);
-        macro.doIt(drawing);
+        commands = filleter.fillet(firstElement, firstClick, secondElement, secondClick);
+        for (UndoableCommand cmd : commands) {
+            cmd.doIt(drawing);
+        }
+
     }
 
     /**

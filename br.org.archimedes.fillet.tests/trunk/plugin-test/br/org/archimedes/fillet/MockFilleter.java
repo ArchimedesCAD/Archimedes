@@ -13,10 +13,13 @@
 
 package br.org.archimedes.fillet;
 
-import br.org.archimedes.controller.commands.MacroCommand;
 import br.org.archimedes.interfaces.Filleter;
+import br.org.archimedes.interfaces.UndoableCommand;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Luiz Real, Ricardo Sider
@@ -42,7 +45,8 @@ public class MockFilleter implements Filleter {
      * br.org.archimedes.model.Point, br.org.archimedes.model.Element,
      * br.org.archimedes.model.Point)
      */
-    public MacroCommand fillet (Element e1, Point click1, Element e2, Point click2) {
+    public List<? extends UndoableCommand> fillet (Element e1, Point click1, Element e2,
+            Point click2) {
 
         this.receivedE1 = e1;
         this.receivedClick1 = click1;
@@ -57,7 +61,7 @@ public class MockFilleter implements Filleter {
             e.printStackTrace();
         }
 
-        return macroCommand;
+        return new ArrayList<MockMacroCommand>();
     }
 
     public boolean calledFillet () {
