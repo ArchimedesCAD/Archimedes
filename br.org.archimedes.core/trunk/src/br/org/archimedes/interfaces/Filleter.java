@@ -13,9 +13,10 @@
 
 package br.org.archimedes.interfaces;
 
-import br.org.archimedes.controller.commands.MacroCommand;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
+
+import java.util.List;
 
 /**
  * Belongs to package br.org.archimedes.interfaces.
@@ -35,7 +36,8 @@ public interface Filleter {
      *            Second element to be filleted
      * @param e2Click
      *            The click point that selected the second element
-     * @return The command to be executed in order to perform the fillet
+     * @return A list of commands to be executed in order to perform the fillet
      */
-    public MacroCommand fillet (Element e1, Point e1Click, Element e2, Point e2Click);
+    public List<? extends UndoableCommand> fillet (Element e1, Point e1Click, Element e2,
+            Point e2Click);
 }
