@@ -68,7 +68,7 @@ public class DefaultFilleterTest extends Tester {
         lowerBiggerLine = new Line(0, 0.5, 0, -2);
         smallerLineInsideArc = new Line(0, -0.5, 0, -0.75);
         biggerLineInsideArc = new Line(0, 0.5, 0, -0.75);
-        halfUpperArc = new Arc(new Point( -1, 0), new Point(0, 1), new Point(1, 0));
+        halfUpperArc = new Arc(new Point( 1, 0), new Point(0, 1), new Point(-1, 0));
         intersection = new Point(0, 0);
     }
 
@@ -97,7 +97,7 @@ public class DefaultFilleterTest extends Tester {
         ArrayList<UndoableCommand> listCommands = new ArrayList<UndoableCommand>();
         listCommands.add(generateMoveCommand(horizontalBigLine,
                 horizontalBigLine.getInitialPoint(), intersection));
-        listCommands.add(generateMoveCommand(verticalBigLine, verticalBigLine.getInitialPoint(),
+        listCommands.add(generateMoveCommand(verticalBigLine, verticalBigLine.getEndingPoint(),
                 intersection));
         MacroCommand expected = new MacroCommand(listCommands);
 
@@ -113,7 +113,7 @@ public class DefaultFilleterTest extends Tester {
         ArrayList<UndoableCommand> listCommands = new ArrayList<UndoableCommand>();
         listCommands.add(generateMoveCommand(horizontalBigLine, horizontalBigLine.getEndingPoint(),
                 intersection));
-        listCommands.add(generateMoveCommand(verticalBigLine, verticalBigLine.getInitialPoint(),
+        listCommands.add(generateMoveCommand(verticalBigLine, verticalBigLine.getEndingPoint(),
                 intersection));
         MacroCommand expected = new MacroCommand(listCommands);
 
@@ -129,7 +129,7 @@ public class DefaultFilleterTest extends Tester {
         ArrayList<UndoableCommand> listCommands = new ArrayList<UndoableCommand>();
         listCommands.add(generateMoveCommand(horizontalBigLine, horizontalBigLine.getEndingPoint(),
                 intersection));
-        listCommands.add(generateMoveCommand(verticalBigLine, verticalBigLine.getEndingPoint(),
+        listCommands.add(generateMoveCommand(verticalBigLine, verticalBigLine.getInitialPoint(),
                 intersection));
         MacroCommand expected = new MacroCommand(listCommands);
 
@@ -145,7 +145,7 @@ public class DefaultFilleterTest extends Tester {
         ArrayList<UndoableCommand> listCommands = new ArrayList<UndoableCommand>();
         listCommands.add(generateMoveCommand(horizontalBigLine,
                 horizontalBigLine.getInitialPoint(), intersection));
-        listCommands.add(generateMoveCommand(verticalBigLine, verticalBigLine.getEndingPoint(),
+        listCommands.add(generateMoveCommand(verticalBigLine, verticalBigLine.getInitialPoint(),
                 intersection));
         MacroCommand expected = new MacroCommand(listCommands);
 
@@ -162,7 +162,7 @@ public class DefaultFilleterTest extends Tester {
         ArrayList<UndoableCommand> listCommands = new ArrayList<UndoableCommand>();
         listCommands.add(generateMoveCommand(horizontalBigLine, horizontalBigLine.getEndingPoint(),
                 intersection));
-        listCommands.add(generateMoveCommand(verticalBigLine, verticalBigLine.getEndingPoint(),
+        listCommands.add(generateMoveCommand(verticalBigLine, verticalBigLine.getInitialPoint(),
                 intersection));
         MacroCommand expected = new MacroCommand(listCommands);
 
@@ -180,7 +180,7 @@ public class DefaultFilleterTest extends Tester {
         ArrayList<UndoableCommand> listCommands = new ArrayList<UndoableCommand>();
         listCommands.add(generateMoveCommand(upperLine, upperLine.getEndingPoint(),
                 intersection));
-        listCommands.add(generateMoveCommand(halfUpperArc, halfUpperArc.getEndingPoint(),
+        listCommands.add(generateMoveCommand(halfUpperArc, halfUpperArc.getInitialPoint(),
                 intersection));
         MacroCommand expected = new MacroCommand(listCommands);
 
@@ -198,7 +198,7 @@ public class DefaultFilleterTest extends Tester {
         ArrayList<UndoableCommand> listCommands = new ArrayList<UndoableCommand>();
         listCommands.add(generateMoveCommand(upperLine, upperLine.getEndingPoint(),
                 intersection));
-        listCommands.add(generateMoveCommand(halfUpperArc, halfUpperArc.getInitialPoint(),
+        listCommands.add(generateMoveCommand(halfUpperArc, halfUpperArc.getEndingPoint(),
                 intersection));
         MacroCommand expected = new MacroCommand(listCommands);
 
@@ -216,7 +216,7 @@ public class DefaultFilleterTest extends Tester {
         ArrayList<UndoableCommand> listCommands = new ArrayList<UndoableCommand>();
         listCommands.add(generateMoveCommand(upperLine, upperLine.getEndingPoint(),
                 intersection));
-        listCommands.add(generateMoveCommand(halfUpperArc, halfUpperArc.getEndingPoint(),
+        listCommands.add(generateMoveCommand(halfUpperArc, halfUpperArc.getInitialPoint(),
                 intersection));
         MacroCommand expected = new MacroCommand(listCommands);
 
@@ -234,7 +234,7 @@ public class DefaultFilleterTest extends Tester {
         ArrayList<UndoableCommand> listCommands = new ArrayList<UndoableCommand>();
         listCommands.add(generateMoveCommand(verticalBigLine, verticalBigLine.getInitialPoint(),
                 intersection));
-        listCommands.add(generateMoveCommand(halfUpperArc, halfUpperArc.getInitialPoint(),
+        listCommands.add(generateMoveCommand(halfUpperArc, halfUpperArc.getEndingPoint(),
                 intersection));
         MacroCommand expected = new MacroCommand(listCommands);
 
@@ -252,7 +252,7 @@ public class DefaultFilleterTest extends Tester {
         ArrayList<UndoableCommand> listCommands = new ArrayList<UndoableCommand>();
         listCommands.add(generateMoveCommand(verticalBigLine, verticalBigLine.getInitialPoint(),
                 intersection));
-        listCommands.add(generateMoveCommand(halfUpperArc, halfUpperArc.getEndingPoint(),
+        listCommands.add(generateMoveCommand(halfUpperArc, halfUpperArc.getInitialPoint(),
                 intersection));
         MacroCommand expected = new MacroCommand(listCommands);
 
@@ -332,30 +332,12 @@ public class DefaultFilleterTest extends Tester {
     }
 
     @Test
-    public void filletsTrimmingLowerLineAndExtendingRightArcClickinOnTheRightSideOfArcAndUpperSideOfLine ()
+    public void filletsTrimmingLowerLineAndExtendingLeftArcClickinOnTheRightSideOfArcAndUpperSideOfLine ()
             throws Exception {
 
         Point intersection = new Point(0, -1);
         MacroCommand command = filleter.fillet(lowerSmallerLine, new Point(0, -0.5),
                 halfUpperArc, new Point(1, 0));
-
-        ArrayList<UndoableCommand> listCommands = new ArrayList<UndoableCommand>();
-        listCommands.add(generateMoveCommand(lowerSmallerLine, lowerSmallerLine
-                .getEndingPoint(), intersection));
-        listCommands.add(generateMoveCommand(halfUpperArc, halfUpperArc.getInitialPoint(),
-                intersection));
-        MacroCommand expected = new MacroCommand(listCommands);
-
-        assertEquals(expected, command);
-    }
-
-    @Test
-    public void filletsTrimmingLowerLineAndExtendingLeftArcClickinOnTheLeftSideOfArcAndUpperSideOfLine ()
-            throws Exception {
-
-        Point intersection = new Point(0, -1);
-        MacroCommand command = filleter.fillet(lowerSmallerLine, new Point(0, -0.5),
-                halfUpperArc, new Point( -1, 0));
 
         ArrayList<UndoableCommand> listCommands = new ArrayList<UndoableCommand>();
         listCommands.add(generateMoveCommand(lowerSmallerLine, lowerSmallerLine
@@ -368,16 +350,16 @@ public class DefaultFilleterTest extends Tester {
     }
 
     @Test
-    public void filletsTrimmingUpperLineAndExtendingRightArcClickinOnTheRightSideOfArcAndLowerSideOfLine ()
+    public void filletsTrimmingLowerLineAndExtendingRightArcClickinOnTheLeftSideOfArcAndUpperSideOfLine ()
             throws Exception {
 
         Point intersection = new Point(0, -1);
-        MacroCommand command = filleter.fillet(lowerSmallerLine, new Point(0, -2),
-                halfUpperArc, new Point(1, 0));
+        MacroCommand command = filleter.fillet(lowerSmallerLine, new Point(0, -0.5),
+                halfUpperArc, new Point( -1, 0));
 
         ArrayList<UndoableCommand> listCommands = new ArrayList<UndoableCommand>();
         listCommands.add(generateMoveCommand(lowerSmallerLine, lowerSmallerLine
-                .getInitialPoint(), intersection));
+                .getEndingPoint(), intersection));
         listCommands.add(generateMoveCommand(halfUpperArc, halfUpperArc.getInitialPoint(),
                 intersection));
         MacroCommand expected = new MacroCommand(listCommands);
@@ -386,12 +368,12 @@ public class DefaultFilleterTest extends Tester {
     }
 
     @Test
-    public void filletsTrimmingUpperLineAndExtendingLeftArcClickinOnTheLeftSideOfArcAndLowerSideOfLine ()
+    public void filletsTrimmingUpperLineAndExtendingLeftArcClickinOnTheRightSideOfArcAndLowerSideOfLine ()
             throws Exception {
-
+        
         Point intersection = new Point(0, -1);
         MacroCommand command = filleter.fillet(lowerSmallerLine, new Point(0, -2),
-                halfUpperArc, new Point( -1, 0));
+                halfUpperArc, new Point(1, 0));
 
         ArrayList<UndoableCommand> listCommands = new ArrayList<UndoableCommand>();
         listCommands.add(generateMoveCommand(lowerSmallerLine, lowerSmallerLine
@@ -404,7 +386,25 @@ public class DefaultFilleterTest extends Tester {
     }
 
     @Test
-    public void filletsTrimmingUpperLineAndExtendingRightArcClickinOnTheRightSideOfArcAndFilletPoint ()
+    public void filletsTrimmingUpperLineAndExtendingRightArcClickinOnTheLeftSideOfArcAndLowerSideOfLine ()
+            throws Exception {
+
+        Point intersection = new Point(0, -1);
+        MacroCommand command = filleter.fillet(lowerSmallerLine, new Point(0, -2),
+                halfUpperArc, new Point( -1, 0));
+
+        ArrayList<UndoableCommand> listCommands = new ArrayList<UndoableCommand>();
+        listCommands.add(generateMoveCommand(lowerSmallerLine, lowerSmallerLine
+                .getInitialPoint(), intersection));
+        listCommands.add(generateMoveCommand(halfUpperArc, halfUpperArc.getInitialPoint(),
+                intersection));
+        MacroCommand expected = new MacroCommand(listCommands);
+
+        assertEquals(expected, command);
+    }
+
+    @Test
+    public void filletsTrimmingUpperLineAndExtendingLeftArcClickinOnTheRightSideOfArcAndFilletPoint ()
             throws Exception {
 
         Point intersection = new Point(0, -1);
@@ -413,8 +413,8 @@ public class DefaultFilleterTest extends Tester {
 
         ArrayList<UndoableCommand> listCommands = new ArrayList<UndoableCommand>();
         listCommands.add(generateMoveCommand(lowerSmallerLine, lowerSmallerLine
-                .getInitialPoint(), intersection));
-        listCommands.add(generateMoveCommand(halfUpperArc, halfUpperArc.getInitialPoint(),
+                .getEndingPoint(), intersection));
+        listCommands.add(generateMoveCommand(halfUpperArc, halfUpperArc.getEndingPoint(),
                 intersection));
         MacroCommand expected = new MacroCommand(listCommands);
 
@@ -458,7 +458,7 @@ public class DefaultFilleterTest extends Tester {
     }
     
     @Test
-    public void filletsExtendingLineAndExtendingRightArcClickinOnTheRightSideOfArcAndOnTheLine ()
+    public void filletsExtendingLineAndExtendingLeftArcClickinOnTheRightSideOfArcAndOnTheLine ()
             throws Exception {
 
         Point intersection = new Point(0, -1);
@@ -468,7 +468,7 @@ public class DefaultFilleterTest extends Tester {
         ArrayList<UndoableCommand> listCommands = new ArrayList<UndoableCommand>();
         listCommands.add(generateMoveCommand(smallerLineInsideArc, smallerLineInsideArc
                 .getEndingPoint(), intersection));
-        listCommands.add(generateMoveCommand(halfUpperArc, halfUpperArc.getInitialPoint(),
+        listCommands.add(generateMoveCommand(halfUpperArc, halfUpperArc.getEndingPoint(),
                 intersection));
         MacroCommand expected = new MacroCommand(listCommands);
 
@@ -476,7 +476,7 @@ public class DefaultFilleterTest extends Tester {
     }
 
     @Test
-    public void filletsExtendingLineAndExtendingLeftArcClickinOnTheLeftSideOfArcAndOnTheLine ()
+    public void filletsExtendingLineAndExtendingRightArcClickinOnTheLeftSideOfArcAndOnTheLine ()
             throws Exception {
 
         Point intersection = new Point(0, -1);
@@ -486,7 +486,7 @@ public class DefaultFilleterTest extends Tester {
         ArrayList<UndoableCommand> listCommands = new ArrayList<UndoableCommand>();
         listCommands.add(generateMoveCommand(smallerLineInsideArc, smallerLineInsideArc
                 .getEndingPoint(), intersection));
-        listCommands.add(generateMoveCommand(halfUpperArc, halfUpperArc.getEndingPoint(),
+        listCommands.add(generateMoveCommand(halfUpperArc, halfUpperArc.getInitialPoint(),
                 intersection));
         MacroCommand expected = new MacroCommand(listCommands);
 
