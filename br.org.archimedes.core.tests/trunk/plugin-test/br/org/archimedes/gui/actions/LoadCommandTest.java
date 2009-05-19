@@ -13,6 +13,7 @@
 
 package br.org.archimedes.gui.actions;
 
+import br.org.archimedes.TestActivator;
 import br.org.archimedes.Tester;
 import br.org.archimedes.exceptions.InvalidFileFormatException;
 import br.org.archimedes.interfaces.Importer;
@@ -22,7 +23,7 @@ import br.org.archimedes.rcp.extensionpoints.NativeFormatEPLoader;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.MessageBox;
-import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.PlatformUI;
 import org.junit.Test;
 
 import java.io.File;
@@ -54,7 +55,7 @@ public class LoadCommandTest extends Tester {
 
         public MockedLoadCommand () {
 
-            super(new Shell());
+            super(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell());
         }
 
         /*
@@ -78,7 +79,16 @@ public class LoadCommandTest extends Tester {
                 @Override
                 public String open () {
 
-                    return "emptyDrawing.arc";
+                    File file;
+                    try {
+                        file = TestActivator.resolveFile("emptyDrawing.arc", TestActivator
+                                .getDefault().getBundle());
+                    }
+                    catch (IOException e) {
+                        e.printStackTrace();
+                        throw new AssertionError("The emptyDrawing.arc file couldn't be loaded");
+                    }
+                    return file.getAbsolutePath();
                 }
 
             };
@@ -166,21 +176,17 @@ public class LoadCommandTest extends Tester {
     @Test
     public void createdFileDialogFiltersCorrectExtensions () throws Exception {
 
-        LoadCommand command = new LoadCommand(new Shell());
+        LoadCommand command = new LoadCommand(PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+                .getShell());
         FileDialog filedialog = command.createFileDialog();
         String[] extensions = new NativeFormatEPLoader().getExtensionsArray();
-        
+
         List<String> expected = new LinkedList<String>();
         for (String extension : extensions) {
             String filter = "*." + extension;
             expected.add(filter);
         }
 
-        
-        assertCollectionTheSame(expected, Arrays.asList(filedialog
-                .getFilterExtensions()));
-
+        assertCollectionTheSame(expected, Arrays.asList(filedialog.getFilterExtensions()));
     }
-
-
 }

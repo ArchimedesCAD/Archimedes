@@ -28,6 +28,8 @@
 <project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.es/trunk,br.org.archimedes.es"/>
 <project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.extend/trunk,br.org.archimedes.extend"/>
 <project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.extend.tests/trunk,br.org.archimedes.extend.tests"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.fillet/trunk,br.org.archimedes.fillet"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.fillet.tests/trunk,br.org.archimedes.fillet.tests"/>
 <project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.fr/trunk,br.org.archimedes.fr"/>
 <project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.infiniteline/trunk,br.org.archimedes.infiniteline"/>
 <project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.infiniteline.tests/trunk,br.org.archimedes.infiniteline.tests"/>
@@ -163,6 +165,8 @@
 <workingSets editPageId="org.eclipse.pde.ui.pluginWorkingSet" label="Plugins - Archimedes Edit Operations Feature and Tests" name="Plugins - Archimedes Edit Operations Feature and Tests">
 <item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.extend"/>
 <item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.extend.tests"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.fillet"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.fillet.tests"/>
 <item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.mirror"/>
 <item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.mirror.tests"/>
 <item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.move"/>
