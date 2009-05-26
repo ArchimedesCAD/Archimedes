@@ -1,0 +1,179 @@
+<project name="Release and Archimedes version to SourceForge" default="release">
+	<property file="releases/HEAD.properties" />
+	<property name="version.full" value="${version}.${version.qualifier}${buildTypePresentation}" />
+	<property file="build-files/build_rcp.properties" />
+	<property file="build_local.properties" />
+	<property file="izpack.properties" />
+	<property name="deployDir" value="${buildDirectory}/results" />
+	<property name="resultDir" value="results" />
+	<property name="keyfile.name" value="sourceforge.net.key_file" />
+
+	<target name="set-releasing-platforms">
+		<property name="windows" value="win32.win32.x86" />
+		<property name="macosx" value="macosx.carbon.x86" />
+		<property name="linux32" value="linux.gtk.x86" />
+		<property name="linux64" value="linux.gtk.x86_64" />
+	</target>
+
+	<target name="check-results-are-unzipped" depends="set-releasing-platforms">
+		<condition property="results-are-unzipped">
+			<and>
+				<available file="${deployDir}/${windows}" />
+				<available file="${deployDir}/${macosx}" />
+				<available file="${deployDir}/${linux32}" />
+				<available file="${deployDir}/${linux64}" />
+			</and>
+		</condition>
+	</target>
+
+	<target name="check-izpack-files-available">
+		<property name="temp.dir" value="${buildDirectory}/izpack" />
+		<condition property="izpack-files-available">
+			<and>
+				<available file="${temp.dir}/installer.png" />
+				<available file="${temp.dir}/LICENSE.TXT" />
+				<available file="${temp.dir}/shortcutSpec.xml" />
+				<available file="${temp.dir}/Unix_shortcutSpec.xml" />
+				<available file="${temp.dir}/packsLang_eng.xml" />
+				<available file="${temp.dir}/packsLang_fra.xml" />
+				<available file="${temp.dir}/packsLang_por.xml" />
+			</and>
+		</condition>
+	</target>
+
+	<import file="build.xml" />
+
+	<taskdef name="izpack" classpath="lib/standalone-compiler.jar" classname="com.izforge.izpack.ant.IzPackTask" />
+
+	<target name="base-files">
+		<!-- TODO Check if more files should be generated and generate everything needed! -->
+		<!-- build_files/build_rcp.properties -->
+		<!-- build_files/automatedTests/run_tests.properties -->
+		<!-- build_local.properties -->
+		<!-- sourceforge.properties -->
+	</target>
+
+	<target name="build-source">
+		<zip destfile="${resultDir}/${archiveNamePrefix}-sources.zip">
+			<fileset dir="..">
+				<exclude name="br.org.archimedes.build/results/**/*" />
+				<exclude name="br.org.archimedes.izpack/target/**/*" />
+				<include name="br.org.archimedes*/**/*.java" />
+				<include name="br.org.archimedes*/**/*.exsd" />
+				<include name="br.org.archimedes*/**/*.xsd" />
+				<include name="br.org.archimedes*/**/*.MF" />
+				<include name="br.org.archimedes*/**/*.html" />
+				<include name="br.org.archimedes*/**/*.ttf" />
+				<include name="br.org.archimedes*/**/*.jar" />
+				<include name="br.org.archimedes*/**/*.so" />
+				<include name="br.org.archimedes*/**/*.dll" />
+				<include name="br.org.archimedes*/**/*.jnilib" />
+				<include name="br.org.archimedes*/**/*.dylib" />
+				<include name="br.org.archimedes*/**/*.xml" />
+				<include name="br.org.archimedes*/**/*.arc" />
+				<include name="br.org.archimedes*/**/*.properties" />
+				<include name="br.org.archimedes*/**/*.png" />
+				<include name="br.org.archimedes*/**/.project" />
+				<include name="br.org.archimedes*/**/.classpath" />
+				<include name="br.org.archimedes*/**/*.gif" />
+				<include name="br.org.archimedes*/**/*.bmp" />
+				<include name="br.org.archimedes*/**/*.png" />
+				<include name="br.org.archimedes*/**/*.ico" />
+				<include name="br.org.archimedes*/**/*.icns" />
+				<include name="br.org.archimedes*/**/*.map" />
+				<include name="br.org.archimedes*/**/*.txt" />
+				<include name="br.org.archimedes*/**/*.TXT" />
+				<include name="br.org.archimedes*/**/*.rb" />
+				<include name="br.org.archimedes*/**/*.config" />
+			</fileset>
+		</zip>
+	</target>
+
+	<target name="release" depends="base-files">
+		<antcall target="build-sources" />
+
+		<!-- Builds the project -->
+		<antcall target="main" />
+
+		<antcall target="build-full-installer" />
+		<antcall target="build-online-installer" />
+		<antcall target="build-light-installer" />
+
+		<antcall target="copy-output-to-result-folder" />
+
+		<antcall target="upload-online-packs" />
+		<antcall target="upload-files-to-sourceforge" />
+	</target>
+
+	<target name="upload-files-to-sourceforge">
+		<!-- TODO Auth failed :( -->
+		<scp todir="${sourceforge.user}@frs.sourceforge.net:uploads/" keyfile="${user.home}/.ssh/${keyfile.name}" passphrase="${sourceforge.passphrase}">
+			<fileset dir="${resultDir}">
+				<include name="${archiveNamePrefix}*installer.jar" />
+				<include name="${archiveNamePrefix}*${version}.zip" />
+			</fileset>
+		</scp>
+	</target>
+
+	<target name="upload-online-packs">
+		<!-- TODO Auth failed :( -->
+		<scp todir="${sourceforge.user}@web.sourceforge.net:/home/groups/a/ar/arquimedes/htdocs/update/" keyfile="${user.home}/.ssh/${keyfile.name}" passphrase="${sourceforge.passphrase}">
+			<fileset dir="${resultDir}">
+				<include name="${archiveNamePrefix}*online-installer.pack-*.jar" />
+			</fileset>
+		</scp>
+	</target>
+
+	<target name="copy-output-to-result-folder">
+		<copy todir="${resultDir}">
+			<fileset dir="${deployDir}">
+				<include name="${archiveNamePrefix}*.zip" />
+				<include name="${archiveNamePrefix}*installer.jar" />
+				<include name="${archiveNamePrefix}*online-installer.pack-*.jar" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="unzip-build" depends="set-releasing-platforms,check-results-are-unzipped" unless="results-are-unzipped">
+		<unzip src="${deployDir}/${archiveNamePrefix}-${windows}.zip" dest="${deployDir}/${windows}" />
+		<unzip src="${deployDir}/${archiveNamePrefix}-${macosx}.zip" dest="${deployDir}/${macosx}" />
+		<unzip src="${deployDir}/${archiveNamePrefix}-${linux32}.zip" dest="${deployDir}/${linux32}" />
+		<unzip src="${deployDir}/${archiveNamePrefix}-${linux64}.zip" dest="${deployDir}/${linux64}" />
+	</target>
+
+	<target name="prepare-izpack-folder" depends="check-izpack-files-available,unzip-build" unless="izpack-files-available">
+		<copy todir="${temp.dir}">
+			<fileset dir="izpack" />
+		</copy>
+	</target>
+
+	<target name="build-full-installer">
+		<property name="install.file" value="${full.installer.file}" />
+		<property name="installer.type" value="standart" />
+		<property name="installer.name" value="${archiveNamePrefix}-full-installer" />
+		<antcall target="compile-izpack" />
+	</target>
+
+	<target name="build-online-installer">
+		<property name="install.file" value="${full.installer.file}" />
+		<property name="installer.type" value="web" />
+		<property name="installer.name" value="${archiveNamePrefix}-online-installer" />
+		<antcall target="compile-izpack" />
+	</target>
+
+	<target name="build-light-installer">
+		<property name="install.file" value="${light.installer.file}" />
+		<property name="installer.type" value="standart" />
+		<property name="installer.name" value="${archiveNamePrefix}-light-installer" />
+		<antcall target="compile-izpack" />
+	</target>
+
+	<!-- Depends on install.file, installer.type, installer.name and version variables -->
+	<target name="compile-izpack" depends="prepare-izpack-folder">
+		<echo message="Running IzPack to build the installer with input = ${install.file}, output = ${output.dir}/${installer.name}.jar, installerType = ${installer.type}..." />
+		<izpack input="${install.file}" output="${deployDir}/${installer.name}.jar" inheritAll="true" basedir="${temp.dir}" compression="deflate" compressionlevel="9" />
+		<echo message="Cleaning up working directory..." />
+		<delete dir="${temp.dir}" quiet="true" includeemptydirs="true" />
+		<echo message="Done." />
+	</target>
+</project>
