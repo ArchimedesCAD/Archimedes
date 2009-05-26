@@ -95,6 +95,7 @@
 <project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.tests.feature/trunk,br.org.archimedes.tests.feature"/>
 <project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.text/trunk,br.org.archimedes.text"/>
 <project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.text.edittext/trunk,br.org.archimedes.text.edittext"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.text.edittext.tests/trunk,br.org.archimedes.text.edittext.tests"/>
 <project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.text.tests/trunk,br.org.archimedes.text.tests"/>
 <project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.trims/trunk,br.org.archimedes.trims"/>
 <project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.trims.tests/trunk,br.org.archimedes.trims.tests"/>
@@ -153,6 +154,7 @@
 <item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.leader.tests"/>
 <item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.text"/>
 <item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.text.edittext"/>
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.text.edittext.tests"/>
 <item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.text.tests"/>
 </workingSets>
 <workingSets editPageId="org.eclipse.pde.ui.pluginWorkingSet" label="Plugins - Archimedes Curves Feature and Tests" name="Plugins - Archimedes Curves Feature and Tests">
