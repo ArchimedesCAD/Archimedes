@@ -43,7 +43,6 @@
 <project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.io.svg.tests/trunk,br.org.archimedes.io.svg.tests"/>
 <project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.io.xml/trunk,br.org.archimedes.io.xml"/>
 <project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.io.xml.tests/trunk,br.org.archimedes.io.xml.tests"/>
-<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.izpack/trunk,br.org.archimedes.izpack"/>
 <project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.langpack.feature/trunk,br.org.archimedes.langpack.feature"/>
 <project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.leader/trunk,br.org.archimedes.leader"/>
 <project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.leader.tests/trunk,br.org.archimedes.leader.tests"/>
@@ -112,7 +111,6 @@
 <item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.polyline.area.tests"/>
 </workingSets>
 <workingSets editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" label="General - Archimedes Config and Build" name="General - Archimedes Config and Build">
-<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/br.org.archimedes.izpack" type="4"/>
 <item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/br.org.archimedes.build" type="4"/>
 <item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/br.org.archimedes.config" type="4"/>
 </workingSets>
