@@ -4,6 +4,7 @@
 	<property file="build-files/build_rcp.properties" />
 	<property file="build_local.properties" />
 	<property file="izpack.properties" />
+	<property file="sourceforge.properties" />
 	<property name="deployDir" value="${buildDirectory}/results" />
 	<property name="resultDir" value="results" />
 	<property name="keyfile.name" value="sourceforge.net.key_file" />
@@ -89,42 +90,7 @@
 		</zip>
 	</target>
 
-	<target name="release" depends="base-files">
-		<antcall target="build-sources" />
-
-		<!-- Builds the project -->
-		<antcall target="main" />
-
-		<antcall target="build-full-installer" />
-		<antcall target="build-online-installer" />
-		<antcall target="build-light-installer" />
-
-		<antcall target="copy-output-to-result-folder" />
-
-		<antcall target="upload-online-packs" />
-		<antcall target="upload-files-to-sourceforge" />
-	</target>
-
-	<target name="upload-files-to-sourceforge">
-		<!-- TODO Auth failed :( -->
-		<scp todir="${sourceforge.user}@frs.sourceforge.net:uploads/" keyfile="${user.home}/.ssh/${keyfile.name}" passphrase="${sourceforge.passphrase}">
-			<fileset dir="${resultDir}">
-				<include name="${archiveNamePrefix}*installer.jar" />
-				<include name="${archiveNamePrefix}*${version}.zip" />
-			</fileset>
-		</scp>
-	</target>
-
-	<target name="upload-online-packs">
-		<!-- TODO Auth failed :( -->
-		<scp todir="${sourceforge.user}@web.sourceforge.net:/home/groups/a/ar/arquimedes/htdocs/update/" keyfile="${user.home}/.ssh/${keyfile.name}" passphrase="${sourceforge.passphrase}">
-			<fileset dir="${resultDir}">
-				<include name="${archiveNamePrefix}*online-installer.pack-*.jar" />
-			</fileset>
-		</scp>
-	</target>
-
-	<target name="copy-output-to-result-folder">
+	<target name="copy-results-to-output" depends="build-source,main,build-full-installer,build-online-installer,build-light-installer">
 		<copy todir="${resultDir}">
 			<fileset dir="${deployDir}">
 				<include name="${archiveNamePrefix}*.zip" />
@@ -132,6 +98,29 @@
 				<include name="${archiveNamePrefix}*online-installer.pack-*.jar" />
 			</fileset>
 		</copy>
+	</target>
+
+	<target name="release" depends="base-files,copy-results-to-output">
+		<antcall target="upload-online-packs" />
+		<antcall target="upload-files-to-sourceforge" />
+	</target>
+
+	<target name="upload-files-to-sourceforge">
+		<scp todir="${sourceforge.user}@frs.sourceforge.net:uploads/" keyfile="${user.home}/.ssh/${keyfile.name}" passphrase="${sourceforge.passphrase}">
+			<fileset dir="${resultDir}">
+				<include name="${archiveNamePrefix}*installer.jar" />
+				<include name="${archiveNamePrefix}*${version}.zip" />
+				<include name="test.txt" />
+			</fileset>
+		</scp>
+	</target>
+
+	<target name="upload-online-packs">
+		<scp todir="${sourceforge.user}@web.sourceforge.net:/home/groups/a/ar/arquimedes/htdocs/update/" keyfile="${user.home}/.ssh/${keyfile.name}" passphrase="${sourceforge.passphrase}">
+			<fileset dir="${resultDir}">
+				<include name="${archiveNamePrefix}*online-installer.pack-*.jar" />
+			</fileset>
+		</scp>
 	</target>
 
 	<target name="unzip-build" depends="set-releasing-platforms,check-results-are-unzipped" unless="results-are-unzipped">
