@@ -13,14 +13,6 @@
  */
 package br.org.archimedes.trims;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import br.org.archimedes.controller.commands.MacroCommand;
 import br.org.archimedes.controller.commands.PutOrRemoveElementCommand;
 import br.org.archimedes.exceptions.IllegalActionException;
@@ -33,6 +25,14 @@ import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.rcp.extensionpoints.TrimManagerEPLoader;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 /**
  * Belongs to package br.org.archimedes.model.commands.
  * 
@@ -42,7 +42,9 @@ public class TrimCommand implements UndoableCommand {
 
     private Collection<Element> references;
 
-    private List<Point> points;
+    private Collection<Point> cutPoints;
+
+    private List<Point> clicks;
 
     private Map<Element, Set<Element>> trimMap;
 
@@ -59,10 +61,10 @@ public class TrimCommand implements UndoableCommand {
      * @param points
      *            The points where a click ocurred
      */
-    public TrimCommand (Collection<Element> references, List<Point> points) {
+    public TrimCommand (Collection<Element> references, List<Point> clicks) {
 
         trimManager = new TrimManagerEPLoader().getTrimManager();
-        this.points = points;
+        this.clicks = clicks;
         macro = null;
         performedOnce = false;
         trimMap = new HashMap<Element, Set<Element>>();
@@ -77,6 +79,22 @@ public class TrimCommand implements UndoableCommand {
     public void doIt (Drawing drawing) throws NullArgumentException,
             IllegalActionException {
 
+        /* TODO
+         * Implements this intersection here
+        private IntersectionManager intersectionManager;
+
+        intersectionManager = new IntersectionManagerEPLoader()
+                    .getIntersectionManager();
+        
+        InfiniteLine line = (InfiniteLine) element;
+        
+        Collection<Element> trimResult = new ArrayList<Element>();
+
+        SortedSet<ComparablePoint> sortedPointSet = getSortedPointSet(line,
+                line.getInitialPoint(), intersectionManager
+                        .getIntersectionsBetween(line, cutPoints));*/
+        
+        
         if (drawing == null) {
             throw new NullArgumentException();
         }
@@ -86,7 +104,7 @@ public class TrimCommand implements UndoableCommand {
                 references.addAll(drawing.getUnlockedContents());
             }
 
-            for (Point point : points) {
+            for (Point point : clicks) {
                 computeTrim(drawing, point);
             }
 
@@ -170,7 +188,7 @@ public class TrimCommand implements UndoableCommand {
 
         if (key == null || isInMap) {
             
-            Collection<Element> trimResult = trimManager.getTrimOf(toTrim, references, click);
+            Collection<Element> trimResult = trimManager.getTrimOf(toTrim, cutPoints, click);
             if ( !trimResult.isEmpty()) {
                 Set<Element> turnedTo;
                 if (isInMap) {

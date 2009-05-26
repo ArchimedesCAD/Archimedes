@@ -46,10 +46,10 @@ public class TrimManager implements br.org.archimedes.interfaces.TrimManager {
     }
     
     public Collection<Element> getTrimOf (Element element,
-            Collection<Element> references, Point click)
+            Collection<Point> cutPoints, Point click)
             throws NullArgumentException {
 
-        return getTrimmerFor(element).trim(element, references, click);
+        return getTrimmerFor(element).trim(element, cutPoints, click);
     }
 
     private Trimmer getTrimmerFor (Element element) {

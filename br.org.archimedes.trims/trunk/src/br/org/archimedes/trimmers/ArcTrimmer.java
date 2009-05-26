@@ -11,7 +11,19 @@
  * This file was created on 2009/01/10, 11:16:48, by Hugo Corbucci.<br>
  * It is part of package br.org.archimedes.trim on the br.org.archimedes.trims project.<br>
  */
+
 package br.org.archimedes.trimmers;
+
+import br.org.archimedes.Constant;
+import br.org.archimedes.Geometrics;
+import br.org.archimedes.arc.Arc;
+import br.org.archimedes.exceptions.InvalidArgumentException;
+import br.org.archimedes.exceptions.NullArgumentException;
+import br.org.archimedes.model.ComparablePoint;
+import br.org.archimedes.model.DoubleKey;
+import br.org.archimedes.model.Element;
+import br.org.archimedes.model.Point;
+import br.org.archimedes.trims.interfaces.Trimmer;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -19,45 +31,24 @@ import java.util.Collections;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import br.org.archimedes.Constant;
-import br.org.archimedes.Geometrics;
-import br.org.archimedes.arc.Arc;
-import br.org.archimedes.exceptions.InvalidArgumentException;
-import br.org.archimedes.exceptions.NullArgumentException;
-import br.org.archimedes.interfaces.IntersectionManager;
-import br.org.archimedes.model.ComparablePoint;
-import br.org.archimedes.model.DoubleKey;
-import br.org.archimedes.model.Element;
-import br.org.archimedes.model.Point;
-import br.org.archimedes.rcp.extensionpoints.IntersectionManagerEPLoader;
-import br.org.archimedes.trims.interfaces.Trimmer;
-
 public class ArcTrimmer implements Trimmer {
 
-	private IntersectionManager intersectionManager;
+    public Collection<Element> trim (Element element, Collection<Point> cutPoints, Point click)
+            throws NullArgumentException {
 
-	public ArcTrimmer() {
-		intersectionManager = new IntersectionManagerEPLoader()
-		.getIntersectionManager();
-	}
-	
-	public Collection<Element> trim(Element element,
-			Collection<Element> references, Point click)
-			throws NullArgumentException {
-		if (element == null || references == null || click == null) {
-			throw new NullArgumentException();
-		}
-		
-		Arc arc = (Arc) element;
-		
-		Collection<Element> trimResult = new ArrayList<Element>();
-        Collection<Point> intersectionPoints = intersectionManager.getIntersectionsBetween(element, references);
-        
-        if (intersectionPoints.size() == 0)
-        	return Collections.singleton(element);
+        if (element == null || cutPoints == null || click == null) {
+            throw new NullArgumentException();
+        }
 
-        SortedSet<ComparablePoint> sortedPointSet = getSortedPointSet(arc,
-                arc.getInitialPoint(), intersectionPoints);
+        Arc arc = (Arc) element;
+
+        Collection<Element> trimResult = new ArrayList<Element>();
+
+        if (cutPoints.size() == 0)
+            return Collections.singleton(element);
+
+        SortedSet<ComparablePoint> sortedPointSet = getSortedPointSet(arc, arc.getInitialPoint(),
+                cutPoints);
 
         ComparablePoint clickPoint = null;
         ComparablePoint initial = null;
@@ -78,8 +69,7 @@ public class ArcTrimmer implements Trimmer {
         SortedSet<ComparablePoint> positiveIntersections = sortedPointSet.tailSet(clickPoint);
 
         try {
-            if (negativeIntersections.size() == 0
-                    && positiveIntersections.size() > 0) {
+            if (negativeIntersections.size() == 0 && positiveIntersections.size() > 0) {
                 Point firstPositive = positiveIntersections.first().getPoint();
                 Element resultArc = new Arc(firstPositive, arc.getEndingPoint(), arc.getCenter(),
                         true);
@@ -87,8 +77,7 @@ public class ArcTrimmer implements Trimmer {
 
                 trimResult.add(resultArc);
             }
-            else if (positiveIntersections.size() == 0
-                    && negativeIntersections.size() > 0) {
+            else if (positiveIntersections.size() == 0 && negativeIntersections.size() > 0) {
                 Point lastNegative = negativeIntersections.last().getPoint();
                 Element resultArc = new Arc(arc.getInitialPoint(), lastNegative, arc.getCenter(),
                         true);
@@ -96,18 +85,15 @@ public class ArcTrimmer implements Trimmer {
 
                 trimResult.add(resultArc);
             }
-            else if (negativeIntersections.size() > 0
-                    && positiveIntersections.size() > 0) {
+            else if (negativeIntersections.size() > 0 && positiveIntersections.size() > 0) {
                 Point firstPositive = positiveIntersections.first().getPoint();
                 Point lastNegative = negativeIntersections.last().getPoint();
-                Element arc1 = new Arc(arc.getInitialPoint(), lastNegative, arc.getCenter(),
-                        true);
+                Element arc1 = new Arc(arc.getInitialPoint(), lastNegative, arc.getCenter(), true);
                 arc1.setLayer(arc.getLayer());
 
                 trimResult.add(arc1);
 
-                Element arc2 = new Arc(firstPositive, arc.getEndingPoint(), arc.getCenter(),
-                        true);
+                Element arc2 = new Arc(firstPositive, arc.getEndingPoint(), arc.getCenter(), true);
                 arc2.setLayer(arc.getLayer());
 
                 trimResult.add(arc2);
@@ -124,9 +110,9 @@ public class ArcTrimmer implements Trimmer {
         }
 
         return trimResult;
-	}
-	
-	public SortedSet<ComparablePoint> getSortedPointSet (Arc arc, Point referencePoint,
+    }
+
+    public SortedSet<ComparablePoint> getSortedPointSet (Arc arc, Point referencePoint,
             Collection<Point> points) {
 
         SortedSet<ComparablePoint> sortedSet = new TreeSet<ComparablePoint>();
@@ -138,8 +124,7 @@ public class ArcTrimmer implements Trimmer {
                 if (Math.abs(key) > Constant.EPSILON && invertOrder) {
                     key = 1 / key;
                 }
-                ComparablePoint orderedPoint = new ComparablePoint(point,
-                        new DoubleKey(key));
+                ComparablePoint orderedPoint = new ComparablePoint(point, new DoubleKey(key));
                 sortedSet.add(orderedPoint);
             }
             catch (NullArgumentException e) {
@@ -151,8 +136,8 @@ public class ArcTrimmer implements Trimmer {
 
         return sortedSet;
     }
-	
-	private double getArcAngle (Arc arc, Point point) {
+
+    private double getArcAngle (Arc arc, Point point) {
 
         double arcAngle = 0;
         boolean contained = true;

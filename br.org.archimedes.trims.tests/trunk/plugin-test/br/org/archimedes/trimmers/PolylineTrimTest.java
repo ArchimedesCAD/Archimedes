@@ -10,220 +10,228 @@
  * This file was created on 2009/01/10, 11:16:48, by Hugo Corbucci.<br>
  * It is part of package br.org.archimedes.trim on the br.org.archimedes.trims.tests project.<br>
  */
+
 package br.org.archimedes.trimmers;
+
+import br.org.archimedes.Tester;
+import br.org.archimedes.exceptions.InvalidArgumentException;
+import br.org.archimedes.exceptions.NullArgumentException;
+import br.org.archimedes.model.Element;
+import br.org.archimedes.model.Point;
+import br.org.archimedes.polyline.Polyline;
+import br.org.archimedes.trims.interfaces.Trimmer;
+
+import org.junit.Before;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
-
-import br.org.archimedes.Tester;
-import br.org.archimedes.exceptions.InvalidArgumentException;
-import br.org.archimedes.exceptions.NullArgumentException;
-import br.org.archimedes.line.Line;
-import br.org.archimedes.model.Element;
-import br.org.archimedes.model.Point;
-import br.org.archimedes.polyline.Polyline;
-import br.org.archimedes.trimmers.PolylineTrimmer;
-import br.org.archimedes.trims.interfaces.Trimmer;
-
 public class PolylineTrimTest extends Tester {
-	Polyline poly1;
-	Trimmer trimmer;
 
-	@Before
-	public void setUp() throws NullArgumentException, InvalidArgumentException {
-		List<Point> polyPoints = new ArrayList<Point>();
-		polyPoints.add(new Point(0.0, -1.0));
-		polyPoints.add(new Point(0.0, 1.0));
-		polyPoints.add(new Point(1.0, 1.0));
-		polyPoints.add(new Point(1.0, 0.0));
-		polyPoints.add(new Point(-1.0, 0.0));
-		polyPoints.add(new Point(-1.0, -1.0));
-		poly1 = new Polyline(polyPoints);
-		trimmer = new PolylineTrimmer();
-	}
+    Polyline poly1;
 
-	@Test
-	public void lineIntersectsOnceReturnsPolyline()
-			throws NullArgumentException, InvalidArgumentException {
-		Element line = new Line(new Point(-0.5, -0.5), new Point(0.5, -0.5));
+    Trimmer trimmer;
 
-		Collection<Element> smallerSide = trimmer.trim(poly1, Collections
-				.singleton(line), new Point(0.0, 0.0));
-		List<Point> expectedPolyPoints = new ArrayList<Point>();
-		expectedPolyPoints.add(new Point(0.0, -1.0));
-		expectedPolyPoints.add(new Point(0.0, -0.5));
-		Polyline expected = new Polyline(expectedPolyPoints);
-		assertCollectionTheSame(Collections.singleton(expected), smallerSide);
-
-		Collection<Element> biggerSide = trimmer.trim(poly1, Collections
-				.singleton(line), new Point(0.0, -1.0));
-		expectedPolyPoints = new ArrayList<Point>();
-		expectedPolyPoints.add(new Point(0.0, -0.5));
-		expectedPolyPoints.add(new Point(0.0, 1.0));
-		expectedPolyPoints.add(new Point(1.0, 1.0));
-		expectedPolyPoints.add(new Point(1.0, 0.0));
-		expectedPolyPoints.add(new Point(-1.0, 0.0));
-		expectedPolyPoints.add(new Point(-1.0, -1.0));
-		expected = new Polyline(expectedPolyPoints);
-		assertCollectionTheSame(Collections.singleton(expected), biggerSide);
-	}
-
-	@Test
-	public void lineIntersectsTwiceReturnsTwoPolylines()
-			throws NullArgumentException, InvalidArgumentException {
-		Element line = new Line(new Point(-1.5, -0.5), new Point(1.5, -0.5));
-
-		Collection<Element> smallerSide = trimmer.trim(poly1, Collections
-				.singleton(line), new Point(0.0, 0.0));
-		List<Point> expectedPoly1Points = new ArrayList<Point>();
-		expectedPoly1Points.add(new Point(0.0, -1.0));
-		expectedPoly1Points.add(new Point(0.0, -0.5));
-		Polyline expectedPoly1 = new Polyline(expectedPoly1Points);
-
-		List<Point> expectedPoly2Points = new ArrayList<Point>();
-		expectedPoly2Points.add(new Point(-1.0, -0.5));
-		expectedPoly2Points.add(new Point(-1.0, -1.0));
-		Polyline expectedPoly2 = new Polyline(expectedPoly2Points);
-
-		Collection<Element> expected = new ArrayList<Element>();
-		expected.add(expectedPoly1);
-		expected.add(expectedPoly2);
-
-		assertCollectionTheSame(expected, smallerSide);
-	}
-
-	@Test
-	public void lineIntersectsTwiceReturnsPolyline()
-			throws NullArgumentException, InvalidArgumentException {
-		Element line = new Line(new Point(-1.5, -0.5), new Point(0.5, -0.5));
-
-		Collection<Element> biggerSide = trimmer.trim(poly1, Collections
-				.singleton(line), new Point(0.0, -1.0));
-		List<Point> expectedPolyPoints = new ArrayList<Point>();
-		expectedPolyPoints.add(new Point(0.0, -0.5));
-		expectedPolyPoints.add(new Point(0.0, 1.0));
-		expectedPolyPoints.add(new Point(1.0, 1.0));
-		expectedPolyPoints.add(new Point(1.0, 0.0));
-		expectedPolyPoints.add(new Point(-1.0, 0.0));
-		expectedPolyPoints.add(new Point(-1.0, -1.0));
-
-		Polyline expected = new Polyline(expectedPolyPoints);
-		assertCollectionTheSame(Collections.singleton(expected), biggerSide);
-	}
-
-	@Test
-	public void lineCrossesMiddleOfPolylineReturnsTwoPiecesOfPolylineClickingOver()
-			throws NullArgumentException, InvalidArgumentException {
-		Element line = new Line(new Point(-1.0, 1.0), new Point(1.0, -1.0));
-
-		Collection<Element> sideBelow = trimmer.trim(poly1, Collections
-				.singleton(line), new Point(1.0, 1.0));
-
-		List<Point> expectedPoly1Points = new ArrayList<Point>();
-		expectedPoly1Points.add(new Point(0.0, -1.0));
-		expectedPoly1Points.add(new Point(0.0, 0.0));
-		expectedPoly1Points.add(new Point(-1.0, 0.0));
-		expectedPoly1Points.add(new Point(-1.0, -1.0));
-		Polyline expectedPoly1 = new Polyline(expectedPoly1Points);
+    Collection<Point> cutPoints = new ArrayList<Point>();
 
 
-		Collection<Element> expected = new ArrayList<Element>();
-		expected.add(expectedPoly1);
+    @Before
+    public void setUp () throws NullArgumentException, InvalidArgumentException {
 
-		assertCollectionTheSame(expected, sideBelow);
-	}
+        List<Point> polyPoints = new ArrayList<Point>();
+        polyPoints.add(new Point(0.0, -1.0));
+        polyPoints.add(new Point(0.0, 1.0));
+        polyPoints.add(new Point(1.0, 1.0));
+        polyPoints.add(new Point(1.0, 0.0));
+        polyPoints.add(new Point( -1.0, 0.0));
+        polyPoints.add(new Point( -1.0, -1.0));
+        poly1 = new Polyline(polyPoints);
+        trimmer = new PolylineTrimmer();
+    }
 
-	@Test
-	public void lineCrossesMiddleOfPolylineReturnsHalfOfPolylineClickingUnderTwice()
-			throws NullArgumentException, InvalidArgumentException {
-		Element line = new Line(new Point(-1.0, 1.0), new Point(1.0, -1.0));
+    @Test
+    public void oneIntersectionReturnsPolyline () throws NullArgumentException,
+            InvalidArgumentException {
 
-		Collection<Element> sideOver = trimmer.trim(poly1, Collections
-				.singleton(line), new Point(0.0, -1.0));
-		List<Point> expectedPolyPoints = new ArrayList<Point>();
-		expectedPolyPoints.add(new Point(0.0, 0.0));
-		expectedPolyPoints.add(new Point(0.0, 1.0));
-		expectedPolyPoints.add(new Point(1.0, 1.0));
-		expectedPolyPoints.add(new Point(1.0, 0.0));
-		expectedPolyPoints.add(new Point(-1.0, 0.0));
-		expectedPolyPoints.add(new Point(-1.0, -1.0));
+        cutPoints.add(new Point(0.0, -0.5));
 
-		Polyline expected = new Polyline(expectedPolyPoints);
-		assertCollectionTheSame(Collections.singleton(expected), sideOver);
+        Collection<Element> smallerSide = trimmer.trim(poly1, cutPoints, new Point(0.0, 0.0));
+        List<Point> expectedPolyPoints = new ArrayList<Point>();
+        expectedPolyPoints.add(new Point(0.0, -1.0));
+        expectedPolyPoints.add(new Point(0.0, -0.5));
+        Polyline expected = new Polyline(expectedPolyPoints);
+        assertCollectionTheSame(Collections.singleton(expected), smallerSide);
 
-		sideOver = trimmer.trim(expected, Collections.singleton(line),
-				new Point(-1.0, -1.0));
-		expectedPolyPoints = new ArrayList<Point>();
-		expectedPolyPoints.add(new Point(0.0, 0.0));
-		expectedPolyPoints.add(new Point(0.0, 1.0));
-		expectedPolyPoints.add(new Point(1.0, 1.0));
-		expectedPolyPoints.add(new Point(1.0, 0.0));
-		expectedPolyPoints.add(new Point(0.0, 0.0));
-		expected = new Polyline(expectedPolyPoints);
-		assertCollectionTheSame(Collections.singleton(expected), sideOver);
-	}
-	
-	@Test
-	public void twoLinesCuttingFourTimesReturnsTwoPolylinesClickingPolylineBeforeSecondPiece()
-			throws NullArgumentException, InvalidArgumentException {
-		Element line1 = new Line(new Point(-1.5, -0.5), new Point(0.5, -0.5));
-		Element line2 = new Line(new Point(0.5, 1.5), new Point(0.5, -0.5));
-		
-		Collection<Element> references = new ArrayList<Element>();
-		references.add(line1);
-		references.add(line2);
-		
-		Collection<Element> twoPieces = trimmer.trim(poly1, references, new Point(-1.0, 0.0));
+        Collection<Element> biggerSide = trimmer.trim(poly1, cutPoints, new Point(0.0, -1.0));
+        expectedPolyPoints = new ArrayList<Point>();
+        expectedPolyPoints.add(new Point(0.0, -0.5));
+        expectedPolyPoints.add(new Point(0.0, 1.0));
+        expectedPolyPoints.add(new Point(1.0, 1.0));
+        expectedPolyPoints.add(new Point(1.0, 0.0));
+        expectedPolyPoints.add(new Point( -1.0, 0.0));
+        expectedPolyPoints.add(new Point( -1.0, -1.0));
+        expected = new Polyline(expectedPolyPoints);
+        assertCollectionTheSame(Collections.singleton(expected), biggerSide);
+    }
 
-		List<Point> expectedPoly1Points = new ArrayList<Point>();
-		expectedPoly1Points.add(new Point(0.0, -1.0));
-		expectedPoly1Points.add(new Point(0.0, 1.0));
-		expectedPoly1Points.add(new Point(1.0, 1.0));
-		expectedPoly1Points.add(new Point(1.0, 0.0));
-		expectedPoly1Points.add(new Point(0.5, 0.0));
-		Polyline expectedPoly1 = new Polyline(expectedPoly1Points);
+    @Test
+    public void twoIntersectionsReturnTwoPolylinesClickingUp () throws NullArgumentException,
+            InvalidArgumentException {
 
-		List<Point> expectedPoly2Points = new ArrayList<Point>();
-		expectedPoly2Points.add(new Point(-1.0, -0.5));
-		expectedPoly2Points.add(new Point(-1.0, -1.0));
-		Polyline expectedPoly2 = new Polyline(expectedPoly2Points);
+        cutPoints.add(new Point( -1.0, -0.5));
+        cutPoints.add(new Point(0.0, -0.5));
 
-		Collection<Element> expected = new ArrayList<Element>();
-		expected.add(expectedPoly1);
-		expected.add(expectedPoly2);
+        Collection<Element> smallerSide = trimmer.trim(poly1, cutPoints, new Point(0.0, 0.0));
+        List<Point> expectedPoly1Points = new ArrayList<Point>();
+        expectedPoly1Points.add(new Point(0.0, -1.0));
+        expectedPoly1Points.add(new Point(0.0, -0.5));
+        Polyline expectedPoly1 = new Polyline(expectedPoly1Points);
 
-		assertCollectionTheSame(expected, twoPieces);
-	}
-	
-	@Test
-	public void polylineIntersectingItselfThreeTimesWithLineIntersectingThereReturnsRWhenClickedOnLeft() throws NullArgumentException, InvalidArgumentException{
-		List<Point> polyPoints = new ArrayList<Point>();
-		polyPoints.add(new Point(0.0, -1.0));
-		polyPoints.add(new Point(0.0, 1.0));
-		polyPoints.add(new Point(1.0, 1.0));
-		polyPoints.add(new Point(1.0, 0.0));
-		polyPoints.add(new Point(-1.0, 0.0));
-		polyPoints.add(new Point(-1.0, 1.0));
-		polyPoints.add(new Point(1.0, -1.0));
-		
-		Element poly = new Polyline(polyPoints);
-		Element reference = new Line(new Point(-1.0, -1.0), new Point(1.0, 1.0));
-		
-		Collection<Element> r = trimmer.trim(poly, Collections.singleton(reference), new Point(-1.0, 0.5));
-		
-		List<Point> expectedPoints = new ArrayList<Point>();
-		expectedPoints.add(new Point(0.0, -1.0));
-		expectedPoints.add(new Point(0.0, 1.0));
-		expectedPoints.add(new Point(1.0, 1.0));
-		expectedPoints.add(new Point(1.0, 0.0));
-		expectedPoints.add(new Point(0.0, 0.0));
-		expectedPoints.add(new Point(1.0, -1.0));
-		
-		assertCollectionTheSame(Collections.singleton(new Polyline(expectedPoints)), r);
-	}
+        List<Point> expectedPoly2Points = new ArrayList<Point>();
+        expectedPoly2Points.add(new Point( -1.0, -0.5));
+        expectedPoly2Points.add(new Point( -1.0, -1.0));
+        Polyline expectedPoly2 = new Polyline(expectedPoly2Points);
+
+        Collection<Element> expected = new ArrayList<Element>();
+        expected.add(expectedPoly1);
+        expected.add(expectedPoly2);
+
+        assertCollectionTheSame(expected, smallerSide);
+    }
+
+    @Test
+    public void twoIntersectionsReturnPolylineClickingDown () throws NullArgumentException,
+            InvalidArgumentException {
+
+        cutPoints.add(new Point( -1.0, -0.5));
+        cutPoints.add(new Point(0.0, -0.5));
+
+        Collection<Element> biggerSide = trimmer.trim(poly1, cutPoints, new Point(0.0, -1.0));
+        List<Point> expectedPolyPoints = new ArrayList<Point>();
+        expectedPolyPoints.add(new Point(0.0, -0.5));
+        expectedPolyPoints.add(new Point(0.0, 1.0));
+        expectedPolyPoints.add(new Point(1.0, 1.0));
+        expectedPolyPoints.add(new Point(1.0, 0.0));
+        expectedPolyPoints.add(new Point( -1.0, 0.0));
+        expectedPolyPoints.add(new Point( -1.0, -1.0));
+
+        Polyline expected = new Polyline(expectedPolyPoints);
+        assertCollectionTheSame(Collections.singleton(expected), biggerSide);
+    }
+
+    @Test
+    public void oneIntersectionThroughOriginReturnsLowerPartOfThePolylineClickingUp ()
+            throws NullArgumentException, InvalidArgumentException {
+
+        cutPoints.add(new Point(0.0, 0.0));
+
+        Collection<Element> sideBelow = trimmer.trim(poly1, cutPoints, new Point(1.0, 1.0));
+
+        List<Point> expectedPoly1Points = new ArrayList<Point>();
+        expectedPoly1Points.add(new Point(0.0, -1.0));
+        expectedPoly1Points.add(new Point(0.0, 0.0));
+        expectedPoly1Points.add(new Point( -1.0, 0.0));
+        expectedPoly1Points.add(new Point( -1.0, -1.0));
+        Polyline expectedPoly1 = new Polyline(expectedPoly1Points);
+
+        Collection<Element> expected = new ArrayList<Element>();
+        expected.add(expectedPoly1);
+
+        assertCollectionTheSame(expected, sideBelow);
+    }
+
+    @Test
+    public void oneIntersectionThroughOriginReturnsOnePolyline () throws NullArgumentException,
+            InvalidArgumentException {
+
+        cutPoints.add(new Point(0.0, 0.0));
+
+        Collection<Element> sideOver = trimmer.trim(poly1, cutPoints, new Point(0.0, -1.0));
+        List<Point> expectedPolyPoints = new ArrayList<Point>();
+        expectedPolyPoints.add(new Point(0.0, 0.0));
+        expectedPolyPoints.add(new Point(0.0, 1.0));
+        expectedPolyPoints.add(new Point(1.0, 1.0));
+        expectedPolyPoints.add(new Point(1.0, 0.0));
+        expectedPolyPoints.add(new Point( -1.0, 0.0));
+        expectedPolyPoints.add(new Point( -1.0, -1.0));
+
+        Polyline expected = new Polyline(expectedPolyPoints);
+        assertCollectionTheSame(Collections.singleton(expected), sideOver);
+
+        sideOver = trimmer.trim(expected, cutPoints, new Point( -1.0, -1.0));
+        expectedPolyPoints = new ArrayList<Point>();
+        expectedPolyPoints.add(new Point(0.0, 0.0));
+        expectedPolyPoints.add(new Point(0.0, 1.0));
+        expectedPolyPoints.add(new Point(1.0, 1.0));
+        expectedPolyPoints.add(new Point(1.0, 0.0));
+        expectedPolyPoints.add(new Point(0.0, 0.0));
+        expected = new Polyline(expectedPolyPoints);
+        assertCollectionTheSame(Collections.singleton(expected), sideOver);
+    }
+
+    @Test
+    public void fourIntersectionsReturnTwoPolylinesClickingPolylineBeforeSecondPiece ()
+            throws NullArgumentException, InvalidArgumentException {
+
+        cutPoints.add(new Point( -1.0, -0.5));
+        cutPoints.add(new Point(0.0, -0.5));
+
+        cutPoints.add(new Point(0.5, 1.0));
+        cutPoints.add(new Point(0.5, 0.0));
+
+        Collection<Element> twoPieces = trimmer.trim(poly1, cutPoints, new Point( -1.0, 0.0));
+
+        List<Point> expectedPoly1Points = new ArrayList<Point>();
+        expectedPoly1Points.add(new Point(0.0, -1.0));
+        expectedPoly1Points.add(new Point(0.0, 1.0));
+        expectedPoly1Points.add(new Point(1.0, 1.0));
+        expectedPoly1Points.add(new Point(1.0, 0.0));
+        expectedPoly1Points.add(new Point(0.5, 0.0));
+        Polyline expectedPoly1 = new Polyline(expectedPoly1Points);
+
+        List<Point> expectedPoly2Points = new ArrayList<Point>();
+        expectedPoly2Points.add(new Point( -1.0, -0.5));
+        expectedPoly2Points.add(new Point( -1.0, -1.0));
+        Polyline expectedPoly2 = new Polyline(expectedPoly2Points);
+
+        Collection<Element> expected = new ArrayList<Element>();
+        expected.add(expectedPoly1);
+        expected.add(expectedPoly2);
+
+        assertCollectionTheSame(expected, twoPieces);
+    }
+
+    @Test
+    public void polylineIntersectingItselfThreeTimesWithLineIntersectingThereReturnsRWhenClickedOnLeft ()
+            throws NullArgumentException, InvalidArgumentException {
+
+        List<Point> polyPoints = new ArrayList<Point>();
+        polyPoints.add(new Point(0.0, -1.0));
+        polyPoints.add(new Point(0.0, 1.0));
+        polyPoints.add(new Point(1.0, 1.0));
+        polyPoints.add(new Point(1.0, 0.0));
+        polyPoints.add(new Point( -1.0, 0.0));
+        polyPoints.add(new Point( -1.0, 1.0));
+        polyPoints.add(new Point(1.0, -1.0));
+
+        Element poly = new Polyline(polyPoints);
+
+        cutPoints.add(new Point(0.0, 0.0));
+        cutPoints.add(new Point(1.0, 1.0));
+
+        Collection<Element> r = trimmer.trim(poly, cutPoints, new Point( -1.0, 0.5));
+
+        List<Point> expectedPoints = new ArrayList<Point>();
+        expectedPoints.add(new Point(0.0, -1.0));
+        expectedPoints.add(new Point(0.0, 1.0));
+        expectedPoints.add(new Point(1.0, 1.0));
+        expectedPoints.add(new Point(1.0, 0.0));
+        expectedPoints.add(new Point(0.0, 0.0));
+        expectedPoints.add(new Point(1.0, -1.0));
+
+        assertCollectionTheSame(Collections.singleton(new Polyline(expectedPoints)), r);
+    }
 }

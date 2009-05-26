@@ -29,7 +29,7 @@ import br.org.archimedes.trims.interfaces.Trimmer;
 public class NullTrimmer implements Trimmer {
 
 	public Collection<Element> trim(Element element,
-			Collection<Element> references, Point click) throws NullArgumentException {
+			Collection<Point> cutPoints, Point click) throws NullArgumentException {
 		
 		return Collections.singleton(element);
 	}

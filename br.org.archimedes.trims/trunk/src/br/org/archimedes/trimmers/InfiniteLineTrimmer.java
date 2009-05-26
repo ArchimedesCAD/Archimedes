@@ -13,39 +13,33 @@
  */
 package br.org.archimedes.trimmers;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.SortedSet;
-import java.util.TreeSet;
-
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.infiniteline.InfiniteLine;
-import br.org.archimedes.interfaces.IntersectionManager;
 import br.org.archimedes.model.ComparablePoint;
 import br.org.archimedes.model.DoubleKey;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Vector;
-import br.org.archimedes.rcp.extensionpoints.IntersectionManagerEPLoader;
 import br.org.archimedes.semiline.Semiline;
 import br.org.archimedes.trims.interfaces.Trimmer;
 
-public class InfiniteLineTrimmer implements Trimmer {
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
-	private IntersectionManager intersectionManager;
+public class InfiniteLineTrimmer implements Trimmer {
 
 	public InfiniteLineTrimmer() {
 
-		intersectionManager = new IntersectionManagerEPLoader()
-				.getIntersectionManager();
 	}
 
 	public Collection<Element> trim(Element element,
-			Collection<Element> references, Point click)
+			Collection<Point> cutPoints, Point click)
 			throws NullArgumentException {
 
-		if (element == null || references == null) {
+		if (element == null || cutPoints == null) {
 			throw new NullArgumentException();
 		}
 
@@ -53,8 +47,7 @@ public class InfiniteLineTrimmer implements Trimmer {
 		Collection<Element> trimResult = new ArrayList<Element>();
 
 		SortedSet<ComparablePoint> sortedPointSet = getSortedPointSet(line,
-				line.getInitialPoint(), intersectionManager
-						.getIntersectionsBetween(line, references));
+				line.getInitialPoint(), cutPoints);
 
 		Vector direction = new Vector(line.getInitialPoint(), line
 				.getEndingPoint());

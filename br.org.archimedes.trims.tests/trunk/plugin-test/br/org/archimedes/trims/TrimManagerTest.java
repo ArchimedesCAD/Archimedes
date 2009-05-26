@@ -39,8 +39,8 @@ public class TrimManagerTest extends Tester {
         TrimManager manager = new TrimManager(trimmerEPLoader);
         Line line = new Line(1.0, 0.0, -1.0, 0.0);
 
-        Collection<Element> list = Collections.emptyList();
-        Collection<Element> collection = manager.getTrimOf(line, list, new Point(0.0, 0.0));
+        Collection<Point> cutPoints = Collections.emptyList();
+        Collection<Element> collection = manager.getTrimOf(line, cutPoints, new Point(0.0, 0.0));
         assertCollectionTheSame(Collections.singleton(line), collection);
     }
 
@@ -48,16 +48,16 @@ public class TrimManagerTest extends Tester {
     public void returnMockedTrimmerAndCallTrimForIt () throws Exception {
 
         final Line line = new Line(1.0, 0.0, -1.0, 0.0);
-        final Collection<Element> reference = Collections.emptyList();
+        final Collection<Point> reference = Collections.emptyList();
         final Point point = new Point(0.0, 0.0);
 
         Trimmer trimmerMockado = new Trimmer() {
 
-            public Collection<Element> trim (Element element, Collection<Element> references,
+            public Collection<Element> trim (Element element, Collection<Point> cutPoints,
                     Point click) throws NullArgumentException {
 
                 assertEquals(line, element);
-                assertEquals(reference, references);
+                assertEquals(reference, cutPoints);
                 assertEquals(point, click);
                 return Collections.singleton((Element) line);
             }
