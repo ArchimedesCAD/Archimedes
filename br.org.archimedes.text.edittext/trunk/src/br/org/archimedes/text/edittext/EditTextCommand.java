@@ -64,7 +64,7 @@ public class EditTextCommand implements UndoableCommand {
      * @throws NullArgumentException
      *             In case the drawing is null.
      */
-    private void changeText (Drawing drawing, String content)
+    public void changeText (Drawing drawing, String content)
             throws IllegalActionException, NullArgumentException {
 
         if (drawing == null) {
