@@ -110,7 +110,6 @@
 			<fileset dir="${resultDir}">
 				<include name="${archiveNamePrefix}*installer.jar" />
 				<include name="${archiveNamePrefix}*${version}.zip" />
-				<include name="test.txt" />
 			</fileset>
 		</scp>
 	</target>
