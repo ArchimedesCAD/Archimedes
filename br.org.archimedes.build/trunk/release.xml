@@ -105,7 +105,7 @@
 		<antcall target="upload-files-to-sourceforge" />
 	</target>
 
-	<target name="upload-files-to-sourceforge">
+	<target name="upload-files-to-sourceforge" depends="copy-results-to-output">
 		<scp todir="${sourceforge.user}@frs.sourceforge.net:uploads/" keyfile="${user.home}/.ssh/${keyfile.name}" passphrase="${sourceforge.passphrase}">
 			<fileset dir="${resultDir}">
 				<include name="${archiveNamePrefix}*installer.jar" />
@@ -114,7 +114,7 @@
 		</scp>
 	</target>
 
-	<target name="upload-online-packs">
+	<target name="upload-online-packs" depends="copy-results-to-output">
 		<scp todir="${sourceforge.user}@web.sourceforge.net:/home/groups/a/ar/arquimedes/htdocs/update/" keyfile="${user.home}/.ssh/${keyfile.name}" passphrase="${sourceforge.passphrase}">
 			<fileset dir="${resultDir}">
 				<include name="${archiveNamePrefix}*online-installer.pack-*.jar" />
