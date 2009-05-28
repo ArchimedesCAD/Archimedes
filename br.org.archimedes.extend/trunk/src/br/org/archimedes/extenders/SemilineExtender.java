@@ -1,28 +1,34 @@
-/*
- * Copyright (c) 2008, 2009 Hugo Corbucci and others.<br> All rights reserved. This program and the
- * accompanying materials are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html<br> <br> Contributors:<br> Bruno da Hora, Luiz Real -
- * initial API and implementation<br> <br> This file was created on 2009/04/28, 14:00:00, by Bruno
- * da Hora, Luiz real, Ricardo Sider.<br> It is part of package br.org.archimedes.extenders on the
- * br.org.archimedes.extend.test project.<br>
+/**
+ * Copyright (c) 2008, 2009 Hugo Corbucci and others.<br>
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html<br>
+ * <br>
+ * Contributors:<br>
+ * Bruno da Hora, Luiz Real - initial API and implementation<br>
+ * Bruno Klava, Kenzo Yamada - later contributions<br>
+ * <br>
+ * This file was created on 2009/04/28, 14:00:00, by Bruno da Hora, Luiz real, Ricardo Sider.<br>
+ * It is part of package br.org.archimedes.extenders on the br.org.archimedes.extend.test project.<br>
  */
 
 package br.org.archimedes.extenders;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 import br.org.archimedes.Geometrics;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.extend.interfaces.Extender;
+import br.org.archimedes.infiniteline.InfiniteLine;
 import br.org.archimedes.interfaces.IntersectionManager;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Vector;
 import br.org.archimedes.rcp.extensionpoints.IntersectionManagerEPLoader;
 import br.org.archimedes.semiline.Semiline;
-
-import java.util.Collection;
-import java.util.Collections;
 
 public class SemilineExtender implements Extender {
 
@@ -85,5 +91,30 @@ public class SemilineExtender implements Extender {
             }
         }
         return nearestReferencePoint;
+    }
+
+    public Collection<Element> getInfiniteExtensionElements (Element element) {
+
+        if ( !(element instanceof Semiline)) {
+            throw new IllegalArgumentException();
+        }
+
+        Semiline semiline = (Semiline) element;
+
+        Collection<Element> extension = new ArrayList<Element>(1);
+
+        try {
+            InfiniteLine infiniteLine = new InfiniteLine(semiline.getInitialPoint(), semiline
+                    .getDirectionPoint());
+            extension.add(infiniteLine);
+        }
+        catch (NullArgumentException e) {
+            // will not reach here
+        }
+        catch (InvalidArgumentException e) {
+            // will not reach here
+        }
+
+        return extension;
     }
 }

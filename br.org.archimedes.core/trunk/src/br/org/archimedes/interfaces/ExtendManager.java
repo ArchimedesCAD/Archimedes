@@ -11,6 +11,7 @@
  * This file was created on 2008/07/03, 10:03:33, by Luiz C. Real.<br>
  * It is part of package br.org.archimedes.interfaces on the br.org.archimedes.core project.<br>
  */
+
 package br.org.archimedes.interfaces;
 
 import java.util.Collection;
@@ -26,7 +27,7 @@ import br.org.archimedes.model.Point;
  */
 public interface ExtendManager {
 
-	/**
+    /**
      * Extends an element to the nearest reference
      * 
      * @param element
@@ -34,11 +35,16 @@ public interface ExtendManager {
      * @param references
      *            References to extend the element
      * @param click
-     * 			  Point where user clicked to choose which parts of the element shall be extended
+     *            Point where user clicked to choose which parts of the element shall be extended
      * @throws NullArgumentException
      *             If element, references or click is null
      */
-	public void extend (Element element,
-	            Collection<Element> references, Point click) throws NullArgumentException;
+    public void extend (Element element, Collection<Element> references, Point click)
+            throws NullArgumentException;
+
+    /**
+     * @return a collection of elements that are the infinite extension of element
+     */
+    public Collection<Element> getInfiniteExtensionElements (Element element);
 
 }

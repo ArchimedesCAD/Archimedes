@@ -6,13 +6,17 @@
  * <br>
  * Contributors:<br>
  * Jonas K. Hirata - initial API and implementation<br>
- * Hugo Corbucci - later contributions<br>
+ * Hugo Corbucci, Bruno Klava, Kenzo Yamada - later contributions<br>
  * <br>
  * This file was created on 2008/07/16, 23:59:46, by Jonas K. Hirata.<br>
  * It is part of package br.org.archimedes.extend.line on the br.org.archimedes.extend project.<br>
  */
 
 package br.org.archimedes.extenders;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 import br.org.archimedes.Geometrics;
 import br.org.archimedes.arc.Arc;
@@ -25,9 +29,6 @@ import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Vector;
 import br.org.archimedes.rcp.extensionpoints.IntersectionManagerEPLoader;
-
-import java.util.Collection;
-import java.util.Collections;
 
 public class ArcExtender implements Extender {
 
@@ -99,5 +100,29 @@ public class ArcExtender implements Extender {
         else {
             return arc.getInitialPoint();
         }
+    }
+
+    public Collection<Element> getInfiniteExtensionElements (Element element) {
+
+        if ( !(element instanceof Arc)) {
+            throw new IllegalArgumentException();
+        }
+
+        Arc arc = (Arc) element;
+
+        Collection<Element> extension = new ArrayList<Element>(1);
+
+        try {
+            Circle circle = new Circle(arc.getCenter(), arc.getRadius());
+            extension.add(circle);
+        }
+        catch (NullArgumentException e) {
+            // will not reach here
+        }
+        catch (InvalidArgumentException e) {
+            // will not reach here
+        }
+
+        return extension;
     }
 }

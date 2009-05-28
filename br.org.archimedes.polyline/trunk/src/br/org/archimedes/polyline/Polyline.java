@@ -14,6 +14,15 @@
 
 package br.org.archimedes.polyline;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
+
 import br.org.archimedes.Geometrics;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.InvalidParameterException;
@@ -33,14 +42,6 @@ import br.org.archimedes.model.references.SquarePoint;
 import br.org.archimedes.model.references.TrianglePoint;
 import br.org.archimedes.model.references.XPoint;
 import br.org.archimedes.rcp.extensionpoints.IntersectionManagerEPLoader;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 /**
  * Belongs to package br.org.archimedes.polyline.
@@ -79,6 +80,10 @@ public class Polyline extends Element {
         else {
             fillPoints(points);
         }
+    }
+
+    public Polyline (Point... points) throws NullArgumentException, InvalidArgumentException {
+        this(Arrays.asList(points));
     }
 
     /**

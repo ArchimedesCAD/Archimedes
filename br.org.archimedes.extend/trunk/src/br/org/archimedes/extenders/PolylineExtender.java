@@ -7,6 +7,7 @@
  * Contributors:<br>
  * Bruno da Hora, Luiz Real - initial API and implementation<br>
  * Bruno Klava, Luiz Real - behavior fixed<br>
+ * Bruno Klava, Kenzo Yamada - later contributions<br>
  * <br>
  * This file was created on 30/04/2009, 07:23:56.<br>
  * It is part of br.org.archimedes.extenders on the br.org.archimedes.extend project.<br>
@@ -14,19 +15,22 @@
 
 package br.org.archimedes.extenders;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 import br.org.archimedes.Geometrics;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.extend.interfaces.Extender;
+import br.org.archimedes.infiniteline.InfiniteLine;
 import br.org.archimedes.interfaces.IntersectionManager;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
+import br.org.archimedes.model.Vector;
 import br.org.archimedes.polyline.Polyline;
 import br.org.archimedes.rcp.extensionpoints.IntersectionManagerEPLoader;
 import br.org.archimedes.semiline.Semiline;
-
-import java.util.Collection;
-import java.util.List;
 
 /**
  * @author Bruno da Hora, Luiz Real
@@ -35,13 +39,14 @@ public class PolylineExtender implements Extender {
 
     private IntersectionManager intersectionManager;
 
+
     public void extend (Element element, Collection<Element> references, Point extremePoint)
             throws NullArgumentException {
 
         if (element == null || references == null || extremePoint == null) {
             throw new NullArgumentException();
         }
-        
+
         intersectionManager = new IntersectionManagerEPLoader().getIntersectionManager();
 
         Polyline polyline = (Polyline) element;
@@ -49,20 +54,22 @@ public class PolylineExtender implements Extender {
         List<Point> points = polyline.getPoints();
         extremePoint = points.get(getIndexInPolyline(polyline, extremePoint));
 
-        if (!doExtend(polyline, references, extremePoint)) {
+        if ( !doExtend(polyline, references, extremePoint)) {
             Point otherExtreme = getOtherExtreme(polyline, extremePoint);
-            
+
             doExtend(polyline, references, otherExtreme);
         }
 
     }
-    
-    private boolean doExtend(Polyline polyline, Collection<Element> references, Point extremePoint) throws NullArgumentException {
+
+    private boolean doExtend (Polyline polyline, Collection<Element> references, Point extremePoint)
+            throws NullArgumentException {
+
         Semiline semiline = createHelperSemiline(polyline, extremePoint);
 
         Collection<Point> intersectionPoints = intersectionManager.getIntersectionsBetween(
                 semiline, references);
-        
+
         Point nearestReferencePoint = getNearestReferencePoint(extremePoint, polyline,
                 intersectionPoints);
 
@@ -73,14 +80,16 @@ public class PolylineExtender implements Extender {
         }
         return false;
     }
-    
+
     private Point getOtherExtreme (Polyline polyline, Point extremePoint) {
+
         int index = getIndexInPolyline(polyline, extremePoint);
         List<Point> points = polyline.getPoints();
         return points.get(points.size() - 1 - index);
     }
 
-    private Semiline createHelperSemiline(Polyline polyline, Point extremeToExtend) {
+    private Semiline createHelperSemiline (Polyline polyline, Point extremeToExtend) {
+
         Point semilineInitial;
         int index = getIndexInPolyline(polyline, extremeToExtend);
         List<Point> points = polyline.getPoints();
@@ -140,4 +149,55 @@ public class PolylineExtender implements Extender {
         }
     }
 
+    public Collection<Element> getInfiniteExtensionElements (Element element) {
+
+        if ( !(element instanceof Polyline)) {
+            throw new IllegalArgumentException();
+        }
+
+        Polyline polyline = (Polyline) element;
+
+        Collection<Element> extension = new ArrayList<Element>();
+
+        try {
+
+            int size = polyline.getPoints().size();
+
+            if (size == 2) {
+                InfiniteLine infiniteLine = new InfiniteLine(polyline.getPoints().get(0), polyline
+                        .getPoints().get(1));
+                extension.add(infiniteLine);
+            }
+            else if (size > 2) {
+                Point direction = (new Vector(polyline.getPoints().get(1), polyline.getPoints()
+                        .get(0))).getPoint();
+                Semiline semiline1 = new Semiline(polyline.getPoints().get(1), direction);
+                extension.add(semiline1);
+
+                if (size > 3) {
+                    ArrayList<Point> middlePoints = new ArrayList<Point>();
+                    for (int i = 1; i <= size - 2; i++) {
+                        middlePoints.add(polyline.getPoints().get(i));
+                    }
+                    Polyline middlePolyline = new Polyline(middlePoints);
+                    extension.add(middlePolyline);
+                }
+
+                Point direction2 = (new Vector(polyline.getPoints().get(size - 2), polyline
+                        .getPoints().get(size - 1))).getPoint();
+                Semiline semiline2 = new Semiline(polyline.getPoints().get(size - 2), direction2);
+                extension.add(semiline2);
+
+            }
+
+        }
+        catch (NullArgumentException e) {
+            // will not reach here
+        }
+        catch (InvalidArgumentException e) {
+            // will not reach here
+        }
+
+        return extension;
+    }
 }

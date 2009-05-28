@@ -6,24 +6,38 @@
  * <br>
  * Contributors:<br>
  * Luiz C. Real - initial API and implementation<br>
+ * Bruno Klava, Kenzo Yamada - later contributions<br>
  * <br>
  * This file was created on 2008/07/03, 10:30:03, by Luiz C. Real.<br>
  * It is part of package br.org.archimedes.extend on the br.org.archimedes.extend project.<br>
  */
+
 package br.org.archimedes.extend;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
+import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.extend.interfaces.Extender;
+import br.org.archimedes.infiniteline.InfiniteLine;
+import br.org.archimedes.line.Line;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
 
 public class NullExtender implements Extender {
 
-	public void extend(Element element, Collection<Element> references,
-			Point extremePoint) throws NullArgumentException {
-		// Does nothing
-	}
+    public void extend (Element element, Collection<Element> references, Point extremePoint)
+            throws NullArgumentException {
+
+        // Does nothing
+    }
+
+    public Collection<Element> getInfiniteExtensionElements (Element element) {
+
+        Collection<Element> extension = new ArrayList<Element>(1);
+        extension.add(element);
+        return extension;
+    }
 
 }

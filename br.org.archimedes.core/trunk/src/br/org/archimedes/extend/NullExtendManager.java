@@ -6,11 +6,12 @@
  * <br>
  * Contributors:<br>
  * Luiz C. Real - initial API and implementation<br>
- * Hugo Corbucci - later contributions<br>
+ * Hugo Corbucci, Bruno Klava, Kenzo Yamada - later contributions<br>
  * <br>
  * This file was created on 2008/07/03, 10:03:33, by Luiz C. Real.<br>
  * It is part of package br.org.archimedes.extend on the br.org.archimedes.core project.<br>
  */
+
 package br.org.archimedes.extend;
 
 import java.util.Collection;
@@ -22,10 +23,15 @@ import br.org.archimedes.model.Point;
 
 public class NullExtendManager implements ExtendManager {
 
-	public void extend(Element element,
-			Collection<Element> references, Point click)
-			throws NullArgumentException {
-		// Does nothing
-	}
+    public void extend (Element element, Collection<Element> references, Point click)
+            throws NullArgumentException {
+
+        // Does nothing
+    }
+
+    public Collection<Element> getInfiniteExtensionElements (Element element) {
+
+        return null;
+    }
 
 }

@@ -13,6 +13,7 @@
  */
 package br.org.archimedes.extend;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import br.org.archimedes.exceptions.NullArgumentException;
@@ -45,6 +46,10 @@ public class ExtendManager implements
 		Class<? extends Element> elementClass = element.getClass();
         Extender extender = loader.get(elementClass);
         return extender == null ? NULL_EXTENDER : extender;
+	}
+	
+	public Collection<Element> getInfiniteExtensionElements (Element element) {
+	    return getExtenderFor(element).getInfiniteExtensionElements(element);
 	}
 
 }
