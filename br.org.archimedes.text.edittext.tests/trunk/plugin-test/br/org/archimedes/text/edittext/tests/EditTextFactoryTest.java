@@ -1,7 +1,6 @@
 
 package br.org.archimedes.text.edittext.tests;
 
-import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.gui.opengl.Color;
 import br.org.archimedes.helper.FactoryTester;
 import br.org.archimedes.model.Drawing;
@@ -48,27 +47,20 @@ public class EditTextFactoryTest extends FactoryTester {
         br.org.archimedes.Utils.getController().setActiveDrawing(null);
     }
 
-    @Test(expected = InvalidArgumentException.class)
-    public void throwsInvalidArgumentExceptionIfThereIsNoTextUnderTheDrawing ()
-            throws InvalidArgumentException {
-
-        drawing.addLayer(layer);
-        factory = new EditTextFactory(new Point(500, 500));
-    }
-    
     @Test
-    public void testAcceptsSetOfElements() {
+    public void testAcceptsSetOfElements () {
+
         factory = new EditTextFactory();
         assertBegin(factory, false);
-        
+
         assertInvalidNext(factory, null);
-        assertInvalidNext(factory, new Point(0,0));
+        assertInvalidNext(factory, new Point(0, 0));
         assertInvalidNext(factory, new Object());
         assertInvalidNext(factory, new Selection());
-        
+
         Set<Element> set = new HashSet<Element>();
         assertInvalidNext(factory, set);
-        
+
         set.add(text);
         assertSafeNext(factory, set, true);
     }
