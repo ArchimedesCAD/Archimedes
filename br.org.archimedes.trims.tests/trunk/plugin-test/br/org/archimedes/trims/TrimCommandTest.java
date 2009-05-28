@@ -13,6 +13,8 @@
 
 package br.org.archimedes.trims;
 
+import static org.junit.Assert.*;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -20,9 +22,10 @@ import java.util.Collections;
 import org.junit.Before;
 import org.junit.Test;
 
-import br.org.archimedes.Tester;
+import br.org.archimedes.exceptions.IllegalActionException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.infiniteline.InfiniteLine;
+import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
 
@@ -30,11 +33,13 @@ import br.org.archimedes.model.Point;
  * @author Wesley Seidel, Bruno da Hora
  * 
  */
-public class TrimCommandTest extends Tester {
+public class TrimCommandTest {
 
 	private TrimCommand trimCommand;
 
 	private Collection<Element> references;
+
+	Drawing drawing;
 
 	@Before
 	public void setUp() throws Exception {
@@ -48,15 +53,33 @@ public class TrimCommandTest extends Tester {
 	}
 
 	@Test(expected = NullArgumentException.class)
-	public void doItWithDrawingNullTrhowsIllegalActionException()
+	public void doItWithDrawingNullThrowsNullArgumentException()
 			throws Exception {
 		trimCommand.doIt(null);
 	}
 
 	@Test(expected = NullArgumentException.class)
-	public void undoItWithDrawingNullTrhowsIllegalActionException()
+	public void undoItWithDrawingNullThrowsNullArgumentException()
 			throws Exception {
 		trimCommand.undoIt(null);
 	}
+
+	@Test(expected = IllegalActionException.class)
+	public void throwsIllegalActionExceptionIfClicksIsNull() throws Exception {
+		drawing = new Drawing("Testes");
+
+		trimCommand = new TrimCommand(references, Collections
+				.singletonList(new Point(-2.0, 2.0))){
+
+			@Override
+			protected void computeTrim(Drawing drawing, Point click)
+					throws IllegalActionException,
+					NullArgumentException {
+			}
+		};
+
+		trimCommand.doIt(drawing);
+	}
+	
 
 }

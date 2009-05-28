@@ -63,7 +63,7 @@ public class TrimCommand implements UndoableCommand {
 	 * @param references
 	 *            The references for this trim
 	 * @param points
-	 *            The points where a click ocurred
+	 *            The points where a click occurred
 	 */
 	public TrimCommand(Collection<Element> references, List<Point> clicks) {
 
@@ -152,7 +152,7 @@ public class TrimCommand implements UndoableCommand {
 	 * @throws NullArgumentException
 	 *             In case that the references of trimming are null
 	 */
-	private void computeTrim(Drawing drawing, Point click)
+	protected void computeTrim(Drawing drawing, Point click)
 			throws IllegalActionException, NullArgumentException {
 
 		Element toTrim = getClickedElement(click);
