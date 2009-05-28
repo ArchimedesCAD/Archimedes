@@ -19,135 +19,128 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import br.org.archimedes.exceptions.NullArgumentException;
-import br.org.archimedes.interfaces.IntersectionManager;
 import br.org.archimedes.line.Line;
 import br.org.archimedes.model.ComparablePoint;
 import br.org.archimedes.model.DoubleKey;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Vector;
-import br.org.archimedes.rcp.extensionpoints.IntersectionManagerEPLoader;
 import br.org.archimedes.semiline.Semiline;
 import br.org.archimedes.trims.interfaces.Trimmer;
 
 public class SemilineTrimmer implements Trimmer {
 
-    private IntersectionManager intersectionManager;
+	public SemilineTrimmer() {
 
+	}
 
-    public SemilineTrimmer () {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.org.archimedes.trims.interfaces.Trimmer#trim(br.org.archimedes.model
+	 * .Element, java.util.Collection, br.org.archimedes.model.Point)
+	 */
+	public Collection<Element> trim(Element element,
+			Collection<Point> cutPoints, Point click)
+			throws NullArgumentException {
 
-        intersectionManager = new IntersectionManagerEPLoader().getIntersectionManager();
-    }
+		if (element == null || cutPoints == null) {
+			throw new NullArgumentException();
+		}
 
-    /*
-     * (non-Javadoc)
-     * @see br.org.archimedes.trims.interfaces.Trimmer#trim(br.org.archimedes.model.Element,
-     * java.util.Collection, br.org.archimedes.model.Point)
-     */
-    public Collection<Element> trim (Element element, Collection<Element> references, Point click)
-            throws NullArgumentException {
+		Semiline line = (Semiline) element;
+		Collection<Element> trimResult = new ArrayList<Element>();
 
-        if (element == null || references == null) {
-            throw new NullArgumentException();
-        }
+		SortedSet<ComparablePoint> sortedPointSet = getSortedPointSet(line,
+				line.getInitialPoint(), cutPoints);
 
-        Semiline line = (Semiline) element;
-        Collection<Element> trimResult = new ArrayList<Element>();
+		Vector direction = new Vector(line.getInitialPoint(), line
+				.getDirectionPoint());
 
-        SortedSet<ComparablePoint> sortedPointSet = getSortedPointSet(line, line.getInitialPoint(),
-                intersectionManager.getIntersectionsBetween(line, references));
+		Vector clickVector = new Vector(line.getInitialPoint(), click);
+		double key = direction.dotProduct(clickVector);
+		ComparablePoint clickPoint = null;
+		try {
+			clickPoint = new ComparablePoint(click, new DoubleKey(key));
+		} catch (NullArgumentException e) {
+			// Should never reach
+			e.printStackTrace();
+		}
 
-        Vector direction = new Vector(line.getInitialPoint(), line.getDirectionPoint());
+		SortedSet<ComparablePoint> headSet = sortedPointSet.headSet(clickPoint);
+		SortedSet<ComparablePoint> tailSet = sortedPointSet.tailSet(clickPoint);
 
-        Vector clickVector = new Vector(line.getInitialPoint(), click);
-        double key = direction.dotProduct(clickVector);
-        ComparablePoint clickPoint = null;
-        try {
-            clickPoint = new ComparablePoint(click, new DoubleKey(key));
-        }
-        catch (NullArgumentException e) {
-            // Should never reach
-            e.printStackTrace();
-        }
+		try {
 
-        SortedSet<ComparablePoint> headSet = sortedPointSet.headSet(clickPoint);
-        SortedSet<ComparablePoint> tailSet = sortedPointSet.tailSet(clickPoint);
+			Vector dir = new Vector(new Point(line.getDirectionPoint().getX()
+					- line.getInitialPoint().getX(), line.getDirectionPoint()
+					.getY()
+					- line.getInitialPoint().getY()));
 
-        try {
+			if (tailSet.size() == 0 && headSet.size() > 0) {
+				Point initialPoint = headSet.last().getPoint();
+				Element trimmedLine = new Line(line.getInitialPoint(),
+						initialPoint);
+				trimmedLine.setLayer(line.getLayer());
+				trimResult.add(trimmedLine);
 
-            Vector dir = new Vector(new Point(line.getDirectionPoint().getX()
-                    - line.getInitialPoint().getX(), line.getDirectionPoint().getY()
-                    - line.getInitialPoint().getY()));
+			} else if (headSet.size() == 0 && tailSet.size() > 0) {
+				Point initialPoint = tailSet.first().getPoint();
+				Point directionPoint = new Point(initialPoint.getX()
+						+ dir.getX(), initialPoint.getY() + dir.getY());
+				Element trimmedLine = new Semiline(initialPoint, directionPoint);
+				trimmedLine.setLayer(line.getLayer());
+				trimResult.add(trimmedLine);
 
-            if (tailSet.size() == 0 && headSet.size() > 0) {
-                Point initialPoint = headSet.last().getPoint();
-                Element trimmedLine = new Line(line.getInitialPoint(), initialPoint);
-                trimmedLine.setLayer(line.getLayer());
-                trimResult.add(trimmedLine);
+			} else if (headSet.size() > 0 && tailSet.size() > 0) {
 
-            }
-            else if (headSet.size() == 0 && tailSet.size() > 0) {
-                Point initialPoint = tailSet.first().getPoint();
-                Point directionPoint = new Point(initialPoint.getX() + dir.getX(), initialPoint
-                        .getY()
-                        + dir.getY());
-                Element trimmedLine = new Semiline(initialPoint, directionPoint);
-                trimmedLine.setLayer(line.getLayer());
-                trimResult.add(trimmedLine);
+				Point initialPoint = tailSet.first().getPoint();
+				Point directionPoint = new Point(initialPoint.getX()
+						+ dir.getX(), initialPoint.getY() + dir.getY());
 
-            }
-            else if (headSet.size() > 0 && tailSet.size() > 0) {
+				Element trimmedLine = new Semiline(initialPoint, directionPoint);
+				trimmedLine.setLayer(line.getLayer());
+				trimResult.add(trimmedLine);
 
-                Point initialPoint = tailSet.first().getPoint();
-                Point directionPoint = new Point(initialPoint.getX() + dir.getX(), initialPoint
-                        .getY()
-                        + dir.getY());
+				initialPoint = headSet.last().getPoint();
+				trimmedLine = new Line(line.getInitialPoint(), initialPoint);
+				trimmedLine.setLayer(line.getLayer());
+				trimResult.add(trimmedLine);
+			}
+		} catch (Exception e) {
+			// Should not catch any exception
+			e.printStackTrace();
+		}
 
-                Element trimmedLine = new Semiline(initialPoint, directionPoint);
-                trimmedLine.setLayer(line.getLayer());
-                trimResult.add(trimmedLine);
+		return trimResult;
+	}
 
-                initialPoint = headSet.last().getPoint();
-                trimmedLine = new Line(line.getInitialPoint(), initialPoint);
-                trimmedLine.setLayer(line.getLayer());
-                trimResult.add(trimmedLine);
-            }
-        }
-        catch (Exception e) {
-            // Should not catch any exception
-            e.printStackTrace();
-        }
+	public SortedSet<ComparablePoint> getSortedPointSet(Semiline line,
+			Point referencePoint, Collection<Point> intersectionPoints) {
 
-        return trimResult;
-    }
+		SortedSet<ComparablePoint> sortedPointSet = new TreeSet<ComparablePoint>();
 
-    public SortedSet<ComparablePoint> getSortedPointSet (Semiline line, Point referencePoint,
-            Collection<Point> intersectionPoints) {
+		Point otherPoint = line.getInitialPoint();
+		if (referencePoint.equals(line.getInitialPoint())) {
+			otherPoint = line.getDirectionPoint();
+		}
 
-        SortedSet<ComparablePoint> sortedPointSet = new TreeSet<ComparablePoint>();
+		Vector direction = new Vector(referencePoint, otherPoint);
+		for (Point point : intersectionPoints) {
+			Vector pointVector = new Vector(referencePoint, point);
+			double key = direction.dotProduct(pointVector);
+			ComparablePoint element;
+			try {
+				element = new ComparablePoint(point, new DoubleKey(key));
+				sortedPointSet.add(element);
+			} catch (NullArgumentException e) {
+				// Should never reach
+				e.printStackTrace();
+			}
+		}
 
-        Point otherPoint = line.getInitialPoint();
-        if (referencePoint.equals(line.getInitialPoint())) {
-            otherPoint = line.getDirectionPoint();
-        }
-
-        Vector direction = new Vector(referencePoint, otherPoint);
-        for (Point point : intersectionPoints) {
-            Vector pointVector = new Vector(referencePoint, point);
-            double key = direction.dotProduct(pointVector);
-            ComparablePoint element;
-            try {
-                element = new ComparablePoint(point, new DoubleKey(key));
-                sortedPointSet.add(element);
-            }
-            catch (NullArgumentException e) {
-                // Should never reach
-                e.printStackTrace();
-            }
-        }
-
-        return sortedPointSet;
-    }
+		return sortedPointSet;
+	}
 
 }

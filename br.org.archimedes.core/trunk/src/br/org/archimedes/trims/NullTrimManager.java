@@ -24,8 +24,9 @@ import br.org.archimedes.model.Point;
 public class NullTrimManager implements TrimManager {
 
 	public Collection<Element> getTrimOf(Element element,
-			Collection<Element> references, Point click) throws NullArgumentException {
-		
+			Collection<Point> cutPoints, Point click)
+			throws NullArgumentException {
+
 		return Collections.emptyList();
 	}
 
