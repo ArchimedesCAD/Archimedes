@@ -100,6 +100,7 @@ plugin@br.org.archimedes.scale.tests=COPY,/Users/night/Documents/Archimedes/work
 plugin@br.org.archimedes.semiline.tests=COPY,/Users/night/Documents/Archimedes/workspace,br.org.archimedes.semiline.tests
 plugin@br.org.archimedes.snap.tests=COPY,/Users/night/Documents/Archimedes/workspace,br.org.archimedes.snap.tests
 plugin@br.org.archimedes.stretch.tests=COPY,/Users/night/Documents/Archimedes/workspace,br.org.archimedes.stretch.tests
+plugin@br.org.archimedes.text.edittext.tests=COPY,/Users/night/Documents/Archimedes/workspace,br.org.archimedes.text.edittext.tests
 plugin@br.org.archimedes.text.tests=COPY,/Users/night/Documents/Archimedes/workspace,br.org.archimedes.text.tests
 plugin@br.org.archimedes.trims.tests=COPY,/Users/night/Documents/Archimedes/workspace,br.org.archimedes.trims.tests
 plugin@br.org.archimedes.undo.tests=COPY,/Users/night/Documents/Archimedes/workspace,br.org.archimedes.undo.tests
