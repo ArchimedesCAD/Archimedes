@@ -65,7 +65,7 @@ public class TrimTest extends Tester {
         drawing = null;
     }
 
-    private void doTrim (Element element, Collection<Element> references, Point click) {
+    private void doTrim (Element element, Collection<Element> references, Point click) throws Exception {
 
         for (Element reference : references) {
             putSafeElementOnDrawing(reference, drawing);
@@ -87,7 +87,7 @@ public class TrimTest extends Tester {
     }
 
     @Test
-    public void testTrimHorizontalLine () throws InvalidArgumentException {
+    public void testTrimHorizontalLine () throws Exception {
 
         Element line;
         Element reference1, reference2;
@@ -142,7 +142,7 @@ public class TrimTest extends Tester {
     }
 
     @Test
-    public void testTrimVerticalLine () throws InvalidArgumentException {
+    public void testTrimVerticalLine () throws Exception {
 
         Element line;
         Element reference1, reference2;
@@ -200,7 +200,7 @@ public class TrimTest extends Tester {
     }
 
     @Test
-    public void testTrimObliqueLine () throws InvalidArgumentException {
+    public void testTrimObliqueLine () throws Exception {
 
         Element line;
         Element reference1, reference2;

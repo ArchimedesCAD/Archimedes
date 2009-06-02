@@ -12,15 +12,8 @@
  * This file was created on 2006/08/25, 00:03:02, by Hugo Corbucci.<br>
  * It is part of package br.org.archimedes.trims on the br.org.archimedes.trims project.<br>
  */
-package br.org.archimedes.trims;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+package br.org.archimedes.trims;
 
 import br.org.archimedes.controller.commands.MacroCommand;
 import br.org.archimedes.controller.commands.PutOrRemoveElementCommand;
@@ -36,6 +29,14 @@ import br.org.archimedes.model.Point;
 import br.org.archimedes.rcp.extensionpoints.IntersectionManagerEPLoader;
 import br.org.archimedes.rcp.extensionpoints.TrimManagerEPLoader;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 /**
  * Belongs to package br.org.archimedes.model.commands.
  * 
@@ -43,205 +44,216 @@ import br.org.archimedes.rcp.extensionpoints.TrimManagerEPLoader;
  */
 public class TrimCommand implements UndoableCommand {
 
-	private Collection<Element> references;
+    private Collection<Element> references;
 
-	private Collection<Point> cutPoints;
+    private Collection<Point> cutPoints;
 
-	private List<Point> clicks;
+    private List<Point> clicks;
 
-	private Map<Element, Set<Element>> trimMap;
+    private Map<Element, Set<Element>> trimMap;
 
-	private MacroCommand macro;
+    private MacroCommand macro;
 
-	private boolean performedOnce;
+    private boolean performedOnce;
 
-	private TrimManager trimManager;
+    private TrimManager trimManager;
 
-	private IntersectionManager intersectionManager;
+    private IntersectionManager intersectionManager;
 
-	/**
-	 * @param references
-	 *            The references for this trim
-	 * @param points
-	 *            The points where a click occurred
-	 */
-	public TrimCommand(Collection<Element> references, List<Point> clicks) {
 
-		trimManager = new TrimManagerEPLoader().getTrimManager();
-		intersectionManager = new IntersectionManagerEPLoader()
-				.getIntersectionManager();
-		this.clicks = clicks;
-		macro = null;
-		performedOnce = false;
-		trimMap = new HashMap<Element, Set<Element>>();
-		this.references = references;
-	}
+    /**
+     * @param references
+     *            The references for this trim
+     * @param points
+     *            The points where a click occurred
+     * @throws NullArgumentException
+     *             If one of the arguments is null
+     */
+    public TrimCommand (Collection<Element> references, List<Point> clicks)
+            throws NullArgumentException {
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * br.org.archimedes.model.commands.Command#doIt(br.org.archimedes.model
-	 * .Drawing)
-	 */
-	public void doIt(Drawing drawing) throws NullArgumentException,
-			IllegalActionException {
+        if (references == null || clicks == null) {
+            throw new NullArgumentException();
+        }
+        trimManager = new TrimManagerEPLoader().getTrimManager();
+        intersectionManager = new IntersectionManagerEPLoader().getIntersectionManager();
+        this.clicks = clicks;
+        macro = null;
+        performedOnce = false;
+        trimMap = new HashMap<Element, Set<Element>>();
+        this.references = references;
+    }
 
-		if (drawing == null) {
-			throw new NullArgumentException();
-		}
+    /*
+     * (non-Javadoc)
+     * @see br.org.archimedes.model.commands.Command#doIt(br.org.archimedes.model .Drawing)
+     */
+    public void doIt (Drawing drawing) throws NullArgumentException, IllegalActionException {
 
-		if (!performedOnce) {
-			if (references.isEmpty()) {
-				references.addAll(drawing.getUnlockedContents());
-			}
+        if (drawing == null) {
+            throw new NullArgumentException();
+        }
 
-			for (Point point : clicks) {
-				computeTrim(drawing, point);
-			}
+        if ( !performedOnce) {
+            if (references.isEmpty()) {
+                references.addAll(drawing.getUnlockedContents());
+            }
 
-			if (trimMap.keySet().size() == 0) {
-				throw new IllegalActionException();
-			}
+            for (Point point : clicks) {
+                computeTrim(drawing, point);
+            }
 
-			Set<Element> allResults = new HashSet<Element>();
-			for (Element key : trimMap.keySet()) {
-				Set<Element> trimResult = trimMap.get(key);
-				allResults.addAll(trimResult);
-				if (references.contains(key)) {
-					references.remove(key);
-					references.addAll(trimResult);
-				}
-			}
-			buildMacro(trimMap.keySet(), allResults);
-			performedOnce = true;
-		}
-		if (macro != null) {
-			macro.doIt(drawing);
-		}
-	}
+            if (trimMap.keySet().size() == 0) {
+                throw new IllegalActionException();
+            }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * br.org.archimedes.model.commands.UndoableCommand#undoIt(br.org.archimedes
-	 * .model.Drawing)
-	 */
-	public void undoIt(Drawing drawing) throws IllegalActionException,
-			NullArgumentException {
+            Set<Element> allResults = new HashSet<Element>();
+            for (Element key : trimMap.keySet()) {
+                Set<Element> trimResult = trimMap.get(key);
+                allResults.addAll(trimResult);
+                if (references.contains(key)) {
+                    references.remove(key);
+                    references.addAll(trimResult);
+                }
+            }
+            buildMacro(trimMap.keySet(), allResults);
+            performedOnce = true;
+        }
+        if (macro != null) {
+            macro.doIt(drawing);
+        }
+    }
 
-		if (drawing == null) {
-			throw new NullArgumentException();
-		}
+    /*
+     * (non-Javadoc)
+     * @see br.org.archimedes.model.commands.UndoableCommand#undoIt(br.org.archimedes
+     * .model.Drawing)
+     */
+    public void undoIt (Drawing drawing) throws IllegalActionException, NullArgumentException {
 
-		if (macro != null) {
-			macro.undoIt(drawing);
-		}
-	}
+        if (drawing == null) {
+            throw new NullArgumentException();
+        }
 
-	/**
-	 * Computes the trim
-	 * 
-	 * @param drawing
-	 *            The base drawing
-	 * @param click
-	 *            A click point for the trim
-	 * @throws IllegalActionException
-	 *             In case no element was clicked
-	 * @throws NullArgumentException
-	 *             In case that the references of trimming are null
-	 */
-	protected void computeTrim(Drawing drawing, Point click)
-			throws IllegalActionException, NullArgumentException {
+        if (macro != null) {
+            macro.undoIt(drawing);
+        }
+    }
 
-		Element toTrim = getClickedElement(click);
-		Element key = null;
-		boolean isInMap = false;
+    /**
+     * Computes the trim
+     * 
+     * @param drawing
+     *            The base drawing
+     * @param click
+     *            A click point for the trim
+     * @throws IllegalActionException
+     *             In case no element was clicked
+     * @throws NullArgumentException
+     *             In case that the references of trimming are null
+     */
+    protected void computeTrim (Drawing drawing, Point click) throws IllegalActionException,
+            NullArgumentException {
 
-		cutPoints = intersectionManager.getIntersectionsBetween(toTrim,
-				references);
+        Element toTrim = getClickedElement(click);
+        Element key = null;
+        boolean isInMap = false;
 
-		if (toTrim == null) {
-			throw new IllegalActionException();
-		}
+        if (toTrim == null) {
+            throw new IllegalActionException();
+        }
+        
+        cutPoints = intersectionManager.getIntersectionsBetween(toTrim, references);
 
-		if (trimMap.containsKey(toTrim)) {
-			Set<Element> turnedTo = trimMap.get(toTrim);
-			for (Element element : turnedTo) {
-				try {
-					if (element.contains(click)) {
-						key = toTrim;
-						toTrim = element;
-						isInMap = true;
-					}
-				} catch (NullArgumentException e) {
-					// Should really not happen
-					e.printStackTrace();
-				}
-			}
-		}
+        if (trimMap.containsKey(toTrim)) {
+            Set<Element> turnedTo = trimMap.get(toTrim);
+            for (Element element : turnedTo) {
+                try {
+                    if (element.contains(click)) {
+                        key = toTrim;
+                        toTrim = element;
+                        isInMap = true;
+                    }
+                }
+                catch (NullArgumentException e) {
+                    // Should really not happen
+                    e.printStackTrace();
+                }
+            }
+        }
 
-		if (key == null || isInMap) {
+        if (key == null || isInMap) {
 
-			Collection<Element> trimResult = trimManager.getTrimOf(toTrim,
-					cutPoints, click);
-			if (!trimResult.isEmpty()) {
-				Set<Element> turnedTo;
-				if (isInMap) {
-					turnedTo = trimMap.get(key);
-					turnedTo.remove(toTrim);
-					turnedTo.addAll(trimResult);
-				} else {
-					turnedTo = new HashSet<Element>(trimResult);
-					key = toTrim;
-				}
-				trimMap.put(key, turnedTo);
-			}
-		}
-	}
+            Collection<Element> trimResult = trimManager.getTrimOf(toTrim, cutPoints, click);
+            if ( !trimResult.isEmpty()) {
+                Set<Element> turnedTo;
+                if (isInMap) {
+                    turnedTo = trimMap.get(key);
+                    turnedTo.remove(toTrim);
+                    turnedTo.addAll(trimResult);
+                }
+                else {
+                    turnedTo = new HashSet<Element>(trimResult);
+                    key = toTrim;
+                }
+                trimMap.put(key, turnedTo);
+            }
+        }
+    }
 
-	/**
-	 * @param click
-	 *            The click point
-	 * @return The clicked element if there was any and it is Trimmable, null
-	 *         otherwise.
-	 */
-	private Element getClickedElement(Point click) {
+    /**
+     * @param click
+     *            The click point
+     * @return The clicked element if there was any and it is Trimmable, null otherwise.
+     */
+    private Element getClickedElement (Point click) {
 
-		Element clickedElement = null;
-		try {
-			clickedElement = br.org.archimedes.Utils.getController()
-					.getElementUnder(click, Element.class);
-		} catch (NoActiveDrawingException e) {
-			// Should not happen because I know there is a drawing
-			e.printStackTrace();
-		}
+        Element clickedElement = null;
+        try {
+            clickedElement = br.org.archimedes.Utils.getController().getElementUnder(click,
+                    Element.class);
+        }
+        catch (NoActiveDrawingException e) {
+            // Should not happen because I know there is a drawing
+            e.printStackTrace();
+        }
 
-		return clickedElement;
-	}
+        return clickedElement;
+    }
 
-	/**
-	 * Build a macro-command to perform the necessary actions
-	 * 
-	 * @param toRemove
-	 *            The elements to be removed
-	 * @param toAdd
-	 *            The elements to be added
-	 */
-	private void buildMacro(Set<Element> toRemove, Set<Element> toAdd) {
+    /**
+     * Build a macro-command to perform the necessary actions
+     * 
+     * @param toRemove
+     *            The elements to be removed
+     * @param toAdd
+     *            The elements to be added
+     */
+    private void buildMacro (Set<Element> toRemove, Set<Element> toAdd) {
 
-		try {
-			UndoableCommand remove = new PutOrRemoveElementCommand(toRemove,
-					true);
-			UndoableCommand add = new PutOrRemoveElementCommand(toAdd, false);
-			List<UndoableCommand> cmds = new ArrayList<UndoableCommand>();
-			cmds.add(remove);
-			cmds.add(add);
-			macro = new MacroCommand(cmds);
-		} catch (Exception e) {
-			// Should not happen
-			e.printStackTrace();
-		}
-	}
+        try {
+            UndoableCommand remove = new PutOrRemoveElementCommand(toRemove, true);
+            UndoableCommand add = new PutOrRemoveElementCommand(toAdd, false);
+            List<UndoableCommand> cmds = new ArrayList<UndoableCommand>();
+            cmds.add(remove);
+            cmds.add(add);
+            macro = new MacroCommand(cmds);
+        }
+        catch (Exception e) {
+            // Should not happen
+            e.printStackTrace();
+        }
+    }
+    
+    
+    public void setIntersectionManager (IntersectionManager intersectionManager) {
+
+        this.intersectionManager = intersectionManager;
+    }
+    
+    
+    public void setTrimManager (TrimManager trimManager) {
+
+        this.trimManager = trimManager;
+    }
 }
