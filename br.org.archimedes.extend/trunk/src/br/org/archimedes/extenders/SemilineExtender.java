@@ -32,7 +32,7 @@ import br.org.archimedes.semiline.Semiline;
 
 public class SemilineExtender implements Extender {
 
-    public void extend (Element element, Collection<Element> references, Point click)
+    public Element extend (Element element, Collection<Element> references, Point click)
             throws NullArgumentException {
 
         IntersectionManager intersectionManager = new IntersectionManagerEPLoader()
@@ -57,6 +57,8 @@ public class SemilineExtender implements Extender {
             // wont reach here
             e.printStackTrace();
         }
+        
+        return semiline;
     }
 
     private void doExtend (Semiline semiline, Collection<Point> intersectionPoints)

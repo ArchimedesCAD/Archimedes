@@ -14,9 +14,6 @@
 
 package br.org.archimedes.extenders;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
 import br.org.archimedes.Geometrics;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
@@ -30,9 +27,12 @@ import br.org.archimedes.model.Vector;
 import br.org.archimedes.rcp.extensionpoints.IntersectionManagerEPLoader;
 import br.org.archimedes.semiline.Semiline;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 public class LineExtender implements Extender {
 
-    public void extend (Element element, Collection<Element> references, Point extremePoint)
+    public Element extend (Element element, Collection<Element> references, Point extremePoint)
             throws NullArgumentException {
 
         IntersectionManager intersectionManager = new IntersectionManagerEPLoader()
@@ -43,14 +43,15 @@ public class LineExtender implements Extender {
         }
 
         Line line = (Line) element;
+        Line extendedLine = (Line) line.clone();
         Semiline semiline = null;
 
         Point otherExtreme;
         if (extremePoint.equals(line.getInitialPoint())) {
-            otherExtreme = line.getEndingPoint();
+            otherExtreme = extendedLine.getEndingPoint();
         }
         else {
-            otherExtreme = line.getInitialPoint();
+            otherExtreme = extendedLine.getInitialPoint();
         }
 
         try {
@@ -68,7 +69,6 @@ public class LineExtender implements Extender {
             extended = doExtend(line, extremePoint, intersectionPoints);
         }
         if ( !extended) {
-
             try {
                 semiline = new Semiline(extremePoint, otherExtreme);
             }
@@ -79,10 +79,11 @@ public class LineExtender implements Extender {
             intersectionPoints = intersectionManager.getIntersectionsBetween(semiline, references);
 
             if (intersectionPoints.size() != 0) {
-                doExtend(line, otherExtreme, intersectionPoints);
+                doExtend(extendedLine, otherExtreme, intersectionPoints);
             }
-
         }
+
+        return extendedLine;
     }
 
     private boolean doExtend (Line line, Point extremePoint, Collection<Point> intersectionPoints)

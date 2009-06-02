@@ -39,7 +39,7 @@ public interface ExtendManager {
      * @throws NullArgumentException
      *             If element, references or click is null
      */
-    public void extend (Element element, Collection<Element> references, Point click)
+    public Element extend (Element element, Collection<Element> references, Point click)
             throws NullArgumentException;
 
     /**

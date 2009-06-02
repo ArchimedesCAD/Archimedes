@@ -84,9 +84,13 @@ public class TrimCommand implements UndoableCommand {
         this.references = references;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see br.org.archimedes.model.commands.Command#doIt(br.org.archimedes.model .Drawing)
+    /**
+     * @param drawing
+     *          drawing where the trim will be performed
+     * @throws NullArgumentException
+     *          if drawing is null
+     * @throws IllegalActionException
+     *          if trimMap is empty         
      */
     public void doIt (Drawing drawing) throws NullArgumentException, IllegalActionException {
 
@@ -94,11 +98,11 @@ public class TrimCommand implements UndoableCommand {
             throw new NullArgumentException();
         }
 
-        if ( !performedOnce) {
+        if (!performedOnce) {
             if (references.isEmpty()) {
                 references.addAll(drawing.getUnlockedContents());
             }
-
+            
             for (Point point : clicks) {
                 computeTrim(drawing, point);
             }
@@ -124,10 +128,13 @@ public class TrimCommand implements UndoableCommand {
         }
     }
 
-    /*
-     * (non-Javadoc)
-     * @see br.org.archimedes.model.commands.UndoableCommand#undoIt(br.org.archimedes
-     * .model.Drawing)
+    /**
+     * @param drawing
+     *          drawing where the trim will be undone
+     * @throws NullArgumentException
+     *          if drawing or macro is null
+     * @throws IllegalActionException
+     *          if undoing is not allowed when called.        
      */
     public void undoIt (Drawing drawing) throws IllegalActionException, NullArgumentException {
 

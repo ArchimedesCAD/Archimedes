@@ -35,7 +35,7 @@ public interface Extender {
      * @throws NullArgumentException
      *             If element, references or click is null
      */
-    public void extend (Element element, Collection<Element> references, Point extremePoint)
+    public Element extend (Element element, Collection<Element> references, Point extremePoint)
             throws NullArgumentException;
 
     /**

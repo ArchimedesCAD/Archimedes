@@ -40,7 +40,7 @@ public class PolylineExtender implements Extender {
     private IntersectionManager intersectionManager;
 
 
-    public void extend (Element element, Collection<Element> references, Point extremePoint)
+    public Element extend (Element element, Collection<Element> references, Point extremePoint)
             throws NullArgumentException {
 
         if (element == null || references == null || extremePoint == null) {
@@ -59,6 +59,8 @@ public class PolylineExtender implements Extender {
 
             doExtend(polyline, references, otherExtreme);
         }
+        
+        return polyline;
 
     }
 

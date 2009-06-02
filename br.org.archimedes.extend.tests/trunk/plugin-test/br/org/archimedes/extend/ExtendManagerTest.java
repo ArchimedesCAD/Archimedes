@@ -77,7 +77,7 @@ public class ExtendManagerTest extends Tester {
 
         Extender extenderMockado = new Extender() {
 
-            public void extend (Element element, Collection<Element> references, Point click)
+            public Element extend (Element element, Collection<Element> references, Point click)
                     throws NullArgumentException {
 
                 assertEquals(line, element);

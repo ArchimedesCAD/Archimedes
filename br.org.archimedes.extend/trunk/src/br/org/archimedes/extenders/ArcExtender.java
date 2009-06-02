@@ -32,9 +32,9 @@ import br.org.archimedes.rcp.extensionpoints.IntersectionManagerEPLoader;
 
 public class ArcExtender implements Extender {
 
-    public void extend (Element element, Collection<Element> references, Point extremePoint)
+    public Element extend (Element element, Collection<Element> references, Point extremePoint)
             throws NullArgumentException {
-
+        
         if (element == null || references == null || extremePoint == null) {
             throw new NullArgumentException();
         }
@@ -54,12 +54,15 @@ public class ArcExtender implements Extender {
 
                 Vector offsetVector = new Vector(extremePoint, nearestReferencePoint);
                 arc.move(Collections.singletonList(extremePoint), offsetVector);
+                
             }
         }
         catch (InvalidArgumentException e) {
             // won't reach here
             e.printStackTrace();
         }
+        
+        return arc;
     }
 
     private Collection<Point> getIntersectionPoints (Collection<Element> references, Arc arc)
