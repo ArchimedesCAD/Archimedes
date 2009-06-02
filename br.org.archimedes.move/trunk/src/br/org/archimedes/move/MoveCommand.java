@@ -108,8 +108,8 @@ public class MoveCommand implements UndoableCommand {
                         + "' because it is not on the drawing"));
             }
         }
-        
-        if(exceptions.size() > 0)
+
+        if (exceptions.size() > 0)
             throw exceptions;
     }
 
@@ -120,5 +120,17 @@ public class MoveCommand implements UndoableCommand {
     public void undoIt (Drawing drawing) throws IllegalActionException, NullArgumentException {
 
         moveElements(drawing, vector.multiply( -1));
+    }
+
+    @Override
+    public boolean equals (Object obj) {
+
+        if (obj instanceof MoveCommand) {
+            MoveCommand otherCommand = (MoveCommand) obj;
+            return otherCommand.vector.equals(this.vector)
+                    && otherCommand.elementsToMove.equals(this.elementsToMove)
+                    && otherCommand.pointsToMove.equals(this.pointsToMove);
+        }
+        return false;
     }
 }
