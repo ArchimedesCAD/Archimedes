@@ -229,7 +229,7 @@ public class TrimCommand implements UndoableCommand {
      * @param toAdd
      *            The elements to be added
      */
-    private void buildMacro (Set<Element> toRemove, Set<Element> toAdd) {
+    protected void buildMacro (Set<Element> toRemove, Set<Element> toAdd) {
 
         try {
             UndoableCommand remove = new PutOrRemoveElementCommand(toRemove, true);
@@ -245,13 +245,19 @@ public class TrimCommand implements UndoableCommand {
         }
     }
     
-    
+    /**
+     * Set the intersection manager to be used instead of the default. Useful for testing
+     * @param intersectionManager The intersection manager to be used
+     */
     public void setIntersectionManager (IntersectionManager intersectionManager) {
 
         this.intersectionManager = intersectionManager;
     }
     
-    
+    /**
+     * Set the trim manager to be used instead of the default. Useful for testing
+     * @param trimManager The trim manager to be used
+     */
     public void setTrimManager (TrimManager trimManager) {
 
         this.trimManager = trimManager;

@@ -15,3 +15,5 @@ Require-Bundle: br.org.archimedes.core,
  br.org.archimedes.semiline,
  br.org.archimedes.polyline,
  org.junit4
+Bundle-ClassPath: lib/mockito-all-1.7.jar,
+ .

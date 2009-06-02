@@ -17,6 +17,8 @@ import br.org.archimedes.Tester;
 import br.org.archimedes.exceptions.IllegalActionException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.infiniteline.InfiniteLine;
+import br.org.archimedes.interfaces.IntersectionManager;
+import br.org.archimedes.interfaces.TrimManager;
 import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
@@ -24,13 +26,18 @@ import br.org.archimedes.polyline.Polyline;
 import br.org.archimedes.semiline.Semiline;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Set;
 
-import static org.junit.Assert.assertEquals;
+import static br.org.archimedes.trims.IsACollectionEquivalentTo.isACollectionEquivalentTo;
+import static org.mockito.Matchers.argThat;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * @author Wesley Seidel, Bruno da Hora
@@ -43,7 +50,7 @@ public class TrimCommandTest extends Tester {
 
     Drawing drawing;
 
-    private MockIntersectionManager mockIntersectionManager;
+    private IntersectionManager intersectionManager;
 
     private ArrayList<Point> clicks;
 
@@ -53,31 +60,36 @@ public class TrimCommandTest extends Tester {
 
     private InfiniteLine line3;
 
-    private MockTrimManager mockTrimManager;
+    private TrimManager trimManager;
 
-    private Polyline polyline;
+    private Set<Element> removed;
+
+    private Set<Element> added;
 
 
     @Before
     public void setUp () throws Exception {
 
+        removed = null;
+        added = null;
         line1 = new InfiniteLine(0.0, 0.0, 0.0, 100.0);
         line2 = new InfiniteLine(50.0, 0.0, 50.0, 100.0);
         line3 = new InfiniteLine(0.0, 50.0, 100.0, 50.0);
-        ArrayList<Point> polylinePoints = new ArrayList<Point>();
-        polylinePoints.add(new Point(0.0, 0.0));
-        polylinePoints.add(new Point(25.0, 100.0));
-        polylinePoints.add(new Point(50.0, 0.0));
-        polylinePoints.add(new Point(75.0, 100.0));
-        polylinePoints.add(new Point(100.0, 0.0));
-        polyline = new Polyline(polylinePoints);
         references = new ArrayList<Element>();
         clicks = new ArrayList<Point>();
-        trimCommand = new TrimCommand(references, clicks);
-        mockIntersectionManager = new MockIntersectionManager();
-        mockTrimManager = new MockTrimManager();
-        trimCommand.setIntersectionManager(mockIntersectionManager);
-        trimCommand.setTrimManager(mockTrimManager);
+        trimCommand = new TrimCommand(references, clicks) {
+
+            @Override
+            protected void buildMacro (Set<Element> toRemove, Set<Element> toAdd) {
+
+                removed = toRemove;
+                added = toAdd;
+            }
+        };
+        intersectionManager = mock(IntersectionManager.class);
+        trimManager = mock(TrimManager.class);
+        trimCommand.setIntersectionManager(intersectionManager);
+        trimCommand.setTrimManager(trimManager);
         drawing = new Drawing("Test");
         drawing.putElement(line1);
         drawing.putElement(line2);
@@ -102,13 +114,13 @@ public class TrimCommandTest extends Tester {
 
         trimCommand = new TrimCommand(references, null);
     }
-    
+
     @Test(expected = NullArgumentException.class)
     public void throwsNullArgumentExceptionIfReferencesIsNull () throws Exception {
 
         trimCommand = new TrimCommand(null, clicks);
     }
-    
+
     @Test(expected = IllegalActionException.class)
     public void throwsIllegalActionExceptionIfClickIsNotOnAElement () throws Exception {
 
@@ -116,39 +128,115 @@ public class TrimCommandTest extends Tester {
         trimCommand.doIt(drawing);
     }
     
-    @Test
-    public void usesAllElementsAsReferencesIfNoReferenceIsGiven () throws Exception {
+    @Test(expected = IllegalActionException.class)
+    public void throwsIllegalActionExceptionIfTrimCantBeDone () throws Exception {
 
-        clicks.add(new Point(75.0, 50.0));
+        Point click = new Point(75.0, 50.0);
+        clicks.add(click);
+
+        Collection<Element> expectedReferences = drawing.getUnlockedContents();
+
         ArrayList<Point> intersections = new ArrayList<Point>();
         intersections.add(new Point(0.0, 50.0));
         intersections.add(new Point(50.0, 50.0));
-        mockIntersectionManager.setResult(intersections);
+        when(
+                intersectionManager.getIntersectionsBetween(eq(line3),
+                        argThat(isACollectionEquivalentTo(expectedReferences)))).thenReturn(
+                intersections);
+
+        // Pretends that the trim can't be done
+        Collection<Element> trimResult = Collections.emptyList();
+        when(trimManager.getTrimOf(line3, intersections, click)).thenReturn(trimResult);
+
+        trimCommand.doIt(drawing);        
+    }
+
+    @Test
+    public void usesAllElementsAsReferencesIfNoReferenceIsGiven () throws Exception {
+
+        Point click = new Point(75.0, 50.0);
+        clicks.add(click);
+
+        Collection<Element> expectedReferences = drawing.getUnlockedContents();
+
+        ArrayList<Point> intersections = new ArrayList<Point>();
+        intersections.add(new Point(0.0, 50.0));
+        intersections.add(new Point(50.0, 50.0));
+        when(
+                intersectionManager.getIntersectionsBetween(eq(line3),
+                        argThat(isACollectionEquivalentTo(expectedReferences)))).thenReturn(
+                intersections);
+
         ArrayList<Element> trimResult = new ArrayList<Element>();
         trimResult.add(new Semiline(new Point(50.0, 50.0), new Point(0.0, 50.0)));
-        mockTrimManager.setResult(trimResult);
+        when(trimManager.getTrimOf(line3, intersections, click)).thenReturn(trimResult);
+
         trimCommand.doIt(drawing);
-        assertCollectionTheSame(drawing.getUnlockedContents(), mockIntersectionManager.getReferences());
-        assertEquals(new Point(75.0, 50.0), mockTrimManager.getClick());
     }
-    
+
     @Test
-    @Ignore // Not ready
     public void generatedCommandPutsOnlyTheUniqueResultsOfTrim () throws Exception {
 
+        ArrayList<Point> polylinePoints = new ArrayList<Point>();
+        polylinePoints.add(new Point(0.0, 0.0));
+        polylinePoints.add(new Point(25.0, 100.0));
+        polylinePoints.add(new Point(50.0, 0.0));
+        polylinePoints.add(new Point(75.0, 100.0));
+        polylinePoints.add(new Point(100.0, 0.0));
+        Polyline polyline = new Polyline(polylinePoints);
         drawing.putElement(polyline);
-        clicks.add(new Point(0.0, 0.0));
-        clicks.add(new Point(50.0, 0.0));
-        clicks.add(new Point(100.0, 0.0));
+
+        Point firstClick = new Point(6.25, 25.0);
+        Point secondClick = new Point(50.0, 0.0);
+        Point thirdClick = new Point(93.75, 25.0);
+        clicks.add(firstClick);
+        clicks.add(secondClick);
+        clicks.add(thirdClick);
+
         references.add(line3);
+
         ArrayList<Point> intersections = new ArrayList<Point>();
         intersections.add(new Point(12.5, 50.0));
         intersections.add(new Point(37.5, 50.0));
         intersections.add(new Point(62.5, 50.0));
         intersections.add(new Point(87.5, 50.0));
-        mockIntersectionManager.setResult(intersections);
+        when(
+                intersectionManager.getIntersectionsBetween(eq(polyline),
+                        argThat(isACollectionEquivalentTo(references)))).thenReturn(intersections);
+
         ArrayList<Element> trimResult = new ArrayList<Element>();
-        trimResult.add(new Semiline(new Point(50.0, 50.0), new Point(0.0, 50.0)));
+        polylinePoints.set(0, new Point(12.5, 50.0));
+        Polyline firstResult = new Polyline(polylinePoints);
+        trimResult.add(firstResult);
+        when(trimManager.getTrimOf(polyline, intersections, firstClick)).thenReturn(trimResult);
+
+        ArrayList<Point> firstPolylinePoints = new ArrayList<Point>();
+        ArrayList<Point> secondPolylinePoints = new ArrayList<Point>();
+        firstPolylinePoints.add(new Point(12.5, 50.0));
+        firstPolylinePoints.add(new Point(25.0, 100.0));
+        firstPolylinePoints.add(new Point(37.5, 50.0));
+        Polyline firstPolyline = new Polyline(firstPolylinePoints);
+        secondPolylinePoints.add(new Point(62.5, 50.0));
+        secondPolylinePoints.add(new Point(75.0, 100.0));
+        secondPolylinePoints.add(new Point(100.0, 0.0));
+        Polyline secondResult = new Polyline(secondPolylinePoints);
+        Collection<Element> secondTrimResult = new ArrayList<Element>();
+        secondTrimResult.add(firstPolyline);
+        secondTrimResult.add(secondResult);
+        when(trimManager.getTrimOf(firstResult, intersections, secondClick)).thenReturn(
+                secondTrimResult);
+
+        secondPolylinePoints.set(2, new Point(87.5, 50.0));
+        Polyline secondPolyline = new Polyline(secondPolylinePoints);
+        ArrayList<Element> thirdTrimResult = new ArrayList<Element>();
+        thirdTrimResult.add(firstPolyline);
+        thirdTrimResult.add(secondPolyline);
+        when(trimManager.getTrimOf(secondResult, intersections, thirdClick)).thenReturn(
+                thirdTrimResult);
+
+        trimCommand.doIt(drawing);
+        assertCollectionTheSame(Collections.singleton(polyline), removed);
+        assertCollectionTheSame(thirdTrimResult, added);
     }
 
 }
