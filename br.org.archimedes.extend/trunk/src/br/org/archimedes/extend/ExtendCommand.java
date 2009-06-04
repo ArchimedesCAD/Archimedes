@@ -59,8 +59,8 @@ public class ExtendCommand implements UndoableCommand {
     /**
      * @param references
      *            The references for this extend
-     * @param pointstoelements
-     *            The points where a click occurred
+     * @param elementsToExtend
+     *            HashMap containing the elements to be extended and theirs respective points
      */
     public ExtendCommand (Collection<Element> references, HashMap<Point, Element> elementsToExtend,
             List<Point> points) {
