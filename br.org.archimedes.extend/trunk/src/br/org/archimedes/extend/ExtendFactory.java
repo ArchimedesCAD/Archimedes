@@ -196,7 +196,7 @@ public class ExtendFactory implements CommandFactory {
             }
             Selection selection = (Selection) parameter;
             calculatePoints(selection);
-            command = new ExtendCommand(references, elementsToExtend, points);
+            command = new ExtendCommand(references, elementsToExtend);
             result = Messages.ExtendSelectElements;
         }
         catch (ClassCastException e) {

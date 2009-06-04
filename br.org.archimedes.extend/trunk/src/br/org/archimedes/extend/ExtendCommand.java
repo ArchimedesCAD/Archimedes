@@ -51,8 +51,6 @@ public class ExtendCommand implements UndoableCommand {
 
     private ExtendManager extendManager;
 
-    private List<Point> points;
-
     private Element extendResult;
 
 
@@ -62,12 +60,10 @@ public class ExtendCommand implements UndoableCommand {
      * @param elementsToExtend
      *            HashMap containing the elements to be extended and theirs respective points
      */
-    public ExtendCommand (Collection<Element> references, HashMap<Point, Element> elementsToExtend,
-            List<Point> points) {
+    public ExtendCommand (Collection<Element> references, HashMap<Point, Element> elementsToExtend) {
 
         extendManager = new ExtendManagerEPLoader().getExtendManager();
         this.elementsToExtend = elementsToExtend;
-        this.points = points;
         macro = null;
         performedOnce = false;
         extendMap = new HashMap<Element, Set<Element>>();
@@ -93,7 +89,11 @@ public class ExtendCommand implements UndoableCommand {
                 references.addAll(drawing.getUnlockedContents());
             }
 
-            for (Point point : points) {
+/*            for (Point point : points) {
+                computeExtend(drawing, point);
+            }
+*/
+            for (Point point : elementsToExtend.keySet()) {
                 computeExtend(drawing, point);
             }
 
