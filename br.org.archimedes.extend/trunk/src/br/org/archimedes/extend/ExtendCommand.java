@@ -188,7 +188,7 @@ public class ExtendCommand implements UndoableCommand {
                 turnedTo.addAll(Collections.singleton(extendResult));
             }
             else {
-                turnedTo = new HashSet<Element>(Collections.singleton(toExtend));
+                turnedTo = new HashSet<Element>(Collections.singleton(extendResult));
                 key = toExtend;
             }
             extendMap.put(key, turnedTo);

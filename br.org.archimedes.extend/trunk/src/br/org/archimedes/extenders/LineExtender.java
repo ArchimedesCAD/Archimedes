@@ -47,7 +47,7 @@ public class LineExtender implements Extender {
         Semiline semiline = null;
 
         Point otherExtreme;
-        if (extremePoint.equals(line.getInitialPoint())) {
+        if (extremePoint.equals(extendedLine.getInitialPoint())) {
             otherExtreme = extendedLine.getEndingPoint();
         }
         else {
@@ -66,7 +66,7 @@ public class LineExtender implements Extender {
 
         boolean extended = false;
         if (intersectionPoints.size() != 0) {
-            extended = doExtend(line, extremePoint, intersectionPoints);
+            extended = doExtend(extendedLine, extremePoint, intersectionPoints);
         }
         if ( !extended) {
             try {

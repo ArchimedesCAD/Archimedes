@@ -42,7 +42,7 @@ public class SemilineExtender implements Extender {
             throw new NullArgumentException();
         }
 
-        Semiline semiline = (Semiline) element;
+        Semiline semiline = (Semiline) element.clone();
 
         try {
             Semiline offset = new Semiline(semiline.getDirectionPoint(), semiline.getInitialPoint());

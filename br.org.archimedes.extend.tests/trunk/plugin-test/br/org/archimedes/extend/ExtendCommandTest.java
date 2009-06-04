@@ -1,0 +1,107 @@
+/**
+ * Copyright (c) 2006, 2009 Hugo Corbucci and others.<br>
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html<br>
+ *<br>
+ * Contributors:<br>
+ * Bruno da Hora, Bruno Klava - initial API and implementation<br>
+ * <br>
+ * This file was created on 04/06/2009, 07:38:20.<br>
+ * It is part of br.org.archimedes.extend on the br.org.archimedes.extend.tests project.<br>
+ */
+
+package br.org.archimedes.extend;
+
+import br.org.archimedes.Tester;
+import br.org.archimedes.arc.Arc;
+import br.org.archimedes.infiniteline.InfiniteLine;
+import br.org.archimedes.line.Line;
+import br.org.archimedes.model.Drawing;
+import br.org.archimedes.model.Element;
+import br.org.archimedes.model.Point;
+
+import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+
+/**
+ * @author Bruno da Hora, Bruno Klava
+ */
+public class ExtendCommandTest extends Tester {
+
+    private Drawing drawing;
+
+    private ExtendCommand extendCommand;
+
+    private InfiniteLine infiniteLine1;
+
+    private InfiniteLine infiniteLine2;
+
+    private Collection<Element> references;
+
+    private List<Point> clicks;
+
+    private HashMap<Point, Element> elementsToExtend;
+
+
+    @Override
+    public void setUp () throws Exception {
+
+        infiniteLine1 = new InfiniteLine( -10.0, -2.0, -10.0, 2.0);
+        infiniteLine2 = new InfiniteLine(10.0, -2.0, 10.0, 2.0);
+        references = new ArrayList<Element>();
+        references.add(infiniteLine1);
+        references.add(infiniteLine2);
+        clicks = new ArrayList<Point>();
+        elementsToExtend = new HashMap<Point, Element>();
+        drawing = new Drawing("Undo");
+        drawing.putElement(infiniteLine1);
+        drawing.putElement(infiniteLine2);
+    }
+
+    @Test
+    public void testExtendCommandDoItAndUndoItForLines () throws Exception {
+
+        Point click = new Point(5.0, 0.0);
+        Line line = new Line(0.0, 0.0, 5.0, 0.0);
+        Line lineExtended = new Line(0.0, 0.0, 10.0, 0.0);
+        clicks.add(click);
+        elementsToExtend.put(click, line);
+        drawing.putElement(line);
+        extendCommand = new ExtendCommand(references, elementsToExtend, clicks);
+        extendCommand.doIt(drawing);
+        assertEquals(true, drawing.getVisibleContents().contains(lineExtended));
+        assertEquals(false, drawing.getVisibleContents().contains(line));
+        extendCommand.undoIt(drawing);
+        assertEquals(false, drawing.getVisibleContents().contains(lineExtended));
+        assertEquals(true, drawing.getVisibleContents().contains(line));
+
+    }
+
+    @Test
+    public void testExtendCommandDoItAndUndoItForArc () throws Exception {
+
+        Point click = new Point( -5.0, 0.0);
+        Arc arc = new Arc(new Point( -15.0, 0.0), new Point( -10.0, -5.0), new Point( -5.0, 0.0));
+        Arc arcExtended = new Arc(new Point( -15.0, 0.0), new Point( -10.0, -5.0), new Point(
+                -10.0, 5.0));
+        clicks.add(click);
+        elementsToExtend.put(click, arc);
+        drawing.putElement(arc);
+        extendCommand = new ExtendCommand(references, elementsToExtend, clicks);
+        extendCommand.doIt(drawing);
+        assertEquals(true, drawing.getVisibleContents().contains(arcExtended));
+        assertEquals(false, drawing.getVisibleContents().contains(arc));
+        extendCommand.undoIt(drawing);
+        assertEquals(false, drawing.getVisibleContents().contains(arcExtended));
+        assertEquals(true, drawing.getVisibleContents().contains(arc));
+
+    }
+
+}

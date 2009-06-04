@@ -39,7 +39,7 @@ public class ArcExtender implements Extender {
             throw new NullArgumentException();
         }
 
-        Arc arc = (Arc) element;
+        Arc arc = (Arc) element.clone();
         if (extremePoint.equals(arc.getInitialPoint()))
             extremePoint = arc.getInitialPoint();
         else

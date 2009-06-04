@@ -49,7 +49,7 @@ public class PolylineExtender implements Extender {
 
         intersectionManager = new IntersectionManagerEPLoader().getIntersectionManager();
 
-        Polyline polyline = (Polyline) element;
+        Polyline polyline = (Polyline) element.clone();
 
         List<Point> points = polyline.getPoints();
         extremePoint = points.get(getIndexInPolyline(polyline, extremePoint));
