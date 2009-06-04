@@ -1,11 +1,6 @@
 
 package br.org.archimedes.fillet;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-
 import br.org.archimedes.Geometrics;
 import br.org.archimedes.arc.Arc;
 import br.org.archimedes.circle.Circle;
@@ -19,8 +14,15 @@ import br.org.archimedes.line.Line;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Vector;
+import br.org.archimedes.move.MoveCommand;
 import br.org.archimedes.polyline.Polyline;
 import br.org.archimedes.rcp.extensionpoints.IntersectionManagerEPLoader;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 
 public class DefaultFilleter implements Filleter {
 
@@ -124,21 +126,55 @@ public class DefaultFilleter implements Filleter {
             }
 
             Collection<ArrayList<Point>> minimumMoves = new ArrayList<ArrayList<Point>>();
-            minDist = Double.MAX_VALUE;
-            // TODO ***
-            // for (Point intersection : intersections) {
-            // double dist = Geometrics.calculateDistance(intersection, click1)
-            // + Geometrics.calculateDistance(intersection, click2);
-            // if (dist < minDist) {
-            // closestIntersections.clear();
-            // minDist = dist;
-            // closestIntersections.add(intersection);
-            // }
-            // else if (dist == minDist) {
-            // closestIntersections.add(intersection);
-            // }
-            // }
 
+            minDist = Double.MAX_VALUE;
+            for (Point intersection : closestIntersections) {
+                if (possibleMoves1.containsKey(intersection)
+                        && possibleMoves2.containsKey(intersection)) {
+
+                    removeInterToscas(intersection, possibleMoves1);
+                    removeInterToscas(intersection, possibleMoves2);
+
+                    Point[] extremos1 = (Point[]) possibleMoves1.get(intersection).toArray();
+                    Point[] extremos2 = (Point[]) possibleMoves2.get(intersection).toArray();
+
+                    for (Point point1 : extremos1) {
+                        for (Point point2 : extremos2) {
+                            double dist = Geometrics.calculateDistance(point1, intersection)
+                                    + Geometrics.calculateDistance(point2, intersection);
+                            if (dist == minDist) {
+                                minimumMoves.add(createPossibleMoves(intersection, point1, point2));
+                            }
+                            else if (dist < minDist) {
+                                minDist = dist;
+                                minimumMoves.clear();
+                                minimumMoves.add(createPossibleMoves(intersection, point1, point2));
+                            }
+                        }
+                    }
+
+                }
+            }
+
+            possibleMoves1.clear();
+            possibleMoves2.clear();
+
+            for (ArrayList<Point> x : minimumMoves) {
+                addMapping(possibleMoves1, x.get(0), x.get(1));
+                addMapping(possibleMoves2, x.get(0), x.get(2));
+            }
+
+            if (possibleMoves1.size() > 1 || possibleMoves2.size() > 1)
+                return null; // more than one possible solution
+
+            else {
+
+                untieByClick(possibleMoves1, click1);
+                untieByClick(possibleMoves2, click2);
+            }
+            List<UndoableCommand> fillet = new ArrayList<UndoableCommand>();
+            fillet.add(generateCommand(possibleMoves1, e1));
+            fillet.add(generateCommand(possibleMoves2, e2));
         }
 
         catch (NullArgumentException e) {
@@ -148,6 +184,94 @@ public class DefaultFilleter implements Filleter {
         // TODO return commands
         return null;
 
+    }
+
+    private UndoableCommand generateCommand (HashMap<Point, ArrayList<Point>> possibleMoves,
+            Element element) {
+
+        Point intersection = null;
+        Point extreme = null;
+
+        for (Point point : possibleMoves.keySet()) {
+            intersection = point;
+            extreme = possibleMoves.get(point).get(0);
+        }
+        try {
+            HashMap<Element, Collection<Point>> pointsToMove = new HashMap<Element, Collection<Point>>();
+            pointsToMove.put(element, Collections.singleton(extreme));
+            return new MoveCommand(pointsToMove, new Vector(extreme, intersection));
+        }
+
+        catch (NullArgumentException e) {
+            // won't happen
+        }
+        return null;
+    }
+
+    private void untieByClick (HashMap<Point, ArrayList<Point>> possibleMoves, Point click) {
+
+        for (Point point : possibleMoves.keySet()) {
+            if (possibleMoves.get(point).size() > 1) {
+                try {
+                    double dist0 = Geometrics.calculateDistance(click, possibleMoves.get(point)
+                            .get(0));
+                    double dist1 = Geometrics.calculateDistance(click, possibleMoves.get(point)
+                            .get(1));
+
+                    if (dist0 > dist1) {
+                        possibleMoves.get(point).remove(0);
+                    }
+                    else {
+                        possibleMoves.get(point).remove(1);
+                    }
+
+                }
+                catch (NullArgumentException e) {
+                    // won't happen
+                }
+            }
+        }
+    }
+
+    private void addMapping (HashMap<Point, ArrayList<Point>> possibleMoves, Point intersection,
+            Point extreme) {
+
+        if (possibleMoves.containsKey(intersection)) {
+            possibleMoves.get(intersection).add(extreme);
+        }
+        else {
+            ArrayList<Point> aux = new ArrayList<Point>();
+            aux.add(extreme);
+            possibleMoves.put(intersection, aux);
+        }
+    }
+
+    private ArrayList<Point> createPossibleMoves (Point intersection, Point point1, Point point2) {
+
+        ArrayList<Point> chosen = new ArrayList<Point>(3);
+        chosen.add(intersection);
+        chosen.add(point1);
+        chosen.add(point2);
+        return chosen;
+    }
+
+    private void removeInterToscas (Point intersection,
+            HashMap<Point, ArrayList<Point>> possibleMoves) {
+
+        Point[] extremes = (Point[]) possibleMoves.get(intersection).toArray();
+        if (extremes.length > 1) {
+            try {
+                if (Geometrics.calculateDistance(extremes[0], intersection) < Geometrics
+                        .calculateDistance(extremes[1], intersection))
+                    possibleMoves.get(intersection).remove(extremes[1]);
+                else if (Geometrics.calculateDistance(extremes[0], intersection) > Geometrics
+                        .calculateDistance(extremes[1], intersection))
+                    possibleMoves.get(intersection).remove(extremes[0]);
+            }
+            catch (NullArgumentException e) {
+                // wont ever happen
+            }
+        }
     }
 
     private HashMap<Point, ArrayList<Point>> cleanMap (
@@ -226,7 +350,7 @@ public class DefaultFilleter implements Filleter {
         else {
             for (Point extreme : element.getExtremePoints()) {
                 for (Point intersection : closestIntersections) {
-
+                    // TODO verify if the click coordinates are on one of the extreme points 
                     if ( !isInsideLine(extreme, intersection, click)) {
                         possibleMoves.get(intersection).add(extreme);
                     }
