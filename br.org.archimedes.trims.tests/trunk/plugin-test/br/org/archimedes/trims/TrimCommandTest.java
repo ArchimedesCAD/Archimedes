@@ -26,6 +26,7 @@ import br.org.archimedes.polyline.Polyline;
 import br.org.archimedes.semiline.Semiline;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -34,6 +35,10 @@ import java.util.Collections;
 import java.util.Set;
 
 import static br.org.archimedes.trims.IsACollectionEquivalentTo.isACollectionEquivalentTo;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+
 import static org.mockito.Matchers.argThat;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
@@ -127,7 +132,7 @@ public class TrimCommandTest extends Tester {
         clicks.add(new Point(75.0, 75.0));
         trimCommand.doIt(drawing);
     }
-    
+
     @Test(expected = IllegalActionException.class)
     public void throwsIllegalActionExceptionIfTrimCantBeDone () throws Exception {
 
@@ -148,7 +153,7 @@ public class TrimCommandTest extends Tester {
         Collection<Element> trimResult = Collections.emptyList();
         when(trimManager.getTrimOf(line3, intersections, click)).thenReturn(trimResult);
 
-        trimCommand.doIt(drawing);        
+        trimCommand.doIt(drawing);
     }
 
     @Test
@@ -237,6 +242,46 @@ public class TrimCommandTest extends Tester {
         trimCommand.doIt(drawing);
         assertCollectionTheSame(Collections.singleton(polyline), removed);
         assertCollectionTheSame(thirdTrimResult, added);
+    }
+
+    @Test
+    public void testEquals () throws Exception {
+
+        references.add(line1);
+
+        TrimCommand allElementsWithClickInOrigin = new TrimCommand(drawing.getUnlockedContents(),
+                Collections.singletonList(new Point(0.0, 0.0)));
+        TrimCommand allElementsWithClickOutOfOrigin = new TrimCommand(
+                drawing.getUnlockedContents(), Collections.singletonList(new Point(1.0, 1.0)));
+        TrimCommand line1WithClickInOrigin = new TrimCommand(references, Collections
+                .singletonList(new Point(0.0, 0.0)));
+        TrimCommand line1WithClickOutOfOrigin = new TrimCommand(references, Collections
+                .singletonList(new Point(1.0, 1.0)));
+        TrimCommand otherAllElementsWithClickInOrigin = new TrimCommand(drawing
+                .getUnlockedContents(), Collections.singletonList(new Point(0.0, 0.0)));
+
+        assertFalse(allElementsWithClickInOrigin.equals(allElementsWithClickOutOfOrigin));
+        assertFalse(allElementsWithClickInOrigin.equals(line1WithClickInOrigin));
+        assertFalse(allElementsWithClickInOrigin.equals(line1WithClickOutOfOrigin));
+        assertFalse(allElementsWithClickOutOfOrigin.equals(line1WithClickInOrigin));
+        assertFalse(allElementsWithClickOutOfOrigin.equals(line1WithClickOutOfOrigin));
+        assertFalse(line1WithClickInOrigin.equals(line1WithClickOutOfOrigin));
+        assertEquals(allElementsWithClickInOrigin, otherAllElementsWithClickInOrigin);
+        assertEquals(otherAllElementsWithClickInOrigin, allElementsWithClickInOrigin);
+        assertEquals(allElementsWithClickOutOfOrigin, allElementsWithClickOutOfOrigin);
+    }
+
+    // TODO implement hashCode in TrimCommand
+    @Test
+    @Ignore
+    public void hashCodesAreEqualWhenCommandsAreEqual () throws Exception {
+
+        TrimCommand allElementsWithClickInOrigin = new TrimCommand(drawing.getUnlockedContents(),
+                Collections.singletonList(new Point(0.0, 0.0)));
+        TrimCommand otherAllElementsWithClickInOrigin = new TrimCommand(drawing
+                .getUnlockedContents(), Collections.singletonList(new Point(0.0, 0.0)));
+        assertEquals(allElementsWithClickInOrigin.hashCode(), otherAllElementsWithClickInOrigin
+                .hashCode());
     }
 
 }

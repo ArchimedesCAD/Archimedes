@@ -86,11 +86,11 @@ public class TrimCommand implements UndoableCommand {
 
     /**
      * @param drawing
-     *          drawing where the trim will be performed
+     *            drawing where the trim will be performed
      * @throws NullArgumentException
-     *          if drawing is null
+     *             if drawing is null
      * @throws IllegalActionException
-     *          if trimMap is empty         
+     *             if trimMap is empty
      */
     public void doIt (Drawing drawing) throws NullArgumentException, IllegalActionException {
 
@@ -98,11 +98,11 @@ public class TrimCommand implements UndoableCommand {
             throw new NullArgumentException();
         }
 
-        if (!performedOnce) {
+        if ( !performedOnce) {
             if (references.isEmpty()) {
                 references.addAll(drawing.getUnlockedContents());
             }
-            
+
             for (Point point : clicks) {
                 computeTrim(drawing, point);
             }
@@ -130,11 +130,11 @@ public class TrimCommand implements UndoableCommand {
 
     /**
      * @param drawing
-     *          drawing where the trim will be undone
+     *            drawing where the trim will be undone
      * @throws NullArgumentException
-     *          if drawing or macro is null
+     *             if drawing or macro is null
      * @throws IllegalActionException
-     *          if undoing is not allowed when called.        
+     *             if undoing is not allowed when called.
      */
     public void undoIt (Drawing drawing) throws IllegalActionException, NullArgumentException {
 
@@ -169,7 +169,7 @@ public class TrimCommand implements UndoableCommand {
         if (toTrim == null) {
             throw new IllegalActionException();
         }
-        
+
         cutPoints = intersectionManager.getIntersectionsBetween(toTrim, references);
 
         if (trimMap.containsKey(toTrim)) {
@@ -211,7 +211,7 @@ public class TrimCommand implements UndoableCommand {
     /**
      * @param click
      *            The click point
-     * @return The clicked element if there was any and it is Trimmable, null otherwise.
+     * @return The clicked element if there was any, null otherwise.
      */
     private Element getClickedElement (Point click) {
 
@@ -251,22 +251,44 @@ public class TrimCommand implements UndoableCommand {
             e.printStackTrace();
         }
     }
-    
+
     /**
      * Set the intersection manager to be used instead of the default. Useful for testing
-     * @param intersectionManager The intersection manager to be used
+     * 
+     * @param intersectionManager
+     *            The intersection manager to be used
      */
     public void setIntersectionManager (IntersectionManager intersectionManager) {
 
         this.intersectionManager = intersectionManager;
     }
-    
+
     /**
      * Set the trim manager to be used instead of the default. Useful for testing
-     * @param trimManager The trim manager to be used
+     * 
+     * @param trimManager
+     *            The trim manager to be used
      */
     public void setTrimManager (TrimManager trimManager) {
 
         this.trimManager = trimManager;
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals (Object obj) {
+
+        if (obj instanceof TrimCommand) {
+            TrimCommand otherCommand = (TrimCommand) obj;
+            boolean referencesAreEqual = this.references.containsAll(otherCommand.references)
+                    && otherCommand.references.containsAll(this.references);
+            boolean clicksAreEqual = this.clicks.containsAll(otherCommand.clicks)
+                    && otherCommand.clicks.containsAll(this.clicks);
+            return referencesAreEqual && clicksAreEqual;
+        }
+        return false;
     }
 }

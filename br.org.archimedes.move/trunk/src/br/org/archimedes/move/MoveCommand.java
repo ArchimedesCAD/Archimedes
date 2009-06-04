@@ -133,4 +133,6 @@ public class MoveCommand implements UndoableCommand {
         }
         return false;
     }
+    
+    // TODO implement hashCode
 }
