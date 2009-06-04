@@ -5,8 +5,8 @@
  * http://www.eclipse.org/legal/epl-v10.html<br>
  * <br>
  * Contributors:<br>
- * Bruno da Hora, Kenzo Yamada - initial API and implementation<br>
- * Bruno da Hora, Wesley Seidel - later contributions<br>
+ * Bruno da Hora, Kenzo Yamada  - initial API and implementation<br>
+ * Bruno da Hora, Wesley Seidel, Luiz Real, Bruno Klava - later contributions<br>
  * <br>
  * This file was created on 2009/04/28, 11:00:00, by Bruno da Hora.<br>
  * It is part of package br.org.archimedes.extend on the br.org.archimedes.extend project.<br>
@@ -89,10 +89,6 @@ public class ExtendCommand implements UndoableCommand {
                 references.addAll(drawing.getUnlockedContents());
             }
 
-/*            for (Point point : points) {
-                computeExtend(drawing, point);
-            }
-*/
             for (Point point : elementsToExtend.keySet()) {
                 computeExtend(drawing, point);
             }
@@ -218,4 +214,55 @@ public class ExtendCommand implements UndoableCommand {
             e.printStackTrace();
         }
     }
+
+    /*
+     * (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode () {
+
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((elementsToExtend == null) ? 0 : elementsToExtend.hashCode());
+        result = prime * result + ((references == null) ? 0 : references.hashCode());
+        return result;
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals (Object obj) {
+
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if ( !(obj instanceof ExtendCommand)) {
+            return false;
+        }
+        ExtendCommand other = (ExtendCommand) obj;
+        if ( !(other.references.containsAll(this.references) && this.references
+                .containsAll(other.references))) {
+            return false;
+        }
+        if ( !(this.elementsToExtend.keySet().containsAll(other.elementsToExtend.keySet()) && other.elementsToExtend
+                .keySet().containsAll(this.elementsToExtend.keySet()))) {
+            return false;
+
+        }
+        for (Point point : this.elementsToExtend.keySet()) {
+
+            if ( !this.elementsToExtend.get(point).equals(other.elementsToExtend.get(point))) {
+                return false;
+            }
+
+        }
+        return true;
+    }
+
 }

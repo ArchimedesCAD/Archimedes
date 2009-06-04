@@ -21,13 +21,13 @@ import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -73,11 +73,11 @@ public class ExtendCommandTest extends Tester {
         drawing.putElement(line);
         extendCommand = new ExtendCommand(references, elementsToExtend);
         extendCommand.doIt(drawing);
-        assertTrue( drawing.getVisibleContents().contains(lineExtended));
-        assertFalse( drawing.getVisibleContents().contains(line));
+        assertTrue(drawing.getVisibleContents().contains(lineExtended));
+        assertFalse(drawing.getVisibleContents().contains(line));
         extendCommand.undoIt(drawing);
-        assertFalse( drawing.getVisibleContents().contains(lineExtended));
-        assertTrue( drawing.getVisibleContents().contains(line));
+        assertFalse(drawing.getVisibleContents().contains(lineExtended));
+        assertTrue(drawing.getVisibleContents().contains(line));
 
     }
 
@@ -93,57 +93,37 @@ public class ExtendCommandTest extends Tester {
         extendCommand = new ExtendCommand(references, elementsToExtend);
         extendCommand.doIt(drawing);
         assertTrue(drawing.getVisibleContents().contains(arcExtended));
-        assertFalse( drawing.getVisibleContents().contains(arc));
+        assertFalse(drawing.getVisibleContents().contains(arc));
         extendCommand.undoIt(drawing);
-        assertFalse( drawing.getVisibleContents().contains(arcExtended));
-        assertTrue( drawing.getVisibleContents().contains(arc));
+        assertFalse(drawing.getVisibleContents().contains(arcExtended));
+        assertTrue(drawing.getVisibleContents().contains(arc));
 
     }
+
     @Test
-    public void testEquals() throws Exception {
-/*        infiniteLine1 = new InfiniteLine( -10.0, -2.0, -10.0, 2.0);
-        infiniteLine2 = new InfiniteLine(10.0, -2.0, 10.0, 2.0);
-        references = new ArrayList<Element>();
-        references.add(infiniteLine1);
-        references.add(infiniteLine2);
-        clicks = new ArrayList<Point>();
-        elementsToExtend = new HashMap<Point, Element>();
-        drawing = new Drawing("Undo");
-        drawing.putElement(infiniteLine1);
-        drawing.putElement(infiniteLine2);
-        
-        Collection<Element> references, 
-        HashMap<Point, Element> elementsToExtend,
-        List<Point> points        
-*/        
-        
+    public void testEquals () throws Exception {
+
         Point clickForArc = new Point( -5.0, 0.0);
         Arc arc = new Arc(new Point( -15.0, 0.0), new Point( -10.0, -5.0), new Point( -5.0, 0.0));
-        Arc arcExtended = new Arc(new Point( -15.0, 0.0), new Point( -10.0, -5.0), new Point(
-                -10.0, 5.0));
         elementsToExtend.put(clickForArc, arc);
         drawing.putElement(arc);
         ExtendCommand extendCommandForArc = new ExtendCommand(references, elementsToExtend);
-        
+
         Point clickForLine = new Point(5.0, 0.0);
         Line line = new Line(0.0, 0.0, 5.0, 0.0);
-        Line lineExtended = new Line(0.0, 0.0, 10.0, 0.0);
-        elementsToExtend.put(clickForLine, line);
+        HashMap<Point, Element> elementsToExtendToLine =  new HashMap<Point, Element>();
+        elementsToExtendToLine.put(clickForLine, line);
         drawing.putElement(line);
-        ExtendCommand extendCommandForLine = new ExtendCommand(references, elementsToExtend);
+        ExtendCommand extendCommandForLine = new ExtendCommand(references, elementsToExtendToLine);
 
-        
+        ExtendCommand otherExtendCommandForLine = new ExtendCommand(references, elementsToExtendToLine);
+
+        assertEquals(extendCommandForLine, otherExtendCommandForLine);
+        assertEquals(otherExtendCommandForLine, extendCommandForLine);
+        assertEquals(extendCommandForLine, extendCommandForLine);
+        assertFalse(extendCommandForArc.equals(extendCommandForLine));
+        assertFalse(extendCommandForLine.equals(extendCommandForArc));
+
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
