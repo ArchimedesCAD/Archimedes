@@ -454,6 +454,14 @@ public class SemilineTest extends Tester {
         pointsCrossing = new Semiline(new Point(150, 0), new Point(150, 100))
                 .getPointsCrossing(new Rectangle(0, 0, 100, 100));
         assertEquals(Collections.emptyList(), pointsCrossing);
+        
+        pointsCrossing = new Semiline(new Point(102, 50), new Point(150, 50))
+                .getPointsCrossing(new Rectangle(0, 0, 100, 100));
+        assertEquals(Collections.emptyList(), pointsCrossing);
+        
+        pointsCrossing = new Semiline(new Point(50, 102), new Point(50, 150))
+            .getPointsCrossing(new Rectangle(0, 0, 100, 100));
+        assertEquals(Collections.emptyList(), pointsCrossing);
     }
 
     @Test

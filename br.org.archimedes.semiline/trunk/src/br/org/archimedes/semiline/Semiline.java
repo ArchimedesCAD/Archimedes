@@ -361,6 +361,13 @@ public class Semiline extends Element implements Offsetable {
                     || firstSideInter.getX() > rectangle.getUpperRight().getX()) {
                 firstSideInter = null;
                 otherSideInter = null;
+            } else {
+                if (!contains(firstSideInter)) {
+                    firstSideInter = null;
+                }
+                if (!contains(otherSideInter)) {
+                    otherSideInter = null;
+                }
             }
 
             condition = goingUp(direction);
@@ -373,6 +380,13 @@ public class Semiline extends Element implements Offsetable {
                     || firstSideInter.getY() > rectangle.getUpperLeft().getY()) {
                 firstSideInter = null;
                 otherSideInter = null;
+            } else {
+                if (!contains(firstSideInter)) {
+                    firstSideInter = null;
+                }
+                if (!contains(otherSideInter)) {
+                    otherSideInter = null;
+                }
             }
 
             condition = goingLeft(direction);
