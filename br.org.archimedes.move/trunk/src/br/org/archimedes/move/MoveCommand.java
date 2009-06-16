@@ -127,12 +127,43 @@ public class MoveCommand implements UndoableCommand {
 
         if (obj instanceof MoveCommand) {
             MoveCommand otherCommand = (MoveCommand) obj;
-            return otherCommand.vector.equals(this.vector)
-                    && otherCommand.elementsToMove.equals(this.elementsToMove)
-                    && otherCommand.pointsToMove.equals(this.pointsToMove);
+
+            if ( !otherCommand.vector.equals(this.vector)) {
+                return false;
+            }
+
+            if (otherCommand.elementsToMove.size() != this.elementsToMove.size()) {
+                return false;
+            }
+
+            for (Element element : otherCommand.elementsToMove) {
+                if ( !this.elementsToMove.contains(element)) {
+                    return false;
+                }
+            }
+
+            if (otherCommand.pointsToMove.size() != this.pointsToMove.size()) {
+                return false;
+            }
+
+            int i = 0;
+            for (Collection<Point> colection : otherCommand.pointsToMove) {
+                Collection<Point> colection2 = this.pointsToMove.get(i++);
+                for (Point point : colection) {
+                    if ( !colection2.contains(point)) {
+                        return false;
+                    }
+                }
+            }
         }
-        return false;
+
+        return true;
     }
-    
+
     // TODO implement hashCode
+    public String toString () {
+
+        return "movendo " + pointsToMove.toString() + " de " + elementsToMove.toString() + " para "
+                + vector.toString();
+    }
 }
