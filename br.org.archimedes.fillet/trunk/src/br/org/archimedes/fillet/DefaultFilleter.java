@@ -16,6 +16,7 @@ import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Vector;
 import br.org.archimedes.move.MoveCommand;
 import br.org.archimedes.polyline.Polyline;
+import br.org.archimedes.rcp.extensionpoints.ExtendManagerEPLoader;
 import br.org.archimedes.rcp.extensionpoints.IntersectionManagerEPLoader;
 
 import java.util.ArrayList;
@@ -25,6 +26,16 @@ import java.util.HashMap;
 import java.util.List;
 
 public class DefaultFilleter implements Filleter {
+    
+    
+    private IntersectionManager intersectionManager;
+    private ExtendManager extendManager;
+
+    public DefaultFilleter () {
+
+        intersectionManager = new IntersectionManagerEPLoader().getIntersectionManager();
+        extendManager = new ExtendManagerEPLoader().getExtendManager();
+    }
 
     public List<UndoableCommand> fillet (Element e1, Point click1, Element e2, Point click2) {
 
@@ -72,15 +83,11 @@ public class DefaultFilleter implements Filleter {
     private List<UndoableCommand> filletOpenElements (Element e1, Point click1, Element e2,
             Point click2) {
 
-        IntersectionManager intersectionManager = new IntersectionManagerEPLoader()
-                .getIntersectionManager();
-
-        ExtendManager extendManager = new br.org.archimedes.extend.ExtendManager();
-
         Collection<Element> extensions1 = extendManager.getInfiniteExtensionElements(e1);
         Collection<Element> extensions2 = extendManager.getInfiniteExtensionElements(e2);
 
         Collection<Point> intersections = new ArrayList<Point>();
+        List<UndoableCommand> fillet = new ArrayList<UndoableCommand>();
 
         try {
 
@@ -135,11 +142,8 @@ public class DefaultFilleter implements Filleter {
                     removeInterToscas(intersection, possibleMoves1);
                     removeInterToscas(intersection, possibleMoves2);
 
-                    Point[] extremos1 = (Point[]) possibleMoves1.get(intersection).toArray();
-                    Point[] extremos2 = (Point[]) possibleMoves2.get(intersection).toArray();
-
-                    for (Point point1 : extremos1) {
-                        for (Point point2 : extremos2) {
+                    for (Point point1 : possibleMoves1.get(intersection)) {
+                        for (Point point2 : possibleMoves2.get(intersection)) {
                             double dist = Geometrics.calculateDistance(point1, intersection)
                                     + Geometrics.calculateDistance(point2, intersection);
                             if (dist == minDist) {
@@ -165,14 +169,14 @@ public class DefaultFilleter implements Filleter {
             }
 
             if (possibleMoves1.size() > 1 || possibleMoves2.size() > 1)
-                return null; // more than one possible solution
+                return fillet; // more than one possible solution
 
             else {
 
                 untieByClick(possibleMoves1, click1);
                 untieByClick(possibleMoves2, click2);
             }
-            List<UndoableCommand> fillet = new ArrayList<UndoableCommand>();
+
             fillet.add(generateCommand(possibleMoves1, e1));
             fillet.add(generateCommand(possibleMoves2, e2));
         }
@@ -181,8 +185,7 @@ public class DefaultFilleter implements Filleter {
             // will not reach here
         }
 
-        // TODO return commands
-        return null;
+        return fillet;
 
     }
 
@@ -258,15 +261,15 @@ public class DefaultFilleter implements Filleter {
     private void removeInterToscas (Point intersection,
             HashMap<Point, ArrayList<Point>> possibleMoves) {
 
-        Point[] extremes = (Point[]) possibleMoves.get(intersection).toArray();
-        if (extremes.length > 1) {
+        ArrayList<Point> extremes = possibleMoves.get(intersection);
+        if (extremes.size() > 1) {
             try {
-                if (Geometrics.calculateDistance(extremes[0], intersection) < Geometrics
-                        .calculateDistance(extremes[1], intersection))
-                    possibleMoves.get(intersection).remove(extremes[1]);
-                else if (Geometrics.calculateDistance(extremes[0], intersection) > Geometrics
-                        .calculateDistance(extremes[1], intersection))
-                    possibleMoves.get(intersection).remove(extremes[0]);
+                if (Geometrics.calculateDistance(extremes.get(0), intersection) < Geometrics
+                        .calculateDistance(extremes.get(1), intersection))
+                    extremes.remove(1);
+                else if (Geometrics.calculateDistance(extremes.get(0), intersection) > Geometrics
+                        .calculateDistance(extremes.get(1), intersection))
+                    extremes.remove(0);
             }
             catch (NullArgumentException e) {
                 // wont ever happen
