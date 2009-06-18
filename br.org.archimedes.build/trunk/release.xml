@@ -1,4 +1,4 @@
-<project name="Release and Archimedes version to SourceForge" default="release">
+<project name="Release and Archimedes version to SourceForge" default="upload-files-to-sourceforge">
 	<property file="releases/HEAD.properties" />
 	<property name="version.full" value="${version}.${version.qualifier}${buildTypePresentation}" />
 	<property file="build-files/build_rcp.properties" />
@@ -90,7 +90,7 @@
 		</zip>
 	</target>
 
-	<target name="copy-results-to-output" depends="build-source,main,build-full-installer,build-online-installer,build-light-installer">
+	<target name="copy-results-to-output" depends="">
 		<copy todir="${resultDir}">
 			<fileset dir="${deployDir}">
 				<include name="${archiveNamePrefix}*.zip" />
@@ -100,16 +100,16 @@
 		</copy>
 	</target>
 
-	<target name="release" depends="base-files,copy-results-to-output">
-		<antcall target="upload-online-packs" />
+	<target name="release" depends="base-files">
+		<!--<antcall target="upload-online-packs" />-->
 		<antcall target="upload-files-to-sourceforge" />
 	</target>
 
-	<target name="upload-files-to-sourceforge" depends="copy-results-to-output">
+	<target name="upload-files-to-sourceforge">
 		<scp todir="${sourceforge.user}@frs.sourceforge.net:uploads/" keyfile="${user.home}/.ssh/${keyfile.name}" passphrase="${sourceforge.passphrase}">
 			<fileset dir="${resultDir}">
-				<include name="${archiveNamePrefix}*installer.jar" />
-				<include name="${archiveNamePrefix}*${version}.zip" />
+				<include name="${archiveNamePrefix}*${version}*installer.jar" />
+				<include name="${archiveNamePrefix}*${version}*.zip" />
 			</fileset>
 		</scp>
 	</target>
@@ -136,24 +136,33 @@
 	</target>
 
 	<target name="build-full-installer">
-		<property name="install.file" value="${full.installer.file}" />
-		<property name="installer.type" value="standart" />
-		<property name="installer.name" value="${archiveNamePrefix}-full-installer" />
+		<var name="install.file" value="${full.installer.file}" />
+		<var name="installer.type" value="standart" />
+		<var name="installer.name" value="${archiveNamePrefix}-full-installer" />
 		<antcall target="compile-izpack" />
+		<var name="install.file" unset="true" />
+        <var name="installer.type" unset="true" />
+        <var name="installer.name" unset="true" />
 	</target>
 
 	<target name="build-online-installer">
-		<property name="install.file" value="${full.installer.file}" />
-		<property name="installer.type" value="web" />
-		<property name="installer.name" value="${archiveNamePrefix}-online-installer" />
+		<var name="install.file" value="${full.installer.file}" />
+		<var name="installer.type" value="web" />
+		<var name="installer.name" value="${archiveNamePrefix}-online-installer" />
 		<antcall target="compile-izpack" />
+		<var name="install.file" unset="true" />
+        <var name="installer.type" unset="true" />
+        <var name="installer.name" unset="true" />
 	</target>
 
 	<target name="build-light-installer">
-		<property name="install.file" value="${light.installer.file}" />
-		<property name="installer.type" value="standart" />
-		<property name="installer.name" value="${archiveNamePrefix}-light-installer" />
+		<var name="install.file" value="${light.installer.file}" />
+		<var name="installer.type" value="standart" />
+		<var name="installer.name" value="${archiveNamePrefix}-light-installer" />
 		<antcall target="compile-izpack" />
+		<var name="install.file" unset="true" />
+        <var name="installer.type" unset="true" />
+        <var name="installer.name" unset="true" />
 	</target>
 
 	<!-- Depends on install.file, installer.type, installer.name and version variables -->
