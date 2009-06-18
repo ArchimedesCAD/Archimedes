@@ -11,6 +11,7 @@
  * This file was created on 2007/05/07, 13:07:52, by Mariana V. Bravo.<br>
  * It is part of package br.org.archimedes.dimension on the br.org.archimedes.dimension project.<br>
  */
+
 package br.org.archimedes.dimension;
 
 import java.util.ArrayList;
@@ -107,8 +108,7 @@ public class DimensionFactory extends TwoPointFactory {
     }
 
     /**
-     * @return true if the factory is waiting for the first or second points,
-     *         false otherwise
+     * @return true if the factory is waiting for the first or second points, false otherwise
      */
     private boolean onPointsState () {
 
@@ -116,8 +116,7 @@ public class DimensionFactory extends TwoPointFactory {
     }
 
     /**
-     * @return true if the factory is waiting for a distance to place the text,
-     *         false otherwise
+     * @return true if the factory is waiting for a distance to place the text, false otherwise
      */
     private boolean onDistanceState () {
 
@@ -130,8 +129,7 @@ public class DimensionFactory extends TwoPointFactory {
      * @throws InvalidParameterException
      *             Thrown if the parameter is not a double or is zero
      */
-    private void tryGetFontSize (Object parameter)
-            throws InvalidParameterException {
+    private void tryGetFontSize (Object parameter) throws InvalidParameterException {
 
         Double size = fontSize;
         if (parameter != null) {
@@ -158,12 +156,10 @@ public class DimensionFactory extends TwoPointFactory {
         try {
             if (vector != null) {
                 Point dist = secondPoint.addVector(vector);
-                dimension = new Dimension(firstPoint, secondPoint, dist,
-                        fontSize);
+                dimension = new Dimension(firstPoint, secondPoint, dist, fontSize);
             }
             else {
-                dimension = new Dimension(firstPoint, secondPoint, distance,
-                        fontSize);
+                dimension = new Dimension(firstPoint, secondPoint, distance, fontSize);
             }
             command = new PutOrRemoveElementCommand(dimension, false);
         }
@@ -206,7 +202,6 @@ public class DimensionFactory extends TwoPointFactory {
 
     /*
      * (non-Javadoc)
-     * 
      * @see br.org.archimedes.interpreter.Command#done()
      */
     public boolean isDone () {
@@ -216,7 +211,6 @@ public class DimensionFactory extends TwoPointFactory {
 
     /*
      * (non-Javadoc)
-     * 
      * @see br.org.archimedes.commands.Command#getNextParser()
      */
     public Parser getNextParser () {
@@ -240,7 +234,6 @@ public class DimensionFactory extends TwoPointFactory {
 
     /*
      * (non-Javadoc)
-     * 
      * @see br.org.archimedes.factories.CommandFactory#getCommands()
      */
     public List<Command> getCommands () {
@@ -258,8 +251,7 @@ public class DimensionFactory extends TwoPointFactory {
 
     /**
      * Draws the visual helper for dimension.<br>
-     * A line if we're expecting the second point, and a dimension if we're
-     * waiting for the third.
+     * A line if we're expecting the second point, and a dimension if we're waiting for the third.
      */
     public void drawVisualHelper () {
 
@@ -271,8 +263,7 @@ public class DimensionFactory extends TwoPointFactory {
                 Point mouse = br.org.archimedes.Utils.getWorkspace().getMousePosition();
 
                 try {
-                    Dimension toDraw = new Dimension(firstPoint, secondPoint,
-                            mouse, fontSize);
+                    Dimension toDraw = new Dimension(firstPoint, secondPoint, mouse, fontSize);
                     toDraw.draw(br.org.archimedes.Utils.getOpenGLWrapper());
                 }
                 catch (NullArgumentException e) {
@@ -287,12 +278,10 @@ public class DimensionFactory extends TwoPointFactory {
                     Dimension toDraw;
                     if (vector != null) {
                         Point point = secondPoint.addVector(vector);
-                        toDraw = new Dimension(firstPoint, secondPoint, point,
-                                fontSize);
+                        toDraw = new Dimension(firstPoint, secondPoint, point, fontSize);
                     }
                     else {
-                        toDraw = new Dimension(firstPoint, secondPoint,
-                                distance, fontSize);
+                        toDraw = new Dimension(firstPoint, secondPoint, distance, fontSize);
                     }
                     toDraw.draw(br.org.archimedes.Utils.getOpenGLWrapper());
                 }
@@ -313,7 +302,7 @@ public class DimensionFactory extends TwoPointFactory {
     @Override
     protected void drawVisualHelper (Point start, Point end) {
 
-        br.org.archimedes.Utils.getOpenGLWrapper().draw(start, end);
+        br.org.archimedes.Utils.getOpenGLWrapper().drawFromModel(start, end);
     }
 
     public String getName () {
