@@ -13,6 +13,14 @@
 
 package br.org.archimedes.fillet;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.junit.Test;
+
 import br.org.archimedes.Tester;
 import br.org.archimedes.arc.Arc;
 import br.org.archimedes.exceptions.NullArgumentException;
@@ -23,14 +31,6 @@ import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Vector;
 import br.org.archimedes.move.MoveCommand;
 import br.org.archimedes.polyline.Polyline;
-
-import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class DefaultFilleterTest extends Tester {
 
@@ -95,8 +95,8 @@ public class DefaultFilleterTest extends Tester {
         ArrayList<UndoableCommand> expectedCommands = new ArrayList<UndoableCommand>();
         expectedCommands.add(generateMoveCommand(horizontalBigLine, horizontalBigLine
                 .getInitialPoint(), intersection));
-        expectedCommands.add(generateMoveCommand(verticalBigLine, verticalBigLine.getEndingPoint(),
-                intersection));
+        expectedCommands.add(generateMoveCommand(verticalBigLine,
+                verticalBigLine.getInitialPoint(), intersection));
 
         assertCollectionTheSame(expectedCommands, commands);
     }
@@ -110,8 +110,8 @@ public class DefaultFilleterTest extends Tester {
         ArrayList<UndoableCommand> expectedCommands = new ArrayList<UndoableCommand>();
         expectedCommands.add(generateMoveCommand(horizontalBigLine, horizontalBigLine
                 .getEndingPoint(), intersection));
-        expectedCommands.add(generateMoveCommand(verticalBigLine, verticalBigLine.getEndingPoint(),
-                intersection));
+        expectedCommands.add(generateMoveCommand(verticalBigLine,
+                verticalBigLine.getInitialPoint(), intersection));
 
         assertCollectionTheSame(expectedCommands, commands);
     }
@@ -125,8 +125,8 @@ public class DefaultFilleterTest extends Tester {
         ArrayList<UndoableCommand> expectedCommands = new ArrayList<UndoableCommand>();
         expectedCommands.add(generateMoveCommand(horizontalBigLine, horizontalBigLine
                 .getEndingPoint(), intersection));
-        expectedCommands.add(generateMoveCommand(verticalBigLine,
-                verticalBigLine.getInitialPoint(), intersection));
+        expectedCommands.add(generateMoveCommand(verticalBigLine, verticalBigLine.getEndingPoint(),
+                intersection));
 
         assertCollectionTheSame(expectedCommands, commands);
     }
@@ -140,8 +140,8 @@ public class DefaultFilleterTest extends Tester {
         ArrayList<UndoableCommand> expectedCommands = new ArrayList<UndoableCommand>();
         expectedCommands.add(generateMoveCommand(horizontalBigLine, horizontalBigLine
                 .getInitialPoint(), intersection));
-        expectedCommands.add(generateMoveCommand(verticalBigLine,
-                verticalBigLine.getInitialPoint(), intersection));
+        expectedCommands.add(generateMoveCommand(verticalBigLine, verticalBigLine.getEndingPoint(),
+                intersection));
 
         assertCollectionTheSame(expectedCommands, commands);
     }
@@ -156,8 +156,8 @@ public class DefaultFilleterTest extends Tester {
         ArrayList<UndoableCommand> expectedCommands = new ArrayList<UndoableCommand>();
         expectedCommands.add(generateMoveCommand(horizontalBigLine, horizontalBigLine
                 .getEndingPoint(), intersection));
-        expectedCommands.add(generateMoveCommand(verticalBigLine,
-                verticalBigLine.getInitialPoint(), intersection));
+        expectedCommands.add(generateMoveCommand(verticalBigLine, verticalBigLine.getEndingPoint(),
+                intersection));
 
         assertCollectionTheSame(expectedCommands, commands);
     }
@@ -207,7 +207,7 @@ public class DefaultFilleterTest extends Tester {
         ArrayList<UndoableCommand> expectedCommands = new ArrayList<UndoableCommand>();
         expectedCommands.add(generateMoveCommand(upperLine, upperLine.getEndingPoint(),
                 intersection));
-        expectedCommands.add(generateMoveCommand(halfUpperArc, halfUpperArc.getInitialPoint(),
+        expectedCommands.add(generateMoveCommand(halfUpperArc, halfUpperArc.getEndingPoint(),
                 intersection));
 
         assertCollectionTheSame(expectedCommands, commands);
@@ -224,7 +224,7 @@ public class DefaultFilleterTest extends Tester {
         ArrayList<UndoableCommand> expectedCommands = new ArrayList<UndoableCommand>();
         expectedCommands.add(generateMoveCommand(verticalBigLine,
                 verticalBigLine.getInitialPoint(), intersection));
-        expectedCommands.add(generateMoveCommand(halfUpperArc, halfUpperArc.getEndingPoint(),
+        expectedCommands.add(generateMoveCommand(halfUpperArc, halfUpperArc.getInitialPoint(),
                 intersection));
 
         assertCollectionTheSame(expectedCommands, commands);
@@ -241,7 +241,7 @@ public class DefaultFilleterTest extends Tester {
         ArrayList<UndoableCommand> expectedCommands = new ArrayList<UndoableCommand>();
         expectedCommands.add(generateMoveCommand(verticalBigLine,
                 verticalBigLine.getInitialPoint(), intersection));
-        expectedCommands.add(generateMoveCommand(halfUpperArc, halfUpperArc.getInitialPoint(),
+        expectedCommands.add(generateMoveCommand(halfUpperArc, halfUpperArc.getEndingPoint(),
                 intersection));
 
         assertCollectionTheSame(expectedCommands, commands);
@@ -251,14 +251,14 @@ public class DefaultFilleterTest extends Tester {
     public void filletsTrimmingRightSideOfArcAndTrimmingUpperLineClickingOnTheLeftSideOfArcAndLowerSideOfLine ()
             throws Exception {
 
-        Point intersection = new Point(0, 1);
+        Point intersection = new Point(0, -1);
         List<UndoableCommand> commands = filleter.fillet(verticalBigLine, new Point(0, 0),
                 halfUpperArc, new Point( -1, 0));
 
         ArrayList<UndoableCommand> expectedCommands = new ArrayList<UndoableCommand>();
-        expectedCommands.add(generateMoveCommand(verticalBigLine, verticalBigLine.getEndingPoint(),
+        expectedCommands.add(generateMoveCommand(verticalBigLine, verticalBigLine.getInitialPoint(),
                 intersection));
-        expectedCommands.add(generateMoveCommand(halfUpperArc, halfUpperArc.getInitialPoint(),
+        expectedCommands.add(generateMoveCommand(halfUpperArc, halfUpperArc.getEndingPoint(),
                 intersection));
 
         assertCollectionTheSame(expectedCommands, commands);

@@ -1,8 +1,13 @@
 
 package br.org.archimedes.fillet;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+
 import br.org.archimedes.Geometrics;
-import br.org.archimedes.arc.Arc;
 import br.org.archimedes.circle.Circle;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
@@ -19,17 +24,12 @@ import br.org.archimedes.polyline.Polyline;
 import br.org.archimedes.rcp.extensionpoints.ExtendManagerEPLoader;
 import br.org.archimedes.rcp.extensionpoints.IntersectionManagerEPLoader;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-
 public class DefaultFilleter implements Filleter {
-    
-    
+
     private IntersectionManager intersectionManager;
+
     private ExtendManager extendManager;
+
 
     public DefaultFilleter () {
 
@@ -139,8 +139,8 @@ public class DefaultFilleter implements Filleter {
                 if (possibleMoves1.containsKey(intersection)
                         && possibleMoves2.containsKey(intersection)) {
 
-                    removeInterToscas(intersection, possibleMoves1);
-                    removeInterToscas(intersection, possibleMoves2);
+                    removeFarthestIntersections(intersection, possibleMoves1);
+                    removeFarthestIntersections(intersection, possibleMoves2);
 
                     for (Point point1 : possibleMoves1.get(intersection)) {
                         for (Point point2 : possibleMoves2.get(intersection)) {
@@ -173,8 +173,8 @@ public class DefaultFilleter implements Filleter {
 
             else {
 
-                untieByClick(possibleMoves1, click1);
-                untieByClick(possibleMoves2, click2);
+                untie(possibleMoves1, click1, e1);
+                untie(possibleMoves2, click2, e2);
             }
 
             fillet.add(generateCommand(possibleMoves1, e1));
@@ -211,7 +211,15 @@ public class DefaultFilleter implements Filleter {
         return null;
     }
 
-    private void untieByClick (HashMap<Point, ArrayList<Point>> possibleMoves, Point click) {
+    /**
+     * Removes the extreme farther away from the intersection. If tie removes the initial point from
+     * possibleMoves
+     * 
+     * @param possibleMoves
+     * @param click
+     * @param element
+     */
+    private void untie (HashMap<Point, ArrayList<Point>> possibleMoves, Point click, Element element) {
 
         for (Point point : possibleMoves.keySet()) {
             if (possibleMoves.get(point).size() > 1) {
@@ -224,8 +232,17 @@ public class DefaultFilleter implements Filleter {
                     if (dist0 > dist1) {
                         possibleMoves.get(point).remove(0);
                     }
-                    else {
+
+                    else if (dist0 < dist1) {
                         possibleMoves.get(point).remove(1);
+                    }
+
+                    else {
+                        if (possibleMoves.get(point).get(0).equals(
+                                element.getExtremePoints().get(0)))
+                            possibleMoves.get(point).remove(0);
+                        else
+                            possibleMoves.get(point).remove(1);
                     }
 
                 }
@@ -240,7 +257,8 @@ public class DefaultFilleter implements Filleter {
             Point extreme) {
 
         if (possibleMoves.containsKey(intersection)) {
-            possibleMoves.get(intersection).add(extreme);
+            if ( !possibleMoves.get(intersection).contains(extreme))
+                possibleMoves.get(intersection).add(extreme);
         }
         else {
             ArrayList<Point> aux = new ArrayList<Point>();
@@ -258,7 +276,7 @@ public class DefaultFilleter implements Filleter {
         return chosen;
     }
 
-    private void removeInterToscas (Point intersection,
+    private void removeFarthestIntersections (Point intersection,
             HashMap<Point, ArrayList<Point>> possibleMoves) {
 
         ArrayList<Point> extremes = possibleMoves.get(intersection);
@@ -329,32 +347,14 @@ public class DefaultFilleter implements Filleter {
                 }
             }
         }
-        else if (element instanceof Arc) {
-            Arc arc = (Arc) element;
-            for (Point intersection : closestIntersections) {
-                if (arc.contains(intersection)) {
-                    for (Point extreme : arc.getExtremePoints()) {
-                        possibleMoves.get(intersection).add(extreme);
-                    }
-                }
-                else {
-                    Collection<Point> initial = new ArrayList<Point>();
-                    initial.add(arc.getInitialPoint());
-                    arc.move(initial, new Vector(arc.getInitialPoint(), intersection));
-                    if (arc.contains(click)) {
-                        possibleMoves.get(intersection).add(arc.getInitialPoint());
-                    }
-                    else {
-                        possibleMoves.get(intersection).add(arc.getEndingPoint());
-                    }
-                }
-            }
-        }
         else {
             for (Point extreme : element.getExtremePoints()) {
                 for (Point intersection : closestIntersections) {
-                    // TODO verify if the click coordinates are on one of the extreme points 
-                    if ( !isInsideLine(extreme, intersection, click)) {
+                    // TODO verify if the click coordinates are on one of the extreme points
+                    // if ( !isInsideLine(extreme, intersection, click)) {
+                    // possibleMoves.get(intersection).add(extreme);
+                    // }
+                    if (moveContainsClick(element, extreme, intersection, click)) {
                         possibleMoves.get(intersection).add(extreme);
                     }
                 }
@@ -363,6 +363,27 @@ public class DefaultFilleter implements Filleter {
 
         return possibleMoves;
 
+    }
+
+    private boolean moveContainsClick (Element element, Point extreme, Point intersection,
+            Point click) {
+
+        if (intersection.equals(extreme)) {
+            return true;
+        }
+
+        try {
+            Vector vector = new Vector(extreme, intersection);
+            element.move(Collections.singleton(extreme), vector);
+            boolean contains = element.contains(click);
+            element.move(Collections.singleton(extreme), vector.multiply( -1));
+            return contains;
+        }
+        catch (NullArgumentException e) {
+            // wont reach here
+        }
+
+        return false;
     }
 
     private boolean isInsideLine (Point p1, Point p2, Point click) {
