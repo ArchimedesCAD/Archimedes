@@ -5,7 +5,7 @@
          point="br.org.archimedes.core.factory">
          <factory id="br.org.archimedes.polyline.rectangle"
           	class="br.org.archimedes.polyline.rectangle.RectangleFactory">
-         	<shortcut id="rect"/>
+         	<shortcut id="rec"/>
          </factory>
    </extension>
    <extension
