@@ -28,7 +28,6 @@
          <factory id="br.org.archimedes.erase"
           class="br.org.archimedes.erase.EraseFactory">
          	<shortcut id="e"/>
-         	<shortcut id="d"/>
          </factory>
    </extension>
    <extension
