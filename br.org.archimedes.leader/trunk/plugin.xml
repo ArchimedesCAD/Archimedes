@@ -10,6 +10,7 @@
             visible="true">
          <action
                class="br.org.archimedes.leader.NewLeaderAction"
+               icon="icons/leader.png"
                id="br.org.archimedes.leader.actionCreate"
                label="%action.create.label"
                menubarPath="create/complex0"
