@@ -23,6 +23,7 @@ import org.junit.Test;
 
 import br.org.archimedes.Tester;
 import br.org.archimedes.arc.Arc;
+import br.org.archimedes.circle.Circle;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.interfaces.UndoableCommand;
 import br.org.archimedes.line.Line;
@@ -31,6 +32,17 @@ import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Vector;
 import br.org.archimedes.move.MoveCommand;
 import br.org.archimedes.polyline.Polyline;
+
+import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static org.junit.Assert.*;
 
 public class DefaultFilleterTest extends Tester {
 
@@ -497,10 +509,96 @@ public class DefaultFilleterTest extends Tester {
         assertCollectionTheSame(expectedCommands, commands);
 
     }
+    
+    // TODO test for fillet closed element with open element
+    @Test
+    public void filletsCircleAndHorizontalLineNotIntersectingResultsLineTouchingCircle () throws Exception {
+
+        Circle circle = new Circle(new Point(0.0, 0.0), 2.0);
+        Point circleClick = new Point(2.0, 0.0);
+        Line line = new Line(new Point(3.0, 0.0), new Point(5.0, 0.0));
+        Point lineClick = new Point(3.0, 0.0);
+        
+        List<UndoableCommand> result = filleter.fillet(circle, circleClick, line, lineClick);
+        
+        List<? extends UndoableCommand> expected = Collections.singletonList(generateMoveCommand(line, new Point(3.0, 0.0), new Point(2.0, 0.0)));
+        
+        assertCollectionTheSame(expected, result);
+    }
+    
+    @Test
+    public void filletsHorizontalLineAndCircleNotIntersectingResultsLineTouchingCircle () throws Exception {
+
+        Circle circle = new Circle(new Point(0.0, 0.0), 2.0);
+        Point circleClick = new Point(2.0, 0.0);
+        Line line = new Line(new Point(3.0, 0.0), new Point(5.0, 0.0));
+        Point lineClick = new Point(3.0, 0.0);
+        
+        List<UndoableCommand> result = filleter.fillet(line, lineClick, circle, circleClick);
+        
+        List<? extends UndoableCommand> expected = Collections.singletonList(generateMoveCommand(line, new Point(3.0, 0.0), new Point(2.0, 0.0)));
+        
+        assertCollectionTheSame(expected, result);
+    }
+    
+    @Test
+    public void filletsVerticalLineAndCircleNotIntersectingResultsLineTouchingCircle () throws Exception {
+
+        Circle circle = new Circle(new Point(0.0, 0.0), 2.0);
+        Point circleClick = new Point(2.0, 0.0);
+        Line line = new Line(new Point(0.0, 3.0), new Point(0.0, 5.0));
+        Point lineClick = new Point(0.0, 3.0);
+        
+        List<UndoableCommand> result = filleter.fillet(line, lineClick, circle, circleClick);
+        
+        List<? extends UndoableCommand> expected = Collections.singletonList(generateMoveCommand(line, new Point(0.0, 3.0), new Point(0.0, 2.0)));
+        
+        assertCollectionTheSame(expected, result);
+    }
+    
+    @Test
+    public void filletsVerticalLineInvertedAndCircleNotIntersectingResultsLineTouchingCircle () throws Exception {
+
+        Circle circle = new Circle(new Point(0.0, 0.0), 2.0);
+        Point circleClick = new Point(2.0, 0.0);
+        Line line = new Line(new Point(0.0, 5.0), new Point(0.0, 3.0));
+        Point lineClick = new Point(0.0, 3.0);
+        
+        List<UndoableCommand> result = filleter.fillet(line, lineClick, circle, circleClick);
+        
+        List<? extends UndoableCommand> expected = Collections.singletonList(generateMoveCommand(line, new Point(0.0, 3.0), new Point(0.0, 2.0)));
+        
+        assertCollectionTheSame(expected, result);
+    }
+    
+    @Test
+    public void findsNearestExtremePoint () throws Exception {
+        
+        Circle circle = new Circle(new Point(0.0, 0.0), 2.0);
+        Line line = new Line(new Point(0.0, 5.0), new Point(0.0, 3.0));
+        
+        Point nearestExtreme = filleter.getNearestPoint(circle, line.getExtremePoints());
+        
+        assertEquals(new Point(0.0, 3.0), nearestExtreme);
+        
+    }
+
+    @Test
+    public void filletsVerticalLineAndCircleWithoutIntersectionsDoesNothing () throws Exception {
+
+        Circle circle = new Circle(new Point(0.0, 0.0), 2.0);
+        Point circleClick = new Point(2.0, 0.0);
+        Line line = new Line(new Point(3.0, 5.0), new Point(3.0, 3.0));
+        Point lineClick = new Point(3.0, 3.0);
+        
+        List<UndoableCommand> result = filleter.fillet(line, lineClick, circle, circleClick);
+        
+        List<? extends UndoableCommand> expected = Collections.emptyList();
+        
+        assertCollectionTheSame(expected, result);
+    }
 
     // TODO test for fillet closed element with closed element
-
-    // TODO test for fillet closed element with open element
 
     private MoveCommand generateMoveCommand (Element element, Point pointToMove, Point whereToMove)
             throws NullArgumentException {
