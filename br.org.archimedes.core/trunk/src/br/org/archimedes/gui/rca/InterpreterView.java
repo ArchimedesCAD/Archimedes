@@ -96,7 +96,11 @@ public class InterpreterView extends ViewPart implements Observer, ISelectionLis
             public void keyPressed (KeyEvent e) {
 
                 InputController inputController = br.org.archimedes.Utils.getInputController();
+                
                 if (e.character == SWT.ESC) {
+                    
+                    input.setText("");
+                    
                     if (SelectionCommand.isActive()) {
                         SelectionCommand.getActive().cancel();
                     }
