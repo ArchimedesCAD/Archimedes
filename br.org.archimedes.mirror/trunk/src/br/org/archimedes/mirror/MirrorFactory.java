@@ -12,10 +12,6 @@
  */
 package br.org.archimedes.mirror;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
-
 import br.org.archimedes.exceptions.InvalidParameterException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.factories.SelectionPointVectorFactory;
@@ -26,6 +22,10 @@ import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Vector;
 import br.org.archimedes.parser.StringDecoratorParser;
+
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Belongs to package br.org.archimedes.mirror.
@@ -62,8 +62,8 @@ public class MirrorFactory extends SelectionPointVectorFactory {
     protected String completeCommand (Set<Element> elements, Point point,
             Vector vector) {
 
-        String result = Messages.Iteration4 + " [" + Messages.y.toUpperCase() //$NON-NLS-1$
-                + "|" + Messages.n + "]"; //$NON-NLS-1$ //$NON-NLS-2$
+        String result = Messages.Iteration4 + " [" + Messages.n.toUpperCase() //$NON-NLS-1$
+                + "|" + Messages.y + "]"; //$NON-NLS-1$ //$NON-NLS-2$
 
         this.reference = point;
         this.vector = vector;
@@ -145,10 +145,10 @@ public class MirrorFactory extends SelectionPointVectorFactory {
         if (elements == null) {
             result = super.next(parameter);
         }
-        else if (Messages.y.equals(parameter) || "".equals(parameter)) { //$NON-NLS-1$
+        else if (Messages.n.equals(parameter) || "".equals(parameter)) { //$NON-NLS-1$
             result = makeCommand(true);
         }
-        else if (Messages.n.equals(parameter)) {
+        else if (Messages.y.equals(parameter)) {
             result = makeCommand(false);
         }
         else {
