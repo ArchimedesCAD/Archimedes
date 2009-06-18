@@ -40,7 +40,7 @@
          point="br.org.archimedes.core.factory">
          <factory id="br.org.archimedes.distance"
             class="br.org.archimedes.distance.DistanceFactory">
-         	<shortcut id="dist"/>
+         	<shortcut id="d"/>
          </factory>
    </extension>
 
