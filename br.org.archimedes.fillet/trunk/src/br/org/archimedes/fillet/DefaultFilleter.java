@@ -24,6 +24,13 @@ import br.org.archimedes.polyline.Polyline;
 import br.org.archimedes.rcp.extensionpoints.ExtendManagerEPLoader;
 import br.org.archimedes.rcp.extensionpoints.IntersectionManagerEPLoader;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class DefaultFilleter implements Filleter {
 
     private IntersectionManager intersectionManager;
@@ -76,8 +83,48 @@ public class DefaultFilleter implements Filleter {
     private List<UndoableCommand> filletClosedAndOpenElements (Element e1, Point click1,
             Element e2, Point click2) {
 
-        // TODO implement it
-        return null;
+        Map<Element, Collection<Point>> moveParams = new HashMap<Element, Collection<Point>>();
+        Point nearestExtremePoint =  null;
+        try {
+            nearestExtremePoint = getNearestPoint(e1, e2.getExtremePoints());
+        }
+        catch (NullArgumentException e) {
+            // Should not reach here
+            e.printStackTrace();
+            return Collections.emptyList();
+        }
+        moveParams.put(e2, Collections.singleton(nearestExtremePoint));        
+        MoveCommand moveCommand = null;
+        Collection<Point> intersections;
+        try {
+            intersections = intersectionManager.getIntersectionsBetween(e1, extendManager
+                    .getInfiniteExtensionElements(e2));
+            Point nearestIntersection = getNearestPoint(e2, intersections);
+            if(nearestIntersection == null) return Collections.emptyList();
+            Vector directionToExtend = new Vector(nearestExtremePoint, nearestIntersection);
+            moveCommand = new MoveCommand(moveParams, directionToExtend);
+        }
+        catch (NullArgumentException e3) {
+            // TODO Auto-generated catch block
+            e3.printStackTrace();
+        }
+        List<UndoableCommand> result = new ArrayList<UndoableCommand>();
+        result.add(moveCommand);
+        return result;
+    }
+
+    public Point getNearestPoint (Element e1, Collection<Point> extremePoints) throws NullArgumentException {
+        double minDistance = Double.MAX_VALUE;
+        Point nearestPoint = null;
+        for (Point point : extremePoints) {
+            Point projection = e1.getProjectionOf(point);
+            double distance = projection.calculateDistance(point);
+            if(distance < minDistance){
+                minDistance = distance;
+                nearestPoint = point;
+            }
+        }
+        return nearestPoint;
     }
 
     private List<UndoableCommand> filletOpenElements (Element e1, Point click1, Element e2,
@@ -350,10 +397,6 @@ public class DefaultFilleter implements Filleter {
         else {
             for (Point extreme : element.getExtremePoints()) {
                 for (Point intersection : closestIntersections) {
-                    // TODO verify if the click coordinates are on one of the extreme points
-                    // if ( !isInsideLine(extreme, intersection, click)) {
-                    // possibleMoves.get(intersection).add(extreme);
-                    // }
                     if (moveContainsClick(element, extreme, intersection, click)) {
                         possibleMoves.get(intersection).add(extreme);
                     }
