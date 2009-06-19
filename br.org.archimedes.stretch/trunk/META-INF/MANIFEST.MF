@@ -2,12 +2,11 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Stretch Plug-in
 Bundle-SymbolicName: br.org.archimedes.stretch;singleton:=true
-Bundle-Version: 0.58.0
-Bundle-Activator: br.org.archimedes.stretch.Activator
-Bundle-Vendor: Tarantulus Corporation
+Bundle-Version: 0.64.0
+Bundle-Vendor: Hugo Corbucci
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- br.org.archimedes.core,
- br.org.archimedes.move
+ br.org.archimedes.core;bundle-version="0.64.0",
+ br.org.archimedes.move;bundle-version="0.58.0"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5

@@ -19,6 +19,7 @@ import br.org.archimedes.exceptions.InvalidParameterException;
 import br.org.archimedes.factories.CommandFactory;
 import br.org.archimedes.interfaces.Command;
 import br.org.archimedes.interfaces.Parser;
+import br.org.archimedes.undo.internal.Messages;
 
 public class UndoFactory implements CommandFactory {
 

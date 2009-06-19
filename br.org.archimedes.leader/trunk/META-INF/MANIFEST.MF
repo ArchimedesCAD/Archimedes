@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Leader Element Plug-in
 Bundle-SymbolicName: br.org.archimedes.leader;singleton:=true
-Bundle-Version: 0.58.0
+Bundle-Version: 0.64.0
 Bundle-Localization: plugin
 Require-Bundle: br.org.archimedes.core,
  br.org.archimedes.line,
@@ -10,3 +10,4 @@ Require-Bundle: br.org.archimedes.core,
 Export-Package: br.org.archimedes.leader
 Eclipse-RegisterBuddy: br.org.archimedes.core
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-Vendor: Hugo Corbucci

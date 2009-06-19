@@ -9,24 +9,36 @@
          </factory>
    </extension>
    <extension
-         point="org.eclipse.ui.actionSets">
-      <actionSet
-            id="br.org.archimedes.scale.actionSet"
-            label="Scale action set"
-            visible="true">
-         <action
-               class="br.org.archimedes.scale.ScaleAction"
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:transform?after=simple1">
+         <command
+               commandId="br.org.archimedes.core.factoryactivator"
                icon="icons/scale.png"
-               id="br.org.archimedes.scale.actionActivate"
-               label="%action.scale.label"
-               menubarPath="transform/simple0"
+               label="%command.scale.label"
+               mnemonic="%command.scale.mnemonic"
                style="push"
-               toolbarPath="transform/simple0"
-               tooltip="%action.scale.tooltip">
-            <enablement>
-               <objectClass name="br.org.archimedes.model.Drawing"/>
-            </enablement>
-         </action>
-      </actionSet>
+               tooltip="%command.scale.tooltip">
+            <parameter
+                  name="br.org.archimedes.core.factoryactivator.name"
+                  value="br.org.archimedes.scale">
+            </parameter>
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="toolbar:transform">
+         <command
+               commandId="br.org.archimedes.core.factoryactivator"
+               icon="icons/scale.png"
+               label="%command.scale.label"
+               mnemonic="%command.scale.mnemonic"
+               style="push"
+               tooltip="%command.scale.tooltip">
+            <parameter
+                  name="br.org.archimedes.core.factoryactivator.name"
+                  value="br.org.archimedes.scale">
+            </parameter>
+         </command>
+      </menuContribution>
    </extension>
 </plugin>

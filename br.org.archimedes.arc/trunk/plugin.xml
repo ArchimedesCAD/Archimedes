@@ -2,34 +2,44 @@
 <?eclipse version="3.2"?>
 <plugin>
    <extension
-         point="org.eclipse.ui.actionSets">
-      <actionSet
-            description="The action set for the arc"
-            id="br.org.archimedes.arc.actionSet"
-            label="Arc action set"
-            visible="true">
-         <action
-               class="br.org.archimedes.arc.NewArcAction"
-               enablesFor="1"
-               icon="icons/arc.png"
-               id="br.org.archimedes.arc.actionCreate"
-               label="%action.create.label"
-               menubarPath="create/simple0"
-               style="push"
-               toolbarPath="create/simple0"
-               tooltip="%action.create.tooltip">
-            <enablement>
-               <objectClass name="br.org.archimedes.model.Drawing"/>
-            </enablement>
-         </action>
-      </actionSet>
-   </extension>
-   <extension
          point="br.org.archimedes.core.element">
          <element id="br.org.archimedes.arc" name="Arc" 
          	class="br.org.archimedes.arc.Arc"
          	factory="br.org.archimedes.arc.ArcFactory"
          	shortcut="a" />
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:create?before=simple0">
+         <command
+               commandId="br.org.archimedes.core.factoryactivator"
+               icon="icons/arc.png"
+               label="%command.arc.label"
+               mnemonic="%command.arc.mnemonic"
+               style="push"
+               tooltip="%command.arc.tooltip">
+            <parameter
+                  name="br.org.archimedes.core.factoryactivator.name"
+                  value="br.org.archimedes.arc">
+            </parameter>
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="toolbar:create">
+         <command
+               commandId="br.org.archimedes.core.factoryactivator"
+               icon="icons/arc.png"
+               label="%command.arc.label"
+               mnemonic="%command.arc.mnemonic"
+               style="push"
+               tooltip="%command.arc.tooltip">
+            <parameter
+                  name="br.org.archimedes.core.factoryactivator.name"
+                  value="br.org.archimedes.arc">
+            </parameter>
+         </command>
+      </menuContribution>
    </extension>
 
 </plugin>

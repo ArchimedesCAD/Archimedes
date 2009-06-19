@@ -9,29 +9,6 @@
          <manager class="br.org.archimedes.extend.ExtendManager"/>
    </extension>
    <extension
-         point="org.eclipse.ui.actionSets">
-      <actionSet
-            id="br.org.archimedes.extend.actionSet"
-            label="Extend Action Sets"
-            visible="true">
-         <action
-               class="br.org.archimedes.extend.ExtendAction"
-               icon="icons/extend.png"
-               id="br.org.archimedes.extend.action"
-               label="Extend"
-               menubarPath="transform/simple1"
-               style="push"
-               toolbarPath="transform/simple1"
-               tooltip="Extends the selected element">
-            <enablement>
-               <objectClass
-                     name="br.org.archimedes.model.Drawing">
-               </objectClass>
-            </enablement>
-         </action>
-      </actionSet>
-   </extension>
-   <extension
          point="br.org.archimedes.core.factory">
          <factory id="br.org.archimedes.extend"
           	class="br.org.archimedes.extend.ExtendFactory">
@@ -47,15 +24,48 @@
          <elementExtender
             class="br.org.archimedes.extenders.ArcExtender"
             element="br.org.archimedes.arc"
-            id="br.org.archimedes.extend.Arc"/>
+            id="br.org.archimedes.extend.arc"/>
          <elementExtender
             class="br.org.archimedes.extenders.SemilineExtender"
             element="br.org.archimedes.semiline"
-            id="br.org.archimedes.extend.Semiline"/>
+            id="br.org.archimedes.extend.semiline"/>
          <elementExtender
             class="br.org.archimedes.extenders.PolylineExtender"
             element="br.org.archimedes.polyline"
-            id="br.org.archimedes.extend.Polyline"/>
+            id="br.org.archimedes.extend.polyline"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:transform?after=simple1">
+         <command
+               commandId="br.org.archimedes.core.factoryactivator"
+               icon="icons/extend.png"
+               label="%command.extend.label"
+               mnemonic="%command.extend.mnemonic"
+               style="push"
+               tooltip="%command.extend.tooltip">
+            <parameter
+                  name="br.org.archimedes.core.factoryactivator.name"
+                  value="br.org.archimedes.extend">
+            </parameter>
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="toolbar:transform">
+         <command
+               commandId="br.org.archimedes.core.factoryactivator"
+               icon="icons/extend.png"
+               label="%command.extend.label"
+               mnemonic="%command.extend.mnemonic"
+               style="push"
+               tooltip="%command.extend.tooltip">
+            <parameter
+                  name="br.org.archimedes.core.factoryactivator.name"
+                  value="br.org.archimedes.extend">
+            </parameter>
+         </command>
+      </menuContribution>
    </extension>
 
 </plugin>

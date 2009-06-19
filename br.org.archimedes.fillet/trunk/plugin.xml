@@ -9,33 +9,43 @@
          <manager class="br.org.archimedes.fillet.FilletManager"/>
    </extension>
    <extension
-         point="org.eclipse.ui.actionSets">
-      <actionSet
-            id="br.org.archimedes.fillet.actionSet"
-            label="Fillet Action Sets"
-            visible="true">
-         <action
-               class="br.org.archimedes.fillet.FilletAction"
-               icon="icons/fillet.png"
-               id="br.org.archimedes.fillet.action"
-               label="Fillet"
-               menubarPath="transform/simple1"
-               style="push"
-               toolbarPath="transform/simple1"
-               tooltip="Fillets the selected elements">
-            <enablement>
-               <objectClass
-                     name="br.org.archimedes.model.Drawing">
-               </objectClass>
-            </enablement>
-         </action>
-      </actionSet>
-   </extension>
-   <extension
          point="br.org.archimedes.core.factory">
          <factory id="br.org.archimedes.fillet"
         	  class="br.org.archimedes.fillet.FilletFactory">
          	<shortcut id="f"/>
          </factory>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:transform?after=simple1">
+         <command
+               commandId="br.org.archimedes.core.factoryactivator"
+               icon="icons/fillet.png"
+               label="%command.fillet.label"
+               mnemonic="%command.fillet.mnemonic"
+               style="push"
+               tooltip="%command.fillet.tooltip">
+            <parameter
+                  name="br.org.archimedes.core.factoryactivator.name"
+                  value="br.org.archimedes.fillet">
+            </parameter>
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="toolbar:transform">
+         <command
+               commandId="br.org.archimedes.core.factoryactivator"
+               icon="icons/fillet.png"
+               label="%command.fillet.label"
+               mnemonic="%command.fillet.mnemonic"
+               style="push"
+               tooltip="%command.fillet.tooltip">
+            <parameter
+                  name="br.org.archimedes.core.factoryactivator.name"
+                  value="br.org.archimedes.fillet">
+            </parameter>
+         </command>
+      </menuContribution>
    </extension>
 </plugin>

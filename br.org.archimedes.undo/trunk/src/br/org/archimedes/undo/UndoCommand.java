@@ -19,6 +19,7 @@ import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.interfaces.Command;
 import br.org.archimedes.interfaces.UndoableCommand;
 import br.org.archimedes.model.Drawing;
+import br.org.archimedes.undo.internal.Messages;
 
 public class UndoCommand implements Command {
 

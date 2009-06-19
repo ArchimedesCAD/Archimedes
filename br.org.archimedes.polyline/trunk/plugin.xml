@@ -2,32 +2,43 @@
 <?eclipse version="3.2"?>
 <plugin>
    <extension
-         point="org.eclipse.ui.actionSets">
-      <actionSet
-            description="The polyline&apos;s action set"
-            id="br.org.archimedes.polyline.actionSet"
-            label="Polyline Action Set"
-            visible="true">
-         <action
-               icon="icons/polyline.png"
-               id="br.org.archimedes.polyline.actionCreate"
-               label="%action.create.label"
-               menubarPath="create/complex0"
-               class="br.org.archimedes.polyline.NewPolylineAction"
-               style="push"
-               toolbarPath="create/complex0"
-               tooltip="%action.create.tooltip">
-            <enablement>
-               <objectClass name="br.org.archimedes.model.Drawing"/>
-            </enablement>
-         </action>
-      </actionSet>
-   </extension>
-   <extension
          point="br.org.archimedes.core.element">
          <element id="br.org.archimedes.polyline" name="Polyline" 
             class="br.org.archimedes.polyline.Polyline"
             factory="br.org.archimedes.polyline.PolylineFactory"
             shortcut="pl" />
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:create?before=complex0">
+         <command
+               commandId="br.org.archimedes.core.factoryactivator"
+               icon="icons/polyline.png"
+               label="%command.polyline.label"
+               mnemonic="%command.polyline.mnemonic"
+               style="push"
+               tooltip="%command.polyline.tooltip">
+            <parameter
+                  name="br.org.archimedes.core.factoryactivator.name"
+                  value="br.org.archimedes.polyline">
+            </parameter>
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="toolbar:create">
+         <command
+               commandId="br.org.archimedes.core.factoryactivator"
+               icon="icons/polyline.png"
+               label="%command.polyline.label"
+               mnemonic="%command.polyline.mnemonic"
+               style="push"
+               tooltip="%command.polyline.tooltip">
+            <parameter
+                  name="br.org.archimedes.core.factoryactivator.name"
+                  value="br.org.archimedes.polyline">
+            </parameter>
+         </command>
+      </menuContribution>
    </extension>
 </plugin>

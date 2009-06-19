@@ -22,6 +22,8 @@ import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Layer;
 import br.org.archimedes.text.Text;
 
+import org.eclipse.ui.PlatformUI;
+
 /**
  * Belongs to package br.org.archimedes.text.edittext.
  * 
@@ -97,8 +99,7 @@ public class EditTextCommand implements UndoableCommand {
 
     protected TextEditor getTextEditor () {
 
-        return new TextEditor(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow()
-                .getShell(), text.getText());
+        return new TextEditor(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), text
+                .getText());
     }
-
 }

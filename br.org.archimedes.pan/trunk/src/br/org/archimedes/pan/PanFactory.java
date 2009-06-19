@@ -13,13 +13,6 @@
  */
 package br.org.archimedes.pan;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
-
-import org.eclipse.ui.IEditorPart;
-
 import br.org.archimedes.Constant;
 import br.org.archimedes.controller.commands.PanCommand;
 import br.org.archimedes.exceptions.IllegalActionException;
@@ -36,6 +29,15 @@ import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Vector;
 import br.org.archimedes.parser.PointParser;
 import br.org.archimedes.parser.ReturnDecoratorParser;
+
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.PlatformUI;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * Belongs to package br.org.archimedes.pan.
@@ -88,10 +90,10 @@ public class PanFactory implements CommandFactory, Observer {
      */
     private DrawingEditor getEditor () {
 
-        Activator defaultActivator = Activator.getDefault();
         DrawingEditor drawingEditor = new DrawingEditor();
-        if (defaultActivator != null) {
-            IEditorPart activeEditor = defaultActivator.getWorkbench()
+        IWorkbench workbench = PlatformUI.getWorkbench();
+        if (workbench != null) {
+            IEditorPart activeEditor = workbench
                     .getActiveWorkbenchWindow().getActivePage()
                     .getActiveEditor();
             if (activeEditor != null

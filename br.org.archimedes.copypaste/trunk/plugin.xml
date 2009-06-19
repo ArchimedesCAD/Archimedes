@@ -2,32 +2,43 @@
 <?eclipse version="3.2"?>
 <plugin>
    <extension
-         point="org.eclipse.ui.actionSets">
-      <actionSet
-            description="The action set containing the Copy and paste actions."
-            id="br.org.archimedes.copypaste.actionSet"
-            label="Copy/Paste Action Set"
-            visible="true">
-         <action
-               icon="icons/copy_co.png"
-               id="br.org.archimedes.copypaste.action"
-               label="%action.copypaste.label"
-               menubarPath="transform/simple0"
-               style="push"
-               class="br.org.archimedes.copypaste.CopyPasteAction"
-               toolbarPath="transform/simple0"
-               tooltip="%action.copypaste.tooltip">
-            <enablement>
-               <objectClass name="br.org.archimedes.model.Drawing"/>
-            </enablement>
-         </action>
-      </actionSet>
-   </extension>
-   <extension
          point="br.org.archimedes.core.factory">
          <factory id="br.org.archimedes.copypaste"
           class="br.org.archimedes.copypaste.CopyPasteFactory">
          	<shortcut id="co"/>
          </factory>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:transform?after=simple0">
+         <command
+               commandId="br.org.archimedes.core.factoryactivator"
+               icon="icons/copy_co.png"
+               label="%command.copypaste.label"
+               mnemonic="%command.copypaste.mnemonic"
+               style="push"
+               tooltip="%command.copypaste.tooltip">
+            <parameter
+                  name="br.org.archimedes.core.factoryactivator.name"
+                  value="br.org.archimedes.copypaste">
+            </parameter>
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="toolbar:transform">
+         <command
+               commandId="br.org.archimedes.core.factoryactivator"
+               icon="icons/copy_co.png"
+               label="%command.copypaste.label"
+               mnemonic="%command.copypaste.mnemonic"
+               style="push"
+               tooltip="%command.copypaste.tooltip">
+            <parameter
+                  name="br.org.archimedes.core.factoryactivator.name"
+                  value="br.org.archimedes.copypaste">
+            </parameter>
+         </command>
+      </menuContribution>
    </extension>
 </plugin>

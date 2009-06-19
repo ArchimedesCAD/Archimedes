@@ -2,14 +2,14 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Dimension Plug-in
 Bundle-SymbolicName: br.org.archimedes.dimension;singleton:=true
-Bundle-Version: 0.58.0
-Bundle-Activator: br.org.archimedes.dimension.Activator
+Bundle-Version: 0.64.0
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- br.org.archimedes.core,
- br.org.archimedes.line,
- br.org.archimedes.text
+ br.org.archimedes.core;bundle-version="0.64.0",
+ br.org.archimedes.line;bundle-version="0.64.0",
+ br.org.archimedes.text;bundle-version="0.64.0"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Eclipse-RegisterBuddy: br.org.archimedes.core
 Export-Package: br.org.archimedes.dimension
+Bundle-Vendor: Hugo Corbucci

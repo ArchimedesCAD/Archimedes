@@ -2,32 +2,45 @@
 <?eclipse version="3.2"?>
 <plugin>
    <extension
-         point="org.eclipse.ui.actionSets">
-      <actionSet
-            description="The action set for Redo actions"
-            id="br.org.archimedes.redo.actionSet"
-            label="Redo Action Set"
-            visible="true">
-         <action
-               icon="icons/redo.png"
-               id="br.org.archimedes.redo.redoAction"
-               label="%action.redo.label"
-               menubarPath="edit/simplex0"
-               style="push"
-               class="br.org.archimedes.redo.RedoAction"
-               toolbarPath="edit/simplex0"
-               tooltip="%action.redo.tooltip">
-            <enablement>
-               <objectClass name="br.org.archimedes.model.Drawing"/>
-            </enablement>
-         </action>
-      </actionSet>
-   </extension>
-   <extension
          point="br.org.archimedes.core.factory">
          <factory id="br.org.archimedes.redo"
           class="br.org.archimedes.redo.RedoFactory">
          	<shortcut id="re"/>
          </factory>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:edit?after=menu.undo">
+         <command
+               commandId="br.org.archimedes.core.factoryactivator"
+               icon="icons/redo.png"
+               id="menu.redo"
+               label="%command.redo.label"
+               mnemonic="%command.redo.mnemonic"
+               style="push"
+               tooltip="%command.redo.tooltip">
+            <parameter
+                  name="br.org.archimedes.core.factoryactivator.name"
+                  value="br.org.archimedes.redo">
+            </parameter>
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="toolbar:edit?after=toolbar.undo">
+         <command
+               commandId="br.org.archimedes.core.factoryactivator"
+               icon="icons/redo.png"
+               id="toolbar.redo"
+               label="%command.redo.label"
+               mnemonic="%command.redo.mnemonic"
+               style="push"
+               tooltip="%command.redo.tooltip">
+            <parameter
+                  name="br.org.archimedes.core.factoryactivator.name"
+                  value="br.org.archimedes.redo">
+            </parameter>
+         </command>
+      </menuContribution>
    </extension>
 </plugin>

@@ -2,21 +2,22 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Extend Plug-in
 Bundle-SymbolicName: br.org.archimedes.extend;singleton:=true
-Bundle-Version: 0.58.0
-Bundle-Activator: br.org.archimedes.extend.Activator
+Bundle-Version: 0.64.0
+Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- br.org.archimedes.core,
- br.org.archimedes.undo,
- br.org.archimedes.line,
- br.org.archimedes.infiniteline,
- br.org.archimedes.polyline,
- br.org.archimedes.semiline,
- br.org.archimedes.arc,
- br.org.archimedes.curvedshape,
- br.org.archimedes.circle
+ br.org.archimedes.core;bundle-version="0.64.0",
+ br.org.archimedes.undo;bundle-version="0.58.0",
+ br.org.archimedes.line;bundle-version="0.58.0";resolution:=optional,
+ br.org.archimedes.infiniteline;bundle-version="0.58.0";resolution:=optional,
+ br.org.archimedes.polyline;bundle-version="0.58.0",
+ br.org.archimedes.semiline;bundle-version="0.58.0";resolution:=optional,
+ br.org.archimedes.arc;bundle-version="0.58.0";resolution:=optional,
+ br.org.archimedes.curvedshape;bundle-version="0.58.0";resolution:=optional,
+ br.org.archimedes.circle;bundle-version="0.58.0";resolution:=optional
 Export-Package: br.org.archimedes.extend,
  br.org.archimedes.extend.interfaces,
  br.org.archimedes.extenders,
  br.org.archimedes.extend.rcp
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-Vendor: Hugo Corbucci

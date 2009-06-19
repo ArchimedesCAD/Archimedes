@@ -8,16 +8,16 @@ Bundle-Vendor: Hugo Corbucci
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  br.org.archimedes.core;bundle-version="0.57.4",
- br.org.archimedes.arc;bundle-version="0.57.4",
- br.org.archimedes.circle;bundle-version="0.57.4",
- br.org.archimedes.dimension;bundle-version="0.57.4",
- br.org.archimedes.infiniteline;bundle-version="0.57.4",
- br.org.archimedes.leader;bundle-version="0.57.4",
- br.org.archimedes.line;bundle-version="0.57.4",
- br.org.archimedes.polyline;bundle-version="0.57.4",
- br.org.archimedes.semiline;bundle-version="0.57.4",
- br.org.archimedes.text;bundle-version="0.57.4",
- br.org.archimedes.curvedshape;bundle-version="0.57.4"
+ br.org.archimedes.arc;bundle-version="0.57.4";resolution:=optional,
+ br.org.archimedes.circle;bundle-version="0.57.4";resolution:=optional,
+ br.org.archimedes.dimension;bundle-version="0.57.4";resolution:=optional,
+ br.org.archimedes.infiniteline;bundle-version="0.57.4";resolution:=optional,
+ br.org.archimedes.leader;bundle-version="0.57.4";resolution:=optional,
+ br.org.archimedes.line;bundle-version="0.57.4";resolution:=optional,
+ br.org.archimedes.polyline;bundle-version="0.57.4";resolution:=optional,
+ br.org.archimedes.semiline;bundle-version="0.57.4";resolution:=optional,
+ br.org.archimedes.text;bundle-version="0.57.4";resolution:=optional,
+ br.org.archimedes.curvedshape;bundle-version="0.57.4";resolution:=optional
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Export-Package: br.org.archimedes.io.svg,

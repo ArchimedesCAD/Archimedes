@@ -29,4 +29,37 @@
          </action>
       </actionSet>
    </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:transform?after=simple1">
+         <command
+               commandId="br.org.archimedes.core.factoryactivator"
+               icon="icons/stretch.png"
+               label="%command.stretch.label"
+               mnemonic="%command.stretch.mnemonic"
+               style="push"
+               tooltip="%command.stretch.tooltip">
+            <parameter
+                  name="br.org.archimedes.core.factoryactivator.name"
+                  value="br.org.archimedes.stretch">
+            </parameter>
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="toolbar:transform">
+         <command
+               commandId="br.org.archimedes.core.factoryactivator"
+               icon="icons/stretch.png"
+               label="%command.stretch.label"
+               mnemonic="%command.stretch.mnemonic"
+               style="push"
+               tooltip="%command.stretch.tooltip">
+            <parameter
+                  name="br.org.archimedes.core.factoryactivator.name"
+                  value="br.org.archimedes.stretch">
+            </parameter>
+         </command>
+      </menuContribution>
+   </extension>
 </plugin>

@@ -2,33 +2,53 @@
 <?eclipse version="3.2"?>
 <plugin>
    <extension
-         point="org.eclipse.ui.actionSets">
-      <actionSet
-            description="ActionSet para Pan"
-            id="br.org.archimedes.pan.actionSet"
-            label="ActionSet do Pan"
-            visible="true">
-         <action
-               class="br.org.archimedes.pan.PanAction"
-               icon="icons/pan.png"
-               id="br.org.archimedes.pan.PanAction"
-			   label="%action.pan.label"
-               menubarPath="zoom/move0"
-               style="push"
-               toolbarPath="zoom/move0"
-               tooltip="%action.pan.tooltip">
-            <enablement>
-               <objectClass name="br.org.archimedes.model.Drawing"/>
-            </enablement>
-         </action>
-      </actionSet>
-   </extension>
-   <extension
          point="br.org.archimedes.core.factory">
          <factory id="br.org.archimedes.pan"
           class="br.org.archimedes.pan.PanFactory">
          	<shortcut id="p"/>
          </factory>         
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:org.eclipse.ui.main.menu?after=additions">
+         <menu
+               id="zoom"
+               label="%menu.zoom.label"
+               mnemonic="%menu.zoom.mnemonic"
+               tooltip="%menu.zoom.tooltip">
+            <command
+                  commandId="br.org.archimedes.core.factoryactivator"
+                  icon="icons/pan.png"
+                  label="%command.pan.label"
+                  mnemonic="%command.pan.mnemonic"
+                  style="push"
+                  tooltip="%command.pan.tooltip">
+               <parameter
+                     name="br.org.archimedes.core.factoryactivator.name"
+                     value="br.org.archimedes.pan">
+               </parameter>
+            </command>
+         </menu>
+      </menuContribution>
+      <menuContribution
+            locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
+         <toolbar
+               id="zoom">
+            <command
+                  commandId="br.org.archimedes.core.factoryactivator"
+                  icon="icons/pan.png"
+                  label="%command.pan.label"
+                  mnemonic="%command.pan.mnemonic"
+                  style="push"
+                  tooltip="%command.pan.tooltip">
+               <parameter
+                     name="br.org.archimedes.core.factoryactivator.name"
+                     value="br.org.archimedes.pan">
+               </parameter>
+            </command>
+         </toolbar>
+      </menuContribution>
    </extension>
 
 </plugin>

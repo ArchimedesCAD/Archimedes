@@ -2,46 +2,35 @@
 <?eclipse version="3.2"?>
 <plugin>
    <extension
-         point="org.eclipse.ui.actionSets">
-      <actionSet
-            description="The action set to the Distance action"
-            id="br.org.archimedes.distance.actionSet"
-            label="Distance&apos;s Action set"
-            visible="true">
-         <menu
-               id="calculus"
-               label="%menu.calculus.label"
-               path="additions">
-            <groupMarker name="calculus0"/>
-            <separator name="separator0"/>
-            <groupMarker name="calculus1"/>
-            <separator name="separator1"/>
-            <groupMarker name="calculus2"/>
-            <separator name="separator2"/>
-            <groupMarker name="calculus3"/>
-            <separator name="separator3"/>
-            <groupMarker name="calculus4"/>
-         </menu>
-         <action
-               icon="icons/distance.png"
-               id="br.org.archimedes.distance.action"
-               label="%action.distance.label"
-               menubarPath="calculus/calculus0"
-               style="push"
-               class="br.org.archimedes.distance.DistanceAction"
-               tooltip="%action.distance.tooltip">
-            <enablement>
-               <objectClass name="br.org.archimedes.model.Drawing"/>
-            </enablement>
-         </action>
-      </actionSet>
-   </extension>
-   <extension
          point="br.org.archimedes.core.factory">
          <factory id="br.org.archimedes.distance"
             class="br.org.archimedes.distance.DistanceFactory">
          	<shortcut id="d"/>
          </factory>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:org.eclipse.ui.main.menu?after=additions">
+         <menu
+               id="calculus"
+               label="%menu.calculus.label"
+               mnemonic="%menu.calculus.mnemonic"
+               tooltip="%menu.calculus.tooltip">
+            <command
+                  commandId="br.org.archimedes.core.factoryactivator"
+                  icon="icons/distance.png"
+                  label="%command.distance.label"
+                  mnemonic="%command.distance.mnemonic"
+                  style="push"
+                  tooltip="%command.distance.tooltip">
+               <parameter
+                     name="br.org.archimedes.core.factoryactivator.name"
+                     value="br.org.archimedes.distance">
+               </parameter>
+            </command>
+         </menu>
+      </menuContribution>
    </extension>
 
 </plugin>

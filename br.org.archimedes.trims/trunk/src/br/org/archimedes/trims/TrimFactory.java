@@ -125,22 +125,20 @@ public class TrimFactory implements CommandFactory {
      */
     private String makeUndo () {
 
-        String returnMessage = br.org.archimedes.undo.Messages.UndoPerformed
-                + Constant.NEW_LINE;
-
         command = null;
+        String returnMessage;
         if (count > 0) {
             command = new UndoCommand();
             count--;
-            returnMessage += Messages.TrimSelectElements;
+            returnMessage = "Last operation undone." + Constant.NEW_LINE + Messages.TrimSelectElements;
         }
         else if (gotRef) {
             references = null;
             gotRef = false;
-            returnMessage += Messages.SelectRefs;
+            returnMessage = "Reseting references." + Constant.NEW_LINE + Messages.SelectRefs;
         }
         else {
-            returnMessage = br.org.archimedes.undo.Messages.notPerformed;
+            returnMessage = "Nothing to undo";
         }
 
         return returnMessage;
@@ -227,6 +225,7 @@ public class TrimFactory implements CommandFactory {
         Rectangle area = selection.getRectangle();
 
         if (area != null) {
+            // TODO Shouldn't need Polyline
             Polyline areaPl = new Polyline(area);
             
             Set<Element> elements = selection.getSelectedElements();

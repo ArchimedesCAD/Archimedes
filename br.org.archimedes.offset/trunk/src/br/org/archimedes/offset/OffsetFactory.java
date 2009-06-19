@@ -365,6 +365,7 @@ public class OffsetFactory implements CommandFactory {
     /**
      * Makes an undo command.
      */
+    // TODO Change to eclipse's i18n standart
     private String makeUndo () {
 
         ResourceBundle undoMessages = ResourceBundle

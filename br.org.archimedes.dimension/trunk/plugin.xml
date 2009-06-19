@@ -11,25 +11,36 @@
                shortcut="dim"/>
    </extension>
    <extension
-         point="org.eclipse.ui.actionSets">
-      <actionSet
-            description="The action set for the infinite line"
-            id="br.org.archimedes.dimension.actionSet"
-            label="Dimension action set"
-            visible="true">
-         <action
-               class="br.org.archimedes.dimension.DimensionAction"
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:create?before=complex0">
+         <command
+               commandId="br.org.archimedes.core.factoryactivator"
                icon="icons/dimension.png"
-               id="br.org.archimedes.dimension.actionCreate"
-               label="%action.dimension.label"
-               menubarPath="create/complex0"
+               label="%command.dimension.label"
+               mnemonic="%command.dimension.mnemonic"
                style="push"
-               toolbarPath="create/complex0"
-               tooltip="%action.dimension.tooltip">
-            <enablement>
-               <objectClass name="br.org.archimedes.model.Drawing"/>
-            </enablement>
-         </action>
-      </actionSet>
+               tooltip="%command.dimension.tooltip">
+            <parameter
+                  name="br.org.archimedes.core.factoryactivator.name"
+                  value="br.org.archimedes.dimension">
+            </parameter>
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="toolbar:create">
+         <command
+               commandId="br.org.archimedes.core.factoryactivator"
+               icon="icons/dimension.png"
+               label="%command.dimension.label"
+               mnemonic="%command.dimension.mnemonic"
+               style="push"
+               tooltip="%command.dimension.tooltip">
+            <parameter
+                  name="br.org.archimedes.core.factoryactivator.name"
+                  value="br.org.archimedes.dimension">
+            </parameter>
+         </command>
+      </menuContribution>
    </extension>
 </plugin>

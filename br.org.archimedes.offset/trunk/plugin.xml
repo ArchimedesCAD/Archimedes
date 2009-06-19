@@ -9,25 +9,36 @@
          </factory>
    </extension>
    <extension
-         point="org.eclipse.ui.actionSets">
-      <actionSet
-            id="br.org.archimedes.offset.actionSet"
-            label="Offset action set"
-            visible="true">
-         <action
-               class="br.org.archimedes.offset.OffsetAction"
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:transform?before=simple1">
+         <command
+               commandId="br.org.archimedes.core.factoryactivator"
                icon="icons/offset.png"
-               id="br.org.archimedes.offset.actionActivate"
-               label="%action.offset.label"
-               menubarPath="transform/simple1"
+               label="%command.offset.label"
+               mnemonic="%command.offset.mnemonic"
                style="push"
-               toolbarPath="transform/simple1"
-               tooltip="%action.offset.tooltip">
-            <enablement>
-               <objectClass name="br.org.archimedes.model.Drawing"/>
-            </enablement>
-         </action>
-      </actionSet>
+               tooltip="%command.offset.tooltip">
+            <parameter
+                  name="br.org.archimedes.core.factoryactivator.name"
+                  value="br.org.archimedes.offset">
+            </parameter>
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="toolbar:transform">
+         <command
+               commandId="br.org.archimedes.core.factoryactivator"
+               icon="icons/offset.png"
+               label="%command.offset.label"
+               mnemonic="%command.offset.mnemonic"
+               style="push"
+               tooltip="%command.offset.tooltip">
+            <parameter
+                  name="br.org.archimedes.core.factoryactivator.name"
+                  value="br.org.archimedes.offset">
+            </parameter>
+         </command>
+      </menuContribution>
    </extension>
-
 </plugin>

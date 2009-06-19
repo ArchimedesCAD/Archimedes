@@ -1,8 +1,9 @@
 
 package br.org.archimedes.text.edittext.tests;
 
-import br.org.archimedes.text.edittext.Activator;
 import br.org.archimedes.text.edittext.TextEditor;
+
+import org.eclipse.ui.PlatformUI;
 
 public class MockTextEditor extends TextEditor {
 
@@ -11,7 +12,7 @@ public class MockTextEditor extends TextEditor {
 
     public MockTextEditor (String before, String answer) {
 
-        super(Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell(), before);
+        super(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), before);
         this.answer = answer;
     }
 
@@ -24,5 +25,4 @@ public class MockTextEditor extends TextEditor {
     public int countOpenCalls () {
         return count;
     }
-
 }

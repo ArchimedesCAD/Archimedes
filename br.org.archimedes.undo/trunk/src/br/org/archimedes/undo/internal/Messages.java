@@ -7,25 +7,33 @@
  * Contributors:<br>
  * Hugo Corbucci - initial API and implementation<br>
  * <br>
- * This file was created on 2007/03/13, 22:42:11, by Hugo Corbucci.<br>
+ * This file was created on 2007/04/22, 13:17:30, by Hugo Corbucci.<br>
  * It is part of package br.org.archimedes.undo on the br.org.archimedes.undo project.<br>
  */
-package br.org.archimedes.undo;
+package br.org.archimedes.undo.internal;
 
-import br.org.archimedes.interfaces.FactoryAction;
+import org.eclipse.osgi.util.NLS;
 
 /**
  * Belongs to package br.org.archimedes.undo.
- * 
+ *
  * @author nitao
+ *
  */
-public class UndoAction extends FactoryAction {
+public class Messages extends NLS {
 
-    /**
-     * Constructor.
-     */
-    public UndoAction () {
+    private static final String BUNDLE_NAME = "br.org.archimedes.undo.messages"; //$NON-NLS-1$
 
-        super(Activator.PLUGIN_ID);
+    public static String notPerformed;
+
+    public static String UndoPerformed;
+    static {
+        // initialize resource bundle
+        NLS.initializeMessages(BUNDLE_NAME, Messages.class);
+    }
+
+
+    private Messages () {
+
     }
 }

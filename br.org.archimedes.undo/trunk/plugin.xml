@@ -2,32 +2,45 @@
 <?eclipse version="3.2"?>
 <plugin>
    <extension
-         point="org.eclipse.ui.actionSets">
-      <actionSet
-            description="The action set for Undo actions"
-            id="br.org.archimedes.undo.actionSet"
-            label="Undo Action Set"
-            visible="true">
-         <action
-               icon="icons/undo.png"
-               id="br.org.archimedes.undo.undoAction"
-               label="%action.undo.label"
-               menubarPath="edit/simplex0"
-               style="push"
-               class="br.org.archimedes.undo.UndoAction"
-               toolbarPath="edit/simplex0"
-               tooltip="%action.undo.tooltip">
-            <enablement>
-               <objectClass name="br.org.archimedes.model.Drawing"/>
-            </enablement>
-         </action>
-      </actionSet>
-   </extension>
-   <extension
          point="br.org.archimedes.core.factory">
          <factory id="br.org.archimedes.undo"
           class="br.org.archimedes.undo.UndoFactory">
          	<shortcut id="u"/>
          </factory>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:edit?before=slot0">
+         <command
+               commandId="br.org.archimedes.core.factoryactivator"
+               icon="icons/undo.png"
+               id="menu.undo"
+               label="%command.undo.label"
+               mnemonic="%command.undo.mnemonic"
+               style="push"
+               tooltip="%command.undo.tooltip">
+            <parameter
+                  name="br.org.archimedes.core.factoryactivator.name"
+                  value="br.org.archimedes.undo">
+            </parameter>
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="toolbar:edit">
+         <command
+               commandId="br.org.archimedes.core.factoryactivator"
+               icon="icons/undo.png"
+               id="toolbar.undo"
+               label="%command.undo.label"
+               mnemonic="%command.undo.mnemonic"
+               style="push"
+               tooltip="%command.undo.tooltip">
+            <parameter
+                  name="br.org.archimedes.core.factoryactivator.name"
+                  value="br.org.archimedes.undo">
+            </parameter>
+         </command>
+      </menuContribution>
    </extension>
 </plugin>

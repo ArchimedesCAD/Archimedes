@@ -2,28 +2,6 @@
 <?eclipse version="3.2"?>
 <plugin>
    <extension
-         point="org.eclipse.ui.actionSets">
-      <actionSet
-            description="The action set to the Erase action"
-            id="br.org.archimedes.erase.actionSet"
-            label="Erase&apos;s Action set"
-            visible="true">
-         <action
-               icon="icons/delete.png"
-               id="br.org.archimedes.erase.action"
-               label="%action.erase.label"
-               menubarPath="transform/simplex0"
-               style="push"
-               class="br.org.archimedes.erase.EraseAction"
-               toolbarPath="transform/simplex0"
-               tooltip="%action.erase.tooltip">
-            <enablement>
-               <objectClass name="br.org.archimedes.model.Drawing"/>
-            </enablement>
-         </action>
-      </actionSet>
-   </extension>
-   <extension
          point="br.org.archimedes.core.factory">
          <factory id="br.org.archimedes.erase"
           class="br.org.archimedes.erase.EraseFactory">
@@ -31,17 +9,36 @@
          </factory>
    </extension>
    <extension
-         point="org.eclipse.ui.commands">
-      <command
-            defaultHandler="br.org.archimedes.erase.EraseHandler"
-            id="br.org.archimedes.erase.command"
-            name="orto"/>
-   </extension>
-   <extension
-         point="org.eclipse.ui.bindings">
-      <key
-            commandId="br.org.archimedes.erase.command"
-            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            sequence="Del"/>
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:transform?before=simple0">
+         <command
+               commandId="br.org.archimedes.core.factoryactivator"
+               icon="icons/delete.png"
+               label="%command.erase.label"
+               mnemonic="%command.erase.mnemonic"
+               style="push"
+               tooltip="%command.erase.tooltip">
+            <parameter
+                  name="br.org.archimedes.core.factoryactivator.name"
+                  value="br.org.archimedes.erase">
+            </parameter>
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="toolbar:transform">
+         <command
+               commandId="br.org.archimedes.core.factoryactivator"
+               icon="icons/delete.png"
+               label="%command.erase.label"
+               mnemonic="%command.erase.mnemonic"
+               style="push"
+               tooltip="%command.erase.tooltip">
+            <parameter
+                  name="br.org.archimedes.core.factoryactivator.name"
+                  value="br.org.archimedes.erase">
+            </parameter>
+         </command>
+      </menuContribution>
    </extension>
 </plugin>

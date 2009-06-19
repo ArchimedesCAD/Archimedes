@@ -9,24 +9,36 @@
          </factory>
    </extension>
    <extension
-         point="org.eclipse.ui.actionSets">
-      <actionSet
-            id="br.org.archimedes.move.actionSet"
-            label="Move action set"
-            visible="true">
-         <action
-               id="br.org.archimedes.move.actionActivate"
-               class="br.org.archimedes.move.MoveAction"
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:transform?after=simple1">
+         <command
+               commandId="br.org.archimedes.core.factoryactivator"
                icon="icons/move.png"
-               menubarPath="transform/simple1"
-               label="%action.transform.label"
+               label="%command.move.label"
+               mnemonic="%command.move.mnemonic"
                style="push"
-               toolbarPath="transform/simple1"
-               tooltip="%action.transform.tooltip">
-            <enablement>
-               <objectClass name="br.org.archimedes.model.Drawing"/>
-            </enablement>
-         </action>
-      </actionSet>
+               tooltip="%command.move.tooltip">
+            <parameter
+                  name="br.org.archimedes.core.factoryactivator.name"
+                  value="br.org.archimedes.move">
+            </parameter>
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="toolbar:transform">
+         <command
+               commandId="br.org.archimedes.core.factoryactivator"
+               icon="icons/move.png"
+               label="%command.move.label"
+               mnemonic="%command.move.mnemonic"
+               style="push"
+               tooltip="%command.move.tooltip">
+            <parameter
+                  name="br.org.archimedes.core.factoryactivator.name"
+                  value="br.org.archimedes.move">
+            </parameter>
+         </command>
+      </menuContribution>
    </extension>
 </plugin>

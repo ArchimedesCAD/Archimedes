@@ -81,7 +81,6 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
         menuBar.add(createEditMenu());
         menuBar.add(createCreateMenu());
         menuBar.add(createTransformMenu());
-        menuBar.add(createZoomMenu());
         menuBar.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
         menuBar.add(createHelpMenu());
     }
@@ -100,23 +99,6 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
         helpMenu.add(new Separator());
         helpMenu.add(aboutAction);
         return helpMenu;
-    }
-
-    /**
-     * @return
-     */
-    private MenuManager createZoomMenu () {
-
-        MenuManager zoomMenu = new MenuManager(
-                Messages.br_org_archimedes_menu_zoom, "zoom"); //$NON-NLS-1$
-        createSeparatedSlots(zoomMenu, 10, "absolute"); //$NON-NLS-1$
-        zoomMenu.add(new Separator());
-        createSeparatedSlots(zoomMenu, 10, "relative"); //$NON-NLS-1$
-        zoomMenu.add(new Separator());
-        createSeparatedSlots(zoomMenu, 10, "move"); //$NON-NLS-1$
-        zoomMenu.add(new Separator());
-        createSeparatedSlots(zoomMenu, 10, "complex"); //$NON-NLS-1$
-        return zoomMenu;
     }
 
     /**
@@ -212,7 +194,6 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
         IToolBarManager createBar = new ToolBarManager(coolBar.getStyle());
         IToolBarManager transformBar = new ToolBarManager(coolBar.getStyle());
         IToolBarManager additionsBar = new ToolBarManager(coolBar.getStyle());
-        IToolBarManager zoomBar = new ToolBarManager(coolBar.getStyle());
         IToolBarManager helpBar = new ToolBarManager(coolBar.getStyle());
 
         coolBar.add(new ToolBarContributionItem(fileBar, "file")); //$NON-NLS-1$
@@ -222,7 +203,6 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
         coolBar.add(new ToolBarContributionItem(transformBar, "transform")); //$NON-NLS-1$
         coolBar.add(new ToolBarContributionItem(additionsBar,
                 IWorkbenchActionConstants.MB_ADDITIONS));
-        coolBar.add(new ToolBarContributionItem(zoomBar, "zoom")); //$NON-NLS-1$
         coolBar.add(new ToolBarContributionItem(helpBar, "help")); //$NON-NLS-1$
     }
 }

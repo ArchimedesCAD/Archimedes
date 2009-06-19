@@ -57,9 +57,9 @@ public class ExtendFactory implements CommandFactory {
     private int count;
 
     private ArrayList<Point> points;
-    
+
     private HashMap<Point, Element> elementsToExtend;
-    
+
     private IntersectionManager intersectionManager;
 
 
@@ -129,21 +129,21 @@ public class ExtendFactory implements CommandFactory {
      */
     private String makeUndo () {
 
-        String returnMessage = br.org.archimedes.undo.Messages.UndoPerformed + Constant.NEW_LINE;
+        String returnMessage;
 
         command = null;
         if (count > 0) {
             command = new UndoCommand();
             count--;
-            returnMessage += Messages.ExtendSelectElements;
+            returnMessage = "Last operation undone." + Constant.NEW_LINE + Messages.ExtendSelectElements;
         }
         else if (gotRef) {
             references = null;
             gotRef = false;
-            returnMessage += Messages.SelectRefs;
+            returnMessage = "Reseting references." + Constant.NEW_LINE + Messages.SelectRefs;
         }
         else {
-            returnMessage = br.org.archimedes.undo.Messages.notPerformed;
+            returnMessage = "Nothing to undo.";
         }
 
         return returnMessage;
@@ -243,8 +243,9 @@ public class ExtendFactory implements CommandFactory {
                 if ( !contains) {
                     Collection<Point> intersections = new ArrayList<Point>();
                     try {
-                        intersections = intersectionManager
-                                .getIntersectionsBetween(element, new Polyline(area));
+                        // TODO Shouldn't need Polyline to get the intersections in a rectangle
+                        intersections = intersectionManager.getIntersectionsBetween(element,
+                                new Polyline(area));
                         Point nearestExtreme = null;
                         double minDistance = Double.MAX_VALUE;
                         double distance;

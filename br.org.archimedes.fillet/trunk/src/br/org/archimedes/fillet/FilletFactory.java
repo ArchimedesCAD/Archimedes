@@ -149,6 +149,7 @@ public class FilletFactory implements CommandFactory {
 
             Collection<Point> intersections = new ArrayList<Point>();
             try {
+                // TODO Shouldn't need Polyline to get the intersections in a rectangle
                 intersections = intersectionManager.getIntersectionsBetween(element, new Polyline(area));
                 storeParameters(element, intersections.iterator().next());
             }

@@ -2,33 +2,44 @@
 <?eclipse version="3.2"?>
 <plugin>
    <extension
-         point="org.eclipse.ui.actionSets">
-      <actionSet
-            description="The action set containing the Copy to clipboard actions."
-            id="br.org.archimedes.copytoclipboard.actionSet"
-            label="Copy Action Set"
-            visible="true">
-         <action
-               icon="icons/copy_cp.png"
-               id="br.org.archimedes.action.copytoclipboard"
-               label="%action.copytoclipboard.label"
-               class="br.org.archimedes.copytoclipboard.CopyToClipboardAction"
-               menubarPath="edit/slot0"
-               style="push"
-               toolbarPath="edit/slot0"
-               tooltip="%action.copytoclipboard.tooltip">
-            <enablement>
-               <objectClass name="br.org.archimedes.model.Drawing"/>
-            </enablement>
-         </action>
-      </actionSet>
-   </extension>
-   <extension
          point="br.org.archimedes.core.factory">
          <factory id="br.org.archimedes.copytoclipboard"
           class="br.org.archimedes.copytoclipboard.CopyToClipboardFactory">
          	<shortcut id="cp"/>
          </factory>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:edit?after=slot1">
+         <command
+               commandId="br.org.archimedes.core.factoryactivator"
+               icon="icons/copy_cp.png"
+               label="%command.copytoclipboard.label"
+               mnemonic="%command.copytoclipboard.mnemonic"
+               style="push"
+               tooltip="%command.copytoclipboard.tooltip">
+            <parameter
+                  name="br.org.archimedes.core.factoryactivator.name"
+                  value="br.org.archimedes.copytoclipboard">
+            </parameter>
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="toolbar:edit">
+         <command
+               commandId="br.org.archimedes.core.factoryactivator"
+               icon="icons/copy_cp.png"
+               label="%command.copytoclipboard.label"
+               mnemonic="%command.copytoclipboard.mnemonic"
+               style="push"
+               tooltip="%command.circle.tooltip">
+            <parameter
+                  name="br.org.archimedes.core.factoryactivator.name"
+                  value="br.org.archimedes.copytoclipboard">
+            </parameter>
+         </command>
+      </menuContribution>
    </extension>         
 
 </plugin>

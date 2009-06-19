@@ -9,25 +9,36 @@
          	shortcut="xl" />
    </extension>
    <extension
-         point="org.eclipse.ui.actionSets">
-      <actionSet
-            description="The action set for the infinite line"
-            id="br.org.archimedes.infiniteline.actionSet"
-            label="Infinite Line action set"
-            visible="true">
-         <action
-               class="br.org.archimedes.infiniteline.InfiniteLineAction"
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:create?before=simple0">
+         <command
+               commandId="br.org.archimedes.core.factoryactivator"
                icon="icons/infiniteLine.png"
-               id="br.org.archimedes.infiniteline.actionCreate"
-               label="%action.create.label"
-               menubarPath="create/simple0"
+               label="%command.infiniteline.label"
+               mnemonic="%command.infiniteline.mnemonic"
                style="push"
-               toolbarPath="create/simple0"
-               tooltip="%action.create.tooltip">
-            <enablement>
-               <objectClass name="br.org.archimedes.model.Drawing"/>
-            </enablement>
-         </action>
-      </actionSet>
+               tooltip="%command.infiniteline.tooltip">
+            <parameter
+                  name="br.org.archimedes.core.factoryactivator.name"
+                  value="br.org.archimedes.infiniteline">
+            </parameter>
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="toolbar:create">
+         <command
+               commandId="br.org.archimedes.core.factoryactivator"
+               icon="icons/infiniteLine.png"
+               label="%command.infiniteline.label"
+               mnemonic="%command.infiniteline.mnemonic"
+               style="push"
+               tooltip="%command.infiniteline.tooltip">
+            <parameter
+                  name="br.org.archimedes.core.factoryactivator.name"
+                  value="br.org.archimedes.infiniteline">
+            </parameter>
+         </command>
+      </menuContribution>
    </extension>
 </plugin>

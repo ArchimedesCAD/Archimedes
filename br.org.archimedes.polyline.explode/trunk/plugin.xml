@@ -2,33 +2,44 @@
 <?eclipse version="3.2"?>
 <plugin>
    <extension
-         point="org.eclipse.ui.actionSets">
-      <actionSet
-            description="The action set with the actions for the Explode"
-            id="br.org.archimedes.polyline.explode.actionSet"
-            label="Explode action set"
-            visible="true">
-         <action
-               icon="icons/explode.png"
-               id="br.org.archimedes.polyline.explode.action"
-               label="%action.explode.label"
-               menubarPath="transform/complex0"
-               style="push"
-               class="br.org.archimedes.polyline.explode.ExplodeAction"
-               toolbarPath="transform/complex0"
-               tooltip="%action.explode.tooltip">
-            <enablement>
-               <objectClass name="br.org.archimedes.model.Drawing"/>
-            </enablement>
-         </action>
-      </actionSet>
-   </extension>
-   <extension
          point="br.org.archimedes.core.factory">
          <factory id="br.org.archimedes.polyline.explode"
           class="br.org.archimedes.polyline.explode.ExplodeFactory">
          	<shortcut id="x"/>
          </factory>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:transform?after=complex0">
+         <command
+               commandId="br.org.archimedes.core.factoryactivator"
+               icon="icons/explode.png"
+               label="%command.explode.label"
+               mnemonic="%command.explode.mnemonic"
+               style="push"
+               tooltip="%command.explode.tooltip">
+            <parameter
+                  name="br.org.archimedes.core.factoryactivator.name"
+                  value="br.org.archimedes.polyline.explode">
+            </parameter>
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="toolbar:transform">
+         <command
+               commandId="br.org.archimedes.core.factoryactivator"
+               icon="icons/explode.png"
+               label="%command.explode.label"
+               mnemonic="%command.explode.mnemonic"
+               style="push"
+               tooltip="%command.explode.tooltip">
+            <parameter
+                  name="br.org.archimedes.core.factoryactivator.name"
+                  value="br.org.archimedes.polyline.explode">
+            </parameter>
+         </command>
+      </menuContribution>
    </extension>
 
 </plugin>

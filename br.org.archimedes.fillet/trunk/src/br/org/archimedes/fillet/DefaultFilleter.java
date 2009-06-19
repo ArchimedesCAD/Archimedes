@@ -1,12 +1,6 @@
 
 package br.org.archimedes.fillet;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-
 import br.org.archimedes.Geometrics;
 import br.org.archimedes.circle.Circle;
 import br.org.archimedes.exceptions.InvalidArgumentException;

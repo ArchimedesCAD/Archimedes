@@ -2,33 +2,44 @@
 <?eclipse version="3.2"?>
 <plugin>
    <extension
-         point="org.eclipse.ui.actionSets">
-      <actionSet
-            description="The action set containing the Paste from clipboard actions."
-            id="br.org.archimedes.paste.actionSet"
-            label="Paste Action Set"
-            visible="true">
-         <action
-               icon="icons/paste.png"
-               id="br.org.archimedes.action.paste"
-               class="br.org.archimedes.paste.PasteAction"
-               label="%action.paste.label"
-               menubarPath="edit/slot0"
-               style="push"
-               toolbarPath="edit/slot0"
-               tooltip="%action.paste.tooltip">
-            <enablement>
-               <objectClass name="br.org.archimedes.model.Drawing"/>
-            </enablement>
-         </action>
-      </actionSet>         
-   </extension>
-   <extension
          point="br.org.archimedes.core.factory">
          <factory id="br.org.archimedes.paste"
           class="br.org.archimedes.paste.PasteFactory">
          	<shortcut id="pa"/>
          </factory>         
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:edit?after=slot1">
+         <command
+               commandId="br.org.archimedes.core.factoryactivator"
+               icon="icons/paste.png"
+               label="%command.paste.label"
+               mnemonic="%command.paste.mnemonic"
+               style="push"
+               tooltip="%command.paste.tooltip">
+            <parameter
+                  name="br.org.archimedes.core.factoryactivator.name"
+                  value="br.org.archimedes.paste">
+            </parameter>
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="toolbar:edit">
+         <command
+               commandId="br.org.archimedes.core.factoryactivator"
+               icon="icons/paste.png"
+               label="%command.paste.label"
+               mnemonic="%command.paste.mnemonic"
+               style="push"
+               tooltip="%command.paste.tooltip">
+            <parameter
+                  name="br.org.archimedes.core.factoryactivator.name"
+                  value="br.org.archimedes.paste">
+            </parameter>
+         </command>
+      </menuContribution>
    </extension>
 
 </plugin>

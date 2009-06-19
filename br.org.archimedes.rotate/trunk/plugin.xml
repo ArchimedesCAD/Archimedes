@@ -9,24 +9,36 @@
          </factory>
    </extension>
    <extension
-         point="org.eclipse.ui.actionSets">
-      <actionSet
-            id="br.org.archimedes.rotate.actionSet"
-            label="Rotate action set"
-            visible="true">
-         <action
-               id="br.org.archimedes.rotate.actionActivate"
-               class="br.org.archimedes.rotate.RotateAction"
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:transform?after=simple1">
+         <command
+               commandId="br.org.archimedes.core.factoryactivator"
                icon="icons/rotate.png"
-               menubarPath="transform/simple0"
-               label="%action.rotate.label"
+               label="%command.rotate.label"
+               mnemonic="%command.rotate.mnemonic"
                style="push"
-               toolbarPath="transform/simple0"
-               tooltip="%action.rotate.tooltip">
-            <enablement>
-               <objectClass name="br.org.archimedes.model.Drawing"/>
-            </enablement>
-         </action>
-      </actionSet>
+               tooltip="%command.rotate.tooltip">
+            <parameter
+                  name="br.org.archimedes.core.factoryactivator.name"
+                  value="br.org.archimedes.rotate">
+            </parameter>
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="toolbar:transform">
+         <command
+               commandId="br.org.archimedes.core.factoryactivator"
+               icon="icons/rotate.png"
+               label="%command.rotate.label"
+               mnemonic="%command.rotate.mnemonic"
+               style="push"
+               tooltip="%command.rotate.tooltip">
+            <parameter
+                  name="br.org.archimedes.core.factoryactivator.name"
+                  value="br.org.archimedes.rotate">
+            </parameter>
+         </command>
+      </menuContribution>
    </extension>
 </plugin>
