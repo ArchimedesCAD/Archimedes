@@ -8,25 +8,27 @@
  </factory>
 </extension>
 <extension
-      point="org.eclipse.ui.actionSets">
-   <actionSet
-         id="br.org.archimedes.factoryexample.actionSet"
-         label="br.org.archimedes.factoryexample.actionSet"
-                     visible="true">
-            <menu
-               id="wsl"
-               label="%menu.factoryexample.label"
-               path="additions">
-            <groupMarker name="slot0"/>
-            </menu>
-      <action
-            class="br.org.archimedes.factoryexample.FactoryExampleAction"
-            id="br.org.archimedes.factoryexample.action"
-            label="%action.factoryexample.label"
-            menubarPath="factoryexample/slot0"
-            style="push"
-            toolbarPath="additions"
-            tooltip="%action.factoryexample.tooltip"/>
-   </actionSet>
+      point="org.eclipse.ui.menus">
+   <menuContribution
+         locationURI="menu:org.eclipse.ui.main.menu?after=additions">
+      <menu
+            id="wsl"
+            label="%menu.factoryexample.label"
+            mnemonic="%menu.factoryexample.mnemonic"
+            tooltip="%menu.factoryexample.tooltip">
+         <command
+               commandId="br.org.archimedes.core.factoryactivator"
+               id="br.org.archimedes.factoryexample.action"
+               label="%command.factoryexample.label"
+               mnemonic="%command.factoryexample.mnemonic"
+               style="push"
+               tooltip="%command.factoryexample.tooltip">
+            <parameter
+                  name="br.org.archimedes.core.factoryactivator.name"
+                  value="br.org.archimedes.factoryexample">
+            </parameter>
+         </command>
+      </menu>
+   </menuContribution>
 </extension>
 </plugin>
