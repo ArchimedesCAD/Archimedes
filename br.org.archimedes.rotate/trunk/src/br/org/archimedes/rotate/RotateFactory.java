@@ -12,10 +12,6 @@
  */
 package br.org.archimedes.rotate;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
 import br.org.archimedes.Geometrics;
 import br.org.archimedes.Utils;
 import br.org.archimedes.exceptions.InvalidParameterException;
@@ -33,6 +29,10 @@ import br.org.archimedes.parser.PointParser;
 import br.org.archimedes.parser.SimpleSelectionParser;
 import br.org.archimedes.parser.StringDecoratorParser;
 import br.org.archimedes.parser.VectorParser;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Belongs to package br.org.archimedes.rotate.
@@ -386,7 +386,8 @@ public class RotateFactory implements CommandFactory {
             }
         }
         else if ( !gotAngle) {
-            VectorParser vectorParser = new VectorParser(reference, 1.0, false);
+            // TODO Review
+            VectorParser vectorParser = new VectorParser(reference, false);
             returnParser = new StringDecoratorParser(vectorParser,
                     Messages.RedefineInitial);
         }

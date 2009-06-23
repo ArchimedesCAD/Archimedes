@@ -12,9 +12,6 @@
  */
 package br.org.archimedes.infiniteline;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import br.org.archimedes.controller.commands.PutOrRemoveElementCommand;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.factories.TwoPointFactory;
@@ -23,6 +20,9 @@ import br.org.archimedes.interfaces.Parser;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.parser.PointParser;
 import br.org.archimedes.parser.VectorParser;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Belongs to package br.org.archimedes.infiniteline.
@@ -124,7 +124,7 @@ public class InfiniteLineFactory extends TwoPointFactory {
                 returnParser = new PointParser();
             }
             else {
-                returnParser = new VectorParser(getP1(), 1.0, false);
+                returnParser = new VectorParser(getP1(), false);
             }
         }
         return returnParser;

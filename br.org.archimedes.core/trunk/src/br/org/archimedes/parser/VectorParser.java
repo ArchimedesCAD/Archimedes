@@ -29,15 +29,11 @@ import br.org.archimedes.model.Vector;
  */
 public class VectorParser implements Parser {
 
+    private boolean ignoreOrto;
+
     private Point p1;
 
     private Point p2;
-
-    private boolean gotDistance;
-
-    private double distance;
-
-    private boolean ignoreOrto;
 
 
     /**
@@ -72,23 +68,7 @@ public class VectorParser implements Parser {
     public VectorParser (Point point, boolean ignoreOrto) {
 
         p1 = (point == null ? new Point(0, 0) : point);
-        gotDistance = false;
         this.ignoreOrto = ignoreOrto;
-    }
-
-    /**
-     * @param point
-     *            The point from which the vector should start.
-     * @param distance
-     *            The vector's norm.
-     * @param ignoreOrto
-     *            true if the Orto should be ignored, false otherwise.
-     */
-    public VectorParser (Point point, double distance, boolean ignoreOrto) {
-
-        this(point, ignoreOrto);
-        gotDistance = true;
-        this.distance = distance;
     }
 
     /*
@@ -102,24 +82,6 @@ public class VectorParser implements Parser {
         }
 
         // TODO forbid zero length vectors
-        if (gotDistance) {
-            getPointWithDistance(message);
-            return null;
-        }
-        else {
-            return getPointFromMessage(message);
-        }
-    }
-
-    /**
-     * @param message
-     *            Message to parse from
-     * @return Message to the user
-     * @throws InvalidParameterException
-     *             Thrown if the message cannot fit
-     */
-    private String getPointFromMessage (String message) throws InvalidParameterException {
-
         if (Utils.isPoint(message)) {
             p2 = applyOrto(Utils.getPointCoordinates(message));
         }
@@ -136,6 +98,7 @@ public class VectorParser implements Parser {
         else {
             throw new InvalidParameterException();
         }
+
         return null;
     }
 
@@ -154,32 +117,6 @@ public class VectorParser implements Parser {
             }
         }
         return point;
-    }
-
-    /**
-     * @param message
-     *            Message to be parsed
-     * @throws InvalidParameterException
-     */
-    private void getPointWithDistance (String message) throws InvalidParameterException {
-
-        if (Utils.isDouble(message)) {
-            double angle = Utils.getDouble(message);
-            try {
-                p2 = Geometrics.calculatePoint(p1, distance, angle);
-            }
-            catch (NullArgumentException e) {
-                // This should never happen
-                e.printStackTrace();
-            }
-        }
-        else if (Utils.isPoint(message) || Utils.isReturn(message)) {
-            double distance = this.distance;
-            p2 = getMousePositionWithDistance(message, distance);
-        }
-        else {
-            throw new InvalidParameterException();
-        }
     }
 
     /**
