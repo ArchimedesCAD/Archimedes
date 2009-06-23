@@ -34,8 +34,9 @@
          point="org.eclipse.ui.bindings">
       <key
             commandId="org.eclipse.ui.file.exit"
+            contextId="org.eclipse.ui.contexts.window"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            sequence="CTRL+Q">
+            sequence="M1+Q">
       </key>
    </extension>
    <extension

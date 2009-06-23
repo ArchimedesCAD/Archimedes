@@ -43,4 +43,17 @@
          </command>
       </menuContribution>
    </extension>
+   <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="br.org.archimedes.core.factoryactivator"
+            contextId="org.eclipse.ui.contexts.window"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M1+Z">
+         <parameter
+               id="br.org.archimedes.core.factoryactivator.name"
+               value="br.org.archimedes.undo">
+         </parameter>
+      </key>
+   </extension>
 </plugin>
