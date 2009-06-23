@@ -44,11 +44,11 @@ public class VisualHelper {
     /**
      * Constructor.
      */
-    public VisualHelper () {
+    public VisualHelper (OpenGLWrapper openGLWrapper, Workspace workspace, InputController inputController) {
 
-        this.opengl = br.org.archimedes.Utils.getOpenGLWrapper();
-        this.workspace = br.org.archimedes.Utils.getWorkspace();
-        this.interpreter = br.org.archimedes.Utils.getInputController();
+        this.opengl = openGLWrapper;
+        this.workspace = workspace;
+        this.interpreter = inputController;
     }
 
     /**
@@ -132,12 +132,10 @@ public class VisualHelper {
         opengl.setColor(OpenGLWrapper.COLOR_CURSOR);
         opengl.setLineStyle(OpenGLWrapper.CONTINUOUS_LINE);
         opengl.setPrimitiveType(OpenGLWrapper.PRIMITIVE_LINE_LOOP);
-        if (interpreter.getCurrentFactory() != null) {
-            drawSquareCursor(screenPoint);
-        }
-        else {
+        if (interpreter.getCurrentFactory() == null) {
             drawCrossCursor(screenPoint);
         }
+        drawSquareCursor(screenPoint);
     }
 
     /**

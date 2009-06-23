@@ -79,4 +79,13 @@ public class EraseFactory extends SelectorFactory {
         }
         return Messages.Erased;
     }
+
+    /* (non-Javadoc)
+     * @see br.org.archimedes.factories.CommandFactory#isTransformFactory()
+     */
+    public boolean isTransformFactory () {
+
+        // TODO Auto-generated method stub
+        return false;
+    }
 }

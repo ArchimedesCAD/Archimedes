@@ -269,4 +269,13 @@ public class PanFactory implements CommandFactory, Observer {
 
         return "pan"; //$NON-NLS-1$
     }
+
+    /* (non-Javadoc)
+     * @see br.org.archimedes.factories.CommandFactory#isTransformFactory()
+     */
+    public boolean isTransformFactory () {
+
+        // TODO Auto-generated method stub
+        return false;
+    }
 }

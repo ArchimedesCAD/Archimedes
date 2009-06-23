@@ -81,4 +81,9 @@ public interface CommandFactory {
      * @return The name of the factory to be display to the user.
      */
     public String getName ();
+
+    /**
+     * @return True if this factory transforms elements; false otherwise
+     */
+    public boolean isTransformFactory ();
 }

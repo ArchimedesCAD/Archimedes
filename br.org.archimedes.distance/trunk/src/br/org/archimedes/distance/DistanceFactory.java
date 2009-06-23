@@ -79,4 +79,13 @@ public class DistanceFactory extends TwoPointFactory {
 		return "distance"; //$NON-NLS-1$
 	}
 
+    /* (non-Javadoc)
+     * @see br.org.archimedes.factories.CommandFactory#isTransformFactory()
+     */
+    public boolean isTransformFactory () {
+
+        // TODO Auto-generated method stub
+        return false;
+    }
+
 }

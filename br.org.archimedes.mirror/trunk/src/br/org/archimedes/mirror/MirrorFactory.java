@@ -199,4 +199,13 @@ public class MirrorFactory extends SelectionPointVectorFactory {
         }
         return returnParser;
     }
+
+    /* (non-Javadoc)
+     * @see br.org.archimedes.factories.CommandFactory#isTransformFactory()
+     */
+    public boolean isTransformFactory () {
+
+        // TODO Auto-generated method stub
+        return false;
+    }
 }

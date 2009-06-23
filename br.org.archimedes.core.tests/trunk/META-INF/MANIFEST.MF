@@ -14,6 +14,7 @@ Export-Package: br.org.archimedes,
  br.org.archimedes.stub,
  br.org.archimedes.helper
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Bundle-ClassPath: .
+Bundle-ClassPath: .,
+ lib/mockito-all-1.7.jar
 Bundle-Activator: br.org.archimedes.TestActivator
 Bundle-ActivationPolicy: lazy

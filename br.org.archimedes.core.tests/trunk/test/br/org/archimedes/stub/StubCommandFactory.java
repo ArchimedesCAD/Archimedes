@@ -92,4 +92,14 @@ public class StubCommandFactory implements CommandFactory {
         return null;
     }
 
+    /* (non-Javadoc)
+     * @see br.org.archimedes.factories.CommandFactory#isTransformFactory()
+     */
+    @Override
+    public boolean isTransformFactory () {
+
+        // TODO Auto-generated method stub
+        return false;
+    }
+
 }

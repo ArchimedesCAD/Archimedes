@@ -342,4 +342,13 @@ public class StretchFactory implements CommandFactory {
 
         return "stretch"; //$NON-NLS-1$
     }
+
+    /* (non-Javadoc)
+     * @see br.org.archimedes.factories.CommandFactory#isTransformFactory()
+     */
+    public boolean isTransformFactory () {
+
+        // TODO Auto-generated method stub
+        return false;
+    }
 }

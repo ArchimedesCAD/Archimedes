@@ -327,4 +327,13 @@ public class TrimFactory implements CommandFactory {
 
         return "trim"; //$NON-NLS-1$
     }
+
+    /* (non-Javadoc)
+     * @see br.org.archimedes.factories.CommandFactory#isTransformFactory()
+     */
+    public boolean isTransformFactory () {
+
+        // TODO Auto-generated method stub
+        return false;
+    }
 }

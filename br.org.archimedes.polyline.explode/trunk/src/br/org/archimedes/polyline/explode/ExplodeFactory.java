@@ -130,4 +130,13 @@ public class ExplodeFactory extends SelectorFactory {
 
         return new PutOrRemoveElementCommand(toInsert, false);
     }
+
+    /* (non-Javadoc)
+     * @see br.org.archimedes.factories.CommandFactory#isTransformFactory()
+     */
+    public boolean isTransformFactory () {
+
+        // TODO Auto-generated method stub
+        return false;
+    }
 }

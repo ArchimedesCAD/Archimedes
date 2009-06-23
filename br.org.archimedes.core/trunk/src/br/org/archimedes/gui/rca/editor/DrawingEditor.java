@@ -11,6 +11,7 @@
  * This file was created on 2007/01/19, 00:03:02, by Hugo Corbucci.<br>
  * It is part of package br.org.archimedes.gui.rca.editor on the br.org.archimedes.core project.<br>
  */
+
 package br.org.archimedes.gui.rca.editor;
 
 import br.org.archimedes.Constant;
@@ -64,8 +65,7 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
-public class DrawingEditor extends EditorPart implements Observer,
-        ISelectionProvider {
+public class DrawingEditor extends EditorPart implements Observer, ISelectionProvider {
 
     public static final String EDITOR_ID = "br.org.archimedes.gui.rca.editor.DrawingEditor"; //$NON-NLS-1$
 
@@ -157,8 +157,7 @@ public class DrawingEditor extends EditorPart implements Observer,
     }
 
     @Override
-    public void init (IEditorSite site, IEditorInput input)
-            throws PartInitException {
+    public void init (IEditorSite site, IEditorInput input) throws PartInitException {
 
         if (cursors == null) {
             cursors = DrawingEditor.createCursors(site.getShell().getDisplay());
@@ -168,53 +167,52 @@ public class DrawingEditor extends EditorPart implements Observer,
         setPartName(input.getName());
 
         openGL = br.org.archimedes.Utils.getOpenGLWrapper();
-        visualHelper = new VisualHelper();
+        visualHelper = new VisualHelper(openGL, br.org.archimedes.Utils.getWorkspace(),
+                br.org.archimedes.Utils.getInputController());
 
         getDrawing().addObserver(this);
         getSite().setSelectionProvider(this);
 
-        getEditorSite().getWorkbenchWindow().getPartService().addPartListener(
-                new IPartListener() {
+        getEditorSite().getWorkbenchWindow().getPartService().addPartListener(new IPartListener() {
 
-                    private IWorkbenchPart lastActivated;
+            private IWorkbenchPart lastActivated;
 
 
-                    public void partActivated (IWorkbenchPart part) {
+            public void partActivated (IWorkbenchPart part) {
 
-                        if (part == DrawingEditor.this) {
-                            System.out.println("Ativando: " //$NON-NLS-1$
-                                    + getDrawing().getTitle());
-                            lastActivated = part;
-                            br.org.archimedes.Utils.getInputController()
-                                    .setDrawing(getDrawing());
-                        }
-                    }
+                if (part == DrawingEditor.this) {
+                    System.out.println("Ativando: " //$NON-NLS-1$
+                            + getDrawing().getTitle());
+                    lastActivated = part;
+                    br.org.archimedes.Utils.getInputController().setDrawing(getDrawing());
+                }
+            }
 
-                    public void partBroughtToTop (IWorkbenchPart part) {
+            public void partBroughtToTop (IWorkbenchPart part) {
 
-                        // Nothing to do
-                    }
+                // Nothing to do
+            }
 
-                    public void partClosed (IWorkbenchPart part) {
-                        br.org.archimedes.Utils.getInputController()
-                                .setDrawing(null);
-                        partActivated(lastActivated);
-                    }
+            public void partClosed (IWorkbenchPart part) {
 
-                    public void partDeactivated (IWorkbenchPart part) {
+                br.org.archimedes.Utils.getInputController().setDrawing(null);
+                partActivated(lastActivated);
+            }
 
-                        if (part == DrawingEditor.this) {
-                            System.out.println("Desativando: " //$NON-NLS-1$
-                                    + getDrawing().getTitle());
-                            lastActivated = null;
-                        }
-                    }
+            public void partDeactivated (IWorkbenchPart part) {
 
-                    public void partOpened (IWorkbenchPart part) {
+                if (part == DrawingEditor.this) {
+                    System.out.println("Desativando: " //$NON-NLS-1$
+                            + getDrawing().getTitle());
+                    lastActivated = null;
+                }
+            }
 
-                        // Nothing to do
-                    }
-                });
+            public void partOpened (IWorkbenchPart part) {
+
+                // Nothing to do
+            }
+        });
     }
 
     @Override
@@ -237,8 +235,7 @@ public class DrawingEditor extends EditorPart implements Observer,
 
             GLData data = new GLData();
             data.doubleBuffer = true;
-            canvas = new GLCanvas(parent, SWT.NO_BACKGROUND | SWT.NO_FOCUS,
-                    data);
+            canvas = new GLCanvas(parent, SWT.NO_BACKGROUND | SWT.NO_FOCUS, data);
             canvas.setCurrent();
 
             try {
@@ -264,19 +261,16 @@ public class DrawingEditor extends EditorPart implements Observer,
     }
 
     /**
-     * Adds the mouse listener, the mouse wheel listener, the mouse move
-     * listener and a paint listener.
+     * Adds the mouse listener, the mouse wheel listener, the mouse move listener and a paint
+     * listener.
      */
     private void addListeners () {
 
-        final MouseClickHandler mouseClickHandler = MouseClickHandler
-                .getInstance();
-        final MouseMoveHandler mouseMoveHandler = MouseMoveHandler
-                .getInstance();
+        final MouseClickHandler mouseClickHandler = MouseClickHandler.getInstance();
+        final MouseMoveHandler mouseMoveHandler = MouseMoveHandler.getInstance();
         canvas.addMouseListener(new MouseListener() {
 
-            private Workspace workspace = br.org.archimedes.Utils
-                    .getWorkspace();
+            private Workspace workspace = br.org.archimedes.Utils.getWorkspace();
 
 
             public void mouseDoubleClick (MouseEvent event) {
@@ -344,8 +338,8 @@ public class DrawingEditor extends EditorPart implements Observer,
         Drawing drawing = getDrawing();
         Drawing active = null;
         try {
-            br.org.archimedes.Utils.getWorkspace().setViewport(
-                    drawing.getViewportPosition(), drawing.getZoom());
+            br.org.archimedes.Utils.getWorkspace().setViewport(drawing.getViewportPosition(),
+                    drawing.getZoom());
             active = br.org.archimedes.Utils.getController().getActiveDrawing();
         }
         catch (NullArgumentException e) {
@@ -407,8 +401,7 @@ public class DrawingEditor extends EditorPart implements Observer,
     /**
      * @see org.eclipse.jface.viewers.ISelectionProvider#removeSelectionChangedListener(org.eclipse.jface.viewers.ISelectionChangedListener)
      */
-    public void removeSelectionChangedListener (
-            ISelectionChangedListener listener) {
+    public void removeSelectionChangedListener (ISelectionChangedListener listener) {
 
         selectionListeners.remove(listener);
     }
