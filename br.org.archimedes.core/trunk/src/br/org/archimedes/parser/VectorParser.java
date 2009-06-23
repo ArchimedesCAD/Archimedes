@@ -11,6 +11,7 @@
  * This file was created on 2006/06/15, 00:03:02, by Hugo Corbucci.<br>
  * It is part of package br.org.archimedes.parser on the br.org.archimedes.core project.<br>
  */
+
 package br.org.archimedes.parser;
 
 import br.org.archimedes.Geometrics;
@@ -92,7 +93,6 @@ public class VectorParser implements Parser {
 
     /*
      * (non-Javadoc)
-     * 
      * @see br.org.archimedes.interpreter.parser.Parser#next(java.lang.String)
      */
     public String next (String message) throws InvalidParameterException {
@@ -100,79 +100,117 @@ public class VectorParser implements Parser {
         if (message == null) {
             throw new InvalidParameterException();
         }
-        String returnValue = null;
-        // TODO Nao permitir vetor com tamanho zero
-        if (gotDistance) {
-            Point directionPoint = Utils.getPointCoordinates(message);
-            if (Utils.isDouble(message)) {
-                double angle = Utils.getDouble(message);
-                try {
-                    p2 = Geometrics.calculatePoint(p1, distance, angle);
-                }
-                catch (NullArgumentException e) {
-                    // This should never happen
-                    e.printStackTrace();
-                }
-            }
-            else {
-                if (directionPoint != null || Utils.isReturn(message)) {
-                    if (directionPoint == null) {
-                        directionPoint = br.org.archimedes.Utils.getWorkspace().getMousePosition();
-                    }
 
-                    try {
-                        if(!ignoreOrto) {
-                            directionPoint = Utils.useOrto(p1, directionPoint);
-                        }
-                        p2 = Geometrics.calculatePoint(distance, p1,
-                                directionPoint);
-                    }
-                    catch (NullArgumentException e) {
-                        // This should never happen
-                        e.printStackTrace();
-                    }
-                }
-                else {
-                    throw new InvalidParameterException();
-                }
-            }
+        // TODO forbid zero length vectors
+        if (gotDistance) {
+            getPointWithDistance(message);
+            return null;
         }
         else {
-            if (Utils.isPoint(message)) {
-                p2 = Utils.getPointCoordinates(message);
-                if ( !ignoreOrto) {
-                    try {
-                        p2 = Utils.useOrto(p1, p2);
-                    }
-                    catch (NullArgumentException e) {
-                        // Should not happen
-                        e.printStackTrace();
-                    }
-                }
+            return getPointFromMessage(message);
+        }
+    }
+
+    /**
+     * @param message
+     *            Message to parse from
+     * @return Message to the user
+     * @throws InvalidParameterException
+     *             Thrown if the message cannot fit
+     */
+    private String getPointFromMessage (String message) throws InvalidParameterException {
+
+        if (Utils.isPoint(message)) {
+            p2 = applyOrto(Utils.getPointCoordinates(message));
+        }
+        else if (message.startsWith("@") //$NON-NLS-1$
+                && Utils.isPoint(message.substring(1))) {
+            Point relative = Utils.getPointCoordinates(message.substring(1));
+            Vector offset = new Vector(new Point(0, 0), relative);
+            p2 = p1.addVector(offset);
+        }
+        else if (Utils.isDouble(message)) {
+            double distance = Utils.getDouble(message);
+            p2 = getMousePositionWithDistance("", distance); // $NON-NLS-1$
+        }
+        else {
+            throw new InvalidParameterException();
+        }
+        return null;
+    }
+
+    /**
+     * @return Point with orto (if it shouldnt ignore orto) the given point otherwise
+     */
+    private Point applyOrto (Point point) {
+
+        if ( !ignoreOrto) {
+            try {
+                return Utils.useOrto(p1, point);
             }
-            else if (message.startsWith("@") //$NON-NLS-1$
-                    && Utils.isPoint(message.substring(1))) {
-                Point relative = Utils
-                        .getPointCoordinates(message.substring(1));
-                Vector offset = new Vector(new Point(0, 0), relative);
-                p2 = p1.addVector(offset);
-            }
-            else if (Utils.isDouble(message)) {
-                distance = Utils.getDouble(message);
-                gotDistance = true;
-                returnValue = Messages.Vector_expectDirection1;
-            }
-            else {
-                throw new InvalidParameterException();
+            catch (NullArgumentException e) {
+                // Should not happen
+                e.printStackTrace();
             }
         }
+        return point;
+    }
 
-        return returnValue;
+    /**
+     * @param message
+     *            Message to be parsed
+     * @throws InvalidParameterException
+     */
+    private void getPointWithDistance (String message) throws InvalidParameterException {
+
+        if (Utils.isDouble(message)) {
+            double angle = Utils.getDouble(message);
+            try {
+                p2 = Geometrics.calculatePoint(p1, distance, angle);
+            }
+            catch (NullArgumentException e) {
+                // This should never happen
+                e.printStackTrace();
+            }
+        }
+        else if (Utils.isPoint(message) || Utils.isReturn(message)) {
+            double distance = this.distance;
+            p2 = getMousePositionWithDistance(message, distance);
+        }
+        else {
+            throw new InvalidParameterException();
+        }
+    }
+
+    /**
+     * @param message
+     *            The message to parse
+     * @param distance
+     *            The distance from the first point to use
+     * @return The point at the given distance from the first one on the direction of the mouse
+     */
+    private Point getMousePositionWithDistance (String message, double distance) {
+
+        Point directionPoint = Utils.getPointCoordinates(message);
+        if (directionPoint == null) {
+            directionPoint = br.org.archimedes.Utils.getWorkspace().getMousePosition();
+        }
+
+        directionPoint = applyOrto(directionPoint);
+
+        try {
+            return Geometrics.calculatePoint(distance, p1, directionPoint);
+        }
+        catch (NullArgumentException e) {
+            // This should never happen
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     /*
      * (non-Javadoc)
-     * 
      * @see br.org.archimedes.interpreter.parser.Parser#isDone()
      */
     public boolean isDone () {
@@ -182,7 +220,6 @@ public class VectorParser implements Parser {
 
     /*
      * (non-Javadoc)
-     * 
      * @see br.org.archimedes.interpreter.parser.Parser#getParameter()
      */
     public Object getParameter () {

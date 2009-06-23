@@ -69,5 +69,4 @@ public class PointParser implements Parser {
 
         return point;
     }
-
 }
