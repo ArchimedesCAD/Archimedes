@@ -9,27 +9,6 @@
          </factory>
    </extension>
    <extension
-         point="org.eclipse.ui.actionSets">
-      <actionSet
-            id="br.org.archimedes.stretch.actionSet"
-            label="Stretch action set"
-            visible="true">
-         <action
-               class="br.org.archimedes.stretch.StretchAction"
-               icon="icons/stretch.png"
-               id="br.org.archimedes.stretch.actionActivate"
-               label="%action.stretch.label"
-               menubarPath="transform/simple0"
-               style="push"
-               toolbarPath="transform/simple0"
-               tooltip="%action.stretch.tooltip">
-            <enablement>
-               <objectClass name="br.org.archimedes.model.Drawing"/>
-            </enablement>
-         </action>
-      </actionSet>
-   </extension>
-   <extension
          point="org.eclipse.ui.menus">
       <menuContribution
             locationURI="menu:transform?after=simple1">
