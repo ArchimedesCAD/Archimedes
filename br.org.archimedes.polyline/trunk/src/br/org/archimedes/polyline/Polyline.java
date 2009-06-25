@@ -14,25 +14,19 @@
 
 package br.org.archimedes.polyline;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
-
 import br.org.archimedes.Geometrics;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.InvalidParameterException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.gui.opengl.OpenGLWrapper;
+import br.org.archimedes.infiniteline.InfiniteLine;
+import br.org.archimedes.interfaces.ExtendManager;
 import br.org.archimedes.interfaces.IntersectionManager;
 import br.org.archimedes.line.Line;
 import br.org.archimedes.model.ComparablePoint;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Layer;
+import br.org.archimedes.model.Offsetable;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.PolyLinePointKey;
 import br.org.archimedes.model.Rectangle;
@@ -41,14 +35,26 @@ import br.org.archimedes.model.Vector;
 import br.org.archimedes.model.references.SquarePoint;
 import br.org.archimedes.model.references.TrianglePoint;
 import br.org.archimedes.model.references.XPoint;
+import br.org.archimedes.rcp.extensionpoints.ExtendManagerEPLoader;
 import br.org.archimedes.rcp.extensionpoints.IntersectionManagerEPLoader;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 /**
  * Belongs to package br.org.archimedes.polyline.
  * 
  * @author nitao
  */
-public class Polyline extends Element {
+public class Polyline extends Element implements Offsetable {
 
     private List<Point> points;
 
@@ -83,6 +89,7 @@ public class Polyline extends Element {
     }
 
     public Polyline (Point... points) throws NullArgumentException, InvalidArgumentException {
+
         this(Arrays.asList(points));
     }
 
@@ -408,52 +415,52 @@ public class Polyline extends Element {
     public Element cloneWithDistance (double distance) throws InvalidParameterException {
 
         Element result = null;
-        List<Point> polyLine = new ArrayList<Point>();
+        List<Point> polyLinePoints = new ArrayList<Point>();
 
         List<Line> segments = getLines();
         if (segments.size() == 1) {
             Line line = segments.get(0);
             Line copy = (Line) line.cloneWithDistance(distance);
-            polyLine.add(copy.getInitialPoint());
-            polyLine.add(copy.getEndingPoint());
+            polyLinePoints.add(copy.getInitialPoint());
+            polyLinePoints.add(copy.getEndingPoint());
         }
         else {
-            Collection<Point> intersections;
-            // TODO Resolver intersecção
-            intersections = Collections.emptyList();
-            Point lastPoint = intersections.iterator().next();
-            polyLine.add(lastPoint);
+            ExtendManager extendManager = new ExtendManagerEPLoader().getExtendManager();
+            Set<Point> intersections = new HashSet<Point>();
+            List<InfiniteLine> offsetedSegments = new ArrayList<InfiniteLine>();
 
             for (int i = 0; i < segments.size(); i++) {
-                Line currentSegment = segments.get(i);
-                currentSegment = (Line) currentSegment.cloneWithDistance(distance);
-                // currentSegment = getCorrectOffset(lastPoint, distance,
-                // currentSegment);
+                Line line = (Line) segments.get(i).cloneWithDistance(distance);
+                offsetedSegments.add((InfiniteLine) extendManager
+                        .getInfiniteExtensionElements(line).iterator().next());
+            }
 
-                // TODO Resolver intersecção
-                intersections = Collections.emptyList();
+            Point firstPoint = offsetedSegments.get(0).getInitialPoint();
+            Point lastPoint = offsetedSegments.get(segments.size() - 1).getEndingPoint();
 
-                Point newPoint = intersections.iterator().next();
-
-                Vector originalDirection = new Vector(currentSegment.getInitialPoint(),
-                        currentSegment.getEndingPoint());
-                Vector newDirection = new Vector(lastPoint, newPoint);
-
-                double dotProduct = originalDirection.dotProduct(newDirection);
-
-                if (dotProduct > 0.0) {
-
-                    lastPoint = newPoint;
-                    polyLine.add(lastPoint);
+            intersections.add(firstPoint);
+            for (int i = 0, j = 1; j < offsetedSegments.size(); i++, j++) {
+                try {
+                    Collection<Point> intersectionsBetween = intersectionManager
+                            .getIntersectionsBetween(offsetedSegments.get(i), offsetedSegments
+                                    .get(j));
+                    intersections.add(intersectionsBetween.iterator().next());
+                    intersections.addAll(intersectionsBetween);
                 }
-                else {
-                    throw new InvalidParameterException();
+                catch (NullArgumentException e) {
+                    // Should not reach here
+                    e.printStackTrace();
                 }
+            }
+            intersections.add(lastPoint);
+
+            for (Point point : intersections) {
+                polyLinePoints.add(point);
             }
         }
 
         try {
-            result = new Polyline(polyLine);
+            result = new Polyline(polyLinePoints);
         }
         catch (NullArgumentException e) {
             // Should never happen
@@ -825,4 +832,5 @@ public class Polyline extends Element {
         extremes.add(points.get(points.size() - 1));
         return extremes;
     }
+
 }

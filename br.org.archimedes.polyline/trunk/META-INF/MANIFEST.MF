@@ -8,7 +8,8 @@ Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  br.org.archimedes.core;bundle-version="0.64.0",
- br.org.archimedes.line;bundle-version="0.58.0"
+ br.org.archimedes.line;bundle-version="0.58.0",
+ br.org.archimedes.infiniteline;bundle-version="0.64.0"
 Export-Package: br.org.archimedes.polyline
 Eclipse-RegisterBuddy: br.org.archimedes.core
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
