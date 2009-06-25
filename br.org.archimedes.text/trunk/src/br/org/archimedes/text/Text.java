@@ -14,6 +14,12 @@
 
 package br.org.archimedes.text;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import org.apache.batik.svggen.font.Font;
+
 import br.org.archimedes.Constant;
 import br.org.archimedes.Geometrics;
 import br.org.archimedes.exceptions.IllegalActionException;
@@ -26,12 +32,6 @@ import br.org.archimedes.model.Rectangle;
 import br.org.archimedes.model.ReferencePoint;
 import br.org.archimedes.model.Vector;
 import br.org.archimedes.model.references.CirclePoint;
-
-import org.apache.batik.svggen.font.Font;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 public class Text extends Element {
 
@@ -313,7 +313,7 @@ public class Text extends Element {
 
         Collection<ReferencePoint> references = new ArrayList<ReferencePoint>();
         try {
-            ReferencePoint reference = new CirclePoint(originPoint, originPoint);
+            ReferencePoint reference = new CirclePoint(originPoint, getPoints());
             references.add(reference);
         }
         catch (NullArgumentException e) {
