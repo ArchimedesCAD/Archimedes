@@ -57,6 +57,7 @@
    </extension>
    <extension
          point="org.eclipse.ui.startup">
-      <startup></startup>
+      <startup
+            class="br.org.archimedes.snap.MenuStateInitializer"></startup>
    </extension>
 </plugin>

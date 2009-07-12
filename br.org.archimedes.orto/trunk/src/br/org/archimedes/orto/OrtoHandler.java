@@ -15,11 +15,10 @@ package br.org.archimedes.orto;
 
 import br.org.archimedes.Utils;
 
+import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.commands.IHandler;
-import org.eclipse.core.commands.IHandlerListener;
 import org.eclipse.core.commands.State;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
@@ -33,24 +32,7 @@ import java.util.Map;
  * 
  * @author Hugo Corbucci
  */
-public class OrtoHandler implements IHandler, IElementUpdater {
-
-    /**
-     * @see org.eclipse.core.commands.IHandler#addHandlerListener(org.eclipse.core.commands.IHandlerListener)
-     */
-    public void addHandlerListener (IHandlerListener handlerListener) {
-
-        // Ignores new handlers
-
-    }
-
-    /**
-     * @see org.eclipse.core.commands.IHandler#dispose()
-     */
-    public void dispose () {
-
-        // Nothing to dispose
-    }
+public class OrtoHandler extends AbstractHandler implements IElementUpdater {
 
     /**
      * @see org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.ExecutionEvent)
@@ -59,37 +41,13 @@ public class OrtoHandler implements IHandler, IElementUpdater {
 
         ICommandService service = (ICommandService) PlatformUI.getWorkbench().getService(
                 ICommandService.class);
-        Command command = service.getCommand(Activator.ORTO_COMMAND_ID);
-        State state = command.getState(Activator.ORTO_STATE);
+        Command command = service.getCommand(MenuStateInitializer.ORTO_COMMAND_ID);
+        State state = command.getState(MenuStateInitializer.ORTO_STATE);
         boolean newValue = !(Boolean) state.getValue();
         state.setValue(newValue);
 
-        service.refreshElements(Activator.ORTO_COMMAND_ID, null);
+        service.refreshElements(MenuStateInitializer.ORTO_COMMAND_ID, null);
         return newValue;
-    }
-
-    /**
-     * @see org.eclipse.core.commands.IHandler#isEnabled()
-     */
-    public boolean isEnabled () {
-
-        return true;
-    }
-
-    /**
-     * @see org.eclipse.core.commands.IHandler#isHandled()
-     */
-    public boolean isHandled () {
-
-        return true;
-    }
-
-    /**
-     * @see org.eclipse.core.commands.IHandler#removeHandlerListener(org.eclipse.core.commands.IHandlerListener)
-     */
-    public void removeHandlerListener (IHandlerListener handlerListener) {
-
-        // Ignores attempts to remove handlers
     }
 
     /*

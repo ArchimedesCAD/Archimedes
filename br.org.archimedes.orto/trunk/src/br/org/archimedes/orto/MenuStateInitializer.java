@@ -18,18 +18,17 @@ import org.eclipse.core.commands.State;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.ui.IStartup;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
-import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.ui.progress.UIJob;
-import org.osgi.framework.BundleContext;
 
 /**
  * Belongs to package br.org.archimedes.orto.
  * 
  * @author "Hugo Corbucci"
  */
-public class Activator extends AbstractUIPlugin {
+public class MenuStateInitializer implements IStartup {
 
     public static final String PLUGIN_ID = "br.org.archimedes.orto";
 
@@ -37,15 +36,12 @@ public class Activator extends AbstractUIPlugin {
 
     public static final String ORTO_STATE = "br.org.archimedes.orto.state";
 
-
     /*
      * (non-Javadoc)
-     * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
+     * @see org.eclipse.ui.IStartup#earlyStartup()
      */
-    @Override
-    public void start (BundleContext context) throws Exception {
+    public void earlyStartup () {
 
-        super.start(context);
         UIJob job = new UIJob("InitCommandsWorkaround") {
 
             public IStatus runInUIThread (IProgressMonitor monitor) {

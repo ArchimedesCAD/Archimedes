@@ -38,11 +38,11 @@ public class SnapCommand implements Command {
 
         ICommandService service = (ICommandService) PlatformUI.getWorkbench().getService(
                 ICommandService.class);
-        org.eclipse.core.commands.Command command = service.getCommand(Activator.SNAP_COMMAND_ID);
-        State state = command.getState(Activator.SNAP_STATE);
+        org.eclipse.core.commands.Command command = service.getCommand(MenuStateInitializer.SNAP_COMMAND_ID);
+        State state = command.getState(MenuStateInitializer.SNAP_STATE);
         Boolean newValue = !(Boolean) state.getValue();
         state.setValue(newValue);
 
-        service.refreshElements(Activator.SNAP_COMMAND_ID, null);
+        service.refreshElements(MenuStateInitializer.SNAP_COMMAND_ID, null);
     }
 }

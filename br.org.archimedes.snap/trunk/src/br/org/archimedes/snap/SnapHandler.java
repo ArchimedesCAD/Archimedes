@@ -15,10 +15,9 @@ package br.org.archimedes.snap;
 
 import br.org.archimedes.Utils;
 
+import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.commands.IHandler;
-import org.eclipse.core.commands.IHandlerListener;
 import org.eclipse.core.commands.State;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
@@ -30,26 +29,9 @@ import java.util.Map;
 /**
  * Belongs to package br.org.archimedes.snap.
  * 
- * @author nitao
+ * @author Hugo Corbucci
  */
-public class SnapHandler implements IHandler, IElementUpdater {
-
-    /**
-     * @see org.eclipse.core.commands.IHandler#addHandlerListener(org.eclipse.core.commands.IHandlerListener)
-     */
-    public void addHandlerListener (IHandlerListener handlerListener) {
-
-        // Ignores new handlers
-
-    }
-
-    /**
-     * @see org.eclipse.core.commands.IHandler#dispose()
-     */
-    public void dispose () {
-
-        // Nothing to dispose
-    }
+public class SnapHandler extends AbstractHandler implements IElementUpdater {
 
     /**
      * @see org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.ExecutionEvent)
@@ -58,38 +40,13 @@ public class SnapHandler implements IHandler, IElementUpdater {
 
         ICommandService service = (ICommandService) PlatformUI.getWorkbench().getService(
                 ICommandService.class);
-        org.eclipse.core.commands.Command command = service.getCommand(Activator.SNAP_COMMAND_ID);
-        State state = command.getState(Activator.SNAP_STATE);
+        org.eclipse.core.commands.Command command = service.getCommand(MenuStateInitializer.SNAP_COMMAND_ID);
+        State state = command.getState(MenuStateInitializer.SNAP_STATE);
         Boolean newValue = !(Boolean) state.getValue();
         state.setValue(newValue);
 
-        service.refreshElements(Activator.SNAP_COMMAND_ID, null);
+        service.refreshElements(MenuStateInitializer.SNAP_COMMAND_ID, null);
         return newValue;
-    }
-
-    /**
-     * @see org.eclipse.core.commands.IHandler#isEnabled()
-     */
-    public boolean isEnabled () {
-
-        return true;
-    }
-
-    /**
-     * @see org.eclipse.core.commands.IHandler#isHandled()
-     */
-    public boolean isHandled () {
-
-        return true;
-    }
-
-    /**
-     * @see org.eclipse.core.commands.IHandler#removeHandlerListener(org.eclipse.core.commands.IHandlerListener)
-     */
-    public void removeHandlerListener (IHandlerListener handlerListener) {
-
-        // Ignores attempts to remove handlers
-
     }
 
     /*

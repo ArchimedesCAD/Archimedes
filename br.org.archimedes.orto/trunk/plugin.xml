@@ -58,6 +58,7 @@
    </extension>
    <extension
          point="org.eclipse.ui.startup">
-      <startup></startup>
+      <startup
+            class="br.org.archimedes.orto.MenuStateInitializer"></startup>
    </extension>
 </plugin>
