@@ -37,7 +37,7 @@
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
-            locationURI="menu:transform?after=simple1">
+            locationURI="menu:transform?after=complex">
          <command
                commandId="br.org.archimedes.core.factoryactivator"
                icon="icons/extend.png"
@@ -52,7 +52,7 @@
          </command>
       </menuContribution>
       <menuContribution
-            locationURI="toolbar:transform">
+            locationURI="toolbar:transform?after=complex">
          <command
                commandId="br.org.archimedes.core.factoryactivator"
                icon="icons/extend.png"

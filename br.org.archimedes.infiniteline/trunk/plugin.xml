@@ -11,7 +11,7 @@
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
-            locationURI="menu:create?before=simple0">
+            locationURI="menu:create?before=complex">
          <command
                commandId="br.org.archimedes.core.factoryactivator"
                icon="icons/infiniteLine.png"
@@ -26,7 +26,7 @@
          </command>
       </menuContribution>
       <menuContribution
-            locationURI="toolbar:create">
+            locationURI="toolbar:create?before=complex">
          <command
                commandId="br.org.archimedes.core.factoryactivator"
                icon="icons/infiniteLine.png"

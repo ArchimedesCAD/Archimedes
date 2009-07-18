@@ -9,29 +9,6 @@
          <manager class="br.org.archimedes.trims.TrimManager"/>
    </extension>
    <extension
-         point="org.eclipse.ui.actionSets">
-      <actionSet
-            id="br.org.archimedes.trims.actionSet"
-            label="Trim action sets"
-            visible="true">
-         <action
-               class="br.org.archimedes.trims.TrimAction"
-               icon="icons/trim.png"
-               id="br.org.archimedes.trims.action"
-               label="Trim"
-               menubarPath="transform/simple1"
-               style="push"
-               toolbarPath="transform/simple1"
-               tooltip="Trims the selected element">
-            <enablement>
-               <objectClass
-                     name="br.org.archimedes.model.Drawing">
-               </objectClass>
-            </enablement>
-         </action>
-      </actionSet>
-   </extension>
-   <extension
          point="br.org.archimedes.core.factory">
          <factory id="br.org.archimedes.trims"
           class="br.org.archimedes.trims.TrimFactory">
@@ -64,4 +41,37 @@
             element="br.org.archimedes.infiniteline"
             class="br.org.archimedes.trimmers.InfiniteLineTrimmer"/>    
 	</extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:transform?after=complex">
+         <command
+               commandId="br.org.archimedes.core.factoryactivator"
+               icon="icons/trim.png"
+               label="%command.trim.label"
+               mnemonic="%command.trim.mnemonic"
+               style="push"
+               tooltip="%command.trim.tooltip">
+            <parameter
+                  name="br.org.archimedes.core.factoryactivator.name"
+                  value="br.org.archimedes.trims">
+            </parameter>
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="toolbar:transform?after=complex">
+         <command
+               commandId="br.org.archimedes.core.factoryactivator"
+               icon="icons/trim.png"
+               label="%command.trim.label"
+               mnemonic="%command.trim.mnemonic"
+               style="push"
+               tooltip="%command.trim.tooltip">
+            <parameter
+                  name="br.org.archimedes.core.factoryactivator.name"
+                  value="br.org.archimedes.trims">
+            </parameter>
+         </command>
+      </menuContribution>
+   </extension>
 </plugin>

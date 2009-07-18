@@ -18,29 +18,41 @@ import org.eclipse.core.commands.State;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.ui.IStartup;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
+import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.ui.progress.UIJob;
+import org.osgi.framework.BundleContext;
 
 /**
  * Belongs to package br.org.archimedes.snap.
  * 
  * @author "Hugo Corbucci"
  */
-public class MenuStateInitializer implements IStartup {
+public class Activator extends AbstractUIPlugin {
 
-    protected static final String PLUGIN_ID = "br.org.archimedes.snap";
+    protected static final String PLUGIN_ID = "br.org.archimedes.snap"; //$NON-NLS-1$
 
-    public static final String SNAP_COMMAND_ID = "br.org.archimedes.snap.command";
+    public static final String SNAP_COMMAND_ID = "br.org.archimedes.snap.command"; //$NON-NLS-1$
 
-    public static final String SNAP_STATE = "br.org.archimedes.snap.state";
+    public static final String SNAP_STATE = "br.org.archimedes.snap.state"; //$NON-NLS-1$
 
+    
+    /* (non-Javadoc)
+     * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
+     */
+    @Override
+    public void start (BundleContext context) throws Exception {
+    
+        super.start(context);
+        earlyStartup();
+    }
+    
     /*
      * (non-Javadoc)
      * @see org.eclipse.ui.IStartup#earlyStartup()
      */
-    public void earlyStartup () {
+    private void earlyStartup () {
 
         UIJob job = new UIJob("InitCommandsWorkaround") {
 

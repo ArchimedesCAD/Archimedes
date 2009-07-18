@@ -41,12 +41,12 @@ public class OrtoHandler extends AbstractHandler implements IElementUpdater {
 
         ICommandService service = (ICommandService) PlatformUI.getWorkbench().getService(
                 ICommandService.class);
-        Command command = service.getCommand(MenuStateInitializer.ORTO_COMMAND_ID);
-        State state = command.getState(MenuStateInitializer.ORTO_STATE);
+        Command command = service.getCommand(Activator.ORTO_COMMAND_ID);
+        State state = command.getState(Activator.ORTO_STATE);
         boolean newValue = !(Boolean) state.getValue();
         state.setValue(newValue);
 
-        service.refreshElements(MenuStateInitializer.ORTO_COMMAND_ID, null);
+        service.refreshElements(Activator.ORTO_COMMAND_ID, null);
         return newValue;
     }
 

@@ -12,7 +12,7 @@
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
-            locationURI="menu:create?before=complex0">
+            locationURI="menu:create?after=complex">
          <command
                commandId="br.org.archimedes.core.factoryactivator"
                icon="icons/text.png"
@@ -27,7 +27,7 @@
          </command>
       </menuContribution>
       <menuContribution
-            locationURI="toolbar:create">
+            locationURI="toolbar:create?after=complex">
          <command
                commandId="br.org.archimedes.core.factoryactivator"
                icon="icons/text.png"
@@ -41,5 +41,18 @@
             </parameter>
          </command>
       </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="br.org.archimedes.core.factoryactivator"
+            contextId="br.org.archimedes.idle"
+            schemeId="br.org.archimedes.bindings.default"
+            sequence="T">
+         <parameter
+               id="br.org.archimedes.core.factoryactivator.name"
+               value="br.org.archimedes.text">
+         </parameter>
+      </key>
    </extension>
 </plugin>

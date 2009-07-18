@@ -13,10 +13,9 @@
       <menuContribution
             locationURI="toolbar:org.eclipse.ui.trim.status">
          <toolbar
-            id="br.org.archimedes.ortosnap">
+            id="ortosnap">
           <command
                 commandId="br.org.archimedes.orto.command"
-                id="br.org.archimedes.orto.button"
                 label="%action.orto.label"
                 mnemonic="%action.orto.mnemonic"
                 style="toggle"
@@ -25,12 +24,11 @@
         </toolbar>
       </menuContribution>
       <menuContribution
-            locationURI="menu:edit?before=slot3">
+            locationURI="menu:edit?before=workmods.ext">
          <command
                commandId="br.org.archimedes.orto.command"
-               id="br.org.archimedes.orto.menubutton"
                label="%action.orto.label"
-               mnemonic="%action.snap.mnemonic"
+               mnemonic="%action.orto.mnemonic"
                style="toggle"
                tooltip="%action.orto.tooltip">
          </command>
@@ -53,12 +51,23 @@
          point="org.eclipse.ui.bindings">
       <key
             commandId="br.org.archimedes.orto.command"
-            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            contextId="org.eclipse.ui.contexts.window"
+            platform="win32"
+            schemeId="br.org.archimedes.bindings.default"
             sequence="F8"/>
-   </extension>
-   <extension
-         point="org.eclipse.ui.startup">
-      <startup
-            class="br.org.archimedes.orto.MenuStateInitializer"></startup>
+      <key
+            commandId="br.org.archimedes.orto.command"
+            contextId="org.eclipse.ui.contexts.window"
+            platform="gtk"
+            schemeId="br.org.archimedes.bindings.default"
+            sequence="F8">
+      </key>
+      <key
+            commandId="br.org.archimedes.orto.command"
+            contextId="org.eclipse.ui.contexts.window"
+            platform="carbon"
+            schemeId="br.org.archimedes.bindings.default"
+            sequence="F4">
+      </key>
    </extension>
 </plugin>

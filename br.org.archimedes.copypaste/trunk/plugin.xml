@@ -11,10 +11,11 @@
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
-            locationURI="menu:transform?after=simple0">
+            locationURI="menu:transform">
          <command
                commandId="br.org.archimedes.core.factoryactivator"
                icon="icons/copy_co.png"
+               id="copy"
                label="%command.copypaste.label"
                mnemonic="%command.copypaste.mnemonic"
                style="push"
@@ -30,6 +31,7 @@
          <command
                commandId="br.org.archimedes.core.factoryactivator"
                icon="icons/copy_co.png"
+               id="copy"
                label="%command.copypaste.label"
                mnemonic="%command.copypaste.mnemonic"
                style="push"

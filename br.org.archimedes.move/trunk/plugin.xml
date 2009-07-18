@@ -11,7 +11,7 @@
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
-            locationURI="menu:transform?after=simple1">
+            locationURI="menu:transform?before=complex">
          <command
                commandId="br.org.archimedes.core.factoryactivator"
                icon="icons/move.png"
@@ -26,7 +26,7 @@
          </command>
       </menuContribution>
       <menuContribution
-            locationURI="toolbar:transform">
+            locationURI="toolbar:transform?before=complex">
          <command
                commandId="br.org.archimedes.core.factoryactivator"
                icon="icons/move.png"
@@ -40,5 +40,18 @@
             </parameter>
          </command>
       </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="br.org.archimedes.core.factoryactivator"
+            contextId="br.org.archimedes.idle"
+            schemeId="br.org.archimedes.bindings.default"
+            sequence="M">
+         <parameter
+               id="br.org.archimedes.core.factoryactivator.name"
+               value="br.org.archimedes.move">
+         </parameter>
+      </key>
    </extension>
 </plugin>

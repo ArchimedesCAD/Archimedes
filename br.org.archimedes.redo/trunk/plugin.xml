@@ -11,11 +11,10 @@
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
-            locationURI="menu:edit?after=menu.undo">
+            locationURI="menu:edit">
          <command
                commandId="br.org.archimedes.core.factoryactivator"
                icon="icons/redo.png"
-               id="menu.redo"
                label="%command.redo.label"
                mnemonic="%command.redo.mnemonic"
                style="push"
@@ -27,11 +26,10 @@
          </command>
       </menuContribution>
       <menuContribution
-            locationURI="toolbar:edit?after=toolbar.undo">
+            locationURI="toolbar:edit">
          <command
                commandId="br.org.archimedes.core.factoryactivator"
                icon="icons/redo.png"
-               id="toolbar.redo"
                label="%command.redo.label"
                mnemonic="%command.redo.mnemonic"
                style="push"
@@ -48,7 +46,7 @@
       <key
             commandId="br.org.archimedes.core.factoryactivator"
             contextId="org.eclipse.ui.contexts.window"
-            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            schemeId="br.org.archimedes.bindings.default"
             sequence="M1+Y">
          <parameter
                id="br.org.archimedes.core.factoryactivator.name"

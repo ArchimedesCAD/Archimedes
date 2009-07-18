@@ -11,7 +11,7 @@
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
-            locationURI="menu:edit?before=slot0">
+            locationURI="menu:edit">
          <command
                commandId="br.org.archimedes.core.factoryactivator"
                icon="icons/undo.png"
@@ -48,7 +48,7 @@
       <key
             commandId="br.org.archimedes.core.factoryactivator"
             contextId="org.eclipse.ui.contexts.window"
-            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            schemeId="br.org.archimedes.bindings.default"
             sequence="M1+Z">
          <parameter
                id="br.org.archimedes.core.factoryactivator.name"

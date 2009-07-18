@@ -11,7 +11,7 @@
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
-            locationURI="menu:edit?after=slot1">
+            locationURI="menu:edit?before=clipboard.ext">
          <command
                commandId="br.org.archimedes.core.factoryactivator"
                icon="icons/paste.png"
@@ -40,6 +40,19 @@
             </parameter>
          </command>
       </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="br.org.archimedes.core.factoryactivator"
+            contextId="org.eclipse.ui.contexts.window"
+            schemeId="br.org.archimedes.bindings.default"
+            sequence="M1+V">
+         <parameter
+               id="br.org.archimedes.core.factoryactivator.name"
+               value="br.org.archimedes.paste">
+         </parameter>
+      </key>
    </extension>
 
 </plugin>

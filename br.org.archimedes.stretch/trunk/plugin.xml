@@ -11,7 +11,7 @@
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
-            locationURI="menu:transform?after=simple1">
+            locationURI="menu:transform?before=complex">
          <command
                commandId="br.org.archimedes.core.factoryactivator"
                icon="icons/stretch.png"
@@ -26,7 +26,7 @@
          </command>
       </menuContribution>
       <menuContribution
-            locationURI="toolbar:transform">
+            locationURI="toolbar:transform?before=complex">
          <command
                commandId="br.org.archimedes.core.factoryactivator"
                icon="icons/stretch.png"

@@ -13,7 +13,7 @@
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
-            locationURI="menu:create?before=complex0">
+            locationURI="menu:create?after=complex">
          <command
                commandId="br.org.archimedes.core.factoryactivator"
                icon="icons/dimension.png"
@@ -28,7 +28,7 @@
          </command>
       </menuContribution>
       <menuContribution
-            locationURI="toolbar:create">
+            locationURI="toolbar:create?after=complex">
          <command
                commandId="br.org.archimedes.core.factoryactivator"
                icon="icons/dimension.png"
