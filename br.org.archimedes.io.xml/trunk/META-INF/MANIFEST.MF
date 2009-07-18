@@ -6,19 +6,19 @@ Bundle-Version: 0.58.0
 Bundle-Activator: br.org.archimedes.io.xml.Activator
 Bundle-Vendor: Hugo Corbucci
 Bundle-Localization: plugin
-Require-Bundle: br.org.archimedes.core,
+Require-Bundle: br.org.archimedes.core;bundle-version="0.64.0",
  org.eclipse.core.runtime,
  org.eclipse.ui,
- br.org.archimedes.curvedshape;resolution:=optional,
- br.org.archimedes.arc;resolution:=optional,
- br.org.archimedes.circle;resolution:=optional,
- br.org.archimedes.dimension;resolution:=optional,
- br.org.archimedes.infiniteline;resolution:=optional,
- br.org.archimedes.line;resolution:=optional,
- br.org.archimedes.polyline;resolution:=optional,
- br.org.archimedes.semiline;resolution:=optional,
- br.org.archimedes.text;resolution:=optional,
- br.org.archimedes.leader;resolution:=optional
+ br.org.archimedes.curvedshape;bundle-version="0.58.0";resolution:=optional,
+ br.org.archimedes.arc;bundle-version="0.58.0";resolution:=optional,
+ br.org.archimedes.circle;bundle-version="0.58.0";resolution:=optional,
+ br.org.archimedes.dimension;bundle-version="0.58.0";resolution:=optional,
+ br.org.archimedes.infiniteline;bundle-version="0.58.0";resolution:=optional,
+ br.org.archimedes.line;bundle-version="0.58.0";resolution:=optional,
+ br.org.archimedes.polyline;bundle-version="0.58.0";resolution:=optional,
+ br.org.archimedes.semiline;bundle-version="0.58.0";resolution:=optional,
+ br.org.archimedes.text;bundle-version="0.58.0";resolution:=optional,
+ br.org.archimedes.leader;bundle-version="0.58.0";resolution:=optional
 Export-Package: br.org.archimedes.io.xml,
  br.org.archimedes.io.xml.elements;x-friends:="br.org.archimedes.io.xml.tests",
  br.org.archimedes.io.xml.parsers;x-friends:="br.org.archimedes.io.xml.tests"

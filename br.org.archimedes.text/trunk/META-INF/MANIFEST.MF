@@ -6,8 +6,8 @@ Bundle-Version: 0.64.0
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- br.org.archimedes.core,
- br.org.archimedes.batik
+ br.org.archimedes.core;bundle-version="0.64.0",
+ br.org.archimedes.batik;bundle-version="0.58.0"
 Export-Package: br.org.archimedes.text
 Bundle-Vendor: Hugo Corbucci
 Eclipse-RegisterBuddy: br.org.archimedes.core
