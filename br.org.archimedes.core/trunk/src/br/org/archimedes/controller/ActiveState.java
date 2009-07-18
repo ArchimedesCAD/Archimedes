@@ -10,9 +10,8 @@
  * This file was created on 2006/10/02, 00:03:02, by Hugo Corbucci.<br>
  * It is part of package br.org.archimedes.controller on the br.org.archimedes.core project.<br>
  */
-package br.org.archimedes.controller;
 
-import java.util.List;
+package br.org.archimedes.controller;
 
 import br.org.archimedes.Constant;
 import br.org.archimedes.Utils;
@@ -24,12 +23,16 @@ import br.org.archimedes.interfaces.Command;
 import br.org.archimedes.interfaces.Parser;
 import br.org.archimedes.model.Drawing;
 
+import java.util.List;
+
 /**
  * Belongs to package br.org.archimedes.controller.commands.
  * 
- * @author night
+ * @author Hugo Corbucci
  */
 public class ActiveState extends InputState {
+
+    private static final String ACTIVE = "br.org.archimedes.active"; //$NON-NLS-1$
 
     private CommandFactory factory;
 
@@ -52,8 +55,7 @@ public class ActiveState extends InputState {
      * @param drawing
      *            The drawing on which the factory will be executed
      */
-    public ActiveState (InputState state, CommandFactory factory,
-            Drawing drawing) {
+    public ActiveState (InputState state, CommandFactory factory, Drawing drawing) {
 
         System.setProperty("ActiveState", "true"); //$NON-NLS-1$ //$NON-NLS-2$
         this.previousState = state;
@@ -64,7 +66,6 @@ public class ActiveState extends InputState {
 
     /*
      * (non-Javadoc)
-     * 
      * @see br.org.archimedes.controller.InputState#receiveText(java.lang.String)
      */
     public String receiveText (String text) {
@@ -97,9 +98,8 @@ public class ActiveState extends InputState {
                 }
             }
             if (returnValue != null) {
-                returnValue = returnValue.replaceAll(Constant.NEW_LINE,
-                        Constant.NEW_LINE + factory.getName().toUpperCase()
-                                + ": "); //$NON-NLS-1$
+                returnValue = returnValue.replaceAll(Constant.NEW_LINE, Constant.NEW_LINE
+                        + factory.getName().toUpperCase() + ": "); //$NON-NLS-1$
             }
             if (factory.isDone()) {
                 if (returnValue != null) {
@@ -118,7 +118,6 @@ public class ActiveState extends InputState {
 
     /*
      * (non-Javadoc)
-     * 
      * @see br.org.archimedes.controller.InputState#getNext()
      */
     public InputState getNext () {
@@ -131,7 +130,6 @@ public class ActiveState extends InputState {
 
     /*
      * (non-Javadoc)
-     * 
      * @see br.org.archimedes.controller.InputState#gotSelection()
      */
     public String gotSelection () {
@@ -153,7 +151,6 @@ public class ActiveState extends InputState {
 
     /*
      * (non-Javadoc)
-     * 
      * @see br.org.archimedes.controller.InputState#nextShouldHandle()
      */
     public boolean nextShouldHandle () {
@@ -168,8 +165,7 @@ public class ActiveState extends InputState {
      * @throws InvalidParameterException
      *             In case the parser does not accept the text parameter.
      */
-    private String handlesToParser (String text)
-            throws InvalidParameterException {
+    private String handlesToParser (String text) throws InvalidParameterException {
 
         String returnValue = null;
         returnValue = currentParser.next(text);
@@ -213,7 +209,6 @@ public class ActiveState extends InputState {
 
     /*
      * (non-Javadoc)
-     * 
      * @see br.org.archimedes.controller.InputState#changedDrawing(br.org.archimedes.model.Drawing)
      */
     public InputState changedDrawing (Drawing currentDrawing) {
@@ -231,7 +226,6 @@ public class ActiveState extends InputState {
 
     /*
      * (non-Javadoc)
-     * 
      * @see br.org.archimedes.controller.InputState#cancel()
      */
     public String cancel () {
@@ -251,7 +245,6 @@ public class ActiveState extends InputState {
 
     /*
      * (non-Javadoc)
-     * 
      * @see br.org.archimedes.controller.InputState#getCurrentFactory()
      */
     public CommandFactory getCurrentFactory () {
@@ -261,7 +254,6 @@ public class ActiveState extends InputState {
 
     /*
      * (non-Javadoc)
-     * 
      * @see br.org.archimedes.controller.InputState#wantsSpace()
      */
     public boolean wantsSpace () {
@@ -271,8 +263,8 @@ public class ActiveState extends InputState {
 
     /*
      * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.controller.InputState#setCurrentFactory(br.org.archimedes.factories.CommandFactory)
+     * @seebr.org.archimedes.controller.InputState#setCurrentFactory(br.org.archimedes.factories.
+     * CommandFactory)
      */
     @Override
     protected String setCurrentFactory (CommandFactory factory) {
@@ -280,5 +272,15 @@ public class ActiveState extends InputState {
         nextState = this;
         nextShould = false;
         return factory.getName().toUpperCase() + ": " + Messages.Active; //$NON-NLS-1$
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see br.org.archimedes.controller.InputState#getContextId()
+     */
+    @Override
+    public String getContextId () {
+
+        return ACTIVE;
     }
 }

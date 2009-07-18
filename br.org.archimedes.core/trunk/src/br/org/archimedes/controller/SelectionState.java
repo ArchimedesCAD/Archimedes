@@ -23,9 +23,11 @@ import br.org.archimedes.model.Point;
 /**
  * Belongs to package br.org.archimedes.controller.
  * 
- * @author night
+ * @author Hugo Corbucci
  */
 public class SelectionState extends InputState {
+
+    private static final String SELECTION_CONTEXT = "br.org.archimedes.selection"; //$NON-NLS-1$
 
     private InputState previous;
 
@@ -160,5 +162,14 @@ public class SelectionState extends InputState {
         cancel();
         nextShould = false;
         return previous.setCurrentFactory(factory);
+    }
+
+    /* (non-Javadoc)
+     * @see br.org.archimedes.controller.InputState#getContextId()
+     */
+    @Override
+    public String getContextId () {
+
+        return SELECTION_CONTEXT;
     }
 }

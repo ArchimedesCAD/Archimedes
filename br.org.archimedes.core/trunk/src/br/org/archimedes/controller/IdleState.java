@@ -10,6 +10,7 @@
  * This file was created on 2006/10/02, 00:03:02, by Hugo Corbucci.<br>
  * It is part of package br.org.archimedes.controller on the br.org.archimedes.core project.<br>
  */
+
 package br.org.archimedes.controller;
 
 import br.org.archimedes.Constant;
@@ -24,9 +25,11 @@ import br.org.archimedes.parser.CommandParser;
 /**
  * Belongs to package br.org.archimedes.controller.
  * 
- * @author night
+ * @author Hugo Corbucci
  */
 public class IdleState extends InputState {
+
+    private static final String IDLE = "br.org.archimedes.idle"; //$NON-NLS-1$
 
     private CommandFactory previousFactory;
 
@@ -47,7 +50,6 @@ public class IdleState extends InputState {
 
     /*
      * (non-Javadoc)
-     * 
      * @see br.org.archimedes.controller.InputState#receiveText(java.lang.String)
      */
     public String receiveText (String text) {
@@ -81,8 +83,7 @@ public class IdleState extends InputState {
             }
         }
         else {
-            returnValue = Messages.Invalid + Constant.NEW_LINE
-                    + Messages.Waiting;
+            returnValue = Messages.Invalid + Constant.NEW_LINE + Messages.Waiting;
         }
 
         return returnValue;
@@ -90,7 +91,6 @@ public class IdleState extends InputState {
 
     /*
      * (non-Javadoc)
-     * 
      * @see br.org.archimedes.controller.InputState#getNext()
      */
     public InputState getNext () {
@@ -138,7 +138,6 @@ public class IdleState extends InputState {
 
     /*
      * (non-Javadoc)
-     * 
      * @see br.org.archimedes.controller.InputState#nextShouldHandle()
      */
     public boolean nextShouldHandle () {
@@ -148,7 +147,6 @@ public class IdleState extends InputState {
 
     /*
      * (non-Javadoc)
-     * 
      * @see br.org.archimedes.controller.InputState#changedDrawing(br.org.archimedes.model.Drawing)
      */
     public InputState changedDrawing (Drawing currentDrawing) {
@@ -157,22 +155,27 @@ public class IdleState extends InputState {
         this.currentDrawing = currentDrawing;
         if (currentDrawing == null) {
             state = disabledState;
-            // Window.getInstance().disableDrawingButtons();
-        }
-        else {
-            // Window.getInstance().enableDrawingButtons();
         }
         return state;
     }
 
     /*
      * (non-Javadoc)
-     * 
      * @see br.org.archimedes.controller.InputState#cancel()
      */
     public String cancel () {
 
         nextState = this;
         return Messages.Waiting;
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see br.org.archimedes.controller.InputState#getContextId()
+     */
+    @Override
+    public String getContextId () {
+
+        return IDLE;
     }
 }

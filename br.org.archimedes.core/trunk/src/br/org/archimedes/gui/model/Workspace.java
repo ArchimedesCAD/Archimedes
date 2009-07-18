@@ -13,6 +13,7 @@
 
 package br.org.archimedes.gui.model;
 
+import br.org.archimedes.Utils;
 import br.org.archimedes.exceptions.NoActiveDrawingException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.model.Drawing;
@@ -24,7 +25,6 @@ import br.org.archimedes.model.Vector;
 
 import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.State;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
 
 import java.io.File;
@@ -172,8 +172,7 @@ public class Workspace extends Observable {
      */
     private boolean getValueOf (String commandId, String stateId) {
 
-        ICommandService service = (ICommandService) PlatformUI.getWorkbench().getService(
-                ICommandService.class);
+        ICommandService service = Utils.getCommandService();
         Command command = service.getCommand(commandId);
         if (command == null)
             return false;

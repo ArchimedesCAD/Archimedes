@@ -277,6 +277,15 @@
    <extension
          point="org.eclipse.core.expressions.definitions">
       <definition
+            id="br.org.archimedes.core.drawingeditor">
+         <with
+               variable="activeEditorId">
+            <equals
+                  value="br.org.archimedes.gui.rca.editor.DrawingEditor">
+            </equals>
+         </with>
+      </definition>
+      <definition
             id="br.org.archimedes.core.idlestate">
          <with
                variable="activeContexts">
@@ -284,18 +293,9 @@
                   ifEmpty="false"
                   operator="or">
                <equals
-                     value="br.org.archimedes.controller.commands.IdleState">
+                     value="br.org.archimedes.idle">
                </equals>
             </iterate>
-         </with>
-      </definition>
-      <definition
-            id="br.org.archimedes.core.drawingeditor">
-         <with
-               variable="activeEditorId">
-            <equals
-                  value="br.org.archimedes.gui.rca.editor.DrawingEditor">
-            </equals>
          </with>
       </definition>
       <definition
@@ -530,6 +530,10 @@
                   visible="false">
             </separator>
             <separator
+                  name="undoredo"
+                  visible="true">
+            </separator>
+            <separator
                   name="clipboard.ext"
                   visible="true">
             </separator>
@@ -726,6 +730,34 @@
             </separator>
          </toolbar>
       </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.contexts">
+      <context
+            description="%context.active.description"
+            id="br.org.archimedes.active"
+            name="%context.active.name">
+      </context>
+      <context
+            description="%context.disabled.description"
+            id="br.org.archimedes.disabled"
+            name="%context.disabled.name">
+      </context>
+      <context
+            description="%context.idle.description"
+            id="br.org.archimedes.idle"
+            name="%context.idle.name">
+      </context>
+      <context
+            description="%context.locked.description"
+            id="br.org.archimedes.locked"
+            name="%context.locked.name">
+      </context>
+      <context
+            description="%context.selection.description"
+            id="br.org.archimedes.selection"
+            name="%context.selection.name">
+      </context>
    </extension>
 
 </plugin>

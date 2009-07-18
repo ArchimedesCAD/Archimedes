@@ -11,7 +11,7 @@
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
-            locationURI="menu:edit">
+            locationURI="menu:edit?after=undo">
          <command
                commandId="br.org.archimedes.core.factoryactivator"
                icon="icons/redo.png"
@@ -26,7 +26,7 @@
          </command>
       </menuContribution>
       <menuContribution
-            locationURI="toolbar:edit">
+            locationURI="toolbar:edit?after=undo">
          <command
                commandId="br.org.archimedes.core.factoryactivator"
                icon="icons/redo.png"

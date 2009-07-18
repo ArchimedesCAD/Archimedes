@@ -83,4 +83,13 @@ public class StubState extends InputState {
 
         return null;
     }
+
+    /* (non-Javadoc)
+     * @see br.org.archimedes.controller.InputState#getContextId()
+     */
+    @Override
+    public String getContextId () {
+
+        return null;
+    }
 }

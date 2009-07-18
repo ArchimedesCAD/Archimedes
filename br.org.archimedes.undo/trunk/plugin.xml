@@ -11,11 +11,11 @@
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
-            locationURI="menu:edit">
+            locationURI="menu:edit?after=editStart">
          <command
                commandId="br.org.archimedes.core.factoryactivator"
                icon="icons/undo.png"
-               id="menu.undo"
+               id="undo"
                label="%command.undo.label"
                mnemonic="%command.undo.mnemonic"
                style="push"
@@ -27,11 +27,11 @@
          </command>
       </menuContribution>
       <menuContribution
-            locationURI="toolbar:edit">
+            locationURI="toolbar:edit?after=editStart">
          <command
                commandId="br.org.archimedes.core.factoryactivator"
                icon="icons/undo.png"
-               id="toolbar.undo"
+               id="undo"
                label="%command.undo.label"
                mnemonic="%command.undo.mnemonic"
                style="push"
@@ -47,7 +47,7 @@
          point="org.eclipse.ui.bindings">
       <key
             commandId="br.org.archimedes.core.factoryactivator"
-            contextId="org.eclipse.ui.contexts.window"
+            contextId="br.org.archimedes.idle"
             schemeId="br.org.archimedes.bindings.default"
             sequence="M1+Z">
          <parameter

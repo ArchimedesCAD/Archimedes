@@ -18,7 +18,7 @@ import br.org.archimedes.model.Drawing;
 /**
  * Belongs to package br.org.archimedes.controller.
  * 
- * @author night
+ * @author Hugo Corbucci
  */
 public abstract class InputState {
 
@@ -90,4 +90,9 @@ public abstract class InputState {
      * @return A nice message to the user.
      */
     protected abstract String setCurrentFactory (CommandFactory factory);
+
+    /**
+     * @return A unique string identifying that state context
+     */
+    public abstract String getContextId ();
 }

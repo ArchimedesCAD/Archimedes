@@ -10,6 +10,7 @@
  * This file was created on 2006/10/02, 00:03:02, by Hugo Corbucci.<br>
  * It is part of package br.org.archimedes.controller on the br.org.archimedes.core project.<br>
  */
+
 package br.org.archimedes.controller;
 
 import br.org.archimedes.factories.CommandFactory;
@@ -18,9 +19,11 @@ import br.org.archimedes.model.Drawing;
 /**
  * Belongs to package br.org.archimedes.controller.
  * 
- * @author night
+ * @author Hugo Corbucci
  */
 public class LockedState extends InputState {
+
+    private static final String LOCKED = "br.org.archimedes.locked"; //$NON-NLS-1$
 
     private String message;
 
@@ -47,7 +50,6 @@ public class LockedState extends InputState {
 
     /*
      * (non-Javadoc)
-     * 
      * @see br.org.archimedes.controller.InputState#receiveText(java.lang.String)
      */
     public String receiveText (String text) {
@@ -57,7 +59,6 @@ public class LockedState extends InputState {
 
     /*
      * (non-Javadoc)
-     * 
      * @see br.org.archimedes.controller.InputState#getNext()
      */
     public InputState getNext () {
@@ -67,7 +68,6 @@ public class LockedState extends InputState {
 
     /*
      * (non-Javadoc)
-     * 
      * @see br.org.archimedes.controller.InputState#nextShouldHandle()
      */
     public boolean nextShouldHandle () {
@@ -77,7 +77,6 @@ public class LockedState extends InputState {
 
     /*
      * (non-Javadoc)
-     * 
      * @see br.org.archimedes.controller.InputState#changedDrawing(br.org.archimedes.model.Drawing)
      */
     public InputState changedDrawing (Drawing currentDrawing) {
@@ -94,7 +93,6 @@ public class LockedState extends InputState {
 
     /*
      * (non-Javadoc)
-     * 
      * @see br.org.archimedes.controller.InputState#cancel()
      */
     public String cancel () {
@@ -105,12 +103,22 @@ public class LockedState extends InputState {
 
     /*
      * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.controller.InputState#setCurrentFactory(br.org.archimedes.factories.CommandFactory)
+     * @seebr.org.archimedes.controller.InputState#setCurrentFactory(br.org.archimedes.factories.
+     * CommandFactory)
      */
     @Override
     protected String setCurrentFactory (CommandFactory factory) {
 
         return message;
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see br.org.archimedes.controller.InputState#getContextId()
+     */
+    @Override
+    public String getContextId () {
+
+        return LOCKED;
     }
 }

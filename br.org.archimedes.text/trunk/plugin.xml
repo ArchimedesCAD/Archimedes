@@ -42,17 +42,4 @@
          </command>
       </menuContribution>
    </extension>
-   <extension
-         point="org.eclipse.ui.bindings">
-      <key
-            commandId="br.org.archimedes.core.factoryactivator"
-            contextId="br.org.archimedes.idle"
-            schemeId="br.org.archimedes.bindings.default"
-            sequence="T">
-         <parameter
-               id="br.org.archimedes.core.factoryactivator.name"
-               value="br.org.archimedes.text">
-         </parameter>
-      </key>
-   </extension>
 </plugin>

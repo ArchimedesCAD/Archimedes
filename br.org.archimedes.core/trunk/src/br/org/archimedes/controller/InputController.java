@@ -10,21 +10,25 @@
  * This file was created on 2006/03/23, 00:03:02, by Hugo Corbucci.<br>
  * It is part of package br.org.archimedes.controller on the br.org.archimedes.core project.<br>
  */
+
 package br.org.archimedes.controller;
 
-import java.util.List;
-import java.util.Observable;
-
 import br.org.archimedes.Constant;
+import br.org.archimedes.Utils;
 import br.org.archimedes.factories.CommandFactory;
 import br.org.archimedes.model.Drawing;
 import br.org.archimedes.parser.CommandParser;
 
+import org.eclipse.ui.contexts.IContextActivation;
+import org.eclipse.ui.contexts.IContextService;
+
+import java.util.List;
+import java.util.Observable;
+
 /**
  * Belongs to package br.org.archimedes.interpreter.<br>
- * The input controller is responsible for controlling all input. That is, it
- * controlls the flow of input in the program. It executes command factories and
- * sends their result to the Controller.
+ * The input controller is responsible for controlling all input. That is, it controlls the flow of
+ * input in the program. It executes command factories and sends their result to the Controller.
  * 
  * @author gigante
  */
@@ -34,17 +38,18 @@ public class InputController extends Observable {
 
     private InputState currentState;
 
+    private IContextActivation previousActivation;
+
 
     /**
      * The constructor initializes the tokens.<br>
-     * Do NOT use this constructor. It is only here so that the Activator can
-     * use it.<br>
+     * Do NOT use this constructor. It is only here so that the Activator can use it.<br>
      * To aquire the instance, refer to Utils.getInputController()
      */
     public InputController () {
 
         commandParser = new CommandParser();
-        currentState = new DisabledState();
+        changeState(new DisabledState());
     }
 
     /**
@@ -62,7 +67,7 @@ public class InputController extends Observable {
                 returnValue += receivedText;
             }
             shouldHandleNext = currentState.nextShouldHandle();
-            currentState = currentState.getNext();
+            changeState(currentState.getNext());
         }
         while (shouldHandleNext);
 
@@ -93,13 +98,12 @@ public class InputController extends Observable {
         if ( !controller.isThereActiveDrawing()) {
             controller.setActiveDrawing(drawing);
         }
-        else if (this.getCurrentFactory() == null
-                || this.getCurrentFactory().isDone()) {
+        else if (this.getCurrentFactory() == null || this.getCurrentFactory().isDone()) {
             controller.setActiveDrawing(drawing);
             controller.deselectAll();
         }
 
-        currentState = currentState.changedDrawing(drawing);
+        changeState(currentState.changedDrawing(drawing));
         setChanged();
         notifyObservers(drawing);
     }
@@ -110,13 +114,31 @@ public class InputController extends Observable {
     public void cancelCurrentFactory () {
 
         String message = currentState.cancel();
-        currentState = currentState.getNext();
+        changeState(currentState.getNext());
         printInInterpreter(message);
     }
 
+    private void changeState (InputState newState) {
+
+        currentState = newState;
+        changeContext(newState.getContextId());
+    }
+
     /**
-     * @return Returns the current command or null if there is no current
-     *         command.
+     * @param newContextId
+     *            The new context id
+     */
+    private void changeContext (String newContextId) {
+
+        IContextService contextService = Utils.getContextService();
+        if (previousActivation != null) {
+            contextService.deactivateContext(previousActivation);
+        }
+        previousActivation = contextService.activateContext(newContextId);
+    }
+
+    /**
+     * @return Returns the current command or null if there is no current command.
      */
     public CommandFactory getCurrentFactory () {
 
@@ -145,8 +167,7 @@ public class InputController extends Observable {
     }
 
     /**
-     * @return true if the input controller wants to receive a space character,
-     *         false otherwise.
+     * @return true if the input controller wants to receive a space character, false otherwise.
      */
     public boolean wantsSpace () {
 
