@@ -13,6 +13,18 @@
  */
 package br.org.archimedes.io.xml.parsers;
 
+import br.org.archimedes.Messages;
+import br.org.archimedes.exceptions.InvalidFileFormatException;
+import br.org.archimedes.model.Drawing;
+import br.org.archimedes.model.Element;
+import br.org.archimedes.model.Layer;
+import br.org.archimedes.model.Point;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -23,18 +35,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.validation.Validator;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
-
-import br.org.archimedes.exceptions.InvalidFileFormatException;
-import br.org.archimedes.gui.rca.Messages;
-import br.org.archimedes.model.Drawing;
-import br.org.archimedes.model.Element;
-import br.org.archimedes.model.Layer;
-import br.org.archimedes.model.Point;
 
 /**
  * Belongs to package br.org.archimedes.xml.
@@ -108,6 +108,7 @@ public class XMLParser {
             }
 
             // TODO Check how to set the file
+            // TODO Set the right title
             drawing = new Drawing(Messages.NewDrawingName, layerMap);
             drawing.setZoom(zoom);
             drawing.setViewportPosition(viewPoint);

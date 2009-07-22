@@ -476,7 +476,7 @@
                   visible="true">
             </separator>
             <command
-                  commandId="br.org.archimedes.core.print"
+                  commandId="org.eclipse.ui.file.print"
                   icon="icons/print.png"
                   label="%command.print.label"
                   mnemonic="%command.print.mnemonic"
@@ -488,7 +488,7 @@
                   visible="true">
             </separator>
             <command
-                  commandId="br.org.archimedes.core.import"
+                  commandId="org.eclipse.ui.file.import"
                   icon="icons/import.png"
                   label="%command.import.label"
                   mnemonic="%command.import.mnemonic"
@@ -500,7 +500,7 @@
                   visible="false">
             </separator>
             <command
-                  commandId="br.org.archimedes.core.export"
+                  commandId="org.eclipse.ui.file.export"
                   icon="icons/export.png"
                   label="%command.export.label"
                   mnemonic="%command.export.mnemonic"

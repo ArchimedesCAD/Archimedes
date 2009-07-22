@@ -32,12 +32,12 @@ public class FactoryActivatorHandler extends AbstractHandler implements IHandler
     public Object execute (ExecutionEvent event) throws ExecutionException {
 
         // TODO Have the InputController change something on environment
-        String factoryName = event.getParameter("br.org.archimedes.core.factoryactivator.name"); //$NON_NLS-1$
+        String factoryName = event.getParameter("br.org.archimedes.core.factoryactivator.name"); //$NON_NLS-1$ //$NON-NLS-1$
         br.org.archimedes.Utils.getInputController().receiveText(factoryName);
         
-        String parametersText = event.getParameter("br.org.archimedes.core.factoryactivator.furtherinputs"); //$NON_NLS-1$
+        String parametersText = event.getParameter("br.org.archimedes.core.factoryactivator.furtherinputs"); //$NON_NLS-1$ //$NON-NLS-1$
         if(parametersText != null) {
-            String[] parameters = parametersText.split("|");
+            String[] parameters = parametersText.split("|"); //$NON-NLS-1$
             for (String parameter : parameters) {
                 br.org.archimedes.Utils.getInputController().receiveText(parameter);   
             }

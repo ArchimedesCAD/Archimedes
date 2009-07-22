@@ -13,14 +13,14 @@
  */
 package br.org.archimedes.gui.rca.editor;
 
-import java.io.File;
+import br.org.archimedes.Messages;
+import br.org.archimedes.model.Drawing;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IPersistableElement;
 
-import br.org.archimedes.gui.rca.Messages;
-import br.org.archimedes.model.Drawing;
+import java.io.File;
 
 public class DrawingInput implements IEditorInput {
 

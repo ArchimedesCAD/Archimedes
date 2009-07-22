@@ -10,15 +10,15 @@
  * This file was created on 2007/01/20, 19:16:40, by Hugo Corbucci.<br>
  * It is part of package br.org.archimedes.gui.swt on the br.org.archimedes.core project.<br>
  */
+
 package br.org.archimedes.gui.swt;
 
 import org.eclipse.osgi.util.NLS;
 
 /**
  * Belongs to package br.org.archimedes.gui.swt.
- *
- * @author night
- *
+ * 
+ * @author Hugo Corbucci
  */
 public class Messages extends NLS {
 

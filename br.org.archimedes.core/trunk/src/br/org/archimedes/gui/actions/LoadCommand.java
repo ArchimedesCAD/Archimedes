@@ -144,7 +144,7 @@ public class LoadCommand {
         FileDialog dialog = new FileDialog(parent, SWT.OPEN);
         List<String> filters = new LinkedList<String>();
         for (String extension : nativeLoader.getExtensionsArray()) {
-			String filter = "*." + extension;
+			String filter = "*." + extension; //$NON-NLS-1$
 			filters.add(filter);
 		}
         String[] filtersArray = filters.toArray(new String[0]);

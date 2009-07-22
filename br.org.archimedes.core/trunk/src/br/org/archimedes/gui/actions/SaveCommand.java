@@ -34,7 +34,7 @@ import br.org.archimedes.rcp.extensionpoints.NativeFormatEPLoader;
  */
 public class SaveCommand implements Command {
 
-    private static final String DEFAULT_SAVE_EXTENSION = "arc";
+    private static final String DEFAULT_SAVE_EXTENSION = "arc"; //$NON-NLS-1$
 
     private static final String LINE_BREAK = "\n"; //$NON-NLS-1$
 
@@ -184,7 +184,7 @@ public class SaveCommand implements Command {
     private String addExtensionIfNeeded (String rawFilePath, String extension) {
 
         int extensionSeparator = rawFilePath.lastIndexOf('.');
-        String insertedExtension = "";
+        String insertedExtension = ""; //$NON-NLS-1$
         if (extensionSeparator >= 0) {
             insertedExtension = rawFilePath.substring(extensionSeparator + 1);
             if (nativeLoader.getExporter(insertedExtension) != null) {

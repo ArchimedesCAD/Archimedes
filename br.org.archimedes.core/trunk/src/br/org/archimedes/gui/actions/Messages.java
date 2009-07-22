@@ -24,16 +24,6 @@ public class Messages extends NLS {
 
     private static final String BUNDLE_NAME = "br.org.archimedes.i18n.dialogs"; //$NON-NLS-1$
 
-    public static String Export_errorMessage;
-
-    public static String Export_errorTitle;
-
-    public static String Export_menuText;
-
-    public static String ExportDrawing_Title;
-    
-    public static String ImportDrawing_Title;
-
     public static String Load_InvalidFileText;
 
     public static String Load_InvalidFileTitle;

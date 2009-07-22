@@ -12,10 +12,11 @@
  */
 package br.org.archimedes.io.pdf.rcp;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import br.org.archimedes.interfaces.DrawingExporter;
+import br.org.archimedes.interfaces.FileModel;
+import br.org.archimedes.interfaces.FileModelImpl;
+import br.org.archimedes.io.pdf.PDFExporter;
+import br.org.archimedes.model.Drawing;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
@@ -24,16 +25,15 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IExportWizard;
 import org.eclipse.ui.IWorkbench;
 
-import br.org.archimedes.interfaces.DrawingExporter;
-import br.org.archimedes.interfaces.FileModel;
-import br.org.archimedes.interfaces.FileModelImpl;
-import br.org.archimedes.io.pdf.PDFExporter;
-import br.org.archimedes.model.Drawing;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 
 /**
  * Belongs to package br.org.archimedes.io.xml.
  * 
- * @author nitao
+ * @author Hugo Corbucci
  */
 public class PDFWizardExporter extends Wizard implements IExportWizard,
         DrawingExporter {
@@ -52,7 +52,7 @@ public class PDFWizardExporter extends Wizard implements IExportWizard,
     public boolean canFinish () {
 
         String filePath = fileModel.getFilePath();
-        if (filePath == null
+        if (filePath == null || selection.isEmpty()
                 || selection.getFirstElement().getClass() != Drawing.class) {
             return false;
         }

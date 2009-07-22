@@ -14,12 +14,12 @@
 
 package br.org.archimedes.gui.rca;
 
+import br.org.archimedes.Messages;
 import br.org.archimedes.controller.Controller;
 import br.org.archimedes.exceptions.IllegalActionException;
 import br.org.archimedes.exceptions.NoActiveDrawingException;
 import br.org.archimedes.gui.rca.editor.DrawingEditor;
 import br.org.archimedes.gui.rca.editor.DrawingInput;
-import br.org.archimedes.gui.rca.exporter.Messages;
 import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Layer;
 

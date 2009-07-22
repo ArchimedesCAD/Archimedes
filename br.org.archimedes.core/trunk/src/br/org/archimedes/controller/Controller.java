@@ -202,8 +202,8 @@ public class Controller {
                 }
             }
             catch (NullArgumentException e) {
-                System.err.println("Couldnt calculate a distance for " + element
-                        + ". Ignoring it as a closest element.");
+                System.err.println("Couldnt calculate a distance for " + element //$NON-NLS-1$
+                        + ". Ignoring it as a closest element."); //$NON-NLS-1$
                 e.printStackTrace();
             }
         }
