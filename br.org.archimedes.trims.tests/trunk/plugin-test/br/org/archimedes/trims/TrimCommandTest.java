@@ -28,6 +28,7 @@ import br.org.archimedes.semiline.Semiline;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.mockito.internal.progress.NewOngoingStubbing;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -205,9 +206,13 @@ public class TrimCommandTest extends Tester {
         intersections.add(new Point(37.5, 50.0));
         intersections.add(new Point(62.5, 50.0));
         intersections.add(new Point(87.5, 50.0));
-        when(
-                intersectionManager.getIntersectionsBetween(eq(polyline),
-                        argThat(isACollectionEquivalentTo(references)))).thenReturn(intersections);
+        
+        Polyline poly = eq(polyline);
+        IsACollectionEquivalentTo<Collection<Element>> points = isACollectionEquivalentTo(references);
+        Collection<Element> args = argThat(points);
+        Collection<Point> result = intersectionManager.getIntersectionsBetween(poly, args);
+        NewOngoingStubbing<Collection<Point>> call = when(result);
+        call.thenReturn(intersections);
 
         ArrayList<Element> trimResult = new ArrayList<Element>();
         polylinePoints.set(0, new Point(12.5, 50.0));

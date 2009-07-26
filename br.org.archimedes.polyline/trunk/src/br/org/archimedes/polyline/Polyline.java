@@ -42,10 +42,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -363,7 +361,7 @@ public class Polyline extends Element implements Offsetable {
 
     /*
      * (non-Javadoc)
-     * @see br.org.archimedes.model.Offsetable#isPositiveDirection(br.org.archimedes .model.Point)
+     * @see br.org.archimedes.model.Offsetable#isPositiveDirection(br.org.archimedes.model.Point)
      */
     public boolean isPositiveDirection (Point point) {
 
@@ -414,53 +412,26 @@ public class Polyline extends Element implements Offsetable {
      */
     public Element cloneWithDistance (double distance) throws InvalidParameterException {
 
-        Element result = null;
-        List<Point> polyLinePoints = new ArrayList<Point>();
-
         List<Line> segments = getLines();
-        if (segments.size() == 1) {
-            Line line = segments.get(0);
-            Line copy = (Line) line.cloneWithDistance(distance);
-            polyLinePoints.add(copy.getInitialPoint());
-            polyLinePoints.add(copy.getEndingPoint());
-        }
-        else {
-            ExtendManager extendManager = new ExtendManagerEPLoader().getExtendManager();
-            Set<Point> intersections = new HashSet<Point>();
-            List<InfiniteLine> offsetedSegments = new ArrayList<InfiniteLine>();
+        List<InfiniteLine> offsetedSegments = getOffsettedLines(distance, segments);
 
-            for (int i = 0; i < segments.size(); i++) {
-                Line line = (Line) segments.get(i).cloneWithDistance(distance);
-                offsetedSegments.add((InfiniteLine) extendManager
-                        .getInfiniteExtensionElements(line).iterator().next());
-            }
+        Point startingPoint = offsetedSegments.get(0).getInitialPoint();
+        Point endingPoint = offsetedSegments.get(segments.size() - 1).getEndingPoint();
 
-            Point firstPoint = offsetedSegments.get(0).getInitialPoint();
-            Point lastPoint = offsetedSegments.get(segments.size() - 1).getEndingPoint();
+        List<Point> points = extractLimits(offsetedSegments, startingPoint, endingPoint);
 
-            intersections.add(firstPoint);
-            for (int i = 0, j = 1; j < offsetedSegments.size(); i++, j++) {
-                try {
-                    Collection<Point> intersectionsBetween = intersectionManager
-                            .getIntersectionsBetween(offsetedSegments.get(i), offsetedSegments
-                                    .get(j));
-                    intersections.add(intersectionsBetween.iterator().next());
-                    intersections.addAll(intersectionsBetween);
-                }
-                catch (NullArgumentException e) {
-                    // Should not reach here
-                    e.printStackTrace();
-                }
-            }
-            intersections.add(lastPoint);
+        return createPolyline(points);
+    }
 
-            for (Point point : intersections) {
-                polyLinePoints.add(point);
-            }
-        }
+    /**
+     * @param points
+     *            The points for this polyline
+     * @return The resulting polyline
+     */
+    private Polyline createPolyline (List<Point> points) {
 
         try {
-            result = new Polyline(polyLinePoints);
+            return new Polyline(points);
         }
         catch (NullArgumentException e) {
             // Should never happen
@@ -470,8 +441,75 @@ public class Polyline extends Element implements Offsetable {
             // Should not happen
             e.printStackTrace();
         }
+        return null;
+    }
 
-        return result;
+    /**
+     * @param offsetedSegments
+     * @param startingPoint
+     * @param endingPoint
+     * @return
+     */
+    private List<Point> extractLimits (List<InfiniteLine> offsetedSegments, Point startingPoint,
+            Point endingPoint) {
+
+        List<Point> intersections = new LinkedList<Point>(); // Order matters
+        intersections.add(startingPoint);
+        for (int i = 0, j = 1; j < offsetedSegments.size(); i++, j++) {
+            Collection<Point> intersectionsBetween = getIntersectionsBetween(offsetedSegments, i, j);
+            for (Point intersection : intersectionsBetween) {
+                if ( !intersections.contains(intersection)) {
+                    intersections.add(intersection);
+                }
+            }
+        }
+        intersections.add(endingPoint);
+        return intersections;
+    }
+
+    /**
+     * @param offsetedSegments
+     *            The segments
+     * @param currentSegment
+     *            The index of the current segment
+     * @param nextSegment
+     *            The index of the next segment
+     * @return A collection with the intersections between those segments of an empty collection
+     */
+    private Collection<Point> getIntersectionsBetween (List<InfiniteLine> offsetedSegments,
+            int currentSegment, int nextSegment) {
+
+        try {
+            InfiniteLine current = offsetedSegments.get(currentSegment);
+            InfiniteLine next = offsetedSegments.get(nextSegment);
+            return intersectionManager.getIntersectionsBetween(current, next);
+        }
+        catch (NullArgumentException e) {
+            // Should not reach here
+            e.printStackTrace();
+        }
+        return Collections.emptySet();
+    }
+
+    /**
+     * @param distance
+     *            The distance to offset the segments
+     * @param segments
+     *            The segments to offset
+     * @return A list of offsetted infinite lines
+     */
+    private List<InfiniteLine> getOffsettedLines (double distance, List<Line> segments) {
+
+        List<InfiniteLine> offsetedSegments = new ArrayList<InfiniteLine>();
+
+        ExtendManager extendManager = new ExtendManagerEPLoader().getExtendManager();
+        for (int i = 0; i < segments.size(); i++) {
+            Line line = (Line) segments.get(i).cloneWithDistance(distance);
+            InfiniteLine extendedLine = (InfiniteLine) extendManager.getInfiniteExtensionElements(
+                    line).iterator().next();
+            offsetedSegments.add(extendedLine);
+        }
+        return offsetedSegments;
     }
 
     /**
@@ -558,7 +596,6 @@ public class Polyline extends Element implements Offsetable {
                     line = new Line(points.get(1), points.get(0));
                 }
                 catch (InvalidArgumentException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
             }
@@ -569,7 +606,6 @@ public class Polyline extends Element implements Offsetable {
                     line = new Line(beforeLast, last);
                 }
                 catch (InvalidArgumentException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
                 extendableSegment = lines.size() - 1;

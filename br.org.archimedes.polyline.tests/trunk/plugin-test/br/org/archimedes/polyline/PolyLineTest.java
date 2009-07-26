@@ -13,17 +13,17 @@
 
 package br.org.archimedes.polyline;
 
-import static org.junit.Assert.assertEquals;
-
-import java.util.LinkedList;
-import java.util.List;
-
-import org.junit.Test;
-
 import br.org.archimedes.Tester;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Rectangle;
+
+import org.junit.Test;
+
+import java.util.LinkedList;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
 
 public class PolyLineTest extends Tester {
 
@@ -48,7 +48,6 @@ public class PolyLineTest extends Tester {
 		List<Point> extremesComputed = line.getExtremePoints();
 
 		assertCollectionTheSame(extremes, extremesComputed);
-
 	}
 
 	@Test
@@ -94,14 +93,13 @@ public class PolyLineTest extends Tester {
 
 		Polyline polyline = new Polyline(new Point(0, 0), new Point(0, 1));
 
-		Polyline expected1 = new Polyline(new Point(1, 0), new Point(1, 1));
+		Polyline expected1 = new Polyline(new Point(-1, 0), new Point(-1, 1));
 		Polyline result1 = (Polyline) polyline.cloneWithDistance(1);
 		assertEquals(expected1, result1);
 
-		Polyline expected2 = new Polyline(new Point(-1, 0), new Point(-1, 1));
+		Polyline expected2 = new Polyline(new Point(1, 0), new Point(1, 1));
 		Polyline result2 = (Polyline) polyline.cloneWithDistance(-1);
 		assertEquals(expected2, result2);
-
 	}
 
 	@Test
@@ -115,7 +113,6 @@ public class PolyLineTest extends Tester {
 				new Point(0, -4), new Point(1, -4));
 		Polyline result = (Polyline) polyline.cloneWithDistance(1);
 		assertEquals(expected, result);
-
 	}
 
 	@Test
