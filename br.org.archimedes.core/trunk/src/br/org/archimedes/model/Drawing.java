@@ -468,22 +468,6 @@ public class Drawing extends Observable implements Observer {
     }
 
     /**
-     * @return True if there is something to undo.
-     */
-    public boolean isUndoEnabled () {
-
-        return !undoHistory.isEmpty();
-    }
-
-    /**
-     * @return True if there is something to redo.
-     */
-    public boolean isRedoEnabled () {
-
-        return !redoHistory.isEmpty();
-    }
-
-    /**
      * @return The selected element in this drawing
      */
     public Selection getSelection () {

@@ -275,7 +275,6 @@ public class PanFactory implements CommandFactory, Observer {
      */
     public boolean isTransformFactory () {
 
-        // TODO Auto-generated method stub
-        return false;
+        return true;
     }
 }

@@ -13,9 +13,6 @@
  */
 package br.org.archimedes.zoom;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import br.org.archimedes.controller.commands.RelativeZoomCommand;
 import br.org.archimedes.controller.commands.ZoomByAreaCommand;
 import br.org.archimedes.controller.commands.ZoomExtendCommand;
@@ -31,6 +28,9 @@ import br.org.archimedes.model.Rectangle;
 import br.org.archimedes.model.Vector;
 import br.org.archimedes.parser.VectorParser;
 import br.org.archimedes.parser.ZoomParser;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Belongs to package br.org.archimedes.commands.
@@ -274,7 +274,6 @@ public class ZoomFactory implements CommandFactory {
      */
     public boolean isTransformFactory () {
 
-        // TODO Auto-generated method stub
         return false;
     }
 }

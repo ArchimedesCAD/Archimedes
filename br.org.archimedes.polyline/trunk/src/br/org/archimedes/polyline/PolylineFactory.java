@@ -454,7 +454,6 @@ public class PolylineFactory implements CommandFactory {
      */
     public boolean isTransformFactory () {
 
-        // TODO Auto-generated method stub
         return false;
     }
 }

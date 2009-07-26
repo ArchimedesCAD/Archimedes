@@ -12,9 +12,6 @@
  */
 package br.org.archimedes.intersectors;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.intersections.interfaces.Intersector;
@@ -22,6 +19,9 @@ import br.org.archimedes.line.Line;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.text.Text;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 public class LineTextIntersector implements Intersector {
 
@@ -50,7 +50,6 @@ public class LineTextIntersector implements Intersector {
 				try {
 					boundaryLines.add(new Line(lastPoint, boundaryPoint));
 				} catch (InvalidArgumentException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}

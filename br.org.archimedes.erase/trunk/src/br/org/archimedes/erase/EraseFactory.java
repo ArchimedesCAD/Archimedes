@@ -13,16 +13,16 @@
  */
 package br.org.archimedes.erase;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
 import br.org.archimedes.controller.commands.PutOrRemoveElementCommand;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.factories.SelectorFactory;
 import br.org.archimedes.interfaces.Command;
 import br.org.archimedes.interfaces.UndoableCommand;
 import br.org.archimedes.model.Element;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Belongs to package br.org.archimedes.commands.
@@ -85,7 +85,6 @@ public class EraseFactory extends SelectorFactory {
      */
     public boolean isTransformFactory () {
 
-        // TODO Auto-generated method stub
-        return false;
+        return true;
     }
 }

@@ -12,9 +12,6 @@
  */
 package br.org.archimedes.line;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import br.org.archimedes.controller.commands.PutOrRemoveElementCommand;
 import br.org.archimedes.exceptions.InvalidParameterException;
 import br.org.archimedes.exceptions.NullArgumentException;
@@ -24,6 +21,9 @@ import br.org.archimedes.interfaces.Parser;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.parser.StringDecoratorParser;
 import br.org.archimedes.undo.UndoCommand;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Belongs to package br.org.archimedes.line.
@@ -184,7 +184,6 @@ public class LineFactory extends TwoPointFactory {
      */
     public boolean isTransformFactory () {
 
-        // TODO Auto-generated method stub
         return false;
     }
 }

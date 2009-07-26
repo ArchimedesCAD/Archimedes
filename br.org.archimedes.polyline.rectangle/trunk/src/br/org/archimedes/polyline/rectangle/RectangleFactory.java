@@ -12,16 +12,16 @@
  */
 package br.org.archimedes.polyline.rectangle;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import br.org.archimedes.controller.commands.PutOrRemoveElementCommand;
 import br.org.archimedes.factories.TwoPointFactory;
 import br.org.archimedes.interfaces.Command;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Rectangle;
 import br.org.archimedes.polyline.Polyline;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Belongs to package br.org.archimedes.commands.
@@ -120,7 +120,6 @@ public class RectangleFactory extends TwoPointFactory {
      */
     public boolean isTransformFactory () {
 
-        // TODO Auto-generated method stub
         return false;
     }
 }

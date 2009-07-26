@@ -13,8 +13,6 @@
  */
 package br.org.archimedes.scale;
 
-import java.util.Set;
-
 import br.org.archimedes.exceptions.IllegalActionException;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
@@ -23,6 +21,8 @@ import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Layer;
 import br.org.archimedes.model.Point;
+
+import java.util.Set;
 
 
 /**
@@ -121,5 +121,13 @@ public class ScaleCommand implements UndoableCommand {
             // TODO Que mensagem que eu ponho??
             throw new IllegalActionException();
         }
+    }
+
+    /* (non-Javadoc)
+     * @see br.org.archimedes.interfaces.UndoableCommand#canMergeWith(br.org.archimedes.interfaces.UndoableCommand)
+     */
+    public boolean canMergeWith (UndoableCommand command) {
+
+        return false;
     }
 }

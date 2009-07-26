@@ -12,14 +12,14 @@
  */
 package br.org.archimedes.undo;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import br.org.archimedes.exceptions.InvalidParameterException;
 import br.org.archimedes.factories.CommandFactory;
 import br.org.archimedes.interfaces.Command;
 import br.org.archimedes.interfaces.Parser;
 import br.org.archimedes.undo.internal.Messages;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class UndoFactory implements CommandFactory {
 
@@ -92,7 +92,6 @@ public class UndoFactory implements CommandFactory {
      */
     public boolean isTransformFactory () {
 
-        // TODO Auto-generated method stub
         return false;
     }
 }

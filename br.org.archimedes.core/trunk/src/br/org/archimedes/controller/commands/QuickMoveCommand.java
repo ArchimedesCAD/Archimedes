@@ -13,10 +13,6 @@
  */
 package br.org.archimedes.controller.commands;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-
 import br.org.archimedes.exceptions.IllegalActionException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.interfaces.UndoableCommand;
@@ -24,6 +20,10 @@ import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Vector;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author pafhuaman
@@ -92,5 +92,13 @@ public class QuickMoveCommand implements UndoableCommand {
                 element.move(points, vector.multiply( -1.0));
             }
         }
+    }
+
+    /* (non-Javadoc)
+     * @see br.org.archimedes.interfaces.UndoableCommand#canMergeWith(br.org.archimedes.interfaces.UndoableCommand)
+     */
+    public boolean canMergeWith (UndoableCommand command) {
+
+        return false;
     }
 }

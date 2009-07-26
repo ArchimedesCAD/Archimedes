@@ -102,4 +102,12 @@ public class EditTextCommand implements UndoableCommand {
         return new TextEditor(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), text
                 .getText());
     }
+
+    /* (non-Javadoc)
+     * @see br.org.archimedes.interfaces.UndoableCommand#canMergeWith(br.org.archimedes.interfaces.UndoableCommand)
+     */
+    public boolean canMergeWith (UndoableCommand command) {
+
+        return false;
+    }
 }

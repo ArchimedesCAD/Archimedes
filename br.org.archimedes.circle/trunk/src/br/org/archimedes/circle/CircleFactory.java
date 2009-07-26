@@ -13,9 +13,6 @@
  */
 package br.org.archimedes.circle;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import br.org.archimedes.Geometrics;
 import br.org.archimedes.controller.commands.PutOrRemoveElementCommand;
 import br.org.archimedes.exceptions.InvalidArgumentException;
@@ -29,6 +26,9 @@ import br.org.archimedes.interfaces.Parser;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.parser.DistanceParser;
 import br.org.archimedes.parser.PointParser;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CircleFactory implements CommandFactory {
 
@@ -195,7 +195,6 @@ public class CircleFactory implements CommandFactory {
      */
     public boolean isTransformFactory () {
 
-        // TODO Auto-generated method stub
         return false;
     }
 

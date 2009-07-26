@@ -13,10 +13,6 @@
  */
 package br.org.archimedes.text;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-
 import br.org.archimedes.Constant;
 import br.org.archimedes.controller.commands.PutOrRemoveElementCommand;
 import br.org.archimedes.exceptions.InvalidParameterException;
@@ -31,6 +27,10 @@ import br.org.archimedes.parser.DoubleDecoratorParser;
 import br.org.archimedes.parser.PointParser;
 import br.org.archimedes.parser.TextParser;
 import br.org.archimedes.parser.VectorParser;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 public class TextFactory implements CommandFactory {
 
@@ -255,7 +255,6 @@ public class TextFactory implements CommandFactory {
      */
     public boolean isTransformFactory () {
 
-        // TODO Auto-generated method stub
         return false;
     }
 }

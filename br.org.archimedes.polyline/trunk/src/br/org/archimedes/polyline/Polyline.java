@@ -349,7 +349,6 @@ public class Polyline extends Element implements Offsetable {
                     references.add(new XPoint(intersectionPoint, intersectionPoint));
             }
             catch (NullArgumentException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }

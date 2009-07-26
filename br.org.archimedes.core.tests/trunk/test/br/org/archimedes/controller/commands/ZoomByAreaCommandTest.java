@@ -12,11 +12,6 @@
  */
 package br.org.archimedes.controller.commands;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-
 import br.org.archimedes.exceptions.IllegalActionException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.gui.model.Workspace;
@@ -24,6 +19,11 @@ import br.org.archimedes.interfaces.Command;
 import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Rectangle;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 public class ZoomByAreaCommandTest {
 
@@ -168,14 +168,6 @@ public class ZoomByAreaCommandTest {
 
     }
 
-    /*
-     * Test method for
-     * 'br.org.archimedes.model.commands.ZoomCommand.undoIt(Drawing)'
-     */
-    public void testUndoIt () {
-
-        // TODO Auto-generated method stub
-
-    }
+    // TODO Test the zoom by area undo
 
 }

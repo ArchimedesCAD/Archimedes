@@ -12,10 +12,6 @@
  */
 package br.org.archimedes.mirror;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Set;
-
 import br.org.archimedes.controller.commands.PutOrRemoveElementCommand;
 import br.org.archimedes.exceptions.IllegalActionException;
 import br.org.archimedes.exceptions.InvalidArgumentException;
@@ -24,6 +20,10 @@ import br.org.archimedes.interfaces.UndoableCommand;
 import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Set;
 
 public class MirrorCommand implements UndoableCommand {
 
@@ -132,5 +132,13 @@ public class MirrorCommand implements UndoableCommand {
         else {
             doIt(drawing);
         }
+    }
+
+    /* (non-Javadoc)
+     * @see br.org.archimedes.interfaces.UndoableCommand#canMergeWith(br.org.archimedes.interfaces.UndoableCommand)
+     */
+    public boolean canMergeWith (UndoableCommand command) {
+
+        return false;
     }
 }

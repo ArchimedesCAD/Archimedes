@@ -13,14 +13,15 @@
  */
 package br.org.archimedes.distance;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import br.org.archimedes.Geometrics;
+import br.org.archimedes.Utils;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.factories.TwoPointFactory;
 import br.org.archimedes.interfaces.Command;
 import br.org.archimedes.model.Point;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author pafhuaman
@@ -55,10 +56,9 @@ public class DistanceFactory extends TwoPointFactory {
         points.add(start);
         points.add(end);
         try {
-            br.org.archimedes.Utils.getOpenGLWrapper().drawFromModel(points);
+            Utils.getOpenGLWrapper().drawFromModel(points);
         }
         catch (NullArgumentException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 	}
@@ -84,8 +84,7 @@ public class DistanceFactory extends TwoPointFactory {
      */
     public boolean isTransformFactory () {
 
-        // TODO Auto-generated method stub
-        return false;
+        return true;
     }
 
 }

@@ -135,7 +135,6 @@ public class InfiniteLineFactory extends TwoPointFactory {
      */
     public boolean isTransformFactory () {
 
-        // TODO Auto-generated method stub
         return false;
     }
 }

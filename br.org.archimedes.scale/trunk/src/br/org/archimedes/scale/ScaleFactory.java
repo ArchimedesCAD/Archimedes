@@ -12,10 +12,6 @@
  */
 package br.org.archimedes.scale;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
 import br.org.archimedes.Geometrics;
 import br.org.archimedes.controller.Controller;
 import br.org.archimedes.exceptions.IllegalActionException;
@@ -34,6 +30,10 @@ import br.org.archimedes.parser.DoubleDecoratorParser;
 import br.org.archimedes.parser.PointParser;
 import br.org.archimedes.parser.SimpleSelectionParser;
 import br.org.archimedes.parser.StringDecoratorParser;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Belongs to package br.org.archimedes.scale.
@@ -416,7 +416,6 @@ public class ScaleFactory implements CommandFactory {
      */
     public boolean isTransformFactory () {
 
-        // TODO Auto-generated method stub
-        return false;
+        return true;
     }
 }

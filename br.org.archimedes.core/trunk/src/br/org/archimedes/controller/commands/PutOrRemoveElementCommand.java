@@ -212,4 +212,12 @@ public class PutOrRemoveElementCommand implements UndoableCommand {
             }
         }
     }
+
+    /* (non-Javadoc)
+     * @see br.org.archimedes.interfaces.UndoableCommand#canMergeWith(br.org.archimedes.interfaces.UndoableCommand)
+     */
+    public boolean canMergeWith (UndoableCommand command) {
+
+        return false;
+    }
 }

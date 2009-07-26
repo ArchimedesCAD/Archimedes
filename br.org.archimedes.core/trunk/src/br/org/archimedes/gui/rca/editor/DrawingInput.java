@@ -34,13 +34,12 @@ public class DrawingInput implements IEditorInput {
 
     public boolean exists () {
 
-        // TODO Auto-generated method stub
-        return true;
+        return drawing.getFile() != null && drawing.getFile().exists();
     }
 
     public ImageDescriptor getImageDescriptor () {
 
-        // TODO Auto-generated method stub
+        // TODO Add a miniature of the view
         return null;
     }
 
@@ -71,7 +70,6 @@ public class DrawingInput implements IEditorInput {
     @SuppressWarnings("unchecked")
     public Object getAdapter (Class adapter) {
 
-        // TODO Auto-generated method stub
         return null;
     }
 

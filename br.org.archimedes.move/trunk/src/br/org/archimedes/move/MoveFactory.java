@@ -12,12 +12,6 @@
  */
 package br.org.archimedes.move;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
 import br.org.archimedes.exceptions.InvalidParameterException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.factories.SelectionPointVectorFactory;
@@ -26,6 +20,12 @@ import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.ReferencePoint;
 import br.org.archimedes.model.Vector;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Belongs to package br.org.archimedes.move.
@@ -144,7 +144,6 @@ public class MoveFactory extends SelectionPointVectorFactory {
      */
     public boolean isTransformFactory () {
 
-        // TODO Auto-generated method stub
-        return false;
+        return true;
     }
 }

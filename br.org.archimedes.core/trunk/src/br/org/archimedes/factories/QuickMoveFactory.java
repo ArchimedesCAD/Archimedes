@@ -155,7 +155,6 @@ public class QuickMoveFactory extends TwoPointFactory {
      */
     public boolean isTransformFactory () {
 
-        // TODO Auto-generated method stub
-        return false;
+        return true;
     }
 }

@@ -116,8 +116,7 @@ public class EditTextFactory extends SelectorFactory {
      */
     public boolean isTransformFactory () {
 
-        // TODO Auto-generated method stub
-        return false;
+        return true;
     }
 
 }

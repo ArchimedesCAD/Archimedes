@@ -145,15 +145,13 @@ public class DrawingEditor extends EditorPart implements Observer, ISelectionPro
     @Override
     public void doSave (IProgressMonitor monitor) {
 
-        // TODO Auto-generated method stub
-
+        // TODO Use this system to save the drawing
     }
 
     @Override
     public void doSaveAs () {
 
-        // TODO Auto-generated method stub
-
+        // TODO Use this system to save the drawing
     }
 
     @Override

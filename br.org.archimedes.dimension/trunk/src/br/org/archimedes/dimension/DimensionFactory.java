@@ -14,9 +14,6 @@
 
 package br.org.archimedes.dimension;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import br.org.archimedes.Constant;
 import br.org.archimedes.controller.commands.PutOrRemoveElementCommand;
 import br.org.archimedes.exceptions.InvalidArgumentException;
@@ -31,6 +28,9 @@ import br.org.archimedes.parser.DistanceParser;
 import br.org.archimedes.parser.DoubleDecoratorParser;
 import br.org.archimedes.parser.ReturnDecoratorParser;
 import br.org.archimedes.parser.VectorParser;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DimensionFactory extends TwoPointFactory {
 
@@ -315,7 +315,6 @@ public class DimensionFactory extends TwoPointFactory {
      */
     public boolean isTransformFactory () {
 
-        // TODO Auto-generated method stub
         return false;
     }
 

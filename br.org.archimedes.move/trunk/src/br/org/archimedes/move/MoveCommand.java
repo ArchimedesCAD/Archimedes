@@ -166,4 +166,12 @@ public class MoveCommand implements UndoableCommand {
         return "movendo " + pointsToMove.toString() + " de " + elementsToMove.toString() + " para "
                 + vector.toString();
     }
+
+    /* (non-Javadoc)
+     * @see br.org.archimedes.interfaces.UndoableCommand#canMergeWith(br.org.archimedes.interfaces.UndoableCommand)
+     */
+    public boolean canMergeWith (UndoableCommand command) {
+
+        return false;
+    }
 }

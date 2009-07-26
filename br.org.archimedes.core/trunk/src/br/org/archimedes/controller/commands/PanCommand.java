@@ -22,7 +22,7 @@ import br.org.archimedes.model.Point;
 /**
  * Belongs to package br.org.archimedes.model.commands.
  * 
- * @author Nitao
+ * @author Hugo Corbucci
  */
 public class PanCommand extends ZoomCommand {
 

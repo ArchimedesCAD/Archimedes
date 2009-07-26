@@ -13,10 +13,6 @@
  */
 package br.org.archimedes.arc;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-
 import br.org.archimedes.Geometrics;
 import br.org.archimedes.controller.commands.PutOrRemoveElementCommand;
 import br.org.archimedes.exceptions.InvalidArgumentException;
@@ -33,6 +29,10 @@ import br.org.archimedes.parser.PointParser;
 import br.org.archimedes.parser.ReturnDecoratorParser;
 import br.org.archimedes.parser.StringDecoratorParser;
 import br.org.archimedes.parser.VectorParser;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Belongs to package br.org.archimedes.arc.
@@ -477,7 +477,6 @@ public class ArcFactory implements CommandFactory {
      */
     public boolean isTransformFactory () {
 
-        // TODO Auto-generated method stub
         return false;
     }
 }

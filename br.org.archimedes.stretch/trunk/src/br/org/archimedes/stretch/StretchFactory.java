@@ -12,12 +12,6 @@
  */
 package br.org.archimedes.stretch;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import br.org.archimedes.Geometrics;
 import br.org.archimedes.exceptions.InvalidParameterException;
 import br.org.archimedes.exceptions.NullArgumentException;
@@ -35,6 +29,12 @@ import br.org.archimedes.move.MoveCommand;
 import br.org.archimedes.parser.PointParser;
 import br.org.archimedes.parser.SelectionParser;
 import br.org.archimedes.parser.VectorParser;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Belongs to package br.org.archimedes.stretch.
@@ -348,7 +348,6 @@ public class StretchFactory implements CommandFactory {
      */
     public boolean isTransformFactory () {
 
-        // TODO Auto-generated method stub
-        return false;
+        return true;
     }
 }

@@ -9,8 +9,10 @@
  * Victor D. Lopes - later contributions<br>
  * <br>
  * This file was created on 2006/08/26, 00:03:02, by Hugo Corbucci.<br>
- * It is part of package br.org.archimedes.controller.commands on the br.org.archimedes.core project.<br>
+ * It is part of package br.org.archimedes.controller.commands on the br.org.archimedes.core
+ * project.<br>
  */
+
 package br.org.archimedes.controller.commands;
 
 import br.org.archimedes.Constant;
@@ -23,7 +25,7 @@ import br.org.archimedes.model.Point;
 /**
  * Belongs to package br.org.archimedes.model.commands.
  * 
- * @author Nitao
+ * @author Hugo Corbucci
  */
 public abstract class ZoomCommand implements UndoableCommand {
 
@@ -42,8 +44,7 @@ public abstract class ZoomCommand implements UndoableCommand {
         previousViewport = null;
     }
 
-    public void doIt (Drawing drawing) throws IllegalActionException,
-            NullArgumentException {
+    public void doIt (Drawing drawing) throws IllegalActionException, NullArgumentException {
 
         if (drawing == null) {
             throw new NullArgumentException();
@@ -68,8 +69,7 @@ public abstract class ZoomCommand implements UndoableCommand {
         drawing.setZoom(newZoom);
     }
 
-    public void undoIt (Drawing drawing) throws IllegalActionException,
-            NullArgumentException {
+    public void undoIt (Drawing drawing) throws IllegalActionException, NullArgumentException {
 
         if (drawing == null) {
             throw new NullArgumentException();
@@ -114,5 +114,15 @@ public abstract class ZoomCommand implements UndoableCommand {
     protected Point getPreviousViewport () {
 
         return this.previousViewport;
+    }
+
+    /*
+     * (non-Javadoc)
+     * @seebr.org.archimedes.interfaces.UndoableCommand#canMergeWith(br.org.archimedes.interfaces.
+     * UndoableCommand)
+     */
+    public boolean canMergeWith (UndoableCommand command) {
+
+        return ZoomCommand.class.isAssignableFrom(command.getClass());
     }
 }

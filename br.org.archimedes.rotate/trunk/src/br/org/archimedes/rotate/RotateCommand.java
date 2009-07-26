@@ -12,8 +12,6 @@
  */
 package br.org.archimedes.rotate;
 
-import java.util.Collection;
-
 import br.org.archimedes.exceptions.IllegalActionException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.interfaces.UndoableCommand;
@@ -21,6 +19,8 @@ import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Layer;
 import br.org.archimedes.model.Point;
+
+import java.util.Collection;
 
 
 /**
@@ -114,5 +114,13 @@ public class RotateCommand implements UndoableCommand {
             // TODO Que mensagem que eu ponho??
             throw new IllegalActionException();
         }
+    }
+
+    /* (non-Javadoc)
+     * @see br.org.archimedes.interfaces.UndoableCommand#canMergeWith(br.org.archimedes.interfaces.UndoableCommand)
+     */
+    public boolean canMergeWith (UndoableCommand command) {
+
+        return false;
     }
 }

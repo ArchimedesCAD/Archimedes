@@ -8,13 +8,11 @@
  * Hugo Corbucci - initial API and implementation<br>
  * <br>
  * This file was created on 2006/10/27, 00:03:02, by Hugo Corbucci.<br>
- * It is part of package br.org.archimedes.controller.commands on the br.org.archimedes.core project.<br>
+ * It is part of package br.org.archimedes.controller.commands on the br.org.archimedes.core
+ * project.<br>
  */
-package br.org.archimedes.controller.commands;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+package br.org.archimedes.controller.commands;
 
 import br.org.archimedes.exceptions.IllegalActionException;
 import br.org.archimedes.exceptions.InvalidArgumentException;
@@ -24,11 +22,14 @@ import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Layer;
 
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Belongs to package br.org.archimedes.controller.commands.
  * 
- * @author night
+ * @author Hugo Corbucci
  */
 public class LayerVisibility implements UndoableCommand {
 
@@ -57,8 +58,8 @@ public class LayerVisibility implements UndoableCommand {
      * @throws InvalidArgumentException
      *             thrown if the collection is empty
      */
-    public LayerVisibility (Collection<Element> elements)
-            throws NullArgumentException, InvalidArgumentException {
+    public LayerVisibility (Collection<Element> elements) throws NullArgumentException,
+            InvalidArgumentException {
 
         if (elements == null) {
             throw new NullArgumentException();
@@ -66,7 +67,7 @@ public class LayerVisibility implements UndoableCommand {
         if (elements.isEmpty()) {
             throw new InvalidArgumentException();
         }
-        
+
         layers = new HashMap<String, Layer>();
         for (Element element : elements) {
             Layer layer = element.getLayer();
@@ -79,11 +80,9 @@ public class LayerVisibility implements UndoableCommand {
 
     /*
      * (non-Javadoc)
-     * 
      * @see br.org.archimedes.controller.commands.Command#doIt(br.org.archimedes.model.Drawing)
      */
-    public void doIt (Drawing drawing) throws IllegalActionException,
-            NullArgumentException {
+    public void doIt (Drawing drawing) throws IllegalActionException, NullArgumentException {
 
         if (drawing == null) {
             throw new NullArgumentException();
@@ -126,11 +125,10 @@ public class LayerVisibility implements UndoableCommand {
 
     /*
      * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.controller.commands.UndoableCommand#undoIt(br.org.archimedes.model.Drawing)
+     * @see
+     * br.org.archimedes.controller.commands.UndoableCommand#undoIt(br.org.archimedes.model.Drawing)
      */
-    public void undoIt (Drawing drawing) throws IllegalActionException,
-            NullArgumentException {
+    public void undoIt (Drawing drawing) throws IllegalActionException, NullArgumentException {
 
         if (drawing == null) {
             throw new NullArgumentException();
@@ -142,4 +140,13 @@ public class LayerVisibility implements UndoableCommand {
         setLayersVisibility(drawing, isLayOff);
     }
 
+    /*
+     * (non-Javadoc)
+     * @seebr.org.archimedes.interfaces.UndoableCommand#canMergeWith(br.org.archimedes.interfaces.
+     * UndoableCommand)
+     */
+    public boolean canMergeWith (UndoableCommand command) {
+
+        return false;
+    }
 }

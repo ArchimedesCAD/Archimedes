@@ -13,10 +13,6 @@
  */
 package br.org.archimedes.paste;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import br.org.archimedes.Constant;
 import br.org.archimedes.controller.commands.PutOrRemoveElementCommand;
 import br.org.archimedes.exceptions.InvalidParameterException;
@@ -26,6 +22,10 @@ import br.org.archimedes.interfaces.Command;
 import br.org.archimedes.interfaces.Parser;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Layer;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 public class PasteFactory implements CommandFactory {
 
@@ -122,7 +122,6 @@ public class PasteFactory implements CommandFactory {
      */
     public boolean isTransformFactory () {
 
-        // TODO Auto-generated method stub
-        return false;
+        return true;
     }
 }

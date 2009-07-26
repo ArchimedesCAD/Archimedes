@@ -163,4 +163,12 @@ public class FilletCommand implements UndoableCommand {
         // TODO implement and test this and the above
         return getFirstElement().hashCode();
     }
+
+    /* (non-Javadoc)
+     * @see br.org.archimedes.interfaces.UndoableCommand#canMergeWith(br.org.archimedes.interfaces.UndoableCommand)
+     */
+    public boolean canMergeWith (UndoableCommand command) {
+
+        return false;
+    }
 }

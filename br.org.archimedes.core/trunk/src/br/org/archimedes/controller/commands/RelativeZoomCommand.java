@@ -19,7 +19,7 @@ import br.org.archimedes.model.Point;
  * Belongs to package br.org.archimedes.model.commands.<BR>
  * TODO tests for this class
  * 
- * @author Nitao
+ * @author Hugo Corbucci
  */
 public class RelativeZoomCommand extends ZoomCommand {
 

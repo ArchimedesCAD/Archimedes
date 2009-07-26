@@ -10,12 +10,12 @@
  * This file was created on 2006/08/16, 00:03:02, by Hugo Corbucci.<br>
  * It is part of package br.org.archimedes.interfaces on the br.org.archimedes.core project.<br>
  */
+
 package br.org.archimedes.interfaces;
 
 import br.org.archimedes.exceptions.IllegalActionException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.model.Drawing;
-
 
 /**
  * Belongs to package br.org.archimedes.model.commands.
@@ -34,6 +34,12 @@ public interface UndoableCommand extends Command {
      * @throws NullArgumentException
      *             Thrown if the drawing is null.
      */
-    public void undoIt (Drawing drawing) throws IllegalActionException,
-            NullArgumentException;
+    public void undoIt (Drawing drawing) throws IllegalActionException, NullArgumentException;
+
+    /**
+     * @param command
+     *            A command
+     * @return true if this command can be merged to the received one
+     */
+    public boolean canMergeWith (UndoableCommand command);
 }
