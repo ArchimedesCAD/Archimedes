@@ -26,7 +26,6 @@ import br.org.archimedes.polyline.Polyline;
 import br.org.archimedes.semiline.Semiline;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.internal.progress.NewOngoingStubbing;
 
@@ -97,9 +96,9 @@ public class TrimCommandTest extends Tester {
         trimCommand.setIntersectionManager(intersectionManager);
         trimCommand.setTrimManager(trimManager);
         drawing = new Drawing("Test");
-        drawing.putElement(line1);
-        drawing.putElement(line2);
-        drawing.putElement(line3);
+        drawing.putElement(line1, drawing.getCurrentLayer());
+        drawing.putElement(line2, drawing.getCurrentLayer());
+        drawing.putElement(line3, drawing.getCurrentLayer());
         br.org.archimedes.Utils.getController().setActiveDrawing(drawing);
     }
 
@@ -190,7 +189,7 @@ public class TrimCommandTest extends Tester {
         polylinePoints.add(new Point(75.0, 100.0));
         polylinePoints.add(new Point(100.0, 0.0));
         Polyline polyline = new Polyline(polylinePoints);
-        drawing.putElement(polyline);
+        drawing.putElement(polyline, drawing.getCurrentLayer());
 
         Point firstClick = new Point(6.25, 25.0);
         Point secondClick = new Point(50.0, 0.0);
@@ -278,7 +277,6 @@ public class TrimCommandTest extends Tester {
 
     // TODO implement hashCode in TrimCommand
     @Test
-    @Ignore
     public void hashCodesAreEqualWhenCommandsAreEqual () throws Exception {
 
         TrimCommand allElementsWithClickInOrigin = new TrimCommand(drawing.getUnlockedContents(),

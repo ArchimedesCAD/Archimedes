@@ -11,86 +11,74 @@
  * This file was created on 2006/09/15, 10:14:27, by Hugo Corbucci.<br>
  * It is part of package br.org.archimedes.parser on the br.org.archimedes.core.tests project.<br>
  */
+
 package br.org.archimedes.parser;
-
-import junit.framework.TestCase;
-
-import org.junit.Before;
-import org.junit.Test;
 
 import br.org.archimedes.exceptions.InvalidParameterException;
 import br.org.archimedes.interfaces.Parser;
 import br.org.archimedes.model.Point;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Belongs to package br.org.archimedes.parser.
  * 
  * @author marivb
  */
-public class DoubleDecoratorParserTest extends TestCase {
+public class DoubleDecoratorParserTest {
 
     private DoubleDecoratorParser parser;
 
 
-    /*
-     * @see TestCase#setUp()
-     */
     @Before
     public void setUp () {
 
         Parser decoratedParser = new PointParser();
         parser = new DoubleDecoratorParser(decoratedParser);
+        assertFalse("Should not be done yet", parser.isDone());
     }
 
-    /*
-     * @see TestCase#tearDown()
-     */
+    @After
     public void tearDown () {
 
         parser = null;
     }
 
+    @Test(expected = InvalidParameterException.class)
+    public void doubleParserThrowsExceptionOnText () throws Exception {
+
+        parser.next("u");
+    }
+
     @Test
-    public void testDouble () {
+    public void testDouble () throws Exception {
 
-        assertFalse("Should not be done yet", parser.isDone());
-        try {
-            parser.next("u");
-            fail("Should throw InvalidParameterException");
-        }
-        catch (InvalidParameterException e) {}
-        assertFalse("Should not be done yet", parser.isDone());
-
-        try {
-            parser.next("52.489");
-        }
-        catch (InvalidParameterException e) {
-            e.printStackTrace();
-            fail("Should not throw this exception");
-        }
+        parser.next("52.489");
         assertTrue("Should be done", parser.isDone());
+
         Object parameter = parser.getParameter();
         assertNotNull("Parameter should not be null", parameter);
+
         Double doubleParameter = (Double) parameter;
         assertEquals("Parameter should be as expected", 52.489, doubleParameter);
     }
 
-    public void testPoint () {
+    public void testPoint () throws Exception {
 
-        assertFalse("Should not be done yet", parser.isDone());
-
-        try {
-            parser.next("52;51");
-        }
-        catch (InvalidParameterException e) {
-            e.printStackTrace();
-            fail("Should not throw this exception");
-        }
+        parser.next("52;51");
         assertTrue("Should be done", parser.isDone());
+
         Object parameter = parser.getParameter();
         assertNotNull("Parameter should not be null", parameter);
+
         Point point = (Point) parameter;
-        assertEquals("Parameter should be as expected", new Point(52, 51),
-                point);
+        assertEquals("Parameter should be as expected", new Point(52, 51), point);
     }
 }

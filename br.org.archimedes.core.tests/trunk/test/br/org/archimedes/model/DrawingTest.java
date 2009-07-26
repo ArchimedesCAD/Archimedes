@@ -113,7 +113,7 @@ public class DrawingTest extends Tester {
 
         /* Null element */
         try {
-            drawing.putElement(null);
+            drawing.putElement(null, null);
             Assert.fail("Should not accept a null element.");
         }
         catch (NullArgumentException e) {
@@ -127,7 +127,7 @@ public class DrawingTest extends Tester {
 
         /* Simple element */
         try {
-            drawing.putElement(element);
+            drawing.putElement(element, drawing.getCurrentLayer());
             Collection<Element> contents = drawing.getUnlockedContents();
             Assert.assertTrue("The element should be in the drawing!", contents.contains(element));
         }
@@ -142,7 +142,7 @@ public class DrawingTest extends Tester {
 
         /* Duplicated element */
         try {
-            drawing.putElement(element);
+            drawing.putElement(element, drawing.getCurrentLayer());
             Assert.fail("Should not accept the exact same reference.");
         }
         catch (IllegalActionException e) {

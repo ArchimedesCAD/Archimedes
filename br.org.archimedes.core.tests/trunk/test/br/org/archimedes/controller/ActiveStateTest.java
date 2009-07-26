@@ -17,14 +17,21 @@ import br.org.archimedes.factories.CommandFactory;
 import br.org.archimedes.model.Drawing;
 import br.org.archimedes.stub.StubCommandFactory;
 
-import junit.framework.TestCase;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Belongs to package br.org.archimedes.controller.
  * 
- * @author nitao
+ * @author Hugo Corbucci
  */
-public class ActiveStateTest extends TestCase {
+public class ActiveStateTest {
 
     private Drawing drawing;
 
@@ -35,24 +42,18 @@ public class ActiveStateTest extends TestCase {
     private ActiveState activeSate;
 
 
-    /**
-     * @see junit.framework.TestCase#setUp()
-     */
-    protected void setUp () throws Exception {
+    @Before
+    public void setUp () throws Exception {
 
-        super.setUp();
         drawing = new Drawing("hi");
         factory = new StubCommandFactory();
         state = new IdleState(null);
         activeSate = new ActiveState(state, factory, drawing);
     }
 
-    /**
-     * @see junit.framework.TestCase#tearDown()
-     */
-    protected void tearDown () throws Exception {
+    @After
+    public void tearDown () throws Exception {
 
-        super.tearDown();
         drawing = null;
         state = null;
         factory = null;
@@ -70,8 +71,8 @@ public class ActiveStateTest extends TestCase {
     /**
      * Test method for
      * {@link br.org.archimedes.controller.ActiveState#changedDrawing(br.org.archimedes.model.Drawing)}
-     * .
      */
+    @Test
     public void testChangedDrawing () {
 
         InputState newState = activeSate.changedDrawing(new Drawing("oi"));
@@ -81,6 +82,7 @@ public class ActiveStateTest extends TestCase {
     /**
      * Test method for {@link br.org.archimedes.controller.ActiveState#cancel()}.
      */
+    @Test
     public void testCancel () {
 
         String string = activeSate.cancel();

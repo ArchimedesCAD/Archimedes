@@ -33,7 +33,6 @@ import br.org.archimedes.trims.TrimCommand;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.Collection;
@@ -955,7 +954,6 @@ public class TrimTest extends Tester {
     }
 
     @Test
-    @Ignore
     // FIXME: Closed Polyline have different behaviour on trim.
     public void testTrimClosedPolyLine () throws Exception {
 

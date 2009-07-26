@@ -12,6 +12,7 @@
  */
 package br.org.archimedes.copypaste;
 
+import br.org.archimedes.Utils;
 import br.org.archimedes.controller.Controller;
 import br.org.archimedes.factories.CommandFactory;
 import br.org.archimedes.helper.FactoryTester;
@@ -65,7 +66,7 @@ public class CopyPasteFactoryTest extends FactoryTester {
 
         controller.deselectAll();
         controller.setActiveDrawing(null);
-        br.org.archimedes.Utils.getWorkspace().getClipboard().clear();
+        Utils.getWorkspace().getClipboard().clear();
     }
 
     @Test

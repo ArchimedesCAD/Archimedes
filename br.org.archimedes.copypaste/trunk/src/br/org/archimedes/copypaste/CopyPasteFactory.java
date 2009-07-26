@@ -12,9 +12,6 @@
  */
 package br.org.archimedes.copypaste;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import br.org.archimedes.Constant;
 import br.org.archimedes.controller.commands.PutOrRemoveElementCommand;
 import br.org.archimedes.exceptions.InvalidParameterException;
@@ -27,6 +24,9 @@ import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Vector;
 import br.org.archimedes.parser.ReturnDecoratorParser;
 import br.org.archimedes.undo.UndoCommand;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Belongs to package br.org.archimedes.commands.

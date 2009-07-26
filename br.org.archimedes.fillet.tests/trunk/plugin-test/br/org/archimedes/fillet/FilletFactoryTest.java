@@ -58,8 +58,8 @@ public class FilletFactoryTest extends FactoryTester {
         line2 = new Line(1.0, 0.0, 2.0, 0.0);
         factory = new FilletFactory();
         drawing = new Drawing("Drawing");
-        drawing.putElement(line1);
-        drawing.putElement(line2);
+        drawing.putElement(line1, drawing.getCurrentLayer());
+        drawing.putElement(line2, drawing.getCurrentLayer());
         firstSelection = new Selection(new Rectangle(-0.5, 0.5, 0.5, 1.5));
         firstSelection.add(line1);
         secondSelection = new Selection(new Rectangle(0.5, -0.5, 1.5, 0.5));

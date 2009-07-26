@@ -20,7 +20,7 @@ import br.org.archimedes.model.Drawing;
 /**
  * Belongs to package br.org.archimedes.model.commands.
  * 
- * @author night
+ * @author Hugo Corbucci
  */
 public interface Command {
 

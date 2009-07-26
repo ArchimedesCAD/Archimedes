@@ -53,8 +53,8 @@ public class FilletCommandTest extends Tester {
         line1 = new Line(0.0, 1.0, 0.0, 2.0);
         line2 = new Line(1.0, 0.0, 2.0, 0.0);
         drawing = new Drawing("Test");
-        drawing.putElement(line1);
-        drawing.putElement(line2);
+        drawing.putElement(line1, drawing.getCurrentLayer());
+        drawing.putElement(line2, drawing.getCurrentLayer());
         click1 = new Point(0.0, 1.5);
         click2 = new Point(1.5, 0.0);
         command = new FilletCommand(line1, click1, line2, click2);

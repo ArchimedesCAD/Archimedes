@@ -8,109 +8,97 @@
  * Hugo Corbucci - initial API and implementation<br>
  * <br>
  * This file was created on 2006/09/09, 10:14:27, by Hugo Corbucci.<br>
- * It is part of package br.org.archimedes.controller.commands on the br.org.archimedes.core.tests project.<br>
+ * It is part of package br.org.archimedes.controller.commands on the br.org.archimedes.core.tests
+ * project.<br>
  */
+
 package br.org.archimedes.controller.commands;
 
-import junit.framework.TestCase;
 import br.org.archimedes.exceptions.IllegalActionException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Point;
 
-public class PanCommandTest extends TestCase {
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
-	private PanCommand pan;
+import static org.junit.Assert.assertEquals;
 
-	private Drawing drawing;
+public class PanCommandTest {
 
-	protected void setUp() throws Exception {
-		super.setUp();
-		Point original = new Point(0, 0);
-		Point viewport = new Point(14, 42);
-		pan = new PanCommand(original, viewport);
-		drawing = new Drawing("Drawing");
-	}
+    private PanCommand pan;
 
-	protected void tearDown() throws Exception {
-		super.tearDown();
-		pan = null;
-		drawing = null;
-	}
+    private Drawing drawing;
 
-	/*
-	 * Test method for
-	 * 'br.org.archimedes.controller.commands.PanCommand.PanCommand(Point,
-	 * Point)'
-	 */
-	public void testPanCommand() {
-		try {
-			new PanCommand(null, null);
-			fail("Should throw a NullArgumentException.");
-		} catch (NullArgumentException e) {
-		} catch (IllegalActionException e) {
-			fail("Should throw a NullArgumentException not an IllegalActionException.");
-		}
 
-		try {
-			new PanCommand(new Point(10, 10), new Point(10, 10));
-			fail("Should throw an IllegalActionException.");
-		} catch (NullArgumentException e) {
-			fail("Should throw an IllegalActionException not a NullArgumentException.");
-		} catch (IllegalActionException e) {
-		}
-	}
+    @Before
+    public void setUp () throws Exception {
 
-	/*
-	 * Test method for
-	 * 'br.org.archimedes.controller.commands.PanCommand.doIt(Drawing)'
-	 */
-	public void testDoIt() {
-		try {
-			pan.doIt(null);
-			fail("Should throw a NullArgumentException");
-		} catch (IllegalActionException e) {
-			fail("Should throw a NullArgumentException not IllegalActionException");
-		} catch (NullArgumentException e) {
-		}
+        Point original = new Point(0, 0);
+        Point viewport = new Point(14, 42);
+        pan = new PanCommand(original, viewport);
+        drawing = new Drawing("Drawing");
+    }
 
-		double zoom = drawing.getZoom();
-		safeDoIt();
-		assertEquals("The viewport position should have been updated.",
-				new Point(14, 42), drawing.getViewportPosition());
-		assertEquals("The zoom should be the same.", zoom, drawing.getZoom());
-	}
+    @After
+    public void tearDown () throws Exception {
 
-	private void safeDoIt() {
-		try {
-			pan.doIt(drawing);
-		} catch (Exception e) {
-			fail("Should not throw any exception.");
-		}
-	}
+        pan = null;
+        drawing = null;
+    }
 
-	/*
-	 * Test method for
-	 * 'br.org.archimedes.controller.commands.PanCommand.undoIt(Drawing)'
-	 */
-	public void testUndoIt() {
-		try {
-			pan.undoIt(null);
-			fail("Should throw a NullArgumentException");
-		} catch (IllegalActionException e) {
-			fail("Should throw a NullArgumentException not IllegalActionException");
-		} catch (NullArgumentException e) {
-		}
+    /*
+     * Test method for 'br.org.archimedes.controller.commands.PanCommand.PanCommand(Point, Point)'
+     */
+    @Test(expected = IllegalActionException.class)
+    public void creatingPanWithTwoEqualPointsThrowsException () throws Exception {
 
-		double zoom = drawing.getZoom();
-		safeDoIt();
-		try {
-			pan.undoIt(drawing);
-		} catch (Exception e) {
-			fail("Should not throw any exception.");
-		}
-		assertEquals("The viewport position should be back to the original.",
-				new Point(0, 0), drawing.getViewportPosition());
-		assertEquals("The zoom should be the same.", zoom, drawing.getZoom());
-	}
+        new PanCommand(new Point(10, 10), new Point(10, 10));
+    }
+
+    @Test(expected = NullArgumentException.class)
+    public void creatingPanWithNullsThrowsException () throws Exception {
+
+        new PanCommand(null, null);
+    }
+
+    @Test(expected = NullArgumentException.class)
+    public void executingOnANullDrawingThrowsException () throws Exception {
+
+        pan.doIt(null);
+    }
+
+    /*
+     * Test method for 'br.org.archimedes.controller.commands.PanCommand.doIt(Drawing)'
+     */
+    @Test
+    public void executingWorksFine () throws Exception {
+
+        double zoom = drawing.getZoom();
+        pan.doIt(drawing);
+        Point viewport = drawing.getViewportPosition();
+        assertEquals("The viewport position should have been updated.", new Point(14, 42), viewport);
+        assertEquals("The zoom should be the same.", zoom, drawing.getZoom());
+    }
+
+    @Test(expected = NullArgumentException.class)
+    public void undoingOnANullDrawingThrowsException () throws Exception {
+
+        pan.undoIt(null);
+    }
+
+    /*
+     * Test method for 'br.org.archimedes.controller.commands.PanCommand.undoIt(Drawing)'
+     */
+    @Test
+    public void testUndoIt () throws Exception {
+
+        double zoom = drawing.getZoom();
+        pan.doIt(drawing);
+        pan.undoIt(drawing);
+        assertEquals("The viewport position should be back to the original.", new Point(0, 0),
+                drawing.getViewportPosition());
+        assertEquals("The zoom should be the same.", zoom, drawing.getZoom());
+    }
 }

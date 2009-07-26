@@ -14,13 +14,13 @@
 
 package br.org.archimedes.orto;
 
+import br.org.archimedes.Utils;
 import br.org.archimedes.exceptions.IllegalActionException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.interfaces.Command;
 import br.org.archimedes.model.Drawing;
 
 import org.eclipse.core.commands.State;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
 
 /**
@@ -36,8 +36,7 @@ public class OrtoCommand implements Command {
      */
     public void doIt (Drawing drawing) throws IllegalActionException, NullArgumentException {
 
-        ICommandService service = (ICommandService) PlatformUI.getWorkbench().getService(
-                ICommandService.class);
+        ICommandService service = Utils.getCommandService();
         org.eclipse.core.commands.Command command = service.getCommand(Activator.ORTO_COMMAND_ID);
         State state = command.getState(Activator.ORTO_STATE);
         Boolean newValue = !(Boolean) state.getValue();

@@ -220,7 +220,7 @@ public class MoveElementTest extends Tester {
     private void addsSelectionToDrawing (Selection selection) throws Exception {
 
         for (Element element : selection.getSelectedElements()) {
-            drawing.putElement(element);
+            drawing.putElement(element, drawing.getCurrentLayer());
         }
     }
 

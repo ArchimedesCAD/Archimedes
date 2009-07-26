@@ -186,15 +186,6 @@ public class Drawing extends Observable implements Observer {
 
     /*
      * (non-Javadoc)
-     * @see br.org.archimedes.model.Drawing#putElement(br.org.archimedes.model.Element )
-     */
-    public void putElement (Element element) throws NullArgumentException, IllegalActionException {
-
-        putElement(element, currentLayer);
-    }
-
-    /*
-     * (non-Javadoc)
      * @see br.org.archimedes.model.Drawing#removeElement(br.org.archimedes.model .Element)
      */
     public void removeElement (Element element) throws NullArgumentException,
@@ -639,7 +630,7 @@ public class Drawing extends Observable implements Observer {
 
         return element.getLayer();
     }
-
+    
     /*
      * (non-Javadoc)
      * @see br.org.archimedes.model.Drawing#putElement(br.org.archimedes.model.Element ,

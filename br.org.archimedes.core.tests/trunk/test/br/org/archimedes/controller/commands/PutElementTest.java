@@ -8,187 +8,195 @@
  * Hugo Corbucci - initial API and implementation<br>
  * <br>
  * This file was created on 2006/08/18, 10:14:27, by Hugo Corbucci.<br>
- * It is part of package br.org.archimedes.controller.commands on the br.org.archimedes.core.tests project.<br>
+ * It is part of package br.org.archimedes.controller.commands on the br.org.archimedes.core.tests
+ * project.<br>
  */
+
 package br.org.archimedes.controller.commands;
 
 import br.org.archimedes.exceptions.IllegalActionException;
-import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
-import br.org.archimedes.interfaces.Command;
-import br.org.archimedes.interfaces.UndoableCommand;
+import br.org.archimedes.gui.opengl.Color;
 import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Element;
+import br.org.archimedes.model.Layer;
+import br.org.archimedes.model.LineStyle;
 import br.org.archimedes.stub.StubElement;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import junit.framework.TestCase;
+import java.util.Collection;
+import java.util.LinkedList;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Belongs to package br.org.archimedes.model.commands.
  * 
- * @author night
+ * @author Hugo Corbucci
  */
-public class PutElementTest extends TestCase {
+public class PutElementTest {
 
-	private Drawing drawing;
+    private Drawing drawing;
 
-	/*
-	 * @see TestCase#setUp()
-	 */
+    private Element element;
+
+    private PutOrRemoveElementCommand putElement;
+
+
     @Before
-	public void setUp() {
+    public void setUp () throws Exception {
 
-		drawing = new Drawing("Drawing");
-	}
+        drawing = new Drawing("Drawing");
+        element = new StubElement();
+        putElement = new PutOrRemoveElementCommand(element, false);
+    }
 
-	/*
-	 * @see TestCase#tearDown()
-	 */
     @After
-	public void tearDown() {
+    public void tearDown () {
 
-		drawing = null;
-	}
+        drawing = null;
+    }
 
-	/*
-	 * Test method for
-	 * 'br.org.archimedes.model.commands.PutElementCommand.PutElementCommand(Element)'
-	 */
+    /*
+     * Test method for
+     * 'br.org.archimedes.model.commands.PutElementCommand.PutElementCommand(Element)'
+     */
+    @Test(expected = NullArgumentException.class)
+    public void testPutElementCommandFailsWithNull () throws NullArgumentException {
+
+        Element element = null;
+        new PutOrRemoveElementCommand(element, false);
+    }
+
     @Test
-	public void testPutElementCommand() throws InvalidArgumentException {
+    public void canCreatePutElementWithValidElement () throws Exception {
 
-		Element element = null;
-		try {
-			new PutOrRemoveElementCommand(element, false);
-			fail("Should throw a NullArgumentException.");
-		} catch (NullArgumentException e) {
-		}
+        new PutOrRemoveElementCommand(new StubElement(), false);
+    }
 
-		element = new StubElement();
-		try {
-			new PutOrRemoveElementCommand(element, false);
-		} catch (NullArgumentException e) {
-			fail("Should not throw a NullArgumentException.");
-		}
-	}
+    @Test(expected = NullArgumentException.class)
+    public void doItWithNullDrawingThrowsException () throws Exception {
 
-	/*
-	 * Test method for
-	 * 'br.org.archimedes.model.commands.PutElementCommand.doIt(Drawing)'
-	 */
+        putElement.doIt(null);
+    }
+
+    /*
+     * Test method for 'br.org.archimedes.model.commands.PutElementCommand.doIt(Drawing)'
+     */
     @Test
-	public void testDoIt() throws InvalidArgumentException {
+    public void testDoIt () throws Exception {
 
-		Element element = new StubElement();
-		Command putElement = safeCommand(element);
+        putElement.doIt(drawing);
+        assertTrue("The current layer should contain the element.", drawing.getCurrentLayer()
+                .contains(element));
+    }
 
-		try {
-			putElement.doIt(null);
-			fail("Should throw a NullArgumentException.");
-		} catch (IllegalActionException e) {
-			fail("Should throw a NullArgumentException! Not an IllegalActionException.");
-		} catch (NullArgumentException e) {
-		}
+    @Test(expected = IllegalActionException.class)
+    public void doingItOnceAlreadyDoneThrowsException () throws Exception {
 
-		assertFalse("The current layer should not contain the element.",
-				drawing.getCurrentLayer().contains(element));
+        putElement.doIt(drawing);
+        putElement.doIt(drawing);
+    }
 
-		safeDoIt(putElement, drawing);
-		assertTrue("The current layer should contain the element.", drawing
-				.getCurrentLayer().contains(element));
+    @Test(expected = IllegalActionException.class)
+    public void undoingItIfNeverDoneShouldThrowException () throws Exception {
 
-		try {
-			putElement.doIt(drawing);
-			fail("Should throw an IllegalActionException.");
-		} catch (IllegalActionException e) {
-		} catch (NullArgumentException e) {
-			fail("Should throw an IllegalActionException! Not a NullArgumentException.");
-		}
-		assertTrue("The current layer should contain the element.", drawing
-				.getCurrentLayer().contains(element));
-		assertEquals("The current layer should contain only the element once.",
-				1, drawing.getCurrentLayer().getElements().size());
-	}
+        putElement.undoIt(drawing);
+    }
 
-	/**
-	 * @param putElement
-	 *            The command to be executed.
-	 * @param drawing
-	 *            The drawing in which the command should be done.
-	 */
-	private void safeDoIt(Command putElement, Drawing drawing) {
+    @Test(expected = IllegalActionException.class)
+    public void undoingItAlreadyUndoneShouldThrowException () throws Exception {
 
-		try {
-			putElement.doIt(drawing);
-		} catch (Exception e) {
-			fail("Should not throw an exception.");
-		}
-	}
+        putElement.doIt(drawing);
+        putElement.undoIt(drawing);
 
-	/**
-	 * @param element
-	 *            The element that should be used to create the command.
-	 * @return The PutElementCommand created.
-	 */
-	private UndoableCommand safeCommand(Element element) {
+        putElement.undoIt(drawing);
+    }
 
-		PutOrRemoveElementCommand putElement = null;
-		try {
-			putElement = new PutOrRemoveElementCommand(element, false);
-		} catch (NullArgumentException e) {
-			fail("Should not throw this exception");
-		}
-		return putElement;
-	}
+    @Test(expected = NullArgumentException.class)
+    public void undoingItOnNullDrawingShouldThrowException () throws Exception {
 
-	/*
-	 * Test method for
-	 * 'br.org.archimedes.model.commands.PutElementCommand.undoIt(Drawing)'
-	 */
+        putElement.doIt(drawing);
+        putElement.undoIt(null);
+    }
+
+    /*
+     * Test method for 'br.org.archimedes.model.commands.PutElementCommand.undoIt(Drawing)'
+     */
     @Test
-	public void testUndoIt() throws InvalidArgumentException {
+    public void testUndoIt () throws Exception {
 
-		Element element = new StubElement();
-		UndoableCommand putElement = safeCommand(element);
+        putElement.doIt(drawing);
+        putElement.undoIt(drawing);
 
-		try {
-			putElement.undoIt(drawing);
-			fail("Should throw an IllegalActionException.");
-		} catch (IllegalActionException e) {
-		} catch (NullArgumentException e) {
-			fail("Should throw an IllegalActionException! Not a NullArgumentException.");
-		}
+        assertFalse("The drawing should not contain this element", drawing.getCurrentLayer()
+                .contains(element));
+    }
+    
+    @Test
+    public void putsOnLayerOfTheElement () throws Exception {
 
-		safeDoIt(putElement, drawing);
+        Layer layer = new Layer(new Color(100,100,100), "", LineStyle.CONTINUOUS, 1);
+        drawing.addLayer(layer);
+        element.setLayer(layer);
+        putElement.doIt(drawing);
+        
+        assertEquals(layer, element.getLayer());
+    }
+    
+    
+    @Test
+    public void putsOnCurrentLayerIfElementHasNoLayer () throws Exception {
 
-		try {
-			putElement.undoIt(null);
-			fail("Should throw a NullArgumentException.");
-		} catch (IllegalActionException e) {
-			fail("Should throw a NullArgumentException! Not an IllegalActionException.");
-		} catch (NullArgumentException e) {
-		}
+        putElement.doIt(drawing);
+        
+        assertEquals(drawing.getCurrentLayer(), element.getLayer());
+    }
+    
+    @Test
+    public void addsLayerAndPutsElementInItIfDrawingDoesntHaveLayer () throws Exception {
 
-		try {
-			putElement.undoIt(drawing);
-		} catch (IllegalActionException e) {
-			fail("Should not throw an IllegalActionException.");
-		} catch (NullArgumentException e) {
-			fail("Should not throw a NullArgumentException.");
-		}
-		assertFalse("The drawing should not contain this element", drawing
-				.getCurrentLayer().contains(element));
+        Layer layer = new Layer(new Color(100,100,100), "", LineStyle.CONTINUOUS, 1);
+        element.setLayer(layer);
+        putElement.doIt(drawing);
+        
+        assertEquals(layer, element.getLayer());
+    }
+    
+    @Test
+    public void putsEachElementInItsLayer () throws Exception {
 
-		try {
-			putElement.undoIt(drawing);
-			fail("Should throw an IllegalActionException.");
-		} catch (IllegalActionException e) {
-		} catch (NullArgumentException e) {
-			fail("Should throw an IllegalActionException! Not a NullArgumentException.");
-		}
-	}
+        Collection<Element> elements = new LinkedList<Element>();
+        StubElement noLayer = new StubElement();
+        elements.add(noLayer);
+        
+        StubElement existingLayer = new StubElement();
+        Layer layer = new Layer(new Color(10,10,10), "layer", LineStyle.CONTINUOUS, 1);
+        existingLayer.setLayer(layer);
+        drawing.addLayer(layer);
+        elements.add(existingLayer);
+        
+        StubElement newLayer = new StubElement();
+        Layer otherLayer = new Layer(new Color(0,0,100), "other layer", LineStyle.STIPPED, 1);
+        newLayer.setLayer(otherLayer);
+        elements.add(newLayer);
+        
+        StubElement sameNamedLayer = new StubElement();
+        Layer sameNameLayer = new Layer(new Color(0,100,0), "layer", LineStyle.STIPPED, 1);
+        sameNamedLayer.setLayer(sameNameLayer);
+        elements.add(sameNamedLayer);
+        
+        putElement = new PutOrRemoveElementCommand(elements, false);
+        putElement.doIt(drawing);
+        
+        assertEquals(drawing.getCurrentLayer(), noLayer.getLayer());
+        assertEquals(layer, existingLayer.getLayer());
+        assertEquals(otherLayer, newLayer.getLayer());
+        assertEquals(layer, sameNamedLayer.getLayer());
+    }
 }

@@ -238,7 +238,7 @@ public class RotateTest extends Tester {
 
         for (Element element : selection) {
             try {
-                drawing.putElement(element);
+                drawing.putElement(element, drawing.getCurrentLayer());
             }
             catch (Exception e) {
                 Assert.fail("Should not throw any exception.");

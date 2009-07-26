@@ -59,8 +59,8 @@ public class ExtendCommandTest extends Tester {
         references.add(infiniteLine2);
         elementsToExtend = new HashMap<Point, Element>();
         drawing = new Drawing("Undo");
-        drawing.putElement(infiniteLine1);
-        drawing.putElement(infiniteLine2);
+        drawing.putElement(infiniteLine1, drawing.getCurrentLayer());
+        drawing.putElement(infiniteLine2, drawing.getCurrentLayer());
     }
 
     @Test
@@ -70,7 +70,7 @@ public class ExtendCommandTest extends Tester {
         Line line = new Line(0.0, 0.0, 5.0, 0.0);
         Line lineExtended = new Line(0.0, 0.0, 10.0, 0.0);
         elementsToExtend.put(click, line);
-        drawing.putElement(line);
+        drawing.putElement(line, drawing.getCurrentLayer());
         extendCommand = new ExtendCommand(references, elementsToExtend);
         extendCommand.doIt(drawing);
         assertTrue(drawing.getVisibleContents().contains(lineExtended));
@@ -89,7 +89,7 @@ public class ExtendCommandTest extends Tester {
         Arc arcExtended = new Arc(new Point( -15.0, 0.0), new Point( -10.0, -5.0), new Point(
                 -10.0, 5.0));
         elementsToExtend.put(click, arc);
-        drawing.putElement(arc);
+        drawing.putElement(arc, drawing.getCurrentLayer());
         extendCommand = new ExtendCommand(references, elementsToExtend);
         extendCommand.doIt(drawing);
         assertTrue(drawing.getVisibleContents().contains(arcExtended));
@@ -106,14 +106,14 @@ public class ExtendCommandTest extends Tester {
         Point clickForArc = new Point( -5.0, 0.0);
         Arc arc = new Arc(new Point( -15.0, 0.0), new Point( -10.0, -5.0), new Point( -5.0, 0.0));
         elementsToExtend.put(clickForArc, arc);
-        drawing.putElement(arc);
+        drawing.putElement(arc, drawing.getCurrentLayer());
         ExtendCommand extendCommandForArc = new ExtendCommand(references, elementsToExtend);
 
         Point clickForLine = new Point(5.0, 0.0);
         Line line = new Line(0.0, 0.0, 5.0, 0.0);
         HashMap<Point, Element> elementsToExtendToLine =  new HashMap<Point, Element>();
         elementsToExtendToLine.put(clickForLine, line);
-        drawing.putElement(line);
+        drawing.putElement(line, drawing.getCurrentLayer());
         ExtendCommand extendCommandForLine = new ExtendCommand(references, elementsToExtendToLine);
 
         ExtendCommand otherExtendCommandForLine = new ExtendCommand(references, elementsToExtendToLine);

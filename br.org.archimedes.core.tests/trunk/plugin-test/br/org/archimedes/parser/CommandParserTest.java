@@ -10,15 +10,16 @@
  * This file was created on 2006/03/23, 10:14:27, by Hugo Corbucci.<br>
  * It is part of package br.org.archimedes.parser on the br.org.archimedes.core.tests project.<br>
  */
+
 package br.org.archimedes.parser;
-
-import junit.framework.TestCase;
-
-import org.junit.Test;
 
 import br.org.archimedes.factories.CommandFactory;
 
-public class CommandParserTest extends TestCase {
+import org.junit.Test;
+
+import static org.junit.Assert.assertNull;
+
+public class CommandParserTest {
 
     /**
      * Tests: the recognition of the commands (String).
@@ -27,10 +28,7 @@ public class CommandParserTest extends TestCase {
     public void test () {
 
         CommandParser cp = new CommandParser();
-
-        CommandFactory com;
-
-        com = cp.getCommand("invalid");
+        CommandFactory com = cp.getCommand("invalid");
         assertNull(com);
     }
 }

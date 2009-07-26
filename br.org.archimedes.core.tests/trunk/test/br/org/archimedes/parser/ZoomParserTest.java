@@ -10,21 +10,26 @@
  * This file was created on 2006/06/15, 10:14:27, by Hugo Corbucci.<br>
  * It is part of package br.org.archimedes.parser on the br.org.archimedes.core.tests project.<br>
  */
+
 package br.org.archimedes.parser;
 
-import junit.framework.TestCase;
+import br.org.archimedes.exceptions.InvalidParameterException;
+import br.org.archimedes.model.Point;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import br.org.archimedes.exceptions.InvalidParameterException;
-import br.org.archimedes.model.Point;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Belongs to package br.org.archimedes.parser.
  */
-public class ZoomParserTest extends TestCase {
+public class ZoomParserTest {
 
     private ZoomParser zp;
 
@@ -33,6 +38,8 @@ public class ZoomParserTest extends TestCase {
     public void setUp () {
 
         zp = new ZoomParser();
+        assertFalse("Should not be done", zp.isDone());
+        assertNull("Parameter should be null", zp.getParameter());
     }
 
     @After
@@ -42,103 +49,59 @@ public class ZoomParserTest extends TestCase {
     }
 
     @Test
-    public void testRelativeZoom () {
+    public void testRelativeZoom () throws Exception {
 
-        assertFalse("Should not be done", zp.isDone());
-        assertNull("Parameter should be null", zp.getParameter());
-
-        try {
-            zp.next("10");
-        }
-        catch (InvalidParameterException e) {
-            e.printStackTrace();
-            fail("Should not throw this exception.");
-        }
+        zp.next("10");
         assertTrue("Should be done", zp.isDone());
+
         Double d = (Double) zp.getParameter();
         assertNotNull("Parameter should not be null", d);
         assertEquals("Parameter should be 10", 10.0, d);
     }
 
     @Test
-    public void testZoomByArea () {
+    public void testZoomByArea () throws Exception {
 
-        assertFalse("Should not be done", zp.isDone());
-        assertNull("Parameter should be null", zp.getParameter());
-
-        try {
-            zp.next("10;10");
-        }
-        catch (InvalidParameterException e) {
-            e.printStackTrace();
-            fail("Should not throw this exception.");
-        }
+        zp.next("10;10");
         assertTrue("Should be done", zp.isDone());
-        assertEquals("Parameter should be a point", new Point(10, 10), zp
-                .getParameter());
+        assertEquals("Parameter should be a point", new Point(10, 10), zp.getParameter());
+    }
+
+    @Test(expected = InvalidParameterException.class)
+    public void zoomThrowsExceptionOnNull () throws Exception {
+
+        zp.next(null);
+    }
+
+    @Test(expected = InvalidParameterException.class)
+    public void zoomThrowsExceptionOnText () throws Exception {
+
+        zp.next("bla");
+    }
+
+    @Test(expected = InvalidParameterException.class)
+    public void zoomThrowsExceptionOnEnter () throws Exception {
+
+        zp.next("");
     }
 
     @Test
-    public void testInvalids () {
+    public void testExtended () throws Exception {
 
-        assertThrowsException(null);
-        assertThrowsException("bla");
-        assertThrowsException("");
-    }
-
-    /**
-     * Asserts that the parser throws an exception with the given message, and
-     * assert it doesn't end after recieving it.
-     * 
-     * @param message
-     *            The message to pass
-     */
-    private void assertThrowsException (String message) {
-
-        try {
-            zp.next(message);
-            fail("Should not reach this point.");
-        }
-        catch (InvalidParameterException e) {
-            // Should throw this exception
-        }
-        assertFalse("Should not be done yet", zp.isDone());
-        assertNull("The parameter should be null", zp.getParameter());
-    }
-
-    @Test
-    public void testExtended () {
-
-        assertFalse("Should not be done", zp.isDone());
-        assertNull("Parameter should be null", zp.getParameter());
-
-        try {
-            zp.next("e");
-        }
-        catch (InvalidParameterException e) {
-            e.printStackTrace();
-            fail("Should not throw this exception.");
-        }
+        zp.next("e");
         assertTrue("Should be done", zp.isDone());
+
         String e = (String) zp.getParameter();
         assertNotNull("Parameter should not be null", e);
         assertEquals("Should be an \"e\"", "e", e);
     }
 
     @Test
-    public void testPrevious () {
+    public void testPrevious () throws Exception {
 
-        assertFalse("Should not be done", zp.isDone());
-        assertNull("Parameter should be null", zp.getParameter());
-
-        try {
-            zp.next("p");
-        }
-        catch (InvalidParameterException e) {
-            e.printStackTrace();
-            fail("Should not throw this exception.");
-        }
+        zp.next("p");
         assertTrue("Should be done", zp.isDone());
+
         String p = (String) zp.getParameter();
         assertNotNull("Parameter should not be null", p);
         assertEquals("Should be a \"p\"", "p", p);

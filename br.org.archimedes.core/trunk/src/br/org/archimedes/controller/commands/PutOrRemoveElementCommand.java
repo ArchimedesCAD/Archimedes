@@ -8,12 +8,11 @@
  * Hugo Corbucci - initial API and implementation<br>
  * <br>
  * This file was created on 2006/08/17, 00:03:02, by Hugo Corbucci.<br>
- * It is part of package br.org.archimedes.controller.commands on the br.org.archimedes.core project.<br>
+ * It is part of package br.org.archimedes.controller.commands on the br.org.archimedes.core
+ * project.<br>
  */
-package br.org.archimedes.controller.commands;
 
-import java.util.ArrayList;
-import java.util.Collection;
+package br.org.archimedes.controller.commands;
 
 import br.org.archimedes.exceptions.IllegalActionException;
 import br.org.archimedes.exceptions.NullArgumentException;
@@ -21,6 +20,9 @@ import br.org.archimedes.interfaces.UndoableCommand;
 import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Layer;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * Belongs to package br.org.archimedes.model.commands.
@@ -38,8 +40,7 @@ public class PutOrRemoveElementCommand implements UndoableCommand {
      * Constructor.
      * 
      * @param remove
-     *            true if the element is to be removed, false if it is to be
-     *            added
+     *            true if the element is to be removed, false if it is to be added
      */
     private PutOrRemoveElementCommand (boolean remove) {
 
@@ -52,8 +53,7 @@ public class PutOrRemoveElementCommand implements UndoableCommand {
      * @param newElement
      *            The element to be put.
      * @param remove
-     *            true if the element is to be removed, false if it is to be
-     *            added
+     *            true if the element is to be removed, false if it is to be added
      * @throws NullArgumentException
      *             Thrown if the element is null.
      */
@@ -74,13 +74,12 @@ public class PutOrRemoveElementCommand implements UndoableCommand {
      * @param newElements
      *            A collection of elements to be put or removed.
      * @param remove
-     *            true if the element is to be removed, false if it is to be
-     *            added
+     *            true if the element is to be removed, false if it is to be added
      * @throws NullArgumentException
      *             Thrown if the collection of elements is null.
      */
-    public PutOrRemoveElementCommand (Collection<Element> newElements,
-            boolean remove) throws NullArgumentException {
+    public PutOrRemoveElementCommand (Collection<Element> newElements, boolean remove)
+            throws NullArgumentException {
 
         this(remove);
         if (newElements == null) {
@@ -91,11 +90,9 @@ public class PutOrRemoveElementCommand implements UndoableCommand {
 
     /*
      * (non-Javadoc)
-     * 
      * @see br.org.archimedes.model.commands.Command#doIt()
      */
-    public void doIt (Drawing drawing) throws NullArgumentException,
-            IllegalActionException {
+    public void doIt (Drawing drawing) throws NullArgumentException, IllegalActionException {
 
         if (drawing == null) {
             throw new NullArgumentException();
@@ -111,11 +108,9 @@ public class PutOrRemoveElementCommand implements UndoableCommand {
 
     /*
      * (non-Javadoc)
-     * 
      * @see br.org.archimedes.model.commands.UndoableCommand#undoIt()
      */
-    public void undoIt (Drawing drawing) throws IllegalActionException,
-            NullArgumentException {
+    public void undoIt (Drawing drawing) throws IllegalActionException, NullArgumentException {
 
         if (drawing == null) {
             throw new NullArgumentException();
@@ -140,29 +135,52 @@ public class PutOrRemoveElementCommand implements UndoableCommand {
     private void putElements (Drawing drawing) throws IllegalActionException {
 
         for (Element element : elements) {
-            Layer layer = element.getLayer();
-            if (layer == null) {
-                layer = drawing.getCurrentLayer();
-            }
+            Layer layer = getDestinationLayer(drawing, element);
+
             if (layer.isLocked() || layer.contains(element)) {
                 throw new IllegalActionException(Messages.PutOrRemove_notPut);
             }
-        }
 
-        for (Element element : elements) {
-            try {
-                if (element.getLayer() == null) {
-                    drawing.putElement(element);
-                }
-                else {
-                    drawing.putElement(element, element.getLayer());
-                }
-            }
-            catch (NullArgumentException e) {
-                // Should not happen
-                e.printStackTrace();
-            }
+            addElementToDrawing(element, drawing, layer);
         }
+    }
+
+    /**
+     * @param element
+     *            The element to add
+     * @param drawing
+     *            The drawing to add to
+     * @param layer
+     *            The layer of the element
+     * @throws IllegalActionException
+     *             Thrown if cannot add this element to this layer on this drawing
+     */
+    private void addElementToDrawing (Element element, Drawing drawing, Layer layer)
+            throws IllegalActionException {
+
+        try {
+            drawing.putElement(element, layer);
+        }
+        catch (NullArgumentException e) {
+            // Should not happen
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * @param drawing
+     *            The drawing from which I wish to know the layer destination
+     * @param element
+     *            The element I am trying to know the destination layer
+     * @return The destination layer to use
+     */
+    private Layer getDestinationLayer (Drawing drawing, Element element) {
+
+        Layer layer = element.getLayer();
+        if (layer == null) {
+            layer = drawing.getCurrentLayer();
+        }
+        return layer;
     }
 
     /**

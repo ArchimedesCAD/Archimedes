@@ -233,7 +233,7 @@ public abstract class Tester {
     public void putSafeElementOnDrawing (Element element, Drawing drawing) {
 
         try {
-            drawing.putElement(element);
+            drawing.putElement(element, drawing.getCurrentLayer());
         }
         catch (NullArgumentException e) {
             e.printStackTrace();
