@@ -123,7 +123,7 @@ public class InfiniteLine extends Element implements Offsetable {
 
         InfiniteLine returnLine = (InfiniteLine) this.clone();
         returnLine.move(direction.getX(), direction.getY());
-        returnLine.setLayer(parentLayer);
+        returnLine.setLayer(getLayer());
 
         return returnLine;
     }

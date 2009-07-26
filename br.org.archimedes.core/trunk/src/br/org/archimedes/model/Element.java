@@ -15,13 +15,13 @@
 
 package br.org.archimedes.model;
 
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
-
 import br.org.archimedes.exceptions.IllegalActionException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.gui.opengl.OpenGLWrapper;
+
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Belongs to package br.org.archimedes.model.
@@ -30,7 +30,7 @@ import br.org.archimedes.gui.opengl.OpenGLWrapper;
  */
 public abstract class Element {
 
-    protected Layer parentLayer;
+    private Layer parentLayer;
 
 
     /**

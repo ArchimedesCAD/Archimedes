@@ -14,18 +14,12 @@
 
 package br.org.archimedes.line;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
-
 import br.org.archimedes.Constant;
 import br.org.archimedes.Geometrics;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.gui.opengl.OpenGLWrapper;
 import br.org.archimedes.model.Element;
-import br.org.archimedes.model.Layer;
 import br.org.archimedes.model.Offsetable;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Rectangle;
@@ -33,6 +27,11 @@ import br.org.archimedes.model.ReferencePoint;
 import br.org.archimedes.model.Vector;
 import br.org.archimedes.model.references.SquarePoint;
 import br.org.archimedes.model.references.TrianglePoint;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Belongs to package br.org.archimedes.line.
@@ -42,9 +41,6 @@ public class Line extends Element implements Offsetable {
     private Point initialPoint;
 
     private Point endingPoint;
-
-    private Layer parentLayer;
-
 
     /**
      * Constructor.
@@ -164,7 +160,7 @@ public class Line extends Element implements Offsetable {
         Line clone = null;
         try {
             clone = new Line(initialPoint, endingPoint);
-            clone.setLayer(parentLayer);
+            clone.setLayer(getLayer());
         }
         catch (Exception e) {
             // Should never happen
@@ -188,7 +184,7 @@ public class Line extends Element implements Offsetable {
 
         Line returnLine = (Line) this.clone();
         returnLine.move(direction.getX(), direction.getY());
-        returnLine.setLayer(parentLayer);
+        returnLine.setLayer(getLayer());
 
         return returnLine;
     }

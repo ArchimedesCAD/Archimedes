@@ -14,12 +14,6 @@
 
 package br.org.archimedes.text;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
-import org.apache.batik.svggen.font.Font;
-
 import br.org.archimedes.Constant;
 import br.org.archimedes.Geometrics;
 import br.org.archimedes.exceptions.IllegalActionException;
@@ -32,6 +26,12 @@ import br.org.archimedes.model.Rectangle;
 import br.org.archimedes.model.ReferencePoint;
 import br.org.archimedes.model.Vector;
 import br.org.archimedes.model.references.CirclePoint;
+
+import org.apache.batik.svggen.font.Font;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 public class Text extends Element {
 
@@ -109,7 +109,7 @@ public class Text extends Element {
         try {
             clone = new Text(new String(text), originPoint.clone(), getHeight(), getFont());
             applyRotation(clone);
-            clone.setLayer(parentLayer);
+            clone.setLayer(getLayer());
         }
         catch (Exception e) {
             // Should not happen

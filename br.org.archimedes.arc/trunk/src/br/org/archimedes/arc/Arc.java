@@ -15,10 +15,6 @@
 
 package br.org.archimedes.arc;
 
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
-
 import br.org.archimedes.Constant;
 import br.org.archimedes.Geometrics;
 import br.org.archimedes.curvedshape.CurvedShape;
@@ -36,6 +32,10 @@ import br.org.archimedes.model.Vector;
 import br.org.archimedes.model.references.CirclePoint;
 import br.org.archimedes.model.references.SquarePoint;
 import br.org.archimedes.model.references.TrianglePoint;
+
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * This class represents an Arc of a circle. It is very similar to the circle but adds some
@@ -222,7 +222,7 @@ public class Arc extends CurvedShape implements Offsetable {
 
         try {
             arc = new Arc(initialPoint.clone(), intermediatePoint.clone(), endingPoint.clone());
-            arc.setLayer(parentLayer);
+            arc.setLayer(getLayer());
         }
         catch (NullArgumentException e) {
             // Should never reach this block
@@ -580,7 +580,7 @@ public class Arc extends CurvedShape implements Offsetable {
         Arc arc = null;
         try {
             arc = new Arc(p1, p2, p3);
-            arc.setLayer(parentLayer);
+            arc.setLayer(getLayer());
         }
         catch (NullArgumentException e) {
             // Should not reach this code

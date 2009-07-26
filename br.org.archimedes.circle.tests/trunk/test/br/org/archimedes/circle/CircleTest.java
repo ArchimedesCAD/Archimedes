@@ -15,11 +15,16 @@ package br.org.archimedes.circle;
 
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
+import br.org.archimedes.gui.opengl.Color;
+import br.org.archimedes.model.Layer;
+import br.org.archimedes.model.LineStyle;
 import br.org.archimedes.model.Point;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 public class CircleTest {
 	
@@ -48,6 +53,16 @@ public class CircleTest {
 
 		Assert.assertEquals(new Point(1, 0), circle.getProjectionOf(centerPoint));
 	}
+	
+	@Test
+    public void cloningKeepsTheSameLayer () throws Exception {
+
+        Layer layer = new Layer(new Color(0, 200, 0), "layer", LineStyle.CONTINUOUS, 1);
+        circle.setLayer(layer);
+        Circle clone = (Circle) circle.clone();
+        
+        assertEquals(layer, clone.getLayer());
+    }
 	
 	// TODO Test equals and hash code of a circle
 	

@@ -16,11 +16,22 @@
 
 package br.org.archimedes.semiline;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import br.org.archimedes.Tester;
+import br.org.archimedes.exceptions.IllegalActionException;
+import br.org.archimedes.exceptions.InvalidArgumentException;
+import br.org.archimedes.exceptions.NullArgumentException;
+import br.org.archimedes.gui.opengl.Color;
+import br.org.archimedes.line.Line;
+import br.org.archimedes.model.Element;
+import br.org.archimedes.model.Layer;
+import br.org.archimedes.model.LineStyle;
+import br.org.archimedes.model.Point;
+import br.org.archimedes.model.Rectangle;
+import br.org.archimedes.model.ReferencePoint;
+import br.org.archimedes.model.references.SquarePoint;
+
+import org.junit.Before;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -28,19 +39,11 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
-
-import br.org.archimedes.Tester;
-import br.org.archimedes.exceptions.IllegalActionException;
-import br.org.archimedes.exceptions.InvalidArgumentException;
-import br.org.archimedes.exceptions.NullArgumentException;
-import br.org.archimedes.line.Line;
-import br.org.archimedes.model.Element;
-import br.org.archimedes.model.Point;
-import br.org.archimedes.model.Rectangle;
-import br.org.archimedes.model.ReferencePoint;
-import br.org.archimedes.model.references.SquarePoint;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public class SemilineTest extends Tester {
 
@@ -247,6 +250,16 @@ public class SemilineTest extends Tester {
         expected = new Semiline(5, -5, 105, 95);
         assertEquals("Should be the same line.", expected, copied);
         assertFalse("Should not be the same reference.", copied == sl);
+    }
+    
+    @Test
+    public void clonningShouldKeepSameLayer () throws Exception {
+
+        Layer layer = new Layer(new Color(0,200,20), "layer", LineStyle.CONTINUOUS, 1);
+        sl.setLayer(layer);
+        Element clone = sl.clone();
+        
+        assertEquals(layer, clone.getLayer());
     }
 
     @Test

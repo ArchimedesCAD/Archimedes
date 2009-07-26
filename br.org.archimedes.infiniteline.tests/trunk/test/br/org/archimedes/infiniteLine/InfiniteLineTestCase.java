@@ -16,14 +16,19 @@ package br.org.archimedes.infiniteLine;
 
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
+import br.org.archimedes.gui.opengl.Color;
 import br.org.archimedes.infiniteline.InfiniteLine;
 import br.org.archimedes.model.Element;
+import br.org.archimedes.model.Layer;
+import br.org.archimedes.model.LineStyle;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Rectangle;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Belongs to package br.org.archimedes.infiniteLine.
@@ -63,6 +68,16 @@ public abstract class InfiniteLineTestCase {
         clone.move( -12, 23);
         Assert.assertTrue("The clone should NOT be the equal to the original", !testedLine
                 .equals(clone));
+    }
+    
+    @Test
+    public void cloningShouldKeepSameLayer () throws Exception {
+
+        Layer layer = new Layer(new Color(0,0,200), "layer", LineStyle.CONTINUOUS, 1);
+        testedLine.setLayer(layer);
+        Element clone = testedLine.clone();
+        
+        assertEquals(layer, clone.getLayer());
     }
 
     /**

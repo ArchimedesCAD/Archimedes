@@ -25,7 +25,6 @@ import br.org.archimedes.interfaces.IntersectionManager;
 import br.org.archimedes.line.Line;
 import br.org.archimedes.model.ComparablePoint;
 import br.org.archimedes.model.Element;
-import br.org.archimedes.model.Layer;
 import br.org.archimedes.model.Offsetable;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.PolyLinePointKey;
@@ -55,8 +54,6 @@ import java.util.TreeSet;
 public class Polyline extends Element implements Offsetable {
 
     private List<Point> points;
-
-    private Layer parentLayer;
 
     private IntersectionManager intersectionManager = new IntersectionManagerEPLoader()
             .getIntersectionManager();
@@ -257,7 +254,7 @@ public class Polyline extends Element implements Offsetable {
         Polyline clone = null;
         try {
             clone = new Polyline(points);
-            clone.setLayer(parentLayer);
+            clone.setLayer(getLayer());
         }
         catch (NullArgumentException e) {
             // Will never happen (I create it).

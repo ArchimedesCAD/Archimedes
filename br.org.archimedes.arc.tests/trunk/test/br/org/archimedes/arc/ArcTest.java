@@ -15,21 +15,12 @@
 
 package br.org.archimedes.arc;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
-
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-
 import br.org.archimedes.Tester;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
+import br.org.archimedes.gui.opengl.Color;
+import br.org.archimedes.model.Layer;
+import br.org.archimedes.model.LineStyle;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Rectangle;
 import br.org.archimedes.model.ReferencePoint;
@@ -37,6 +28,19 @@ import br.org.archimedes.model.Vector;
 import br.org.archimedes.model.references.CirclePoint;
 import br.org.archimedes.model.references.SquarePoint;
 import br.org.archimedes.model.references.TrianglePoint;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public class ArcTest extends Tester {
 
@@ -225,9 +229,7 @@ public class ArcTest extends Tester {
     public void cloneAlwaysReturnsAnEqualArc () throws InvalidArgumentException,
             NullArgumentException {
 
-        Arc clone;
-
-        clone = arc1.clone();
+        Arc clone = arc1.clone();
         Assert.assertEquals(arc1, clone);
 
         clone = arc2.clone();
@@ -239,6 +241,16 @@ public class ArcTest extends Tester {
         Arc arc = new Arc(new Point( -4, 0), new Point( -2, 2), new Point(0, 0));
         clone = arc.clone();
         Assert.assertEquals(arc, clone);
+    }
+    
+    @Test
+    public void cloningKeepsSameLayer () throws Exception {
+
+        Layer layer = new Layer(new Color(0, 200, 0), "layer", LineStyle.CONTINUOUS, 1);
+        arc1.setLayer(layer);
+        Arc clone = arc1.clone();
+        
+        assertEquals(layer, clone.getLayer());
     }
 
     @Test

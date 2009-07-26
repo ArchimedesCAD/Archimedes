@@ -23,7 +23,6 @@ import br.org.archimedes.exceptions.InvalidParameterException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.gui.opengl.OpenGLWrapper;
 import br.org.archimedes.model.Element;
-import br.org.archimedes.model.Layer;
 import br.org.archimedes.model.Offsetable;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Rectangle;
@@ -45,9 +44,6 @@ public class Circle extends CurvedShape implements Offsetable {
     private Point center;
 
     private double radius;
-
-    private Layer parentLayer;
-
 
     /**
      * Constructor.
@@ -80,7 +76,7 @@ public class Circle extends CurvedShape implements Offsetable {
 
         try {
             circle = new Circle(center.clone(), radius);
-            circle.setLayer(parentLayer);
+            circle.setLayer(getLayer());
         }
         catch (NullArgumentException e) {
             // Should never reach this block
@@ -294,7 +290,7 @@ public class Circle extends CurvedShape implements Offsetable {
         Circle clone = null;
         try {
             clone = new Circle(this.getCenter().clone(), this.getRadius() + distance);
-            clone.setLayer(parentLayer);
+            clone.setLayer(getLayer());
         }
         catch (NullArgumentException e) {
             // Should not reach this block

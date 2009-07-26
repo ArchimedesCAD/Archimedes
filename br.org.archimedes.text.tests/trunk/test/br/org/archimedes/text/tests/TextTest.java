@@ -19,6 +19,10 @@ import br.org.archimedes.Tester;
 import br.org.archimedes.exceptions.IllegalActionException;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
+import br.org.archimedes.gui.opengl.Color;
+import br.org.archimedes.model.Element;
+import br.org.archimedes.model.Layer;
+import br.org.archimedes.model.LineStyle;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Rectangle;
 import br.org.archimedes.stub.StubFont;
@@ -31,10 +35,12 @@ import org.junit.Test;
 
 import junit.framework.Assert;
 
+import static org.junit.Assert.assertEquals;
+
 /**
  * Belongs to package br.org.archimedes.text.tests.
  * 
- * @author night
+ * @author Hugo Corbucci
  */
 public class TextTest extends Tester {
 
@@ -140,19 +146,29 @@ public class TextTest extends Tester {
 
         Text textClone = this.safeClone(text);
         Assert.assertEquals(text, textClone);
-        
+
         Point rotateReference = text.getLowerLeft();
         text.rotate(rotateReference, Math.PI);
-        
+
         textClone = this.safeClone(text);
         Assert.assertEquals(text, textClone);
-        
-        Text offsetText = new Text("Test", new Point(10,10), 10.0, new StubFont("", 10));
+
+        Text offsetText = new Text("Test", new Point(10, 10), 10.0, new StubFont("", 10));
         rotateReference = offsetText.getLowerLeft();
         offsetText.rotate(rotateReference, Math.PI);
-        
+
         textClone = this.safeClone(offsetText);
         Assert.assertEquals(offsetText, textClone);
+    }
+
+    @Test
+    public void clonningShouldKeepSameLayer () throws Exception {
+
+        Layer layer = new Layer(new Color(0, 200, 20), "layer", LineStyle.CONTINUOUS, 1);
+        text.setLayer(layer);
+        Element clone = text.clone();
+
+        assertEquals(layer, clone.getLayer());
     }
 
     /**
@@ -215,7 +231,7 @@ public class TextTest extends Tester {
             Assert.fail("Should not throw a NullArgumentException.");
         }
     }
-    
+
     /**
      * Test method for
      * {@link br.org.archimedes.text.Element#scale(br.org.archimedes.model.Point, double)}.
@@ -274,10 +290,10 @@ public class TextTest extends Tester {
         Text text = createSafeText(ARCHIMEDES, POINT, SIZE);
         Assert.assertFalse(text.equals(null));
         Assert.assertFalse(text.equals(new Object()));
-        
+
         Assert.assertTrue(text.equals(text));
         Assert.assertEquals(text.hashCode(), text.hashCode());
-        
+
         Text equalText = createSafeText(ARCHIMEDES, POINT, SIZE);
         Assert.assertTrue(text.equals(equalText));
         Assert.assertEquals(text.hashCode(), equalText.hashCode());
@@ -291,11 +307,12 @@ public class TextTest extends Tester {
 
         Text offsetText = createSafeText(ARCHIMEDES, new Point(0, 0.1), SIZE);
         Assert.assertFalse(text.equals(offsetText));
-        
+
         Text otherText = createSafeText("Other", new Point(0, 0), SIZE);
         Assert.assertFalse(text.equals(otherText));
-        
-        Text textWithOtherFont = createSafeText(ARCHIMEDES, new Point(0, 0), SIZE, new StubFont("", 1));
+
+        Text textWithOtherFont = createSafeText(ARCHIMEDES, new Point(0, 0), SIZE, new StubFont("",
+                1));
         Assert.assertFalse(text.equals(textWithOtherFont));
     }
 

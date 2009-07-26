@@ -14,18 +14,24 @@
 
 package br.org.archimedes.line;
 
-import java.util.LinkedList;
-import java.util.List;
-
-import org.junit.Assert;
-import org.junit.Test;
-
 import br.org.archimedes.Constant;
 import br.org.archimedes.Tester;
 import br.org.archimedes.exceptions.IllegalActionException;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
+import br.org.archimedes.gui.opengl.Color;
+import br.org.archimedes.model.Element;
+import br.org.archimedes.model.Layer;
+import br.org.archimedes.model.LineStyle;
 import br.org.archimedes.model.Point;
+
+import org.junit.Assert;
+import org.junit.Test;
+
+import java.util.LinkedList;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Belongs to package br.org.archimedes.line.
@@ -34,7 +40,7 @@ import br.org.archimedes.model.Point;
  */
 public class LineTest extends Tester {
 
-    Line line;
+    private Line line;
 
 
     @Test
@@ -270,6 +276,17 @@ public class LineTest extends Tester {
         expected = createSafeLine( -movement, -movement, 1 - movement, -1 - movement);
         copyLine = (Line) line.cloneWithDistance( -0.5);
         Assert.assertEquals("The lines should be aproximately the same.", expected, copyLine);
+    }
+    
+    @Test
+    public void cloningKeepsSameLayer () throws Exception {
+        
+        Layer layer = new Layer(new Color(0,200,20), "layer", LineStyle.CONTINUOUS, 1);
+        line = createSafeLine(0, 0, 1, 1);
+        line.setLayer(layer);
+        Element clone = line.clone();
+        
+        assertEquals(layer, clone.getLayer());
     }
 
     @Test

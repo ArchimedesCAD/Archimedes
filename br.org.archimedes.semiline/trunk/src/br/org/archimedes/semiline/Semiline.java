@@ -17,11 +17,6 @@
 
 package br.org.archimedes.semiline;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
-
 import br.org.archimedes.Constant;
 import br.org.archimedes.Geometrics;
 import br.org.archimedes.exceptions.InvalidArgumentException;
@@ -30,7 +25,6 @@ import br.org.archimedes.gui.opengl.OpenGLWrapper;
 import br.org.archimedes.infiniteline.InfiniteLine;
 import br.org.archimedes.line.Line;
 import br.org.archimedes.model.Element;
-import br.org.archimedes.model.Layer;
 import br.org.archimedes.model.Offsetable;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Rectangle;
@@ -38,14 +32,16 @@ import br.org.archimedes.model.ReferencePoint;
 import br.org.archimedes.model.Vector;
 import br.org.archimedes.model.references.SquarePoint;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
+
 public class Semiline extends Element implements Offsetable {
 
     private Point initialPoint;
 
     private Point directionPoint;
-
-    private Layer parentLayer;
-
 
     public Semiline (double x1, double y1, double x2, double y2) throws InvalidArgumentException {
 
@@ -78,7 +74,7 @@ public class Semiline extends Element implements Offsetable {
         try {
             semiline = new Semiline(initialPoint.getX(), initialPoint.getY(),
                     directionPoint.getX(), directionPoint.getY());
-            semiline.setLayer(parentLayer);
+            semiline.setLayer(getLayer());
         }
         catch (InvalidArgumentException e) {
             // Should not happen since I cannot be invalid
@@ -243,7 +239,7 @@ public class Semiline extends Element implements Offsetable {
             copiedReference = (Line) referenceLine.cloneWithDistance(distance);
             copied = new Semiline(copiedReference.getInitialPoint(), copiedReference
                     .getEndingPoint());
-            copied.setLayer(parentLayer);
+            copied.setLayer(getLayer());
         }
         catch (Exception e) {
             // Should not reach this block
