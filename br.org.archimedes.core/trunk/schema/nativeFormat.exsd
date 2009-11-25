@@ -89,7 +89,7 @@ This should be used only to file formats that grant all the information to be pe
                   
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn="br.org.archimedes.interfaces.Exporter"/>
+                  <meta.attribute kind="java" basedOn=":br.org.archimedes.interfaces.Exporter"/>
                </appinfo>
             </annotation>
          </attribute>

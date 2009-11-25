@@ -87,7 +87,7 @@ Not really important.
                   The class that extends Exporter and will be encharged of exporting the drawing when asked to.
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn="br.org.archimedes.interfaces.Exporter"/>
+                  <meta.attribute kind="java" basedOn=":br.org.archimedes.interfaces.Exporter"/>
                </appinfo>
             </annotation>
          </attribute>

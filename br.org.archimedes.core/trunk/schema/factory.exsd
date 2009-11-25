@@ -74,7 +74,7 @@ It is very important because it&apos;s the key that will be used to call this fa
                   The class that extends CommandFactory and will be encharged of controlling the command factory.
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn="br.org.archimedes.interfaces.CommandFactory:"/>
+                  <meta.attribute kind="java" basedOn=":br.org.archimedes.factories.CommandFactory"/>
                </appinfo>
             </annotation>
          </attribute>
