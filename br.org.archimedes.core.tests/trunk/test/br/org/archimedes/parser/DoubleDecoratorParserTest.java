@@ -14,6 +14,7 @@
 
 package br.org.archimedes.parser;
 
+import br.org.archimedes.Constant;
 import br.org.archimedes.exceptions.InvalidParameterException;
 import br.org.archimedes.interfaces.Parser;
 import br.org.archimedes.model.Point;
@@ -67,7 +68,7 @@ public class DoubleDecoratorParserTest {
         assertNotNull("Parameter should not be null", parameter);
 
         Double doubleParameter = (Double) parameter;
-        assertEquals("Parameter should be as expected", 52.489, doubleParameter);
+        assertEquals("Parameter should be as expected", 52.489, doubleParameter, Constant.EPSILON);
     }
 
     public void testPoint () throws Exception {

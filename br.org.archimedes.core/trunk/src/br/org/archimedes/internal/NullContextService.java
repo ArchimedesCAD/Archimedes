@@ -209,4 +209,8 @@ public class NullContextService implements IContextService {
     public void dispose () {
 
     }
+
+	public void deferUpdates(boolean defer) {
+		
+	}
 }

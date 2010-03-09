@@ -13,6 +13,7 @@
 
 package br.org.archimedes.parser;
 
+import br.org.archimedes.Constant;
 import br.org.archimedes.exceptions.InvalidParameterException;
 import br.org.archimedes.model.Point;
 
@@ -56,7 +57,7 @@ public class ZoomParserTest {
 
         Double d = (Double) zp.getParameter();
         assertNotNull("Parameter should not be null", d);
-        assertEquals("Parameter should be 10", 10.0, d);
+        assertEquals("Parameter should be 10", 10.0, d, Constant.EPSILON);
     }
 
     @Test
