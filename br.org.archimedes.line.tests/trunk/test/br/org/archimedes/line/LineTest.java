@@ -88,15 +88,13 @@ public class LineTest extends Tester {
 
         Point firstPoint = line.getInitialPoint();
 
-        Assert.assertEquals("The x coordinate of the first point is wrong!", firstPoint.getX(), x1);
-        Assert.assertEquals("The y coordinate of the first point is wrong!", firstPoint.getY(), y1);
+        Assert.assertTrue(Double.compare(firstPoint.getX(), x1) == 0);
+        Assert.assertTrue(Double.compare(firstPoint.getY(), y1) == 0);
 
         Point secondPoint = line.getEndingPoint();
 
-        Assert.assertEquals("The x coordinate of the second point is wrong!", secondPoint.getX(),
-                x2);
-        Assert.assertEquals("The y coordinate of the second point is wrong!", secondPoint.getY(),
-                y2);
+        Assert.assertTrue(Double.compare(secondPoint.getX(), x2) == 0);
+        Assert.assertTrue(Double.compare(secondPoint.getY(), y2) == 0);
     }
 
     @Test(expected = InvalidArgumentException.class)

@@ -45,7 +45,7 @@ public class InterpreterView extends ViewPart implements Observer, ISelectionLis
 
     private Text input;
 
-    private Text output;
+	private Text output;
 
 
     public void createPartControl (Composite parent) {
@@ -99,18 +99,21 @@ public class InterpreterView extends ViewPart implements Observer, ISelectionLis
                 
                 if (e.character == SWT.ESC) {
                     
-                    input.setText("");
-                    
-                    if (SelectionCommand.isActive()) {
-                        SelectionCommand.getActive().cancel();
-                    }
-                    else if ( !(inputController.getCurrentFactory() == null || inputController
-                            .getCurrentFactory().isDone())) {
-                        inputController.cancelCurrentFactory();
-                    }
-                    else {
-                        br.org.archimedes.Utils.getController().deselectAll();
-                    }
+                	if(!input.getText().equals("")) {
+                		input.setText("");
+                	}
+                	else {
+                		if (SelectionCommand.isActive()) {
+                			SelectionCommand.getActive().cancel();
+                		}
+                		else if ( !(inputController.getCurrentFactory() == null || inputController
+                				.getCurrentFactory().isDone())) {
+                			inputController.cancelCurrentFactory();
+                		}
+                		else {
+                			br.org.archimedes.Utils.getController().deselectAll();
+                		}
+                	}
                 }
                 else if (Character.isWhitespace(e.character) && !inputController.wantsSpace()) {
                     inputController.receiveText(input.getText());
