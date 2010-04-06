@@ -13,6 +13,8 @@
 
 package br.org.archimedes.gui.model;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.model.Point;
 
@@ -40,6 +42,20 @@ public class WorkspaceTest {
         workspace.modelToScreen((Point) null);
     }
 
+    @Test
+    public void testSetOrto()
+    {
+    	workspace.setOrto(true);
+    	assertTrue(workspace.isOrtoOn());
+    	
+    	workspace.setOrto(false);
+    	assertFalse(workspace.isOrtoOn());
+    	
+    	workspace.setOrto(true);
+    	assertTrue(workspace.isOrtoOn());
+    	
+    }
+    
     // TODO Test coordinates convertion from screen to model
 
     // TODO Test coordinates convertion from model to screen

@@ -25,6 +25,7 @@ import br.org.archimedes.model.Vector;
 
 import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.State;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
 
 import java.io.File;
@@ -153,6 +154,17 @@ public class Workspace extends Observable {
     public boolean isOrtoOn () {
 
         return getValueOf(ORTO_COMMAND_ID, ORTO_STATE); //$NON-NLS-1$ //$NON-NLS-2$
+    }
+    
+    public void setOrto(boolean value) {
+    	ICommandService service = (ICommandService) PlatformUI.getWorkbench().getService(
+                ICommandService.class);
+        Command command = service.getCommand(ORTO_COMMAND_ID);
+        State state = command.getState(ORTO_STATE);
+        
+        state.setValue(value);
+
+        service.refreshElements(ORTO_COMMAND_ID, null);        
     }
 
     /**

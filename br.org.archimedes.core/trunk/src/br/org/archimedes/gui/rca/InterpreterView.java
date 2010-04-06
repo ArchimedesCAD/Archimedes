@@ -12,10 +12,12 @@
  */
 package br.org.archimedes.gui.rca;
 
+import br.org.archimedes.Utils;
 import br.org.archimedes.controller.InputController;
 import br.org.archimedes.gui.actions.SelectionCommand;
 import br.org.archimedes.gui.model.MouseClickHandler;
 import br.org.archimedes.gui.model.ParameterHandler;
+import br.org.archimedes.gui.model.Workspace;
 import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Rectangle;
 
@@ -56,7 +58,8 @@ public class InterpreterView extends ViewPart implements Observer, ISelectionLis
         final FormLayout layout = new FormLayout();
         parent.setLayout(layout);
         FormData layoutData;
-
+        
+        
         input = new Text(parent, SWT.SINGLE | SWT.BORDER);
         layoutData = new FormData();
         layoutData.left = new FormAttachment(0);
@@ -92,12 +95,15 @@ public class InterpreterView extends ViewPart implements Observer, ISelectionLis
         });
 
         input.addKeyListener(new KeyListener() {
-
+            private boolean oldOrtoState = Utils.getWorkspace().isOrtoOn();
+           
             public void keyPressed (KeyEvent e) {
+            	
 
                 InputController inputController = br.org.archimedes.Utils.getInputController();
                 
-                if (e.character == SWT.ESC) {
+
+                if (e.keyCode == SWT.ESC) {
                     
                 	if(!input.getText().equals("")) {
                 		input.setText("");
@@ -114,7 +120,15 @@ public class InterpreterView extends ViewPart implements Observer, ISelectionLis
                 			br.org.archimedes.Utils.getController().deselectAll();
                 		}
                 	}
+
                 }
+                else if (e.keyCode == SWT.SHIFT) {
+                	
+                	Workspace workspace = Utils.getWorkspace();
+                	oldOrtoState = workspace.isOrtoOn();
+                	workspace.setOrto(true);
+                }
+                
                 else if (Character.isWhitespace(e.character) && !inputController.wantsSpace()) {
                     inputController.receiveText(input.getText());
                     e.doit = false;
@@ -123,10 +137,14 @@ public class InterpreterView extends ViewPart implements Observer, ISelectionLis
             }
 
             public void keyReleased (KeyEvent e) {
-
-                // Does nothing
+            	if (e.keyCode == SWT.SHIFT) {
+            		Workspace workspace = Utils.getWorkspace();
+                	workspace.setOrto(oldOrtoState);
+            	}
+            	
             }
-        });
+        });        
+        
     }
 
     public void setFocus () {
