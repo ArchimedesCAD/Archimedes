@@ -264,6 +264,11 @@
             name="%command.layereditor.name">
       </command>
       <command
+            description="%command.preferenceseditor.description"
+            id="br.org.archimedes.core.preferenceseditor"
+            name="%command.preferenceseditor.name">
+      </command>
+      <command
             description="%command.select.description"
             id="br.org.archimedes.core.select"
             name="%command.select.name">
@@ -366,6 +371,15 @@
       <handler
             class="br.org.archimedes.gui.handlers.LayerEditorHandler"
             commandId="br.org.archimedes.core.layereditor">
+         <activeWhen>
+            <reference
+                  definitionId="br.org.archimedes.core.drawingeditor">
+            </reference>
+         </activeWhen>
+      </handler>
+       <handler
+            class="br.org.archimedes.gui.handlers.PreferencesEditorHandler"
+            commandId="br.org.archimedes.core.preferenceseditor">
          <activeWhen>
             <reference
                   definitionId="br.org.archimedes.core.drawingeditor">
@@ -565,6 +579,13 @@
                   mnemonic="%command.layereditor.mnemonic"
                   style="push"
                   tooltip="%command.layereditor.tooltip">
+            </command>
+             <command
+                  commandId="br.org.archimedes.core.preferenceseditor"
+                  label="%command.preferenceseditor.label"
+                  mnemonic="%command.preferenceseditor.mnemonic"
+                  style="push"
+                  tooltip="%command.preferenceseditor.tooltip">
             </command>
             <separator
                   name="workmods.ext"

@@ -14,19 +14,6 @@
 
 package br.org.archimedes.model;
 
-import br.org.archimedes.Constant;
-import br.org.archimedes.exceptions.IllegalActionException;
-import br.org.archimedes.exceptions.NullArgumentException;
-import br.org.archimedes.gui.model.Workspace;
-import br.org.archimedes.gui.opengl.OpenGLWrapper;
-import br.org.archimedes.gui.swt.Messages;
-import br.org.archimedes.interfaces.Command;
-import br.org.archimedes.interfaces.IntersectionManager;
-import br.org.archimedes.interfaces.UndoableCommand;
-import br.org.archimedes.rcp.extensionpoints.IntersectionManagerEPLoader;
-
-import org.eclipse.swt.opengl.GLCanvas;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -40,6 +27,20 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.Set;
 import java.util.Stack;
+
+import org.eclipse.swt.opengl.GLCanvas;
+
+import br.org.archimedes.Constant;
+import br.org.archimedes.exceptions.IllegalActionException;
+import br.org.archimedes.exceptions.NullArgumentException;
+import br.org.archimedes.gui.model.Workspace;
+import br.org.archimedes.gui.opengl.Color;
+import br.org.archimedes.gui.opengl.OpenGLWrapper;
+import br.org.archimedes.gui.swt.Messages;
+import br.org.archimedes.interfaces.Command;
+import br.org.archimedes.interfaces.IntersectionManager;
+import br.org.archimedes.interfaces.UndoableCommand;
+import br.org.archimedes.rcp.extensionpoints.IntersectionManagerEPLoader;
 
 /**
  * Belongs to package br.org.archimedes.model.
@@ -89,7 +90,7 @@ public class Drawing extends Observable implements Observer {
      *            The drawinglayers
      */
     public Drawing (String title, Map<String, Layer> layers) {
-
+    
         this.title = title;
         this.selection = new Selection();
         this.zoom = 1.0;

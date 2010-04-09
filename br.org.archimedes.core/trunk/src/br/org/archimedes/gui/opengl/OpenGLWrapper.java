@@ -60,7 +60,7 @@ public class OpenGLWrapper {
 
     public static final Color COLOR_GRIP = Constant.RED_ARCHIMEDES;
 
-    public static final Color COLOR_BACKGROUND = Constant.BLACK;
+    public static final Color COLOR_BACKGROUND = Constant.RED;
 
     public static final Color COLOR_DRAWING = Constant.WHITE;
 
@@ -171,7 +171,9 @@ public class OpenGLWrapper {
      * Clears the OpenGL canvas.
      */
     public void clear () {
-
+    	Color currentBkColor = br.org.archimedes.Utils.getWorkspace().getBackgroundColor();
+    	GL11.glClearColor((float)currentBkColor.getR(), (float)currentBkColor.getG(), (float)currentBkColor.getB(), 0);
+    	
         GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
         GL11.glMatrixMode(GL11.GL_MODELVIEW);
         GL11.glLoadIdentity();
@@ -471,7 +473,6 @@ public class OpenGLWrapper {
     public void setColor (Color color) {
 
         GL11.glColor3d(color.getR(), color.getG(), color.getB());
-
     }
 
     /**

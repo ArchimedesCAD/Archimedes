@@ -57,6 +57,12 @@ public class Messages extends NLS {
     public static String LayerEditor_Visible;
 
     public static String LayerLocked;
+    
+    public static String PreferencesEditor_Title;
+    
+    public static String PreferencesEditor_BackgroundColorLabel;
+    
+    public static String PreferencesEditor_BackgroundColorChange;
 
     public static String OK;
 

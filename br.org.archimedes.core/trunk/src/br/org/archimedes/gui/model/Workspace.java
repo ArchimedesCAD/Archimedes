@@ -16,6 +16,7 @@ package br.org.archimedes.gui.model;
 import br.org.archimedes.Utils;
 import br.org.archimedes.exceptions.NoActiveDrawingException;
 import br.org.archimedes.exceptions.NullArgumentException;
+import br.org.archimedes.gui.opengl.Color;
 import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
@@ -66,9 +67,12 @@ public class Workspace extends Observable {
     private MousePositionManager mousePositionManager;
 
     private boolean mouseDown;
+    
 
 
-    /**
+
+
+	/**
      * Constructor. Should NOT be used.<br>
      * This is only public so that the Activator instantiate it.<br>
      * Use br.org.archimedes.Utils.getWorkspace() to get the singleton instance.<br>
@@ -731,4 +735,29 @@ public class Workspace extends Observable {
          */
         return openDrawings;
     }
+    
+    public Color getBackgroundColor() {
+    	String property = workspaceProperties.getProperty("backgroundColor", "0,0,0");
+    	String colors[] = property.split(",");
+    	if(colors.length != 3){
+    		return new Color(0,0,0);
+    	}else{
+    		
+    		try {
+				int r, g, b;
+				r = Integer.parseInt(colors[0]);
+				g = Integer.parseInt(colors[1]);
+				b = Integer.parseInt(colors[2]);
+				Color backgroundColor = new Color(r, g, b);
+				return backgroundColor;
+			} catch (NumberFormatException e) {
+				return new Color(0,0,0);
+			}
+    	}
+	
+	}
+
+	public void setBackgroundColor(Color backgroundColor) {
+		setProperty("backgroundColor", backgroundColor.getRed() + "," + backgroundColor.getGreen() + "," + backgroundColor.getBlue());
+	}
 }
