@@ -132,8 +132,14 @@ public class VisualHelper {
         opengl.setColor(OpenGLWrapper.COLOR_CURSOR);
         opengl.setLineStyle(OpenGLWrapper.CONTINUOUS_LINE);
         opengl.setPrimitiveType(OpenGLWrapper.PRIMITIVE_LINE_LOOP);
-        if (interpreter.getCurrentFactory() == null) {
+        if (interpreter.getCurrentFactory() == null) {        	
             drawCrossCursor(screenPoint);
+        }
+        else { 
+        	CommandFactory cmd = interpreter.getCurrentFactory();
+        	if(!cmd.isTransformFactory()){
+        		drawCrossCursor(screenPoint);
+        	}
         }
         drawSquareCursor(screenPoint);
     }

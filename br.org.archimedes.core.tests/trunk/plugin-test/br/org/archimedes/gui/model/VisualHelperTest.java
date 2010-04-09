@@ -15,12 +15,16 @@ package br.org.archimedes.gui.model;
 
 import br.org.archimedes.Tester;
 import br.org.archimedes.controller.InputController;
+import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.factories.CommandFactory;
 import br.org.archimedes.gui.opengl.OpenGLWrapper;
+import br.org.archimedes.model.Point;
+import br.org.archimedes.model.Rectangle;
 import br.org.archimedes.model.ReferencePoint;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.exceptions.verification.WantedButNotInvoked;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -59,17 +63,42 @@ public class VisualHelperTest extends Tester {
     }
 
     @Test
-    public void drawCrossCursorIfNotTransformFactory () {
+    public void drawCrossCursorIfNotTransformFactory () throws NullArgumentException {
+    	
+    	Point point = new Point(1.0d, 1.0d);
+    	CommandFactory activeFactory = mock(CommandFactory.class);
 
-        CommandFactory activeFactory = mock(CommandFactory.class);
+    	when(workspace.getActualMousePosition()).thenReturn(point);
+    	when(workspace.modelToScreen(point)).thenReturn(point);
         when(inputController.getCurrentFactory()).thenReturn(activeFactory);
         when(activeFactory.isTransformFactory()).thenReturn(false);
-        // TODO finish this test
+        when(workspace.getWindowSize()).thenReturn(new Rectangle(1.0d, 1.0d, 2.0d, 2.0d));
+        
+        visualHelper.draw(true);
+        
+        //Metodo chamado no workspace para desenhar o cross do cursor
+        verify(workspace).getWindowSize();
     }
 
+    @Test(expected = WantedButNotInvoked.class)
+    public void drawCrossCursorIfTransformFactory () throws NullArgumentException {
+    	
+    	Point point = new Point(1.0d, 1.0d);
+    	CommandFactory activeFactory = mock(CommandFactory.class);
+
+    	when(workspace.getActualMousePosition()).thenReturn(point);
+    	when(workspace.modelToScreen(point)).thenReturn(point);
+        when(inputController.getCurrentFactory()).thenReturn(activeFactory);
+        when(activeFactory.isTransformFactory()).thenReturn(true);
+        when(workspace.getWindowSize()).thenReturn(new Rectangle(1.0d, 1.0d, 2.0d, 2.0d));
+        
+        visualHelper.draw(true);
+        
+        //Metodo chamado no workspace para desenhar o cross do cursor
+        verify(workspace).getWindowSize();
+    }    
+    
     // TODO Test drawing selection helper if selection is active
-
-    // TODO Test drawing square cursor if it is a transform factory
-
+    
     // TODO Test visual helper if there is an active factory
 }
