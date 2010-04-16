@@ -15,10 +15,11 @@ package br.org.archimedes.gui.model;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import br.org.archimedes.exceptions.NullArgumentException;
-import br.org.archimedes.model.Point;
-
+import junit.framework.Assert;
 import org.junit.Test;
+import br.org.archimedes.exceptions.NullArgumentException;
+import br.org.archimedes.gui.opengl.Color;
+import br.org.archimedes.model.Point;
 
 public class WorkspaceTest {
 
@@ -40,6 +41,16 @@ public class WorkspaceTest {
     public void modelToScreenThrowsExceptionIfArgumentIsNull () throws Exception {
 
         workspace.modelToScreen((Point) null);
+    }
+
+    @Test
+    public void backgroundColorPersistenceTest() {
+    	Color newColor = new Color(122, 30, 200);
+    	workspace.setBackgroundColor(newColor);
+    	workspace.saveProperties(false);
+    	Workspace newWorkspace = new Workspace();
+    	Color loadedBackgroundColor = newWorkspace.getBackgroundColor();
+    	Assert.assertEquals(newColor, loadedBackgroundColor);
     }
 
     @Test
