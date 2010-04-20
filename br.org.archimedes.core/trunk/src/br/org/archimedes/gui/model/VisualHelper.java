@@ -129,7 +129,7 @@ public class VisualHelper {
             // Should not throw this exception
             e.printStackTrace();
         }
-        opengl.setColor(OpenGLWrapper.COLOR_CURSOR);
+        opengl.setColor(workspace.getCursorColor());
         opengl.setLineStyle(OpenGLWrapper.CONTINUOUS_LINE);
         opengl.setPrimitiveType(OpenGLWrapper.PRIMITIVE_LINE_LOOP);
         if (interpreter.getCurrentFactory() == null) {        	

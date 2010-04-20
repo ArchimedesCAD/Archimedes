@@ -63,6 +63,10 @@ public class Messages extends NLS {
     public static String PreferencesEditor_BackgroundColorLabel;
     
     public static String PreferencesEditor_BackgroundColorChange;
+    
+    public static String PreferencesEditor_CursorColorLabel;
+    
+    public static String PreferencesEditor_CursorColorChange;
 
     public static String OK;
 

@@ -43,7 +43,9 @@ import br.org.archimedes.gui.swt.Messages;
  */
 public class PreferencesForm extends Observable implements Observer {
 
-    private Canvas colorCanvas;
+    private Canvas backgroundColorCanvas;
+    
+    private Canvas cursorColorCanvas;
 
     private Group formGroup;
 
@@ -70,20 +72,20 @@ public class PreferencesForm extends Observable implements Observer {
      *            The parent composite that contains this form
      */
     private void createForm (Composite parent) {
-
         formGroup = new Group(parent, SWT.SHADOW_ETCHED_IN);
         formGroup.setText(Messages.PreferencesEditor_Title);
-        GridLayout layout = new GridLayout(5, false);
+        GridLayout layout = new GridLayout(2, true);
         formGroup.setLayout(layout);
 
         GridData layoutData;
-
+        
+        createBackgroundColorField(formGroup);
+        
         layoutData = new GridData(GridData.HORIZONTAL_ALIGN_CENTER
                 | GridData.FILL_VERTICAL);
-        layoutData.verticalSpan = 3;
-        layoutData.widthHint = 15;
-
-        createColorField(formGroup);
+        layoutData.verticalSpan = 1;
+                
+        createCursorColorField(formGroup);
 
         formGroup.pack();
         formGroup.setVisible(true);
@@ -96,7 +98,7 @@ public class PreferencesForm extends Observable implements Observer {
      * @param formGroup
      *            The form group that should contain the style field.
      */
-    private void createColorField (Group formGroup) {
+    private void createBackgroundColorField (Group formGroup) {
 
         Label colorLabel = new Label(formGroup, SWT.NONE);
         colorLabel.setText(Messages.PreferencesEditor_BackgroundColorLabel);
@@ -106,10 +108,10 @@ public class PreferencesForm extends Observable implements Observer {
         Composite colorComposite = new Composite(formGroup, SWT.NONE);
         colorComposite.setLayout(new RowLayout());
 
-        colorCanvas = new Canvas(colorComposite, SWT.BORDER);
+        backgroundColorCanvas = new Canvas(colorComposite, SWT.BORDER);
         Color backgroundColor = editor.getBackgroundColor();
-        colorCanvas.setBackground(new org.eclipse.swt.graphics.Color(parent.getDisplay(), backgroundColor.getRed(), backgroundColor.getGreen(), backgroundColor.getBlue()));
-        colorCanvas.setLayoutData(new RowData(60, 20));
+        backgroundColorCanvas.setBackground(new org.eclipse.swt.graphics.Color(parent.getDisplay(), backgroundColor.getRed(), backgroundColor.getGreen(), backgroundColor.getBlue()));
+        backgroundColorCanvas.setLayoutData(new RowData(60, 20));
 
         Button colorButton = new Button(colorComposite, SWT.PUSH);
         colorButton.setText(Messages.PreferencesEditor_BackgroundColorChange);
@@ -127,8 +129,57 @@ public class PreferencesForm extends Observable implements Observer {
                         org.eclipse.swt.graphics.Color color = new org.eclipse.swt.graphics.Color(
                                 device, rgb);
 
-                        colorCanvas.setBackground(color);
+                        backgroundColorCanvas.setBackground(color);
                         editor.setBackgroundColor(newColor);
+                        PreferencesForm.this.setChanged();
+                    }
+                }
+
+            }
+        });
+
+        layoutData = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
+        colorComposite.setLayoutData(layoutData);
+    }
+    
+    
+    /**
+     * @param formGroup
+     *            The form group that should contain the style field.
+     */
+    private void createCursorColorField (Group formGroup) {
+
+        Label colorLabel = new Label(formGroup, SWT.NONE);
+        colorLabel.setText(Messages.PreferencesEditor_CursorColorLabel);
+        GridData layoutData = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
+        colorLabel.setLayoutData(layoutData);
+
+        Composite colorComposite = new Composite(formGroup, SWT.NONE);
+        colorComposite.setLayout(new RowLayout());
+
+        cursorColorCanvas = new Canvas(colorComposite, SWT.BORDER);
+        Color cursorColor = editor.getCursorColor();
+        cursorColorCanvas.setBackground(new org.eclipse.swt.graphics.Color(parent.getDisplay(), cursorColor.getRed(), cursorColor.getGreen(), cursorColor.getBlue()));
+        cursorColorCanvas.setLayoutData(new RowData(60, 20));
+
+        Button colorButton = new Button(colorComposite, SWT.PUSH);
+        colorButton.setText(Messages.PreferencesEditor_CursorColorChange);
+        colorButton.addSelectionListener(new SelectionAdapter() {
+
+            public void widgetSelected (SelectionEvent e) {
+
+                ColorDialog colorDialog = new ColorDialog(parent);
+                RGB rgb = colorDialog.open();
+                
+                if (rgb != null) {
+                    Color newColor = new Color(rgb.red, rgb.green, rgb.blue);
+                    if ( !newColor.equals(editor.getCursorColor())) {
+                        Device device = parent.getDisplay();
+                        org.eclipse.swt.graphics.Color color = new org.eclipse.swt.graphics.Color(
+                                device, rgb);
+
+                        cursorColorCanvas.setBackground(color);
+                        editor.setCursorColor(newColor);
                         PreferencesForm.this.setChanged();
                     }
                 }

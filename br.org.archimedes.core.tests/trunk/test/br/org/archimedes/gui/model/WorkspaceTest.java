@@ -52,6 +52,16 @@ public class WorkspaceTest {
     	Color loadedBackgroundColor = newWorkspace.getBackgroundColor();
     	Assert.assertEquals(newColor, loadedBackgroundColor);
     }
+    
+    @Test
+    public void cursorColorPersistenceTest() {
+    	Color newColor = new Color(122, 30, 200);
+    	workspace.setCursorColor(newColor);
+    	workspace.saveProperties(false);
+    	Workspace newWorkspace = new Workspace();
+    	Color loadedCursorColor = newWorkspace.getCursorColor();
+    	Assert.assertEquals(newColor, loadedCursorColor);
+    }
 
     @Test
     public void testSetOrto()

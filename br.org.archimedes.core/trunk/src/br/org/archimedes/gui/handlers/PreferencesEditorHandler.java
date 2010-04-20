@@ -16,8 +16,9 @@ public class PreferencesEditorHandler extends AbstractHandler {
     public Object execute (ExecutionEvent event) throws ExecutionException {
     	
     	Color backgroundColor = Utils.getWorkspace().getBackgroundColor();
+    	Color cursorColor = Utils.getWorkspace().getCursorColor();
         Shell shell = HandlerUtil.getActiveShell(event);
-        PreferencesEditor dialog = new PreferencesEditor(shell, backgroundColor);
+        PreferencesEditor dialog = new PreferencesEditor(shell, backgroundColor, cursorColor);
         dialog.open();
 
         return null;

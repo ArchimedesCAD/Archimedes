@@ -56,6 +56,8 @@ public class PreferencesEditor {
     
     private Color backgroundColor;
 
+	private Color cursorColor;
+
 
     /**
      * Constructor.
@@ -65,14 +67,15 @@ public class PreferencesEditor {
      * @param backgroundColor
      * 			  The workspace current background color 
      */
-    public PreferencesEditor (Shell parent, Color backgroundColor) {
+    public PreferencesEditor (Shell parent, Color backgroundColor, Color cursorColor) {
 
         this.parent = parent;
         this.backgroundColor = backgroundColor;
+        this.cursorColor = cursorColor;
         
         createShell();
 
-        form = new PreferencesForm(shell, this);
+        this.form = new PreferencesForm(shell, this);
        
         createWarning();
         createButtons();
@@ -186,6 +189,7 @@ public class PreferencesEditor {
         okButton.addSelectionListener(new SelectionAdapter() {
 
             public void widgetSelected (SelectionEvent e) {
+            	Utils.getWorkspace().setCursorColor(cursorColor);
             	Utils.getWorkspace().setBackgroundColor(backgroundColor);
             	Utils.getWorkspace().saveProperties(false);
                 shell.dispose();
@@ -231,5 +235,13 @@ public class PreferencesEditor {
 
 	public Color getBackgroundColor() {
 		return backgroundColor;
+	}
+
+	public void setCursorColor(Color cursorColor) {
+		this.cursorColor = cursorColor;
+	}
+
+	public Color getCursorColor() {
+		return cursorColor;
 	}
 }

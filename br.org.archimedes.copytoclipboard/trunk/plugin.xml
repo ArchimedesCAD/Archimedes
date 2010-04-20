@@ -33,7 +33,7 @@
                label="%command.copytoclipboard.label"
                mnemonic="%command.copytoclipboard.mnemonic"
                style="push"
-               tooltip="%command.circle.tooltip">
+               tooltip="%command.copytoclipboard.tooltip">
             <parameter
                   name="br.org.archimedes.core.factoryactivator.name"
                   value="br.org.archimedes.copytoclipboard">

@@ -17,6 +17,7 @@ import br.org.archimedes.Utils;
 import br.org.archimedes.exceptions.NoActiveDrawingException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.gui.opengl.Color;
+import br.org.archimedes.gui.opengl.OpenGLWrapper;
 import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
@@ -737,12 +738,15 @@ public class Workspace extends Observable {
     }
     
     public Color getBackgroundColor() {
-    	String property = workspaceProperties.getProperty("backgroundColor", "0,0,0");
+    	String property = workspaceProperties.getProperty("backgroundColor");
+    	if(property == null) {
+    		return OpenGLWrapper.COLOR_BACKGROUND;
+    	}
     	String colors[] = property.split(",");
-    	if(colors.length != 3){
-    		return new Color(0,0,0);
-    	}else{
-    		
+    	if(colors.length != 3) {
+    		return OpenGLWrapper.COLOR_BACKGROUND;
+    	}
+    	else {
     		try {
 				int r, g, b;
 				r = Integer.parseInt(colors[0]);
@@ -750,14 +754,40 @@ public class Workspace extends Observable {
 				b = Integer.parseInt(colors[2]);
 				Color backgroundColor = new Color(r, g, b);
 				return backgroundColor;
-			} catch (NumberFormatException e) {
-				return new Color(0,0,0);
+			} catch(NumberFormatException e) {
+				return OpenGLWrapper.COLOR_BACKGROUND;
 			}
     	}
-	
 	}
 
 	public void setBackgroundColor(Color backgroundColor) {
 		setProperty("backgroundColor", backgroundColor.getRed() + "," + backgroundColor.getGreen() + "," + backgroundColor.getBlue());
+	}
+	
+	public Color getCursorColor() {
+    	String property = workspaceProperties.getProperty("cursorColor");
+    	if(property == null) {
+    		return OpenGLWrapper.COLOR_CURSOR;
+    	}
+    	String colors[] = property.split(",");
+    	if(colors.length != 3) {
+    		return OpenGLWrapper.COLOR_CURSOR;
+    	}
+    	else {
+    		try {
+				int r, g, b;
+				r = Integer.parseInt(colors[0]);
+				g = Integer.parseInt(colors[1]);
+				b = Integer.parseInt(colors[2]);
+				Color cursorColor = new Color(r, g, b);
+				return cursorColor;
+			} catch(NumberFormatException e) {
+				return OpenGLWrapper.COLOR_CURSOR;
+			}
+    	}
+	}
+
+	public void setCursorColor(Color cursorColor) {
+		setProperty("cursorColor", cursorColor.getRed() + "," + cursorColor.getGreen() + "," + cursorColor.getBlue());
 	}
 }
