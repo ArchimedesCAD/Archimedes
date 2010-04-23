@@ -13,6 +13,7 @@
 package br.org.archimedes.stretch;
 
 import br.org.archimedes.Geometrics;
+import br.org.archimedes.Utils;
 import br.org.archimedes.exceptions.InvalidParameterException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.factories.CommandFactory;
@@ -258,15 +259,14 @@ public class StretchFactory implements CommandFactory {
             Point start = reference;
             Point end = workspace.getMousePosition();
 
-            if (workspace.isOrtoOn()) {
-                try {
-                    end = Geometrics.orthogonalize(start, end);
-                }
-                catch (NullArgumentException e) {
-                    // should never reach this code
-                    e.printStackTrace();
-                }
+            try {
+            	end = Utils.transformVector(start, end);
             }
+            catch (NullArgumentException e) {
+            	// should never reach this code
+            	e.printStackTrace();
+            }
+
 
             for (Element element : selection.getSelectedElements()) {
                 Element copied = element.clone();

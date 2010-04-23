@@ -234,7 +234,28 @@ public class Utils {
 
         return clazz.isAssignableFrom(o.getClass());
     }
-
+    
+    /**
+     * @param p1
+     *            The first point (that should be used as a reference to ortogonalize or breakAngles)
+     * @param point
+     *            The point that defines the vector
+     * @return If shift key is pressed, break the angles in sectors of 15 degrees
+     * 		   If orto is on, the point that makes an ortogonal vector, the same point otherwise.
+     * @throws NullArgumentException
+     *             Thrown if any argument is null.
+     */
+    public static Point transformVector (Point p1, Point p2) throws NullArgumentException {
+    	
+    	Workspace workspace = getWorkspace();
+    	if (workspace.isShiftDown()) {
+    		p2 = Geometrics.breakAngles(p1, p2);
+    	}
+    	else if (workspace.isOrtoOn() && workspace.getGripMousePosition() == null) {
+    		p2 = Geometrics.orthogonalize(p1, p2);
+    	}
+    	return p2;
+    }
     /**
      * @param p1
      *            The first point (that should be used as a reference to ortogonalize)
@@ -248,7 +269,8 @@ public class Utils {
 
         Workspace workspace = getWorkspace();
         if (workspace.isOrtoOn() && workspace.getGripMousePosition() == null) {
-            point = Geometrics.orthogonalize(p1, point);
+        	point = Geometrics.breakAngles(p1, point);
+            //point = Geometrics.orthogonalize(p1, point);
         }
         return point;
     }

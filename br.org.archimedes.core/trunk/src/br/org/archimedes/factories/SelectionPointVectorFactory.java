@@ -238,7 +238,7 @@ public abstract class SelectionPointVectorFactory implements CommandFactory {
             Point end = workspace.getMousePosition();
 
             try {
-                end = Utils.useOrto(start, end);
+                end = Utils.transformVector(start, end);
                 br.org.archimedes.Utils.getOpenGLWrapper().drawFromModel(start, end);
             }
             catch (NullArgumentException e) {

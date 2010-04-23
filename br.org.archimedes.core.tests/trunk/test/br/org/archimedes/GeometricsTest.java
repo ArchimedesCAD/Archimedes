@@ -120,17 +120,16 @@ public class GeometricsTest extends Tester {
             double y2, double distance) {
 
         Assert.assertEquals(distance, Geometrics.calculateDistance(x1, y1, x2,
-                y2));
+                y2), Constant.EPSILON);
         try {
             Assert.assertEquals(distance, Geometrics.calculateDistance(
-                    new Point(x1, y1), new Point(x2, y2)));
+                    new Point(x1, y1), new Point(x2, y2)), Constant.EPSILON);
         }
         catch (NullArgumentException e) {
             Assert.fail("Shouldn't throw this exception.");
             e.printStackTrace();
         }
     }
-
     @Test
     public void testOrthogonalizePointPoint () {
 
@@ -481,6 +480,47 @@ public class GeometricsTest extends Tester {
         expected = new Point(25, 25);
         safeRotate(point, reference, Math.PI / 2);
         Assert.assertEquals("The point should be equals.", expected, point);
+    }
+    
+    @Test
+    public void testBreakAnglesFromOrigin () {
+    	String errorMessage = "The point should be equals";
+    	Point p0 = new Point(0,0);
+    	Assert.assertEquals(errorMessage, new Point(10,0), Geometrics.breakAngles(p0, new Point(10,0)));
+    	Assert.assertEquals(errorMessage, new Point(5,0), Geometrics.breakAngles(p0, new Point(5, 0.525521176)));
+    	Assert.assertEquals(errorMessage, new Point(5,0), Geometrics.breakAngles(p0, new Point(5, -0.525521176)));
+    	Assert.assertEquals(errorMessage, new Point(-10,0), Geometrics.breakAngles(p0, new Point(-10,0)));
+    	Assert.assertEquals(errorMessage, new Point(-5,0), Geometrics.breakAngles(p0, new Point(-5, 0.525521176)));
+    	Assert.assertEquals(errorMessage, new Point(-5,0), Geometrics.breakAngles(p0, new Point(-5, -0.525521176)));
+    	Assert.assertEquals(errorMessage, new Point(0.267949192, -1.0), Geometrics.breakAngles(p0, new Point(0.363970234, -1.0)));
+    	Assert.assertEquals(errorMessage, new Point(0, 5), Geometrics.breakAngles(p0, new Point(0.525521176, 5)));
+    	Assert.assertEquals(errorMessage, new Point(0, 5), Geometrics.breakAngles(p0, new Point(-0.525521176, 5)));
+    	Assert.assertEquals(errorMessage, new Point(6.190658239, 10.722534603), Geometrics.breakAngles(p0, new Point(5, 10.722534603)));
+    	Assert.assertEquals(errorMessage, new Point(0, -5), Geometrics.breakAngles(p0, new Point(0.525521176, -5)));
+    	Assert.assertEquals(errorMessage, new Point(0, -5), Geometrics.breakAngles(p0, new Point(-0.525521176, -5)));
+    	Assert.assertEquals(errorMessage, new Point(-6.190658239, 10.722534603), Geometrics.breakAngles(p0, new Point(-5, 10.722534603)));
+    }
+    
+    @Test
+    public void testBreakAnglesOutOfOrigin () {
+    	String errorMessage = "The point should be equals";
+    	Point o1 = new Point(1,1), o2 = new Point(3,0), o3 = new Point(-1,-1), o4 = new Point(-1,2);
+    	
+    	Point p = Geometrics.breakAngles(o2, new Point(2, 0.305730681));
+    	System.out.println(p);
+    	Assert.assertEquals(errorMessage, new Point(3,1), Geometrics.breakAngles(o1, new Point(3,1)));
+    	Assert.assertEquals(errorMessage, new Point(0,0), Geometrics.breakAngles(o2, new Point(0,0)));
+    	Assert.assertEquals(errorMessage, new Point(2, 0.267949192), Geometrics.breakAngles(o2, new Point(2, 0.305730681)));
+    	Assert.assertEquals(errorMessage, new Point(2, -0.267949192), Geometrics.breakAngles(o2, new Point(2, -0.305730681)));
+    	Assert.assertEquals(errorMessage, new Point(4, 0.267949192), Geometrics.breakAngles(o2, new Point(4, 0.305730681)));
+    	Assert.assertEquals(errorMessage, new Point(4, -0.267949192), Geometrics.breakAngles(o2, new Point(4, -0.305730681)));
+    	Assert.assertEquals(errorMessage, new Point(0,-1), Geometrics.breakAngles(o3, new Point(0,-1)));
+    	Assert.assertEquals(errorMessage, new Point(0,3), Geometrics.breakAngles(o4, new Point(0,3)));
+    	
+    	Assert.assertEquals(errorMessage, new Point(1,4), Geometrics.breakAngles(o1, new Point(1,4)));
+    	Assert.assertEquals(errorMessage, new Point(-1,0), Geometrics.breakAngles(o3, new Point(-1,0)));
+    	Assert.assertEquals(errorMessage, new Point(-1,0), Geometrics.breakAngles(o4, new Point(-1,0)));
+    	
     }
 
     private void safeRotate (Point point, Point reference, double angle) {

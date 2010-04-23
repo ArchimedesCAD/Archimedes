@@ -195,7 +195,7 @@ public abstract class TwoPointFactory implements CommandFactory {
             
             if ( !ignoreOrto) { 
             	try {
-                    end = Utils.useOrto(start, end);
+                    end = Utils.transformVector(start, end);
                 }
                 catch (NullArgumentException e) {
                     // Should not happen

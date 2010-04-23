@@ -368,7 +368,7 @@ public class PolylineFactory implements CommandFactory {
                     drawing.putHelperElement(polyLine);
                 }
                 Point end = workspace.getMousePosition();
-                end = Utils.useOrto(points.get(points.size() - 1), end);
+                end = Utils.transformVector(points.get(points.size() - 1), end);
                 
                 points.add(end);
                 Polyline polyLine = new Polyline(points);

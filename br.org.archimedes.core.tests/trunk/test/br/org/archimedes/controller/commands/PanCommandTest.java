@@ -14,6 +14,7 @@
 
 package br.org.archimedes.controller.commands;
 
+import br.org.archimedes.Constant;
 import br.org.archimedes.exceptions.IllegalActionException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.model.Drawing;
@@ -79,7 +80,7 @@ public class PanCommandTest {
         pan.doIt(drawing);
         Point viewport = drawing.getViewportPosition();
         assertEquals("The viewport position should have been updated.", new Point(14, 42), viewport);
-        assertEquals("The zoom should be the same.", zoom, drawing.getZoom());
+        assertEquals("The zoom should be the same.", zoom, drawing.getZoom(), Constant.EPSILON);
     }
 
     @Test(expected = NullArgumentException.class)
@@ -99,6 +100,6 @@ public class PanCommandTest {
         pan.undoIt(drawing);
         assertEquals("The viewport position should be back to the original.", new Point(0, 0),
                 drawing.getViewportPosition());
-        assertEquals("The zoom should be the same.", zoom, drawing.getZoom());
+        assertEquals("The zoom should be the same.", zoom, drawing.getZoom(), Constant.EPSILON);
     }
 }

@@ -187,9 +187,7 @@ public class LeaderFactory implements CommandFactory {
                     initial = p2;
                 }
 
-                if (workspace.isOrtoOn()) {
-                    point = Geometrics.orthogonalize(initial, point);
-                }
+                point = Utils.transformVector(initial, point);
 
                 Utils.getOpenGLWrapper().drawFromModel(initial, point);
             }

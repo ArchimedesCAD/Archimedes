@@ -623,20 +623,23 @@ public class Drawing extends Observable implements Observer {
      */
     public void putElement (Element element, Layer layer) throws NullArgumentException,
             IllegalActionException {
+    	try {
+    		if ( !layers.containsKey(layer.getName())) {
+    			layers.put(layer.getName(), layer);
+    		}
 
-        if ( !layers.containsKey(layer.getName())) {
-            layers.put(layer.getName(), layer);
-        }
-
-        Layer destination = layers.get(layer.getName());
-        if ( !destination.isLocked()) {
-            destination.putElement(element);
-            setChanged();
-            notifyObservers();
-        }
-        else {
-            throw new IllegalActionException();
-        }
+    		Layer destination = layers.get(layer.getName());
+    		if ( !destination.isLocked()) {
+    			destination.putElement(element);
+    			setChanged();
+    			notifyObservers();
+    		}
+    		else {
+    			throw new IllegalActionException();
+    		}
+    	} catch (NullPointerException e) {
+    		throw new NullArgumentException();
+    	}
     }
 
     /*

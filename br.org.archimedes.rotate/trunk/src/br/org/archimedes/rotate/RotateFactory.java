@@ -316,7 +316,7 @@ public class RotateFactory implements CommandFactory {
 
         OpenGLWrapper wrapper = br.org.archimedes.Utils.getOpenGLWrapper();
         try {
-            end = Utils.useOrto(start, end);
+            end = Utils.transformVector(start, end);
             
             if ( !isDone() && reference != null) {
                 if (getNewAngleAxis && axisP1 != null) {

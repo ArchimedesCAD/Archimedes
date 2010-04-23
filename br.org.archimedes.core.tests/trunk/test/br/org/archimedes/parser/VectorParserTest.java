@@ -47,9 +47,9 @@ public class VectorParserTest extends Tester {
         Assert.assertFalse("Should not be done yet.", vp.isDone());
         Assert.assertNull("Should have no parameter yet.", vp.getParameter());
 
-        Point p2 = new Point(10, 40.5);
+        Point p2 = new Point(40.5, 10);
         try {
-            vp.next("10;40.5");
+            vp.next("40.5;10");
         }
         catch (InvalidParameterException e) {
             e.printStackTrace();

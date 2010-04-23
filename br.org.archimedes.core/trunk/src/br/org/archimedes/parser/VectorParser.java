@@ -53,7 +53,6 @@ public class VectorParser implements Parser {
      *            The first point of the vector.
      */
     public VectorParser (Point point) {
-
         this(point, false);
     }
 

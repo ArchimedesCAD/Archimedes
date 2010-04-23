@@ -42,8 +42,16 @@ public class WorkspaceTest {
 
         workspace.modelToScreen((Point) null);
     }
-
+    
     @Test
+    public void testShiftDown () {
+    	workspace.setShiftDown(true);
+    	assertTrue(workspace.isShiftDown());
+    	workspace.setShiftDown(false);
+    	assertFalse(workspace.isShiftDown());
+    }
+    
+        @Test
     public void backgroundColorPersistenceTest() {
     	Color newColor = new Color(122, 30, 200);
     	workspace.setBackgroundColor(newColor);
@@ -62,10 +70,9 @@ public class WorkspaceTest {
     	Color loadedCursorColor = newWorkspace.getCursorColor();
     	Assert.assertEquals(newColor, loadedCursorColor);
     }
-
+    
     @Test
-    public void testSetOrto()
-    {
+    public void testSetOrto () {
     	workspace.setOrto(true);
     	assertTrue(workspace.isOrtoOn());
     	

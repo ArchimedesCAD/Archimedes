@@ -69,7 +69,7 @@ public class Workspace extends Observable {
 
     private boolean mouseDown;
     
-
+    private boolean shiftDown;
 
 
 
@@ -492,6 +492,25 @@ public class Workspace extends Observable {
     public boolean isMouseDown () {
 
         return mouseDown;
+    }
+    
+    /**
+     * 
+     * @param shiftState
+     *            True if the shift key is pressed, false otherwise.
+     */
+    public void setShiftDown (boolean shiftState) {
+    	
+    	this.shiftDown = shiftState;
+    }
+    
+    /**
+     * 
+     * @return True if the shift key is pressed
+     */
+    public boolean isShiftDown () {
+    	
+    	return this.shiftDown;
     }
 
     /**

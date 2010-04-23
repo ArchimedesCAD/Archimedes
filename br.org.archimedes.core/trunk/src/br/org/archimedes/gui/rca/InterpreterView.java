@@ -100,7 +100,9 @@ public class InterpreterView extends ViewPart implements Observer, ISelectionLis
             public void keyPressed (KeyEvent e) {
                 InputController inputController = br.org.archimedes.Utils.getInputController();
                 
+
                 if (e.keyCode == SWT.ESC) {
+                    
                 	if(!input.getText().equals("")) {
                 		input.setText("");
                 	}
@@ -120,8 +122,7 @@ public class InterpreterView extends ViewPart implements Observer, ISelectionLis
                 else if (e.keyCode == SWT.SHIFT) {
                 	
                 	Workspace workspace = Utils.getWorkspace();
-                	oldOrtoState = workspace.isOrtoOn();
-                	workspace.setOrto(true);
+                	workspace.setShiftDown(true);
                 }
                 else if (e.keyCode == SWT.DEL && input.getText().equals("")) {
                 	inputController.receiveText("br.org.archimedes.erase");
@@ -137,7 +138,7 @@ public class InterpreterView extends ViewPart implements Observer, ISelectionLis
             public void keyReleased (KeyEvent e) {
             	if (e.keyCode == SWT.SHIFT) {
             		Workspace workspace = Utils.getWorkspace();
-                	workspace.setOrto(oldOrtoState);
+                	workspace.setShiftDown(false);
             	}
             	
             }

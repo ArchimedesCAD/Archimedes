@@ -182,7 +182,7 @@ public class Geometrics {
         // TODO Calcular a projeção
         return null;
     }
-
+    
     /**
      * Orthogonalizes the line defined by the points p1 and p2.
      * 
@@ -196,7 +196,7 @@ public class Geometrics {
      */
     public static Point orthogonalize (Point p1, Point p2)
             throws NullArgumentException {
-
+    	
         double angle = Geometrics.calculateAngle(p1, p2);
         Point orthogonalPoint = p2.clone();
 
@@ -209,6 +209,52 @@ public class Geometrics {
         }
 
         return orthogonalPoint;
+    }
+    
+    public static Vector breakAngles (Vector v) 
+    		throws NullArgumentException {
+    	final double increment = Math.PI / 12.0;
+    	double referenceAngle = 0.0;
+    	double angle = calculateAngle(new Point(0,0), new Point(v.getX(), v.getY()));
+    	Point point;
+    	
+    	while (angle - referenceAngle >= Math.PI / 24.0) {
+    		referenceAngle += increment;
+    	}
+    	if (Math.abs(v.getX()) > Math.abs(v.getY())) {
+    		point = new Point(v.getX(), (v.getX() * Math.tan(referenceAngle)));
+    	} else {
+    		if(referenceAngle <= Math.PI/2.0){
+    			referenceAngle = Math.PI/2.0 - referenceAngle;
+    			point = new Point(v.getY()*Math.tan(referenceAngle), v.getY());
+    		}
+    		else if(referenceAngle <= Math.PI){
+    			referenceAngle = referenceAngle - Math.PI/2.0;
+    			point = new Point(-v.getY()*Math.tan(referenceAngle), v.getY());
+    		}
+    		else if(referenceAngle <= 3.0*Math.PI/2.0){
+    			referenceAngle = (3.0*Math.PI/2.0) - referenceAngle;
+    			point = new Point(v.getY()*Math.tan(referenceAngle), v.getY());
+    		}
+    		else {
+    			referenceAngle = referenceAngle - 3.0*Math.PI/2.0;
+    			point = new Point(-v.getY()*Math.tan(referenceAngle), v.getY());
+    			
+    		}
+    	}
+    	return new Vector(point);
+    }
+    
+    public static Point breakAngles (Point p1, Point p2) {
+    	Vector r = new Vector(p1,p2);
+    	Point result;
+    	try {
+    		r = breakAngles(r);
+    		result =  p1.clone().addVector(r);
+    	} catch (NullArgumentException e) {
+    		result =  p1.clone();
+    	}
+    	return result;
     }
 
     /**
