@@ -269,8 +269,7 @@ public class Utils {
 
         Workspace workspace = getWorkspace();
         if (workspace.isOrtoOn() && workspace.getGripMousePosition() == null) {
-        	point = Geometrics.breakAngles(p1, point);
-            //point = Geometrics.orthogonalize(p1, point);
+            point = Geometrics.orthogonalize(p1, point);
         }
         return point;
     }

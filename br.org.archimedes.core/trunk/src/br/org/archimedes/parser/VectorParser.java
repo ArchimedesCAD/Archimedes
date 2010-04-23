@@ -105,10 +105,9 @@ public class VectorParser implements Parser {
      * @return Point with orto (if it shouldnt ignore orto) the given point otherwise
      */
     private Point applyOrto (Point point) {
-
         if ( !ignoreOrto) {
             try {
-                return Utils.useOrto(p1, point);
+                return Utils.transformVector(p1, point);
             }
             catch (NullArgumentException e) {
                 // Should not happen
