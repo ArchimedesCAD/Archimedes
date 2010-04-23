@@ -161,17 +161,6 @@ public class Workspace extends Observable {
         return getValueOf(ORTO_COMMAND_ID, ORTO_STATE); //$NON-NLS-1$ //$NON-NLS-2$
     }
     
-    public void setOrto(boolean value) {
-    	ICommandService service = (ICommandService) PlatformUI.getWorkbench().getService(
-                ICommandService.class);
-        Command command = service.getCommand(ORTO_COMMAND_ID);
-        State state = command.getState(ORTO_STATE);
-        
-        state.setValue(value);
-
-        service.refreshElements(ORTO_COMMAND_ID, null);        
-    }
-
     /**
      * @return Returns true if snap is on, false otherwise
      */
@@ -809,26 +798,4 @@ public class Workspace extends Observable {
 	public void setCursorColor(Color cursorColor) {
 		setProperty("cursorColor", cursorColor.getRed() + "," + cursorColor.getGreen() + "," + cursorColor.getBlue());
 	}
-	
-    public double getOrientationArrowWidth() {
-    	double defaultArrowSize = 10.0;
-    	String property = workspaceProperties.getProperty("orientationArrowWidth", String.valueOf(defaultArrowSize));
-    	try {
-    		double arrowSize = Double.parseDouble(property);
-    		return arrowSize;
-    	} catch (Exception e) {
-			return defaultArrowSize;
-		}
-    }
-    
-    public double getOrientationArrowLength() {
-    	double defaultArrowSize = 50.0;
-    	String property = workspaceProperties.getProperty("orientationArrowLength", String.valueOf(defaultArrowSize));
-    	try {
-    		double arrowSize = Double.parseDouble(property);
-    		return arrowSize;
-    	} catch (Exception e) {
-			return defaultArrowSize;
-		}
-    }
 }

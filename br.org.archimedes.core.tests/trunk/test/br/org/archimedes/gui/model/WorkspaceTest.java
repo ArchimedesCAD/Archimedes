@@ -16,9 +16,7 @@ package br.org.archimedes.gui.model;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import junit.framework.Assert;
-
 import org.junit.Test;
-
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.gui.opengl.Color;
 import br.org.archimedes.model.Point;
@@ -44,7 +42,7 @@ public class WorkspaceTest {
 
         workspace.modelToScreen((Point) null);
     }
-
+    
     @Test
     public void testShiftDown () {
     	workspace.setShiftDown(true);
@@ -71,20 +69,6 @@ public class WorkspaceTest {
     	Workspace newWorkspace = new Workspace();
     	Color loadedCursorColor = newWorkspace.getCursorColor();
     	Assert.assertEquals(newColor, loadedCursorColor);
-    }
-    
-    @Test
-    public void testSetOrto()
-    {
-    	workspace.setOrto(true);
-    	assertTrue(workspace.isOrtoOn());
-    	
-    	workspace.setOrto(false);
-    	assertFalse(workspace.isOrtoOn());
-    	
-    	workspace.setOrto(true);
-    	assertTrue(workspace.isOrtoOn());
-    	
     }
     
     // TODO Test coordinates convertion from screen to model
