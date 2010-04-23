@@ -809,4 +809,26 @@ public class Workspace extends Observable {
 	public void setCursorColor(Color cursorColor) {
 		setProperty("cursorColor", cursorColor.getRed() + "," + cursorColor.getGreen() + "," + cursorColor.getBlue());
 	}
+	
+    public double getOrientationArrowWidth() {
+    	double defaultArrowSize = 10.0;
+    	String property = workspaceProperties.getProperty("orientationArrowWidth", String.valueOf(defaultArrowSize));
+    	try {
+    		double arrowSize = Double.parseDouble(property);
+    		return arrowSize;
+    	} catch (Exception e) {
+			return defaultArrowSize;
+		}
+    }
+    
+    public double getOrientationArrowLength() {
+    	double defaultArrowSize = 50.0;
+    	String property = workspaceProperties.getProperty("orientationArrowLength", String.valueOf(defaultArrowSize));
+    	try {
+    		double arrowSize = Double.parseDouble(property);
+    		return arrowSize;
+    	} catch (Exception e) {
+			return defaultArrowSize;
+		}
+    }
 }

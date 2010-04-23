@@ -21,10 +21,12 @@ import br.org.archimedes.controller.InputController;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.factories.CommandFactory;
 import br.org.archimedes.gui.actions.SelectionCommand;
+import br.org.archimedes.gui.opengl.Color;
 import br.org.archimedes.gui.opengl.OpenGLWrapper;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Rectangle;
 import br.org.archimedes.model.ReferencePoint;
+import br.org.archimedes.model.Vector;
 
 /**
  * Belongs to package br.org.archimedes.gui.model.
@@ -73,6 +75,7 @@ public class VisualHelper {
         if (cursorVisible) {
             drawCursor();
         }
+        drawOrientationArrows();
     }
 
     /**
@@ -129,6 +132,7 @@ public class VisualHelper {
             // Should not throw this exception
             e.printStackTrace();
         }
+        opengl.setLineWidth(OpenGLWrapper.NORMAL_WIDTH);
         opengl.setColor(workspace.getCursorColor());
         opengl.setLineStyle(OpenGLWrapper.CONTINUOUS_LINE);
         opengl.setPrimitiveType(OpenGLWrapper.PRIMITIVE_LINE_LOOP);
@@ -163,4 +167,74 @@ public class VisualHelper {
         opengl.draw(leftHorizontal, rightHorizontal);
         opengl.draw(topVertical, bottomVertical);
     }
+    
+    /**
+     * Draws white orientation arrows on the bottom left corner
+     * @throws  
+     */
+    private void drawOrientationArrows() {
+		try{
+			drawOrientationArrows(workspace.getOrientationArrowWidth(), workspace.getOrientationArrowLength(), workspace.getCursorColor());
+		} catch (Exception e) {
+		}
+	}
+    
+    /**
+     * Draws orientation arrows on the bottom left corner
+     * @throws NullArgumentException 
+     */
+	private boolean drawOrientationArrows(double arrowWidth, double arrowLength, Color color) throws NullArgumentException {
+		if (arrowWidth >= arrowLength)
+			return false;
+		
+		Point rightArrowInitialPoint = workspace.modelToScreen(new Point(0, 0));
+		Point upArrowInitialPoint = workspace.modelToScreen(new Point(0, 0));
+		
+		rightArrowInitialPoint.move(-1.3*arrowWidth, 0);
+		upArrowInitialPoint.move(0, -1.3*arrowWidth);
+		
+		Point rightArrowFinalPoint = rightArrowInitialPoint.clone();		
+		Point upArrowFinalPoint = upArrowInitialPoint.clone();
+		rightArrowFinalPoint.move(arrowLength, 0);
+		upArrowFinalPoint.move(0, arrowLength);
+		
+		opengl.setLineStyle(OpenGLWrapper.CONTINUOUS_LINE);
+		opengl.setLineWidth(OpenGLWrapper.NORMAL_WIDTH);
+		opengl.setColor(color);
+		opengl.draw(generateArrowPoints(arrowWidth, rightArrowInitialPoint, rightArrowFinalPoint)); 
+		opengl.draw(generateArrowPoints(arrowWidth, upArrowInitialPoint, upArrowFinalPoint));
+		
+		return true;
+	}
+	
+	/*
+	 * Generate the points used to draw an arrow from initialPoint to finalPoint with width arrowWidth
+	 * Returns: list of points 
+	 */
+	private List<Point>  generateArrowPoints(double arrowWidth, Point initialPoint, Point finalPoint) throws NullArgumentException {	
+		
+		double angle;
+		try {
+			angle = Math.atan((finalPoint.getY()-initialPoint.getY())/(finalPoint.getX()-initialPoint.getX()));
+		} catch (Exception e) {
+			angle = Math.PI/2;
+		}
+		Vector increment = new Vector(initialPoint);
+		Point origin = new Point(0,0);
+		double l = initialPoint.calculateDistance(finalPoint);
+		List<Point> points = new ArrayList<Point>();
+		points.add(new Point(0, arrowWidth/2.0));
+		points.add(new Point(l-2*arrowWidth, arrowWidth/2.0));
+		points.add(new Point(l-2*arrowWidth, arrowWidth));
+		points.add(new Point(l, 0));
+		points.add(new Point(l-2*arrowWidth, -arrowWidth));
+		points.add(new Point(l-2*arrowWidth, -arrowWidth/2.0));
+		points.add(new Point(0, -arrowWidth/2.0));
+		for (Point point : points) {			
+			point.rotate(origin, angle);			
+			point.move(increment.getX(), increment.getY());			
+		}
+		return points;
+		
+	}
 }

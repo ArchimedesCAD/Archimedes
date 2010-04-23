@@ -5,7 +5,6 @@
          point="br.org.archimedes.core.factory">
          <factory id="br.org.archimedes.orto"
           class="br.org.archimedes.orto.OrtoFactory">
-         	<shortcut id="o"/>
          </factory>
    </extension>
    <extension

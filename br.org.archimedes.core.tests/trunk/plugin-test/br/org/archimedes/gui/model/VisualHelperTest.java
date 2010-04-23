@@ -13,22 +13,31 @@
 
 package br.org.archimedes.gui.model;
 
-import br.org.archimedes.Tester;
-import br.org.archimedes.controller.InputController;
-import br.org.archimedes.exceptions.NullArgumentException;
-import br.org.archimedes.factories.CommandFactory;
-import br.org.archimedes.gui.opengl.OpenGLWrapper;
-import br.org.archimedes.model.Point;
-import br.org.archimedes.model.Rectangle;
-import br.org.archimedes.model.ReferencePoint;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
+
+import junit.framework.Assert;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.exceptions.verification.WantedButNotInvoked;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import br.org.archimedes.Constant;
+import br.org.archimedes.Tester;
+import br.org.archimedes.controller.InputController;
+import br.org.archimedes.exceptions.NullArgumentException;
+import br.org.archimedes.factories.CommandFactory;
+import br.org.archimedes.gui.opengl.Color;
+import br.org.archimedes.gui.opengl.OpenGLWrapper;
+import br.org.archimedes.model.Point;
+import br.org.archimedes.model.Rectangle;
+import br.org.archimedes.model.ReferencePoint;
 
 /**
  * @author Luiz Real, Bruno da Hora
@@ -97,6 +106,67 @@ public class VisualHelperTest extends Tester {
         //Metodo chamado no workspace para desenhar o cross do cursor
         verify(workspace).getWindowSize();
     }    
+    
+    @Test
+    public void drawCursorUsingNormalLineWidth () throws NullArgumentException {
+    	
+    	Point point = new Point(1.0d, 1.0d);
+    	CommandFactory activeFactory = mock(CommandFactory.class);
+
+    	when(workspace.getActualMousePosition()).thenReturn(point);
+    	when(workspace.modelToScreen(point)).thenReturn(point);
+        when(inputController.getCurrentFactory()).thenReturn(activeFactory);
+        when(activeFactory.isTransformFactory()).thenReturn(true);
+        when(workspace.getWindowSize()).thenReturn(new Rectangle(1.0d, 1.0d, 2.0d, 2.0d));
+        
+        visualHelper.draw(true);
+        
+        //Metodo chamado no openGLWrapper para settar o lineWidth para NORMAL_WIDTH
+        verify(openGLWrapper).setLineWidth(OpenGLWrapper.NORMAL_WIDTH);
+    }
+    
+    
+    @Test 
+    public void drawOrientationArrows() throws NullArgumentException, IllegalArgumentException, IllegalAccessException, InvocationTargetException, SecurityException, NoSuchMethodException {
+    	
+    	Method method = VisualHelper.class.getDeclaredMethod("drawOrientationArrows", double.class, double.class, Color.class);    			
+    	method.setAccessible(true); // Poder acessar mesmo sendo private
+    	
+    	Point point = new Point(0, 0);
+    	CommandFactory activeFactory = mock(CommandFactory.class);
+   	
+    	when(workspace.getActualMousePosition()).thenReturn(point);
+    	when(workspace.modelToScreen(point)).thenReturn(point);
+    	
+        when(inputController.getCurrentFactory()).thenReturn(activeFactory);
+        when(activeFactory.isTransformFactory()).thenReturn(true);
+        
+        
+        when(workspace.getWindowSize()).thenReturn(new Rectangle(1.0d, 1.0d, 2.0d, 2.0d));
+        Assert.assertEquals((Boolean)method.invoke(visualHelper, 50, 50, Constant.WHITE), Boolean.FALSE);
+        Assert.assertEquals((Boolean)method.invoke(visualHelper, 50, 200, Constant.WHITE), Boolean.TRUE);
+    }
+    
+    
+    @Test
+    public void generateArrowPoints() throws SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException {
+    	Method method = VisualHelper.class.getDeclaredMethod("generateArrowPoints", double.class, Point.class, Point.class);    			
+    	method.setAccessible(true); // Poder acessar mesmo sendo private
+    	
+    	// right arrow
+    	List<Point> expectedResult = new ArrayList<Point>();
+    	expectedResult.add(new Point(0, 10)); expectedResult.add(new Point(60, 10)); expectedResult.add(new Point(60, 20)); expectedResult.add(new Point(100, 0));
+    	expectedResult.add(new Point(60, -20)); expectedResult.add(new Point(60, -10)); expectedResult.add(new Point(0, -10));
+    	Assert.assertEquals(expectedResult, method.invoke(visualHelper, 20, new Point(0, 0), new Point(100, 0)));
+    	
+    	// left arrow
+    	expectedResult = new ArrayList<Point>();
+    	expectedResult.add(new Point(-10, 0)); expectedResult.add(new Point(-10, 60)); expectedResult.add(new Point(-20, 60)); expectedResult.add(new Point(0, 100));
+    	expectedResult.add(new Point(20, 60)); expectedResult.add(new Point(10, 60)); expectedResult.add(new Point(10, 0));
+    	Assert.assertEquals(expectedResult, method.invoke
+    			(visualHelper, 20, new Point(0, 0), new Point(0, 100)));
+    	
+    }
     
     // TODO Test drawing selection helper if selection is active
     
