@@ -13,6 +13,21 @@
 
 package br.org.archimedes.gui.model;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Observable;
+import java.util.Properties;
+
+import org.eclipse.core.commands.Command;
+import org.eclipse.core.commands.State;
+import org.eclipse.ui.commands.ICommandService;
+
 import br.org.archimedes.Utils;
 import br.org.archimedes.exceptions.NoActiveDrawingException;
 import br.org.archimedes.exceptions.NullArgumentException;
@@ -24,22 +39,6 @@ import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Rectangle;
 import br.org.archimedes.model.ReferencePoint;
 import br.org.archimedes.model.Vector;
-
-import org.eclipse.core.commands.Command;
-import org.eclipse.core.commands.State;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.commands.ICommandService;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Observable;
-import java.util.Properties;
 
 /**
  * Class that models the user interface.<BR>
@@ -798,4 +797,28 @@ public class Workspace extends Observable {
 	public void setCursorColor(Color cursorColor) {
 		setProperty("cursorColor", cursorColor.getRed() + "," + cursorColor.getGreen() + "," + cursorColor.getBlue());
 	}
+	
+
+    public double getOrientationArrowWidth() {
+    	double defaultArrowSize = 10.0;
+    	String property = workspaceProperties.getProperty("orientationArrowWidth", String.valueOf(defaultArrowSize));
+    	try {
+    		double arrowSize = Double.parseDouble(property);
+    		return arrowSize;
+    	} catch (Exception e) {
+			return defaultArrowSize;
+		}
+    }
+    
+    public double getOrientationArrowLength() {
+    	double defaultArrowSize = 50.0;
+    	String property = workspaceProperties.getProperty("orientationArrowLength", String.valueOf(defaultArrowSize));
+    	try {
+    		double arrowSize = Double.parseDouble(property);
+    		return arrowSize;
+    	} catch (Exception e) {
+			return defaultArrowSize;
+		}
+    }
+    
 }
