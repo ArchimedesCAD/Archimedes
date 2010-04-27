@@ -95,7 +95,6 @@ public class InterpreterView extends ViewPart implements Observer, ISelectionLis
         });
 
         input.addKeyListener(new KeyListener() {
-            private boolean oldOrtoState = Utils.getWorkspace().isOrtoOn();
            
             public void keyPressed (KeyEvent e) {
                 InputController inputController = br.org.archimedes.Utils.getInputController();

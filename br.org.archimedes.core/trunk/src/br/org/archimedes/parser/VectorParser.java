@@ -29,7 +29,7 @@ import br.org.archimedes.model.Vector;
  */
 public class VectorParser implements Parser {
 
-    private boolean ignoreOrto;
+    private boolean ignoreTransformation;
 
     private Point p1;
 
@@ -61,13 +61,13 @@ public class VectorParser implements Parser {
      * 
      * @param point
      *            The first point of the vector.
-     * @param ignoreOrto
-     *            true if the Orto should be ignored, false otherwise.
+     * @param ignoreTransformation
+     *            true if the Orto and shift should be ignored, false otherwise.
      */
-    public VectorParser (Point point, boolean ignoreOrto) {
+    public VectorParser (Point point, boolean ignoreTransformation) {
 
         p1 = (point == null ? new Point(0, 0) : point);
-        this.ignoreOrto = ignoreOrto;
+        this.ignoreTransformation = ignoreTransformation;
     }
 
     /*
@@ -82,7 +82,7 @@ public class VectorParser implements Parser {
 
         // TODO forbid zero length vectors
         if (Utils.isPoint(message)) {
-            p2 = applyOrto(Utils.getPointCoordinates(message));
+            p2 = applyTransformation(Utils.getPointCoordinates(message));
         }
         else if (message.startsWith("@") //$NON-NLS-1$
                 && Utils.isPoint(message.substring(1))) {
@@ -104,8 +104,8 @@ public class VectorParser implements Parser {
     /**
      * @return Point with orto (if it shouldnt ignore orto) the given point otherwise
      */
-    private Point applyOrto (Point point) {
-        if ( !ignoreOrto) {
+    private Point applyTransformation (Point point) {
+        if ( !ignoreTransformation) {
             try {
                 return Utils.transformVector(p1, point);
             }
@@ -131,7 +131,7 @@ public class VectorParser implements Parser {
             directionPoint = br.org.archimedes.Utils.getWorkspace().getMousePosition();
         }
 
-        directionPoint = applyOrto(directionPoint);
+        directionPoint = applyTransformation(directionPoint);
 
         try {
             return Geometrics.calculatePoint(distance, p1, directionPoint);
