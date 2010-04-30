@@ -16,6 +16,7 @@ package br.org.archimedes.gui.model;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.times;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -30,6 +31,7 @@ import org.mockito.exceptions.verification.WantedButNotInvoked;
 
 import br.org.archimedes.Constant;
 import br.org.archimedes.Tester;
+import br.org.archimedes.Utils;
 import br.org.archimedes.controller.InputController;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.factories.CommandFactory;
@@ -166,6 +168,21 @@ public class VisualHelperTest extends Tester {
     	Assert.assertEquals(expectedResult, method.invoke
     			(visualHelper, 20, new Point(0, 0), new Point(0, 100)));
     	
+    }
+    
+    @Test
+    public void SeDrawChamaSetColor() {
+    	CommandFactory activeFactory = mock(CommandFactory.class);
+    	when(inputController.getCurrentFactory()).thenReturn(activeFactory);
+    	Color activeColor;
+    	try {
+    		activeColor = Utils.getController().getActiveDrawing().getCurrentLayer().getColor();
+    	} catch (Exception e) {
+    		activeColor = new Color(0.0, 0.0, 0.0);
+    	}
+    	visualHelper.draw(false);
+    	verify(activeFactory, times(1)).drawVisualHelper();
+    	verify(openGLWrapper, times(1)).setColor(activeColor);
     }
     
     // TODO Test drawing selection helper if selection is active

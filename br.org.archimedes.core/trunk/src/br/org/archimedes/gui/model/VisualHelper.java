@@ -62,8 +62,13 @@ public class VisualHelper {
     public void draw (boolean cursorVisible) {
 
         drawGrip();
-
-        opengl.setColor(OpenGLWrapper.COLOR_DRAWING);
+        Color layerColor;
+        try {
+        	 layerColor = Utils.getController().getActiveDrawing().getCurrentLayer().getColor();
+        } catch (Exception e) {
+        	 layerColor = new Color(0.0, 0.0, 0.0);
+        }
+        opengl.setColor(layerColor);
         CommandFactory factory = interpreter.getCurrentFactory();
         if (factory != null) {
             factory.drawVisualHelper();
