@@ -65,7 +65,7 @@ public class SelectionCommand implements Command {
         OpenGLWrapper opengl = br.org.archimedes.Utils.getOpenGLWrapper();
         Color cursorColor = Utils.getWorkspace().getCursorColor();
         opengl.setColor(cursorColor);
-        
+        opengl.setLineWidth(OpenGLWrapper.NORMAL_WIDTH);
         if (end.getX() <= start.getX()) {
             opengl.setLineStyle(OpenGLWrapper.STIPPLED_LINE);
         }

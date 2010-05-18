@@ -7,14 +7,32 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 import br.org.archimedes.Utils;
 import br.org.archimedes.gui.opengl.Color;
+import br.org.archimedes.gui.rca.editor.DrawingEditor;
 import br.org.archimedes.gui.swt.preferences.PreferencesEditor;
 
 public class PreferencesEditorHandler extends AbstractHandler {
-
+	public DrawingEditor getDrawingEditor() {
+		DrawingEditor drawingEditor = new DrawingEditor();
+        IWorkbench workbench = PlatformUI.getWorkbench();
+        if (workbench != null) {
+        	IEditorPart activeEditor = workbench
+        	.getActiveWorkbenchWindow().getActivePage()
+        	.getActiveEditor();
+        	if (activeEditor != null
+        			&& activeEditor.getClass() == DrawingEditor.class) {
+        		drawingEditor = (DrawingEditor) activeEditor;
+        	}
+        }
+        return drawingEditor;
+	}
+	
     public Object execute (ExecutionEvent event) throws ExecutionException {
     	HashMap<String, Color> colors = new HashMap<String, Color>();
     	colors.put("backgroundColor", Utils.getWorkspace().getBackgroundColor());
@@ -22,7 +40,7 @@ public class PreferencesEditorHandler extends AbstractHandler {
     	colors.put("gripSelectionColor", Utils.getWorkspace().getGripSelectionColor());
     	colors.put("gripMouseOverColor", Utils.getWorkspace().getGripMouseOverColor());
         Shell shell = HandlerUtil.getActiveShell(event);
-        PreferencesEditor dialog = new PreferencesEditor(shell, colors);
+        PreferencesEditor dialog = new PreferencesEditor(shell, colors, getDrawingEditor());
         dialog.open();
 
         return null;

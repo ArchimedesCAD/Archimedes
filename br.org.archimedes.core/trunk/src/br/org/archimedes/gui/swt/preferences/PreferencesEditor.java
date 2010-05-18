@@ -31,9 +31,13 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.PlatformUI;
 
 import br.org.archimedes.Utils;
 import br.org.archimedes.gui.opengl.Color;
+import br.org.archimedes.gui.rca.editor.DrawingEditor;
 import br.org.archimedes.gui.swt.Messages;
 
 /**
@@ -63,6 +67,8 @@ public class PreferencesEditor {
 	private Color gripSelectionColor;
 
 	private Color gripMouseOverColor;
+	
+	private final DrawingEditor drawingEditor;
 
 
     /**
@@ -73,14 +79,16 @@ public class PreferencesEditor {
      * @param backgroundColor
      * 			  The workspace current background color 
      */
-    public PreferencesEditor (Shell parent, HashMap<String, Color> colors) {
+    public PreferencesEditor (Shell parent, HashMap<String, Color> colors, DrawingEditor drawingEditor) {
 
         this.parent = parent;
-        this.backgroundColor = colors.get("backgroundColor");
-        this.cursorColor = colors.get("cursorColor");
-        this.setGripSelectionColor(colors.get("gripSelectionColor"));
-        this.setGripMouseOverColor(colors.get("gripMouseOverColor"));
-        
+        if (colors != null) {
+        	this.backgroundColor = colors.get("backgroundColor");
+        	this.cursorColor = colors.get("cursorColor");
+        	this.setGripSelectionColor(colors.get("gripSelectionColor"));
+        	this.setGripMouseOverColor(colors.get("gripMouseOverColor"));
+        }
+        this.drawingEditor = drawingEditor;
         createShell();
 
         this.form = new PreferencesForm(shell, this);
@@ -183,19 +191,9 @@ public class PreferencesEditor {
         warningIcon.setVisible(true);
         warningLabel.setVisible(true);
     }
-
-    /**
-     * Creates the buttons
-     */
-    private void createButtons () {
-
-        Composite buttonsComposite = new Composite(shell, SWT.NONE);
-        buttonsComposite.setLayout(new FillLayout());
-
-        okButton = new Button(buttonsComposite, SWT.PUSH);
-        okButton.setText(Messages.OK);
-        okButton.addSelectionListener(new SelectionAdapter() {
-
+    
+    public SelectionAdapter getOKSelectionAdapter() {
+    	return new SelectionAdapter() {
             public void widgetSelected (SelectionEvent e) {
             	Utils.getWorkspace().setGripSelectionColor(getGripSelectionColor());
             	Utils.getWorkspace().setGripMouseOverColor(getGripMouseOverColor());
@@ -203,8 +201,22 @@ public class PreferencesEditor {
             	Utils.getWorkspace().setBackgroundColor(backgroundColor);
             	Utils.getWorkspace().saveProperties(false);
                 shell.dispose();
+                drawingEditor.update(null, null);
             }
-        });
+        };
+    }
+    
+    /**
+     * Creates the buttons
+     */
+    private void createButtons () {
+
+        Composite buttonsComposite = new Composite(shell, SWT.NONE);
+        buttonsComposite.setLayout(new FillLayout());
+        
+        okButton = new Button(buttonsComposite, SWT.PUSH);
+        okButton.setText(Messages.OK);
+        okButton.addSelectionListener(getOKSelectionAdapter());
 
         okButton.setVisible(true);
     }
