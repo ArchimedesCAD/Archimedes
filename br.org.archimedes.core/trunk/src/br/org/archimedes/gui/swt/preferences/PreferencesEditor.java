@@ -13,6 +13,8 @@
  */
 package br.org.archimedes.gui.swt.preferences;
 
+import java.util.HashMap;
+
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
@@ -58,6 +60,10 @@ public class PreferencesEditor {
 
 	private Color cursorColor;
 
+	private Color gripSelectionColor;
+
+	private Color gripMouseOverColor;
+
 
     /**
      * Constructor.
@@ -67,11 +73,13 @@ public class PreferencesEditor {
      * @param backgroundColor
      * 			  The workspace current background color 
      */
-    public PreferencesEditor (Shell parent, Color backgroundColor, Color cursorColor) {
+    public PreferencesEditor (Shell parent, HashMap<String, Color> colors) {
 
         this.parent = parent;
-        this.backgroundColor = backgroundColor;
-        this.cursorColor = cursorColor;
+        this.backgroundColor = colors.get("backgroundColor");
+        this.cursorColor = colors.get("cursorColor");
+        this.setGripSelectionColor(colors.get("gripSelectionColor"));
+        this.setGripMouseOverColor(colors.get("gripMouseOverColor"));
         
         createShell();
 
@@ -189,6 +197,8 @@ public class PreferencesEditor {
         okButton.addSelectionListener(new SelectionAdapter() {
 
             public void widgetSelected (SelectionEvent e) {
+            	Utils.getWorkspace().setGripSelectionColor(getGripSelectionColor());
+            	Utils.getWorkspace().setGripMouseOverColor(getGripMouseOverColor());
             	Utils.getWorkspace().setCursorColor(cursorColor);
             	Utils.getWorkspace().setBackgroundColor(backgroundColor);
             	Utils.getWorkspace().saveProperties(false);
@@ -243,5 +253,21 @@ public class PreferencesEditor {
 
 	public Color getCursorColor() {
 		return cursorColor;
+	}
+
+	public void setGripSelectionColor(Color gripSelectionColor) {
+		this.gripSelectionColor = gripSelectionColor;
+	}
+
+	public Color getGripSelectionColor() {
+		return gripSelectionColor;
+	}
+
+	public void setGripMouseOverColor(Color gripMouseOverColor) {
+		this.gripMouseOverColor = gripMouseOverColor;
+	}
+
+	public Color getGripMouseOverColor() {
+		return gripMouseOverColor;
 	}
 }

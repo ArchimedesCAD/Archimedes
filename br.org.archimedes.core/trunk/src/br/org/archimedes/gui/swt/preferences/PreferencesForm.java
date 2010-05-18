@@ -46,6 +46,10 @@ public class PreferencesForm extends Observable implements Observer {
     private Canvas backgroundColorCanvas;
     
     private Canvas cursorColorCanvas;
+    
+    private Canvas gripSelectionColorCanvas;
+    
+    private Canvas gripMouseOverColorCanvas;
 
     private Group formGroup;
 
@@ -86,6 +90,10 @@ public class PreferencesForm extends Observable implements Observer {
         layoutData.verticalSpan = 1;
                 
         createCursorColorField(formGroup);
+        
+        createGripSelectionColorField(formGroup);
+        
+        createGripMouseOverColorField(formGroup);
 
         formGroup.pack();
         formGroup.setVisible(true);
@@ -93,8 +101,7 @@ public class PreferencesForm extends Observable implements Observer {
 
   
 
- 
-    /**
+	/**
      * @param formGroup
      *            The form group that should contain the style field.
      */
@@ -190,6 +197,105 @@ public class PreferencesForm extends Observable implements Observer {
         layoutData = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
         colorComposite.setLayoutData(layoutData);
     }
+    
+    
+    /**
+     * @param formGroup
+     *            The form group that should contain the style field.
+     */
+    private void createGripSelectionColorField (Group formGroup) {
+
+        Label colorLabel = new Label(formGroup, SWT.NONE);
+        colorLabel.setText(Messages.PreferencesEditor_GripSelectionColorLabel);
+        GridData layoutData = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
+        colorLabel.setLayoutData(layoutData);
+
+        Composite colorComposite = new Composite(formGroup, SWT.NONE);
+        colorComposite.setLayout(new RowLayout());
+
+        gripSelectionColorCanvas = new Canvas(colorComposite, SWT.BORDER);
+        Color gripSelectionColor = editor.getGripSelectionColor();
+        gripSelectionColorCanvas.setBackground(new org.eclipse.swt.graphics.Color(parent.getDisplay(), gripSelectionColor.getRed(), gripSelectionColor.getGreen(), gripSelectionColor.getBlue()));
+        gripSelectionColorCanvas.setLayoutData(new RowData(60, 20));
+
+        Button colorButton = new Button(colorComposite, SWT.PUSH);
+        colorButton.setText(Messages.PreferencesEditor_GripSelectionColorChange);
+        colorButton.addSelectionListener(new SelectionAdapter() {
+
+            public void widgetSelected (SelectionEvent e) {
+
+                ColorDialog colorDialog = new ColorDialog(parent);
+                RGB rgb = colorDialog.open();
+                
+                if (rgb != null) {
+                    Color newColor = new Color(rgb.red, rgb.green, rgb.blue);
+                    if ( !newColor.equals(editor.getGripSelectionColor())) {
+                        Device device = parent.getDisplay();
+                        org.eclipse.swt.graphics.Color color = new org.eclipse.swt.graphics.Color(
+                                device, rgb);
+
+                        gripSelectionColorCanvas.setBackground(color);
+                        editor.setGripSelectionColor(newColor);
+                        PreferencesForm.this.setChanged();
+                    }
+                }
+
+            }
+        });
+
+        layoutData = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
+        colorComposite.setLayoutData(layoutData);
+    }
+    
+
+    /**
+     * @param formGroup
+     *            The form group that should contain the style field.
+     */
+    private void createGripMouseOverColorField (Group formGroup) {
+
+        Label colorLabel = new Label(formGroup, SWT.NONE);
+        colorLabel.setText(Messages.PreferencesEditor_GripMouseOverColorLabel);
+        GridData layoutData = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
+        colorLabel.setLayoutData(layoutData);
+
+        Composite colorComposite = new Composite(formGroup, SWT.NONE);
+        colorComposite.setLayout(new RowLayout());
+
+        gripMouseOverColorCanvas = new Canvas(colorComposite, SWT.BORDER);
+        Color gripMouseOverColor = editor.getGripMouseOverColor();
+        gripMouseOverColorCanvas.setBackground(new org.eclipse.swt.graphics.Color(parent.getDisplay(), gripMouseOverColor.getRed(), gripMouseOverColor.getGreen(), gripMouseOverColor.getBlue()));
+        gripMouseOverColorCanvas.setLayoutData(new RowData(60, 20));
+
+        Button colorButton = new Button(colorComposite, SWT.PUSH);
+        colorButton.setText(Messages.PreferencesEditor_GripMouseOverColorChange);
+        colorButton.addSelectionListener(new SelectionAdapter() {
+
+            public void widgetSelected (SelectionEvent e) {
+
+                ColorDialog colorDialog = new ColorDialog(parent);
+                RGB rgb = colorDialog.open();
+                
+                if (rgb != null) {
+                    Color newColor = new Color(rgb.red, rgb.green, rgb.blue);
+                    if ( !newColor.equals(editor.getGripMouseOverColor())) {
+                        Device device = parent.getDisplay();
+                        org.eclipse.swt.graphics.Color color = new org.eclipse.swt.graphics.Color(
+                                device, rgb);
+
+                        gripMouseOverColorCanvas.setBackground(color);
+                        editor.setGripMouseOverColor(newColor);
+                        PreferencesForm.this.setChanged();
+                    }
+                }
+
+            }
+        });
+
+        layoutData = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
+        colorComposite.setLayoutData(layoutData);
+    }
+    
 
     /**
      *  

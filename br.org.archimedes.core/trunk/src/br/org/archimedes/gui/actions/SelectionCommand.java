@@ -13,9 +13,11 @@
  */
 package br.org.archimedes.gui.actions;
 
+import br.org.archimedes.Utils;
 import br.org.archimedes.controller.Controller;
 import br.org.archimedes.exceptions.NoActiveDrawingException;
 import br.org.archimedes.exceptions.NullArgumentException;
+import br.org.archimedes.gui.opengl.Color;
 import br.org.archimedes.gui.opengl.OpenGLWrapper;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Rectangle;
@@ -54,13 +56,16 @@ public class SelectionCommand implements Command {
      * Draws the visual helper for selection.
      */
     public void drawVisualHelper () {
-
+    	
         Point start = p1;
         Point end = br.org.archimedes.Utils.getWorkspace().getActualMousePosition();
 
         Rectangle rectangle = new Rectangle(start.getX(), start.getY(), end
                 .getX(), end.getY());
         OpenGLWrapper opengl = br.org.archimedes.Utils.getOpenGLWrapper();
+        Color cursorColor = Utils.getWorkspace().getCursorColor();
+        opengl.setColor(cursorColor);
+        
         if (end.getX() <= start.getX()) {
             opengl.setLineStyle(OpenGLWrapper.STIPPLED_LINE);
         }

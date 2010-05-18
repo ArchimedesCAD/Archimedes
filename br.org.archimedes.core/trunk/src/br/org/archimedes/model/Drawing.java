@@ -31,6 +31,7 @@ import java.util.Stack;
 import org.eclipse.swt.opengl.GLCanvas;
 
 import br.org.archimedes.Constant;
+import br.org.archimedes.Utils;
 import br.org.archimedes.exceptions.IllegalActionException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.gui.model.Workspace;
@@ -765,7 +766,7 @@ public class Drawing extends Observable implements Observer {
             openGL.setColor(OpenGLWrapper.COLOR_DRAWING);
             element.draw(openGL);
 
-            openGL.setColor(OpenGLWrapper.COLOR_GRIP);
+            openGL.setColor(Utils.getWorkspace().getGripSelectionColor());
             openGL.setLineWidth(OpenGLWrapper.GRIP_WIDTH);
             openGL.setLineStyle(OpenGLWrapper.CONTINUOUS_LINE);
             openGL.setPrimitiveType(OpenGLWrapper.PRIMITIVE_LINE_LOOP);

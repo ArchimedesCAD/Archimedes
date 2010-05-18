@@ -51,7 +51,7 @@ public class WorkspaceTest {
     	assertFalse(workspace.isShiftDown());
     }
     
-        @Test
+    @Test
     public void backgroundColorPersistenceTest() {
     	Color newColor = new Color(122, 30, 200);
     	workspace.setBackgroundColor(newColor);
@@ -63,12 +63,32 @@ public class WorkspaceTest {
     
     @Test
     public void cursorColorPersistenceTest() {
-    	Color newColor = new Color(122, 30, 200);
+    	Color newColor = new Color(0, 30, 200);
     	workspace.setCursorColor(newColor);
     	workspace.saveProperties(false);
     	Workspace newWorkspace = new Workspace();
     	Color loadedCursorColor = newWorkspace.getCursorColor();
     	Assert.assertEquals(newColor, loadedCursorColor);
+    }
+    
+    @Test
+    public void gripSelectionColorPersistenceTest() {
+    	Color newColor = new Color(122, 0, 200);
+    	workspace.setGripSelectionColor(newColor);
+    	workspace.saveProperties(false);
+    	Workspace newWorkspace = new Workspace();
+    	Color loadedGripSelectionColor = newWorkspace.getGripSelectionColor();
+    	Assert.assertEquals(newColor, loadedGripSelectionColor);
+    }
+    
+    @Test
+    public void gripMouseOverColorPersistenceTest() {
+    	Color newColor = new Color(122, 30, 0);
+    	workspace.setGripMouseOverColor(newColor);
+    	workspace.saveProperties(false);
+    	Workspace newWorkspace = new Workspace();
+    	Color loadedGripMouseOverColor = newWorkspace.getGripMouseOverColor();
+    	Assert.assertEquals(newColor, loadedGripMouseOverColor);
     }
     
     // TODO Test coordinates convertion from screen to model

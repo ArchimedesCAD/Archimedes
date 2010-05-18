@@ -67,6 +67,14 @@ public class Messages extends NLS {
     public static String PreferencesEditor_CursorColorLabel;
     
     public static String PreferencesEditor_CursorColorChange;
+    
+    public static String PreferencesEditor_GripSelectionColorLabel;
+    
+    public static String PreferencesEditor_GripSelectionColorChange;
+    
+    public static String PreferencesEditor_GripMouseOverColorLabel;
+    
+    public static String PreferencesEditor_GripMouseOverColorChange;
 
     public static String OK;
 

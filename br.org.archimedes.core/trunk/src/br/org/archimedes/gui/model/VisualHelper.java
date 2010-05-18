@@ -73,7 +73,7 @@ public class VisualHelper {
         if (factory != null) {
             factory.drawVisualHelper();
         }
-
+        
         if (SelectionCommand.isActive()) {
             SelectionCommand.getActive().drawVisualHelper();
         }
@@ -90,7 +90,7 @@ public class VisualHelper {
 
         ReferencePoint gripPoint = workspace.getGripMousePosition();
         if (gripPoint != null) {
-            opengl.setColor(OpenGLWrapper.COLOR_SELECTED);
+            opengl.setColor(Utils.getWorkspace().getGripMouseOverColor());
             opengl.setLineWidth(OpenGLWrapper.GRIP_WIDTH);
             opengl.setLineStyle(OpenGLWrapper.CONTINUOUS_LINE);
             opengl.setPrimitiveType(OpenGLWrapper.PRIMITIVE_LINE_LOOP);

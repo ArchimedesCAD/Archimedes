@@ -744,14 +744,15 @@ public class Workspace extends Observable {
         return openDrawings;
     }
     
-    public Color getBackgroundColor() {
-    	String property = workspaceProperties.getProperty("backgroundColor");
+    private Color getPropertyColor(String propertyName, Color defaultColor) {
+    	Color color;
+    	String property = workspaceProperties.getProperty(propertyName);
     	if(property == null) {
-    		return OpenGLWrapper.COLOR_BACKGROUND;
+    		return defaultColor;
     	}
     	String colors[] = property.split(",");
     	if(colors.length != 3) {
-    		return OpenGLWrapper.COLOR_BACKGROUND;
+    		return defaultColor;
     	}
     	else {
     		try {
@@ -759,46 +760,50 @@ public class Workspace extends Observable {
 				r = Integer.parseInt(colors[0]);
 				g = Integer.parseInt(colors[1]);
 				b = Integer.parseInt(colors[2]);
-				Color backgroundColor = new Color(r, g, b);
-				return backgroundColor;
+				color = new Color(r, g, b);
+				return color;
 			} catch(NumberFormatException e) {
-				return OpenGLWrapper.COLOR_BACKGROUND;
+				return defaultColor;
 			}
     	}
-	}
+    }
+    
+    private void setPropertyColor(String propertyName, Color color){
+    	setProperty(propertyName, color.getRed() + "," + color.getGreen() + "," + color.getBlue());
+    }
+    
+    public Color getBackgroundColor() {
+    	return getPropertyColor("backgroundColor", OpenGLWrapper.COLOR_BACKGROUND);	
+    }
 
 	public void setBackgroundColor(Color backgroundColor) {
-		setProperty("backgroundColor", backgroundColor.getRed() + "," + backgroundColor.getGreen() + "," + backgroundColor.getBlue());
+		setPropertyColor("backgroundColor", backgroundColor);
 	}
 	
 	public Color getCursorColor() {
-    	String property = workspaceProperties.getProperty("cursorColor");
-    	if(property == null) {
-    		return OpenGLWrapper.COLOR_CURSOR;
-    	}
-    	String colors[] = property.split(",");
-    	if(colors.length != 3) {
-    		return OpenGLWrapper.COLOR_CURSOR;
-    	}
-    	else {
-    		try {
-				int r, g, b;
-				r = Integer.parseInt(colors[0]);
-				g = Integer.parseInt(colors[1]);
-				b = Integer.parseInt(colors[2]);
-				Color cursorColor = new Color(r, g, b);
-				return cursorColor;
-			} catch(NumberFormatException e) {
-				return OpenGLWrapper.COLOR_CURSOR;
-			}
-    	}
+		return getPropertyColor("cursorColor", OpenGLWrapper.COLOR_CURSOR);	
 	}
 
 	public void setCursorColor(Color cursorColor) {
-		setProperty("cursorColor", cursorColor.getRed() + "," + cursorColor.getGreen() + "," + cursorColor.getBlue());
+		setPropertyColor("cursorColor", cursorColor);
 	}
-	
 
+	public void setGripSelectionColor(Color color) {
+		setPropertyColor("gripSelectionColor", color);
+	}
+
+	public Color getGripSelectionColor() {
+		return getPropertyColor("gripSelectionColor", OpenGLWrapper.COLOR_GRIP);
+	}
+
+	public void setGripMouseOverColor(Color color) {
+		setPropertyColor("gripMouseOverColor", color);
+	}
+
+	public Color getGripMouseOverColor() {
+		return getPropertyColor("gripMouseOverColor", OpenGLWrapper.COLOR_SELECTED);
+	}
+    
     public double getOrientationArrowWidth() {
     	double defaultArrowSize = 10.0;
     	String property = workspaceProperties.getProperty("orientationArrowWidth", String.valueOf(defaultArrowSize));
@@ -820,5 +825,5 @@ public class Workspace extends Observable {
 			return defaultArrowSize;
 		}
     }
-    
+
 }

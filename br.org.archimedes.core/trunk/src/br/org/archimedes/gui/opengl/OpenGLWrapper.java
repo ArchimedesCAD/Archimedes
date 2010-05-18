@@ -13,6 +13,7 @@
  */
 package br.org.archimedes.gui.opengl;
 
+import java.nio.IntBuffer;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -525,4 +526,5 @@ public class OpenGLWrapper {
         }
         return total;
     }
+    
 }
