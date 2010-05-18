@@ -99,30 +99,35 @@ public class PreferencesForm extends Observable implements Observer {
         formGroup.setVisible(true);
     }
 
-  
+    private Canvas createColorField(Group formGroup, String message, String changeMessage, Color color, SelectionAdapter selectionAdapter) {
+    	Label colorLabel = new Label(formGroup, SWT.NONE);
+    	colorLabel.setText(message);
+    	GridData layoutData = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
+    	colorLabel.setLayoutData(layoutData);
+    	
+    	Composite colorComposite = new Composite(formGroup, SWT.NONE);
+    	colorComposite.setLayout(new RowLayout());
+    	
+    	Canvas colorCanvas = new Canvas(colorComposite, SWT.BORDER);
+    	colorCanvas.setBackground(new org.eclipse.swt.graphics.Color(parent.getDisplay(), color.getRed(), color.getGreen(), color.getBlue()));
+        colorCanvas.setLayoutData(new RowData(60, 20));
+        
+        Button colorButton = new Button(colorComposite, SWT.PUSH);
+        colorButton.setText(changeMessage);
+        colorButton.addSelectionListener(selectionAdapter);
+        
+        layoutData = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
+        colorComposite.setLayoutData(layoutData);
+        
+        return colorCanvas;
+    }
 
 	/**
      * @param formGroup
      *            The form group that should contain the style field.
      */
     private void createBackgroundColorField (Group formGroup) {
-
-        Label colorLabel = new Label(formGroup, SWT.NONE);
-        colorLabel.setText(Messages.PreferencesEditor_BackgroundColorLabel);
-        GridData layoutData = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
-        colorLabel.setLayoutData(layoutData);
-
-        Composite colorComposite = new Composite(formGroup, SWT.NONE);
-        colorComposite.setLayout(new RowLayout());
-
-        backgroundColorCanvas = new Canvas(colorComposite, SWT.BORDER);
-        Color backgroundColor = editor.getBackgroundColor();
-        backgroundColorCanvas.setBackground(new org.eclipse.swt.graphics.Color(parent.getDisplay(), backgroundColor.getRed(), backgroundColor.getGreen(), backgroundColor.getBlue()));
-        backgroundColorCanvas.setLayoutData(new RowData(60, 20));
-
-        Button colorButton = new Button(colorComposite, SWT.PUSH);
-        colorButton.setText(Messages.PreferencesEditor_BackgroundColorChange);
-        colorButton.addSelectionListener(new SelectionAdapter() {
+    	SelectionAdapter selectionAdapter = new SelectionAdapter() {
 
             public void widgetSelected (SelectionEvent e) {
 
@@ -143,10 +148,11 @@ public class PreferencesForm extends Observable implements Observer {
                 }
 
             }
-        });
-
-        layoutData = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
-        colorComposite.setLayoutData(layoutData);
+        };
+        String labelMessage = Messages.PreferencesEditor_BackgroundColorLabel;
+        String changeMessage = Messages.PreferencesEditor_BackgroundColorChange;
+    	backgroundColorCanvas = createColorField(formGroup, labelMessage, changeMessage,
+    			                                 editor.getBackgroundColor(), selectionAdapter);
     }
     
     
@@ -155,23 +161,8 @@ public class PreferencesForm extends Observable implements Observer {
      *            The form group that should contain the style field.
      */
     private void createCursorColorField (Group formGroup) {
-
-        Label colorLabel = new Label(formGroup, SWT.NONE);
-        colorLabel.setText(Messages.PreferencesEditor_CursorColorLabel);
-        GridData layoutData = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
-        colorLabel.setLayoutData(layoutData);
-
-        Composite colorComposite = new Composite(formGroup, SWT.NONE);
-        colorComposite.setLayout(new RowLayout());
-
-        cursorColorCanvas = new Canvas(colorComposite, SWT.BORDER);
-        Color cursorColor = editor.getCursorColor();
-        cursorColorCanvas.setBackground(new org.eclipse.swt.graphics.Color(parent.getDisplay(), cursorColor.getRed(), cursorColor.getGreen(), cursorColor.getBlue()));
-        cursorColorCanvas.setLayoutData(new RowData(60, 20));
-
-        Button colorButton = new Button(colorComposite, SWT.PUSH);
-        colorButton.setText(Messages.PreferencesEditor_CursorColorChange);
-        colorButton.addSelectionListener(new SelectionAdapter() {
+    	
+    	SelectionAdapter selectionAdapter = new SelectionAdapter() {
 
             public void widgetSelected (SelectionEvent e) {
 
@@ -192,10 +183,11 @@ public class PreferencesForm extends Observable implements Observer {
                 }
 
             }
-        });
-
-        layoutData = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
-        colorComposite.setLayoutData(layoutData);
+        };
+    	String labelMessage = Messages.PreferencesEditor_CursorColorLabel;
+        String changeMessage = Messages.PreferencesEditor_CursorColorChange;
+    	cursorColorCanvas = createColorField(formGroup, labelMessage, changeMessage,
+                editor.getCursorColor(), selectionAdapter);
     }
     
     
@@ -204,23 +196,8 @@ public class PreferencesForm extends Observable implements Observer {
      *            The form group that should contain the style field.
      */
     private void createGripSelectionColorField (Group formGroup) {
-
-        Label colorLabel = new Label(formGroup, SWT.NONE);
-        colorLabel.setText(Messages.PreferencesEditor_GripSelectionColorLabel);
-        GridData layoutData = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
-        colorLabel.setLayoutData(layoutData);
-
-        Composite colorComposite = new Composite(formGroup, SWT.NONE);
-        colorComposite.setLayout(new RowLayout());
-
-        gripSelectionColorCanvas = new Canvas(colorComposite, SWT.BORDER);
-        Color gripSelectionColor = editor.getGripSelectionColor();
-        gripSelectionColorCanvas.setBackground(new org.eclipse.swt.graphics.Color(parent.getDisplay(), gripSelectionColor.getRed(), gripSelectionColor.getGreen(), gripSelectionColor.getBlue()));
-        gripSelectionColorCanvas.setLayoutData(new RowData(60, 20));
-
-        Button colorButton = new Button(colorComposite, SWT.PUSH);
-        colorButton.setText(Messages.PreferencesEditor_GripSelectionColorChange);
-        colorButton.addSelectionListener(new SelectionAdapter() {
+    	
+    	SelectionAdapter selectionAdapter = new SelectionAdapter() {
 
             public void widgetSelected (SelectionEvent e) {
 
@@ -241,10 +218,11 @@ public class PreferencesForm extends Observable implements Observer {
                 }
 
             }
-        });
-
-        layoutData = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
-        colorComposite.setLayoutData(layoutData);
+        };
+    	String labelMessage = Messages.PreferencesEditor_GripSelectionColorLabel;
+        String changeMessage = Messages.PreferencesEditor_GripSelectionColorChange;
+        gripSelectionColorCanvas = createColorField(formGroup, labelMessage, changeMessage,
+                editor.getGripSelectionColor(), selectionAdapter);
     }
     
 
@@ -253,47 +231,34 @@ public class PreferencesForm extends Observable implements Observer {
      *            The form group that should contain the style field.
      */
     private void createGripMouseOverColorField (Group formGroup) {
+    	
+    	SelectionAdapter selectionAdapter = new SelectionAdapter() {
 
-        Label colorLabel = new Label(formGroup, SWT.NONE);
-        colorLabel.setText(Messages.PreferencesEditor_GripMouseOverColorLabel);
-        GridData layoutData = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
-        colorLabel.setLayoutData(layoutData);
+                public void widgetSelected (SelectionEvent e) {
 
-        Composite colorComposite = new Composite(formGroup, SWT.NONE);
-        colorComposite.setLayout(new RowLayout());
+                    ColorDialog colorDialog = new ColorDialog(parent);
+                    RGB rgb = colorDialog.open();
+                    
+                    if (rgb != null) {
+                        Color newColor = new Color(rgb.red, rgb.green, rgb.blue);
+                        if ( !newColor.equals(editor.getGripMouseOverColor())) {
+                            Device device = parent.getDisplay();
+                            org.eclipse.swt.graphics.Color color = new org.eclipse.swt.graphics.Color(
+                                    device, rgb);
 
-        gripMouseOverColorCanvas = new Canvas(colorComposite, SWT.BORDER);
-        Color gripMouseOverColor = editor.getGripMouseOverColor();
-        gripMouseOverColorCanvas.setBackground(new org.eclipse.swt.graphics.Color(parent.getDisplay(), gripMouseOverColor.getRed(), gripMouseOverColor.getGreen(), gripMouseOverColor.getBlue()));
-        gripMouseOverColorCanvas.setLayoutData(new RowData(60, 20));
-
-        Button colorButton = new Button(colorComposite, SWT.PUSH);
-        colorButton.setText(Messages.PreferencesEditor_GripMouseOverColorChange);
-        colorButton.addSelectionListener(new SelectionAdapter() {
-
-            public void widgetSelected (SelectionEvent e) {
-
-                ColorDialog colorDialog = new ColorDialog(parent);
-                RGB rgb = colorDialog.open();
-                
-                if (rgb != null) {
-                    Color newColor = new Color(rgb.red, rgb.green, rgb.blue);
-                    if ( !newColor.equals(editor.getGripMouseOverColor())) {
-                        Device device = parent.getDisplay();
-                        org.eclipse.swt.graphics.Color color = new org.eclipse.swt.graphics.Color(
-                                device, rgb);
-
-                        gripMouseOverColorCanvas.setBackground(color);
-                        editor.setGripMouseOverColor(newColor);
-                        PreferencesForm.this.setChanged();
+                            gripMouseOverColorCanvas.setBackground(color);
+                            editor.setGripMouseOverColor(newColor);
+                            PreferencesForm.this.setChanged();
+                        }
                     }
+
                 }
+    	};
+    	String labelMessage = Messages.PreferencesEditor_GripMouseOverColorLabel;
+        String changeMessage = Messages.PreferencesEditor_GripMouseOverColorChange;
+        gripMouseOverColorCanvas = createColorField(formGroup, labelMessage, changeMessage,
+                editor.getGripMouseOverColor(), selectionAdapter);
 
-            }
-        });
-
-        layoutData = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
-        colorComposite.setLayoutData(layoutData);
     }
     
 
