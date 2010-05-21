@@ -35,10 +35,10 @@ public class PreferencesEditorHandler extends AbstractHandler {
 	
     public Object execute (ExecutionEvent event) throws ExecutionException {
     	HashMap<String, Color> colors = new HashMap<String, Color>();
-    	colors.put("backgroundColor", Utils.getWorkspace().getBackgroundColor());
-    	colors.put("cursorColor", Utils.getWorkspace().getCursorColor());
-    	colors.put("gripSelectionColor", Utils.getWorkspace().getGripSelectionColor());
-    	colors.put("gripMouseOverColor", Utils.getWorkspace().getGripMouseOverColor());
+    	colors.put("background", Utils.getWorkspace().getBackgroundColor());
+    	colors.put("cursor", Utils.getWorkspace().getCursorColor());
+    	colors.put("gripSelection", Utils.getWorkspace().getGripSelectionColor());
+    	colors.put("gripMouseOver", Utils.getWorkspace().getGripMouseOverColor());
         Shell shell = HandlerUtil.getActiveShell(event);
         PreferencesEditor dialog = new PreferencesEditor(shell, colors, getDrawingEditor());
         dialog.open();

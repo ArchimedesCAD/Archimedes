@@ -60,13 +60,7 @@ public class PreferencesEditor {
     
     private PreferencesForm form;
     
-    private Color backgroundColor;
-
-	private Color cursorColor;
-
-	private Color gripSelectionColor;
-
-	private Color gripMouseOverColor;
+    private HashMap<String, Color> colors;
 	
 	private final DrawingEditor drawingEditor;
 
@@ -82,12 +76,7 @@ public class PreferencesEditor {
     public PreferencesEditor (Shell parent, HashMap<String, Color> colors, DrawingEditor drawingEditor) {
 
         this.parent = parent;
-        if (colors != null) {
-        	this.backgroundColor = colors.get("backgroundColor");
-        	this.cursorColor = colors.get("cursorColor");
-        	this.setGripSelectionColor(colors.get("gripSelectionColor"));
-        	this.setGripMouseOverColor(colors.get("gripMouseOverColor"));
-        }
+        this.colors = colors;
         this.drawingEditor = drawingEditor;
         createShell();
 
@@ -195,10 +184,10 @@ public class PreferencesEditor {
     public SelectionAdapter getOKSelectionAdapter() {
     	return new SelectionAdapter() {
             public void widgetSelected (SelectionEvent e) {
-            	Utils.getWorkspace().setGripSelectionColor(getGripSelectionColor());
-            	Utils.getWorkspace().setGripMouseOverColor(getGripMouseOverColor());
-            	Utils.getWorkspace().setCursorColor(cursorColor);
-            	Utils.getWorkspace().setBackgroundColor(backgroundColor);
+            	Utils.getWorkspace().setGripSelectionColor(getColor("gripSelection"));
+            	Utils.getWorkspace().setGripMouseOverColor(getColor("gripMouseOver"));
+            	Utils.getWorkspace().setCursorColor(getColor("cursor"));
+            	Utils.getWorkspace().setBackgroundColor(getColor("background"));
             	Utils.getWorkspace().saveProperties(false);
                 shell.dispose();
                 drawingEditor.update(null, null);
@@ -250,36 +239,16 @@ public class PreferencesEditor {
 
         okButton.setEnabled(closable);
     }
-
-	public void setBackgroundColor(Color backgroundColor) {
-		this.backgroundColor = backgroundColor;
-	}
-
-	public Color getBackgroundColor() {
-		return backgroundColor;
-	}
-
-	public void setCursorColor(Color cursorColor) {
-		this.cursorColor = cursorColor;
-	}
-
-	public Color getCursorColor() {
-		return cursorColor;
-	}
-
-	public void setGripSelectionColor(Color gripSelectionColor) {
-		this.gripSelectionColor = gripSelectionColor;
-	}
-
-	public Color getGripSelectionColor() {
-		return gripSelectionColor;
-	}
-
-	public void setGripMouseOverColor(Color gripMouseOverColor) {
-		this.gripMouseOverColor = gripMouseOverColor;
-	}
-
-	public Color getGripMouseOverColor() {
-		return gripMouseOverColor;
-	}
+    
+    public void setColor(String name, Color color) {
+    	colors.put(name, color);
+    }
+    
+    public Color getColor(String name) {
+    	Color color = this.colors.get(name);
+    	if(color == null){
+    		color = new Color(0,0,0);
+    	}
+    	return color;
+    }
 }
