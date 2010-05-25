@@ -15,13 +15,13 @@
 
 package br.org.archimedes.model;
 
-import br.org.archimedes.exceptions.IllegalActionException;
-import br.org.archimedes.exceptions.NullArgumentException;
-import br.org.archimedes.gui.opengl.OpenGLWrapper;
-
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
+
+import br.org.archimedes.exceptions.IllegalActionException;
+import br.org.archimedes.exceptions.NullArgumentException;
+import br.org.archimedes.gui.opengl.OpenGLWrapper;
 
 /**
  * Belongs to package br.org.archimedes.model.
@@ -289,6 +289,10 @@ public abstract class Element {
     }
 
     public abstract void draw (OpenGLWrapper wrapper);
+    
+    public void drawClone(OpenGLWrapper wrapper) {
+    	draw(wrapper);
+    }
 
     /**
      * @return the extremes (vertices) of the element

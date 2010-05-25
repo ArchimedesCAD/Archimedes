@@ -115,13 +115,14 @@ public class QuickMoveFactory extends TwoPointFactory {
         // Moves other elements so that the map can stay unaltered
         // Bug Fix for Bug ID 2747780
         Map<Element, Collection<Point>> movableClones = createClones(pointsToMove);
-        
+
         for (Entry<Element, Collection<Point>> association : movableClones.entrySet()) {
             Element toMove = association.getKey();
+            
             Collection<Point> points = association.getValue();
             try {
                 toMove.move(points, vector);
-                toMove.draw(wrapper);
+                toMove.drawClone(wrapper);
             }
             catch (NullArgumentException e) {
                 // Should not happen
