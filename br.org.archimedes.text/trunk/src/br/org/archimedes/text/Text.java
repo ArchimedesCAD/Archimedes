@@ -14,6 +14,12 @@
 
 package br.org.archimedes.text;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import org.apache.batik.svggen.font.Font;
+
 import br.org.archimedes.Constant;
 import br.org.archimedes.Geometrics;
 import br.org.archimedes.exceptions.IllegalActionException;
@@ -26,12 +32,6 @@ import br.org.archimedes.model.Rectangle;
 import br.org.archimedes.model.ReferencePoint;
 import br.org.archimedes.model.Vector;
 import br.org.archimedes.model.references.CirclePoint;
-
-import org.apache.batik.svggen.font.Font;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 public class Text extends Element {
 
@@ -103,7 +103,7 @@ public class Text extends Element {
     }
 
     @Override
-    public Element clone () {
+    public Text clone () {
 
         Text clone = null;
         try {
@@ -347,4 +347,26 @@ public class Text extends Element {
                 + verticalPoint;
         return s;
     }
+
+	@Override
+	public List<Point> getExtremePoints() {
+		List<Point> extremePoints = new ArrayList<Point>();
+		Rectangle rectangle = this.getBoundaryRectangle();
+		Point lowerLeft = rectangle.getLowerLeft();
+		Point lowerRight = rectangle.getLowerRight();
+		Point upperLeft = rectangle.getUpperLeft();
+		Point upperRight = rectangle.getUpperRight();
+		lowerLeft = lowerLeft.addVector(new Vector(new Point(-5.0, -5.0)));
+		lowerRight = lowerRight.addVector(new Vector(new Point(5.0, -5.0)));
+		upperLeft = upperLeft.addVector(new Vector(new Point(-5.0, 5.0)));
+		upperRight = upperRight.addVector(new Vector(new Point(5.0, 5.0)));
+		extremePoints.add(lowerLeft);
+		extremePoints.add(upperLeft);
+		extremePoints.add(upperRight);
+		extremePoints.add(lowerRight);
+		return extremePoints;
+		
+	}
+    
+    
 }
