@@ -25,6 +25,7 @@ import br.org.archimedes.Tester;
 import br.org.archimedes.dimension.Dimension;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
+import br.org.archimedes.gui.opengl.OpenGLWrapper;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Rectangle;
@@ -317,6 +318,22 @@ public class DimensionTest extends Tester {
     	for(ReferencePoint point:references) {
     		assertTrue(returnedReferences.contains(point));
     	}
+    }
+    
+    @Test
+    public void testDrawClone() throws NullArgumentException, InvalidArgumentException {
+    	OpenGLWrapper mockWrapper = mock(OpenGLWrapper.class);
+    	Text text = mock(Text.class);
+    	Dimension dimension = new Dimension(new Point(1,0), new Point(1,1), new Point(1,2), 1.0, text);
+    	List<Point> extremePoints = new ArrayList<Point>();
+    	extremePoints.add(new Point(0, 0));
+    	extremePoints.add(new Point(0, 1));
+    	extremePoints.add(new Point(1, 1));
+    	extremePoints.add(new Point(1, 0));
+    	when(text.getExtremePoints()).thenReturn(extremePoints);
+    	dimension.drawClone(mockWrapper);
+    	verify(mockWrapper).drawFilledRectangle(extremePoints.get(0), extremePoints.get(2));
+    	
     }
     
     // TODO Test moving a dimension
