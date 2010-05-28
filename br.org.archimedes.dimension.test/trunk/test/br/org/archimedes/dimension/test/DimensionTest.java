@@ -15,6 +15,11 @@
 
 package br.org.archimedes.dimension.test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+
 import br.org.archimedes.Constant;
 import br.org.archimedes.Tester;
 import br.org.archimedes.dimension.Dimension;
@@ -23,8 +28,13 @@ import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Rectangle;
+import br.org.archimedes.model.ReferencePoint;
 import br.org.archimedes.model.Vector;
+import br.org.archimedes.model.references.CirclePoint;
+import br.org.archimedes.text.Text;
 
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.*;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -286,10 +296,27 @@ public class DimensionTest extends Tester {
      * Test method for
      * {@link br.org.archimedes.model.elements.Dimension#getReferencePoints(br.org.archimedes.model.Rectangle)}
      * .
+     * @throws NullArgumentException 
+     * @throws InvalidArgumentException 
      */
-    public void testGetReferencePoints () {
+    @Test
+    public void testGetReferencePoints () throws NullArgumentException, InvalidArgumentException {
 
-        // TODO Test reference points for dimension
+    	Text text = mock(Text.class);
+    	Rectangle area = new Rectangle(0, 0, 1, 1);
+    	Collection<ReferencePoint> references = new ArrayList<ReferencePoint>();
+    	Collection<ReferencePoint> returnedReferences;
+    	references.add(new CirclePoint(new Point(0,0)));
+    	references.add(new CirclePoint(new Point(1,1)));
+    	references.add(new CirclePoint(new Point(2,3)));
+    	when(text.getReferencePoints(area)).thenReturn(references);
+    	
+    	Dimension dimension = new Dimension(new Point(1,0), new Point(1,1), new Point(1,2), 1.0, text);
+    	returnedReferences = dimension.getReferencePoints(area);
+    	verify(text).getReferencePoints(area);
+    	for(ReferencePoint point:references) {
+    		assertTrue(returnedReferences.contains(point));
+    	}
     }
     
     // TODO Test moving a dimension
