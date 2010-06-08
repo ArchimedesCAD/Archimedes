@@ -17,6 +17,16 @@ package br.org.archimedes;
 import org.junit.Assert;
 import org.junit.Test;
 
+import br.org.archimedes.exceptions.InvalidArgumentException;
+import br.org.archimedes.exceptions.NullArgumentException;
+import br.org.archimedes.gui.model.Workspace;
+import br.org.archimedes.interfaces.Filleter;
+import br.org.archimedes.line.Line;
+import br.org.archimedes.model.Element;
+import br.org.archimedes.model.Offsetable;
+import br.org.archimedes.model.Point;
+import br.org.archimedes.model.Vector;
+
 /**
  * Belongs to package .
  * 
@@ -67,5 +77,29 @@ public class UtilsTest {
         Assert.assertNotNull(Utils.getInputController());
         Assert.assertNotNull(Utils.getOpenGLWrapper());
         Assert.assertNotNull(Utils.getWorkspace());
+    }
+    
+    @Test
+    public void testIsInterfaceOf() throws InvalidArgumentException {
+    	Line line = new Line(0,0,1,0);
+    	Assert.assertTrue(Utils.isInterfaceOf(line, Offsetable.class));
+    	Assert.assertFalse(Utils.isInterfaceOf(line, Filleter.class));
+    }
+    
+    @Test
+    public void testIsSubclassOf() throws InvalidArgumentException {
+    	Line line = new Line(0,0,1,0);
+    	Assert.assertTrue(Utils.isSubclassOf(line, Element.class));
+    	Assert.assertFalse(Utils.isSubclassOf(line, Utils.class));
+    }
+    
+    @Test
+    public void testTransformVector() throws NullArgumentException {
+    	Workspace workspace = Utils.getWorkspace();
+    	
+    	workspace.setShiftDown(false);
+    	Assert.assertEquals(new Point(1,1), Utils.transformVector(new Point(0,0), new Point(1,1)));
+    	workspace.setShiftDown(true);
+    	Assert.assertEquals(Geometrics.breakAngles(new Point(0,0), new Point(1,1)) , Utils.transformVector(new Point(0,0), new Point(1,1)));
     }
 }

@@ -420,4 +420,9 @@ public class TextTest extends Tester {
         rectangle = new Rectangle(0, -50 * sqrt_2, 55 * sqrt_2, 5 * sqrt_2);
         Assert.assertEquals(rectangle, t1.getBoundaryRectangle());
     }
+    
+    @Test
+    public void getExtremePointsTest() {
+    	
+    }
 }

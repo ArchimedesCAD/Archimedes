@@ -15,6 +15,7 @@ package br.org.archimedes;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -522,6 +523,40 @@ public class GeometricsTest extends Tester {
     	Assert.assertEquals(errorMessage, new Point(-1,0), Geometrics.breakAngles(o4, new Point(-1,0)));
     	
     }
+    
+    @Test
+    public void testCalculateRelativeAngle() {
+    	Point p0 = new Point(0,0);
+    	Point p1 = new Point(1,1);
+    	Point p2 = new Point(-1,1);
+    	
+    	Assert.assertEquals(Math.PI/2.0, Geometrics.calculateRelativeAngle(p0, p1, p2), Constant.EPSILON);
+    	Assert.assertEquals(Math.PI/2.0, Geometrics.calculateRelativeAngle(p0, p2, p1), Constant.EPSILON);
+    	Assert.assertEquals(0.0, Geometrics.calculateRelativeAngle(null, null, null), Constant.EPSILON);
+    }
+    
+    @Test
+    public void testCalculateDistancePointLine() throws NullArgumentException {
+    	Point initLine, endLine;
+    	Point point;
+    	point = new Point(1,1);
+    	initLine = new Point(1, -1);
+    	endLine = new Point(-1, 1);
+    	Assert.assertEquals(Math.sqrt(2.0), Geometrics.calculateDistance(initLine, endLine, point), Constant.EPSILON);
+    	Assert.assertEquals(0.0, Geometrics.calculateDistance(initLine, endLine, new Point(0,0)), Constant.EPSILON);
+    }
+    
+    @Test
+    public void testGetMeanOfTwoPoints() throws NullArgumentException {
+    	try {
+			Assert.assertEquals(new Point(0, 0), Geometrics.getMeanPoint(new Point(0, 0), new Point(0, 0)));
+			Assert.assertEquals(new Point(0.5, 0), Geometrics.getMeanPoint(new Point(1, 0), new Point(0, 0)));
+			Assert.assertEquals(new Point(0, 0), Geometrics.getMeanPoint(new Point(-1, -1), new Point(1, 1)));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
 
     private void safeRotate (Point point, Point reference, double angle) {
 
@@ -531,5 +566,82 @@ public class GeometricsTest extends Tester {
         catch (NullArgumentException e) {
             Assert.fail();
         }
+    }
+    
+    @Test
+    public void testIsHorizontal() {
+    	Assert.assertTrue(Geometrics.isHorizontal(0.0));
+    	Assert.assertTrue(Geometrics.isHorizontal(Math.PI));
+    	Assert.assertFalse(Geometrics.isHorizontal(Math.PI/6));
+    }
+    
+    @Test
+    public void testCalculateDeterminant() throws NullArgumentException {
+    	Assert.assertEquals(0.0, Geometrics.calculateDeterminant(new Point(1, 2), new Point(2, 2), new Point(3, 2)), Constant.EPSILON);
+    	Assert.assertEquals(9.0, Geometrics.calculateDeterminant(new Point(0, 0), new Point(3, 1), new Point(0, 3)), Constant.EPSILON);
+    	Assert.assertEquals(-9.0, Geometrics.calculateDeterminant(new Point(3, 1), new Point(0, 0), new Point(0, 3)), Constant.EPSILON);
+    }
+    
+    @Test
+    public void testNormalize() {
+    	double r2 = Math.sqrt(2.0);
+    	Assert.assertEquals(new Vector(new Point(0,0), new Point(1,0)), Geometrics.normalize(new Vector(new Point(0,0), new Point(3, 0))));
+    	Assert.assertEquals(new Vector(new Point(0,0), new Point(0,1)), Geometrics.normalize(new Vector(new Point(0,0), new Point(0, 3))));
+    	Assert.assertEquals(new Vector(new Point(0,0), new Point(1.0/r2,1.0/r2)), Geometrics.normalize(new Vector(new Point(0,0), new Point(1, 1))));
+    	
+    }
+    
+    @Test
+    public void testCalculateArea() throws NullArgumentException, InvalidArgumentException {
+    	List<Point> triangle = new ArrayList<Point>();
+    	triangle.add(new Point(0,0));
+    	triangle.add(new Point(2,0));
+    	triangle.add(new Point(1,3));
+    	Assert.assertEquals(3.0, Geometrics.calculateArea(triangle), Constant.EPSILON);
+    	List<Point> square = new ArrayList<Point>();
+    	square.add(new Point(0,0));
+    	square.add(new Point(2,0));
+    	square.add(new Point(2,2));
+    	square.add(new Point(0,2));
+    	Assert.assertEquals(4.0, Geometrics.calculateArea(square), Constant.EPSILON);
+    	List<Point> buggie = new ArrayList<Point>();
+    	buggie.add(new Point(0,0));
+    	buggie.add(new Point(0,4));
+    	buggie.add(new Point(3,0));
+    	buggie.add(new Point(1,1));
+    	Assert.assertEquals(4.5, Geometrics.calculateArea(buggie), Constant.EPSILON);
+    	buggie.clear();
+    	buggie.add(new Point(0,0));
+    	buggie.add(new Point(0,4));
+    	buggie.add(new Point(3,0));
+    	buggie.add(new Point(1,-1));
+    	Assert.assertEquals(7.5, Geometrics.calculateArea(buggie), Constant.EPSILON);
+    }
+    
+    @Test
+    public void testCalculatePerimeter() throws NullArgumentException, InvalidArgumentException {
+    	List<Point> triangle = new ArrayList<Point>();
+    	triangle.add(new Point(0,0));
+    	triangle.add(new Point(2,0));
+    	triangle.add(new Point(1,3));
+    	Assert.assertEquals(2*Math.sqrt(10) + 2, Geometrics.calculatePerimeter(triangle), Constant.EPSILON);
+    	List<Point> square = new ArrayList<Point>();
+    	square.add(new Point(0,0));
+    	square.add(new Point(2,0));
+    	square.add(new Point(2,2));
+    	square.add(new Point(0,2));
+    	Assert.assertEquals(8.0, Geometrics.calculatePerimeter(square), Constant.EPSILON);
+    	List<Point> buggie = new ArrayList<Point>();
+    	buggie.add(new Point(0,0));
+    	buggie.add(new Point(0,4));
+    	buggie.add(new Point(3,0));
+    	buggie.add(new Point(1,1));
+    	Assert.assertEquals(9.0 + Math.sqrt(2.0) + Math.sqrt(5.0), Geometrics.calculatePerimeter(buggie), Constant.EPSILON);
+    	buggie.clear();
+    	buggie.add(new Point(0,0));
+    	buggie.add(new Point(0,4));
+    	buggie.add(new Point(3,0));
+    	buggie.add(new Point(1,-1));
+    	Assert.assertEquals(9.0 + Math.sqrt(2.0) + Math.sqrt(5.0), Geometrics.calculatePerimeter(buggie), Constant.EPSILON);
     }
 }

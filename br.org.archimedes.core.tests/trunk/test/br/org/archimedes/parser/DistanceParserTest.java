@@ -13,6 +13,7 @@
 package br.org.archimedes.parser;
 
 import org.junit.Assert;
+import org.junit.Test;
 
 import br.org.archimedes.Tester;
 import br.org.archimedes.exceptions.InvalidParameterException;
@@ -22,7 +23,7 @@ import br.org.archimedes.interfaces.Parser;
  * Belongs to package br.org.archimedes.parser.
  */
 public class DistanceParserTest extends Tester {
-
+	@Test
     public void testDouble () {
 
         Parser dp = new DistanceParser();
@@ -34,7 +35,8 @@ public class DistanceParserTest extends Tester {
         Assert.assertTrue("Should be done", dp.isDone());
         Assert.assertEquals("Should be 52.6", 52.6, dp.getParameter());
     }
-
+	
+	@Test
     public void testPoints () {
 
         Parser dp = new DistanceParser();
@@ -51,6 +53,7 @@ public class DistanceParserTest extends Tester {
         Assert.assertEquals("Parameter should be correct", 15.0, dp.getParameter());
     }
 
+	@Test
     public void testReturn () {
 
         Parser dp = new DistanceParser();
@@ -90,6 +93,7 @@ public class DistanceParserTest extends Tester {
      * @param parameter
      *            The parameter
      */
+
     private void doSafeNext (Parser parser, String parameter) {
 
         try {

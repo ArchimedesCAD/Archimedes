@@ -14,14 +14,6 @@
 
 package br.org.archimedes;
 
-import java.util.Collection;
-import java.util.Locale;
-import java.util.Scanner;
-
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.commands.ICommandService;
-import org.eclipse.ui.contexts.IContextService;
-
 import br.org.archimedes.controller.Controller;
 import br.org.archimedes.controller.InputController;
 import br.org.archimedes.exceptions.NullArgumentException;
@@ -32,6 +24,14 @@ import br.org.archimedes.internal.NullCommandService;
 import br.org.archimedes.internal.NullContextService;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Rectangle;
+
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.commands.ICommandService;
+import org.eclipse.ui.contexts.IContextService;
+
+import java.util.Collection;
+import java.util.Locale;
+import java.util.Scanner;
 
 /**
  * Belongs to package br.org.archimedes.
@@ -255,23 +255,6 @@ public class Utils {
     		p2 = Geometrics.orthogonalize(p1, p2);
     	}
     	return p2;
-    }
-    /**
-     * @param p1
-     *            The first point (that should be used as a reference to ortogonalize)
-     * @param point
-     *            The point that defines the vector
-     * @return If orto is on, the point that makes an ortogonal vector, the same point otherwise.
-     * @throws NullArgumentException
-     *             Thrown if any argument is null.
-     */
-    public static Point useOrto (Point p1, Point point) throws NullArgumentException {
-
-        Workspace workspace = getWorkspace();
-        if (workspace.isOrtoOn() && workspace.getGripMousePosition() == null) {
-            point = Geometrics.orthogonalize(p1, point);
-        }
-        return point;
     }
 
     /**

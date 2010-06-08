@@ -158,10 +158,12 @@ public class Geometrics {
         if (point == null || startLine == null || endLine == null) {
             throw new NullArgumentException();
         }
-
-        Point projection = getProjectionOf(point, startLine, endLine);
-
-        double distance = calculateDistance(point, projection);
+        
+        double a, b, c;
+        a = startLine.getY() - endLine.getY();
+        b = endLine.getX() - startLine.getX();
+        c = startLine.getX() * endLine.getY() - endLine.getX() * startLine.getY();
+        double distance = Math.abs(point.getX() * a + point.getY() * b + c) / Math.sqrt(a*a + b*b);
 
         return distance;
     }
@@ -899,22 +901,19 @@ public class Geometrics {
 
         double initialAngle = 0.0;
         double pointAngle = 0.0;
+        double resultAngle = 0.0;
 
         try {
             initialAngle = Geometrics.calculateAngle(centerPoint, initialPoint);
-            pointAngle = Geometrics.calculateAngle(centerPoint, point)
-                    - initialAngle;
-            initialAngle = 0.0;
+            pointAngle = Geometrics.calculateAngle(centerPoint, point);
+            resultAngle = (initialAngle > pointAngle) ? initialAngle - pointAngle : pointAngle - initialAngle;
+         
         }
         catch (NullArgumentException e) {
             // Should never reach this block
             e.printStackTrace();
         }
 
-        if (pointAngle < 0) {
-            pointAngle += 2.0 * Math.PI;
-        }
-
-        return pointAngle;
+        return resultAngle;
     }
 }
