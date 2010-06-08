@@ -13,6 +13,11 @@
 
 package br.org.archimedes.fillet;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
+
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.InvalidParameterException;
 import br.org.archimedes.exceptions.NullArgumentException;
@@ -21,16 +26,13 @@ import br.org.archimedes.interfaces.Command;
 import br.org.archimedes.interfaces.IntersectionManager;
 import br.org.archimedes.interfaces.Parser;
 import br.org.archimedes.model.Element;
+import br.org.archimedes.model.Filletable;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Rectangle;
 import br.org.archimedes.model.Selection;
-import br.org.archimedes.parser.SelectionParser;
+import br.org.archimedes.parser.SelectionOrDoubleParser;
 import br.org.archimedes.polyline.Polyline;
 import br.org.archimedes.rcp.extensionpoints.IntersectionManagerEPLoader;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 public class FilletFactory implements CommandFactory {
 
@@ -47,10 +49,12 @@ public class FilletFactory implements CommandFactory {
     private Command command;
 
     private IntersectionManager intersectionManager;
+    
+    private double radius;
+    private boolean checkingRadius;
 
 
-    public FilletFactory () {
-
+    public FilletFactory () {    	
         intersectionManager = new IntersectionManagerEPLoader().getIntersectionManager();
         deactivate();
     }
@@ -59,22 +63,29 @@ public class FilletFactory implements CommandFactory {
 
         active = true;
         command = null;
+        radius = 0;
+    	checkingRadius = true;
 
         br.org.archimedes.Utils.getController().deselectAll();
 
-        return Messages.SelectElement;
+        return Messages.SelectRadiusOrElement;
     }
 
     public String next (Object parameter) throws InvalidParameterException {
 
         String result = null;
-
-        if ( !isDone()) {
-            result = tryGetSelection(parameter);
-        } else {
-            throw new InvalidParameterException();
+        
+        if (checkingRadius && parameter instanceof Double) {
+        	radius = ((Double) parameter).doubleValue();  
+        	result = Messages.SelectElement;
+        } else {        
+        	if ( !isDone()) {
+        		result = tryGetSelection(parameter);
+        	} else {
+        		throw new InvalidParameterException();
+        	}
         }
-
+        checkingRadius = false;
         return result;
     }
 
@@ -96,8 +107,14 @@ public class FilletFactory implements CommandFactory {
             }
             Selection selection = (Selection) parameter;
 
-            if (selection.getSelectedElements().size() != 1) {
+            Set<Element> selectedElements = selection.getSelectedElements();
+            if (selectedElements.size() != 1) {
                 throw new InvalidParameterException(Messages.SelectElement);
+            }
+            for (Element e : selectedElements) {
+            	if (!(e instanceof Filletable)) {
+            		throw new InvalidParameterException(Messages.SelectElement);
+            	}
             }
             
             if (element1 == null) {
@@ -105,8 +122,11 @@ public class FilletFactory implements CommandFactory {
                 result = Messages.SelectOther;
             }
             else {
-                calculatePoint(selection);
-                command = new FilletCommand(element1, click1, element2, click2);
+            	calculatePoint(selection);
+            	if (element1 == element2) {
+            		throw new InvalidParameterException(Messages.SelectElement);
+            	}
+                command = new FilletCommand(element1, click1, element2, click2, radius);
                 result = Messages.Filleted;
                 deactivate();
             }
@@ -173,8 +193,7 @@ public class FilletFactory implements CommandFactory {
     }
 
     public boolean isDone () {
-
-        return !active;
+        return (!active);
     }
 
     public String cancel () {
@@ -195,10 +214,12 @@ public class FilletFactory implements CommandFactory {
     private void deactivate () {
 
         active = false;
+        radius = 0;
         element1 = null;
         element2 = null;
         click1 = null;
-        click2 = null;
+        click2 = null;    
+        checkingRadius = true;
     }
 
     /*
@@ -209,7 +230,7 @@ public class FilletFactory implements CommandFactory {
 
         Parser parser = null;
         if (active) {
-            parser = new SelectionParser();
+        	return new SelectionOrDoubleParser();
         }
         return parser;
     }

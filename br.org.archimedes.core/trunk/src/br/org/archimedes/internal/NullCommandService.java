@@ -13,6 +13,9 @@
 
 package br.org.archimedes.internal;
 
+import java.util.Collection;
+import java.util.Map;
+
 import org.eclipse.core.commands.Category;
 import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.IExecutionListener;
@@ -24,9 +27,6 @@ import org.eclipse.core.commands.common.NotDefinedException;
 import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.ui.commands.IElementReference;
 import org.eclipse.ui.menus.UIElement;
-
-import java.util.Collection;
-import java.util.Map;
 
 /**
  * Belongs to package br.org.archimedes.

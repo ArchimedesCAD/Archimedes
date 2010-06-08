@@ -13,3 +13,4 @@ Require-Bundle: org.eclipse.ui,
 Export-Package: br.org.archimedes.polyline
 Eclipse-RegisterBuddy: br.org.archimedes.core
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Import-Package: br.org.archimedes.move

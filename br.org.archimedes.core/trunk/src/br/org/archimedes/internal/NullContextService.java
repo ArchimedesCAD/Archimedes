@@ -13,6 +13,8 @@
 
 package br.org.archimedes.internal;
 
+import java.util.Collection;
+
 import org.eclipse.core.commands.contexts.Context;
 import org.eclipse.core.commands.contexts.IContextManagerListener;
 import org.eclipse.core.expressions.Expression;
@@ -20,8 +22,6 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.ISourceProvider;
 import org.eclipse.ui.contexts.IContextActivation;
 import org.eclipse.ui.contexts.IContextService;
-
-import java.util.Collection;
 
 /**
  * Belongs to package br.org.archimedes.

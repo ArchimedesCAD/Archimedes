@@ -13,14 +13,14 @@
  */
 package br.org.archimedes.parser;
 
-import br.org.archimedes.factories.CommandFactory;
-import br.org.archimedes.rcp.extensionpoints.ElementFactoryEPLoader;
-import br.org.archimedes.rcp.extensionpoints.FactoryEPLoader;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import br.org.archimedes.factories.CommandFactory;
+import br.org.archimedes.rcp.extensionpoints.ElementFactoryEPLoader;
+import br.org.archimedes.rcp.extensionpoints.FactoryEPLoader;
 
 /**
  * This class must have all the verifications for all the commands.<br>

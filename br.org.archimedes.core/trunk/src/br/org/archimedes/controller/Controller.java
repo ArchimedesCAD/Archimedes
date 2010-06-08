@@ -14,6 +14,13 @@
 
 package br.org.archimedes.controller;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import br.org.archimedes.Utils;
 import br.org.archimedes.exceptions.IllegalActionException;
 import br.org.archimedes.exceptions.NoActiveDrawingException;
@@ -29,13 +36,6 @@ import br.org.archimedes.model.Rectangle;
 import br.org.archimedes.model.ReferencePoint;
 import br.org.archimedes.model.Selection;
 import br.org.archimedes.model.Vector;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * Belongs to package br.org.archimedes.controller.

@@ -14,15 +14,15 @@
 
 package br.org.archimedes.rcp.extensionpoints;
 
-import br.org.archimedes.factories.CommandFactory;
-import br.org.archimedes.rcp.ExtensionLoader;
-import br.org.archimedes.rcp.ExtensionTagHandler;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 
-import java.util.HashMap;
-import java.util.Map;
+import br.org.archimedes.factories.CommandFactory;
+import br.org.archimedes.rcp.ExtensionLoader;
+import br.org.archimedes.rcp.ExtensionTagHandler;
 
 /**
  * Belongs to package br.org.archimedes.rcp.extensionpoints.

@@ -14,14 +14,10 @@
 
 package br.org.archimedes.gui.rca;
 
-import br.org.archimedes.Messages;
-import br.org.archimedes.controller.Controller;
-import br.org.archimedes.exceptions.IllegalActionException;
-import br.org.archimedes.exceptions.NoActiveDrawingException;
-import br.org.archimedes.gui.rca.editor.DrawingEditor;
-import br.org.archimedes.gui.rca.editor.DrawingInput;
-import br.org.archimedes.model.Drawing;
-import br.org.archimedes.model.Layer;
+import java.util.List;
+import java.util.Map;
+import java.util.Observable;
+import java.util.Observer;
 
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -43,10 +39,14 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.menus.WorkbenchWindowControlContribution;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Observable;
-import java.util.Observer;
+import br.org.archimedes.Messages;
+import br.org.archimedes.controller.Controller;
+import br.org.archimedes.exceptions.IllegalActionException;
+import br.org.archimedes.exceptions.NoActiveDrawingException;
+import br.org.archimedes.gui.rca.editor.DrawingEditor;
+import br.org.archimedes.gui.rca.editor.DrawingInput;
+import br.org.archimedes.model.Drawing;
+import br.org.archimedes.model.Layer;
 
 /**
  * Belongs to package br.org.archimedes.gui.rca.

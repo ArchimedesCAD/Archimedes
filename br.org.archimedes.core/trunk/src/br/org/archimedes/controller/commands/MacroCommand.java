@@ -15,14 +15,14 @@
 
 package br.org.archimedes.controller.commands;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import br.org.archimedes.exceptions.IllegalActionException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.interfaces.UndoableCommand;
 import br.org.archimedes.model.Drawing;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * Belongs to package br.org.archimedes.model.commands.

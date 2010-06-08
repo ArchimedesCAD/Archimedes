@@ -157,14 +157,24 @@ public class VisualHelperTest extends Tester {
     	
     	// right arrow
     	List<Point> expectedResult = new ArrayList<Point>();
-    	expectedResult.add(new Point(0, 10)); expectedResult.add(new Point(60, 10)); expectedResult.add(new Point(60, 20)); expectedResult.add(new Point(100, 0));
-    	expectedResult.add(new Point(60, -20)); expectedResult.add(new Point(60, -10)); expectedResult.add(new Point(0, -10));
+    	expectedResult.add(new Point(0, 10)); 
+    	expectedResult.add(new Point(60, 10));
+    	expectedResult.add(new Point(60, 20));
+    	expectedResult.add(new Point(100, 0));
+    	expectedResult.add(new Point(60, -20));
+    	expectedResult.add(new Point(60, -10));
+    	expectedResult.add(new Point(0, -10));
     	Assert.assertEquals(expectedResult, method.invoke(visualHelper, 20, new Point(0, 0), new Point(100, 0)));
     	
     	// left arrow
     	expectedResult = new ArrayList<Point>();
-    	expectedResult.add(new Point(-10, 0)); expectedResult.add(new Point(-10, 60)); expectedResult.add(new Point(-20, 60)); expectedResult.add(new Point(0, 100));
-    	expectedResult.add(new Point(20, 60)); expectedResult.add(new Point(10, 60)); expectedResult.add(new Point(10, 0));
+    	expectedResult.add(new Point(-10, 0));
+    	expectedResult.add(new Point(-10, 60));
+    	expectedResult.add(new Point(-20, 60));
+    	expectedResult.add(new Point(0, 100));
+    	expectedResult.add(new Point(20, 60));
+    	expectedResult.add(new Point(10, 60));
+    	expectedResult.add(new Point(10, 0));
     	Assert.assertEquals(expectedResult, method.invoke
     			(visualHelper, 20, new Point(0, 0), new Point(0, 100)));
     	

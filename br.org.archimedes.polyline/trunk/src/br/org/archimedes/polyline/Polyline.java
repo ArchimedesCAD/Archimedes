@@ -14,7 +14,18 @@
 
 package br.org.archimedes.polyline;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
+
 import br.org.archimedes.Geometrics;
+import br.org.archimedes.controller.commands.PutOrRemoveElementCommand;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.InvalidParameterException;
 import br.org.archimedes.exceptions.NullArgumentException;
@@ -22,9 +33,11 @@ import br.org.archimedes.gui.opengl.OpenGLWrapper;
 import br.org.archimedes.infiniteline.InfiniteLine;
 import br.org.archimedes.interfaces.ExtendManager;
 import br.org.archimedes.interfaces.IntersectionManager;
+import br.org.archimedes.interfaces.UndoableCommand;
 import br.org.archimedes.line.Line;
 import br.org.archimedes.model.ComparablePoint;
 import br.org.archimedes.model.Element;
+import br.org.archimedes.model.Filletable;
 import br.org.archimedes.model.Offsetable;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.PolyLinePointKey;
@@ -34,24 +47,16 @@ import br.org.archimedes.model.Vector;
 import br.org.archimedes.model.references.SquarePoint;
 import br.org.archimedes.model.references.TrianglePoint;
 import br.org.archimedes.model.references.XPoint;
+import br.org.archimedes.move.MoveCommand;
 import br.org.archimedes.rcp.extensionpoints.ExtendManagerEPLoader;
 import br.org.archimedes.rcp.extensionpoints.IntersectionManagerEPLoader;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 /**
  * Belongs to package br.org.archimedes.polyline.
  * 
  * @author nitao
  */
-public class Polyline extends Element implements Offsetable {
+public class Polyline extends Element implements Offsetable, Filletable {
 
     private List<Point> points;
 
@@ -864,5 +869,101 @@ public class Polyline extends Element implements Offsetable {
         extremes.add(points.get(points.size() - 1));
         return extremes;
     }
+
+    private int getLineIndexWithPoint(Point p) {
+    	int ret = 0;
+    	double minDistance = Double.MAX_VALUE;
+    	int currIndex = 0;
+    	
+    	try {
+    		for (Line l : getLines()) {		
+    			double distance = p.calculateDistance(l.getProjectionOf(p));    			
+    			if (distance < minDistance) {
+    				ret = currIndex;
+    				minDistance = distance; 
+    			}
+    			currIndex++;			
+    		}
+    	} catch (NullArgumentException e) {
+    		// Should not reach here
+    	}			
+    	
+		return ret;
+    }
+    
+    private List<Point> getPointsBefore(Point p, Point movedPoint) {
+    	List<Point> ret = new ArrayList<Point>();
+    	for (Point point : points) {
+    		if (point.equals(p))
+    			break;
+    		ret.add(point.clone());
+    	}
+    	ret.add(movedPoint.clone());
+    	return ret;
+    }
+    
+    private List<Point> getPointsAfter(Point p, Point movedPoint) {
+    	List<Point> ret = new ArrayList<Point>();
+    	boolean found = false;
+    	
+    	ret.add(movedPoint.clone());
+    	for (Point point : points) {
+    		if (found) {
+    			ret.add(point.clone());
+    		}
+    		if (point.equals(p))
+    			found = true;
+    	}
+    	return ret;
+    }
+    
+	public Collection<UndoableCommand> getFilletCommands(Point arcCenter,
+			Point arcIntersectionWithThisElement,
+			Point arcIntersectionWithThatElement, Point force) throws NullArgumentException {
+		
+		Line intersectionLine = getLines().get(getNearestSegment(arcIntersectionWithThisElement));
+		Point initialPoint = intersectionLine.getInitialPoint();
+		Point endingPoint = intersectionLine.getEndingPoint();
+		Point pointToBeMoved = null;
+		//----
+		boolean signAreaElement1 = Geometrics.calculateSignedTriangleArea(arcIntersectionWithThisElement, arcIntersectionWithThatElement, initialPoint) > 0;
+		boolean signAreaElement2 = Geometrics.calculateSignedTriangleArea(arcIntersectionWithThisElement, arcIntersectionWithThatElement, endingPoint) > 0;
+		
+		if (signAreaElement1 == signAreaElement2) {
+			if (Geometrics.calculateDistance(initialPoint, arcIntersectionWithThisElement) < Geometrics.calculateDistance(endingPoint, arcIntersectionWithThisElement))
+				pointToBeMoved = initialPoint;
+			else
+				pointToBeMoved = endingPoint;
+		} else {
+			boolean signArea = Geometrics.calculateSignedTriangleArea(arcIntersectionWithThisElement, arcIntersectionWithThatElement, arcCenter) > 0;
+			pointToBeMoved = (signArea == signAreaElement2)? initialPoint : endingPoint;  
+		}
+		// ----
+		Point movedPoint = (force != null)? force : arcIntersectionWithThisElement;
+		
+		Polyline newPolyline = null;
+		
+		try {
+			if (pointToBeMoved == initialPoint) {
+				newPolyline = new Polyline(getPointsAfter(pointToBeMoved, movedPoint));				
+				
+			} else {
+				newPolyline = new Polyline(getPointsBefore(pointToBeMoved, movedPoint));
+								
+			}
+		} catch (InvalidArgumentException e) { }
+		
+		
+		Collection <UndoableCommand> ret = new ArrayList<UndoableCommand>();
+		ret.add(new PutOrRemoveElementCommand(this, true));
+		ret.add(new PutOrRemoveElementCommand(newPolyline, false));
+		
+		return ret;
+	}
+
+	public Point getTangencyLinePoint(Point intersection, Point click) {
+		List<Line> lines = getLines();
+		return lines.get(getNearestSegment(intersection)).getTangencyLinePoint(intersection, click);
+	}
 
 }

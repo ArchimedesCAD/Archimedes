@@ -1,17 +1,17 @@
 
 package br.org.archimedes.gui.handlers;
 
-import br.org.archimedes.Utils;
-import br.org.archimedes.exceptions.NoActiveDrawingException;
-import br.org.archimedes.model.Drawing;
-import br.org.archimedes.model.Element;
-import br.org.archimedes.model.Selection;
+import java.util.Collection;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 
-import java.util.Collection;
+import br.org.archimedes.Utils;
+import br.org.archimedes.exceptions.NoActiveDrawingException;
+import br.org.archimedes.model.Drawing;
+import br.org.archimedes.model.Element;
+import br.org.archimedes.model.Selection;
 
 public class SelectionHandler extends AbstractHandler {
 

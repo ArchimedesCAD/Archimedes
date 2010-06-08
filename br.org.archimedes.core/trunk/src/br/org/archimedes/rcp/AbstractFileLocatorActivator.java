@@ -13,11 +13,6 @@
 
 package br.org.archimedes.rcp;
 
-import org.eclipse.core.runtime.FileLocator;
-import org.eclipse.core.runtime.Path;
-import org.eclipse.ui.plugin.AbstractUIPlugin;
-import org.osgi.framework.Bundle;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -25,6 +20,11 @@ import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Collections;
+
+import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.osgi.framework.Bundle;
 
 /**
  * Belongs to package br.org.archimedes.rcp.

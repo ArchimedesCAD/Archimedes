@@ -14,15 +14,15 @@
 
 package br.org.archimedes.controller.commands;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import br.org.archimedes.exceptions.IllegalActionException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.interfaces.UndoableCommand;
 import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Layer;
-
-import java.util.ArrayList;
-import java.util.Collection;
 
 /**
  * Belongs to package br.org.archimedes.model.commands.
@@ -219,5 +219,22 @@ public class PutOrRemoveElementCommand implements UndoableCommand {
     public boolean canMergeWith (UndoableCommand command) {
 
         return false;
+    }
+    
+    @Override
+    public boolean equals(Object o) {
+    	if (o instanceof PutOrRemoveElementCommand) {
+    		PutOrRemoveElementCommand other = (PutOrRemoveElementCommand) o;
+    		for (Element element : other.elements) {
+                if ( !this.elements.contains(element)) {
+                    return false;
+                }
+            }
+    		if (other.remove != this.remove) {
+    			return false;
+    		}
+    		return true;
+    	}
+    	return false;
     }
 }

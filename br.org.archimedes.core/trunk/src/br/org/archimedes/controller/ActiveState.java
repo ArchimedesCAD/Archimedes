@@ -13,6 +13,8 @@
 
 package br.org.archimedes.controller;
 
+import java.util.List;
+
 import br.org.archimedes.Constant;
 import br.org.archimedes.Utils;
 import br.org.archimedes.exceptions.IllegalActionException;
@@ -22,8 +24,6 @@ import br.org.archimedes.factories.CommandFactory;
 import br.org.archimedes.interfaces.Command;
 import br.org.archimedes.interfaces.Parser;
 import br.org.archimedes.model.Drawing;
-
-import java.util.List;
 
 /**
  * Belongs to package br.org.archimedes.controller.commands.

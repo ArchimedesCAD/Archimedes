@@ -13,17 +13,17 @@
 
 package br.org.archimedes.controller;
 
+import java.util.List;
+import java.util.Observable;
+
+import org.eclipse.ui.contexts.IContextActivation;
+import org.eclipse.ui.contexts.IContextService;
+
 import br.org.archimedes.Constant;
 import br.org.archimedes.Utils;
 import br.org.archimedes.factories.CommandFactory;
 import br.org.archimedes.model.Drawing;
 import br.org.archimedes.parser.CommandParser;
-
-import org.eclipse.ui.contexts.IContextActivation;
-import org.eclipse.ui.contexts.IContextService;
-
-import java.util.List;
-import java.util.Observable;
 
 /**
  * Belongs to package br.org.archimedes.interpreter.<br>

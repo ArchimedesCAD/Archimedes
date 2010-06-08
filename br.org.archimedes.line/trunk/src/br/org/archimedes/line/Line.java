@@ -14,12 +14,20 @@
 
 package br.org.archimedes.line;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+
 import br.org.archimedes.Constant;
 import br.org.archimedes.Geometrics;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.gui.opengl.OpenGLWrapper;
+import br.org.archimedes.interfaces.UndoableCommand;
 import br.org.archimedes.model.Element;
+import br.org.archimedes.model.Filletable;
 import br.org.archimedes.model.Offsetable;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Rectangle;
@@ -27,16 +35,12 @@ import br.org.archimedes.model.ReferencePoint;
 import br.org.archimedes.model.Vector;
 import br.org.archimedes.model.references.SquarePoint;
 import br.org.archimedes.model.references.TrianglePoint;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
+import br.org.archimedes.move.MoveCommand;
 
 /**
  * Belongs to package br.org.archimedes.line.
  */
-public class Line extends Element implements Offsetable {
+public class Line extends Element implements Offsetable, Filletable {
 
     private Point initialPoint;
 
@@ -432,4 +436,50 @@ public class Line extends Element implements Offsetable {
         extremes.add(getEndingPoint());
         return extremes;
     }
+
+    public Collection<UndoableCommand> getFilletCommands(Point arcCenter, Point arcIntersectionWithThisElement, Point arcIntersectionWithThatElement, Point force) throws NullArgumentException {
+		
+		Point pointToBeMoved;		
+		
+		
+		boolean signAreaElement1 = Geometrics.calculateSignedTriangleArea(arcIntersectionWithThisElement, arcIntersectionWithThatElement, initialPoint) > 0;
+		boolean signAreaElement2 = Geometrics.calculateSignedTriangleArea(arcIntersectionWithThisElement, arcIntersectionWithThatElement, endingPoint) > 0;
+		
+		if (signAreaElement1 == signAreaElement2) {
+			if (Geometrics.calculateDistance(initialPoint, arcIntersectionWithThisElement) < Geometrics.calculateDistance(endingPoint, arcIntersectionWithThisElement))
+				pointToBeMoved = initialPoint;
+			else
+				pointToBeMoved = endingPoint;
+		} else {
+			boolean signArea = Geometrics.calculateSignedTriangleArea(arcIntersectionWithThisElement, arcIntersectionWithThatElement, arcCenter) > 0;
+			pointToBeMoved = (signArea == signAreaElement2)? initialPoint : endingPoint;  
+		}
+		
+		Collection<Point> points = new ArrayList<Point>(); points.add(pointToBeMoved); 
+		HashMap<Element, Collection<Point>> hash = new HashMap<Element, Collection<Point>>();
+		hash.put(this, points);
+		
+		
+		try {
+			Collection<UndoableCommand> ret = new ArrayList<UndoableCommand>();
+			if (force != null)			
+				
+				ret.add(new MoveCommand(hash, new Vector(pointToBeMoved, force)));
+			else
+				ret.add(new MoveCommand(hash, new Vector(pointToBeMoved, arcIntersectionWithThisElement)));
+			
+			return ret;
+		} catch (NullArgumentException e) {
+			return null; // FIXME
+		} 
+			
+	}
+
+	public Point getTangencyLinePoint(Point intersection, Point click) {
+		return click;
+	}
+    
+    
+    
+    
 }

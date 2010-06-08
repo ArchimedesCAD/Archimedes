@@ -1,11 +1,6 @@
 
 package br.org.archimedes.gui.handlers;
 
-import br.org.archimedes.gui.actions.LoadCommand;
-import br.org.archimedes.gui.rca.editor.DrawingEditor;
-import br.org.archimedes.gui.rca.editor.DrawingInput;
-import br.org.archimedes.model.Drawing;
-
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -13,6 +8,11 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.handlers.HandlerUtil;
+
+import br.org.archimedes.gui.actions.LoadCommand;
+import br.org.archimedes.gui.rca.editor.DrawingEditor;
+import br.org.archimedes.gui.rca.editor.DrawingInput;
+import br.org.archimedes.model.Drawing;
 
 public class OpenHandler extends AbstractHandler {
 

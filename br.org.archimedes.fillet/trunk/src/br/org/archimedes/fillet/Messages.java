@@ -20,12 +20,15 @@ public class Messages extends NLS {
     private static final String BUNDLE_NAME = "br.org.archimedes.fillet.messages"; //$NON-NLS-1$
 
     public static String SelectElement;
+    
+    public static String SelectRadiusOrElement;
 
     public static String SelectOther;
 
     public static String Filleted;
 
     public static String FilletCancel;
+    
     static {
         // initialize resource bundle
         NLS.initializeMessages(BUNDLE_NAME, Messages.class);

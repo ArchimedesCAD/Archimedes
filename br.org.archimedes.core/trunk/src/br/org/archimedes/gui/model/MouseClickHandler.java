@@ -13,6 +13,15 @@
  */
 package br.org.archimedes.gui.model;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Observable;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.widgets.Canvas;
+import org.eclipse.swt.widgets.Event;
+
 import br.org.archimedes.Constant;
 import br.org.archimedes.Utils;
 import br.org.archimedes.controller.Controller;
@@ -32,15 +41,6 @@ import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Rectangle;
 import br.org.archimedes.model.Vector;
 import br.org.archimedes.rcp.extensionpoints.FactoryEPLoader;
-
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.widgets.Canvas;
-import org.eclipse.swt.widgets.Event;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Observable;
 
 /**
  * This class manipulate mouse click related events, and send them to its observers.<br>

@@ -1,10 +1,10 @@
 
 package br.org.archimedes.gui.handlers;
 
+import org.eclipse.swt.widgets.Shell;
+
 import br.org.archimedes.Messages;
 import br.org.archimedes.model.Drawing;
-
-import org.eclipse.swt.widgets.Shell;
 
 public class NewHandler extends OpenHandler {
 

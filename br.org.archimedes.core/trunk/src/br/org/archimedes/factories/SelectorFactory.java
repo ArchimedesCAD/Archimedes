@@ -14,14 +14,14 @@
 
 package br.org.archimedes.factories;
 
+import java.util.Set;
+
 import br.org.archimedes.exceptions.IllegalActionException;
 import br.org.archimedes.exceptions.InvalidParameterException;
 import br.org.archimedes.exceptions.NoActiveDrawingException;
 import br.org.archimedes.interfaces.Parser;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.parser.SimpleSelectionParser;
-
-import java.util.Set;
 
 /**
  * Belongs to package br.org.archimedes.factories. NOTA: Factories that will handle double clicks

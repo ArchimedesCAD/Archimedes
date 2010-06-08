@@ -13,6 +13,8 @@
 
 package br.org.archimedes.fillet;
 
+
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -20,6 +22,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import br.org.archimedes.Tester;
+import br.org.archimedes.controller.commands.PutOrRemoveElementCommand;
 import br.org.archimedes.exceptions.IllegalActionException;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
@@ -57,7 +60,7 @@ public class FilletCommandTest extends Tester {
         drawing.putElement(line2, drawing.getCurrentLayer());
         click1 = new Point(0.0, 1.5);
         click2 = new Point(1.5, 0.0);
-        command = new FilletCommand(line1, click1, line2, click2);
+        command = new FilletCommand(line1, click1, line2, click2, 0);
         mockFilleter = new MockFilleter();
         command.setFilleter(mockFilleter);
     }
@@ -65,39 +68,39 @@ public class FilletCommandTest extends Tester {
     @Test(expected = NullArgumentException.class)
     public void throwsNullArgumentExceptionIfFirstPointIsNull () throws Exception {
 
-        new FilletCommand(line1, null, line2, new Point(0, 0));
+        new FilletCommand(line1, null, line2, new Point(0, 0), 0);
     }
 
     @Test(expected = NullArgumentException.class)
     public void throwsNullArgumentExceptionIfSecondPointIsNull () throws Exception {
 
-        new FilletCommand(line1, new Point(0, 0), line2, null);
+        new FilletCommand(line1, new Point(0, 0), line2, null, 0);
     }
 
     @Test(expected = NullArgumentException.class)
     public void throwsNullArgumentExceptionIfFirstElementIsNull () throws Exception {
 
-        new FilletCommand(null, new Point(0, 0), line2, new Point(0, 0));
+        new FilletCommand(null, new Point(0, 0), line2, new Point(0, 0), 0);
     }
 
     @Test(expected = NullArgumentException.class)
     public void throwsNullArgumentExceptionIfSecondElementIsNull () throws Exception {
 
-        new FilletCommand(line1, new Point(0, 0), null, new Point(0, 0));
+        new FilletCommand(line1, new Point(0, 0), null, new Point(0, 0), 0);
     }
 
     @Test(expected = InvalidArgumentException.class)
     public void throwsInvalidArgumentExceptionIfFirstPointIsNotInsideFirstElement ()
             throws Exception {
 
-        new FilletCommand(line1, new Point(0, 0), line2, new Point(1, 0));
+        new FilletCommand(line1, new Point(0, 0), line2, new Point(1, 0), 0);
     }
 
     @Test(expected = InvalidArgumentException.class)
     public void throwsInvalidArgumentExceptionIfSecondPointIsNotInsideSecondElement ()
             throws Exception {
 
-        new FilletCommand(line1, new Point(0, 1), line2, new Point(0, 0));
+        new FilletCommand(line1, new Point(0, 1), line2, new Point(0, 0), 0);
     }
 
     @Test(expected = NullArgumentException.class)
@@ -115,13 +118,16 @@ public class FilletCommandTest extends Tester {
     @Test
     public void testDoIt () throws Exception {
 
+    	//when(mockFilleter.fillet(line1, click1, line2, click2)).thenReturn(new PutOrRemoveElementCommand(null, true));
+    	
         command.doIt(drawing);
         assertTrue(mockFilleter.calledFillet());
         assertEquals(line1, mockFilleter.getReceivedE1());
         assertEquals(line2, mockFilleter.getReceivedE2());
         assertEquals(click1, mockFilleter.getReceivedClick1());
         assertEquals(click2, mockFilleter.getReceivedClick2());
-        assertTrue(mockFilleter.getGeneratedMacroCommand().calledDoIt());
+        
+        assertTrue(mockFilleter.getGeneratedMacroCommand().calledDoIt());        
     }
 
     @Test

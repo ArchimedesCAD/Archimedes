@@ -27,7 +27,6 @@ import br.org.archimedes.infiniteline.InfiniteLine;
 import br.org.archimedes.interfaces.IntersectionManager;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
-import br.org.archimedes.model.Vector;
 import br.org.archimedes.polyline.Polyline;
 import br.org.archimedes.rcp.extensionpoints.IntersectionManagerEPLoader;
 import br.org.archimedes.semiline.Semiline;
@@ -171,9 +170,8 @@ public class PolylineExtender implements Extender {
                 extension.add(infiniteLine);
             }
             else if (size > 2) {
-                Point direction = (new Vector(polyline.getPoints().get(1), polyline.getPoints()
-                        .get(0))).getPoint();
-                Semiline semiline1 = new Semiline(polyline.getPoints().get(1), direction);
+                
+                Semiline semiline1 = new Semiline(polyline.getPoints().get(1), polyline.getPoints().get(0));
                 extension.add(semiline1);
 
                 if (size > 3) {
@@ -184,10 +182,8 @@ public class PolylineExtender implements Extender {
                     Polyline middlePolyline = new Polyline(middlePoints);
                     extension.add(middlePolyline);
                 }
-
-                Point direction2 = (new Vector(polyline.getPoints().get(size - 2), polyline
-                        .getPoints().get(size - 1))).getPoint();
-                Semiline semiline2 = new Semiline(polyline.getPoints().get(size - 2), direction2);
+                Semiline semiline2 = new Semiline(polyline.getPoints().get(size - 2), polyline.getPoints().get(size - 1));
+                
                 extension.add(semiline2);
 
             }

@@ -14,6 +14,10 @@
 
 package br.org.archimedes.controller.commands;
 
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
 import br.org.archimedes.exceptions.IllegalActionException;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
@@ -21,10 +25,6 @@ import br.org.archimedes.interfaces.UndoableCommand;
 import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Layer;
-
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Belongs to package br.org.archimedes.controller.commands.

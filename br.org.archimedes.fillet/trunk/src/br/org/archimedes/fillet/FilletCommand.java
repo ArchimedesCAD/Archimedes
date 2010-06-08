@@ -38,6 +38,8 @@ public class FilletCommand implements UndoableCommand {
     private final Point secondClick;
 
     private Filleter filleter;
+    
+    private double radius;
 
     private List<? extends UndoableCommand> commands;
 
@@ -57,7 +59,7 @@ public class FilletCommand implements UndoableCommand {
      *             if one of the points is not part of their elements
      */
     public FilletCommand (Element firstElement, Point firstClick, Element secondElement,
-            Point secondClick) throws NullArgumentException, InvalidArgumentException {
+            Point secondClick, double radius) throws NullArgumentException, InvalidArgumentException {
 
         if (firstElement == null || secondElement == null || firstClick == null
                 || secondClick == null) {
@@ -75,7 +77,9 @@ public class FilletCommand implements UndoableCommand {
 
         commands = null;
 
-        this.filleter = new DefaultFilleter();
+        this.radius = radius;
+        this.filleter = new DefaultFilleter(radius);
+        
     }
 
     /*

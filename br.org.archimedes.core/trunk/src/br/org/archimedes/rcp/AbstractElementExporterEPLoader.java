@@ -13,15 +13,15 @@
 
 package br.org.archimedes.rcp;
 
-import br.org.archimedes.interfaces.ElementExporter;
-import br.org.archimedes.model.Element;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import br.org.archimedes.interfaces.ElementExporter;
+import br.org.archimedes.model.Element;
 
 /**
  * Belongs to package br.org.archimedes.rcp.

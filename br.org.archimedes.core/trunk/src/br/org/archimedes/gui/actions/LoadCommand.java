@@ -14,23 +14,23 @@
  */
 package br.org.archimedes.gui.actions;
 
-import br.org.archimedes.exceptions.InvalidFileFormatException;
-import br.org.archimedes.gui.model.Workspace;
-import br.org.archimedes.interfaces.Importer;
-import br.org.archimedes.model.Drawing;
-import br.org.archimedes.rcp.extensionpoints.NativeFormatEPLoader;
-
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.FileDialog;
-import org.eclipse.swt.widgets.MessageBox;
-import org.eclipse.swt.widgets.Shell;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.LinkedList;
 import java.util.List;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.swt.widgets.Shell;
+
+import br.org.archimedes.exceptions.InvalidFileFormatException;
+import br.org.archimedes.gui.model.Workspace;
+import br.org.archimedes.interfaces.Importer;
+import br.org.archimedes.model.Drawing;
+import br.org.archimedes.rcp.extensionpoints.NativeFormatEPLoader;
 
 /**
  * Belongs to package br.org.archimedes.gui.actions.

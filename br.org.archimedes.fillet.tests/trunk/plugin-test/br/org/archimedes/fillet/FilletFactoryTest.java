@@ -112,7 +112,7 @@ public class FilletFactoryTest extends FactoryTester {
         factory.next(secondSelection);
         assertTrue(factory.isDone());
         
-        FilletCommand expectedCommand = new FilletCommand(line1, new Point(0,1), line2, new Point(1,0));
+        FilletCommand expectedCommand = new FilletCommand(line1, new Point(0,1), line2, new Point(1,0), 0);
         assertCollectionTheSame(Collections.singleton(expectedCommand), factory.getCommands());
     }
     

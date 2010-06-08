@@ -547,6 +547,13 @@ public class Geometrics {
         return verLine;
     }*/
 
+    
+    public static double calculateSignedTriangleArea(Point a, Point b, Point c) {
+    	   return a.getX()*b.getY()-a.getY()*b.getX()+a.getY()*c.getX()
+    	         -a.getX()*c.getY()+b.getX()*c.getY()-c.getX()*b.getY();
+    }
+    
+    
     /**
      * Method to get a segment of this line from initialX to endingX.
      * 

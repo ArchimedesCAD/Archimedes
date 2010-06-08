@@ -14,6 +14,14 @@
 
 package br.org.archimedes;
 
+import java.util.Collection;
+import java.util.Locale;
+import java.util.Scanner;
+
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.commands.ICommandService;
+import org.eclipse.ui.contexts.IContextService;
+
 import br.org.archimedes.controller.Controller;
 import br.org.archimedes.controller.InputController;
 import br.org.archimedes.exceptions.NullArgumentException;
@@ -24,14 +32,6 @@ import br.org.archimedes.internal.NullCommandService;
 import br.org.archimedes.internal.NullContextService;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Rectangle;
-
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.commands.ICommandService;
-import org.eclipse.ui.contexts.IContextService;
-
-import java.util.Collection;
-import java.util.Locale;
-import java.util.Scanner;
 
 /**
  * Belongs to package br.org.archimedes.

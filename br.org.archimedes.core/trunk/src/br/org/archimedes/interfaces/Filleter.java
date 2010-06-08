@@ -13,10 +13,10 @@
 
 package br.org.archimedes.interfaces;
 
+import java.util.List;
+
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
-
-import java.util.List;
 
 /**
  * Belongs to package br.org.archimedes.interfaces.

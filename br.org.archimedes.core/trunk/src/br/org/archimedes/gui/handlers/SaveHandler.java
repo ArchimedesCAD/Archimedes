@@ -1,11 +1,6 @@
 
 package br.org.archimedes.gui.handlers;
 
-import br.org.archimedes.gui.actions.SaveCommand;
-import br.org.archimedes.gui.rca.editor.DrawingEditor;
-import br.org.archimedes.gui.rca.editor.DrawingInput;
-import br.org.archimedes.model.Drawing;
-
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -14,6 +9,11 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.handlers.HandlerUtil;
+
+import br.org.archimedes.gui.actions.SaveCommand;
+import br.org.archimedes.gui.rca.editor.DrawingEditor;
+import br.org.archimedes.gui.rca.editor.DrawingInput;
+import br.org.archimedes.model.Drawing;
 
 public class SaveHandler extends AbstractHandler {
 

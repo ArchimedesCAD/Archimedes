@@ -13,18 +13,18 @@
  */
 package br.org.archimedes;
 
-import br.org.archimedes.gui.opengl.Color;
-import br.org.archimedes.gui.rca.Activator;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.util.Collections;
 
 import org.apache.batik.svggen.font.Font;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.osgi.framework.Bundle;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.util.Collections;
+import br.org.archimedes.gui.opengl.Color;
+import br.org.archimedes.gui.rca.Activator;
 
 /**
  * Belongs to package br.org.archimedes.

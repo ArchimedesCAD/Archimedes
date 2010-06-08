@@ -25,8 +25,7 @@ public class DisabledState extends InputState {
 
     private static final String DISABLED = "br.org.archimedes.disabled"; //$NON-NLS-1$
 
-    private IdleState idleState;
-
+    private IdleState idleState;    
 
     /**
      * @param previousState

@@ -22,7 +22,7 @@ package br.org.archimedes.model;
 public class Vector {
 
     private Point point;
-
+    
 
     /**
      * Constructor
@@ -32,8 +32,7 @@ public class Vector {
      * @param endingPoint
      *            The vector ending point
      */
-    public Vector (Point initialPoint, Point endingPoint) {
-
+    public Vector (Point initialPoint, Point endingPoint) {    	
         this(new Point((endingPoint.getX() - initialPoint.getX()),
                 (endingPoint.getY() - initialPoint.getY())));
     }
@@ -170,4 +169,11 @@ public class Vector {
 
         return new Vector(point);
     }
+    
+    public Vector normalized() {    	
+    	return this.multiply(1/this.getNorm());
+    }
+    
+    
+    
 }
