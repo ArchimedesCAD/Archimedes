@@ -15,17 +15,23 @@
 
 package br.org.archimedes.dimension.test;
 
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 import br.org.archimedes.Constant;
 import br.org.archimedes.Tester;
 import br.org.archimedes.dimension.Dimension;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
-import br.org.archimedes.gui.opengl.OpenGLWrapper;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Rectangle;
@@ -33,12 +39,6 @@ import br.org.archimedes.model.ReferencePoint;
 import br.org.archimedes.model.Vector;
 import br.org.archimedes.model.references.CirclePoint;
 import br.org.archimedes.text.Text;
-
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.*;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 public class DimensionTest extends Tester {
 
@@ -319,23 +319,7 @@ public class DimensionTest extends Tester {
     		assertTrue(returnedReferences.contains(point));
     	}
     }
-    
-    @Test
-    public void testDrawClone() throws NullArgumentException, InvalidArgumentException {
-    	OpenGLWrapper mockWrapper = mock(OpenGLWrapper.class);
-    	Text text = mock(Text.class);
-    	Dimension dimension = new Dimension(new Point(1,0), new Point(1,1), new Point(1,2), 1.0, text);
-    	List<Point> extremePoints = new ArrayList<Point>();
-    	extremePoints.add(new Point(0, 0));
-    	extremePoints.add(new Point(0, 1));
-    	extremePoints.add(new Point(1, 1));
-    	extremePoints.add(new Point(1, 0));
-    	when(text.getExtremePoints()).thenReturn(extremePoints);
-    	dimension.drawClone(mockWrapper);
-    	verify(mockWrapper).drawFilledRectangle(extremePoints.get(0), extremePoints.get(2));
-    	
-    }
-    
+
     // TODO Test moving a dimension
     
     // TODO Test dimensions return the correct lines to draw

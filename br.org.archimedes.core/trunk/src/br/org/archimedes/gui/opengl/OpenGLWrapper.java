@@ -13,7 +13,6 @@
  */
 package br.org.archimedes.gui.opengl;
 
-import java.nio.IntBuffer;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -28,8 +27,6 @@ import org.lwjgl.opengl.GL11;
 
 import br.org.archimedes.Constant;
 import br.org.archimedes.Geometrics;
-import br.org.archimedes.Utils;
-import br.org.archimedes.exceptions.NoActiveDrawingException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Point;
@@ -208,40 +205,6 @@ public class OpenGLWrapper {
         if (currentCanvas != null) {
             this.currentCanvas.swapBuffers();
         }
-    }
-
-    /**
-     * Draws a rectangle and fills it.
-     * 
-     * @param lowerLeftCorner
-     *            Rectangle lower left corner point
-	 * @param upperRightCorner
-     *            Rectangle upper right corner point
-     * @throws NullArgumentException
-     *             Thrown if points is null
-     */
-    public void drawFilledRectangle (Point lowerLeftCorner, Point upperRightCorner) throws NullArgumentException {
-    	
-        if (lowerLeftCorner == null || upperRightCorner == null) {
-            throw new NullArgumentException();
-        }
-        try {
-        	Point loweLeftConvertedPoint = Utils.getWorkspace().modelToScreen(lowerLeftCorner);
-        	Point upperRightConvertedPoint = Utils.getWorkspace().modelToScreen(upperRightCorner);
-			Color currentLayerColor = Utils.getController().getActiveDrawing().getCurrentLayer().getColor();
-			Color bgColor = Utils.getWorkspace().getBackgroundColor();
-			GL11.glColor3d(bgColor.getRed(), bgColor.getGreen(), bgColor.getBlue());
-	        GL11.glBegin(GL11.GL_QUADS);
-	            GL11.glVertex2d(loweLeftConvertedPoint.getX(), loweLeftConvertedPoint.getY());
-	            GL11.glVertex2d(loweLeftConvertedPoint.getX(), upperRightConvertedPoint.getY());
-	            GL11.glVertex2d(upperRightConvertedPoint.getX(), upperRightConvertedPoint.getY());
-	            GL11.glVertex2d(upperRightConvertedPoint.getX(), loweLeftConvertedPoint.getY());
-	        GL11.glEnd();
-	        GL11.glColor3d(currentLayerColor.getRed(), currentLayerColor.getGreen(), currentLayerColor.getBlue());
-		} catch (NoActiveDrawingException e) {
-			// Should never reach this block.
-			e.printStackTrace();
-		}
     }
 
     /**

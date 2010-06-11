@@ -158,4 +158,11 @@ public class QuickMoveFactory extends TwoPointFactory {
 
         return true;
     }
+    
+    /**
+     * Returns true if the element is being moved by this factory.
+     */
+    public boolean isMoving(Element element) {
+    	return pointsToMove.containsKey(element);
+    }
 }

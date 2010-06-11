@@ -22,8 +22,12 @@ import org.apache.batik.svggen.font.Font;
 
 import br.org.archimedes.Constant;
 import br.org.archimedes.Geometrics;
+import br.org.archimedes.Utils;
+import br.org.archimedes.controller.InputController;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
+import br.org.archimedes.factories.CommandFactory;
+import br.org.archimedes.factories.QuickMoveFactory;
 import br.org.archimedes.gui.opengl.OpenGLWrapper;
 import br.org.archimedes.line.Line;
 import br.org.archimedes.model.Element;
@@ -52,8 +56,6 @@ public class Dimension extends Element {
 	private Text text;
 
 	private double fontSize;
-
-	private Text lastText;
 
 	/**
 	 * @param initialPoint
@@ -87,7 +89,6 @@ public class Dimension extends Element {
 		this.distance = distance.clone();
 		this.fontSize = fontSize;
 		this.text = text;
-		this.lastText = text;
 	}
 
 	/**
@@ -121,7 +122,6 @@ public class Dimension extends Element {
 		this.fontSize = fontSize;
 		remakeDistance();
 		text = makeText(Constant.DEFAULT_FONT);
-		lastText = text;
 	}
 
 	/**
@@ -184,7 +184,6 @@ public class Dimension extends Element {
 		this.fontSize = fontSize;
 		remakeDistance();
 		text = makeText(font);
-		lastText = text;
 	}
 
 	/**
@@ -469,9 +468,7 @@ public class Dimension extends Element {
 		super.move(pointsToMove, vector);
 		remakeDistance();
 		if ( !pointsToMove.contains(text.getLowerLeft())) {
-//			text.setText(getDistanceText());
 			try {
-				lastText = text;
 				text = new Text(getDistanceText(), text.getLowerLeft(), text.getSize());
 			} catch (InvalidArgumentException e) {
 				// Should not happen
@@ -585,16 +582,20 @@ public class Dimension extends Element {
 		+ distance.toString();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @seebr.org.archimedes.model.Element#draw(br.org.archimedes.gui.opengl.
-	 * OpenGLWrapper)
-	 */
 	@Override
 	public void draw (OpenGLWrapper wrapper) {
 		Collection<Line> linesToDraw = getLinesToDraw();
 		try {
-			text.draw(wrapper);
+			InputController inputController = Utils.getInputController();
+			CommandFactory currentFactory = inputController.getCurrentFactory();
+			if (currentFactory != null && currentFactory instanceof QuickMoveFactory) {
+				QuickMoveFactory quickMoveFactory = (QuickMoveFactory) currentFactory;
+				if (!quickMoveFactory.isMoving(this)) {
+					text.draw(wrapper);
+				}
+			} else {
+				text.draw(wrapper);
+			}
 			for (Line line : linesToDraw) {
 				wrapper.drawFromModel(new ArrayList<Point>(line
 						.getPoints()));
@@ -626,10 +627,6 @@ public class Dimension extends Element {
 	public void drawClone(OpenGLWrapper wrapper) {
 		Collection<Line> linesToDraw = getLinesToDraw();
 		try {
-			List<Point> extremePoints = lastText.getExtremePoints();
-			Point lowerLeft = extremePoints.get(0);
-			Point upperRight = extremePoints.get(2);
-			wrapper.drawFilledRectangle(lowerLeft, upperRight);
 			text.draw(wrapper);
 			for (Line line : linesToDraw) {
 				wrapper.drawFromModel(new ArrayList<Point>(line
