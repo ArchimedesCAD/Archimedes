@@ -15,6 +15,7 @@
 
 package br.org.archimedes.arc;
 
+import br.org.archimedes.Constant;
 import br.org.archimedes.Tester;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
@@ -57,6 +58,8 @@ public class ArcTest extends Tester {
     private Arc arc2;
 
     private Arc arc3;
+    
+    private Arc arc4;
 
     private Arc arc;
 
@@ -257,12 +260,12 @@ public class ArcTest extends Tester {
     public void radiusIsCalculatedCorrectly () throws InvalidArgumentException,
             NullArgumentException {
 
-        Assert.assertEquals(1.0, arc1.getRadius());
-        Assert.assertEquals(1.0, arc2.getRadius());
-        Assert.assertEquals(1.0, arc3.getRadius());
+        Assert.assertEquals(1.0, arc1.getRadius(),Constant.EPSILON);
+        Assert.assertEquals(1.0, arc2.getRadius(),Constant.EPSILON);
+        Assert.assertEquals(1.0, arc3.getRadius(),Constant.EPSILON);
 
         Arc arc = new Arc(new Point( -2, 0), new Point(0, 2), new Point(2, 0));
-        Assert.assertEquals(2.0, arc.getRadius());
+        Assert.assertEquals(2.0, arc.getRadius(),Constant.EPSILON);
     }
 
     @Test
@@ -359,7 +362,55 @@ public class ArcTest extends Tester {
         }
     }
 
-    // TODO Tests for the creation of an arc with 3 points
+    @Test
+    public void canCreateArcWithThreePoints(){
+    	
+    	//Horizontal arc
+    	arcCreationWithThreePoints(1, 0, 0, 1, -1, 0);
+    	arcCreationWithThreePoints(1, 0, 0, 0.2, -1, 0);
+    	arcCreationWithThreePoints(5, 5, 0, 10, -5, 5);
+    	arcCreationWithThreePoints(1, 0, COS_45, COS_45, 0, 1);
+    	
+    	//Vertical arc
+    	arcCreationWithThreePoints(0, -1, 1, 0, 0, 1);
+    	arcCreationWithThreePoints(0, -1, 0.2, 0, 0, 1);
+    	arcCreationWithThreePoints(5, -5, 10, 0, 5, 5);
+    	
+    	//Oblique arc
+    	arcCreationWithThreePoints(1, 1, -Math.sqrt(2.0), Math.sqrt(2.0), -1, -1);
+    	
+    }
+
+    private void arcCreationWithThreePoints(double x1, double y1, double x2, double y2, double x3, double y3){
+    	
+    	Point initialPoint = new Point(x1, y1);
+    	Point intermediatePoint = new Point(x2, y2);
+    	Point endingPoint = new Point(x3, y3);
+    	
+    	arc4 = createSafeArc(initialPoint, intermediatePoint, endingPoint);
+    	
+    	Assert.assertEquals(x1, arc4.getInitialPoint().getX(),Constant.EPSILON);
+    	Assert.assertEquals(y1, arc4.getInitialPoint().getY(),Constant.EPSILON);  	
+    	Assert.assertEquals(x2, arc4.getIntermediatePoint().getX(),Constant.EPSILON);
+    	Assert.assertEquals(y2, arc4.getIntermediatePoint().getY(),Constant.EPSILON);
+    	Assert.assertEquals(x3, arc4.getEndingPoint().getX(),Constant.EPSILON);
+    	Assert.assertEquals(y3, arc4.getEndingPoint().getY(),Constant.EPSILON);
+    	
+    }
+
+    private Arc createSafeArc(Point initial, Point intermediate, Point ending){
+    	Arc result = null;
+        try {
+			result = new Arc(initial, intermediate, ending);
+		} catch (NullArgumentException e) {
+			Assert.fail("Should not thrown a NullArgumentException creating an arc.");
+			e.printStackTrace();
+		} catch (InvalidArgumentException e) {
+			Assert.fail("Should not thrown an InvalidArgumentException creating an arc.");
+			e.printStackTrace();
+		}
+        return result;
+    }
 
     // TODO Tests for the creation of an arc with 3 points and a boolean
 
