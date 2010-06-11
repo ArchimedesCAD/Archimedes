@@ -19,6 +19,7 @@ import junit.framework.Assert;
 import org.junit.Test;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.gui.opengl.Color;
+import br.org.archimedes.gui.opengl.OpenGLWrapper;
 import br.org.archimedes.model.Point;
 
 public class WorkspaceTest {
@@ -53,7 +54,7 @@ public class WorkspaceTest {
     
     @Test
     public void backgroundColorPersistenceTest() {
-    	Color newColor = new Color(122, 30, 200);
+    	Color newColor = new Color(0, 0, 0);
     	workspace.setBackgroundColor(newColor);
     	workspace.saveProperties(false);
     	Workspace newWorkspace = new Workspace();
@@ -63,7 +64,7 @@ public class WorkspaceTest {
     
     @Test
     public void cursorColorPersistenceTest() {
-    	Color newColor = new Color(0, 30, 200);
+    	Color newColor = new Color(255, 255, 255);
     	workspace.setCursorColor(newColor);
     	workspace.saveProperties(false);
     	Workspace newWorkspace = new Workspace();
@@ -73,7 +74,7 @@ public class WorkspaceTest {
     
     @Test
     public void gripSelectionColorPersistenceTest() {
-    	Color newColor = new Color(122, 0, 200);
+    	Color newColor = new Color(165, 42, 42);
     	workspace.setGripSelectionColor(newColor);
     	workspace.saveProperties(false);
     	Workspace newWorkspace = new Workspace();
@@ -83,7 +84,7 @@ public class WorkspaceTest {
     
     @Test
     public void gripMouseOverColorPersistenceTest() {
-    	Color newColor = new Color(122, 30, 0);
+    	Color newColor = new Color(255, 255, 0);
     	workspace.setGripMouseOverColor(newColor);
     	workspace.saveProperties(false);
     	Workspace newWorkspace = new Workspace();
