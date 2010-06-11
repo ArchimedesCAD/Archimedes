@@ -424,7 +424,8 @@ public class Line extends Element implements Offsetable, Filletable {
             wrapper.drawFromModel(points);
         }
         catch (NullArgumentException e) {
-            // Should not happen
+        	// Should never reach this block
+            e.printStackTrace();
         }
     }
 
@@ -436,12 +437,43 @@ public class Line extends Element implements Offsetable, Filletable {
         extremes.add(getEndingPoint());
         return extremes;
     }
+    
+    
+    
+    
 
     public Collection<UndoableCommand> getFilletCommands(Point arcCenter, Point arcIntersectionWithThisElement, Point arcIntersectionWithThatElement, Point force) throws NullArgumentException {
 		
-		Point pointToBeMoved;		
+		Point pointToBeMoved;				
+		
+		pointToBeMoved = getPointToBeMovedForFillet(arcCenter,
+				arcIntersectionWithThisElement, arcIntersectionWithThatElement);
+		
+		Collection<Point> points = new ArrayList<Point>(); points.add(pointToBeMoved); 
+		HashMap<Element, Collection<Point>> hash = new HashMap<Element, Collection<Point>>();
+		hash.put(this, points);
 		
 		
+		Collection<UndoableCommand> ret = new ArrayList<UndoableCommand>();
+		try {
+			if (force != null)			
+				
+				ret.add(new MoveCommand(hash, new Vector(pointToBeMoved, force)));
+			else
+				ret.add(new MoveCommand(hash, new Vector(pointToBeMoved, arcIntersectionWithThisElement)));
+			
+		} catch (NullArgumentException e) {
+			// Should never reach this block
+            e.printStackTrace();
+		} 
+		return ret;
+			
+	}
+
+	public Point getPointToBeMovedForFillet(Point arcCenter,
+			Point arcIntersectionWithThisElement,
+			Point arcIntersectionWithThatElement) throws NullArgumentException {
+		Point pointToBeMoved;
 		boolean signAreaElement1 = Geometrics.calculateSignedTriangleArea(arcIntersectionWithThisElement, arcIntersectionWithThatElement, initialPoint) > 0;
 		boolean signAreaElement2 = Geometrics.calculateSignedTriangleArea(arcIntersectionWithThisElement, arcIntersectionWithThatElement, endingPoint) > 0;
 		
@@ -454,28 +486,13 @@ public class Line extends Element implements Offsetable, Filletable {
 			boolean signArea = Geometrics.calculateSignedTriangleArea(arcIntersectionWithThisElement, arcIntersectionWithThatElement, arcCenter) > 0;
 			pointToBeMoved = (signArea == signAreaElement2)? initialPoint : endingPoint;  
 		}
-		
-		Collection<Point> points = new ArrayList<Point>(); points.add(pointToBeMoved); 
-		HashMap<Element, Collection<Point>> hash = new HashMap<Element, Collection<Point>>();
-		hash.put(this, points);
-		
-		
-		try {
-			Collection<UndoableCommand> ret = new ArrayList<UndoableCommand>();
-			if (force != null)			
-				
-				ret.add(new MoveCommand(hash, new Vector(pointToBeMoved, force)));
-			else
-				ret.add(new MoveCommand(hash, new Vector(pointToBeMoved, arcIntersectionWithThisElement)));
-			
-			return ret;
-		} catch (NullArgumentException e) {
-			return null; // FIXME
-		} 
-			
+		return pointToBeMoved;
 	}
 
 	public Point getTangencyLinePoint(Point intersection, Point click) {
+		if (click.equals(intersection)) {			
+			return initialPoint.equals(intersection)? endingPoint : initialPoint;
+		}
 		return click;
 	}
     

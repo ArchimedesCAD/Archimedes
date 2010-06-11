@@ -922,29 +922,13 @@ public class Polyline extends Element implements Offsetable, Filletable {
 			Point arcIntersectionWithThatElement, Point force) throws NullArgumentException {
 		
 		Line intersectionLine = getLines().get(getNearestSegment(arcIntersectionWithThisElement));
-		Point initialPoint = intersectionLine.getInitialPoint();
-		Point endingPoint = intersectionLine.getEndingPoint();
-		Point pointToBeMoved = null;
-		//----
-		boolean signAreaElement1 = Geometrics.calculateSignedTriangleArea(arcIntersectionWithThisElement, arcIntersectionWithThatElement, initialPoint) > 0;
-		boolean signAreaElement2 = Geometrics.calculateSignedTriangleArea(arcIntersectionWithThisElement, arcIntersectionWithThatElement, endingPoint) > 0;
-		
-		if (signAreaElement1 == signAreaElement2) {
-			if (Geometrics.calculateDistance(initialPoint, arcIntersectionWithThisElement) < Geometrics.calculateDistance(endingPoint, arcIntersectionWithThisElement))
-				pointToBeMoved = initialPoint;
-			else
-				pointToBeMoved = endingPoint;
-		} else {
-			boolean signArea = Geometrics.calculateSignedTriangleArea(arcIntersectionWithThisElement, arcIntersectionWithThatElement, arcCenter) > 0;
-			pointToBeMoved = (signArea == signAreaElement2)? initialPoint : endingPoint;  
-		}
-		// ----
+		Point pointToBeMoved = intersectionLine.getPointToBeMovedForFillet(arcCenter, arcIntersectionWithThisElement, arcIntersectionWithThatElement);
 		Point movedPoint = (force != null)? force : arcIntersectionWithThisElement;
 		
 		Polyline newPolyline = null;
 		
 		try {
-			if (pointToBeMoved == initialPoint) {
+			if (pointToBeMoved == intersectionLine.getInitialPoint()) {
 				newPolyline = new Polyline(getPointsAfter(pointToBeMoved, movedPoint));				
 				
 			} else {
@@ -963,7 +947,18 @@ public class Polyline extends Element implements Offsetable, Filletable {
 
 	public Point getTangencyLinePoint(Point intersection, Point click) {
 		List<Line> lines = getLines();
-		return lines.get(getNearestSegment(intersection)).getTangencyLinePoint(intersection, click);
+		Line nearestSegment = lines.get(getNearestSegment(intersection));
+		try {
+			if (nearestSegment.contains(click)) {
+				return nearestSegment.getTangencyLinePoint(intersection, click);
+			} else {
+				return nearestSegment.getTangencyLinePoint(intersection, intersection);
+			}
+		} catch (NullArgumentException e) {
+			// Should not reach here
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 }

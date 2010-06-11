@@ -102,8 +102,8 @@ public class DefaultFilleter implements Filleter {
                         .addAll(intersectionManager.getIntersectionsBetween(ext1, extensions2));
             }
             
-            if (intersections.isEmpty()) {
-            	throw new Exception("Não há interseções entre os elementos selecionados.");
+            if (intersections.isEmpty()) { 
+            	throw new InvalidArgumentException();
             }
             
             

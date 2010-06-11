@@ -615,5 +615,58 @@ public class LineTest extends Tester {
         assertCollectionTheSame(extremes, extremesComputed);
 
     }
+    
+    @Test
+    public void testPointToBeMovedForFilletWithDifferentAreaSign() throws InvalidArgumentException, NullArgumentException {
+    	Line line = new Line(0, 0, 2, 0);
+    	Point movedPoint = line.getPointToBeMovedForFillet(new Point(1, 1), new Point(1, 0), new Point(1.5,  1));
+    	Point expectedMovedPoint = line.getEndingPoint();
+    	assertEquals(expectedMovedPoint, movedPoint);
+    	
+    	movedPoint = line.getPointToBeMovedForFillet(new Point(1, -1), new Point(1, 0), new Point(1.5,  -1));
+    	expectedMovedPoint = line.getEndingPoint();
+    	assertEquals(expectedMovedPoint, movedPoint);
+    	
+    	movedPoint = line.getPointToBeMovedForFillet(new Point(1, 1), new Point(1, 0), new Point(.5,  1));
+    	expectedMovedPoint = line.getInitialPoint();
+    	assertEquals(expectedMovedPoint, movedPoint);
+    	
+    	movedPoint = line.getPointToBeMovedForFillet(new Point(1, -1), new Point(1, 0), new Point(.5,  -1));
+    	expectedMovedPoint = line.getInitialPoint();
+    	assertEquals(expectedMovedPoint, movedPoint);
+    }
+    
+    @Test
+    public void testPointToBeMovedForFilletWithEqualAreaSign() throws InvalidArgumentException, NullArgumentException {
+    	Line line = new Line(0, 0, 2, 0);
+    	Point movedPoint = line.getPointToBeMovedForFillet(new Point(2.5, 1), new Point(2.5, 0), new Point(3,  1));
+    	Point expectedMovedPoint = line.getEndingPoint();
+    	assertEquals(expectedMovedPoint, movedPoint);
+    	
+    	movedPoint = line.getPointToBeMovedForFillet(new Point(2.5, -1), new Point(2.5, 0), new Point(3,  -1));
+    	expectedMovedPoint = line.getEndingPoint();
+    	assertEquals(expectedMovedPoint, movedPoint);
+    	
+    	movedPoint = line.getPointToBeMovedForFillet(new Point(-0.5, 1), new Point(-0.5, 0), new Point(-1,  1));
+    	expectedMovedPoint = line.getInitialPoint();
+    	assertEquals(expectedMovedPoint, movedPoint);
+    	
+    	movedPoint = line.getPointToBeMovedForFillet(new Point(-0.5, -1), new Point(-0.5, 0), new Point(-1,  -1));
+    	expectedMovedPoint = line.getInitialPoint();
+    	assertEquals(expectedMovedPoint, movedPoint);
+    }
+    
+    @Test 
+    public void testTangencyLinePoint() throws InvalidArgumentException {
+    	Line line = new Line(0, 0, 2, 0);
+    	Point point1 = new Point(0, 1);
+    	Point point2 = new Point(0, 0);
+    	Point point3 = new Point(0, 2);
+
+    	assertEquals(point2, line.getTangencyLinePoint(point1, point2));
+    	assertEquals(line.getInitialPoint(), line.getTangencyLinePoint(point3, point3));
+    	assertEquals(line.getEndingPoint(), line.getTangencyLinePoint(point2, point2));
+    }
+
 
 }

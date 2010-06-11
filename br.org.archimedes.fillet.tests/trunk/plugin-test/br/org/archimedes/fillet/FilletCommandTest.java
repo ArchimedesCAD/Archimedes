@@ -13,10 +13,12 @@
 
 package br.org.archimedes.fillet;
 
-
-
+import static org.mockito.Mockito.when;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+
+import java.util.Collections;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -26,6 +28,7 @@ import br.org.archimedes.controller.commands.PutOrRemoveElementCommand;
 import br.org.archimedes.exceptions.IllegalActionException;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
+import br.org.archimedes.interfaces.UndoableCommand;
 import br.org.archimedes.line.Line;
 import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Point;
@@ -118,9 +121,6 @@ public class FilletCommandTest extends Tester {
     @Test
     public void testDoIt () throws Exception {
 
-    	//when(mockFilleter.fillet(line1, click1, line2, click2)).thenReturn(new PutOrRemoveElementCommand(null, true));
-    	
-        command.doIt(drawing);
         assertTrue(mockFilleter.calledFillet());
         assertEquals(line1, mockFilleter.getReceivedE1());
         assertEquals(line2, mockFilleter.getReceivedE2());

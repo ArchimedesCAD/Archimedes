@@ -13,6 +13,8 @@
 
 package br.org.archimedes.fillet;
 
+import static org.junit.Assert.assertTrue;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -494,6 +496,24 @@ public class DefaultFilleterTest extends Tester {
     }
     
     @Test
+    public void filletLinesWithRadiusAndClockwiseArc () throws Exception {
+    	// Mesmo teste anterior, só trocando a ordem das linhas para que o sinal do arco seja diferente
+    	Line line1 = new Line(1, -1, 1, 3);
+    	Line line2 = new Line(-1, 1, 3, 1);
+    	
+    	
+    	List<UndoableCommand> commands = filleterWithRadiusOne.fillet(line1, new Point(0, 1), line2,
+                new Point(1, 0));
+    	
+    	List<UndoableCommand> expected = new ArrayList<UndoableCommand>();
+    	expected.add(generateMoveCommand(line1, new Point(3, 1), new Point(0, 1)));
+    	expected.add(generateMoveCommand(line2, new Point(1, 3), new Point(1, 0)));
+    	expected.add(new PutOrRemoveElementCommand(new Arc(new Point(0, 1), new Point(1, 0), new Point(0, 0), false), false));
+    	
+    	assertCollectionTheSame(expected, commands);
+    }
+    
+    @Test
     public void filletPolylinesWithRadius () throws Exception {
     	Polyline polyline1 = new Polyline(new Point(-50, 100), new Point(-1, 1), new Point(3, 1));
     	Polyline polyline2 = new Polyline(new Point(50, -100), new Point(1, -1), new Point(1, 3));
@@ -549,6 +569,25 @@ public class DefaultFilleterTest extends Tester {
         assertCollectionTheSame(expectedCommands, commands);
 
     }
+    
+    
+    @Test 
+    public void testFilletElementsWithoutIntersection() {
+    	Line line1 = null;
+    	Line line2 = null;
+		try {
+			line1 = new Line(0, 1, 0, 30);
+			line2 = new Line(4, 1, 4, 30);
+		} catch (InvalidArgumentException e) {
+			e.printStackTrace();
+		}
+    	
+    	List<UndoableCommand> commands = filleter.fillet(line1, new Point(0, 1), line2, new Point(4,1));
+    	assertTrue(commands.isEmpty());
+    	
+    	
+    }
+    
 /*   
     // TODO test for fillet closed element with open element
     @Test
@@ -640,4 +679,6 @@ public class DefaultFilleterTest extends Tester {
         return new MoveCommand(map, new Vector(pointToMove, whereToMove));
 
     }
+    
+   
 }

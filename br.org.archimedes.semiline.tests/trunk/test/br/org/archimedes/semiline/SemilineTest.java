@@ -363,7 +363,7 @@ public class SemilineTest extends Tester {
         try {
             projection = line.getProjectionOf(toProject);
         }
-        catch (NullArgumentException e) {
+        catch (Exception e) {
             fail("Somebody gave me a null point to project!");
         }
         return projection;

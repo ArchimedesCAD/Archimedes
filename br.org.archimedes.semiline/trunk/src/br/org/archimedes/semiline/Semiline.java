@@ -1,5 +1,6 @@
 /**
- * Copyright (c) 2009 Hugo Corbucci and others.<br>
+ * Copyright (c) 2009 Hugo Corbucci and others.<br>;
+ * 
  * All rights reserved. This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html<br>
@@ -22,7 +23,6 @@ import br.org.archimedes.Geometrics;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.gui.opengl.OpenGLWrapper;
-import br.org.archimedes.infiniteline.InfiniteLine;
 import br.org.archimedes.line.Line;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Offsetable;
@@ -253,19 +253,15 @@ public class Semiline extends Element implements Offsetable {
      * (non-Javadoc)
      * @see br.org.archimedes.model.Element#getProjectionOf(br.org .archimedes.model.Point)
      */
-    public Point getProjectionOf (Point point) throws NullArgumentException {
-
-        InfiniteLine helper = null;
-        try {
-            helper = new InfiniteLine(getInitialPoint(), directionPoint);
-        }
-        catch (Exception e) {
-            // Should not happen
-            e.printStackTrace();
-        }
-        Point projection = helper.getProjectionOf(point);
-
-        return projection;
+    
+    public Point getProjectionOf (Point point) {
+    	
+    	Vector direction = new Vector(initialPoint, directionPoint);
+    	direction = direction.normalized();
+    	double projectionLength = direction.dotProduct(new Vector(initialPoint, point));
+    	Vector projectionVector = direction.multiply(projectionLength);
+    	Point projection = initialPoint.addVector(projectionVector);
+    	return projection;
     }
 
     public String toString () {
