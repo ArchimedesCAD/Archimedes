@@ -54,7 +54,11 @@ public class PreferencesForm extends Observable implements Observer {
 
     private PreferencesEditor editor;
 
-
+    public static String background = "background";
+    public static String cursor = "cursor";
+    public static String gripSelection = "gripSelection";
+    public static String gripMouseOver = "gripMouseOver";
+    
     /**
      * @param parent
      *            The composite parent that contains this form.
@@ -82,26 +86,26 @@ public class PreferencesForm extends Observable implements Observer {
 
         GridData layoutData;
         
-        messages.put("backgroundLabel", Messages.PreferencesEditor_BackgroundColorLabel);
-        messages.put("backgroundChange", Messages.PreferencesEditor_BackgroundColorChange);
-        messages.put("cursorLabel", Messages.PreferencesEditor_CursorColorLabel);
-        messages.put("cursorChange", Messages.PreferencesEditor_CursorColorChange);
-        messages.put("gripSelectionLabel", Messages.PreferencesEditor_GripSelectionColorLabel);
-        messages.put("gripSelectionChange", Messages.PreferencesEditor_GripSelectionColorChange);
-        messages.put("gripMouseOverLabel", Messages.PreferencesEditor_GripMouseOverColorLabel);
-        messages.put("gripMouseOverChange", Messages.PreferencesEditor_GripMouseOverColorChange);
+        messages.put(PreferencesForm.background + "Label", Messages.PreferencesEditor_BackgroundColorLabel);
+        messages.put(PreferencesForm.background + "Change", Messages.PreferencesEditor_BackgroundColorChange);
+        messages.put(PreferencesForm.cursor + "Label", Messages.PreferencesEditor_CursorColorLabel);
+        messages.put(PreferencesForm.cursor + "Change", Messages.PreferencesEditor_CursorColorChange);
+        messages.put(PreferencesForm.gripSelection + "Label", Messages.PreferencesEditor_GripSelectionColorLabel);
+        messages.put(PreferencesForm.gripSelection + "Change", Messages.PreferencesEditor_GripSelectionColorChange);
+        messages.put(PreferencesForm.gripMouseOver + "Label", Messages.PreferencesEditor_GripMouseOverColorLabel);
+        messages.put(PreferencesForm.gripMouseOver + "Change", Messages.PreferencesEditor_GripMouseOverColorChange);
         
         layoutData = new GridData(GridData.HORIZONTAL_ALIGN_CENTER
                 | GridData.FILL_VERTICAL);
         layoutData.verticalSpan = 1;
                 
-        createColorField(formGroup, "background");
+        createColorField(formGroup, PreferencesForm.background);
         
-        createColorField(formGroup, "cursor");
+        createColorField(formGroup, PreferencesForm.cursor);
         
-        createColorField(formGroup, "gripSelection");
+        createColorField(formGroup, PreferencesForm.gripSelection);
         
-        createColorField(formGroup, "gripMouseOver");
+        createColorField(formGroup, PreferencesForm.gripMouseOver);
 
         formGroup.pack();
         formGroup.setVisible(true);

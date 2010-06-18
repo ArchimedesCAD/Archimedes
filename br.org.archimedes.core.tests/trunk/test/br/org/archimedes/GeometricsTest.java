@@ -508,7 +508,6 @@ public class GeometricsTest extends Tester {
     	Point o1 = new Point(1,1), o2 = new Point(3,0), o3 = new Point(-1,-1), o4 = new Point(-1,2);
     	
     	Point p = Geometrics.breakAngles(o2, new Point(2, 0.305730681));
-    	System.out.println(p);
     	Assert.assertEquals(errorMessage, new Point(3,1), Geometrics.breakAngles(o1, new Point(3,1)));
     	Assert.assertEquals(errorMessage, new Point(0,0), Geometrics.breakAngles(o2, new Point(0,0)));
     	Assert.assertEquals(errorMessage, new Point(2, 0.267949192), Geometrics.breakAngles(o2, new Point(2, 0.305730681)));

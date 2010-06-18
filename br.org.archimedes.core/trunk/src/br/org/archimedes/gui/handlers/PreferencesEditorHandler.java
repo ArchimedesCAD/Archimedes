@@ -16,6 +16,7 @@ import br.org.archimedes.Utils;
 import br.org.archimedes.gui.opengl.Color;
 import br.org.archimedes.gui.rca.editor.DrawingEditor;
 import br.org.archimedes.gui.swt.preferences.PreferencesEditor;
+import br.org.archimedes.gui.swt.preferences.PreferencesForm;
 
 public class PreferencesEditorHandler extends AbstractHandler {
 	public DrawingEditor getDrawingEditor() {
@@ -35,10 +36,10 @@ public class PreferencesEditorHandler extends AbstractHandler {
 	
     public Object execute (ExecutionEvent event) throws ExecutionException {
     	HashMap<String, Color> colors = new HashMap<String, Color>();
-    	colors.put("background", Utils.getWorkspace().getBackgroundColor());
-    	colors.put("cursor", Utils.getWorkspace().getCursorColor());
-    	colors.put("gripSelection", Utils.getWorkspace().getGripSelectionColor());
-    	colors.put("gripMouseOver", Utils.getWorkspace().getGripMouseOverColor());
+    	colors.put(PreferencesForm.background, Utils.getWorkspace().getBackgroundColor());
+    	colors.put(PreferencesForm.cursor, Utils.getWorkspace().getCursorColor());
+    	colors.put(PreferencesForm.gripSelection, Utils.getWorkspace().getGripSelectionColor());
+    	colors.put(PreferencesForm.gripMouseOver, Utils.getWorkspace().getGripMouseOverColor());
         Shell shell = HandlerUtil.getActiveShell(event);
         PreferencesEditor dialog = new PreferencesEditor(shell, colors, getDrawingEditor());
         dialog.open();
