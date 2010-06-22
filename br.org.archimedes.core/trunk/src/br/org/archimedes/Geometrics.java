@@ -901,19 +901,22 @@ public class Geometrics {
 
         double initialAngle = 0.0;
         double pointAngle = 0.0;
-        double resultAngle = 0.0;
 
         try {
             initialAngle = Geometrics.calculateAngle(centerPoint, initialPoint);
-            pointAngle = Geometrics.calculateAngle(centerPoint, point);
-            resultAngle = (initialAngle > pointAngle) ? initialAngle - pointAngle : pointAngle - initialAngle;
-         
+            pointAngle = Geometrics.calculateAngle(centerPoint, point)
+                    - initialAngle;
+            initialAngle = 0.0;
         }
         catch (NullArgumentException e) {
             // Should never reach this block
             e.printStackTrace();
         }
 
-        return resultAngle;
+        if (pointAngle < 0) {
+            pointAngle += 2.0 * Math.PI;
+        }
+
+        return pointAngle;
     }
 }

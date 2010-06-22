@@ -530,7 +530,7 @@ public class GeometricsTest extends Tester {
     	Point p2 = new Point(-1,1);
     	
     	Assert.assertEquals(Math.PI/2.0, Geometrics.calculateRelativeAngle(p0, p1, p2), Constant.EPSILON);
-    	Assert.assertEquals(Math.PI/2.0, Geometrics.calculateRelativeAngle(p0, p2, p1), Constant.EPSILON);
+    	Assert.assertEquals(3.0 * Math.PI/2.0, Geometrics.calculateRelativeAngle(p0, p2, p1), Constant.EPSILON);
     	Assert.assertEquals(0.0, Geometrics.calculateRelativeAngle(null, null, null), Constant.EPSILON);
     }
     
