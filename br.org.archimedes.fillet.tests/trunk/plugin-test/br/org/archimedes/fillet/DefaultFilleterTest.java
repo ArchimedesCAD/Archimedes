@@ -492,10 +492,6 @@ public class DefaultFilleterTest extends Tester {
     	expected.add(generateMoveCommand(line1, new Point(3, 1), new Point(0, 1)));
     	expected.add(generateMoveCommand(line2, new Point(1, 3), new Point(1, 0)));
     	
-    	assertTrue(expected.contains(commands.get(1)));
-    	assertTrue(expected.contains(commands.get(2)));
-    	assertTrue(expected.contains(commands.get(0)));
-    	
     	
     	assertCollectionTheSame(expected, commands);
     }
@@ -621,6 +617,56 @@ public class DefaultFilleterTest extends Tester {
     	assertCollectionTheSame(expectedCommands, commands);
     	
     }
+    
+    @Test
+    public void filletSemilineIntoLine() throws InvalidArgumentException, NullArgumentException {
+    	Semiline target = new Semiline(0, 0, 1, 1);
+    	Line line = new Line(1, 0, 1, 30);
+    	List<UndoableCommand> commands = filleter.fillet(target, new Point(.5, .5), line, new Point(1, 2));
+    	
+    	List<UndoableCommand> expectedCommands = new ArrayList<UndoableCommand>();
+    	Line expectedLine = new Line(0, 0, 1, 1);
+    	UndoableCommand expectedMove = generateMoveCommand(line, new Point(1, 30), new Point(1, 1));
+    	
+    	expectedCommands.add(new PutOrRemoveElementCommand(target, true));
+    	expectedCommands.add(new PutOrRemoveElementCommand(expectedLine, false));
+    	expectedCommands.add(expectedMove);
+    }
+    
+    @Test
+    public void filletSemilineIntoSemiline() throws InvalidArgumentException, NullArgumentException {
+    	Semiline target = new Semiline(0, 0, 1, 1);
+    	Line line = new Line(1, 0, 1, 30);
+    	List<UndoableCommand> commands = filleter.fillet(target, new Point(2, 2), line, new Point(1, 2));
+    	
+    	List<UndoableCommand> expectedCommands = new ArrayList<UndoableCommand>();
+    	Semiline expectedSemiline = new Semiline(1, 1, 2, 2);
+    	UndoableCommand expectedMove = generateMoveCommand(line, new Point(1, 30), new Point(1, 1));
+    	
+    	expectedCommands.add(new PutOrRemoveElementCommand(target, true));
+    	expectedCommands.add(new PutOrRemoveElementCommand(expectedSemiline, false));
+    	expectedCommands.add(expectedMove);
+    }
+    
+    @Test
+    public void filletSemilineIntoSemilineWithRadius() throws InvalidArgumentException, NullArgumentException {
+    	Semiline target = new Semiline(3, 1, -3, 1);
+    	Line line = new Line(1, -5, 1, 3);
+    	List<UndoableCommand> commands = filleterWithRadiusOne.fillet(target, new Point(0, 1), line, new Point(1, 0));
+
+    	List<UndoableCommand> expectedCommands = new ArrayList<UndoableCommand>();
+    	
+    	Semiline expectedSemiline = new Semiline(0, 1, -3, 1);
+    	UndoableCommand expectedMove = generateMoveCommand(line, new Point(1, 3), new Point(1, 0));
+    	
+    	expectedCommands.add(new PutOrRemoveElementCommand(target, true));
+    	expectedCommands.add(new PutOrRemoveElementCommand(expectedSemiline, false));
+    	expectedCommands.add(expectedMove);
+    	expectedCommands.add(new PutOrRemoveElementCommand(new Arc(new Point(0, 1), new Point(1, 0), new Point(0, 0), false), false));
+    }
+    
+    
+    
     
     @Test
     public void filletInfiniteLineWithRadiusTest () throws InvalidArgumentException, NullArgumentException {
