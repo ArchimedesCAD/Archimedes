@@ -10,6 +10,9 @@ import org.junit.Test;
 import br.org.archimedes.Utils;
 import br.org.archimedes.exceptions.NoActiveDrawingException;
 
+/* This tests depends on SWTBot plugin (run as SWTBot Test).
+ * http://eclipse.org/swtbot/downloads.php */
+
 public class LayerEditorTests extends SWTBotGefTestCase{
 	@Before
 	public void setUp() {
