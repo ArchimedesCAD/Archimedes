@@ -17,20 +17,18 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.junit.Test;
 
-
 import br.org.archimedes.Tester;
 import br.org.archimedes.arc.Arc;
-import br.org.archimedes.circle.Circle;
 import br.org.archimedes.controller.commands.PutOrRemoveElementCommand;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
+import br.org.archimedes.infiniteline.InfiniteLine;
 import br.org.archimedes.interfaces.UndoableCommand;
 import br.org.archimedes.line.Line;
 import br.org.archimedes.model.Element;
@@ -38,6 +36,7 @@ import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Vector;
 import br.org.archimedes.move.MoveCommand;
 import br.org.archimedes.polyline.Polyline;
+import br.org.archimedes.semiline.Semiline;
 
 public class DefaultFilleterTest extends Tester {
 
@@ -488,9 +487,15 @@ public class DefaultFilleterTest extends Tester {
                 new Point(1, 0));
     	
     	List<UndoableCommand> expected = new ArrayList<UndoableCommand>();
+    	
+    	expected.add(new PutOrRemoveElementCommand(new Arc(new Point(0, 1), new Point(1, 0), new Point(0, 0), false), false));
     	expected.add(generateMoveCommand(line1, new Point(3, 1), new Point(0, 1)));
     	expected.add(generateMoveCommand(line2, new Point(1, 3), new Point(1, 0)));
-    	expected.add(new PutOrRemoveElementCommand(new Arc(new Point(0, 1), new Point(1, 0), new Point(0, 0), false), false));
+    	
+    	assertTrue(expected.contains(commands.get(1)));
+    	assertTrue(expected.contains(commands.get(2)));
+    	assertTrue(expected.contains(commands.get(0)));
+    	
     	
     	assertCollectionTheSame(expected, commands);
     }
@@ -570,6 +575,91 @@ public class DefaultFilleterTest extends Tester {
 
     }
     
+    @Test
+    public void filletInfiniteLineTest () throws InvalidArgumentException, NullArgumentException {
+    	InfiniteLine horizontal = new InfiniteLine(-1, 0, 1, 0);
+    	InfiniteLine vertical = new InfiniteLine(0, -1, 0, 1);
+    	
+    	Semiline left = new Semiline(new Point(0, 0), new Point(-1, 0));
+    	Semiline right = new Semiline(new Point(0, 0), new Point(1, 0));
+    	Semiline up = new Semiline(new Point(0, 0), new Point(0, 1));
+    	Semiline down = new Semiline(new Point(0, 0), new Point(0, -1));
+    	
+    	List<UndoableCommand> commands;
+    	ArrayList<UndoableCommand> expectedCommands;
+    	
+    	commands = filleter.fillet(horizontal, new Point(.5, 0), vertical, new Point(0, .5));
+    	expectedCommands = new ArrayList<UndoableCommand>();
+    	expectedCommands.add(new PutOrRemoveElementCommand(horizontal, true));
+    	expectedCommands.add(new PutOrRemoveElementCommand(vertical, true));
+    	expectedCommands.add(new PutOrRemoveElementCommand(up, false));
+    	expectedCommands.add(new PutOrRemoveElementCommand(right, false));
+    	assertCollectionTheSame(expectedCommands, commands);
+    	
+    	commands = filleter.fillet(horizontal, new Point(-.5, 0), vertical, new Point(0, .5));
+    	expectedCommands = new ArrayList<UndoableCommand>();
+    	expectedCommands.add(new PutOrRemoveElementCommand(horizontal, true));
+    	expectedCommands.add(new PutOrRemoveElementCommand(vertical, true));
+    	expectedCommands.add(new PutOrRemoveElementCommand(up, false));
+    	expectedCommands.add(new PutOrRemoveElementCommand(left, false));
+    	assertCollectionTheSame(expectedCommands, commands);
+    	
+    	commands = filleter.fillet(horizontal, new Point(-.5, 0), vertical, new Point(0, -.5));
+    	expectedCommands = new ArrayList<UndoableCommand>();
+    	expectedCommands.add(new PutOrRemoveElementCommand(horizontal, true));
+    	expectedCommands.add(new PutOrRemoveElementCommand(vertical, true));
+    	expectedCommands.add(new PutOrRemoveElementCommand(left, false));
+    	expectedCommands.add(new PutOrRemoveElementCommand(down, false));
+    	assertCollectionTheSame(expectedCommands, commands);
+    	
+    	commands = filleter.fillet(horizontal, new Point(.5, 0), vertical, new Point(0, -.5));
+    	expectedCommands = new ArrayList<UndoableCommand>();
+    	expectedCommands.add(new PutOrRemoveElementCommand(horizontal, true));
+    	expectedCommands.add(new PutOrRemoveElementCommand(vertical, true));
+    	expectedCommands.add(new PutOrRemoveElementCommand(down, false));
+    	expectedCommands.add(new PutOrRemoveElementCommand(right, false));
+    	assertCollectionTheSame(expectedCommands, commands);
+    	
+    }
+    
+    @Test
+    public void filletInfiniteLineWithRadiusTest () throws InvalidArgumentException, NullArgumentException {
+    	InfiniteLine horizontal = new InfiniteLine(-1, 0, 1, 0);
+    	InfiniteLine vertical = new InfiniteLine(0, -1, 0, 1);
+    	
+    	Semiline right = new Semiline(new Point(1, 0), new Point(2, 0));
+    	Semiline up = new Semiline(new Point(0, 1), new Point(0, 2));
+    	
+    	Arc arc = new Arc(new Point(0, 1), new Point(1, 0), new Point(1, 1), true);
+    	
+    	List<UndoableCommand> commands;
+    	ArrayList<UndoableCommand> expectedCommands;
+    	
+    	commands = filleterWithRadiusOne.fillet(horizontal, new Point(.5, 0), vertical, new Point(0, .5));
+    	expectedCommands = new ArrayList<UndoableCommand>();
+    	expectedCommands.add(new PutOrRemoveElementCommand(horizontal, true));
+    	expectedCommands.add(new PutOrRemoveElementCommand(vertical, true));
+    	expectedCommands.add(new PutOrRemoveElementCommand(up, false));
+    	expectedCommands.add(new PutOrRemoveElementCommand(right, false));
+    	expectedCommands.add(new PutOrRemoveElementCommand(arc, false));
+    	assertCollectionTheSame(expectedCommands, commands);
+    }
+    
+    
+    @Test
+    public void testInvalidFilletWithLines() throws InvalidArgumentException, NullArgumentException {
+    	Line line1 = new Line(-.5, 0, 0, 0);
+    	Line line2 = new Line(0, .5, 0, 0);
+    	
+    	List<UndoableCommand> commands = filleterWithRadiusOne.fillet(line1, new Point(-0.25, 0), line2, new Point(0, 0.25));
+    	Arc arc = new Arc(new Point(-1, 0), new Point(0, 1), new Point(-1, 1), true);
+    	List<UndoableCommand> expectedCommands = new ArrayList<UndoableCommand>();
+    	expectedCommands.add(new PutOrRemoveElementCommand(arc, false));
+    	expectedCommands.add(new PutOrRemoveElementCommand(line1, true));
+    	expectedCommands.add(new PutOrRemoveElementCommand(line2, true));
+    	
+    	assertCollectionTheSame(expectedCommands, commands);
+    }
     
     @Test 
     public void testFilletElementsWithoutIntersection() {
@@ -677,7 +767,6 @@ public class DefaultFilleterTest extends Tester {
         listPoints.add(pointToMove);
         map.put(element, listPoints);
         return new MoveCommand(map, new Vector(pointToMove, whereToMove));
-
     }
     
    

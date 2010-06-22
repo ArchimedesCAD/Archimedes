@@ -923,25 +923,25 @@ public class Polyline extends Element implements Offsetable, Filletable {
 		
 		Line intersectionLine = getLines().get(getNearestSegment(arcIntersectionWithThisElement));
 		Point pointToBeMoved = intersectionLine.getPointToBeMovedForFillet(arcCenter, arcIntersectionWithThisElement, arcIntersectionWithThatElement);
-		Point movedPoint = (force != null)? force : arcIntersectionWithThisElement;
-		
-		Polyline newPolyline = null;
-		
-		try {
-			if (pointToBeMoved == intersectionLine.getInitialPoint()) {
-				newPolyline = new Polyline(getPointsAfter(pointToBeMoved, movedPoint));				
-				
-			} else {
-				newPolyline = new Polyline(getPointsBefore(pointToBeMoved, movedPoint));
-								
-			}
-		} catch (InvalidArgumentException e) { }
-		
 		
 		Collection <UndoableCommand> ret = new ArrayList<UndoableCommand>();
-		ret.add(new PutOrRemoveElementCommand(this, true));
-		ret.add(new PutOrRemoveElementCommand(newPolyline, false));
-		
+		if (!(intersectionLine.isInvalidFillet(arcCenter, arcIntersectionWithThisElement, arcIntersectionWithThatElement, pointToBeMoved))) {
+			Point movedPoint = (force != null)? force : arcIntersectionWithThisElement;
+			
+			Polyline newPolyline = null;
+			
+			try {
+				if (pointToBeMoved == intersectionLine.getInitialPoint()) {
+					newPolyline = new Polyline(getPointsAfter(pointToBeMoved, movedPoint));				
+					
+				} else {
+					newPolyline = new Polyline(getPointsBefore(pointToBeMoved, movedPoint));
+									
+				}
+			} catch (InvalidArgumentException e) { }
+			ret.add(new PutOrRemoveElementCommand(newPolyline, false));
+		}
+		ret.add(new PutOrRemoveElementCommand(this, true));		
 		return ret;
 	}
 

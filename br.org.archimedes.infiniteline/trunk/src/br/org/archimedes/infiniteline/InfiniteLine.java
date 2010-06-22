@@ -16,6 +16,9 @@
 
 package br.org.archimedes.infiniteline;
 
+
+import br.org.archimedes.semiline.Semiline;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -29,6 +32,7 @@ import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.gui.opengl.OpenGLWrapper;
 import br.org.archimedes.interfaces.UndoableCommand;
+import br.org.archimedes.line.Line;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Filletable;
 import br.org.archimedes.model.Offsetable;
@@ -38,7 +42,7 @@ import br.org.archimedes.model.ReferencePoint;
 import br.org.archimedes.model.Vector;
 import br.org.archimedes.model.references.TrianglePoint;
 
-public class InfiniteLine extends Element implements Offsetable {
+public class InfiniteLine extends Element implements Offsetable, Filletable{
 
     private Point initialPoint;
 
@@ -448,8 +452,45 @@ public class InfiniteLine extends Element implements Offsetable {
         }
     }
 
-    public String toString () {
-
+    public String toString ( ) {
         return "Infinite Line: from =" + getInitialPoint() + " moving by " + getDirectionVector(); //$NON-NLS-1$ //$NON-NLS-2$
     }
+
+	public Collection<UndoableCommand> getFilletCommands(Point arcCenter,
+			Point arcIntersectionWithThisElement,
+			Point arcIntersectionWithThatElement, Point force)
+			throws NullArgumentException {
+		
+		Collection<UndoableCommand> ret = new ArrayList<UndoableCommand>(); 
+		try {
+			
+			Point candidateDirectionPoint1 = initialPoint;
+			Point candidateDirectionPoint2 = arcIntersectionWithThisElement.addVector(new Vector(candidateDirectionPoint1, arcIntersectionWithThisElement));
+			Line line = new Line(candidateDirectionPoint1, candidateDirectionPoint2);
+			
+			Point pointToBeMoved = line.getPointToBeMovedForFillet(arcCenter, arcIntersectionWithThisElement, arcIntersectionWithThatElement);
+			Point fixedPoint = (pointToBeMoved.equals(candidateDirectionPoint1))? candidateDirectionPoint2 : candidateDirectionPoint1;
+
+			Semiline producedSemiline;
+			if (force == null )
+				producedSemiline = new Semiline(arcIntersectionWithThisElement, fixedPoint);
+			else
+				producedSemiline = new Semiline(force, fixedPoint);
+			
+			ret.add(new PutOrRemoveElementCommand(producedSemiline, false));
+			ret.add(new PutOrRemoveElementCommand(this, true));
+		} catch (InvalidArgumentException e) {
+			e.printStackTrace();
+		}
+		
+		return ret;
+	}
+
+	public Point getTangencyLinePoint(Point intersection, Point click) {
+		if (click.equals(intersection)) {			
+			return initialPoint.equals(intersection)? endingPoint : initialPoint;
+		}
+		return click;
+	}
+    
 }

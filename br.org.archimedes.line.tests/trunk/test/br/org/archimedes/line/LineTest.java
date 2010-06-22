@@ -656,6 +656,8 @@ public class LineTest extends Tester {
     	assertEquals(expectedMovedPoint, movedPoint);
     }
     
+  
+    
     @Test 
     public void testTangencyLinePoint() throws InvalidArgumentException {
     	Line line = new Line(0, 0, 2, 0);

@@ -62,7 +62,6 @@ public class DefaultFilleter implements Filleter {
     	Vector direction1 = (new Vector(intersection, click1)).normalized();
     	Vector direction2 = (new Vector(intersection, click2)).normalized();
     	
-    	
     	Vector bissectrix = direction1.clone(); 
     	bissectrix.add(direction2);
     	bissectrix = bissectrix.normalized();
