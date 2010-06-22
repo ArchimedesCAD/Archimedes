@@ -3,9 +3,6 @@ package br.org.archimedes.gui.swt.layers;
 import junit.framework.Assert;
 
 import org.eclipse.swtbot.eclipse.gef.finder.SWTBotGefTestCase;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
 import br.org.archimedes.Utils;
 import br.org.archimedes.exceptions.NoActiveDrawingException;
@@ -14,12 +11,12 @@ import br.org.archimedes.exceptions.NoActiveDrawingException;
  * http://eclipse.org/swtbot/downloads.php */
 
 public class LayerEditorTests extends SWTBotGefTestCase{
-	@Before
+	//@Before
 	public void setUp() {
 		bot.menu("File").menu("New Drawing").click();
 	}
 	
-	@Test
+	//@Test
 	public void testLineThicknessChange() throws NoActiveDrawingException {
 		bot.menu("Edit").menu("Open layer editor...").click();
 		bot.shell("Editor de camadas").activate();
@@ -29,7 +26,7 @@ public class LayerEditorTests extends SWTBotGefTestCase{
 		Assert.assertEquals(7.536, Utils.getController().getActiveDrawing().getCurrentLayer().getThickness());
 	}
 	
-	@After
+	//@After
 	public void tearDown() {
 		bot.menu("File").menu("Close").click();
 		bot.shell("Save Resource").activate();
