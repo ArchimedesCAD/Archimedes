@@ -37,7 +37,7 @@
 			<fileset dir="." includes="eclipse-test-framework*.zip" />
 		</unzip>
 		<unzip dest="${test.eclipseExtensionDirectory}">
-			<fileset dir="." includes="org.pluginbuilder.autotestsuite*.zip" />
+			<fileset dir="." includes="org.pluginbuilder.feature*.zip" />
 		</unzip>
 		<echo file="${test.eclipseExtensionDirectory}/.eclipseextension">id=org.eclipse.platform
 name=Eclipse Platform
