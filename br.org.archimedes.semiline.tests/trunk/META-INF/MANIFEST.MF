@@ -9,3 +9,4 @@ Require-Bundle: br.org.archimedes.core,
  br.org.archimedes.semiline,
  br.org.archimedes.line,
  org.junit4
+Export-Package: br.org.archimedes.semiline

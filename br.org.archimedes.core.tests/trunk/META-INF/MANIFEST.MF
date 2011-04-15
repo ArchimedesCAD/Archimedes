@@ -17,7 +17,14 @@ Require-Bundle: br.org.archimedes.core,
  org.eclipse.swtbot.swt.finder;bundle-version="2.0.0"
 Export-Package: br.org.archimedes,
  br.org.archimedes.stub,
- br.org.archimedes.helper
+ br.org.archimedes.helper,
+ br.org.archimedes.controller,
+ br.org.archimedes.controller.commands,
+ br.org.archimedes.gui.actions,
+ br.org.archimedes.gui.model,
+ br.org.archimedes.gui.opengl,
+ br.org.archimedes.model,
+ br.org.archimedes.parser
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ClassPath: .,
  lib/mockito-all-1.7.jar

@@ -10,6 +10,6 @@ Require-Bundle: br.org.archimedes.text,
  org.eclipse.ui;bundle-version="3.4.0",
  org.eclipse.core.runtime;bundle-version="3.4.0"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: br.org.archimedes.stub
+Export-Package: br.org.archimedes.stub, br.org.archimedes.text.tests
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: br.org.archimedes.text.tests.TestActivator

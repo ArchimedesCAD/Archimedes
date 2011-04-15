@@ -17,3 +17,4 @@ Require-Bundle: br.org.archimedes.fillet;bundle-version="0.58.0",
  br.org.archimedes.circle;bundle-version="0.58.0"
 Import-Package: br.org.archimedes.infiniteline,
  br.org.archimedes.semiline
+Export-Package: br.org.archimedes.fillet

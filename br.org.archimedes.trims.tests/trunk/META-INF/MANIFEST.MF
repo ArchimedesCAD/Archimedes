@@ -15,5 +15,6 @@ Require-Bundle: br.org.archimedes.core,
  br.org.archimedes.semiline,
  br.org.archimedes.polyline,
  org.junit4
+Export-Package: br.org.archimedes.trims, br.org.archimedes.trimmers, br.org.archimedes.controller.commands
 Bundle-ClassPath: lib/mockito-all-1.7.jar,
  .

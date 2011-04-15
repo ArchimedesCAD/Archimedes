@@ -4,6 +4,7 @@ Bundle-Name: Line Tests Plug-in
 Bundle-SymbolicName: br.org.archimedes.line.tests
 Bundle-Version: 0.58.0
 Bundle-Vendor: Hugo Corbucci
+Export-Package: br.org.archimedes.line
 Require-Bundle: br.org.archimedes.core,
  br.org.archimedes.line,
  br.org.archimedes.core.tests,
