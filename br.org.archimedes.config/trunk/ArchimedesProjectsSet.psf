@@ -83,6 +83,7 @@
 <project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.ro/trunk,br.org.archimedes.ro"/>
 <project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.rotate/trunk,br.org.archimedes.rotate"/>
 <project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.rotate.tests/trunk,br.org.archimedes.rotate.tests"/>
+<project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.runalltests/trunk,br.org.archimedes.runalltests"/>
 <project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.scale/trunk,br.org.archimedes.scale"/>
 <project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.scale.tests/trunk,br.org.archimedes.scale.tests"/>
 <project reference="0.9.3,http://svn.archimedes.org.br/public/mainarchimedes/rcparchimedes/br.org.archimedes.semiline/trunk,br.org.archimedes.semiline"/>
@@ -227,4 +228,7 @@
 <item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.zoom"/>
 <item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.zoom.tests"/>
 </workingSets>
+<workingSets editPageId="org.eclipse.pde.ui.pluginWorkingSet" label="Plugins - Archimedes Run All UnitTests" name="Plugins - Archimedes Run All UnitTests">
+<item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.runalltests"/>
+</workingSets
 </psf>
