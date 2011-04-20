@@ -230,5 +230,5 @@
 </workingSets>
 <workingSets editPageId="org.eclipse.pde.ui.pluginWorkingSet" label="Plugins - Archimedes Run All UnitTests" name="Plugins - Archimedes Run All UnitTests">
 <item factoryID="org.eclipse.pde.ui.elementFactory" org.eclipse.pde.workingSetKey="br.org.archimedes.runalltests"/>
-</workingSets
+</workingSets>
 </psf>
