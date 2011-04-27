@@ -44,7 +44,7 @@ public class EditTextFactory extends SelectorFactory {
 
     public String getName () {
 
-        return "editText"; //$NON-NLS-1$
+        return "edittext"; //$NON-NLS-1$
     }
 
     /*

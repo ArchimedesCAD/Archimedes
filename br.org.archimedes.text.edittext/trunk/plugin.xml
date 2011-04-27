@@ -24,7 +24,7 @@
                tooltip="%command.edittext.tooltip">
             <parameter
                   name="br.org.archimedes.core.factoryactivator.name"
-                  value="br.org.archimedes.edittext">
+                  value="br.org.archimedes.text.edittext">
             </parameter>
          </command>
       </menuContribution>
@@ -39,7 +39,7 @@
                tooltip="%command.edittext.tooltip">
             <parameter
                   name="br.org.archimedes.core.factoryactivator.name"
-                  value="br.org.archimedes.edittext">
+                  value="br.org.archimedes.text.edittext">
             </parameter>
          </command>
       </menuContribution>
