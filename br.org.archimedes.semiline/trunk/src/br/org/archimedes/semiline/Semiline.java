@@ -257,7 +257,11 @@ public class Semiline extends Element implements Offsetable, Filletable {
      * @see br.org.archimedes.model.Element#getProjectionOf(br.org .archimedes.model.Point)
      */
     
-    public Point getProjectionOf (Point point) {
+    public Point getProjectionOf (Point point) throws NullArgumentException{
+    	
+        if (point == null) {
+            throw new NullArgumentException();
+        }
     	
     	Vector direction = new Vector(initialPoint, directionPoint);
     	direction = direction.normalized();

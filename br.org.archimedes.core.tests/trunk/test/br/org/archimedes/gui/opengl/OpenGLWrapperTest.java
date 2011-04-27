@@ -12,80 +12,74 @@
  */
 package br.org.archimedes.gui.opengl;
 
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import java.util.Map;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.opengl.GLCanvas;
+import org.eclipse.swt.opengl.GLData;
+import org.eclipse.swt.widgets.Shell;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
+
+import br.org.archimedes.exceptions.NullArgumentException;
+import br.org.archimedes.model.Drawing;
 
 public class OpenGLWrapperTest {
 
-    OpenGLWrapper openGL;
+    OpenGLWrapper openGL = br.org.archimedes.Utils.getOpenGLWrapper();
 
+    @Ignore
+    @Test
+	public void testAddDrawingContext() {
 
-    public OpenGLWrapperTest (String name) {
+		Drawing drawing = new Drawing("Drawing");
+		GLCanvas canvas = new GLCanvas(new Shell(), SWT.NO_BACKGROUND,
+				new GLData());
 
-        // super(name);
-        openGL = br.org.archimedes.Utils.getOpenGLWrapper();
-    }
+		/* drawing and context null */
+		try {
+			openGL.addDrawingCanvas(null, null);
+			fail("Should not catch this exception.");
+		} catch (NullArgumentException e) {
+			/* Should catch this exception */
+			assertTrue(true);
+		}
 
-    @Before
-    protected void setUp () throws Exception {
+		/* just context null */
+		try {
+			openGL.addDrawingCanvas(drawing, null);
+			fail("Should not catch this exception.");
+		} catch (NullArgumentException e) {
+			/* Should catch this exception */
+			assertTrue(true);
+		}
 
-        // super.setUp();
-    }
+		/* just drawing null */
+		try {
+			openGL.addDrawingCanvas(null, canvas);
+			fail("Should not catch this exception.");
+		} catch (NullArgumentException e) {
+			/* Should catch this exception */
+			assertTrue(true);
+		}
 
-    @After
-    protected void tearDown () throws Exception {
+		/* adding a drawing associated with a context */
+		try {
+			openGL.addDrawingCanvas(drawing, canvas);
+			Map<Drawing, GLCanvas> map = openGL.getDrawingCanvas();
+			assertTrue("The drawing should be in the map!",
+					map.containsKey(drawing));
+			assertTrue("The drawing should be associated to the context.", map
+					.get(drawing).equals(canvas));
 
-        // super.tearDown();
-    }
-
-    // public void testAddDrawingContext () {
-    //
-    // Drawing drawing = new Drawing("Drawing");
-    // GLCanvas canvas = new GLCanvas(new Shell(), SWT.NO_BACKGROUND,
-    // new GLData());
-    //
-    // /* drawing and context null */
-    // try {
-    // openGL.addDrawingCanvas(null, null);
-    // fail("Should not catch this exception.");
-    // }
-    // catch (NullArgumentException e) {
-    // /* Should catch this exception */
-    // assertTrue(true);
-    // }
-    //
-    // /* just context null */
-    // try {
-    // openGL.addDrawingCanvas(drawing, null);
-    // fail("Should not catch this exception.");
-    // }
-    // catch (NullArgumentException e) {
-    // /* Should catch this exception */
-    // assertTrue(true);
-    // }
-    //
-    // /* just drawing null */
-    // try {
-    // openGL.addDrawingCanvas(null, canvas);
-    // fail("Should not catch this exception.");
-    // }
-    // catch (NullArgumentException e) {
-    // /* Should catch this exception */
-    // assertTrue(true);
-    // }
-    //
-    // /* adding a drawing associated with a context */
-    // try {
-    // openGL.addDrawingCanvas(drawing, canvas);
-    // Map<Drawing, GLCanvas> map = openGL.getDrawingCanvas();
-    // assertTrue("The drawing should be in the map!", map
-    // .containsKey(drawing));
-    // assertTrue("The drawing should be associated to the context.", map
-    // .get(drawing).equals(canvas));
-    //
-    // }
-    // catch (NullArgumentException e) {
-    // fail("Should not catch this exception.");
-    // }
-    // }
+		} catch (NullArgumentException e) {
+			fail("Should not catch this exception.");
+		}
+	}
 }

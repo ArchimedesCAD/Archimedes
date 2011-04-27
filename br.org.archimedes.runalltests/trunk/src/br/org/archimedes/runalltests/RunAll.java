@@ -3,55 +3,126 @@ package br.org.archimedes.runalltests;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
-import br.org.archimedes.*;
-import br.org.archimedes.arc.*;
-import br.org.archimedes.circle.*;
-import br.org.archimedes.controller.*;
-import br.org.archimedes.copypaste.*;
-import br.org.archimedes.copytoclipboard.*;
-import br.org.archimedes.dimension.test.*;
-import br.org.archimedes.distance.*;
-import br.org.archimedes.erase.*;
-import br.org.archimedes.extend.*;
-import br.org.archimedes.extenders.*;
-import br.org.archimedes.fillet.*;
-import br.org.archimedes.infiniteLine.*;
-import br.org.archimedes.intersectors.*;
-import br.org.archimedes.io.svg.*;
-import br.org.archimedes.io.svg.elements.*;
-import br.org.archimedes.io.xml.*;
-import br.org.archimedes.io.xml.parsers.*;
-import br.org.archimedes.io.xml.elements.*;
-import br.org.archimedes.leader.*;
-import br.org.archimedes.line.*;
-import br.org.archimedes.mirror.*;
-import br.org.archimedes.move.*;
-import br.org.archimedes.offset.*;
-import br.org.archimedes.orto.*;
-import br.org.archimedes.pan.tests.*;
-import br.org.archimedes.paste.*;
-import br.org.archimedes.polyline.area.*;
-import br.org.archimedes.polyline.explode.*;
-import br.org.archimedes.polyline.rectangle.*;
-import br.org.archimedes.polyline.*;
-import br.org.archimedes.redo.*;
-import br.org.archimedes.rotate.*;
-import br.org.archimedes.scale.*;
-import br.org.archimedes.semiline.*;
-import br.org.archimedes.snap.*;
-import br.org.archimedes.stretch.*;
-import br.org.archimedes.text.edittext.tests.*;
-import br.org.archimedes.text.tests.*;
-import br.org.archimedes.trims.*;
-import br.org.archimedes.trimmers.*;
-import br.org.archimedes.controller.commands.*;
-import br.org.archimedes.gui.actions.*;
-import br.org.archimedes.gui.model.*;
-import br.org.archimedes.gui.opengl.*;
-import br.org.archimedes.model.*;
-import br.org.archimedes.parser.*;
-import br.org.archimedes.undo.*;
-import br.org.archimedes.zoom.*;
+import br.org.archimedes.GeometricsTest;
+import br.org.archimedes.UtilsTest;
+import br.org.archimedes.arc.ArcFactoryTest;
+import br.org.archimedes.arc.ArcTest;
+import br.org.archimedes.circle.CircleFactoryTest;
+import br.org.archimedes.circle.CircleTest;
+import br.org.archimedes.controller.ActiveStateTest;
+import br.org.archimedes.controller.InputControllerTest;
+import br.org.archimedes.controller.commands.MacroCommandTest;
+import br.org.archimedes.controller.commands.PutElementTest;
+import br.org.archimedes.controller.commands.RemoveElementTest;
+import br.org.archimedes.controller.commands.TrimTest;
+import br.org.archimedes.controller.commands.ZoomByAreaCommandTest;
+import br.org.archimedes.copypaste.CopyPasteFactoryTest;
+import br.org.archimedes.copytoclipboard.CopyToClipboardFactoryTest;
+import br.org.archimedes.dimension.test.DimensionFactoryTest;
+import br.org.archimedes.dimension.test.DimensionTest;
+import br.org.archimedes.distance.DistanceFactoryTest;
+import br.org.archimedes.erase.EraseFactoryTest;
+import br.org.archimedes.extend.ExtendCommandTest;
+import br.org.archimedes.extend.ExtendManagerTest;
+import br.org.archimedes.extenders.ArcExtenderTest;
+import br.org.archimedes.extenders.LineExtenderTest;
+import br.org.archimedes.extenders.PolylineExtenderTest;
+import br.org.archimedes.extenders.SemilineExtenderTest;
+import br.org.archimedes.fillet.DefaultFilleterTest;
+import br.org.archimedes.fillet.FilletCommandTest;
+import br.org.archimedes.fillet.FilletFactoryTest;
+import br.org.archimedes.gui.actions.LoadCommandTest;
+import br.org.archimedes.gui.actions.SaveCommandTest;
+import br.org.archimedes.gui.model.MousePositionManagerTest;
+import br.org.archimedes.gui.model.VisualHelperTest;
+import br.org.archimedes.gui.model.WorkspaceTest;
+import br.org.archimedes.gui.opengl.OpenGLWrapperTest;
+import br.org.archimedes.infiniteLine.HorizontalInfiniteLineTest;
+import br.org.archimedes.infiniteLine.VerticalInfiniteLineTest;
+import br.org.archimedes.intersectors.ArcArcIntersectorTest;
+import br.org.archimedes.intersectors.ArcInfiniteLineIntersectorTest;
+import br.org.archimedes.intersectors.ArcLineIntersectorTest;
+import br.org.archimedes.intersectors.CircleLineIntersectorTest;
+import br.org.archimedes.intersectors.CirclePolylineIntersectorTest;
+import br.org.archimedes.intersectors.InfiniteLinePolylineIntersectorTest;
+import br.org.archimedes.intersectors.LineInfiniteLineIntersectorTest;
+import br.org.archimedes.intersectors.LineLeaderIntersectorTest;
+import br.org.archimedes.intersectors.LineLineIntersectorTest;
+import br.org.archimedes.intersectors.LinePolylineIntersectorTest;
+import br.org.archimedes.intersectors.LineTextIntersectorTest;
+import br.org.archimedes.intersectors.PolylinePolylineIntersectorTest;
+import br.org.archimedes.intersectors.SemilineArcIntersectorTest;
+import br.org.archimedes.intersectors.SemilineCircleIntersectorTest;
+import br.org.archimedes.intersectors.SemilineInfiniteLineIntersectorTest;
+import br.org.archimedes.intersectors.SemilineLineIntersectorTest;
+import br.org.archimedes.intersectors.SemilinePolylineIntersectorTest;
+import br.org.archimedes.intersectors.SemilineSemilineIntersectorTest;
+import br.org.archimedes.io.svg.SVGExporterHelperTest;
+import br.org.archimedes.io.svg.SVGExporterTest;
+import br.org.archimedes.io.svg.elements.ArcExporterTest;
+import br.org.archimedes.io.svg.elements.CircleExporterTest;
+import br.org.archimedes.io.svg.elements.DimensionExporterTest;
+import br.org.archimedes.io.svg.elements.InfiniteLineExporterTest;
+import br.org.archimedes.io.svg.elements.LeaderExporterTest;
+import br.org.archimedes.io.svg.elements.LineExporterTest;
+import br.org.archimedes.io.svg.elements.PolylineExporterTest;
+import br.org.archimedes.io.svg.elements.SemilineExporterTest;
+import br.org.archimedes.io.svg.elements.TextExporterTest;
+import br.org.archimedes.io.xml.XMLExporterHelperTest;
+import br.org.archimedes.io.xml.XMLExporterTest;
+import br.org.archimedes.io.xml.XMLImporterTest;
+import br.org.archimedes.io.xml.parsers.DimensionParserTest;
+import br.org.archimedes.io.xml.parsers.LineParserTest;
+import br.org.archimedes.leader.LeaderTest;
+import br.org.archimedes.line.LineFactoryTest;
+import br.org.archimedes.line.LineTest;
+import br.org.archimedes.mirror.MirrorFactoryTest;
+import br.org.archimedes.model.DrawingIntersectionTest;
+import br.org.archimedes.model.DrawingTest;
+import br.org.archimedes.model.PointTest;
+import br.org.archimedes.model.RectangleTest;
+import br.org.archimedes.model.SelectionTest;
+import br.org.archimedes.model.VectorTest;
+import br.org.archimedes.move.MoveCommandTest;
+import br.org.archimedes.move.MoveElementTest;
+import br.org.archimedes.move.MoveFactoryTest;
+import br.org.archimedes.offset.OffsetFactoryTest;
+import br.org.archimedes.orto.OrtoCommandTest;
+import br.org.archimedes.parser.CommandParserTest;
+import br.org.archimedes.parser.DistanceParserTest;
+import br.org.archimedes.parser.DoubleDecoratorParserTest;
+import br.org.archimedes.parser.OffsetDirectionParserTest;
+import br.org.archimedes.parser.PointParserTest;
+import br.org.archimedes.parser.SimpleSelectionParserTest;
+import br.org.archimedes.parser.TextParserTest;
+import br.org.archimedes.parser.VectorParserTest;
+import br.org.archimedes.parser.ZoomParserTest;
+import br.org.archimedes.paste.PasteFactoryTest;
+import br.org.archimedes.polyline.PolyLineFactoryTest;
+import br.org.archimedes.polyline.PolyLineTest;
+import br.org.archimedes.polyline.area.AreaPerimeterFactoryTest;
+import br.org.archimedes.polyline.explode.ExplodeFactoryTest;
+import br.org.archimedes.polyline.rectangle.RectangleFactoryTest;
+import br.org.archimedes.redo.RedoTest;
+import br.org.archimedes.rotate.RotateFactoryTest;
+import br.org.archimedes.rotate.RotateTest;
+import br.org.archimedes.scale.ScaleFactoryTest;
+import br.org.archimedes.semiline.SemilineTest;
+import br.org.archimedes.snap.SnapTest;
+import br.org.archimedes.stretch.StretchFactoryTest;
+import br.org.archimedes.text.edittext.tests.EditTextCommandTest;
+import br.org.archimedes.text.edittext.tests.EditTextFactoryTest;
+import br.org.archimedes.text.tests.TextTest;
+import br.org.archimedes.trimmers.ArcTrimTest;
+import br.org.archimedes.trimmers.CircleTrimTest;
+import br.org.archimedes.trimmers.InfiniteLineTrimTest;
+import br.org.archimedes.trimmers.LineTrimTest;
+import br.org.archimedes.trimmers.PolylineTrimTest;
+import br.org.archimedes.trimmers.SemilineTrimTest;
+import br.org.archimedes.trims.TrimCommandTest;
+import br.org.archimedes.trims.TrimManagerTest;
+import br.org.archimedes.undo.UndoTest;
+import br.org.archimedes.zoom.ZoomFactoryTest;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
@@ -90,7 +161,6 @@ import br.org.archimedes.zoom.*;
 	ExplodeFactoryTest.class,
 	ExtendCommandTest.class,
 	ExtendManagerTest.class,
-	ExtendTest.class,
 	FilletCommandTest.class,
 	FilletFactoryTest.class,
 	GeometricsTest.class,
@@ -100,9 +170,7 @@ import br.org.archimedes.zoom.*;
 	InfiniteLineTrimTest.class,
 	InputControllerTest.class,
 	LeaderExporterTest.class,
-	LeaderFactoryTest.class,
 	LeaderTest.class,
-	LeaderXMLExporterTest.class,
 	LineExporterTest.class,
 	LineExtenderTest.class,
 	LineFactoryTest.class,
@@ -121,18 +189,15 @@ import br.org.archimedes.zoom.*;
 	MoveCommandTest.class,
 	MoveElementTest.class,
 	MoveFactoryTest.class,
-	NPointParserTest.class,
 	OffsetDirectionParserTest.class,
 	OffsetFactoryTest.class,
 	OpenGLWrapperTest.class,
 	OrtoCommandTest.class,
-	OrtoFactoryTest.class,
 	br.org.archimedes.controller.commands.PanCommandTest.class,
 	br.org.archimedes.pan.tests.PanCommandTest.class,
-	PanFactoryTest.class,
 	PasteFactoryTest.class,
 	PointParserTest.class,
-	PointTest.class,
+	PointTest.class, 
 	PolylineExporterTest.class,
 	PolylineExtenderTest.class,
 	PolyLineFactoryTest.class,

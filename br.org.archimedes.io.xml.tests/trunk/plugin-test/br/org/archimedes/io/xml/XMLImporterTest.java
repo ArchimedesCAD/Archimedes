@@ -71,7 +71,7 @@ public class XMLImporterTest {
     public void testImportDrawing () throws InvalidFileFormatException, IOException,
             NullArgumentException, IllegalActionException, InvalidArgumentException {
 
-        String fileName = "ExampleFile.xml";
+        String fileName = "../br.org.archimedes.io.xml.tests/ExampleFile.xml";
 
         InputStream input = readFile(fileName);
         XMLImporter importer = new XMLImporter();

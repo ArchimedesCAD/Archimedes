@@ -26,7 +26,7 @@ import br.org.archimedes.model.Point;
 /**
  * @author vidlopes
  */
-public class DimensionParserTest extends NPointParserTest {
+public class DimensionParserTest extends NPointParserTestHelper {
 
     private static final Double FONT_SIZE = 18.0;
 

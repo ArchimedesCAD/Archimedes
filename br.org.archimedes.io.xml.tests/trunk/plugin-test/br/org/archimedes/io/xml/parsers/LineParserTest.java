@@ -26,7 +26,7 @@ import br.org.archimedes.model.Point;
 /**
  * @author vidlopes
  */
-public class LineParserTest extends NPointParserTest {
+public class LineParserTest extends NPointParserTestHelper {
 
     @Before
     public void testGetLineParser () {

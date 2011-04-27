@@ -13,6 +13,7 @@
 package br.org.archimedes.parser;
 
 import org.junit.Assert;
+import org.junit.Test;
 
 import br.org.archimedes.Tester;
 import br.org.archimedes.exceptions.InvalidParameterException;
@@ -24,6 +25,7 @@ import br.org.archimedes.model.Point;
  */
 public class PointParserTest extends Tester {
 
+	@Test
     public void testPointParser () {
 
         Parser pp = new PointParser();

@@ -13,6 +13,7 @@
 package br.org.archimedes.parser;
 
 import org.junit.Assert;
+import org.junit.Test;
 
 import br.org.archimedes.Tester;
 import br.org.archimedes.exceptions.InvalidParameterException;
@@ -24,6 +25,7 @@ import br.org.archimedes.model.Point;
  */
 public class OffsetDirectionParserTest extends Tester {
 
+	@Test
     public void testPlus () {
 
         Parser dp = new DirectionParser();
@@ -34,7 +36,8 @@ public class OffsetDirectionParserTest extends Tester {
         Assert.assertEquals("Should be true for positive", true, dp
                 .getParameter());
     }
-
+	
+	@Test
     public void testMinus () {
 
         Parser dp = new DirectionParser();
@@ -46,6 +49,7 @@ public class OffsetDirectionParserTest extends Tester {
                 .getParameter());
     }
 
+	@Test
     public void testPoint () {
 
         Parser dp = new DirectionParser();
@@ -60,6 +64,7 @@ public class OffsetDirectionParserTest extends Tester {
                 dp.getParameter());
     }
 
+	@Test
     public void testReturn () {
 
         Parser dp = new DirectionParser();

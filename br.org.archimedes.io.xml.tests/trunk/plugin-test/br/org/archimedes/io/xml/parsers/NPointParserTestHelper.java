@@ -30,7 +30,7 @@ import br.org.archimedes.model.Element;
 /**
  * @author vidlopes
  */
-public class NPointParserTest {
+public class NPointParserTestHelper {
 
     protected ElementParser parser;
 

@@ -42,7 +42,7 @@ public class XMLExporterTest {
         String result = output.toString();
         output.close();
 
-        String expected = readFromFile("emptyDrawing.arc");
+        String expected = readFromFile("../br.org.archimedes.io.xml.tests/emptyDrawing.arc");
 
         result = result.replaceAll("\\s", "");
         expected = expected.replaceAll("\\s", "");

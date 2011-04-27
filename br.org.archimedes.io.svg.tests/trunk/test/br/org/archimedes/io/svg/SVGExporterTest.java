@@ -50,7 +50,7 @@ public class SVGExporterTest extends Tester {
         String result = output.toString();
         output.close();
 
-        String expected = readFromFile("emptyDrawing.svg");
+        String expected = readFromFile("../br.org.archimedes.io.svg.tests/emptyDrawing.svg");
 
         result = result.replaceAll("\\s", "");
         expected = expected.replaceAll("\\s", "");
