@@ -26,7 +26,6 @@ import br.org.archimedes.polyline.Polyline;
 public class LayerEditorTests extends SWTBotGefTestCase{
 	@Before
 	public void setUp() {
-		//bot.button("Cancel").click();
 		bot.menu("File").menu("New Drawing").click();
 		SWTBotPreferences.KEYBOARD_LAYOUT = "EN_US";
 	}
@@ -35,11 +34,11 @@ public class LayerEditorTests extends SWTBotGefTestCase{
 	public void testLineThicknessChange() throws NoActiveDrawingException {
 		bot.menu("Edit").menu("Open layer editor...").click();
 		bot.shell("Editor de camadas").activate();
-		bot.table().select(0);
 		bot.spinnerWithLabel("Espessura").setSelection(7536);
-		bot.button("Ok").click();
+    	bot.button("Ok").click();
 		Assert.assertEquals(7.536, Utils.getController().getActiveDrawing().getCurrentLayer().getThickness());
 	}
+	
 	@Test
 	public void testDoACircleMoveItUndoAndRedo() throws NoActiveDrawingException, InterruptedException, NullArgumentException, InvalidArgumentException
 	{
