@@ -1,19 +1,20 @@
 /**
- * Copyright (c) 2006, 2009 Hugo Corbucci and others.<br>
- * All rights reserved. This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html<br>
- * <br>
- * Contributors:<br>
- * Hugo Corbucci - initial API and implementation<br>
- * Luiz C. Real, Bruno Klava, Kenzo Yamada - later contributions<br>
- * <br>
- * This file was created on 2006/06/05, 22:53:43, by Hugo Corbucci.<br>
- * It is part of package br.org.archimedes.polyline on the br.org.archimedes.polyline project.<br>
- */
-
-package br.org.archimedes.polyline;
-
+ * /**                                                                                                                                                                                                                                                                             
+ * Copyright (c) 2006, 2009 Hugo Corbucci and others.<br>                                                                                                                                                                                                                       
+ * All rights reserved. This program and the accompanying materials are made available under the                                                                                                                                                                                
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at                                                                                                                                                                            
+ * http://www.eclipse.org/legal/epl-v10.html<br>                                                                                                                                                                                                                                
+ * <br>                                                                                                                                                                                                                                                                         
+ * Contributors:<br>                                                                                                                                                                                                                                                            
+ * Hugo Corbucci - initial API and implementation<br>                                                                                                                                                                                                                           
+ * Luiz C. Real, Bruno Klava, Kenzo Yamada - later contributions<br>                                                                                                                                                                                                            
+ * <br>                                                                                                                                                                                                                                                                         
+ * This file was created on 2006/06/05, 22:53:43, by Hugo Corbucci.<br>                                                                                                                                                                                                         
+ * It is part of package br.org.archimedes.polyline on the br.org.archimedes.polyline project.<br>                                                                                                                                                                              
+ */                                                                                                                                                                                                                                                                             
+                                                                                                                                                                                                                                                                                
+package br.org.archimedes.polyline;                                                                                                                                                                                                                                             
+                                                                                                                                                                                                                                                                                
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -359,7 +360,50 @@ public class Polyline extends Element implements Offsetable, Filletable {
         }
         return references;
     }
-
+    
+    private ArrayList<Point> getCrossings(Line ray) throws NullArgumentException {
+	    ArrayList<Point> crossings = new ArrayList<Point>();
+	    
+	    List<Line> lines = getLines();
+	    for (Line line : lines) {
+	        double lx1 = line.getInitialPoint().getX();
+	        double ly1 = line.getInitialPoint().getY();
+	        double lx2 = line.getEndingPoint().getX();
+	        double ly2 = line.getEndingPoint().getY();
+	        double a1;
+	        double b1;
+	        
+	        double rx1 = ray.getInitialPoint().getX();
+	        double ry1 = ray.getInitialPoint().getY();
+	        double rx2 = ray.getEndingPoint().getX();
+	        double ry2 = ray.getEndingPoint().getY();
+	        double a2;
+	        double b2;
+	        
+	        double x, y;
+	        
+	        a2 = (ry1 - ry2)/(rx1 - rx2);
+	    	b2 = ry1 - a2*rx1;
+	    	
+	        if (lx1 != lx2) {
+	        	a1 = (ly1 - ly2)/(lx1 - lx2);
+	        	b1 = ly1 - a1*lx1;
+	            if (a1 == a2) continue;
+	            x = (b2 -b1)/(a1 - a2);
+	            y = a1 * x + b1;
+	        }
+	        else {
+	
+	        	x = lx1;
+	        	y = a2*x + b2;
+	
+	        }
+	        Point crossing = new Point(x, y);
+	        if (line.contains(crossing) && ray.contains(crossing));
+	            crossings.add(crossing);
+	    }
+    return crossings;
+}
     /*
      * (non-Javadoc)
      * @see br.org.archimedes.model.Offsetable#isPositiveDirection(br.org.archimedes.model.Point)
@@ -378,11 +422,8 @@ public class Polyline extends Element implements Offsetable, Filletable {
                 Point meanPoint = Geometrics.getMeanPoint(segment.getInitialPoint(), segment
                         .getEndingPoint());
                 Point helper = meanPoint.addVector(orthogonal);
-
                 Line ray = new Line(point, helper);
-                // TODO Resolver intersecção
-                Collection<Point> crossings = Collections.emptyList();
-
+                ArrayList<Point> crossings = getCrossings(ray);
                 int numberOfCrossings = 0;
                 for (Point crossing : crossings) {
                     if (this.contains(crossing) && ray.contains(crossing)) {
@@ -394,10 +435,10 @@ public class Polyline extends Element implements Offsetable, Filletable {
                     leftSide++;
                 }
             }
-
             if (leftSide > lines.size() / 2) {
                 result = true;
             }
+            
         }
         catch (Exception e) {
             // Should not catch any exception
@@ -871,94 +912,94 @@ public class Polyline extends Element implements Offsetable, Filletable {
     }
 
     private int getLineIndexWithPoint(Point p) {
-    	int ret = 0;
-    	double minDistance = Double.MAX_VALUE;
-    	int currIndex = 0;
-    	
-    	try {
-    		for (Line l : getLines()) {		
-    			double distance = p.calculateDistance(l.getProjectionOf(p));    			
-    			if (distance < minDistance) {
-    				ret = currIndex;
-    				minDistance = distance; 
-    			}
-    			currIndex++;			
-    		}
-    	} catch (NullArgumentException e) {
-    		// Should not reach here
-    	}			
-    	
-		return ret;
+        int ret = 0;
+        double minDistance = Double.MAX_VALUE;
+        int currIndex = 0;
+    
+        try {
+                for (Line l : getLines()) {
+                        double distance = p.calculateDistance(l.getProjectionOf(p));    
+                        if (distance < minDistance) {
+                                ret = currIndex;
+                                minDistance = distance; 
+                        }
+                        currIndex++;
+                }
+        } catch (NullArgumentException e) {
+                // Should not reach here
+        }
+    
+                return ret;
     }
     
     private List<Point> getPointsBefore(Point p, Point movedPoint) {
-    	List<Point> ret = new ArrayList<Point>();
-    	for (Point point : points) {
-    		if (point.equals(p))
-    			break;
-    		ret.add(point.clone());
-    	}
-    	ret.add(movedPoint.clone());
-    	return ret;
+        List<Point> ret = new ArrayList<Point>();
+        for (Point point : points) {
+                if (point.equals(p))
+                        break;
+                ret.add(point.clone());
+        }
+        ret.add(movedPoint.clone());
+        return ret;
     }
     
     private List<Point> getPointsAfter(Point p, Point movedPoint) {
-    	List<Point> ret = new ArrayList<Point>();
-    	boolean found = false;
-    	
-    	ret.add(movedPoint.clone());
-    	for (Point point : points) {
-    		if (found) {
-    			ret.add(point.clone());
-    		}
-    		if (point.equals(p))
-    			found = true;
-    	}
-    	return ret;
+        List<Point> ret = new ArrayList<Point>();
+        boolean found = false;
+    
+        ret.add(movedPoint.clone());
+        for (Point point : points) {
+                if (found) {
+                        ret.add(point.clone());
+                }
+                if (point.equals(p))
+                        found = true;
+        }
+        return ret;
     }
     
-	public Collection<UndoableCommand> getFilletCommands(Point arcCenter,
-			Point arcIntersectionWithThisElement,
-			Point arcIntersectionWithThatElement, Point force) throws NullArgumentException {
-		
-		Line intersectionLine = getLines().get(getNearestSegment(arcIntersectionWithThisElement));
-		Point pointToBeMoved = intersectionLine.getPointToBeMovedForFillet(arcCenter, arcIntersectionWithThisElement, arcIntersectionWithThatElement);
-		
-		Collection <UndoableCommand> ret = new ArrayList<UndoableCommand>();
-		if (!(intersectionLine.isInvalidFillet(arcCenter, arcIntersectionWithThisElement, arcIntersectionWithThatElement, pointToBeMoved))) {
-			Point movedPoint = (force != null)? force : arcIntersectionWithThisElement;
-			
-			Polyline newPolyline = null;
-			
-			try {
-				if (pointToBeMoved == intersectionLine.getInitialPoint()) {
-					newPolyline = new Polyline(getPointsAfter(pointToBeMoved, movedPoint));				
-					
-				} else {
-					newPolyline = new Polyline(getPointsBefore(pointToBeMoved, movedPoint));
-									
-				}
-			} catch (InvalidArgumentException e) { }
-			ret.add(new PutOrRemoveElementCommand(newPolyline, false));
-		}
-		ret.add(new PutOrRemoveElementCommand(this, true));		
-		return ret;
-	}
+        public Collection<UndoableCommand> getFilletCommands(Point arcCenter,
+                        Point arcIntersectionWithThisElement,
+                        Point arcIntersectionWithThatElement, Point force) throws NullArgumentException {
 
-	public Point getTangencyLinePoint(Point intersection, Point click) {
-		List<Line> lines = getLines();
-		Line nearestSegment = lines.get(getNearestSegment(intersection));
-		try {
-			if (nearestSegment.contains(click)) {
-				return nearestSegment.getTangencyLinePoint(intersection, click);
-			} else {
-				return nearestSegment.getTangencyLinePoint(intersection, intersection);
-			}
-		} catch (NullArgumentException e) {
-			// Should not reach here
-			e.printStackTrace();
-			return null;
-		}
-	}
+                Line intersectionLine = getLines().get(getNearestSegment(arcIntersectionWithThisElement));
+                Point pointToBeMoved = intersectionLine.getPointToBeMovedForFillet(arcCenter, arcIntersectionWithThisElement, arcIntersectionWithThatElement);
+
+                Collection <UndoableCommand> ret = new ArrayList<UndoableCommand>();
+                if (!(intersectionLine.isInvalidFillet(arcCenter, arcIntersectionWithThisElement, arcIntersectionWithThatElement, pointToBeMoved))) {
+                        Point movedPoint = (force != null)? force : arcIntersectionWithThisElement;
+
+                        Polyline newPolyline = null;
+
+                        try {
+                                if (pointToBeMoved == intersectionLine.getInitialPoint()) {
+                                        newPolyline = new Polyline(getPointsAfter(pointToBeMoved, movedPoint));
+
+                                } else {
+                                        newPolyline = new Polyline(getPointsBefore(pointToBeMoved, movedPoint));
+
+                                }
+                        } catch (InvalidArgumentException e) { }
+                        ret.add(new PutOrRemoveElementCommand(newPolyline, false));
+                }
+                ret.add(new PutOrRemoveElementCommand(this, true));
+                return ret;
+        }
+
+        public Point getTangencyLinePoint(Point intersection, Point click) {
+                List<Line> lines = getLines();
+                Line nearestSegment = lines.get(getNearestSegment(intersection));
+                try {
+                        if (nearestSegment.contains(click)) {
+                                return nearestSegment.getTangencyLinePoint(intersection, click);
+                        } else {
+                                return nearestSegment.getTangencyLinePoint(intersection, intersection);
+                        }
+                } catch (NullArgumentException e) {
+                        // Should not reach here
+                        e.printStackTrace();
+                        return null;
+                }
+        }
 
 }
