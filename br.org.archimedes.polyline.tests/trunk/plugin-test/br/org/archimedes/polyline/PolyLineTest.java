@@ -15,6 +15,7 @@ package br.org.archimedes.polyline;
 
 import br.org.archimedes.Tester;
 import br.org.archimedes.exceptions.InvalidArgumentException;
+import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.gui.opengl.Color;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Layer;
@@ -127,7 +128,67 @@ public class PolyLineTest extends Tester {
         Polyline result = (Polyline) polyline.cloneWithDistance( -1);
         assertEquals(expected, result);
     }
+    
+    /*Tests for isPositiveDirections method for different kinds of drawing*/
 
+    @Test
+    public void testIsPositiveDirectionForM() throws NullArgumentException, InvalidArgumentException {
+    	Polyline polyline = new Polyline(new Point(-10, 0), new Point(-5, 10), new Point(0, 0), new Point(5, 10), new Point(10, 0));
+    	boolean expected, result;
+    	
+    	expected = true;
+    	result = polyline.isPositiveDirection(new Point(-11, 5));
+        assertEquals(expected, result);
+    	result = polyline.isPositiveDirection(new Point(0, 5));
+        assertEquals(expected, result);
+    	result = polyline.isPositiveDirection(new Point(11, 5));
+        assertEquals(expected, result);
+        
+    	expected = false;
+    	result = polyline.isPositiveDirection(new Point(-5, 5));
+        assertEquals(expected, result);
+    	result = polyline.isPositiveDirection(new Point(0, -5));
+        assertEquals(expected, result);
+    	result = polyline.isPositiveDirection(new Point(5, 5));
+        assertEquals(expected, result);
+    }
+    
+    @Test
+    public void testIsPositiveDirectionFor4() throws NullArgumentException, InvalidArgumentException {
+    	Polyline polyline = new Polyline(new Point(0, 0), new Point(0, 10), new Point(-5, 5), new Point(5, 5));
+    	boolean expected, result;
+    	
+    	expected = true;
+    	result = polyline.isPositiveDirection(new Point(-1, 6));
+        assertEquals(expected, result);
+        
+    	expected = false;
+    	result = polyline.isPositiveDirection(new Point(0, 100));
+        assertEquals(expected, result);
+    	result = polyline.isPositiveDirection(new Point(1, 4));
+        assertEquals(expected, result);
+    	result = polyline.isPositiveDirection(new Point(4, 0));
+        assertEquals(expected, result);
+    }
+    
+    @Test
+    public void testIsPositiveDirectionForTie() throws NullArgumentException, InvalidArgumentException {
+    	Polyline polyline = new Polyline(new Point(0, 0), new Point(0, 10), new Point(-5, 5), new Point(5, 5), new Point(0, 0));    	
+    	boolean expected, result;
+    	
+    	expected = true;
+    	result = polyline.isPositiveDirection(new Point(-1, 6));
+        assertEquals(expected, result);
+    	result = polyline.isPositiveDirection(new Point(4, 0));
+        assertEquals(expected, result);
+        
+    	expected = false;
+    	result = polyline.isPositiveDirection(new Point(0, 100));
+        assertEquals(expected, result);
+    	result = polyline.isPositiveDirection(new Point(1, 4));
+        assertEquals(expected, result);
+    }
+    
     @Test
     public void clonningKeepsTheSameLayer () throws Exception {
         Polyline polyline = new Polyline(new Point(1, -2), new Point( -1, -2), new Point( -1, -5),
