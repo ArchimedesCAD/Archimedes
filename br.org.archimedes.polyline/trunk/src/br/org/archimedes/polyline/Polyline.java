@@ -25,6 +25,8 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import org.eclipse.ui.internal.actions.ClearWorkingSetAction;
+
 import br.org.archimedes.Geometrics;
 import br.org.archimedes.controller.commands.PutOrRemoveElementCommand;
 import br.org.archimedes.exceptions.InvalidArgumentException;
@@ -361,91 +363,132 @@ public class Polyline extends Element implements Offsetable, Filletable {
         return references;
     }
     
+    private static Point getCrossing(Line line1, Line line2)
+    {
+        double lx1 = line1.getInitialPoint().getX();
+        double ly1 = line1.getInitialPoint().getY();
+        double lx2 = line1.getEndingPoint().getX();
+        double ly2 = line1.getEndingPoint().getY();
+        double a1;
+        double b1;
+        
+        double rx1 = line2.getInitialPoint().getX();
+        double ry1 = line2.getInitialPoint().getY();
+        double rx2 = line2.getEndingPoint().getX();
+        double ry2 = line2.getEndingPoint().getY();
+        double a2;
+        double b2;
+        
+        double x, y;
+        
+        a2 = (ry1 - ry2)/(rx1 - rx2);
+    	b2 = ry1 - a2*rx1;
+    	
+        if (lx1 != lx2) {
+        	a1 = (ly1 - ly2)/(lx1 - lx2);
+        	b1 = ly1 - a1*lx1;
+            if (a1 == a2) return null;
+            x = (b2 -b1)/(a1 - a2);
+            y = a1 * x + b1;
+        }
+        else {
+
+        	x = lx1;
+        	y = a2*x + b2;
+
+        }
+        Point crossing = new Point(x, y);
+        return crossing;
+    }
+    
     private ArrayList<Point> getCrossings(Line ray) throws NullArgumentException {
 	    ArrayList<Point> crossings = new ArrayList<Point>();
 	    
 	    List<Line> lines = getLines();
 	    for (Line line : lines) {
-	        double lx1 = line.getInitialPoint().getX();
-	        double ly1 = line.getInitialPoint().getY();
-	        double lx2 = line.getEndingPoint().getX();
-	        double ly2 = line.getEndingPoint().getY();
-	        double a1;
-	        double b1;
-	        
-	        double rx1 = ray.getInitialPoint().getX();
-	        double ry1 = ray.getInitialPoint().getY();
-	        double rx2 = ray.getEndingPoint().getX();
-	        double ry2 = ray.getEndingPoint().getY();
-	        double a2;
-	        double b2;
-	        
-	        double x, y;
-	        
-	        a2 = (ry1 - ry2)/(rx1 - rx2);
-	    	b2 = ry1 - a2*rx1;
-	    	
-	        if (lx1 != lx2) {
-	        	a1 = (ly1 - ly2)/(lx1 - lx2);
-	        	b1 = ly1 - a1*lx1;
-	            if (a1 == a2) continue;
-	            x = (b2 -b1)/(a1 - a2);
-	            y = a1 * x + b1;
-	        }
-	        else {
-	
-	        	x = lx1;
-	        	y = a2*x + b2;
-	
-	        }
-	        Point crossing = new Point(x, y);
+    		Point crossing = getCrossing(line, ray);
+    		if (crossing == null)
+    			continue;
 	        if (line.contains(crossing) && ray.contains(crossing));
 	            crossings.add(crossing);
 	    }
-    return crossings;
-}
+	    return crossings;
+	}
+    
+    private static double distance(Line line, Point point) {
+    	Double distance = 0.0;
+    	Point projection;
+    	
+		try {
+			projection = line.getProjectionOf(point);
+	    	if (line.contains(projection)) {
+	    		distance = projection.calculateDistance(point);
+	    	} 
+	    	else {
+	    		Double min1 = point.calculateDistance(line.getInitialPoint());
+	    		Double min2 = point.calculateDistance(line.getEndingPoint());
+	    		distance = (min1 < min2 ? min1 : min2);
+	    	}
+	    	
+		} catch (NullArgumentException e) {
+			e.printStackTrace();
+		}
+    	
+    	return distance;
+    }
+    
     /*
      * (non-Javadoc)
      * @see br.org.archimedes.model.Offsetable#isPositiveDirection(br.org.archimedes.model.Point)
      */
     public boolean isPositiveDirection (Point point) {
 
-        boolean result = false;
+    	double min = Double.POSITIVE_INFINITY;
+    	ArrayList<Line> closestLines = new ArrayList<Line>();
+		Line closestLine = null;
+		
+    	for (Line line : getLines()) {
+    		double d = distance(line, point);
+    		if (d < min) {
+    			min = d;
+    			closestLines.clear();
+    		}
+    		if (d == min) {
+    			closestLines.add(line);        			
+    		}
+    	}
+    	
+		if (closestLines.size() == 1) {
+			closestLine = closestLines.get(0);
+		}
+		else {
+			Point crossing = getCrossing(closestLines.get(0), closestLines.get(1));
+			Vector v = new Vector(crossing, point);
+			v = v.normalized();
+			Double minAngle = Math.PI;
+			for (Line line : closestLines) {
+				Point initialPoint = crossing;
+				Point finalPoint;
+				if (line.getInitialPoint().equals(initialPoint))
+					finalPoint = line.getEndingPoint();
+				else
+					finalPoint = line.getInitialPoint();
+				Vector w = new Vector(initialPoint, finalPoint);
+				w = w.normalized();
+				double angle = Math.acos(v.dotProduct(w));
+				if (angle < minAngle) {
+					minAngle = angle;
+					closestLine = line;
+				}
+			}
+		}
+
         try {
-            int leftSide = 0;
-            List<Line> lines = getLines();
-            for (Line segment : lines) {
-                Vector orthogonal = new Vector(segment.getInitialPoint(), segment.getEndingPoint());
-                orthogonal = orthogonal.getOrthogonalVector();
-                orthogonal = Geometrics.normalize(orthogonal);
-
-                Point meanPoint = Geometrics.getMeanPoint(segment.getInitialPoint(), segment
-                        .getEndingPoint());
-                Point helper = meanPoint.addVector(orthogonal);
-                Line ray = new Line(point, helper);
-                ArrayList<Point> crossings = getCrossings(ray);
-                int numberOfCrossings = 0;
-                for (Point crossing : crossings) {
-                    if (this.contains(crossing) && ray.contains(crossing)) {
-                        numberOfCrossings++;
-                    }
-                }
-
-                if (numberOfCrossings % 2 == 0) {
-                    leftSide++;
-                }
-            }
-            if (leftSide > lines.size() / 2) {
-                result = true;
-            }
-            
-        }
-        catch (Exception e) {
-            // Should not catch any exception
-            e.printStackTrace();
-        }
-
-        return result;
+			return closestLine.isPositiveDirection(point);
+		} catch (NullArgumentException e) {
+			e.printStackTrace();
+		}
+		return false;
     }
 
     /*
@@ -497,7 +540,8 @@ public class Polyline extends Element implements Offsetable, Filletable {
 
         List<Point> intersections = new LinkedList<Point>(); // Order matters
         intersections.add(startingPoint);
-        for (int i = 0, j = 1; j < offsetedSegments.size(); i++, j++) {
+        int i, j;
+        for (i = 0, j = 1; j < offsetedSegments.size(); i++, j++) {
             Collection<Point> intersectionsBetween = getIntersectionsBetween(offsetedSegments, i, j);
             for (Point intersection : intersectionsBetween) {
                 if ( !intersections.contains(intersection)) {
