@@ -5,6 +5,7 @@ import junit.framework.Assert;
 import org.eclipse.swtbot.eclipse.gef.finder.SWTBotGefTestCase;
 import org.eclipse.swtbot.swt.finder.keyboard.Keystrokes;
 import org.eclipse.swtbot.swt.finder.utils.SWTBotPreferences;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,7 +24,7 @@ import br.org.archimedes.polyline.Polyline;
 /* This tests depends on SWTBot plugin (run as SWTBot Test).
  * http://eclipse.org/swtbot/downloads.php */
 
-public class LayerEditorTests extends SWTBotGefTestCase{
+public class LayerEditorTests extends SWTBotGefTestCase {
 	@Before
 	public void setUp() {
 		bot.menu("File").menu("New Drawing").click();
