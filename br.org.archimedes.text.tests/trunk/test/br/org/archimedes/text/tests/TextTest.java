@@ -425,4 +425,45 @@ public class TextTest extends Tester {
     public void getExtremePointsTest() {
     	
     }
+    
+    /**
+     * Test method for Text selection with click inside rectangle boundary
+     */
+    @Test
+    public void testClickInsideRectangleBoundaryText () {
+
+        final String TEXT = "Teste de click";
+        final Point LOWER_LEFT = new Point(0, 0);
+        Text text = createSafeText(TEXT, LOWER_LEFT, 10);
+        
+        Point clickPoint = new Point(10, 10);
+        Assert.assertTrue("Click not inside rectangle boundary text.",text.isInside(makeClickRectangle(clickPoint)));
+    }
+    
+    /**
+     * Test method for Text selection with click outside rectangle boundary
+     */
+    @Test
+    public void testClickOutsideRectangleBoundaryText () {
+
+        final String TEXT = "Teste de click";
+        final Point LOWER_LEFT = new Point(0, 0);
+        Text text = createSafeText(TEXT, LOWER_LEFT, 10);
+        
+        Point clickPoint = new Point(10, 10);
+        Assert.assertFalse("Click not inside rectangle boundary text.", !text.isInside(makeClickRectangle(clickPoint)));
+        
+        clickPoint = new Point(400, 400);
+        Assert.assertFalse("Click not inside rectangle boundary text.",text.isInside(makeClickRectangle(clickPoint)));
+    }
+    
+    private Rectangle makeClickRectangle(Point clickPoint){
+    	
+    	double delta = br.org.archimedes.Utils.getWorkspace().getSelectionSize() / 2.0;
+        delta = br.org.archimedes.Utils.getWorkspace().screenToModel(delta);
+        Point a = new Point(clickPoint.getX() - delta, clickPoint.getY() - delta);
+        Point b = new Point(clickPoint.getX() + delta, clickPoint.getY() + delta);
+    	return new Rectangle(a.getX(), a.getY(), b.getX(), b.getY());
+    }
+    
 }

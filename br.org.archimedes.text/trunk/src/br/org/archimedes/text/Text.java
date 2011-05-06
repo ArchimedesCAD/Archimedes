@@ -32,6 +32,7 @@ import br.org.archimedes.model.Rectangle;
 import br.org.archimedes.model.ReferencePoint;
 import br.org.archimedes.model.Vector;
 import br.org.archimedes.model.references.CirclePoint;
+import br.org.archimedes.model.references.RhombusPoint;
 
 public class Text extends Element {
 
@@ -64,6 +65,7 @@ public class Text extends Element {
             InvalidArgumentException {
 
         this(text, originPoint, size, null);
+        
     }
 
     /**
@@ -299,13 +301,18 @@ public class Text extends Element {
 
     /**
      * Texts have no project points. Therefore it will always return null.
+     * @throws NullArgumentException 
      * 
      * @see br.org.archimedes.model.Element#getProjectionOf(br.org.archimedes.model.Point)
      */
     @Override
-    public Point getProjectionOf (Point point) {
+    public Point getProjectionOf (Point point) throws NullArgumentException {
 
-        return null;
+    	if (point == null) {
+            throw new NullArgumentException();
+        }
+    	
+    	return originPoint;
     }
 
     @Override
@@ -313,7 +320,7 @@ public class Text extends Element {
 
         Collection<ReferencePoint> references = new ArrayList<ReferencePoint>();
         try {
-            ReferencePoint reference = new CirclePoint(originPoint, getPoints());
+            ReferencePoint reference = new RhombusPoint(originPoint, getPoints());
             references.add(reference);
         }
         catch (NullArgumentException e) {
@@ -348,6 +355,17 @@ public class Text extends Element {
         return s;
     }
 
+    /**
+     * 
+     * The behavior this method is a little different this common because when select a text it is necessary checked 
+     * if the click rectangle boundary is inside the text rectangle boundary
+     * 
+     * */
+    @Override
+    public boolean isInside(Rectangle rectangle) {
+    	return super.isInside(rectangle) || rectangle.isInside(getBoundaryRectangle());
+    }
+    
 	@Override
 	public List<Point> getExtremePoints() {
 		List<Point> extremePoints = new ArrayList<Point>();

@@ -36,6 +36,10 @@ public class EditTextFactory extends SelectorFactory {
 
     private UndoableCommand command;
 
+    
+    public EditTextFactory() {
+		super();
+	}
 
     protected String getCancelMessage () {
 
@@ -78,6 +82,7 @@ public class EditTextFactory extends SelectorFactory {
             message = Messages.Factory_Edited;
         }
         catch (NullArgumentException e) {
+
             // Should never happen
             e.printStackTrace();
         }
