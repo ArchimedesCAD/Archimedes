@@ -434,9 +434,7 @@ public class TextTest extends Tester {
         final String TEXT = "Teste de click";
         final Point LOWER_LEFT = new Point(0, 0);
         Text text = createSafeText(TEXT, LOWER_LEFT, 10);
-        System.out.println(text.getBoundaryRectangle());
         Point clickPoint = new Point(5, 5);
-        System.out.println(makeClickRectangle(clickPoint));
         Assert.assertTrue("Click not inside rectangle boundary text.",text.isInside(makeClickRectangle(clickPoint)));
     }
     
