@@ -31,6 +31,7 @@ import br.org.archimedes.text.Text;
 import org.apache.batik.svggen.font.Font;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import junit.framework.Assert;
@@ -368,7 +369,6 @@ public class TextTest extends Tester {
         }
         return text;
     }
-
     @Test
     public void testBoundaryRectangle () throws NullArgumentException {
 
@@ -420,7 +420,6 @@ public class TextTest extends Tester {
         rectangle = new Rectangle(0, -50 * sqrt_2, 55 * sqrt_2, 5 * sqrt_2);
         Assert.assertEquals(rectangle, t1.getBoundaryRectangle());
     }
-    
     @Test
     public void getExtremePointsTest() {
     	
@@ -435,8 +434,9 @@ public class TextTest extends Tester {
         final String TEXT = "Teste de click";
         final Point LOWER_LEFT = new Point(0, 0);
         Text text = createSafeText(TEXT, LOWER_LEFT, 10);
-        
-        Point clickPoint = new Point(10, 10);
+        System.out.println(text.getBoundaryRectangle());
+        Point clickPoint = new Point(5, 5);
+        System.out.println(makeClickRectangle(clickPoint));
         Assert.assertTrue("Click not inside rectangle boundary text.",text.isInside(makeClickRectangle(clickPoint)));
     }
     
@@ -450,7 +450,7 @@ public class TextTest extends Tester {
         final Point LOWER_LEFT = new Point(0, 0);
         Text text = createSafeText(TEXT, LOWER_LEFT, 10);
         
-        Point clickPoint = new Point(10, 10);
+        Point clickPoint = new Point(5, 5);
         Assert.assertFalse("Click not inside rectangle boundary text.", !text.isInside(makeClickRectangle(clickPoint)));
         
         clickPoint = new Point(400, 400);
