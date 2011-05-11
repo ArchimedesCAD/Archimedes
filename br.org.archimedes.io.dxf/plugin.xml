@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="br.org.archimedes.core.nativeFormat">
+			<nativeFormat id="dxf" name="DXF" extension="dxf"
+            importer="br.org.archimedes.io.dxf.DXFImporter"
+            exporter="br.org.archimedes.io.dxf.DXFExporter">
+         </nativeFormat>
+   </extension>
+
+</plugin>

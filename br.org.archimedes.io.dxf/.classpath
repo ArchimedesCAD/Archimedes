@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry exported="true" kind="lib" path="lib/batik-all.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/js.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/kabeja-0.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/kabeja-svg-0.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/kabeja-xslt.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/miethxml-toolkit.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/miethxml-ui.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/pdf-transcoder.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/xml-apis-ext.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/xml-apis.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
