@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Tests
+Bundle-SymbolicName: br.org.archimedes.io.dxf.tests
+Bundle-Version: 1.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Require-Bundle: org.junit,
+ br.org.archimedes.io.dxf;bundle-version="1.0.0",
+ br.org.archimedes.core;bundle-version="0.64.0",
+ br.org.archimedes.circle;bundle-version="0.64.0"
