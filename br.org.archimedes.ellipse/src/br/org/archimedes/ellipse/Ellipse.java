@@ -59,27 +59,69 @@ public class Ellipse extends Element {
 					/ (xaxis.getNorm() * haxis.getNorm()));
 	}
 
-	public Ellipse(Point center, Vector hSemiAxis, Vector vSemiAxis)
+	public Ellipse(Point focus1, Point focus2, Double radius)
 			throws NullArgumentException, InvalidArgumentException {
 
-		if (center == null) {
+		if (focus1 == null) {
 			throw new NullArgumentException();
 		}
 
-		if (hSemiAxis.getNorm() <= Constant.EPSILON) {
+		if (focus2 == null) {
+			throw new NullArgumentException();
+		}
+
+		if (Math.abs(radius) <= Constant.EPSILON) {
 			throw new InvalidArgumentException();
 		}
 
-		if (vSemiAxis.getNorm() <= Constant.EPSILON) {
-			throw new InvalidArgumentException();
-		}
-		this.center = center;
-		this.widthPoint = center.addVector(hSemiAxis);
-		this.heightPoint = center.addVector(vSemiAxis);
+		this.center = new Point((focus1.getX() + focus2.getX()) / 2,
+				(focus1.getY() + focus2.getY()) / 2);
+		Vector axis = new Vector(center, focus1);
+		axis = axis.normalized();
+		widthPoint = center.addVector(axis.multiply(radius));
+
+		// encontra o angulo do verto do eixo principal com o vetor horizontal
+		Double angle;
 		Vector xaxis = new Vector(new Point(1, 0));
-		this.fi = Math.acos((xaxis.dotProduct(hSemiAxis))
-				/ (xaxis.getNorm() * hSemiAxis.getNorm()));
+		Vector haxis = new Vector(center, widthPoint);
+		if (center.getY() < widthPoint.getY())
+			angle = Math.acos((xaxis.dotProduct(haxis))
+					/ (xaxis.getNorm() * haxis.getNorm()));
+		else
+			angle = -Math.acos((xaxis.dotProduct(haxis))
+					/ (xaxis.getNorm() * haxis.getNorm()));
+
+		// angulo de inclinacao da elipse
+		fi = angle;
+
+		// rotaciona 90 graus para obter heightPoint
+		angle += Math.PI / 2;
+		heightPoint = new Point(center.getX() + radius * Math.cos(angle),
+				radius * Math.sin(angle));
+
 	}
+
+	// public Ellipse(Point center, Vector hSemiAxis, Vector vSemiAxis)
+	// throws NullArgumentException, InvalidArgumentException {
+	//
+	// if (center == null) {
+	// throw new NullArgumentException();
+	// }
+	//
+	// if (hSemiAxis.getNorm() <= Constant.EPSILON) {
+	// throw new InvalidArgumentException();
+	// }
+	//
+	// if (vSemiAxis.getNorm() <= Constant.EPSILON) {
+	// throw new InvalidArgumentException();
+	// }
+	// this.center = center;
+	// this.widthPoint = center.addVector(hSemiAxis);
+	// this.heightPoint = center.addVector(vSemiAxis);
+	// Vector xaxis = new Vector(new Point(1, 0));
+	// this.fi = Math.acos((xaxis.dotProduct(hSemiAxis))
+	// / (xaxis.getNorm() * hSemiAxis.getNorm()));
+	// }
 
 	public Point getCenter() {
 		return center;
@@ -154,18 +196,91 @@ public class Ellipse extends Element {
 		return result;
 	}
 
+	private Point getPointOfEllipse(double angle) {
+		Vector haxis = new Vector(center, widthPoint);
+		Vector vaxis = new Vector(center, heightPoint);
+		double x = center.getX() + haxis.getNorm() * Math.cos(angle)
+				* Math.cos(fi) - vaxis.getNorm() * Math.sin(angle)
+				* Math.sin(fi);
+		double y = center.getY() + haxis.getNorm() * Math.cos(angle)
+				* Math.sin(fi) + vaxis.getNorm() * Math.sin(angle)
+				* Math.cos(fi);
+		return new Point(x, y);
+	}
+
 	@Override
 	public Rectangle getBoundaryRectangle() {
+		Rectangle boundary;
+		Point xmin, xmax, ymin, ymax;
+		
+		double a = (new Vector(center, widthPoint)).getNorm();
+		double b = (new Vector(center, heightPoint)).getNorm();
+		double f = a * Math.cos(this.fi);
+		double g = b * Math.sin(this.fi);
 
-		Point myCenter = this.getCenter();
+		double t1 = Math.acos(f / Math.sqrt(f * f + g * g));
+		double t2 = Math.acos(-f / Math.sqrt(f * f + g * g));
+		double t3 = -Math.acos(f / Math.sqrt(f * f + g * g));
+		double t4 = -Math.acos(-f / Math.sqrt(f * f + g * g));
 
-		double left = myCenter.getX() - 40;
-		double right = myCenter.getX() + 40;
+		if (fi < 0) {
+			Point x1 = getPointOfEllipse(t1); 
+			Point x4 = getPointOfEllipse(t4);
+			if (x1.getX() < x4.getX()) {
+				xmin = x1;
+				xmax = x4;
+			}
+			else {
+				xmin = x4;
+				xmax = x1;
+			}
+		} else {
+			Point x2 = getPointOfEllipse(t2); 
+			Point x3 = getPointOfEllipse(t3);
+			if (x2.getX() < x3.getX()) {
+				xmin = x2;
+				xmax = x3;
+			}
+			else {
+				xmin = x3;
+				xmax = x2;
+			}
+		}
 
-		double bottom = myCenter.getY() - 40;
-		double top = myCenter.getY() + 40;
+		f = a * Math.sin(this.fi);
+		g = b * Math.cos(this.fi);
 
-		return new Rectangle(left, bottom, right, top);
+		t1 = Math.acos(f / Math.sqrt(f * f + g * g));
+		t2 = Math.acos(-f / Math.sqrt(f * f + g * g));
+		t3 = -Math.acos(f / Math.sqrt(f * f + g * g));
+		t4 = -Math.acos(-f / Math.sqrt(f * f + g * g));
+
+		if ((fi > 0 && fi < Math.PI / 2) || (fi > -Math.PI / 2 && fi < 0)) {
+			Point y1 = getPointOfEllipse(t1); 
+			Point y4 = getPointOfEllipse(t4);
+			if (y1.getY() < y4.getY()) {
+				ymin = y1;
+				ymax = y4;
+			}
+			else {
+				ymin = y4;
+				ymax = y1;
+			}
+		} else {
+			Point y2 = getPointOfEllipse(t2); 
+			Point y3 = getPointOfEllipse(t3);
+			if (y2.getY() < y3.getY()) {
+				ymin = y2;
+				ymax = y3;
+			}
+			else {
+				ymin = y3;
+				ymax = y2;
+			}
+		}
+
+		boundary = new Rectangle(xmin.getX(), ymin.getY(), xmax.getX(), ymax.getY());
+		return boundary;
 	}
 
 	@Override
@@ -228,24 +343,20 @@ public class Ellipse extends Element {
 		return false;
 	}
 
-    public boolean isPositiveDirection (Point point) {
-    	return !contains(point);
-    }
-    /*
-    public Element cloneWithDistance  (double distance) throws InvalidParameterException {
-    	Ellipse clone;
-		try {
-			clone = new Ellipse(center.clone(), widthPoint.addVector(new Vector(0, dingPoint)), heightPoint);
-		} catch (NullArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvalidArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        clone.setLayer(getLayer());
-    }*/
-    
+	public boolean isPositiveDirection(Point point) {
+		return !contains(point);
+	}
+
+	/*
+	 * public Element cloneWithDistance (double distance) throws
+	 * InvalidParameterException { Ellipse clone; try { clone = new
+	 * Ellipse(center.clone(), widthPoint.addVector(new Vector(0, dingPoint)),
+	 * heightPoint); } catch (NullArgumentException e) { // TODO Auto-generated
+	 * catch block e.printStackTrace(); } catch (InvalidArgumentException e) {
+	 * // TODO Auto-generated catch block e.printStackTrace(); }
+	 * clone.setLayer(getLayer()); }
+	 */
+
 	@Override
 	public List<Point> getPoints() {
 
@@ -264,19 +375,19 @@ public class Ellipse extends Element {
 		widthPoint.scale(reference, proportion);
 		heightPoint.scale(reference, proportion);
 	}
-	
-	
-    public void rotate (Point rotateReference, double angle) throws NullArgumentException {
 
-        if (rotateReference == null) {
-            throw new NullArgumentException();
-        }
-        
+	public void rotate(Point rotateReference, double angle)
+			throws NullArgumentException {
+
+		if (rotateReference == null) {
+			throw new NullArgumentException();
+		}
+
 		center.rotate(rotateReference, angle);
 		widthPoint.rotate(rotateReference, angle);
 		heightPoint.rotate(rotateReference, angle);
-		
-		//corrigindo fi
+
+		// corrigindo fi
 		Vector xaxis = new Vector(new Point(1, 0));
 		Vector haxis = new Vector(center, widthPoint);
 		if (center.getY() < widthPoint.getY())
@@ -285,8 +396,7 @@ public class Ellipse extends Element {
 		else
 			this.fi = -Math.acos((xaxis.dotProduct(haxis))
 					/ (xaxis.getNorm() * haxis.getNorm()));
-    }
-	
+	}
 
 	public boolean isClosed() {
 

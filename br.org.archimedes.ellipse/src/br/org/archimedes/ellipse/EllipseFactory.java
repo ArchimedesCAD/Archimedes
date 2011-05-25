@@ -13,7 +13,9 @@ import br.org.archimedes.interfaces.Command;
 import br.org.archimedes.interfaces.Parser;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.parser.DistanceParser;
+import br.org.archimedes.parser.DoubleDecoratorParser;
 import br.org.archimedes.parser.PointParser;
+import br.org.archimedes.parser.StringDecoratorParser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,17 +28,26 @@ public class EllipseFactory implements CommandFactory {
 
     private Point heightPoint;
     
+    private Point focus1;
+    
+    private Point focus2;
+    
+    private double radius;
+    
     private Workspace workspace;
 
     private boolean active;
 
     private PutOrRemoveElementCommand command;
+    
+    private boolean isCenterProtocol; // centro e eixos
 
 
     public EllipseFactory () {
 
         workspace = br.org.archimedes.Utils.getWorkspace();
         deactivate();
+        this.isCenterProtocol = false;
     }
 
     public String begin () {
@@ -44,7 +55,7 @@ public class EllipseFactory implements CommandFactory {
         active = true;
         br.org.archimedes.Utils.getController().deselectAll();
 
-        return Messages.SelectCenter;
+        return Messages.EllipseFactory_SelectInitialPoint;
     }
 
     public String cancel () {
@@ -58,6 +69,7 @@ public class EllipseFactory implements CommandFactory {
 
         OpenGLWrapper opengl = br.org.archimedes.Utils.getOpenGLWrapper();
 
+        if (isCenterProtocol){
         if (center != null && widthPoint != null && !isDone()) {
             Point start = center;
             Point middle = widthPoint;
@@ -76,6 +88,28 @@ public class EllipseFactory implements CommandFactory {
             catch (InvalidArgumentException e) {
                 // Nothing to do, just don't draw the circle
             }
+        }
+        }
+        else {
+        if (focus1 != null && focus2 != null && !isDone()) {
+            Point f1 = focus1;
+            Point f2 = focus2;
+            Point mouse  = workspace.getMousePosition();
+
+            opengl.setLineStyle(OpenGLWrapper.STIPPLED_LINE);
+
+            try {
+                Ellipse ellipse = new Ellipse(f1, f2, mouse.calculateDistance(new Point((f1.getX() + f2.getX()) / 2 , (f1.getY() + f2.getY()) / 2 )));
+                ellipse.draw(opengl);
+            }
+            catch (NullArgumentException e) {
+                // Should not reach this block
+                e.printStackTrace();
+            }
+            catch (InvalidArgumentException e) {
+                // Nothing to do, just don't draw the circle
+            }
+        }
         }
     }
 
@@ -106,14 +140,23 @@ public class EllipseFactory implements CommandFactory {
 
         Parser returnParser = null;
         if (active) {
-            if (center == null) {
+            if (center == null && focus1 == null) {
                 returnParser = new PointParser();
+                returnParser = new StringDecoratorParser(returnParser, "a"); 
+                returnParser = new StringDecoratorParser(returnParser, "c");
+
             }
-            else if (widthPoint == null) {
+            else if (widthPoint == null && isCenterProtocol) {
                 returnParser = new PointParser();            	
             }
-            else {
+            else if (heightPoint == null && isCenterProtocol){
                 returnParser = new PointParser();
+            }
+            else if (focus2 == null && !isCenterProtocol) {
+                returnParser = new PointParser();            	
+            }
+            else if (radius == 0 && !isCenterProtocol){
+                returnParser = new DistanceParser(new Point( (focus1.getX() + focus2.getX()) / 2, (focus2.getY() + focus2.getY()) / 2 ));
             }
         }
         return returnParser;
@@ -135,20 +178,40 @@ public class EllipseFactory implements CommandFactory {
 
         if (parameter != null) {
             try {
-                if (center == null) {
+                if ("C".equals(parameter) || "c".equals(parameter)) { //$NON-NLS-1$ //$NON-NLS-2$
+                    this.isCenterProtocol = false;
+                    result = Messages.EllipseFactory_SelectFocus1;
+                }
+                else if ("A".equals(parameter) || "a".equals(parameter)) { //$NON-NLS-1$ //$NON-NLS-2$
+                    this.isCenterProtocol = true;
+                    result = Messages.SelectCenter;
+                }
+                else if (isCenterProtocol && center == null) {
                     center = (Point) parameter;
                     workspace.setPerpendicularGripReferencePoint(center);
                     result = Messages.EllipseFactory_SelectWidthPoint;
                 }
-                else if (widthPoint == null) {
+                else if (isCenterProtocol && widthPoint == null) {
                 	widthPoint = (Point) parameter;
                     workspace.setPerpendicularGripReferencePoint(widthPoint);
                     result = Messages.EllipseFactory_SelectHeightPoint;
                 }
-                else {
+                else if (isCenterProtocol) {
                 	heightPoint = (Point) parameter;
                     workspace.setPerpendicularGripReferencePoint(heightPoint);
-                    result = createCircle();
+                    result = createEllipse();
+                }
+                else if (!isCenterProtocol && focus1 == null) {
+                	focus1 = (Point) parameter;
+                	result = Messages.EllipseFactory_SelectFocus2;
+                }
+                else if (!isCenterProtocol && focus2 == null) {
+                	focus2 = (Point) parameter;
+                	result = Messages.EllipseFactory_SelectRadius;
+                }
+                else if (!isCenterProtocol) {
+                	radius = (Double) parameter;
+                    result = createEllipse();
                 }
             }
             catch (ClassCastException e) {
@@ -166,19 +229,27 @@ public class EllipseFactory implements CommandFactory {
         center = null;
         widthPoint = null;
         heightPoint = null;
+        focus1 = null;
+        focus2 = null;
+        radius = 0.0;
         active = false;
+        isCenterProtocol = false;
     }
 
     /**
-     * Creates the circle and ends the command.
+     * Creates the ellipse and ends the command.
      * 
      * @return A nice message to the user.
      */
-    private String createCircle () {
+    private String createEllipse () {
 
         String result = null;
+        Ellipse newEllipse;
         try {
-            Ellipse newEllipse = new Ellipse(center, widthPoint, heightPoint);
+        	if (isCenterProtocol)
+        		newEllipse = new Ellipse(center, widthPoint, heightPoint);
+        	else
+        		newEllipse = new Ellipse(focus1, focus2, radius);        		
             command = new PutOrRemoveElementCommand(newEllipse, false);
             result = Messages.Created;
         }
