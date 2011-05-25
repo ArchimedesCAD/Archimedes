@@ -33,15 +33,17 @@ public class CircleParser extends ElementParser {
 	@Override
 	public Collection<Element> parse(DXFLayer layer) throws NullArgumentException, InvalidArgumentException {
 		List<DXFCircle> dxfCircles = layer.getDXFEntities(DXFConstants.ENTITY_TYPE_CIRCLE);
-		for (DXFCircle dxfCircle : dxfCircles) {
-	  		org.kabeja.dxf.helpers.Point centerPoint = dxfCircle.getCenterPoint();
-	  		
-			Point center = new Point(centerPoint.getX(), centerPoint.getY());
-	  		double radius = dxfCircle.getRadius();
-	  		
-			Circle circle = new Circle(center, radius);
-						
-			archimedesCircles.add(circle);
+		if(dxfCircles != null) {
+			for (DXFCircle dxfCircle : dxfCircles) {
+		  		org.kabeja.dxf.helpers.Point centerPoint = dxfCircle.getCenterPoint();
+		  		
+				Point center = new Point(centerPoint.getX(), centerPoint.getY());
+		  		double radius = dxfCircle.getRadius();
+		  		
+				Circle circle = new Circle(center, radius);
+							
+				archimedesCircles.add(circle);
+			}
 		}
 		return archimedesCircles;
 	}

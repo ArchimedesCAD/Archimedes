@@ -50,6 +50,7 @@ public abstract class ElementParser {
         Map<String, ElementParser> map = new HashMap<String, ElementParser>();
 
         map.put("circle", new CircleParser()); //$NON-NLS-1$ //$NON-NLS-2$
+        map.put("line", new LineParser()); //$NON-NLS-1$ //$NON-NLS-2$
         
         return map;
     }
