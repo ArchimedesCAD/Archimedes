@@ -24,7 +24,7 @@ import br.org.archimedes.factories.ElementFactory;
 import br.org.archimedes.model.Element;
 
 /**
- * @author fsokol and ttogores
+ * @author fsokol, ttogores, gustavopuga, fgtorres
  */
 public abstract class ElementParser {
 
@@ -49,9 +49,10 @@ public abstract class ElementParser {
 
         Map<String, ElementParser> map = new HashMap<String, ElementParser>();
 
+        map.put("arc", new ArcParser()); //$NON-NLS-1$ //$NON-NLS-2$
         map.put("circle", new CircleParser()); //$NON-NLS-1$ //$NON-NLS-2$
         map.put("line", new LineParser()); //$NON-NLS-1$ //$NON-NLS-2$
-        
+                
         return map;
     }
     
