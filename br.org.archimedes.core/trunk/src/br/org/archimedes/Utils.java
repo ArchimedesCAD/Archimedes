@@ -65,6 +65,16 @@ public class Utils {
 
         return (text != null && !isReturn(text) && text.matches("\\s*[+-]?[0-9]*([.,][0-9]*)?\\s*")); //$NON-NLS-1$
     }
+    
+    /**
+     * @param text
+     *            The text to verify.
+     * @return Returns true if text is in the format of a double, false otherwise.
+     */
+    public static boolean isInteger (String text) {
+
+        return (text != null && !isReturn(text) && text.matches("\\s*[+-]?[0-9]+\\s*")); //$NON-NLS-1$
+    }
 
     /**
      * Replaces commas by dots in the decimal representation.

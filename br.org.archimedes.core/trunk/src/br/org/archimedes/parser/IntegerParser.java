@@ -10,11 +10,11 @@ public class IntegerParser implements Parser{
 	
 	public String next(String message) throws InvalidParameterException {
 		
-		if (Utils.isDouble(message)) {
+		if (Utils.isInteger(message)) {
             integerValue = Utils.getInteger(message);
         }
         else {
-            throw new InvalidParameterException("CRIAR MENSAGEM QUE ESTAVA ESPERANDO UM INTEIRO");
+            throw new InvalidParameterException(Messages.Integer_expectingInteger);
         }
 
 		

@@ -34,6 +34,8 @@ public class Messages extends NLS {
     public static String Text_no;
 
     public static String Text_yes;
+    
+    public static String Integer_expectingInteger;
 
     static {
         // initialize resource bundle
