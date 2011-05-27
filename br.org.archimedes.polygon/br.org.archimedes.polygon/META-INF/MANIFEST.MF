@@ -9,7 +9,6 @@ Require-Bundle: org.eclipse.ui,
  br.org.archimedes.line;bundle-version="0.64.0",
  br.org.archimedes.circle;bundle-version="0.64.0",
  br.org.archimedes.curvedshape;bundle-version="0.58.0"
-Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Import-Package: br.org.archimedes.model
+Eclipse-RegisterBuddy: br.org.archimedes.core
 Export-Package: br.org.archimedes.polygon

@@ -27,6 +27,15 @@ public class Messages extends NLS {
     public static String PolygonCreated;
 
     public static String PolygonNotCreated;
+    
+    public static String SelectSides;
+    
+    public static String SelectCenterPoint;
+    
+    public static String SelectRadiusPoint;
+
+    public static String WrongNumberOfSides;
+    
     static {
         // initialize resource bundle
         NLS.initializeMessages(BUNDLE_NAME, Messages.class);

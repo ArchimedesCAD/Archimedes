@@ -50,7 +50,7 @@ public class Polygon extends Element {
 		return sides;
 	}
 
-	public List<Point> getVertexPoints() {
+	private List<Point> getVertexPoints() {
 
 		List<Point> vertexPoints = new ArrayList<Point>();
 		Point auxiliarPoint = getInitialPoint().clone();
@@ -71,7 +71,7 @@ public class Polygon extends Element {
 
 		Polygon clone = null;
 		try {
-			clone = new Polygon(this.center, this.initialPoint, this.sides);
+			clone = new Polygon(this.center.clone(), this.initialPoint.clone(), this.sides);
 		} catch (NullArgumentException e) {
 			e.printStackTrace();
 		} catch (InvalidArgumentException e) {
@@ -107,12 +107,17 @@ public class Polygon extends Element {
 
 	@Override
 	public Rectangle getBoundaryRectangle() {
-		double radius = initialPoint.calculateDistance(center);
-		double left = center.getX() - radius;
-		double right = center.getX() + radius;
-		double bottom = center.getY() - radius;
-		double top = center.getY() + radius;
-		return new Rectangle(left, bottom, right, top);
+	    double vmaxX = Double.MIN_VALUE;
+	    double vminX = Double.MAX_VALUE;
+	    double vmaxY = Double.MIN_VALUE;
+        double vminY = Double.MAX_VALUE;
+		for (Point v : this.getVertexPoints()) {
+		    vmaxX  = v.getX() > vmaxX ? v.getX() : vmaxX;
+		    vminX  = v.getX() < vminX ? v.getX() : vminX;
+		    vmaxY  = v.getY() > vmaxY ? v.getY() : vmaxY;
+            vminY  = v.getY() < vminY ? v.getY() : vminY;
+        }
+		return new Rectangle(vmaxX, vmaxY, vminX, vminY);
 	}
 
 	@Override
@@ -178,14 +183,14 @@ public class Polygon extends Element {
         }
 	}
 
-	public List<Line> getLines () {
+	private List<Line> getLines () {
 
 		List<Point> vertexPoints = getVertexPoints();
         List<Line> lines = new ArrayList<Line>();
         
         Point p1;
         Point p2;
-        int lastPosition = vertexPoints.size() -1;
+        int lastPosition = vertexPoints.size() - 1;
         for (int i = 0; i < lastPosition; i++) {
             p1 = vertexPoints.get(i);
             p2 = vertexPoints.get(i + 1);

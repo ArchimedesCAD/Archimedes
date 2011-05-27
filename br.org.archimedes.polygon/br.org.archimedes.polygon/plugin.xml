@@ -6,7 +6,7 @@
          <element id="br.org.archimedes.polygon" name="Polygon" 
          	class="br.org.archimedes.polygon.Polygon"
          	factory="br.org.archimedes.polygon.PolygonFactory"
-         	shortcut="c" />
+         	shortcut="pol" />
    </extension>
    <extension
          point="org.eclipse.ui.menus">
@@ -24,6 +24,10 @@
                   name="br.org.archimedes.core.factoryactivator.name"
                   value="br.org.archimedes.polygon">
             </parameter>
+         </command>
+         <command
+               commandId="br.org.archimedes.polygon.command1"
+               style="push">
          </command>
       </menuContribution>
       <menuContribution

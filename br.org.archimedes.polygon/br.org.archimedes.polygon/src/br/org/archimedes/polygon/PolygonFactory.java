@@ -41,7 +41,7 @@ public class PolygonFactory implements CommandFactory{
         active = true;
         br.org.archimedes.Utils.getController().deselectAll();
 
-        return "CRIAR MENSAGEM 1";
+        return Messages.SelectSides;
     }
 
 	@Override
@@ -57,11 +57,16 @@ public class PolygonFactory implements CommandFactory{
             try {
                 if (sides <= 0) {
                     sides = (Integer) parameter;
-                    result = "CRIAR MENSAGEM 2";
+                    if (sides < 3) {
+                        result = Messages.WrongNumberOfSides;
+                        sides = 0;
+                    }
+                    else
+                        result = Messages.SelectCenterPoint;
                 }
-                else if(center == null){
+                else if (center == null){
                     center = (Point) parameter;
-                    result = "CRIAR MENSAGEM 3";
+                    result = Messages.SelectRadiusPoint;
                 } else if (initialPoint == null){
                 	initialPoint = (Point) parameter;
                 	result = createPolygon();
