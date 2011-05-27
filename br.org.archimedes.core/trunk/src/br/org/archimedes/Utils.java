@@ -134,6 +134,22 @@ public class Utils {
     }
 
     /**
+     * Get the integer value from a string.
+     * 
+     * @param parameter
+     *            Text to extract the integer.
+     * @return The integer value from the string.
+     */
+    public static int getInteger (String parameter) {
+
+        String withDots = withDot(parameter);
+        Scanner stringScanner = new Scanner(withDots);
+        stringScanner.useLocale(Locale.US);
+
+        return stringScanner.nextInt();
+    }
+    
+    /**
      * Verifies that the x values is in the interval [begin, end].
      * 
      * @param x
