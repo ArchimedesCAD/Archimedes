@@ -16,6 +16,8 @@
 
 package br.org.archimedes.infiniteLine;
 
+import javax.crypto.EncryptedPrivateKeyInfo;
+
 import br.org.archimedes.Constant;
 import br.org.archimedes.exceptions.IllegalActionException;
 import br.org.archimedes.exceptions.NullArgumentException;
@@ -463,9 +465,9 @@ public class HorizontalInfiniteLineTest extends InfiniteLineTestCase {
     public void testInfiniteLineCreationBoundaryRectangle () {
 
         Rectangle boundary = testedLine.getCreationBoundaryRectangle();
-        assertEquals(boundary.getLowerLeft().getX(), 0);
-        assertEquals(boundary.getLowerLeft().getY(), 10);
-        assertEquals(boundary.getUpperRight().getX(), 10);
-        assertEquals(boundary.getUpperRight().getY(), 10);
+        assertEquals(boundary.getLowerLeft().getX(), 0, Constant.EPSILON);
+        assertEquals(boundary.getLowerLeft().getY(), 10, Constant.EPSILON);
+        assertEquals(boundary.getUpperRight().getX(), 10, Constant.EPSILON);
+        assertEquals(boundary.getUpperRight().getY(), 10, Constant.EPSILON);
     }
 }
