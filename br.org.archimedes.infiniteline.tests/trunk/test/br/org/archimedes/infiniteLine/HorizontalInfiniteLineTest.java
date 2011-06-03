@@ -16,7 +16,10 @@
 
 package br.org.archimedes.infiniteLine;
 
-import javax.crypto.EncryptedPrivateKeyInfo;
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Assert;
+import org.junit.Test;
 
 import br.org.archimedes.Constant;
 import br.org.archimedes.exceptions.IllegalActionException;
@@ -24,11 +27,6 @@ import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.infiniteline.InfiniteLine;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Rectangle;
-
-import org.junit.Assert;
-import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
 
 /**
  * Horizontal infinite line tests
