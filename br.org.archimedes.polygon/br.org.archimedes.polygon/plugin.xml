@@ -14,7 +14,7 @@
             locationURI="menu:create?before=complex">
          <command
                commandId="br.org.archimedes.core.factoryactivator"
-               icon="icons/circle.png"
+               icon="icons/polygon.png"
                id="polygon"
                label="%command.polygon.label"
                mnemonic="%command.polygon.mnemonic"
@@ -34,7 +34,7 @@
             locationURI="toolbar:create?before=complex">
          <command
                commandId="br.org.archimedes.core.factoryactivator"
-               icon="icons/circle.png"
+               icon="icons/polygon.png"
                id="polygon"
                label="%command.polygon.label"
                mnemonic="%command.polygon.mnemonic"
