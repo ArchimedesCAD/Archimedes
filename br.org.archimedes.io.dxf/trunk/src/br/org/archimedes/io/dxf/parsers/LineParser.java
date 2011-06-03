@@ -16,11 +16,12 @@ import br.org.archimedes.model.Point;
 
 public class LineParser extends ElementParser{
 	
-	Collection<Element> archimedesLines = new ArrayList<Element>();
-
 	@Override
 	public Collection<Element> parse(DXFLayer layer) throws NullArgumentException, InvalidArgumentException {
+		
+		Collection<Element> archimedesLines = new ArrayList<Element>();
 		List<DXFLine> dxfLines = layer.getDXFEntities(DXFConstants.ENTITY_TYPE_LINE);
+		
 		if(dxfLines != null) {
 			for (DXFLine dxfLine : dxfLines) {
 		  		org.kabeja.dxf.helpers.Point startPoint = dxfLine.getStartPoint();

@@ -16,12 +16,10 @@ import br.org.archimedes.model.Point;
 
 public class ArcParser extends ElementParser{
 
-	private Collection<Element> archimedesArcs = new ArrayList<Element>();
-
 	@Override
-	public Collection<Element> parse(DXFLayer layer)
-			throws NullArgumentException, InvalidArgumentException {
+	public Collection<Element> parse(DXFLayer layer) throws NullArgumentException, InvalidArgumentException {
 		
+		ArrayList<Element> archimedesArcs = new ArrayList<Element>();
 		List<DXFArc> dxfArcs = layer.getDXFEntities(DXFConstants.ENTITY_TYPE_ARC);
 
 		if(dxfArcs != null) {

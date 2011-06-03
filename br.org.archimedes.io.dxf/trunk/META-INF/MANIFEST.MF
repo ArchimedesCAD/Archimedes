@@ -12,7 +12,9 @@ Require-Bundle: br.org.archimedes.core;bundle-version="0.64.0",
  br.org.archimedes.curvedshape;bundle-version="0.58.0",
  br.org.archimedes.line;bundle-version="0.64.0",
  br.org.archimedes.arc;bundle-version="0.64.0",
- br.org.archimedes.ellipse;bundle-version="1.0.0"
+ br.org.archimedes.ellipse;bundle-version="1.0.0",
+ br.org.archimedes.infiniteline;bundle-version="0.64.0",
+ br.org.archimedes.text;bundle-version="0.64.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: br.org.archimedes.io.dxf,

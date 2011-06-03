@@ -52,6 +52,7 @@ public abstract class ElementParser {
         map.put("arc", new ArcParser()); //$NON-NLS-1$ //$NON-NLS-2$
         map.put("circle", new CircleParser()); //$NON-NLS-1$ //$NON-NLS-2$
         map.put("line", new LineParser()); //$NON-NLS-1$ //$NON-NLS-2$
+        map.put("infiniteLine", new InfiniteLineParser());
                 
         return map;
     }

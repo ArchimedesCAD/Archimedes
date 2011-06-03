@@ -18,6 +18,7 @@ import org.kabeja.parser.Parser;
 import org.kabeja.parser.ParserBuilder;
 import org.kabeja.parser.entities.DXFViewportHandler;
 
+import br.org.archimedes.controller.commands.ZoomExtendCommand;
 import br.org.archimedes.exceptions.IllegalActionException;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.InvalidFileFormatException;
@@ -65,50 +66,9 @@ public class DXFImporter implements Importer {
 		Drawing drawing = new Drawing("Imported drawing", importedLayers);
 		
 		Collection<Element> elements = importedLayers.get(dxfLayer0.getName()).getElements();
-		fixCenterView(drawing, elements);
-				
+		//TODO ver o ZoomExtends...				
 		return drawing;
 	}
-
-    private void fixCenterView (Drawing drawing, Collection<Element> elements) {
-        double maxX = Double.MIN_VALUE;
-		double minX = Double.MAX_VALUE;
-		double maxY = Double.MIN_VALUE;
-		double minY = Double.MAX_VALUE;
-
-		if(elements.size() > 1) {
-    		for (Element element : elements) {
-    		    for (Point p : element.getPoints()) {
-    		        maxX = p.getX() > maxX ? p.getX() : maxX;
-    		        minX = p.getX() < minX ? p.getX() : minX;
-    		        
-    		        maxY = p.getY() > maxY ? p.getY() : maxY;
-    		        minY = p.getY() < minY ? p.getY() : minY;
-    		    }
-    		}
-    		Point drawingCenter = new Point(minX + (maxX - minX)/2, minY + (maxY - minY)/2);
-    		drawing.setViewportPosition(drawingCenter);
-    		//TODO ver a implementacao do comando zoom
-    		drawing.setZoom(1000*Math.max(maxX - minX, maxY - minY));
-		}
-		else if (elements.size() == 1) {
-		    Element element = elements.iterator().next();
-		    
-		    Rectangle boundary = element.getBoundaryRectangle();
-		    Point lowerLeft = boundary.getLowerLeft();
-            Point upperRight = boundary.getUpperRight();
-            Point lowerRight = boundary.getLowerRight();
-            
-            Vector vector = new Vector(lowerLeft, upperRight);
-		    Vector normalized = vector.normalized();
-		    vector = normalized.multiply(vector.getNorm()/2);
-		    
-		    Point center = lowerLeft;
-		    center = center.addVector(vector);
-		     		    
-            drawing.setViewportPosition(center);
-		}
-    }
 
 	private Layer addParsedElementsFrom(DXFLayer dxfLayer) {
 		Layer archLayer = new Layer(new Color(255,255,255), dxfLayer.getName(), LineStyle.CONTINUOUS, dxfLayer.getLineWeight());

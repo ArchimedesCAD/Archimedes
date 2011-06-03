@@ -28,11 +28,12 @@ import br.org.archimedes.model.Point;
 
 public class CircleParser extends ElementParser {
 
-	Collection<Element> archimedesCircles = new ArrayList<Element>();
-	
 	@Override
 	public Collection<Element> parse(DXFLayer layer) throws NullArgumentException, InvalidArgumentException {
+		
+		Collection<Element> archimedesCircles = new ArrayList<Element>();
 		List<DXFCircle> dxfCircles = layer.getDXFEntities(DXFConstants.ENTITY_TYPE_CIRCLE);
+		
 		if(dxfCircles != null) {
 			for (DXFCircle dxfCircle : dxfCircles) {
 		  		org.kabeja.dxf.helpers.Point centerPoint = dxfCircle.getCenterPoint();
