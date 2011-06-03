@@ -10,7 +10,9 @@ import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.InvalidParameterException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.gui.opengl.OpenGLWrapper;
+import br.org.archimedes.line.Line;
 import br.org.archimedes.model.Element;
+import br.org.archimedes.model.Offsetable;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Rectangle;
 import br.org.archimedes.model.ReferencePoint;
@@ -18,7 +20,7 @@ import br.org.archimedes.model.Vector;
 import br.org.archimedes.model.references.CirclePoint;
 import br.org.archimedes.model.references.RhombusPoint;
 
-public class Ellipse extends Element {
+public class Ellipse extends Element implements Offsetable {
 
 	private Point center;
 	private Point widthPoint;
@@ -76,9 +78,10 @@ public class Ellipse extends Element {
 
 		this.center = new Point((focus1.getX() + focus2.getX()) / 2,
 				(focus1.getY() + focus2.getY()) / 2);
-		Vector axis = new Vector(center, focus1);
-		axis = axis.normalized();
-		widthPoint = center.addVector(axis.multiply(radius));
+		//Vector axis = new Vector(center, focus1);
+		//axis = axis.normalized();		
+		Vector axis = new Vector(focus1, focus2);
+		widthPoint = center.addVector(axis);
 
 		// encontra o angulo do verto do eixo principal com o vetor horizontal
 		Double angle;
@@ -96,8 +99,7 @@ public class Ellipse extends Element {
 
 		// rotaciona 90 graus para obter heightPoint
 		angle += Math.PI / 2;
-		heightPoint = new Point(center.getX() + radius * Math.cos(angle),
-				radius * Math.sin(angle));
+		heightPoint = new Point(center.getX() + radius * Math.cos(angle),center.getY() + radius * Math.sin(angle));
 
 	}
 
@@ -344,7 +346,8 @@ public class Ellipse extends Element {
 	}
 
 	public boolean isPositiveDirection(Point point) {
-		return !contains(point);
+		boolean b = !contains(point);
+		return b;
 	}
 
 	/*
@@ -408,6 +411,33 @@ public class Ellipse extends Element {
 		return "Ellipse centered at " + this.getCenter().toString();
 	}
 
+    public Element cloneWithDistance (double distance) throws InvalidParameterException {
+
+//    	Vector v = new Vector(this.center, this.widthPoint);
+//    	double radius = v.getNorm();
+//    	v = v.multiply(0.5);
+//    	Point focus1 = this.center.clone().addVector(v);
+//    	v = v.multiply(-1);
+//    	Point focus2 = this.center.clone().addVector(v);
+    	
+    	Vector v = new Vector(this.center, this.widthPoint);
+    	Vector distanceVector = v.clone().normalized().multiply(distance);
+    	v.add(distanceVector);
+    	Point newWidthPoint = this.widthPoint.clone().addVector(v);
+    	
+    	Ellipse newEllipse = null;
+		try {
+			newEllipse = new Ellipse(center.clone(), newWidthPoint, heightPoint.clone());
+		} catch (NullArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvalidArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        return newEllipse;
+    }
+    
 	@Override
 	public void draw(OpenGLWrapper wrapper) {
 

@@ -12,10 +12,12 @@ import br.org.archimedes.gui.opengl.OpenGLWrapper;
 import br.org.archimedes.interfaces.Command;
 import br.org.archimedes.interfaces.Parser;
 import br.org.archimedes.model.Point;
+import br.org.archimedes.model.references.CirclePoint;
 import br.org.archimedes.parser.DistanceParser;
 import br.org.archimedes.parser.DoubleDecoratorParser;
 import br.org.archimedes.parser.PointParser;
 import br.org.archimedes.parser.StringDecoratorParser;
+import br.org.archimedes.line.Line;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,7 +72,25 @@ public class EllipseFactory implements CommandFactory {
         OpenGLWrapper opengl = br.org.archimedes.Utils.getOpenGLWrapper();
 
         if (isCenterProtocol){
-        if (center != null && widthPoint != null && !isDone()) {
+        	if (center != null && widthPoint == null && !isDone()) {
+        		Point start = center;
+        		Point end = workspace.getMousePosition();
+        		
+        		opengl.setLineStyle(OpenGLWrapper.STIPPLED_LINE);
+        		
+        		Line line;
+				try {
+					line = new Line(start, end);
+					line.draw(opengl);
+				} catch (NullArgumentException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (InvalidArgumentException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}  		
+        	}
+        	else if (center != null && widthPoint != null && !isDone()) {
             Point start = center;
             Point middle = widthPoint;
             Point end = workspace.getMousePosition();
@@ -80,6 +100,8 @@ public class EllipseFactory implements CommandFactory {
             try {
                 Ellipse ellipse = new Ellipse(start, middle, end);
                 ellipse.draw(opengl);
+				Line line = new Line(start, middle);
+				line.draw(opengl);
             }
             catch (NullArgumentException e) {
                 // Should not reach this block
@@ -91,7 +113,24 @@ public class EllipseFactory implements CommandFactory {
         }
         }
         else {
-        if (focus1 != null && focus2 != null && !isDone()) {
+        	if (focus1 != null && focus2 == null && !isDone()) {
+                Point f1 = focus1;
+                Point f2 = workspace.getMousePosition();
+        		opengl.setLineStyle(OpenGLWrapper.STIPPLED_LINE);
+        		
+        		Line line;
+				try {
+					line = new Line(f1, f2);
+					line.draw(opengl);
+				} catch (NullArgumentException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (InvalidArgumentException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}  		
+        	}
+        else if (focus1 != null && focus2 != null && !isDone()) {
             Point f1 = focus1;
             Point f2 = focus2;
             Point mouse  = workspace.getMousePosition();
@@ -101,6 +140,8 @@ public class EllipseFactory implements CommandFactory {
             try {
                 Ellipse ellipse = new Ellipse(f1, f2, mouse.calculateDistance(new Point((f1.getX() + f2.getX()) / 2 , (f1.getY() + f2.getY()) / 2 )));
                 ellipse.draw(opengl);
+                Line line = new Line(f1, f2);
+				line.draw(opengl);
             }
             catch (NullArgumentException e) {
                 // Should not reach this block
@@ -156,7 +197,7 @@ public class EllipseFactory implements CommandFactory {
                 returnParser = new PointParser();            	
             }
             else if (radius == 0 && !isCenterProtocol){
-                returnParser = new DistanceParser(new Point( (focus1.getX() + focus2.getX()) / 2, (focus2.getY() + focus2.getY()) / 2 ));
+                returnParser = new DistanceParser(new Point( (focus1.getX() + focus2.getX()) / 2, (focus1.getY() + focus2.getY()) / 2 ));
             }
         }
         return returnParser;

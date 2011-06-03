@@ -11,3 +11,4 @@ Export-Package: br.org.archimedes.ellipse
 Eclipse-RegisterBuddy: br.org.archimedes.core
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Import-Package: br.org.archimedes.line
