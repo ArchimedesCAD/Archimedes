@@ -50,8 +50,9 @@ public abstract class ElementParser {
         Map<String, ElementParser> map = new HashMap<String, ElementParser>();
 
         map.put("arc", new ArcParser()); //$NON-NLS-1$ //$NON-NLS-2$
-        map.put("circle", new CircleParser()); //$NON-NLS-1$ //$NON-NLS-2$
-        map.put("line", new LineParser()); //$NON-NLS-1$ //$NON-NLS-2$
+        map.put("circle", new CircleParser());
+        map.put("line", new LineParser());
+        map.put("polyline", new PolylineParser());
         map.put("infiniteLine", new InfiniteLineParser());
                 
         return map;
