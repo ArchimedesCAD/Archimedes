@@ -52,11 +52,11 @@ public class Ellipse extends Element implements Offsetable {
 		return center;
 	}
 
-	public Point getwidthPoint() {
+	public Point getWidthPoint() {
 		return widthPoint;
 	}
 
-	public Point getheightPoint() {
+	public Point getHeightPoint() {
 		return heightPoint;
 	}
 
@@ -94,8 +94,8 @@ public class Ellipse extends Element implements Offsetable {
 		if (ellipse == null) {
 			result = false;
 		} else if (!this.center.equals(ellipse.getCenter()) 
-				|| !this.widthPoint.equals(ellipse.getwidthPoint()) 
-				|| !this.heightPoint.equals(ellipse.getheightPoint())) {
+				|| !this.widthPoint.equals(ellipse.getWidthPoint()) 
+				|| !this.heightPoint.equals(ellipse.getHeightPoint())) {
 			result = false;
 		}
 		return result;
@@ -271,31 +271,15 @@ public class Ellipse extends Element implements Offsetable {
 	}
 
 	public String toString() {
-		// TODO
-		return "Ellipse centered at " + this.getCenter().toString();
+		return "Ellipse centered at " + this.getCenter().toString() 
+			+ " and width " + this.getWidthPoint().toString()
+			+ " with height " + this.getHeightPoint().toString();
 	}
 
 	public Element cloneWithDistance(double distance) throws InvalidParameterException {
 
-		// Vector v = new Vector(this.center, this.widthPoint);
-		// double radius = v.getNorm();
-		// v = v.multiply(0.5);
-		// Point focus1 = this.center.clone().addVector(v);
-		// v = v.multiply(-1);
-		// Point focus2 = this.center.clone().addVector(v);
-		if (distance <= 0.0)
-			return this.clone();
-		// ajustando o eixo principal
-		Vector v1 = new Vector(this.center, this.widthPoint);
-		Vector distanceVector1 = v1.clone().normalized().multiply(distance);
-		v1.add(distanceVector1);
-		Point newWidthPoint = this.widthPoint.clone().addVector(v1);
-
-		// ajustando o eixo secundario
-		Vector v2 = new Vector(this.center, this.heightPoint);
-		Vector distanceVector2 = v2.clone().normalized().multiply(distance);
-		v2.add(distanceVector2);
-		Point newHeightPoint = this.heightPoint.clone().addVector(v2);
+		Point newWidthPoint = calculateOffsetPoint(distance, widthPoint);
+		Point newHeightPoint = calculateOffsetPoint(distance, heightPoint);
 
 		Ellipse newEllipse = null;
 		try {
@@ -308,6 +292,13 @@ public class Ellipse extends Element implements Offsetable {
 			e.printStackTrace();
 		}
 		return newEllipse;
+	}
+
+	private Point calculateOffsetPoint(double distance, Point point) {
+		Vector axis = new Vector(center, point);
+		Vector distanceVector = axis.clone().normalized().multiply(distance);
+		Point offsetPoint = point.clone().addVector(distanceVector);
+		return offsetPoint;
 	}
 
 	@Override
@@ -387,10 +378,17 @@ public class Ellipse extends Element implements Offsetable {
 			throw new InvalidArgumentException();
 		}
 
-		if (center.getX() < widthPoint.getX())
+		if  (Math.abs(center.getX() - widthPoint.getX()) < Constant.EPSILON) {
+			if (center.getY() > widthPoint.getY())
+				return center.addVector(ortho.multiply(height));
+			else 
+				return center.addVector(ortho.multiply(-height));
+		}
+		else if (center.getX() < widthPoint.getX())
 			return center.addVector(ortho.multiply(height));
-		else
+		else// if (center.getX() > widthPoint.getX())
 			return center.addVector(ortho.multiply(-height));
+
 	}
 
 }
