@@ -15,7 +15,7 @@ import br.org.archimedes.model.Point;
 import br.org.archimedes.text.Text;
 
 public class TextParser extends ElementParser{
-//TODO nao funciona!!!!!
+	
 	@Override
 	public Collection<Element> parse(DXFLayer layer) throws NullArgumentException, InvalidArgumentException {
 		
@@ -26,8 +26,8 @@ public class TextParser extends ElementParser{
 			for (DXFText dxfText : dxfTexts) {
 				String contentText = dxfText.getText();
 		  		org.kabeja.dxf.helpers.Point insertPoint = dxfText.getInsertPoint();
-		  		double size = dxfText.getLength();
-	
+		  		double size = dxfText.getHeight();
+		  			
 		  		Point p1 = new Point(insertPoint.getX(), insertPoint.getY());
 		  		
 				Text text = new Text(contentText,p1,size);

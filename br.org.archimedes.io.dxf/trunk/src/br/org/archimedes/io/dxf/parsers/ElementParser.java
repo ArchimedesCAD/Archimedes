@@ -53,8 +53,9 @@ public abstract class ElementParser {
         map.put("arc", new ArcParser()); //$NON-NLS-1$ //$NON-NLS-2$
         map.put("circle", new CircleParser());
         map.put("line", new LineParser());
-        map.put("polyline", new PolylineParser());
         map.put("infiniteLine", new InfiniteLineParser());
+        map.put("polyline", new PolylineParser());
+        map.put("text", new TextParser());
                 
         return map;
     }
@@ -74,6 +75,7 @@ public abstract class ElementParser {
      */
     public abstract Collection<Element> parse (DXFLayer layer) throws NullArgumentException, InvalidArgumentException;
     
+     
     protected Point transformToArchimedesPoint (org.kabeja.dxf.helpers.Point dxfPoint) {
 
         return new Point (dxfPoint.getX(), dxfPoint.getY());

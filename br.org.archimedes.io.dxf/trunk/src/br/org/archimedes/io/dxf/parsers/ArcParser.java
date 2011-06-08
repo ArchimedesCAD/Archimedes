@@ -39,10 +39,4 @@ public class ArcParser extends ElementParser{
 		return archimedesArcs;
 		
 	}
-
-	private Point transformToArchimedesPoint(org.kabeja.dxf.helpers.Point kabejaPoint) {
-		
-		return new Point(kabejaPoint.getX(), kabejaPoint.getY());
-	}
-	
 }
