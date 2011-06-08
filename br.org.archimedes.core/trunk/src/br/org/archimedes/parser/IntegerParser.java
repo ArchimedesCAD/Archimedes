@@ -4,7 +4,7 @@ import br.org.archimedes.Utils;
 import br.org.archimedes.exceptions.InvalidParameterException;
 import br.org.archimedes.interfaces.Parser;
 
-public class IntegerParser implements Parser{
+public class IntegerParser implements Parser {
 
 	int integerValue;
 	
@@ -22,13 +22,11 @@ public class IntegerParser implements Parser{
 	}
 
 	public boolean isDone() {
-		return integerValue > 0;
+		return (Object) integerValue != null;
 	}
 
 	public Object getParameter() {
 		return integerValue;
 	}
-
-	
 	
 }
