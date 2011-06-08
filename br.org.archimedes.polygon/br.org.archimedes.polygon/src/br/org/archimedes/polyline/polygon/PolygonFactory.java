@@ -1,6 +1,7 @@
-package br.org.archimedes.polygon;
+package br.org.archimedes.polyline.polygon;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import br.org.archimedes.Geometrics;
@@ -17,12 +18,16 @@ import br.org.archimedes.interfaces.Parser;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.parser.IntegerParser;
 import br.org.archimedes.parser.PointParser;
+import br.org.archimedes.parser.StringDecoratorParser;
+import br.org.archimedes.polyline.Polyline;
 
-public class PolygonFactory implements CommandFactory{
+public class PolygonFactory implements CommandFactory {
 
 	private Point center;
 	private Point initialPoint;
-	private int sides;
+	private int sides = 0;
+	private boolean insideCircle = false;
+	private boolean firstParser = true;
 
     private boolean active;
 
@@ -41,7 +46,7 @@ public class PolygonFactory implements CommandFactory{
         active = true;
         br.org.archimedes.Utils.getController().deselectAll();
 
-        return Messages.SelectSides;
+        return Messages.SelectSidesOrOption;
     }
 
 	@Override
@@ -55,14 +60,32 @@ public class PolygonFactory implements CommandFactory{
 
         if (parameter != null) {
             try {
-                if (sides <= 0) {
-                    sides = (Integer) parameter;
-                    if (sides < 3) {
-                        result = Messages.WrongNumberOfSides;
-                        sides = 0;
+                if (sides == 0) {
+                    if ("I".equals(parameter) || "i".equals(parameter)) {
+                        insideCircle = true;
+                        result = Messages.SelectOnlySides;
+                        firstParser = false;
                     }
-                    else
-                        result = Messages.SelectCenterPoint;
+                    else if ("C".equals(parameter) || "c".equals(parameter)) {
+                        insideCircle = false;
+                        result = Messages.SelectOnlySides;
+                        firstParser = false;
+                    }
+                    else {
+                        sides = (Integer) parameter;
+                        if (sides < 3) {
+                            result = Messages.WrongNumberOfSides;
+                            sides = 0;
+                        } 
+                        else if (sides > 30) {
+                            result = Messages.WrongNumberOfSides;
+                            sides = 0;
+                        }
+                        else {
+                            result = Messages.SelectCenterPoint;
+                            firstParser = false;
+                        }
+                    }
                 }
                 else if (center == null){
                     center = (Point) parameter;
@@ -92,8 +115,13 @@ public class PolygonFactory implements CommandFactory{
 		
 		String result = null;
         try {
-            Polygon newPolygon = new Polygon(center, initialPoint, sides);
+            Polygon polyTemplate = new Polygon(center, initialPoint, sides, insideCircle);
+            List<Point> vertex = polyTemplate.getVertexPoints();
+            Collections.reverse(vertex);
+            vertex.add(vertex.get(0).clone());
+            Polyline newPolygon = new Polyline(vertex);
             command = new PutOrRemoveElementCommand(newPolygon, false);
+           
             result = Messages.PolygonCreated;
         }
         catch (Exception e) {
@@ -110,9 +138,8 @@ public class PolygonFactory implements CommandFactory{
 
 	@Override
 	public String cancel () {
-
         deactivate();
-        return "CRIAR MENSAGEM DE CANCELAR";
+        return Messages.PolygonCanceled;
     }
 
 	@Override
@@ -120,7 +147,11 @@ public class PolygonFactory implements CommandFactory{
 	
 		Parser returnParser = null;
         if (active) {
-            if (sides <= 0) {
+            if (firstParser) {
+                returnParser = new IntegerParser();
+                returnParser = new StringDecoratorParser(returnParser, "i"); 
+                returnParser = new StringDecoratorParser(returnParser, "c");
+            } else if (sides == 0) {
                 returnParser = new IntegerParser();
             }
             else if (center == null || initialPoint == null){
@@ -147,7 +178,11 @@ public class PolygonFactory implements CommandFactory{
                 Circle circle = new Circle(start, radius);
                 circle.draw(opengl);
                 
-                Polygon newPolygon = new Polygon(start, end, sides);
+                Polygon polyTemplate = new Polygon(start, end, sides, insideCircle);
+                List<Point> vertex = polyTemplate.getVertexPoints();
+                Collections.reverse(vertex);
+                vertex.add(vertex.get(0).clone());
+                Polyline newPolygon = new Polyline(vertex);
                 newPolygon.draw(br.org.archimedes.Utils.getOpenGLWrapper());
             }
             catch (NullArgumentException e) {
@@ -191,6 +226,7 @@ public class PolygonFactory implements CommandFactory{
         initialPoint = null;
         sides = 0;
         active = false;
+        insideCircle = false;
     }
 
 }

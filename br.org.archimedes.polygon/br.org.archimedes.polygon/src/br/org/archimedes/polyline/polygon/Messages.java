@@ -10,7 +10,7 @@
  * This file was created on 2011/05/11, 17:00:00.<br>
  * It is part of package br.org.archimedes.polyline.polygon on the br.org.archimedes.polyline.polygon project.<br>
  */
-package br.org.archimedes.polygon;
+package br.org.archimedes.polyline.polygon;
 
 import org.eclipse.osgi.util.NLS;
 
@@ -28,13 +28,17 @@ public class Messages extends NLS {
 
     public static String PolygonNotCreated;
     
-    public static String SelectSides;
+    public static String SelectSidesOrOption;
     
     public static String SelectCenterPoint;
     
     public static String SelectRadiusPoint;
 
     public static String WrongNumberOfSides;
+    
+    public static String SelectOnlySides;
+    
+    public static String PolygonCanceled;
     
     static {
         // initialize resource bundle

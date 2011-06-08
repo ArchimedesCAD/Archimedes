@@ -4,8 +4,8 @@
    <extension
          point="br.org.archimedes.core.element">
          <element id="br.org.archimedes.polygon" name="Polygon" 
-         	class="br.org.archimedes.polygon.Polygon"
-         	factory="br.org.archimedes.polygon.PolygonFactory"
+         	class="br.org.archimedes.polyline.polygon.Polygon"
+         	factory="br.org.archimedes.polyline.polygon.PolygonFactory"
          	shortcut="pol" />
    </extension>
    <extension
