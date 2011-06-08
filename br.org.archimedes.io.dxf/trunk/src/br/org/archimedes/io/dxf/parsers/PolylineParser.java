@@ -2,18 +2,15 @@ package br.org.archimedes.io.dxf.parsers;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 import org.kabeja.dxf.DXFConstants;
-import org.kabeja.dxf.DXFLWPolyline;
 import org.kabeja.dxf.DXFLayer;
 import org.kabeja.dxf.DXFPolyline;
 import org.kabeja.dxf.DXFVertex;
 
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
-import br.org.archimedes.line.Line;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.polyline.Polyline;
@@ -42,14 +39,10 @@ public class PolylineParser extends ElementParser {
                 DXFVertex vertex = dxfPolyline.getVertex(i);
                 points.add(transformToArchimedesPoint(vertex.getPoint()));
             }
+            points.add(transformToArchimedesPoint(dxfPolyline.getVertex(0).getPoint()));
             archimedesPolylines.add(new Polyline(points));
         }
         return archimedesPolylines;
     }
     
-    private Point transformToArchimedesPoint (org.kabeja.dxf.helpers.Point dxfPoint) {
-
-        return new Point (dxfPoint.getX(), dxfPoint.getY());
-    }
-
 }
