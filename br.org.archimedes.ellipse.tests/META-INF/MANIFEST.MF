@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Ellipse plugin tests
+Bundle-SymbolicName: br.org.archimedes.ellipse.tests
+Bundle-Version: 1.0.0.qualifier
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ br.org.archimedes.core;bundle-version="0.64.0",
+ br.org.archimedes.ellipse;bundle-version="1.0.0",
+ org.junit4;bundle-version="4.8.1",
+ br.org.archimedes.core.tests;bundle-version="0.58.0"
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
