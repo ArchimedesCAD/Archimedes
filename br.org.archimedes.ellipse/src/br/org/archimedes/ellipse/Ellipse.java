@@ -334,8 +334,18 @@ public class Ellipse extends Element implements Offsetable {
 	@Override
 	public boolean contains(Point point) {
 		double x, y, dx, dy, a, b;
-		x = point.getX() * Math.cos(-fi) - point.getY() * Math.sin(-fi);
-		y = point.getY() * Math.cos(-fi) + point.getX() * Math.sin(-fi);
+		Point rotPoint = point.clone();
+		try {
+			rotPoint.rotate(center, -fi);
+			System.out.println(point.toString() + rotPoint.toString() + fi);
+		} catch (NullArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//x = point.getX() * Math.cos(-fi) - point.getY() * Math.sin(-fi);
+		//y = point.getY() * Math.cos(-fi) + point.getX() * Math.sin(-fi);
+		x = rotPoint.getX();
+		y = rotPoint.getY();
 		dx = x - getCenter().getX();
 		dy = y - getCenter().getY();
 		a = (new Vector(center, widthPoint)).getNorm();
@@ -347,6 +357,7 @@ public class Ellipse extends Element implements Offsetable {
 
 	public boolean isPositiveDirection(Point point) {
 		boolean b = !contains(point);
+		System.out.println(b);
 		return b;
 	}
 
@@ -419,15 +430,22 @@ public class Ellipse extends Element implements Offsetable {
 //    	Point focus1 = this.center.clone().addVector(v);
 //    	v = v.multiply(-1);
 //    	Point focus2 = this.center.clone().addVector(v);
+    	if(distance <= 0.0) return this.clone();
+    	//ajustando o eixo principal
+    	Vector v1 = new Vector(this.center, this.widthPoint);
+    	Vector distanceVector1 = v1.clone().normalized().multiply(distance);
+    	v1.add(distanceVector1);
+    	Point newWidthPoint = this.widthPoint.clone().addVector(v1);
     	
-    	Vector v = new Vector(this.center, this.widthPoint);
-    	Vector distanceVector = v.clone().normalized().multiply(distance);
-    	v.add(distanceVector);
-    	Point newWidthPoint = this.widthPoint.clone().addVector(v);
+    	//ajustando o eixo secundario
+    	Vector v2 = new Vector(this.center, this.heightPoint);
+    	Vector distanceVector2 = v2.clone().normalized().multiply(distance);
+    	v2.add(distanceVector2);
+    	Point newHeightPoint = this.heightPoint.clone().addVector(v2);
     	
     	Ellipse newEllipse = null;
 		try {
-			newEllipse = new Ellipse(center.clone(), newWidthPoint, heightPoint.clone());
+			newEllipse = new Ellipse(center.clone(), newWidthPoint, newHeightPoint);
 		} catch (NullArgumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
