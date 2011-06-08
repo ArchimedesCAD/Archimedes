@@ -1,7 +1,9 @@
 
 package br.org.archimedes.ellipse;
 
-import br.org.archimedes.Geometrics;
+import java.util.ArrayList;
+import java.util.List;
+
 import br.org.archimedes.controller.commands.PutOrRemoveElementCommand;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.InvalidParameterException;
@@ -11,16 +13,11 @@ import br.org.archimedes.gui.model.Workspace;
 import br.org.archimedes.gui.opengl.OpenGLWrapper;
 import br.org.archimedes.interfaces.Command;
 import br.org.archimedes.interfaces.Parser;
+import br.org.archimedes.line.Line;
 import br.org.archimedes.model.Point;
-import br.org.archimedes.model.references.CirclePoint;
 import br.org.archimedes.parser.DistanceParser;
-import br.org.archimedes.parser.DoubleDecoratorParser;
 import br.org.archimedes.parser.PointParser;
 import br.org.archimedes.parser.StringDecoratorParser;
-import br.org.archimedes.line.Line;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class EllipseFactory implements CommandFactory {
 
