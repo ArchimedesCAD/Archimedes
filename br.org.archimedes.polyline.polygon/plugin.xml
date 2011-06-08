@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="br.org.archimedes.core.element">
+         <element id="br.org.archimedes.polygon" name="Polygon" 
+         	class="br.org.archimedes.polyline.polygon.Polygon"
+         	factory="br.org.archimedes.polyline.polygon.PolygonFactory"
+         	shortcut="pol" />
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:create?before=complex">
+         <command
+               commandId="br.org.archimedes.core.factoryactivator"
+               icon="icons/polygon.png"
+               id="polygon"
+               label="%command.polygon.label"
+               mnemonic="%command.polygon.mnemonic"
+               style="push"
+               tooltip="%command.polygon.tooltip">
+            <parameter
+                  name="br.org.archimedes.core.factoryactivator.name"
+                  value="br.org.archimedes.polygon">
+            </parameter>
+         </command>
+         <command
+               commandId="br.org.archimedes.polygon.command1"
+               style="push">
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="toolbar:create?before=complex">
+         <command
+               commandId="br.org.archimedes.core.factoryactivator"
+               icon="icons/polygon.png"
+               id="polygon"
+               label="%command.polygon.label"
+               mnemonic="%command.polygon.mnemonic"
+               style="push"
+               tooltip="%command.polygon.tooltip">
+            <parameter
+                  name="br.org.archimedes.core.factoryactivator.name"
+                  value="br.org.archimedes.polygon">
+            </parameter>
+         </command>
+      </menuContribution>
+   </extension>
+
+</plugin>
