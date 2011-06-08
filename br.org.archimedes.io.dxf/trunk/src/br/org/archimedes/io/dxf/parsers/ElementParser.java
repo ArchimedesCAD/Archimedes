@@ -22,6 +22,7 @@ import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.factories.ElementFactory;
 import br.org.archimedes.model.Element;
+import br.org.archimedes.model.Point;
 
 /**
  * @author fsokol, ttogores, gustavopuga, fgtorres
@@ -72,4 +73,9 @@ public abstract class ElementParser {
      *             Cannot
      */
     public abstract Collection<Element> parse (DXFLayer layer) throws NullArgumentException, InvalidArgumentException;
+    
+    protected Point transformToArchimedesPoint (org.kabeja.dxf.helpers.Point dxfPoint) {
+
+        return new Point (dxfPoint.getX(), dxfPoint.getY());
+    }
 }
