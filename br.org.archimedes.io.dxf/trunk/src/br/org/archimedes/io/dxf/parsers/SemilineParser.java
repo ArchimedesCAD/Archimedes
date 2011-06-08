@@ -16,7 +16,7 @@ import br.org.archimedes.model.Point;
 import br.org.archimedes.semiline.Semiline;
 
 public class SemilineParser extends ElementParser{
-	//TODO: Arquivo de teste!
+    
 	@Override
 	public Collection<Element> parse(DXFLayer layer) throws NullArgumentException, InvalidArgumentException {
 		

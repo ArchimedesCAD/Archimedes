@@ -67,6 +67,7 @@ public class DXFImporter implements Importer {
 		Drawing drawing = new Drawing("Imported drawing", importedLayers);
 		
 		Collection<Element> elements = importedLayers.get(dxfLayer0.getName()).getElements();
+		
 		//TODO ver o ZoomExtends...				
 		return drawing;
 	}
@@ -93,6 +94,7 @@ public class DXFImporter implements Importer {
 		Collection<ElementParser> parsers = ElementParser.getParserMap().values();
 		
 		for (ElementParser parser : parsers) {
+		    System.out.println("Classe " + parser.getClass().getName());
 			try {
 				for (Element element : parser.parse(dxfLayer)) {
 					archLayer.putElement(element);

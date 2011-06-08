@@ -20,7 +20,8 @@ public class ArcParser extends ElementParser{
 	public Collection<Element> parse(DXFLayer layer) throws NullArgumentException, InvalidArgumentException {
 		
 		ArrayList<Element> archimedesArcs = new ArrayList<Element>();
-		List<DXFArc> dxfArcs = layer.getDXFEntities(DXFConstants.ENTITY_TYPE_ARC);
+		@SuppressWarnings("unchecked")
+        List<DXFArc> dxfArcs = layer.getDXFEntities(DXFConstants.ENTITY_TYPE_ARC);
 
 		if(dxfArcs != null) {
 			for (DXFArc dxfArc : dxfArcs) {

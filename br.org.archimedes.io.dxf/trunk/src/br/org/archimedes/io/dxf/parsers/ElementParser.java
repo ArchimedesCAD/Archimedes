@@ -20,7 +20,6 @@ import org.kabeja.dxf.DXFLayer;
 import br.org.archimedes.exceptions.ElementCreationException;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
-import br.org.archimedes.factories.ElementFactory;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
 
@@ -30,8 +29,6 @@ import br.org.archimedes.model.Point;
 public abstract class ElementParser {
 
     private static Map<String, ElementParser> parserMap = createParserMap();
-
-	private static ElementFactory elementFactory = new ElementFactory();
 
 
     /**
@@ -50,10 +47,12 @@ public abstract class ElementParser {
 
         Map<String, ElementParser> map = new HashMap<String, ElementParser>();
 
-        map.put("arc", new ArcParser()); //$NON-NLS-1$ //$NON-NLS-2$
+        map.put("arc", new ArcParser());
         map.put("circle", new CircleParser());
+        map.put("ellipse", new EllipseParser());
         map.put("line", new LineParser());
         map.put("infiniteLine", new InfiniteLineParser());
+        map.put("semiline", new SemilineParser());
         map.put("polyline", new PolylineParser());
         map.put("text", new TextParser());
                 
