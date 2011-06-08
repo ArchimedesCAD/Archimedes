@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.swt.widgets.Display;
+import org.kabeja.dxf.DXFColor;
 import org.kabeja.dxf.DXFConstants;
 import org.kabeja.dxf.DXFLayer;
 import org.kabeja.dxf.DXFViewport;
@@ -70,9 +71,27 @@ public class DXFImporter implements Importer {
 		return drawing;
 	}
 
+	private Color getLayerColor(DXFLayer dxfLayer) {
+	    
+	    //The default color is black
+	    int rgb[] = {0, 0, 0};
+	    String rgbColor = DXFColor.getRGBString(dxfLayer.getColor());
+	    
+	    if (rgbColor != null) {
+    	    int i = 0;
+            for (String s : rgbColor.split(",")) 
+                rgb[i++] = Integer.valueOf(s);
+	    }
+	    return new Color(rgb[0], rgb[1], rgb[2]);
+	    
+	}
+	
 	private Layer addParsedElementsFrom(DXFLayer dxfLayer) {
-		Layer archLayer = new Layer(new Color(255,255,255), dxfLayer.getName(), LineStyle.CONTINUOUS, dxfLayer.getLineWeight());
+	    
+	    Color layerBackgroundColor = getLayerColor(dxfLayer);
+	    Layer archLayer = new Layer(layerBackgroundColor, dxfLayer.getName(), LineStyle.CONTINUOUS, dxfLayer.getLineWeight());
 		Collection<ElementParser> parsers = ElementParser.getParserMap().values();
+		
 		for (ElementParser parser : parsers) {
 			try {
 				for (Element element : parser.parse(dxfLayer)) {
