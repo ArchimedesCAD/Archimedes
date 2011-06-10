@@ -61,12 +61,12 @@ public class PolygonFactory implements CommandFactory {
         if (parameter != null) {
             try {
                 if (sides == 0) {
-                    if ("I".equals(parameter) || "i".equals(parameter)) {
+                    if (("I".equals(parameter) || "i".equals(parameter)) && firstParser) {
                         insideCircle = true;
                         result = Messages.SelectOnlySides;
                         firstParser = false;
                     }
-                    else if ("C".equals(parameter) || "c".equals(parameter)) {
+                    else if (("C".equals(parameter) || "c".equals(parameter)) && firstParser) {
                         insideCircle = false;
                         result = Messages.SelectOnlySides;
                         firstParser = false;
@@ -221,12 +221,12 @@ public class PolygonFactory implements CommandFactory {
 	}
 	
 	private void deactivate () {
-
         center = null;
         initialPoint = null;
         sides = 0;
         active = false;
         insideCircle = false;
+        firstParser = true;
     }
 
 }

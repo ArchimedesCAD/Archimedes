@@ -25,6 +25,9 @@ public class Polygon {
 	public Polygon(Point center, Point initialPoint, int sides, boolean insideCircle)
 		throws NullArgumentException, InvalidArgumentException {
 		
+	    if (center.equals(initialPoint)) {
+	        throw new InvalidArgumentException();
+	    }
     	if (insideCircle) {
     	    double r = center.calculateDistance(initialPoint);
     	    initialPoint.rotate(center, Math.PI/(sides));
@@ -56,7 +59,7 @@ public class Polygon {
 		return sides;
 	}
 
-	List<Point> getVertexPoints() {
+	public List<Point> getVertexPoints() {
 
 		List<Point> vertexPoints = new ArrayList<Point>();
 		Point auxiliarPoint = getInitialPoint().clone();
