@@ -2,39 +2,25 @@ package br.org.archimedes.io.dxf;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import org.eclipse.swt.widgets.Display;
 import org.kabeja.dxf.DXFColor;
-import org.kabeja.dxf.DXFConstants;
 import org.kabeja.dxf.DXFLayer;
-import org.kabeja.dxf.DXFViewport;
 import org.kabeja.parser.DXFParser;
 import org.kabeja.parser.ParseException;
 import org.kabeja.parser.Parser;
 import org.kabeja.parser.ParserBuilder;
-import org.kabeja.parser.entities.DXFViewportHandler;
 
-import br.org.archimedes.controller.commands.ZoomExtendCommand;
-import br.org.archimedes.exceptions.IllegalActionException;
-import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.InvalidFileFormatException;
-import br.org.archimedes.exceptions.NullArgumentException;
+import br.org.archimedes.gui.opengl.Color;
 import br.org.archimedes.interfaces.Importer;
-import br.org.archimedes.io.dxf.parsers.CircleParser;
 import br.org.archimedes.io.dxf.parsers.ElementParser;
 import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Layer;
 import br.org.archimedes.model.LineStyle;
-import br.org.archimedes.model.Point;
-import br.org.archimedes.model.Rectangle;
-import br.org.archimedes.model.Vector;
-import br.org.archimedes.gui.opengl.Color;
 
 public class DXFImporter implements Importer {
 	
@@ -64,11 +50,9 @@ public class DXFImporter implements Importer {
 			dxfLayer = kabejaParser.getDocument().getDXFLayer(i.toString());
 		} while (!dxfLayer0.equals(dxfLayer));
 		
-		Drawing drawing = new Drawing("Imported drawing", importedLayers);
-		
-		Collection<Element> elements = importedLayers.get(dxfLayer0.getName()).getElements();
-		
-		//TODO ver o ZoomExtends...				
+		Drawing drawing = new Drawing("Imported drawing", importedLayers, true);
+		//Collection<Element> elements = importedLayers.get(dxfLayer0.getName()).getElements();
+
 		return drawing;
 	}
 

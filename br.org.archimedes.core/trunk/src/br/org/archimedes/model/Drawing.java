@@ -60,6 +60,8 @@ public class Drawing extends Observable implements Observer {
 
     private boolean saved;
 
+    private boolean centerToOpen;
+    
     private Layer currentLayer;
 
     private double zoom;
@@ -82,6 +84,10 @@ public class Drawing extends Observable implements Observer {
         this(title, null);
     }
 
+    public Drawing (String title, Map<String, Layer> layers){
+        this (title, layers, false);
+    }
+    
     /**
      * Constructor.
      * 
@@ -90,7 +96,7 @@ public class Drawing extends Observable implements Observer {
      * @param layers
      *            The drawinglayers
      */
-    public Drawing (String title, Map<String, Layer> layers) {
+    public Drawing (String title, Map<String, Layer> layers, boolean centerToOpen) {
     
         this.title = title;
         this.selection = new Selection();
@@ -99,6 +105,7 @@ public class Drawing extends Observable implements Observer {
         this.undoHistory = new Stack<UndoableCommand>();
         this.redoHistory = new Stack<UndoableCommand>();
         this.setSaved(false);
+        this.centerToOpen = centerToOpen;
         this.helperLayer = new Layer(Constant.WHITE, "Helper Layer", //$NON-NLS-1$
                 LineStyle.CONTINUOUS, 1.0);
 
@@ -775,6 +782,11 @@ public class Drawing extends Observable implements Observer {
             }
             openGL.setLineWidth(OpenGLWrapper.NORMAL_WIDTH);
         }
+    }
+    
+    public boolean isCenterToOpen () {
+    
+        return centerToOpen;
     }
 
     /**
