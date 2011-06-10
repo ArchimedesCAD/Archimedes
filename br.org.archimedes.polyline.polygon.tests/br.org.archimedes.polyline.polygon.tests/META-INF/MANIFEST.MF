@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Polygon Tests
+Bundle-SymbolicName: br.org.archimedes.polyline.polygon.tests
+Bundle-Version: 1.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Require-Bundle: br.org.archimedes.core;bundle-version="0.64.0",
+ br.org.archimedes.core.tests;bundle-version="0.58.0",
+ br.org.archimedes.polyline.polygon;bundle-version="1.0.0"
+Import-Package: org.junit
