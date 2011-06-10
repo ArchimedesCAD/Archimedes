@@ -1,6 +1,5 @@
 package br.org.archimedes.ellipse.tests;
 
-import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -93,11 +92,15 @@ public class EllipseTest {
 	}
 
 	@Test
-	//TODO erro (!?) em calculateHeightPoint
-	public void shouldInvertPoint() throws Exception {
+	public void shouldCalculateOffset() throws Exception {
 		Element offsetedEllipse = defaultEllipse.cloneWithDistance(5);
-		Ellipse expectedEllipse = new Ellipse(defaultCenter, new Point(0, 15), new Point(10, 0));
+		Ellipse expectedEllipse = new Ellipse(defaultCenter, new Point(0, 15), new Point(-10, 0));
 		
 		assertEquals(expectedEllipse, offsetedEllipse);
+	
+		Ellipse ellipse = new Ellipse(defaultCenter, defaultWidthPoint, new Point(-5, 0));
+		Element offsetedEllipse2 = ellipse.cloneWithDistance(5);
+		
+		assertEquals(expectedEllipse, offsetedEllipse2);
 	}
 }

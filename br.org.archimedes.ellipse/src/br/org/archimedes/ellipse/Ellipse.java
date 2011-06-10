@@ -379,10 +379,11 @@ public class Ellipse extends Element implements Offsetable {
 		}
 
 		if  (Math.abs(center.getX() - widthPoint.getX()) < Constant.EPSILON) {
+			Vector e1 = new Vector(new Point(0, 0), new Point(1, 0));
 			if (center.getY() > widthPoint.getY())
-				return center.addVector(ortho.multiply(height));
+				return center.addVector(e1.multiply(axis.getNorm()));
 			else 
-				return center.addVector(ortho.multiply(-height));
+				return center.addVector(e1.multiply(-axis.getNorm()));
 		}
 		else if (center.getX() < widthPoint.getX())
 			return center.addVector(ortho.multiply(height));
