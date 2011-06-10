@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 
 import br.org.archimedes.Constant;
+import br.org.archimedes.Geometrics;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.InvalidParameterException;
 import br.org.archimedes.exceptions.NullArgumentException;
@@ -133,8 +134,8 @@ public class Ellipse extends Element implements Offsetable {
 		double t4 = -Math.acos(-f / Math.sqrt(f * f + g * g));
 
 		if (fi < 0) {
-			Point x1 = calculatePointFromAngle(t1);
-			Point x4 = calculatePointFromAngle(t4);
+			Point x1 = calculatePointFromAngle(t1, fi);
+			Point x4 = calculatePointFromAngle(t4, fi);
 			if (x1.getX() < x4.getX()) {
 				xmin = x1;
 				xmax = x4;
@@ -143,8 +144,8 @@ public class Ellipse extends Element implements Offsetable {
 				xmax = x1;
 			}
 		} else {
-			Point x2 = calculatePointFromAngle(t2);
-			Point x3 = calculatePointFromAngle(t3);
+			Point x2 = calculatePointFromAngle(t2, fi);
+			Point x3 = calculatePointFromAngle(t3, fi);
 			if (x2.getX() < x3.getX()) {
 				xmin = x2;
 				xmax = x3;
@@ -163,8 +164,8 @@ public class Ellipse extends Element implements Offsetable {
 		t4 = -Math.acos(-f / Math.sqrt(f * f + g * g));
 
 		if ((fi > 0 && fi < Math.PI / 2) || (fi > -Math.PI / 2 && fi < 0)) {
-			Point y1 = calculatePointFromAngle(t1);
-			Point y4 = calculatePointFromAngle(t4);
+			Point y1 = calculatePointFromAngle(t1, fi);
+			Point y4 = calculatePointFromAngle(t4, fi);
 			if (y1.getY() < y4.getY()) {
 				ymin = y1;
 				ymax = y4;
@@ -173,8 +174,8 @@ public class Ellipse extends Element implements Offsetable {
 				ymax = y1;
 			}
 		} else {
-			Point y2 = calculatePointFromAngle(t2);
-			Point y3 = calculatePointFromAngle(t3);
+			Point y2 = calculatePointFromAngle(t2, fi);
+			Point y3 = calculatePointFromAngle(t3, fi);
 			if (y2.getY() < y3.getY()) {
 				ymin = y2;
 				ymax = y3;
@@ -202,7 +203,7 @@ public class Ellipse extends Element implements Offsetable {
 				references.add(reference);
 			}
 			for (double angle = initialAngle; angle < endingAngle; angle += increment) {
-				Point point = calculatePointFromAngle(angle);
+				Point point = calculatePointFromAngle(angle, fi);
 				reference = new RhombusPoint(point);
 				if (reference.isInside(area)) {
 					references.add(reference);
@@ -215,10 +216,37 @@ public class Ellipse extends Element implements Offsetable {
 	}
 
 	@Override
-	public Point getProjectionOf(Point point) throws NullArgumentException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	   public Point getProjectionOf (Point point) throws NullArgumentException {
+
+        if (point == null) {
+            throw new NullArgumentException();
+        }
+
+        Point projection = null;
+        
+        if (getCenter().equals(point)) {
+        	double widthToCenterDistance = this.widthPoint.calculateDistance(this.center);
+        	double heightToCenterDistance = this.heightPoint.calculateDistance(this.center);
+        	if(widthToCenterDistance < heightToCenterDistance) {
+        		return this.widthPoint;
+        	} else {
+        		return this.heightPoint;
+        	}
+        }
+
+        Collection<Point> intersectionWithLine = getEllipsePoints(point);
+
+        double closestDist = Double.MAX_VALUE;
+        for (Point intersection : intersectionWithLine) {
+            double dist = Geometrics.calculateDistance(point, intersection);
+            if (dist < closestDist) {
+                projection = intersection;
+                closestDist = dist;
+            }
+        }
+
+        return projection;
+    }
 
 	@Override
 	public boolean contains(Point point) {
@@ -300,6 +328,35 @@ public class Ellipse extends Element implements Offsetable {
 		Point offsetPoint = point.clone().addVector(distanceVector);
 		return offsetPoint;
 	}
+	
+	private Collection<Point> getEllipsePoints(Point point) throws NullArgumentException {
+		if(point == null) throw new NullArgumentException();
+		Collection<Point> points = new ArrayList<Point>();
+		
+		Point rotPoint = point.clone();
+		rotPoint.rotate(center, -fi);
+
+		Vector ray = new Vector(center, rotPoint);
+		Vector e1 = new Vector(new Point(0, 0), new Point(1, 0));
+		double angle = e1.dotProduct(ray)/ray.getNorm();
+		Point point1;
+		Point point2;
+		if (point.getY() > center.getY()) {
+			point1 = calculatePointFromAngle(angle, 0);
+			point2 = calculatePointFromAngle(angle+Math.PI, 0);
+		}
+		else{
+			point1 = calculatePointFromAngle(-angle, 0);
+			point2 = calculatePointFromAngle(2*Math.PI-angle, 0);
+		}
+		point1.rotate(point1, fi);
+		point2.rotate(point2, fi);		
+		
+		points.add(point1);
+		points.add(point2);
+		
+		return points;
+	}
 
 	@Override
 	public void draw(OpenGLWrapper wrapper) {
@@ -310,9 +367,9 @@ public class Ellipse extends Element implements Offsetable {
 		ArrayList<Point> points = new ArrayList<Point>();
 
 		for (double angle = initialAngle; angle <= endingAngle; angle += increment) {
-			points.add(calculatePointFromAngle(angle));
+			points.add(calculatePointFromAngle(angle, fi));
 		}
-		points.add(calculatePointFromAngle(endingAngle));
+		points.add(calculatePointFromAngle(endingAngle, fi));
 
 		wrapper.setPrimitiveType(OpenGLWrapper.PRIMITIVE_LINE_STRIP);
 		try {
@@ -323,7 +380,7 @@ public class Ellipse extends Element implements Offsetable {
 		}
 	}
 
-	private Point calculatePointFromAngle(double angle) {
+	private Point calculatePointFromAngle(double angle, double fi) {
 		
 		Vector haxis = new Vector(center, widthPoint);
 		Vector vaxis = new Vector(center, heightPoint);

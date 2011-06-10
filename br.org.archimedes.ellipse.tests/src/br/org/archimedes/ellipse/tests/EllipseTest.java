@@ -86,21 +86,20 @@ public class EllipseTest {
 		for (ReferencePoint referencePoint : referencePoints) {
 			refPoints.add(referencePoint.getPoint());
 		}
-		
 		assertEquals(5,refPoints.size());
 		assertTrue(refPoints.containsAll(points));
 	}
 
 	@Test
 	public void shouldCalculateOffset() throws Exception {
-		Element offsetedEllipse = defaultEllipse.cloneWithDistance(5);
 		Ellipse expectedEllipse = new Ellipse(defaultCenter, new Point(0, 15), new Point(-10, 0));
 		
+		Element offsetedEllipse = defaultEllipse.cloneWithDistance(5);
 		assertEquals(expectedEllipse, offsetedEllipse);
 	
 		Ellipse ellipse = new Ellipse(defaultCenter, defaultWidthPoint, new Point(-5, 0));
-		Element offsetedEllipse2 = ellipse.cloneWithDistance(5);
 		
+		Element offsetedEllipse2 = ellipse.cloneWithDistance(5);
 		assertEquals(expectedEllipse, offsetedEllipse2);
 	}
 }
