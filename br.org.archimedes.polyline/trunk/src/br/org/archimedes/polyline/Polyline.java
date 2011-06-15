@@ -539,7 +539,22 @@ public class Polyline extends Element implements Offsetable, Filletable {
             Point endingPoint) {
 
         List<Point> intersections = new LinkedList<Point>(); // Order matters
-        intersections.add(startingPoint);
+        Point firstIntersection = null;
+
+        //if polyline is closed, need to include an extra intersection point
+        if(this.isClosed()){  
+            Collection<Point> intersectionsBetween = getIntersectionsBetween(offsetedSegments, 0, offsetedSegments.size()-1);
+            for (Point intersection : intersectionsBetween) {
+                if ( !intersections.contains(intersection)) {
+                    intersections.add(intersection);
+                    firstIntersection = intersection;
+                }              
+            }
+         }
+        else{
+                intersections.add(startingPoint);
+        }
+        //intersections common for both open and closed
         int i, j;
         for (i = 0, j = 1; j < offsetedSegments.size(); i++, j++) {
             Collection<Point> intersectionsBetween = getIntersectionsBetween(offsetedSegments, i, j);
@@ -549,7 +564,13 @@ public class Polyline extends Element implements Offsetable, Filletable {
                 }
             }
         }
-        intersections.add(endingPoint);
+        //if polyline is closed, need to include an extra intersection point
+        if(this.isClosed()){  
+            intersections.add(firstIntersection);           
+        }
+        else
+             intersections.add(endingPoint);
+        
         return intersections;
     }
 
