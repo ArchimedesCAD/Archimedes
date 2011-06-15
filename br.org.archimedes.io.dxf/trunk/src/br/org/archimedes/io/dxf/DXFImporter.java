@@ -78,7 +78,6 @@ public class DXFImporter implements Importer {
 		Collection<ElementParser> parsers = ElementParser.getParserMap().values();
 		
 		for (ElementParser parser : parsers) {
-		    System.out.println("Classe " + parser.getClass().getName());
 			try {
 				for (Element element : parser.parse(dxfLayer)) {
 					archLayer.putElement(element);

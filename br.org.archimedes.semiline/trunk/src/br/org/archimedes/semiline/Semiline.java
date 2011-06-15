@@ -203,7 +203,8 @@ public class Semiline extends Element implements Offsetable, Filletable {
 
     public Rectangle getBoundaryRectangle () {
 
-        return null;
+        return new Rectangle(getInitialPoint().getX(), getInitialPoint().getY(), getDirectionPoint()
+				.getX(), getDirectionPoint().getY());
     }
 
     /**
