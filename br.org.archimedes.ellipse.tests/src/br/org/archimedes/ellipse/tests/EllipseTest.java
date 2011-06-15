@@ -102,4 +102,11 @@ public class EllipseTest {
 		Element offsetedEllipse2 = ellipse.cloneWithDistance(5);
 		assertEquals(expectedEllipse, offsetedEllipse2);
 	}
+	
+	@Test 
+	public void shouldReturnProjectionOfPointAtEllipse() throws Exception{
+		Point expectedPoint = new Point(5*Math.sqrt(2.0)/2.0, 10*Math.sqrt(2.0)/2.0);
+		Point point = defaultEllipse.getProjectionOf(new Point(1, 1));
+		assertEquals(expectedPoint, point);
+	}
 }

@@ -6,6 +6,7 @@ import java.util.List;
 
 import br.org.archimedes.Constant;
 import br.org.archimedes.Geometrics;
+import br.org.archimedes.exceptions.IllegalActionException;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.InvalidParameterException;
 import br.org.archimedes.exceptions.NullArgumentException;
@@ -216,7 +217,7 @@ public class Ellipse extends Element implements Offsetable {
 	}
 
 	@Override
-	   public Point getProjectionOf (Point point) throws NullArgumentException {
+	public Point getProjectionOf (Point point) throws NullArgumentException {
 
         if (point == null) {
             throw new NullArgumentException();
@@ -244,7 +245,6 @@ public class Ellipse extends Element implements Offsetable {
                 closestDist = dist;
             }
         }
-
         return projection;
     }
 
@@ -313,10 +313,8 @@ public class Ellipse extends Element implements Offsetable {
 		try {
 			newEllipse = new Ellipse(center.clone(), newWidthPoint, newHeightPoint);
 		} catch (NullArgumentException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InvalidArgumentException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return newEllipse;
@@ -341,13 +339,13 @@ public class Ellipse extends Element implements Offsetable {
 		double angle = e1.dotProduct(ray)/ray.getNorm();
 		Point point1;
 		Point point2;
-		if (point.getY() > center.getY()) {
-			point1 = calculatePointFromAngle(angle, 0);
-			point2 = calculatePointFromAngle(angle+Math.PI, 0);
+		if (rotPoint.getY() < center.getY()) {
+			point1 = calculatePointFromAngle(-angle, 0);
+			point2 = calculatePointFromAngle(-angle+Math.PI, 0);
 		}
 		else{
-			point1 = calculatePointFromAngle(-angle, 0);
-			point2 = calculatePointFromAngle(2*Math.PI-angle, 0);
+			point1 = calculatePointFromAngle(angle, 0);
+			point2 = calculatePointFromAngle(Math.PI+angle, 0);
 		}
 		point1.rotate(point1, fi);
 		point2.rotate(point2, fi);		
@@ -379,6 +377,12 @@ public class Ellipse extends Element implements Offsetable {
 			e.printStackTrace();
 		}
 	}
+	
+	@Override
+	public void mirror(Point p1, Point p2) throws NullArgumentException, IllegalActionException {
+		super.mirror(p1, p2);
+	}
+
 
 	private Point calculatePointFromAngle(double angle, double fi) {
 		
