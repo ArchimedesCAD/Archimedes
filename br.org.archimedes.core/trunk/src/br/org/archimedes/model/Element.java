@@ -272,8 +272,8 @@ public abstract class Element {
             b = p2.getY() - p1.getY();
             c = p1.getY() - p2.getY();
             d = p2.getX() - p1.getX();
-            e = point.getX() * (p2.getX() - p1.getX()) + point.getY() * (p2.getY() - p1.getY());
-            f = p1.getY() * (p2.getX() - p1.getX()) - p1.getX() * (p2.getY() - p1.getY());
+            e = point.getX() * (a) + point.getY() * (b);
+            f = p1.getY() * (d) - p1.getX() * (b);
 
             x = (d * e - f * b) / (d * a - b * c);
             y = (e - a * x) / b;
