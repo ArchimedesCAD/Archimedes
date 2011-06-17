@@ -381,6 +381,7 @@ public class Ellipse extends Element implements Offsetable {
 	@Override
 	public void mirror(Point p1, Point p2) throws NullArgumentException, IllegalActionException {
 		super.mirror(p1, p2);
+		this.fi = calculateFi(center, widthPoint);
 	}
 
 
