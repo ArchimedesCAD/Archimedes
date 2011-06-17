@@ -453,5 +453,11 @@ public class Ellipse extends Element implements Offsetable {
 			return center.addVector(ortho.multiply(-height));
 
 	}
+	
+	public Collection<Point> calculateFocusPoints() {
+	    //TODO Terminar este metodo!
+	    Collection<Point> focusPoints = new ArrayList<Point>();
+	    return focusPoints;
+	}
 
 }
