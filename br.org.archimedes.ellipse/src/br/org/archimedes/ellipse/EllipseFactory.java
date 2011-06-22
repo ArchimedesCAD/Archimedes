@@ -291,9 +291,11 @@ public class EllipseFactory implements CommandFactory {
             command = new PutOrRemoveElementCommand(newEllipse, false);
             result = Messages.Created;
         }
-        catch (Exception e) {
-            result = Messages.NotCreated;
-        }
+        catch (NullArgumentException e) {
+            result = Messages.NotCreatedBecauseNullArgument;
+        }catch (InvalidArgumentException e) {
+        	result = Messages.NotCreatedBecauseInvalidArgument;
+		}
         deactivate();
         return result;
     }

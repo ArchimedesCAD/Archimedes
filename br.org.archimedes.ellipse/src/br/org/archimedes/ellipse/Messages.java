@@ -40,8 +40,12 @@ public class Messages extends NLS {
     
     public static String Created;
 
-    public static String NotCreated;
+    public static String NotCreatedBecauseInvalidArgument;
+    
+    public static String NotCreatedBecauseNullArgument;
 
+    public static String NotCreated;
+    
     public static String SelectCenter;
 
     static {
