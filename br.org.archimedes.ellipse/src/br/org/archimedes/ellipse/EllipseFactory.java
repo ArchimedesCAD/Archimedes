@@ -216,11 +216,11 @@ public class EllipseFactory implements CommandFactory {
 
         if (parameter != null) {
             try {
-                if ("C".equals(parameter) || "c".equals(parameter)) { //$NON-NLS-1$ //$NON-NLS-2$
+                if ("C".equals(parameter) || "c".equals(parameter)) {
                     this.isCenterProtocol = false;
                     result = Messages.EllipseFactory_SelectFocus1;
                 }
-                else if ("A".equals(parameter) || "a".equals(parameter)) { //$NON-NLS-1$ //$NON-NLS-2$
+                else if ("A".equals(parameter) || "a".equals(parameter)) {
                     this.isCenterProtocol = true;
                     result = Messages.SelectCenter;
                 }
