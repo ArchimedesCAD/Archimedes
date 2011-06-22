@@ -11,7 +11,7 @@
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
-            locationURI="menu:create?before=complex">
+            locationURI="menu:create?after=circle">
          <command
                commandId="br.org.archimedes.core.factoryactivator"
                icon="icons/ellipse.png"
@@ -27,7 +27,7 @@
          </command>
       </menuContribution>
       <menuContribution
-            locationURI="toolbar:create?before=complex">
+            locationURI="toolbar:create?after=circle">
          <command
                commandId="br.org.archimedes.core.factoryactivator"
                icon="icons/ellipse.png"
