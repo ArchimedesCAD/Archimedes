@@ -69,6 +69,7 @@ public class XMLParser {
 
         Document doc = getDocument(xmlInputStream);
         Drawing drawing = null;
+        
         if (doc != null && validadeXMLSchema(doc)) {
             NodeList windowList = doc.getFirstChild().getChildNodes();
             LayerParser parser = new LayerParser();

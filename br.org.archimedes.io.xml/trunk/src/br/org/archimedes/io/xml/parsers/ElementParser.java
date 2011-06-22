@@ -52,6 +52,7 @@ public abstract class ElementParser {
         map.put("infiniteline", new TwoPointParser("br.org.archimedes.infiniteline")); //$NON-NLS-1$ //$NON-NLS-2$
         map.put("arc", new ThreePointParser("br.org.archimedes.arc")); //$NON-NLS-1$ //$NON-NLS-2$
         map.put("circle", new CircleParser()); //$NON-NLS-1$
+        map.put("ellipse", new ThreePointParser("br.org.archimedes.ellipse")); //$NON-NLS-1$ //$NON-NLS-2$
         map.put("leader", new ThreePointParser("br.org.archimedes.leader")); //$NON-NLS-1$ //$NON-NLS-2$
         map.put("polyline", new PolyLineParser()); //$NON-NLS-1$
         map.put("semiline", new TwoPointParser("br.org.archimedes.semiline")); //$NON-NLS-1$ //$NON-NLS-2$

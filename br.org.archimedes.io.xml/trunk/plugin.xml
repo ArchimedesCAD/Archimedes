@@ -26,6 +26,9 @@
       <exporter id="br.org.archimedes.circle.xml.exporter"
            elementId="br.org.archimedes.circle"
            class="br.org.archimedes.io.xml.elements.CircleXMLExporter"/>
+      <exporter id="br.org.archimedes.ellipse.xml.exporter"
+           elementId="br.org.archimedes.ellipse"
+           class="br.org.archimedes.io.xml.elements.EllipseXMLExporter"/>
       <exporter id="br.org.archimedes.dimension.xml.exporter"
            elementId="br.org.archimedes.dimension"
            class="br.org.archimedes.io.xml.elements.DimensionXMLExporter"/>

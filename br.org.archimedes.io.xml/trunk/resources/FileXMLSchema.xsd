@@ -113,6 +113,14 @@
 			</sequence>
 		</complexType>
 	</element>
+	
+	<element name="ellipse">
+		<complexType>
+			<sequence>
+				<element maxOccurs="3" minOccurs="3" ref="archimedes:point"/>
+			</sequence>
+		</complexType>
+	</element>
 
 	<element name="zoom" type="double"/>
 

@@ -57,6 +57,7 @@
 					<element ref="archimedes:arc"/>
 					<element ref="archimedes:rectangle"/>
 					<element ref="archimedes:line"/>
+					<element ref="archimedes:ellipse"/>
 					<element ref="archimedes:leader"/>
 					<element ref="archimedes:dimension"/>
                 </choice>
@@ -110,6 +111,14 @@
 			<sequence>
 				<element ref="archimedes:point"/>
 				<element maxOccurs="1" minOccurs="1" ref="archimedes:radius"/>
+			</sequence>
+		</complexType>
+	</element>
+	
+	<element name="ellipse">
+		<complexType>
+			<sequence>
+				<element maxOccurs="3" minOccurs="3" ref="archimedes:point"/>
 			</sequence>
 		</complexType>
 	</element>

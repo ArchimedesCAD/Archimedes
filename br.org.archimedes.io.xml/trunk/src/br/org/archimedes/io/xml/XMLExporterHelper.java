@@ -62,7 +62,7 @@ public final class XMLExporterHelper {
         write(point, POINT_TAG, output);
     }
 
-    /**
+    /**POINT_FORMAT
      * Escreve a representação XML deste ponto neste OutputStream usando este
      * tag name.
      * 
@@ -83,7 +83,7 @@ public final class XMLExporterHelper {
 
     /**
      * Escreve a representação XML deste Vector neste OutputStream.
-     * 
+     * POINT_FORMAT
      * @param vector
      *            o Vector
      * @param output
