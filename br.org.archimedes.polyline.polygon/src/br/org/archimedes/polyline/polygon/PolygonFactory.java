@@ -66,21 +66,12 @@ public class PolygonFactory implements CommandFactory {
                         result = Messages.SelectOnlySides;
                         firstParser = false;
                     }
-                    else if (("C".equals(parameter) || "c".equals(parameter)) && firstParser) {
-                        insideCircle = false;
-                        result = Messages.SelectOnlySides;
-                        firstParser = false;
-                    }
                     else {
                         sides = (Integer) parameter;
-                        if (sides < 3) {
+                        if (sides < 3 || sides > 30) {
                             result = Messages.WrongNumberOfSides;
                             sides = 0;
                         } 
-                        else if (sides > 30) {
-                            result = Messages.WrongNumberOfSides;
-                            sides = 0;
-                        }
                         else {
                             result = Messages.SelectCenterPoint;
                             firstParser = false;
@@ -150,7 +141,6 @@ public class PolygonFactory implements CommandFactory {
             if (firstParser) {
                 returnParser = new IntegerParser();
                 returnParser = new StringDecoratorParser(returnParser, "i"); 
-                returnParser = new StringDecoratorParser(returnParser, "c");
             } else if (sides == 0) {
                 returnParser = new IntegerParser();
             }

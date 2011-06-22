@@ -3,15 +3,15 @@
 <plugin>
    <extension
          point="br.org.archimedes.core.element">
-         <element id="br.org.archimedes.polygon" name="Polygon" 
+         <element id="br.org.archimedes.polyline.polygon" name="Polygon" 
          	class="br.org.archimedes.polyline.polygon.Polygon"
          	factory="br.org.archimedes.polyline.polygon.PolygonFactory"
-         	shortcut="pol" />
+         	shortcut="pg" />
    </extension>
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
-            locationURI="menu:create?before=complex">
+            locationURI="menu:create?after=complex">
          <command
                commandId="br.org.archimedes.core.factoryactivator"
                icon="icons/polygon.png"
@@ -22,16 +22,16 @@
                tooltip="%command.polygon.tooltip">
             <parameter
                   name="br.org.archimedes.core.factoryactivator.name"
-                  value="br.org.archimedes.polygon">
+                  value="br.org.archimedes.polyline.polygon">
             </parameter>
          </command>
          <command
-               commandId="br.org.archimedes.polygon.command1"
+               commandId="br.org.archimedes.polyline.polygon.command1"
                style="push">
          </command>
       </menuContribution>
       <menuContribution
-            locationURI="toolbar:create?before=complex">
+            locationURI="toolbar:create?after=complex">
          <command
                commandId="br.org.archimedes.core.factoryactivator"
                icon="icons/polygon.png"
@@ -42,7 +42,7 @@
                tooltip="%command.polygon.tooltip">
             <parameter
                   name="br.org.archimedes.core.factoryactivator.name"
-                  value="br.org.archimedes.polygon">
+                  value="br.org.archimedes.polyline.polygon">
             </parameter>
          </command>
       </menuContribution>
