@@ -86,6 +86,7 @@ public class DXFImporter implements Importer {
 	    
 	    Color layerBackgroundColor = getInvertedBackgroundColor();
 	    Layer archLayer = new Layer(layerBackgroundColor, dxfLayer.getName(), LineStyle.CONTINUOUS, dxfLayer.getLineWeight());
+	    archLayer.setPrintColor(new Color(0, 0, 0));
 		Collection<ElementParser> parsers = ElementParser.getParserMap().values();
 		
 		for (ElementParser parser : parsers) {
