@@ -34,7 +34,6 @@ public class PolylineTrimmer implements Trimmer {
     public PolylineTrimmer () {
 
     }
-
     public Collection<Element> trim (Element element, Collection<Point> cutPoints, Point click)
             throws NullArgumentException {
 
@@ -73,18 +72,35 @@ public class PolylineTrimmer implements Trimmer {
             negativeIntersectedIndex = clickSegmentIndex;
         }
 
-        if (nearestNegativeIntersectionPoint == null) {
-            for (negativeIntersectedIndex = clickSegmentIndex - 1; negativeIntersectedIndex >= 0; negativeIntersectedIndex--) {
-                Line line = lines.get(negativeIntersectedIndex);
+        if (nearestNegativeIntersectionPoint == null) {        
+            if(!polyline.isClosed()){           
+                for (negativeIntersectedIndex = clickSegmentIndex - 1; negativeIntersectedIndex >= 0; negativeIntersectedIndex--) {
+                    Line line = lines.get(negativeIntersectedIndex);
+                    
+                    nearestNegativeIntersectionPoint = getNearestIntersectionPoint(cutPoints, line, line.getEndingPoint());
 
-                nearestNegativeIntersectionPoint = getNearestIntersectionPoint(cutPoints, line,
-                        line.getEndingPoint());
-
-                if (nearestNegativeIntersectionPoint != null) {
-                    break;
+                    if (nearestNegativeIntersectionPoint != null) {
+                        break;
+                    }
                 }
             }
-        }
+            // se o poligono for fechado
+            else {
+                int numberOfLines = lines.size();
+                int cont=0;
+                //procura por intersecoes em sentido anti-horario, passando inclusive pela origem  e para os segmentos anteriores ate olhar todo poligono
+                for (negativeIntersectedIndex = clickSegmentIndex - 1; cont < numberOfLines; negativeIntersectedIndex--, cont++) {
+                    negativeIntersectedIndex = mod(negativeIntersectedIndex,numberOfLines);
+                    Line line = lines.get(negativeIntersectedIndex);
+                 
+                    nearestNegativeIntersectionPoint = getNearestIntersectionPoint(cutPoints, line,line.getEndingPoint());
+                    if (nearestNegativeIntersectionPoint != null) {
+                        break;
+                    }
+                }                          
+            }
+      }
+        
 
         Line halfSegmentAfterClick = null;
         try {
@@ -101,24 +117,73 @@ public class PolylineTrimmer implements Trimmer {
         }
 
         if (nearestPositiveIntersectionPoint == null) {
-            for (positiveIntersectedIndex = clickSegmentIndex + 1; positiveIntersectedIndex < lines
-                    .size(); positiveIntersectedIndex++) {
-                Line line = lines.get(positiveIntersectedIndex);
+            if(!polyline.isClosed()){  
+                for (positiveIntersectedIndex = clickSegmentIndex + 1; positiveIntersectedIndex < lines.size(); positiveIntersectedIndex++) {
+                    Line line = lines.get(positiveIntersectedIndex);
 
-                nearestPositiveIntersectionPoint = getNearestIntersectionPoint(cutPoints, line,
-                        line.getInitialPoint());
+                    nearestPositiveIntersectionPoint = getNearestIntersectionPoint(cutPoints, line,line.getInitialPoint());
 
-                if (nearestPositiveIntersectionPoint != null) {
-                    break;
+                    if (nearestPositiveIntersectionPoint != null) {
+                        break;
+                    }
                 }
+            }      
+            else {
+                // se o poligono for fechado
+                int numberOfLines = lines.size();
+                int cont=0;
+               //procura por intersecoes em sentido horario, passando inclusive pela origem  e continuando para os proximos segmentos ate olhar todo poligono
+                for (positiveIntersectedIndex = clickSegmentIndex + 1; cont < numberOfLines; positiveIntersectedIndex++, cont++) {
+                    positiveIntersectedIndex = mod(positiveIntersectedIndex,numberOfLines);
+                    Line line = lines.get(positiveIntersectedIndex);
+                 
+                    nearestPositiveIntersectionPoint = getNearestIntersectionPoint(cutPoints, line,line.getInitialPoint());
+
+                    if (nearestPositiveIntersectionPoint != null) {
+                        break;
+                    }
+                }                          
             }
+            
         }
 
         Collection<Polyline> polyLines = new ArrayList<Polyline>();
         List<Point> polyPoints = polyline.getPoints();
-
+        
+        //constroi o poligono a ser devolvido, com o trim passando pelos segmentos que fecham o poligono
+        if(negativeIntersectedIndex > clickSegmentIndex) {
+            List<Point> points = new ArrayList<Point>();          
+            points.add(nearestPositiveIntersectionPoint);
+            points.addAll(polyPoints.subList(positiveIntersectedIndex + 1, negativeIntersectedIndex + 1));
+            points.add(nearestNegativeIntersectionPoint);
+            trimResult.clear();
+            try {
+                trimResult.add(new Polyline(points));
+            }
+            catch (InvalidArgumentException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+         }
+        //constroi o poligono a ser devolvido, com o trim passando pelos segmentos que fecham o poligono
+        else if (positiveIntersectedIndex < clickSegmentIndex) {
+            List<Point> points = new ArrayList<Point>(); 
+            
+            points.add(nearestPositiveIntersectionPoint);
+            points.addAll(polyPoints.subList(positiveIntersectedIndex + 1, negativeIntersectedIndex + 1));
+            points.add(nearestNegativeIntersectionPoint);
+            trimResult.clear();
+            try {
+                trimResult.add(new Polyline(points));
+            }
+            catch (InvalidArgumentException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+        else {
         if (nearestNegativeIntersectionPoint != null) {
-            List<Point> polylinePoints1 = new ArrayList<Point>();
+            List<Point> polylinePoints1 = new ArrayList<Point>();          
             polylinePoints1.addAll(polyPoints.subList(0, negativeIntersectedIndex + 1));
             polylinePoints1.add(nearestNegativeIntersectionPoint);
             try {
@@ -133,8 +198,7 @@ public class PolylineTrimmer implements Trimmer {
         if (nearestPositiveIntersectionPoint != null) {
             List<Point> polylinePoints2 = new ArrayList<Point>();
             polylinePoints2.add(nearestPositiveIntersectionPoint);
-            polylinePoints2.addAll(polyPoints.subList(positiveIntersectedIndex + 1, polyPoints
-                    .size()));
+            polylinePoints2.addAll(polyPoints.subList(positiveIntersectedIndex + 1, polyPoints.size()));
             try {
                 polyLines.add(new Polyline(polylinePoints2));
             }
@@ -160,6 +224,7 @@ public class PolylineTrimmer implements Trimmer {
         }
 
         if (trimResult.size() == 2) {
+            
             Iterator<Element> iterator = trimResult.iterator();
             Polyline poly1 = (Polyline) iterator.next();
             Polyline poly2 = (Polyline) iterator.next();
@@ -190,7 +255,7 @@ public class PolylineTrimmer implements Trimmer {
                 }
             }
         }
-
+        }
         return trimResult;
     }
 
@@ -229,4 +294,15 @@ public class PolylineTrimmer implements Trimmer {
 
         return nearestIntersectionPoint;
     }
+    
+    private int mod(int x, int y)
+    {
+        int result = x % y;
+        if (result < 0)
+        {
+            result += y;
+        }
+        return result;
+    }
+
 }
