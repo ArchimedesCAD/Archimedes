@@ -15,6 +15,7 @@ import org.kabeja.parser.ParseException;
 import org.kabeja.parser.Parser;
 import org.kabeja.parser.ParserBuilder;
 
+import br.org.archimedes.Utils;
 import br.org.archimedes.exceptions.IllegalActionException;
 import br.org.archimedes.exceptions.InvalidFileFormatException;
 import br.org.archimedes.gui.opengl.Color;
@@ -77,18 +78,8 @@ public class DXFImporter implements Importer {
 	}
 
 	private Color getLayerColor(DXFLayer dxfLayer) {
-	    
-	    //The default color is black
-	    int rgb[] = {0, 0, 0};
-	    String rgbColor = DXFColor.getRGBString(dxfLayer.getColor());
-	    
-	    if (rgbColor != null) {
-    	    int i = 0;
-            for (String s : rgbColor.split(",")) 
-                rgb[i++] = Integer.valueOf(s);
-	    }
-	    return new Color(rgb[0], rgb[1], rgb[2]);
-	    
+		Color c = Utils.getWorkspace().getBackgroundColor();
+	    return new Color(255 - c.getRed(), 255 - c.getGreen(), 255 - c.getBlue());
 	}
 	
 	private Layer addParsedElementsFrom(DXFLayer dxfLayer) {
@@ -102,7 +93,7 @@ public class DXFImporter implements Importer {
 				for (Element element : parser.parse(dxfLayer)) {
 					try {
 						archLayer.putElement(element);
-					}catch (IllegalActionException e) {
+					} catch (IllegalActionException e) {
 						System.out.println("Elemento parseado já está na Layer e não será inserido novamente.");
 					}
 				}
