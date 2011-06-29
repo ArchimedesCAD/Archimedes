@@ -4,8 +4,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
+import org.kabeja.dxf.DXFBlock;
 import org.kabeja.dxf.DXFColor;
 import org.kabeja.dxf.DXFLayer;
 import org.kabeja.parser.DXFParser;
@@ -13,9 +15,11 @@ import org.kabeja.parser.ParseException;
 import org.kabeja.parser.Parser;
 import org.kabeja.parser.ParserBuilder;
 
+import br.org.archimedes.exceptions.IllegalActionException;
 import br.org.archimedes.exceptions.InvalidFileFormatException;
 import br.org.archimedes.gui.opengl.Color;
 import br.org.archimedes.interfaces.Importer;
+import br.org.archimedes.io.dxf.parsers.BlockParser;
 import br.org.archimedes.io.dxf.parsers.ElementParser;
 import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Element;
@@ -41,19 +45,35 @@ public class DXFImporter implements Importer {
 		DXFLayer dxfLayer0 = kabejaParser.getDocument().getDXFLayer("0");
 		DXFLayer dxfLayer = dxfLayer0;
 		
+		parseBlocksFrom(dxfLayer);
+			
 		do {
 			Layer archLayer = addParsedElementsFrom(dxfLayer);
 			
-            importedLayers.put(dxfLayer.getName(), archLayer);
+			importedLayers.put(dxfLayer.getName(), archLayer);
 			
 			i++;
 			dxfLayer = kabejaParser.getDocument().getDXFLayer(i.toString());
 		} while (!dxfLayer0.equals(dxfLayer));
 		
+		
 		Drawing drawing = new Drawing("Imported drawing", importedLayers, true);
-		//Collection<Element> elements = importedLayers.get(dxfLayer0.getName()).getElements();
 
 		return drawing;
+	}
+
+	private void parseBlocksFrom(DXFLayer dxfLayer) {
+		Iterator blockIterator = kabejaParser.getDocument().getDXFBlockIterator();
+		
+		while (blockIterator.hasNext()) {
+			DXFBlock block = (DXFBlock) blockIterator.next();
+			
+			dxfLayer = (new BlockParser()).createLayerWithoutBlocksFrom(block);
+			
+			Layer archLayerWithoutBlocks = addParsedElementsFrom(dxfLayer);
+			
+			importedLayers.put(dxfLayer.getName(), archLayerWithoutBlocks);
+		}
 	}
 
 	private Color getLayerColor(DXFLayer dxfLayer) {
@@ -80,7 +100,11 @@ public class DXFImporter implements Importer {
 		for (ElementParser parser : parsers) {
 			try {
 				for (Element element : parser.parse(dxfLayer)) {
-					archLayer.putElement(element);
+					try {
+						archLayer.putElement(element);
+					}catch (IllegalActionException e) {
+						System.out.println("Elemento parseado já está na Layer e não será inserido novamente.");
+					}
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
