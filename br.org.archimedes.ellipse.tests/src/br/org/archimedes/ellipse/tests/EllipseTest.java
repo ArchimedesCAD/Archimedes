@@ -1,5 +1,6 @@
 package br.org.archimedes.ellipse.tests;
 
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -12,6 +13,7 @@ import org.junit.Test;
 
 import br.org.archimedes.ellipse.Ellipse;
 import br.org.archimedes.exceptions.InvalidArgumentException;
+import br.org.archimedes.exceptions.InvalidParameterException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
@@ -88,6 +90,11 @@ public class EllipseTest {
 		}
 		assertEquals(5,refPoints.size());
 		assertTrue(refPoints.containsAll(points));
+	}
+	
+	@Test(expected=InvalidParameterException.class)
+	public void shouldNotCalculateOffsetIfDistanceIsInvalid() throws Exception {
+		defaultEllipse.cloneWithDistance(-1000);
 	}
 
 	@Test

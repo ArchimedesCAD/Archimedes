@@ -305,6 +305,14 @@ public class Ellipse extends Element implements Offsetable {
 	}
 
 	public Element cloneWithDistance(double distance) throws InvalidParameterException {
+		
+        if (distance < 0) {
+        	double minAxis = Math.min(center.calculateDistance(widthPoint), center.calculateDistance(heightPoint));
+            if (Math.abs(minAxis - distance) <= Constant.EPSILON
+                    || Math.abs(distance) > minAxis) {
+                throw new InvalidParameterException();
+            }
+        }
 
 		Point newWidthPoint = calculateOffsetPoint(distance, widthPoint);
 		Point newHeightPoint = calculateOffsetPoint(distance, heightPoint);
