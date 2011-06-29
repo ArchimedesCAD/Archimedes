@@ -77,14 +77,14 @@ public class DXFImporter implements Importer {
 		}
 	}
 
-	private Color getLayerColor(DXFLayer dxfLayer) {
-		Color c = Utils.getWorkspace().getBackgroundColor();
-	    return new Color(255 - c.getRed(), 255 - c.getGreen(), 255 - c.getBlue());
+	private Color getInvertedBackgroundColor() {
+		Color bgColor = Utils.getWorkspace().getBackgroundColor();
+	    return new Color(255 - bgColor.getRed(), 255 - bgColor.getGreen(), 255 - bgColor.getBlue());
 	}
 	
 	private Layer addParsedElementsFrom(DXFLayer dxfLayer) {
 	    
-	    Color layerBackgroundColor = getLayerColor(dxfLayer);
+	    Color layerBackgroundColor = getInvertedBackgroundColor();
 	    Layer archLayer = new Layer(layerBackgroundColor, dxfLayer.getName(), LineStyle.CONTINUOUS, dxfLayer.getLineWeight());
 		Collection<ElementParser> parsers = ElementParser.getParserMap().values();
 		
