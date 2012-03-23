@@ -1,0 +1,3 @@
+*.class
+*.properties
+/br.org.archimedes.io.xml/bin/FileXMLSchema.xsd
