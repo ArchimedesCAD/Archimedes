@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: MAC OS X Fragment
-Bundle-SymbolicName: br.org.archimedes.opengl.macosx
+Bundle-Name: Windows 64 Fragment
+Bundle-SymbolicName: br.org.archimedes.opengl.win64
 Bundle-Version: 2.8.3
 Bundle-Vendor: LWJGL
 Fragment-Host: br.org.archimedes.opengl
