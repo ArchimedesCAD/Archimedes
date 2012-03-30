@@ -1,5 +1,5 @@
 *.class
-*.properties
+*/bin/
 /br.org.archimedes.io.xml/bin/FileXMLSchema.xsd
 *~
 .metadata
