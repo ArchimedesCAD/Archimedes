@@ -13,6 +13,7 @@
  */
 package br.org.archimedes.polyline;
 
+import static org.junit.Assert.assertNotNull;
 import br.org.archimedes.factories.CommandFactory;
 import br.org.archimedes.helper.FactoryTester;
 import br.org.archimedes.model.Drawing;
@@ -207,4 +208,10 @@ public class PolyLineFactoryTest extends FactoryTester {
         assertSafeNext(factory, vector1, false);
         assertSafeNext(factory, null, true);
     }
+    
+	@Override
+	@Test
+	public void testFactoryName() {
+		assertNotNull(factory.getName());
+	}
 }

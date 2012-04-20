@@ -15,6 +15,7 @@
 
 package br.org.archimedes.polyline.area;
 
+import static org.junit.Assert.assertNotNull;
 import br.org.archimedes.exceptions.InvalidParameterException;
 import br.org.archimedes.factories.CommandFactory;
 import br.org.archimedes.helper.FactoryTester;
@@ -212,4 +213,10 @@ public class AreaPerimeterFactoryTest extends FactoryTester {
                 + (10 + 5 * Math.sqrt(2)), message);
 
     }
+    
+	@Override
+	@Test
+	public void testFactoryName() {
+		assertNotNull(factory.getName());
+	}
 }

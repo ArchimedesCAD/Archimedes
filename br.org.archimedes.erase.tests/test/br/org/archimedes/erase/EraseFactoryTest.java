@@ -13,6 +13,7 @@
 
 package br.org.archimedes.erase;
 
+import static org.junit.Assert.assertNotNull;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.factories.CommandFactory;
 import br.org.archimedes.helper.FactoryTester;
@@ -115,4 +116,10 @@ public class EraseFactoryTest extends FactoryTester {
         selection.add(element);
         assertSafeNext(factory, selection, true);
     }
+    
+	@Override
+	@Test
+	public void testFactoryName() {
+		assertNotNull(factory.getName());
+	}
 }

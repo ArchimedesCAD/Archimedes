@@ -12,6 +12,7 @@
  */
 package br.org.archimedes.offset;
 
+import static org.junit.Assert.assertNotNull;
 import br.org.archimedes.controller.Controller;
 import br.org.archimedes.exceptions.InvalidParameterException;
 import br.org.archimedes.exceptions.NullArgumentException;
@@ -216,4 +217,10 @@ public class OffsetFactoryTest extends FactoryTester {
         assertSafeNext(factory, true, false, true);
         assertCancel(factory, false);
     }
+    
+	@Override
+	@Test
+	public void testFactoryName() {
+		assertNotNull(factory.getName());
+	}
 }

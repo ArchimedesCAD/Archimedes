@@ -14,6 +14,7 @@
 
 package br.org.archimedes.dimension.test;
 
+import static org.junit.Assert.assertNotNull;
 import br.org.archimedes.dimension.DimensionFactory;
 import br.org.archimedes.helper.FactoryTester;
 import br.org.archimedes.model.Point;
@@ -139,4 +140,10 @@ public class DimensionFactoryTest extends FactoryTester {
         assertSafeNext(factory, null, true);
         assertCancel(factory, false);
     }
+    
+	@Override
+	@Test
+	public void testFactoryName() {
+		assertNotNull(factory.getName());
+	}
 }

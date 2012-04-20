@@ -12,6 +12,11 @@
  */
 package br.org.archimedes.pan.tests;
 
+import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+
+import org.junit.Test;
+
 import br.org.archimedes.helper.FactoryTester;
 
 
@@ -23,5 +28,9 @@ import br.org.archimedes.helper.FactoryTester;
  */
 public class PanFactoryTest extends FactoryTester {
     
-    // TODO Pan Factory tests
+	@Override
+	@Test
+	public void testFactoryName() {
+		fail("Not yet implemented.");
+	}
 }

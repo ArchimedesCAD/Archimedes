@@ -13,6 +13,7 @@
  */
 package br.org.archimedes.rotate;
 
+import static org.junit.Assert.assertNotNull;
 import br.org.archimedes.controller.Controller;
 import br.org.archimedes.factories.CommandFactory;
 import br.org.archimedes.helper.FactoryTester;
@@ -184,4 +185,10 @@ public class RotateFactoryTest extends FactoryTester {
         assertSafeNext(factory, reference, false);
         assertSafeNext(factory, vector, true);
     }
+    
+	@Override
+	@Test
+	public void testFactoryName() {
+		assertNotNull(factory.getName());
+	}
 }

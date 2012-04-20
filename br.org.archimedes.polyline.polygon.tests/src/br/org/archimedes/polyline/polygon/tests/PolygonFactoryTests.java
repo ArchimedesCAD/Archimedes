@@ -1,6 +1,8 @@
 package br.org.archimedes.polyline.polygon.tests;
 
 
+import static org.junit.Assert.assertNotNull;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -95,5 +97,10 @@ public class PolygonFactoryTests extends FactoryTester {
         assertSafeNext(factory, center, false);
         assertCancel(factory, false);
     }
-
+    
+	@Override
+	@Test
+	public void testFactoryName() {
+		assertNotNull(factory.getName());
+	}
 }

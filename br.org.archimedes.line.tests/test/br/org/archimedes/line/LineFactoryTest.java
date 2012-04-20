@@ -13,6 +13,7 @@
  */
 package br.org.archimedes.line;
 
+import static org.junit.Assert.assertNotNull;
 import br.org.archimedes.factories.CommandFactory;
 import br.org.archimedes.helper.FactoryTester;
 import br.org.archimedes.model.Point;
@@ -108,6 +109,13 @@ public class LineFactoryTest extends FactoryTester {
         assertSafeNext(factory, vector2, false, true);
         assertSafeNext(factory, null, true, false);
     }
+
+	@Override
+	@Test
+	public void testFactoryName() {
+		assertNotNull(factory.getName());
+		
+	}
     
     // TODO Test undoing on the factory
 }
