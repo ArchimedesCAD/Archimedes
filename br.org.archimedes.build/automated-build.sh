@@ -25,12 +25,15 @@ unzip -oq org.eclipse.swtbot.eclipse.gef-2.0.5.20111003_1754-3676ac8-dev-e36.zip
 unzip -oq org.eclipse.swtbot.eclipse.test.junit3-2.0.5.20111003_1754-3676ac8-dev-e36.zip
 unzip -qo org.eclipse.swtbot.ide-2.0.5.20111003_1754-3676ac8-dev-e36.zip
 
+echo "Installing plugins..."
+cd eclipse
 ./eclipse  -nosplash \
    -application org.eclipse.equinox.p2.director \
    -installIU org.eclipse.swtbot.eclipse.gef.finder \
    -profileProperties org.eclipse.update.install.features=true \
    -profile SDKProfile \
    -repository http://download.eclipse.org/technology/swtbot/helios/dev-build/update-site,http://download.eclipse.org/tools/gef/updates/releases/
+cd ..
 
 echo "Building..."
 echo "buildHome=`pwd`" > build_local.properties
