@@ -68,6 +68,13 @@ public class Ellipse extends Element implements Offsetable {
 		return (widthVector.getNorm() > heightVector.getNorm()) ? widthVector : heightVector;
 	}
 
+	public Vector getSemiMinorAxis() {
+		Vector widthVector = new Vector(center, widthPoint);
+		Vector heightVector = new Vector(center, heightPoint);
+		return (widthVector.getNorm() > heightVector.getNorm()) ? heightVector : widthVector;
+	}
+
+	
 	@Override
 	public Element clone() {
 		Ellipse ellipse = null;
