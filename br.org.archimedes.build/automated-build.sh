@@ -6,18 +6,18 @@ WHERE="${WHERE//\//\\/}"
 cd br.org.archimedes.build
 
 echo "Downloading..."
-#wget "http://ftp.halifax.rwth-aachen.de/eclipse//eclipse/downloads/drops/R-3.7.2-201202080800/eclipse-SDK-3.7.2-linux-gtk.tar.gz"
-#wget "http://ftp.halifax.rwth-aachen.de/eclipse//eclipse/downloads/drops/R-3.7.2-201202080800/eclipse-3.7.2-delta-pack.zip"
-#wget "ftp://ftp.halifax.rwth-aachen.de/eclipse//technology/swtbot/helios/dev-build/org.eclipse.swtbot-2.0.5.20111003_1754-3676ac8-dev-e36.zip"
-#wget "ftp://ftp.halifax.rwth-aachen.de/eclipse//technology/swtbot/helios/dev-build/org.eclipse.swtbot.eclipse-2.0.5.20111003_1754-3676ac8-dev-e36.zip"
-#wget "ftp://ftp.halifax.rwth-aachen.de/eclipse//technology/swtbot/helios/dev-build/org.eclipse.swtbot.ide-2.0.5.20111003_1754-3676ac8-dev-e36.zip"
-#wget "ftp://ftp.halifax.rwth-aachen.de/eclipse//technology/swtbot/helios/dev-build/org.eclipse.swtbot.eclipse.gef-2.0.5.20111003_1754-3676ac8-dev-e36.zip"
-#wget "ftp://ftp.halifax.rwth-aachen.de/eclipse//technology/swtbot/helios/dev-build/org.eclipse.swtbot.eclipse.test.junit3-2.0.5.20111003_1754-3676ac8-dev-e36.zip"
-#wget "http://ftp.halifax.rwth-aachen.de/eclipse//technology/swtbot/helios/dev-build/org.eclipse.swtbot.eclipse.test.junit4-2.0.5.20111003_1754-3676ac8-dev-e36.zip"
+wget "http://ftp.halifax.rwth-aachen.de/eclipse//eclipse/downloads/drops/R-3.7.2-201202080800/eclipse-SDK-3.7.2-linux-gtk.tar.gz"
+wget "http://ftp.halifax.rwth-aachen.de/eclipse//eclipse/downloads/drops/R-3.7.2-201202080800/eclipse-3.7.2-delta-pack.zip"
+wget "ftp://ftp.halifax.rwth-aachen.de/eclipse//technology/swtbot/helios/dev-build/org.eclipse.swtbot-2.0.5.20111003_1754-3676ac8-dev-e36.zip"
+wget "ftp://ftp.halifax.rwth-aachen.de/eclipse//technology/swtbot/helios/dev-build/org.eclipse.swtbot.eclipse-2.0.5.20111003_1754-3676ac8-dev-e36.zip"
+wget "ftp://ftp.halifax.rwth-aachen.de/eclipse//technology/swtbot/helios/dev-build/org.eclipse.swtbot.ide-2.0.5.20111003_1754-3676ac8-dev-e36.zip"
+wget "ftp://ftp.halifax.rwth-aachen.de/eclipse//technology/swtbot/helios/dev-build/org.eclipse.swtbot.eclipse.gef-2.0.5.20111003_1754-3676ac8-dev-e36.zip"
+wget "ftp://ftp.halifax.rwth-aachen.de/eclipse//technology/swtbot/helios/dev-build/org.eclipse.swtbot.eclipse.test.junit3-2.0.5.20111003_1754-3676ac8-dev-e36.zip"
+wget "http://ftp.halifax.rwth-aachen.de/eclipse//technology/swtbot/helios/dev-build/org.eclipse.swtbot.eclipse.test.junit4-2.0.5.20111003_1754-3676ac8-dev-e36.zip"
 
 echo "Unpacking..."
-#tar xf eclipse-SDK-3.7.2-linux-gtk.tar.gz
-tar xf eclipse-SDK-3.7.2-linux-gtk-x86_64.tar.gz
+tar xf eclipse-SDK-3.7.2-linux-gtk.tar.gz
+#tar xf eclipse-SDK-3.7.2-linux-gtk-x86_64.tar.gz
 unzip -oq eclipse-3.7.2-delta-pack.zip
 unzip -oq org.eclipse.swtbot-2.0.5.20111003_1754-3676ac8-dev-e36.zip
 unzip -oq org.eclipse.swtbot.eclipse-2.0.5.20111003_1754-3676ac8-dev-e36.zip
