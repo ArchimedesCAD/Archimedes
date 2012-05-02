@@ -37,41 +37,66 @@ public class EllipseInfiniteLineIntersector implements Intersector {
         Point ending = infiniteLine.getEndingPoint();
         Point starting = infiniteLine.getInitialPoint();
         
-        double a = (ending.getY() - starting.getY()) / (ending.getX() - starting.getX());
-        double b = ending.getY() - a*(ending.getX());
-        
+        double aReta = (ending.getY() - starting.getY()) / (ending.getX() - starting.getX());
+        double bReta = ending.getY() - aReta*(ending.getX());
+        System.out.println("ending.getY(): "+ending.getY()+" starting.getY(): "+starting.getY());
+        System.out.println("ending.getX(): "+ending.getX()+" starting.getX(): "+starting.getX());
+        System.out.println("aReta: "+aReta+" bReta: "+bReta);
+        //we need to validate the case of vertical line;
         ArrayList<Point> focusPoints = (ArrayList<Point>) ellipse.calculateFocusPoints();
         
         Point Fa = focusPoints.get(0);
         Point Fb = focusPoints.get(1);
         
-        double A = 2.0 + 2*(a*a);
-        double B = -2.0 * (Fa.getX() + Fb.getX() + Fa.getY() * a + Fb.getY() * a - 2 * a * b);
+        double aEllipse = 2;
+        double bEllipse = 1;
+        System.out.println("aEllipse: "+aEllipse+" bEllipse: "+bEllipse);
+        if(aEllipse < bEllipse){
+        	double temp = aEllipse;
+        	aEllipse = bEllipse;
+        	bEllipse = temp;
+        }
+        double x0 = ellipse.getCenter().getX();
+        double y0 = ellipse.getCenter().getY();
+        System.out.println("x0: "+x0+" y0: "+y0);
+        double A = bEllipse*bEllipse + aEllipse*aEllipse*aReta;
+        double B = -2*(bEllipse*bEllipse*x0 + aReta*bReta*aEllipse*aEllipse - aEllipse*aEllipse*aReta*y0*y0);
+        double C = bEllipse*bEllipse*x0*x0 + aEllipse*aEllipse*bReta*bReta - 2*bReta*aEllipse*aEllipse*y0*y0 + aEllipse*aEllipse*y0*y0 - aEllipse*aEllipse*bEllipse*bEllipse; 
+        System.out.println("A: "+A+" B: "+B+" C:"+C);
+        /*double A = 2.0 + 2*(aReta*aReta);
+        double B = -2.0 * (Fa.getX() + Fb.getX() + Fa.getY() * aReta + Fb.getY() * aReta - 2 * aReta * bReta);
         double v = Fa.calculateDistance(Fb);
-        double C = Fa.getY() * Fa.getY() - 2 * Fa.getY() * b + 2 * b * b + Fb.getY() * Fb.getY() + Fa.getX() * Fa.getX() + Fb.getX() * Fb.getX() - 2 * Fb.getY() * b - v  * v;
+        double C = Fa.getY() * Fa.getY() - 2 * Fa.getY() * bReta + 2 * bReta * bReta + Fb.getY() * Fb.getY() + Fa.getX() * Fa.getX() + Fb.getX() * Fb.getX() - 2 * Fb.getY() * bReta - v  * v;
+        */
         
         try {
             Collection<Double> solutions = solve(A, B, C);
+            for(Double sol : solutions) {
+				Point p = new Point(sol,aReta*sol + bReta);
+				intersectionPoints.add(p);
+			}
         }
         catch (InvalidArgumentException e) {
-            // TODO Tratar excecao
             e.printStackTrace();
         }
-        
-        
         return intersectionPoints;
     }
 
     private Collection<Double> solve(double a, double b, double c) throws InvalidArgumentException
     {
-        if (Math.abs(a) < Constant.EPSILON)
+    	ArrayList<Double> solutions = new ArrayList<Double>();
+    	System.out.println("a: "+a+" b: "+b+" c: "+c);
+    	if (Math.abs(a) <= 0) //we don't understand this constant
             throw new InvalidArgumentException();
+    	
         double delta = delta(a, b, c);
-        ArrayList<Double> solutions = new ArrayList<Double>();
-        if (delta < -Constant.EPSILON)
-            return solutions;
+        System.out.println("nosso delta: "+delta);
+        if (delta < 0)
+        	return solutions;
+        
         solutions.add((-b + Math.sqrt(delta))/2*a);
-        if (delta > Constant.EPSILON)
+        
+        if (delta > 0)
             solutions.add((-b - Math.sqrt(delta))/2*a);
         return solutions;
     }
