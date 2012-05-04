@@ -45,9 +45,13 @@ sed "s/PROJECT_ROOT/$WHERE/" maps/all-template.map > maps/all.map
 
 ant
 
-if [ ! "$?" = "0" ]; then
+RET=$?
+
+if [ ! "$RET" = "0" ]; then
+  sleep 5
   echo
   echo "ANT log..."
   cat /tmp/pluginbuilder/br.org.archimedes.build/workspace/.metadata/.log
+  exit $RET
 fi
 
