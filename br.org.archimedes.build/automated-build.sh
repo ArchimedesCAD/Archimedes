@@ -30,14 +30,14 @@ cd eclipse
 cd ..
 
 echo
-echo "Building (`uname -m`)..."
+echo "Building..."
 echo "buildHome=`pwd`" > build_local.properties
 echo "buildDirectory=/tmp/pluginbuilder/br.org.archimedes.build" >> build_local.properties
 echo "eclipseDir=`pwd`/eclipse" >> build_local.properties
 echo "os=linux" >> build_local.properties
 echo "ws=gtk" >> build_local.properties
 #echo "arch=x86_64" >> build_local.properties
-echo "arch=`uname -m`" >> build_local.properties
+echo "arch=x86" >> build_local.properties
 
 sed "s/test.eclipse.zip\=/test.eclipse.zip\=$WHERE\/br.org.archimedes.build\/$ECLIPSE/" build-files/automatedTests/run-tests-template.properties > build-files/automatedTests/run-tests.properties
 
