@@ -62,6 +62,10 @@ public class Ellipse extends Element implements Offsetable {
 		return heightPoint;
 	}
 	
+	public double getFi() {
+		return fi;
+	}
+	
 	public Vector getSemiMajorAxis() {
 		Vector widthVector = new Vector(center, widthPoint);
 		Vector heightVector = new Vector(center, heightPoint);

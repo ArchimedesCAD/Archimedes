@@ -48,8 +48,15 @@ public class EllipseInfiniteLineIntersector implements Intersector {
         	aEllipse = bEllipse;
         	bEllipse = temp;
         }
-        System.out.println("aEllipse: "+aEllipse+" bEllipse: "+bEllipse);
         
+        
+        double x0 = ellipse.getCenter().getX();
+        double y0 = ellipse.getCenter().getY();
+        double fi = ellipse.getFi();
+        
+        System.out.println("aEllipse: "+aEllipse+" bEllipse: "+bEllipse+" x0: "+x0+" y0: "+y0 +" fi:"+fi);
+        System.out.println("now xH: "+ellipse.getHeightPoint().getX()+" now yH: "+ellipse.getHeightPoint().getY());
+        System.out.println("now xW: "+ellipse.getWidthPoint().getX()+" now yW: "+ellipse.getWidthPoint().getY());
         
         //System.out.println("ending.getY(): "+ending.getY()+" starting.getY(): "+starting.getY());
         //System.out.println("ending.getX(): "+ending.getX()+" starting.getX(): "+starting.getX());
@@ -68,13 +75,9 @@ public class EllipseInfiniteLineIntersector implements Intersector {
         
         ArrayList<Point> focusPoints = (ArrayList<Point>) ellipse.calculateFocusPoints();
         
-        Point Fa = focusPoints.get(0);
-        Point Fb = focusPoints.get(1);
+        //Point Fa = focusPoints.get(0);
+        //Point Fb = focusPoints.get(1);
         
-        
-        double x0 = ellipse.getCenter().getX();
-        double y0 = ellipse.getCenter().getY();
-        System.out.println("x0: "+x0+" y0: "+y0);
         double A = bEllipse*bEllipse + aEllipse*aEllipse*aReta*aReta;
         double B = -2*x0*bEllipse*bEllipse + 2*aEllipse*aEllipse*aReta*bReta - 2*aReta*y0*aEllipse*aEllipse;
         double C = bEllipse*bEllipse*x0*x0 + aEllipse*aEllipse*bReta*bReta - 2*bReta*y0*aEllipse*aEllipse + aEllipse*aEllipse*y0*y0 - aEllipse*aEllipse*bEllipse*bEllipse; 
@@ -112,11 +115,14 @@ public class EllipseInfiniteLineIntersector implements Intersector {
         if (delta.isNaN() || delta < 0)
         	return solutions;
         
-        solutions.add((-b + Math.sqrt(delta))/2*a);
+        double x = (-b + Math.sqrt(delta))/(2*a);
+        solutions.add(x);
+        System.out.println("x1 "+ x);
         
         if (delta != 0){
-            solutions.add((-b - Math.sqrt(delta))/2*a);
-            System.out.println("Delta2 "+ ((-b - Math.sqrt(delta))/2*a));
+        	x = (-b - Math.sqrt(delta))/(2*a);
+            solutions.add(x);
+            System.out.println("x2 "+ x);
         }
         
         return solutions;

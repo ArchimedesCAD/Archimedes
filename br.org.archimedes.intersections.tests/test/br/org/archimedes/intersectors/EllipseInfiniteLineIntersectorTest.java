@@ -18,7 +18,6 @@ public class EllipseInfiniteLineIntersectorTest extends Tester {
 
     private Ellipse ellipse;
     private InfiniteLine infiniteLine;
-    private InfiniteLine infiniteLine2;
     private EllipseInfiniteLineIntersector intersector;
     
     private Ellipse ellipse2;
@@ -31,7 +30,6 @@ public class EllipseInfiniteLineIntersectorTest extends Tester {
         this.intersector = new EllipseInfiniteLineIntersector();
         
         this.ellipse2 = new Ellipse(new Point(0, 0), new Point(2, -2), new Point(1,1));
-        
         
     }
 
@@ -68,10 +66,11 @@ public class EllipseInfiniteLineIntersectorTest extends Tester {
     @Test
     public void shouldReturnOneTangencyPoint2() throws InvalidArgumentException, NullArgumentException
     {
-        this.infiniteLine2 = new InfiniteLine(1, 1, 2, 0);
-        List<Point> intersectionPoints = new ArrayList<Point>();
-        intersectionPoints.add(new Point(1, 1));
-        assertCollectionTheSame(intersectionPoints, intersector.getIntersections(ellipse2, infiniteLine2));        
+        this.infiniteLine = new InfiniteLine(1, 1, 2, 0);
+    	List<Point> intersectionPoints = new ArrayList<Point>();
+        //intersectionPoints.add(new Point(1, 1));//dela derivada esse não é ponto de intersecao
+        intersectionPoints.add(new Point(1.6, 0.4));
+        assertCollectionTheSame(intersectionPoints, intersector.getIntersections(ellipse2, infiniteLine));        
         
         
     }
