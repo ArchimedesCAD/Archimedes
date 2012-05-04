@@ -37,31 +37,47 @@ public class EllipseInfiniteLineIntersector implements Intersector {
         Point ending = infiniteLine.getEndingPoint();
         Point starting = infiniteLine.getInitialPoint();
         
-        double aReta = (ending.getY() - starting.getY()) / (ending.getX() - starting.getX());
-        double bReta = ending.getY() - aReta*(ending.getX());
-        System.out.println("ending.getY(): "+ending.getY()+" starting.getY(): "+starting.getY());
-        System.out.println("ending.getX(): "+ending.getX()+" starting.getX(): "+starting.getX());
-        System.out.println("aReta: "+aReta+" bReta: "+bReta);
-        //we need to validate the case of vertical line;
-        ArrayList<Point> focusPoints = (ArrayList<Point>) ellipse.calculateFocusPoints();
+        Double aReta = (ending.getY() - starting.getY()) / (ending.getX() - starting.getX());
+        Double bReta = ending.getY() - aReta*(ending.getX());
+                
+        double aEllipse = ellipse.getCenter().calculateDistance(ellipse.getHeightPoint());
+        double bEllipse = ellipse.getCenter().calculateDistance(ellipse.getWidthPoint());
         
-        Point Fa = focusPoints.get(0);
-        Point Fb = focusPoints.get(1);
-        
-        double aEllipse = 2;
-        double bEllipse = 1;
-        System.out.println("aEllipse: "+aEllipse+" bEllipse: "+bEllipse);
         if(aEllipse < bEllipse){
         	double temp = aEllipse;
         	aEllipse = bEllipse;
         	bEllipse = temp;
         }
+        System.out.println("aEllipse: "+aEllipse+" bEllipse: "+bEllipse);
+        
+        
+        //System.out.println("ending.getY(): "+ending.getY()+" starting.getY(): "+starting.getY());
+        //System.out.println("ending.getX(): "+ending.getX()+" starting.getX(): "+starting.getX());
+        System.out.println("aReta: "+aReta+" bReta: "+bReta);
+        
+        if(aReta.isInfinite()){
+        	Double x = starting.getX();
+        	Double y = Math.sqrt( (1 - (x - ellipse.getCenter().getX())*(x - ellipse.getCenter().getX()) / (aEllipse*aEllipse) ) * (bEllipse*bEllipse) ) + ellipse.getCenter().getY();
+        	//System.out.println("x: "+x+" y: "+y);
+        	if(!y.isNaN()){
+        		Point p = new Point(x,y);
+        		intersectionPoints.add(p);
+        	}
+        	return intersectionPoints;
+        }
+        
+        ArrayList<Point> focusPoints = (ArrayList<Point>) ellipse.calculateFocusPoints();
+        
+        Point Fa = focusPoints.get(0);
+        Point Fb = focusPoints.get(1);
+        
+        
         double x0 = ellipse.getCenter().getX();
         double y0 = ellipse.getCenter().getY();
         System.out.println("x0: "+x0+" y0: "+y0);
-        double A = bEllipse*bEllipse + aEllipse*aEllipse*aReta;
-        double B = -2*(bEllipse*bEllipse*x0 + aReta*bReta*aEllipse*aEllipse - aEllipse*aEllipse*aReta*y0*y0);
-        double C = bEllipse*bEllipse*x0*x0 + aEllipse*aEllipse*bReta*bReta - 2*bReta*aEllipse*aEllipse*y0*y0 + aEllipse*aEllipse*y0*y0 - aEllipse*aEllipse*bEllipse*bEllipse; 
+        double A = bEllipse*bEllipse + aEllipse*aEllipse*aReta*aReta;
+        double B = -2*x0*bEllipse*bEllipse + 2*aEllipse*aEllipse*aReta*bReta - 2*aReta*y0*aEllipse*aEllipse;
+        double C = bEllipse*bEllipse*x0*x0 + aEllipse*aEllipse*bReta*bReta - 2*bReta*y0*aEllipse*aEllipse + aEllipse*aEllipse*y0*y0 - aEllipse*aEllipse*bEllipse*bEllipse; 
         System.out.println("A: "+A+" B: "+B+" C:"+C);
         /*double A = 2.0 + 2*(aReta*aReta);
         double B = -2.0 * (Fa.getX() + Fb.getX() + Fa.getY() * aReta + Fb.getY() * aReta - 2 * aReta * bReta);
@@ -79,25 +95,30 @@ public class EllipseInfiniteLineIntersector implements Intersector {
         catch (InvalidArgumentException e) {
             e.printStackTrace();
         }
+        
+        System.out.println("FIM");
+        System.out.println();
         return intersectionPoints;
     }
 
     private Collection<Double> solve(double a, double b, double c) throws InvalidArgumentException
     {
     	ArrayList<Double> solutions = new ArrayList<Double>();
-    	System.out.println("a: "+a+" b: "+b+" c: "+c);
-    	if (Math.abs(a) <= 0) //we don't understand this constant
+    	if (Math.abs(a) <= 0)
             throw new InvalidArgumentException();
     	
-        double delta = delta(a, b, c);
+        Double delta = delta(a, b, c);
         System.out.println("nosso delta: "+delta);
-        if (delta < 0)
+        if (delta.isNaN() || delta < 0)
         	return solutions;
         
         solutions.add((-b + Math.sqrt(delta))/2*a);
         
-        if (delta > 0)
+        if (delta != 0){
             solutions.add((-b - Math.sqrt(delta))/2*a);
+            System.out.println("Delta2 "+ ((-b - Math.sqrt(delta))/2*a));
+        }
+        
         return solutions;
     }
     
