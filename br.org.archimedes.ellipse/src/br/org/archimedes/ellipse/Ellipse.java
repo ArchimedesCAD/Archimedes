@@ -504,5 +504,12 @@ public class Ellipse extends Element implements Offsetable {
 	    
 	    return focusPoints;
 	}
+	
+	public void translateToPoint(Point destiny) {
+		Vector dist = new Vector(destiny, center);
+		center.addVector(dist);
+		widthPoint.addVector(dist);
+		heightPoint.addVector(dist);
+	}
 
 }

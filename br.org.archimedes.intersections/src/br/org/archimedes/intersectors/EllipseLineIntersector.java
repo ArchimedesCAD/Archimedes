@@ -41,15 +41,23 @@ public class EllipseLineIntersector implements Intersector {
 		// A point L is in the Line-Ellipse intersection iff it satisfies both equations
 		
 		double fi = ellipse.getFi();
+		Point oldCenter = ellipse.getCenter();
+		Line lineP = (Line) line.clone();
+		Ellipse ellipseP = (Ellipse) ellipse.clone();
 		
-		Point lineP = line.getInitialPoint().clone();
-		lineP.rotate(new Point(0, 0), fi);
+		
+		ellipse.translateToPoint(new Point(0, 0));
+		ellipse.rotate(new Point(0, 0), -fi);
+		line.move(line.getInitialPoint().getX(), line.getInitialPoint().getY());
+		line.rotate(new Point(0, 0), -fi);
+		//Point lineP = line.getInitialPoint().clone();
+		//lineP.rotate(new Point(0, 0), -fi);
 		
 		Point endP = line.getEndingPoint().clone();
 		endP.rotate(new Point(0, 0), fi);
 		
 		Vector lineV = new Vector(lineP, endP).normalized();
-		
+		 
 		double ellipseA = ellipse.getSemiMajorAxis().getNorm();
 		double ellipseB = ellipse.getSemiMinorAxis().getNorm();
 		Point ellipseCenter = ellipse.getCenter();
@@ -65,7 +73,8 @@ public class EllipseLineIntersector implements Intersector {
 			ArrayList<Double> solutions = (ArrayList<Double>) solve(solutionA, solutionB, solutionC);
 			for(Double sol : solutions) {
 				Point p = lineP.addVector(lineV.multiply(sol));
-				if(line.contains(p))
+				//p.rotate(new Point(0, 0), -fi);
+				//if(line.contains(p))
 					intersections.add(p);
 			}
 			
