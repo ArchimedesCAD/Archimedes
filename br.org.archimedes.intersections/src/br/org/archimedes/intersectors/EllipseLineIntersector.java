@@ -40,8 +40,15 @@ public class EllipseLineIntersector implements Intersector {
 		// Line: p + v * d, d > 0
 		// A point L is in the Line-Ellipse intersection iff it satisfies both equations
 		
-		Point lineP = line.getInitialPoint();
-		Vector lineV = new Vector(lineP, line.getEndingPoint()).normalized();
+		double fi = ellipse.getFi();
+		
+		Point lineP = line.getInitialPoint().clone();
+		lineP.rotate(new Point(0, 0), fi);
+		
+		Point endP = line.getEndingPoint().clone();
+		endP.rotate(new Point(0, 0), fi);
+		
+		Vector lineV = new Vector(lineP, endP).normalized();
 		
 		double ellipseA = ellipse.getSemiMajorAxis().getNorm();
 		double ellipseB = ellipse.getSemiMinorAxis().getNorm();
