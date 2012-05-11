@@ -40,40 +40,38 @@ public class EllipseLineIntersector implements Intersector {
 		// Line: p + v * d, d > 0
 		// A point L is in the Line-Ellipse intersection iff it satisfies both equations
 		
-		double fi = ellipse.getFi();
-		Point oldCenter = ellipse.getCenter();
-		Line lineP = (Line) line.clone();
-		Ellipse ellipseP = (Ellipse) ellipse.clone();
+		double theta = ellipse.getFi();
+				
+		Point lineP = line.getInitialPoint();
+		Vector lineD = new Vector(lineP, line.getEndingPoint()).normalized();
 		
-		
-		ellipse.translateToPoint(new Point(0, 0));
-		ellipse.rotate(new Point(0, 0), -fi);
-		line.move(line.getInitialPoint().getX(), line.getInitialPoint().getY());
-		line.rotate(new Point(0, 0), -fi);
-		//Point lineP = line.getInitialPoint().clone();
-		//lineP.rotate(new Point(0, 0), -fi);
-		
-		Point endP = line.getEndingPoint().clone();
-		endP.rotate(new Point(0, 0), fi);
-		
-		Vector lineV = new Vector(lineP, endP).normalized();
-		 
 		double ellipseA = ellipse.getSemiMajorAxis().getNorm();
 		double ellipseB = ellipse.getSemiMinorAxis().getNorm();
 		Point ellipseCenter = ellipse.getCenter();
 		
-		double Xr = lineV.getX(), Yr = lineV.getY();
-		double Xdiff = lineP.getX() - ellipseCenter.getX(), Ydiff = lineP.getY() - ellipseCenter.getY();
+		double ellipseAsqr = ellipseA * ellipseA;
+		double ellipseBsqr = ellipseB * ellipseB;
 		
-		double solutionA = ellipseB*ellipseB * Xr*Xr + ellipseA*ellipseA * Yr*Yr;
-		double solutionB = 2*(ellipseB*ellipseB * Xr * Xdiff + ellipseA*ellipseA * Yr * Ydiff);
-		double solutionC = ellipseB*ellipseB * Xdiff*Xdiff + ellipseA*ellipseA * Ydiff*Ydiff - ellipseA*ellipseA * ellipseB*ellipseB;
+		double Ox = lineP.getX() - ellipseCenter.getX();
+		double Oy = lineP.getY() - ellipseCenter.getY();
+		
+		double sinTheta = Math.sin(theta);
+		double cosTheta = Math.cos(theta);
+		
+		double L1 = ellipseBsqr * cosTheta * cosTheta + ellipseAsqr * sinTheta * sinTheta; // L1 = b² (se Fi = 0)
+		double L2 = ellipseBsqr * sinTheta * sinTheta + ellipseAsqr * cosTheta * cosTheta; // L2 = a² (se Fi = 0)
+		
+		double Dx = lineD.getX();
+		double Dy = lineD.getY();
+		
+		double solutionA = (Dx*Dx * L1) + (Dy*Dy * L2) + (2 * Dx * Dy * (ellipseAsqr - ellipseBsqr) * sinTheta * cosTheta);
+		double solutionB = (2 * Ox * Dx * L1) + (2 * Oy * Dy * L2) + (2 * (Ox * Dy + Oy * Dx) * (ellipseAsqr - ellipseBsqr) * sinTheta * cosTheta);
+		double solutionC = (Ox*Ox * L1) + (Oy*Oy * L2) + (2 * Ox * Oy * (ellipseAsqr - ellipseBsqr) * sinTheta * cosTheta) - ellipseAsqr * ellipseBsqr;
 
 		try {
 			ArrayList<Double> solutions = (ArrayList<Double>) solve(solutionA, solutionB, solutionC);
 			for(Double sol : solutions) {
-				Point p = lineP.addVector(lineV.multiply(sol));
-				//p.rotate(new Point(0, 0), -fi);
+				Point p = lineP.addVector(lineD.multiply(sol));
 				//if(line.contains(p))
 					intersections.add(p);
 			}

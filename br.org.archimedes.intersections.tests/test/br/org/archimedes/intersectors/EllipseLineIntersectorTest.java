@@ -32,10 +32,10 @@ public class EllipseLineIntersectorTest extends Tester {
     	this.intersector = new EllipseLineIntersector();
     	
         this.ellipse = new Ellipse(new Point(0, 0), new Point(2, 0), new Point(0,1));
-        this.ellipse2 = new Ellipse(new Point(0, 0), new Point(2, -2), new Point(1,1));
+        this.ellipse2 = new Ellipse(new Point(0, 0), new Point(2, 0), new Point(0,2));
     }
 
-    /*@Test
+    @Test
     public void shouldNotReturnIntersectionPoints() throws InvalidArgumentException, NullArgumentException
     {
          this.line = new Line(2.1, 0, 2.1, 10);
@@ -58,28 +58,23 @@ public class EllipseLineIntersectorTest extends Tester {
         intersectionPoints.add(new Point(2, 0));
         assertCollectionTheSame(intersectionPoints, intersector.getIntersections(ellipse, line));
         
-        this.line = new Line(0, 1, 10, 1);
+        this.line = new Line(-10, 1, 10, 1);
         intersectionPoints = new ArrayList<Point>();
         intersectionPoints.add(new Point(0, 1));
         assertCollectionTheSame(intersectionPoints, intersector.getIntersections(ellipse, line));
         
-    }*/
+    }
     
     @Test
-    public void shouldReturnOneTangencyPoint2() throws InvalidArgumentException, NullArgumentException
+    public void shouldReturnOneTangencyPointRotated() throws InvalidArgumentException, NullArgumentException
     {
-        this.line = new Line(1, 1, 2, 0);
-    	List<Point> intersectionPoints = new ArrayList<Point>();
-        //intersectionPoints.add(new Point(1, 1));//dela derivada esse não é ponto de intersecao
-        intersectionPoints.add(new Point(1.6, 0.4));
-        
-        //System.out.println(intersector.getIntersections(ellipse2, line));
-        Collection<Point> result = intersector.getIntersections(ellipse2, line);
+        this.line = new Line(-15, 0, 10, 0);
+    	Collection<Point> result = intersector.getIntersections(ellipse2, line);
         System.out.println(result);
         
-        assertCollectionTheSame(intersectionPoints, result);        
-        
-        
+        List<Point> intersectionPoints = new ArrayList<Point>();
+        intersectionPoints.add(new Point(1.6, 0.4));
+        assertCollectionTheSame(intersectionPoints, result);
     }
 
 }
