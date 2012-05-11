@@ -24,8 +24,7 @@ div.content_wrapper{
   width: 400px;}
 div.menu{
   float:left;
-  margin-left: 10px;
-  display: none;}
+  margin-left: 10px;}
 .menu ul{
   list-style-type: none;
   padding: 0;
