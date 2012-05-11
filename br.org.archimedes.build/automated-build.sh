@@ -4,7 +4,7 @@ WHERE=$(pwd)
 WHERE="${WHERE//\//\\/}"
 
 ECLIPSE=eclipse-SDK-3.7.2-linux-gtk.tar.gz
-ECLIPSE=eclipse-SDK-3.7.2-linux-gtk-x86_64.tar.gz
+#ECLIPSE=eclipse-SDK-3.7.2-linux-gtk-x86_64.tar.gz
 
 cd br.org.archimedes.build
 
