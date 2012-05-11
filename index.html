@@ -1,70 +1,40 @@
-<!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Archimedes by ArchimedesLabXP2012</title>
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script src="javascripts/main.js"></script>
-    <!--[if lt IE 9]>
-      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-  </head>
-  <body>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <title>Archimedes - The Open CAD</title>
+  <link href="./stylesheets/two-columns-content.css" media="screen" rel="stylesheet" type="text/css" />
+</head>
+<body>
+	<img alt="Logo" class="banner" src="./images/logo.png" />
 
-      <header>
-        <h1>Archimedes</h1>
-        <p>Archimedes is a free and open source CAD (Computer Aided Design) software.</p>
-      </header>
-
-      <div id="banner">
-        <span id="logo"></span>
-
-        <a href="https://github.com/ArchimedesLabXP2012/Archimedes" class="button fork"><strong>View On GitHub</strong></a>
-        <div class="downloads">
-          <span>Downloads:</span>
-          <ul>
-            <li><a href="https://github.com/ArchimedesLabXP2012/Archimedes/zipball/master" class="button">ZIP</a></li>
-            <li><a href="https://github.com/ArchimedesLabXP2012/Archimedes/tarball/master" class="button">TAR</a></li>
-          </ul>
-        </div>
-      </div><!-- end banner -->
-
-    <div class="wrapper">
-      <nav>
-        <ul></ul>
-      </nav>
-      <section>
-        <h1>TUTORIAL OF ARCHIMEDES</h1>
-
-<p>We are a new team working on Archimedes, We would like to show a tutorial of how set up an environment to work with Archimedes. In order to code for Archimedes, just follow these steps:</p>
-
-<ol>
-<li><p>Download and install a Java Virtual Machine S.E. SDK version 1.5 or later compatible with the Sun virtual machine (We suggest the version from <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">http://www.oracle.com/technetwork/java/javase/downloads/index.html</a>).</p></li>
-<li><p>Download and install an Eclipse version above 3.4. Make sure it has all of the Eclipse RCP plugins. We suggest "Eclipse for RCP and RAP Developers". The installation just involves unpacking the zip or tar.gz file you downloaded. Enter to the folder that was created on the previous step, there should be an executable called 'eclipse'. Run that executable.</p></li>
-<li><p>Import the project on Eclipse. Go to "File"-&gt;"Import". Select "Git"-&gt;"Projects from Git". Press Next, select the URI option and press Next. Fill in the URI field with "<a href="mailto:git@github.com">git@github.com</a>:ArchimedesLabXP2012/Archimedes.git". Then press next to maintain the default options. Finally press finish.</p></li>
-<li><p>Run Archimedes. For that, find the project "br.org.archimedes.core", expand it. Find the file "archimedes.product", right-click it, "Run As..."-&gt;"Eclipse Application". On Mac, that's enough. It all works. On Linux, there is a problem, because it doesn't select all plugins needed. It then pops an error dialog, press proceed button.</p></li>
-<li>
-<p>Configure Eclipse IDE.</p>
-
-<ul>
-<li>Note 1: To add more "Plug-ins" for Archimedes, find the project "br.org.archimedes.core", expand it. Find the file "archimedes.product", right-click it, select "Run As..."-&gt;"Run Configuration". In the left panel, select "Eclipse Application"-&gt;"archimedes.product". Select the tab "Plug-ins" and then press the "Add Required Plug-ins" button (or select manually any other plug-ins desired). Click "Apply" button.</li>
-<li>Note 2: If you are getting some compile errors ("there are red signs on the projects"), try changing your Java default compile version. To do so, go to "Window"-&gt;"Preferences..." (or "Eclipse"-&gt;"Preferences..." on Mac), type 'compiler' , select the "Compiler" item on your left pane, change the "Compiler compliance level" to "1.5". It should rebuild the project and remove the compiler errors.</li>
+	<p style="color: green"></p>
+    <div class="menu">
+	  	
+<ul class="menu">
+	<li>What is it?</li>
+	<li><a href="./projects/archimedes/screenshots">Screenshots</a></li>
 </ul>
-</li>
-</ol><p>Obs: To send your changes to the Archimede's GitHub repository, you nee privileges. to get then, send an e-mail to the Rep. admin.
-That's all</p>
-      </section>
-      <footer>
-        <p>Project maintained by <a href="https://github.com/ArchimedesLabXP2012">ArchimedesLabXP2012</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></small></p>
-      </footer>
-    </div>
-    <!--[if !IE]><script>fixScale(document);</script><!--<![endif]-->
-    
-  </body>
+
+  	</div>
+  	<div class="content_wrapper">
+	<p>
+		Archimedes is a free and open source <span class="caps">CAD</span> (Computer Aided Design) software. 
+		It is a robust system built over <a href="http://www.eclipse.org/rcp/">Eclipse's Rich Client Platform</a> fully based on plug ins. 
+		This means it is easily extensible but also has a pretty thin core that allows you to select the features you need and drop the other ones easily.
+	</p>
+	<div class="image">
+		<a href="http://sourceforge.net/project/platformdownload.php?group_id=143642"><img src="./images/download_generated.png" title="Download the latest Archimedes Version" alt="Download the latest Archimedes Version" /></a>
+	</div>
+
+	<p>
+		Archimedes works on <span class="caps">GNU</span>/Linux, Mac <span class="caps">OS X</span> and Windows and it only requires you have a <a href="http://java.sun.com/download/">Java Virtual Machine</a> installed which is also a free software.
+		This means that anything generated with Archimedes is easily recoverable and reused.
+	</p>
+	<p>
+		The software and most of its plug ins are licensed under the <a href="http://www.eclipse.org/legal/epl-v10.html">Eclipse Public License</a> which allows anyone to download the source code, study it and make changes on it without permission from Archimedes' team.
+	</p>
+</body>
 </html>

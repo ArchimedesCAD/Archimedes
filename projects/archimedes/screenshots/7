@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <title></title>
+  <link href="/stylesheets/two-columns-content.css?1223162325" media="screen" rel="stylesheet" type="text/css" />
+</head>
+<body>
+	<div style="float:right;text-align:right;">
+	  
+	    <a href="/login">Login</a> or <a href="/signup">Signup</a>
+	  
+	</div>
+	
+	<p style="color: green"></p>
+    <div class="menu">
+	  	
+  	</div>
+  	<div class="content_wrapper">
+		<div style="margin-left:-200px;text-align:center;">
+  Version &quot;Non-RCP&quot; on Windows - Options available in the File menu<br />
+  <br />
+  Open and save available as welll as import, export and print<br />
+  <br />
+  <img alt="Filemenu" src="/screenshots/0000/0007/fileMenu.gif?1223164732" />
+
+  <p>
+    
+    <a href="/projects/archimedes/screenshots">Back</a>
+  </p>
+</div>
+
+	</div>
+</body>
+</html>
