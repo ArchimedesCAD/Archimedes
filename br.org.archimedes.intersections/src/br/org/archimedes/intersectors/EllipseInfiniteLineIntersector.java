@@ -41,36 +41,44 @@ public class EllipseInfiniteLineIntersector implements Intersector {
 		InfiniteLine infiniteLineClone = (InfiniteLine) infiniteLine.clone();
 		Ellipse ellipseClone = (Ellipse) ellipse.clone();
 		
+		//System.out.println("infiniteLine_point1XX: ("+infiniteLineClone.getInitialPoint().getX()+", "+infiniteLineClone.getInitialPoint().getY()+")");
+        //System.out.println("infiniteLine_point2XX: ("+infiniteLineClone.getEndingPoint().getX()+", "+infiniteLineClone.getEndingPoint().getY()+")");
+        
 		//translate and rotate
-		//ellipseP.translateToPoint(new Point(0, 0));
-		ellipseClone.rotate(ellipse.getCenter(), -fi*180/Math.PI);
-		//ellipseP.translateToPoint(oldCenter);
-		//lineP.move(-lineP.getInitialPoint().getX(), -lineP.getInitialPoint().getY());
-		infiniteLineClone.rotate(new Point(0,0), -fi*180/Math.PI);//infiniteLine.getInitialPoint()
-		//lineP.move(infiniteLine.getInitialPoint().getX(), infiniteLine.getInitialPoint().getY());
-		
+		ellipseClone.rotate(ellipse.getCenter(), -fi);//ellipse.getCenter()
+		infiniteLineClone.rotate(new Point(0,0), -fi);//deve ser a origem!!! infiniteLine.getInitialPoint() 
+		ellipseClone.getWidthPoint().setY(0);
+		ellipseClone.getHeightPoint().setX(0);
 		//auxiliary variables
-		Point ending = infiniteLine.getEndingPoint();
-        Point starting = infiniteLine.getInitialPoint();
+		Point starting = infiniteLine.getInitialPoint();
+        Point ending = infiniteLine.getEndingPoint();
         Double aReta = (ending.getY() - starting.getY()) / (ending.getX() - starting.getX());
         Double bReta = ending.getY() - aReta*(ending.getX());
-        System.out.println("infiniteLine_point1: ("+starting.getX()+", "+starting.getY()+")");
-        System.out.println("infiniteLine_point2: ("+ending.getX()+", "+ending.getY()+")");
+        //System.out.println("infiniteLine_point1: ("+starting.getX()+", "+starting.getY()+")");
+        //System.out.println("infiniteLine_point2: ("+ending.getX()+", "+ending.getY()+")");
         System.out.println("aReta: "+aReta+" bReta: "+bReta);
         
-        ending = infiniteLineClone.getEndingPoint();
-        starting = infiniteLineClone.getInitialPoint();
-        aReta = (ending.getY() - starting.getY()) / (ending.getX() - starting.getX());
-        bReta = ending.getY() - aReta*(ending.getX());
-        System.out.println("infiniteLineClone_point1: ("+starting.getX()+", "+starting.getY()+")");
-        System.out.println("infiniteLineClone_point2: ("+ending.getX()+", "+ending.getY()+")");
+        Point pInitial= infiniteLineClone.getInitialPoint();
+        Point pFinal = infiniteLineClone.getEndingPoint();
+        Double diffY = (pFinal.getY() - pInitial.getY()) ;
+        Double diffX = (pFinal.getX() - pInitial.getX());
+        if(Math.abs(diffY) <= 0.00001){
+        	aReta = 0.0;
+        	bReta = infiniteLineClone.getInitialPoint().getY();
+        } else {
+        	aReta = diffY/diffX;
+        	bReta = pFinal.getY() - aReta*(pFinal.getX());
+        } 
+        
+        System.out.println("infiniteLineClone_point1: ("+infiniteLineClone.getInitialPoint().getX()+", "+infiniteLineClone.getInitialPoint().getY()+")");
+        System.out.println("infiniteLineClone_point2: ("+infiniteLineClone.getEndingPoint().getX()+", "+infiniteLineClone.getEndingPoint().getY()+")");
         System.out.println("aReta: "+aReta+" bReta: "+bReta);
-        /*Double newAReta = aReta*Math.cos(-fi*180/Math.PI) - bReta*Math.sin(-fi*180/Math.PI);
-        Double newBReta = aReta*Math.sin(-fi*180/Math.PI) + bReta*Math.cos(-fi*180/Math.PI);
-        System.out.println("aReta: "+newAReta+" bReta: "+newBReta);
-        bReta = newBReta;
-        aReta = newAReta;
-        */
+        //Double newAReta = aReta*Math.cos(-fi*180/Math.PI) - bReta*Math.sin(-fi*180/Math.PI);//*180/Math.PI
+        //Double newBReta = aReta*Math.sin(-fi*180/Math.PI) + bReta*Math.cos(-fi*180/Math.PI);
+        //System.out.println("aReta: "+newAReta+" bReta: "+newBReta);
+        //bReta = newBReta;
+        //aReta = newAReta;
+        
         double aEllipse = ellipseClone.getCenter().calculateDistance(ellipseClone.getHeightPoint());
         double bEllipse = ellipseClone.getCenter().calculateDistance(ellipseClone.getWidthPoint());
         
@@ -92,7 +100,7 @@ public class EllipseInfiniteLineIntersector implements Intersector {
         //System.out.println("ending.getX(): "+ending.getX()+" starting.getX(): "+starting.getX());
         
         if(aReta.isInfinite()){
-        	Double x = starting.getX();
+        	Double x = infiniteLineClone.getInitialPoint().getX();
         	Double y = Math.sqrt( (1 - (x - ellipseClone.getCenter().getX())*(x - ellipseClone.getCenter().getX()) / (aEllipse*aEllipse) ) * (bEllipse*bEllipse) ) + ellipseClone.getCenter().getY();
         	//System.out.println("x: "+x+" y: "+y);
         	if(!y.isNaN()){
@@ -110,6 +118,10 @@ public class EllipseInfiniteLineIntersector implements Intersector {
         
         double A = bEllipse*bEllipse + aEllipse*aEllipse*aReta*aReta;
         double B = -2*x0*bEllipse*bEllipse + 2*aEllipse*aEllipse*aReta*bReta - 2*aReta*y0*aEllipse*aEllipse;
+        double diff = bReta - bEllipse;
+        if(Math.abs(diff) <= 0.00001){
+        	bReta = bEllipse;
+        }
         double C = bEllipse*bEllipse*x0*x0 + aEllipse*aEllipse*bReta*bReta - 2*bReta*y0*aEllipse*aEllipse + aEllipse*aEllipse*y0*y0 - aEllipse*aEllipse*bEllipse*bEllipse; 
         System.out.println("A: "+A+" B: "+B+" C:"+C);
         /*double A = 2.0 + 2*(aReta*aReta);
@@ -129,7 +141,7 @@ public class EllipseInfiniteLineIntersector implements Intersector {
                 p.setX(newpX);
                 p.setY(newpY);*/
             	//p.rotate(new Point(0, 0), fi*180/Math.PI);
-            	p.rotate(new Point(0,0), fi*180/Math.PI);//infiniteLineClone.getInitialPoint()
+            	p.rotate(new Point(0, 0), fi);//deve ser a origem!!!
             	//p.move(lineP.getInitialPoint().getX(), lineP.getInitialPoint().getY());
             	
             	//translate

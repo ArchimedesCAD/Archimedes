@@ -493,16 +493,8 @@ public class InfiniteLine extends Element implements Offsetable, Filletable{
 		return click;
 	}
 	
-	public void move (double deltaX, double deltaY) {
-		initialPoint.move(deltaX, deltaY);
-		endingPoint.move(deltaX, deltaY);
-    }
-
-	public void rotate (Point reference, double angle) throws NullArgumentException {
-
-		initialPoint.rotate(reference, angle);
-		endingPoint.rotate(reference, angle);
-	}
+	
+	
 	
     
 }

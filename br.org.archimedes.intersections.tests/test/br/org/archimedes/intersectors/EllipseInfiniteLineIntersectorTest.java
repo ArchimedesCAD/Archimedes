@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -66,11 +67,28 @@ public class EllipseInfiniteLineIntersectorTest extends Tester {
     @Test
     public void shouldReturnOneTangencyPointRotated() throws InvalidArgumentException, NullArgumentException
     {
-        this.infiniteLine = new InfiniteLine(1, 1, 2, 0);
+    	Point p1 = new Point(1,1);
+    	Point p2 = new Point(2,0);
+    	this.infiniteLine = new InfiniteLine(p1, p2);
+    	
+    	//InfiniteLine infiniteLineClone = (InfiniteLine)this.infiniteLine.clone();
+    	//infiniteLineClone.rotate(new Point(0,0), -ellipse2.getFi());//Math.PI/4
+    	
+    	Point p3 = new Point(0, Math.sqrt(2));//-1.1102230246251565E-16
+    	Point p4 = new Point(Math.sqrt(2), Math.sqrt(2));
+    	InfiniteLine expected = new InfiniteLine(p3, p4);
+        
+    	//Assert.assertEquals("point should be equal.", expected.getInitialPoint().getX(), infiniteLineClone.getInitialPoint().getX(),0.01);
+        //Assert.assertEquals("point should be equal.", expected.getInitialPoint(), infiniteLineClone.getInitialPoint());
+        //Assert.assertEquals("point should be equal.", expected.getEndingPoint(), infiniteLineClone.getEndingPoint());
+        
     	List<Point> intersectionPoints = new ArrayList<Point>();
-        intersectionPoints.add(new Point(1.6, 0.4));
+        intersectionPoints.add(new Point(1, 1));
         assertCollectionTheSame(intersectionPoints, intersector.getIntersections(ellipse2, infiniteLine));        
         
         
     }
+    
+    
+    
 }
