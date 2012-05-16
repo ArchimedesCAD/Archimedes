@@ -46,9 +46,9 @@ public class EllipseInfiniteLineIntersector implements Intersector {
         
 		//translate and rotate
 		ellipseClone.rotate(ellipse.getCenter(), -fi);//ellipse.getCenter()
-		infiniteLineClone.rotate(new Point(0,0), -fi);//deve ser a origem!!! infiniteLine.getInitialPoint() 
-		ellipseClone.getWidthPoint().setY(0);
-		ellipseClone.getHeightPoint().setX(0);
+		infiniteLineClone.rotate(ellipse.getCenter(), -fi);//deve ser a origem!!! infiniteLine.getInitialPoint()    new Point(0,0) 
+		ellipseClone.getWidthPoint().setY(ellipseClone.getCenter().getY());
+		ellipseClone.getHeightPoint().setX(ellipseClone.getCenter().getX());
 		//auxiliary variables
 		Point starting = infiniteLine.getInitialPoint();
         Point ending = infiniteLine.getEndingPoint();
@@ -119,7 +119,7 @@ public class EllipseInfiniteLineIntersector implements Intersector {
         double A = bEllipse*bEllipse + aEllipse*aEllipse*aReta*aReta;
         double B = -2*x0*bEllipse*bEllipse + 2*aEllipse*aEllipse*aReta*bReta - 2*aReta*y0*aEllipse*aEllipse;
         double diff = bReta - bEllipse;
-        if(Math.abs(diff) <= 0.00001){
+        if(Math.abs(diff) <= 0.01){
         	bReta = bEllipse;
         }
         double C = bEllipse*bEllipse*x0*x0 + aEllipse*aEllipse*bReta*bReta - 2*bReta*y0*aEllipse*aEllipse + aEllipse*aEllipse*y0*y0 - aEllipse*aEllipse*bEllipse*bEllipse; 
@@ -141,7 +141,7 @@ public class EllipseInfiniteLineIntersector implements Intersector {
                 p.setX(newpX);
                 p.setY(newpY);*/
             	//p.rotate(new Point(0, 0), fi*180/Math.PI);
-            	p.rotate(new Point(0, 0), fi);//deve ser a origem!!!
+            	p.rotate(ellipse.getCenter(), fi);//deve ser a origem!!!  new Point(0, 0)
             	//p.move(lineP.getInitialPoint().getX(), lineP.getInitialPoint().getY());
             	
             	//translate

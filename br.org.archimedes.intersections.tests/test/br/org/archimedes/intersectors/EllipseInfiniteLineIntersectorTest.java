@@ -22,6 +22,8 @@ public class EllipseInfiniteLineIntersectorTest extends Tester {
     private EllipseInfiniteLineIntersector intersector;
     
     private Ellipse ellipse2;
+    private Ellipse ellipse3;
+    private Ellipse ellipse4;
     
     
     @Before
@@ -29,8 +31,9 @@ public class EllipseInfiniteLineIntersectorTest extends Tester {
     {
         this.ellipse = new Ellipse(new Point(0, 0), new Point(2, 0), new Point(0,1));
         this.intersector = new EllipseInfiniteLineIntersector();
-        
         this.ellipse2 = new Ellipse(new Point(0, 0), new Point(2, -2), new Point(1,1));
+        this.ellipse3 = new Ellipse(new Point(0, 0), new Point(-2, -2), new Point(1,-1));
+        this.ellipse4 = new Ellipse(new Point(5, 6), new Point(3, 4), new Point(6, 5));
         
     }
 
@@ -67,24 +70,25 @@ public class EllipseInfiniteLineIntersectorTest extends Tester {
     @Test
     public void shouldReturnOneTangencyPointRotated() throws InvalidArgumentException, NullArgumentException
     {
-    	Point p1 = new Point(1,1);
-    	Point p2 = new Point(2,0);
-    	this.infiniteLine = new InfiniteLine(p1, p2);
-    	
-    	//InfiniteLine infiniteLineClone = (InfiniteLine)this.infiniteLine.clone();
-    	//infiniteLineClone.rotate(new Point(0,0), -ellipse2.getFi());//Math.PI/4
-    	
-    	Point p3 = new Point(0, Math.sqrt(2));//-1.1102230246251565E-16
-    	Point p4 = new Point(Math.sqrt(2), Math.sqrt(2));
-    	InfiniteLine expected = new InfiniteLine(p3, p4);
-        
-    	//Assert.assertEquals("point should be equal.", expected.getInitialPoint().getX(), infiniteLineClone.getInitialPoint().getX(),0.01);
+    	this.infiniteLine = new InfiniteLine(1,1, 2,0);
+    	//InfiniteLine expected = new InfiniteLine(0, Math.sqrt(2), Math.sqrt(2), Math.sqrt(2));//p1y = -1.1102230246251565E-16
+        //Assert.assertEquals("point should be equal.", expected.getInitialPoint().getX(), infiniteLineClone.getInitialPoint().getX(),0.01);
         //Assert.assertEquals("point should be equal.", expected.getInitialPoint(), infiniteLineClone.getInitialPoint());
         //Assert.assertEquals("point should be equal.", expected.getEndingPoint(), infiniteLineClone.getEndingPoint());
         
     	List<Point> intersectionPoints = new ArrayList<Point>();
         intersectionPoints.add(new Point(1, 1));
         assertCollectionTheSame(intersectionPoints, intersector.getIntersections(ellipse2, infiniteLine));        
+        
+        this.infiniteLine = new InfiniteLine(1,-1, 2,0);
+    	intersectionPoints = new ArrayList<Point>();
+        intersectionPoints.add(new Point(1, -1));
+        assertCollectionTheSame(intersectionPoints, intersector.getIntersections(ellipse3, infiniteLine));        
+        
+        this.infiniteLine = new InfiniteLine(6, 5, 7, 6);
+    	intersectionPoints = new ArrayList<Point>();
+        intersectionPoints.add(new Point(6, 5));
+        assertCollectionTheSame(intersectionPoints, intersector.getIntersections(ellipse4, infiniteLine));        
         
         
     }
