@@ -13,25 +13,35 @@
  */
 package br.org.archimedes.circle;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
+import br.org.archimedes.Constant;
+import br.org.archimedes.Tester;
 import br.org.archimedes.exceptions.InvalidArgumentException;
+import br.org.archimedes.exceptions.InvalidParameterException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.gui.opengl.Color;
 import br.org.archimedes.model.Layer;
 import br.org.archimedes.model.LineStyle;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Rectangle;
+import br.org.archimedes.model.ReferencePoint;
+import br.org.archimedes.model.references.CirclePoint;
+import br.org.archimedes.model.references.RhombusPoint;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
-public class CircleTest {
+public class CircleTest extends Tester {
 	
 	private static final int CIRCLE_RADIUS = 1;
 	private Circle circle1;
@@ -78,7 +88,7 @@ public class CircleTest {
 	}
 	
 	@Test
-	public void testHashcodeCircle() throws Exception {
+	public void testHashCodeCircle() throws Exception {
 		int hash1 = circle1.hashCode();
 		int hash2 = circle2.hashCode();
 		assertEquals(hash1, circle1.hashCode()); // Test if it returns the same code again
@@ -91,18 +101,65 @@ public class CircleTest {
 		assertFalse(hash_c1 == c1.hashCode()); // Object changed, hash should change
 	}
 	
-	// TODO Test the boundary rectangle of a circle
 	@Test
 	public void testBoundaryRectangle() {
 		assertEquals(circle1.getBoundaryRectangle(), new Rectangle(-1, -1, 1, 1));
 		assertEquals(circle2.getBoundaryRectangle(), new Rectangle(2, 1, 6, 5));
 	}
 	
-	// TODO Test the reference points of a circle
+	@Test
+	public void testReferencePoint() throws Exception {
+		Collection<ReferencePoint> refPoints = new ArrayList<ReferencePoint>();
+		assertCollectionTheSame(refPoints, circle1.getReferencePoints(new Rectangle(50, 50, 51, 51))); // Empty
+		
+		refPoints.add(new CirclePoint(centerPoint, centerPoint));
+		refPoints.add(new RhombusPoint(new Point(1, 0)));
+		refPoints.add(new RhombusPoint(new Point(0, 1)));
+		assertCollectionTheSame(refPoints, circle1.getReferencePoints(new Rectangle(0, 100, 100, 0))); // Only Top-Right
+		
+		refPoints.add(new RhombusPoint(new Point(-1, 0)));
+		refPoints.add(new RhombusPoint(new Point(0, -1)));
+		assertCollectionTheSame(refPoints, circle1.getReferencePoints(new Rectangle(-100,-100, 100, 100))); // All points
+	}
 	
-	// TODO Test contains for a circle includes only the right points
+	@Test
+	public void testContains() throws Exception {
+		assertFalse(circle1.contains(new Point(0, 0)));
+		assertTrue(circle1.contains(new Point(1, 0)));
+		assertTrue(circle1.contains(new Point(-Math.sqrt(2)/2, Math.sqrt(2)/2)));
+		assertFalse(circle1.contains(new Point(2, 0)));
+	}
 	
-	// TODO Test clone with distance for a circle
+	@Test(expected = NullArgumentException.class)
+	public void testContainsNull() throws Exception {
+		circle1.contains(null);
+	}
+	
+	@Test
+	public void testCloneCircle() throws Exception {
+		assertEquals(circle1.clone(), circle1);
+		assertEquals(circle2.clone(), circle2);
+		assertNotSame(circle1.clone(), circle1);
+		assertNotSame(circle2.clone(), circle2);
+	}
+	
+	@Test
+	public void testCloneDistanceCircle() throws Exception {
+		assertEquals(circle1.cloneWithDistance(0), circle1);
+		
+		Circle cd1 = (Circle) circle1.cloneWithDistance(1);
+		assertEquals(cd1.getCenter(), circle1.getCenter());
+		assertEquals(cd1.getRadius(), circle1.getRadius() + 1, Constant.EPSILON);
+		
+		Circle cd2 = (Circle) circle1.cloneWithDistance(-0.5);
+		assertEquals(cd2.getCenter(), circle1.getCenter());
+		assertEquals(cd2.getRadius(), circle1.getRadius() -0.5, Constant.EPSILON);
+	}
+	
+	@Test(expected = InvalidParameterException.class)
+	public void testCloneDistanceInvalidCircle() throws Exception {
+		assertNotNull(circle1.cloneWithDistance(-CIRCLE_RADIUS));
+	}
 	
 	// TODO Test isPositiveDirection regarding a circle
 	
