@@ -26,6 +26,7 @@ import br.org.archimedes.model.LineStyle;
 import br.org.archimedes.model.Point;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.LinkedList;
@@ -40,32 +41,24 @@ import static org.junit.Assert.assertEquals;
  */
 public class LineTest extends Tester {
 
+    private Line []lineA;
     private Line line;
-
+    
+    @Before
+    public void loadTestes () throws InvalidArgumentException {
+    	lineA = new Line[5];
+    	lineA[0] = createSafeLine( 0, 0, 10, 0);
+    	lineA[1] = createSafeLine( 0, 0, 0, 10);
+    	lineA[2] = createSafeLine( 0, 0, 10, 10);
+    	lineA[3] = createSafeLine( 0, 3, 4, 0);
+    	lineA[4] = createSafeLine( 0, 3, -10, -15);
+    }
 
     @Test
     public void canCreateALineFrom4Coordinates () {
-
-        /* simple cases */
-
-        testLineCreation(0, 1, 2, 3);
-        testLineCreation(0, 1, -1, 0);
-
-        /* oblique cases */
-
-        testLineCreation(0, 2, 4, 5);
-        testLineCreation(0, 2, 4, 3);
-        testLineCreation(0, 2, 4, 1);
-        testLineCreation(0, 2, 4, -1);
-
-        /* horizontal lines */
-
-        testLineCreation(0, 0, 5, 0);
-        testLineCreation(0, 1, 5, 1);
-
-        /* vertical lines */
-        testLineCreation(0, 0, 0, 4);
-        testLineCreation(1, 2, 1, 4);
+    	for (Line line : lineA) {
+    		testLineCreation(line);
+		}
     }
 
     /**
@@ -80,9 +73,13 @@ public class LineTest extends Tester {
      * @param y2
      *            the y coordinate of the second point
      */
-    private void testLineCreation (double x1, double y1, double x2, double y2) {
-
-        line = createSafeLine(x1, y1, x2, y2);
+    private void testLineCreation (Line line) {
+    	double x1, y1, x2, y2;
+    	
+    	x1 = line.getInitialPoint().getX();
+    	y1 = line.getInitialPoint().getY();
+    	x2 = line.getEndingPoint().getX();
+    	y2 = line.getEndingPoint().getY();
 
         Assert.assertNotNull("The object Line is null!", line);
 
