@@ -33,6 +33,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Belongs to package br.org.archimedes.line.
@@ -142,12 +143,20 @@ public class LineTest extends Tester {
     public void cantCreateALineFromEqualPointsPassingPositivePoints () throws Exception {
         new Line(new Point(42, 42), new Point(42, 42));
     }
+
+    @Test
+    public void testClone () {
+    	for (Line line : lineFromDouble) {
+			testCloneDouble(line);
+		} 
+    }
     
-    // TODO Test creation of line from Point,Point constructor
+    private void testCloneDouble(Line line2) {
+		Line clone = (Line) line2.clone();
+		assertTrue(line2.equals(clone));
+	}
 
-    // TODO Test a line contains the points in it and not others
-
-    // TODO Test cloning a line makes an equal line with
+    
 
     @Test
     public void lineContainsPointsBetweenItsInitialAndEndingPoints () throws Exception {
