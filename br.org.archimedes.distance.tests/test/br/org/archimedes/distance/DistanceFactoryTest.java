@@ -12,6 +12,8 @@
  */
 package br.org.archimedes.distance;
 
+import static org.junit.Assert.assertNotNull;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -114,4 +116,10 @@ public class DistanceFactoryTest extends FactoryTester {
         Assert.assertNotNull("Returned message should not be null", message);
         Assert.assertEquals("Message should be the distance", "" + 5.0, message);
     }
+    
+	@Override
+	@Test
+	public void testFactoryName() {
+		assertNotNull(factory.getName());
+	}
 }

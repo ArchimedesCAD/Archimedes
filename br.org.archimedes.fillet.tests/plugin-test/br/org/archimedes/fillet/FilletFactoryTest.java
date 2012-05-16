@@ -28,6 +28,7 @@ import org.junit.Test;
 import java.util.Collections;
 import java.util.HashSet;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 
@@ -129,4 +130,10 @@ public class FilletFactoryTest extends FactoryTester {
         assertCancel(factory, false);
         assertInvalidNext(factory, secondSelection);
     }
+    
+	@Override
+	@Test
+	public void testFactoryName() {
+		assertNotNull(factory.getName());
+	}
 }

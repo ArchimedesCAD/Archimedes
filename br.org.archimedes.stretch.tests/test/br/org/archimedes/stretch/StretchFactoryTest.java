@@ -12,6 +12,8 @@
  */
 package br.org.archimedes.stretch;
 
+import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.helper.FactoryTester;
 import br.org.archimedes.model.Drawing;
@@ -64,30 +66,40 @@ public class StretchFactoryTest extends FactoryTester {
     public void testProportion () {
 
         // TODO Not yet implemented
+    	fail("Not yet implemented.");
     }
 
     @Test
     public void testTwoPoints () {
 
         // TODO Not yet implemented
+    	fail("Not yet implemented.");
     }
 
     @Test
     public void testROptionDoubleDouble () {
 
         // TODO Not yet implemented
+    	fail("Not yet implemented.");
     }
 
     @Test
     public void testROptionThreePoints () {
 
         // TODO Not yet implemented
+    	fail("Not yet implemented.");
     }
 
     @Test
     public void testCancel () throws InvalidArgumentException {
 
         // TODO Not yet implemented
+    	fail("Not yet implemented.");
     }
 
+	@Override
+	@Test
+	public void testFactoryName() {
+		fail("Not yet implemented.");
+	}
 }

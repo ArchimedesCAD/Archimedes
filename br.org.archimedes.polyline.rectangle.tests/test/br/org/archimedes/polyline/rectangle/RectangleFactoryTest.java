@@ -13,6 +13,7 @@
  */
 package br.org.archimedes.polyline.rectangle;
 
+import static org.junit.Assert.assertNotNull;
 import br.org.archimedes.controller.Controller;
 import br.org.archimedes.factories.CommandFactory;
 import br.org.archimedes.helper.FactoryTester;
@@ -112,4 +113,10 @@ public class RectangleFactoryTest extends FactoryTester {
         assertSafeNext(factory, vector, true);
         assertCancel(factory, false);
     }
+    
+	@Override
+	@Test
+	public void testFactoryName() {
+		assertNotNull(factory.getName());
+	}
 }

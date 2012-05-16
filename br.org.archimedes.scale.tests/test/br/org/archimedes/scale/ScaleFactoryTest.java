@@ -13,6 +13,7 @@
  */
 package br.org.archimedes.scale;
 
+import static org.junit.Assert.assertNotNull;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.factories.CommandFactory;
 import br.org.archimedes.helper.FactoryTester;
@@ -249,4 +250,10 @@ public class ScaleFactoryTest extends FactoryTester {
         assertSafeNext(factory, reference, false);
         assertSafeNext(factory, 1.58, true);
     }
+    
+	@Override
+	@Test
+	public void testFactoryName() {
+		assertNotNull(factory.getName());
+	}
 }

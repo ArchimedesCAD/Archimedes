@@ -12,6 +12,7 @@
  */
 package br.org.archimedes.copypaste;
 
+import static org.junit.Assert.assertNotNull;
 import br.org.archimedes.Utils;
 import br.org.archimedes.controller.Controller;
 import br.org.archimedes.factories.CommandFactory;
@@ -208,4 +209,10 @@ public class CopyPasteFactoryTest extends FactoryTester {
         assertSafeNext(factory, vector, false, true);
         assertCancel(factory, false);
     }
+    
+	@Override
+	@Test
+	public void testFactoryName() {
+		assertNotNull(factory.getName());
+	}
 }

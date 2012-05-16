@@ -12,6 +12,11 @@
  */
 package br.org.archimedes.orto;
 
+import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+
+import org.junit.Test;
+
 import br.org.archimedes.helper.FactoryTester;
 
 
@@ -23,4 +28,9 @@ import br.org.archimedes.helper.FactoryTester;
 public class OrtoFactoryTest extends FactoryTester {
 
     // TODO Test the Orto factory
+	@Override
+	@Test
+	public void testFactoryName() {
+		fail("Not yet implemented.");
+	}
 }

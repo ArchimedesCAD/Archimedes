@@ -12,6 +12,7 @@
  */
 package br.org.archimedes.paste;
 
+import static org.junit.Assert.assertNotNull;
 import br.org.archimedes.Constant;
 import br.org.archimedes.controller.Controller;
 import br.org.archimedes.factories.CommandFactory;
@@ -74,4 +75,10 @@ public class PasteFactoryTest extends FactoryTester {
 
         assertBegin(factory, true);
     }
+    
+	@Override
+	@Test
+	public void testFactoryName() {
+		assertNotNull(factory.getName());
+	}
 }

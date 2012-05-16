@@ -12,6 +12,7 @@
  */
 package br.org.archimedes.circle;
 
+import static org.junit.Assert.assertNotNull;
 import br.org.archimedes.factories.CommandFactory;
 import br.org.archimedes.helper.FactoryTester;
 import br.org.archimedes.model.Drawing;
@@ -88,4 +89,10 @@ public class CircleFactoryTest extends FactoryTester {
         assertSafeNext(factory, point1, false);
         assertCancel(factory, false);
     }
+    
+	@Override
+	@Test
+	public void testFactoryName() {
+		assertNotNull(factory.getName());
+	}
 }
