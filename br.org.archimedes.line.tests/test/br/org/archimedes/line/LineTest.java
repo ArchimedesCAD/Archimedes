@@ -70,18 +70,18 @@ public class LineTest extends Tester {
     		testLineCreation(line);
 		}
     }
+    
+    @Test
+    public void canCreateALineFrom2Points () {
+    	for (Line line : lineFromPoint) {
+    		testLineCreation(line);
+		}
+    }
 
     /**
      * Creates a line and tests if it was correctly created.
      * 
-     * @param x1
-     *            the x coordinate of the first point
-     * @param y1
-     *            the y coordinate of the first point
-     * @param x2
-     *            the x coordinate of the second point
-     * @param y2
-     *            the y coordinate of the second point
+     * @param Line the line that will be tested.
      */
     private void testLineCreation (Line line) {
     	double x1, y1, x2, y2;
