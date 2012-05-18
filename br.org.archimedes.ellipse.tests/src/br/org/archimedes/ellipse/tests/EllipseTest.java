@@ -92,6 +92,13 @@ public class EllipseTest {
 	}
 	
 	@Test
+	public void cloneTest(){
+		Ellipse ellipseClone = (Ellipse)ellipse1.clone();
+		assertEquals(ellipseClone, ellipse1);
+		assertNotSame(ellipseClone, ellipse1);
+	}
+	
+	@Test
 	public void shouldContainsPoint() throws Exception {
 		Point frontierPoint1 = new Point(2, 9.16515138991168);
 		Point frontierPoint2 = heightPoint1;
