@@ -96,7 +96,32 @@ public class EllipseTest {
 		Ellipse ellipseClone = (Ellipse)ellipse1.clone();
 		assertEquals(ellipseClone, ellipse1);
 		assertNotSame(ellipseClone, ellipse1);
+		
 	}
+	
+	@Test
+	public void testHashCodeEllipse() throws Exception {
+		int hash1 = ellipse1.hashCode();
+		int hash2 = ellipse2.hashCode();
+		assertEquals(hash1, ellipse1.hashCode()); // Test if it returns the same code again
+		assertNotSame(hash1, hash2);
+		
+		Ellipse e1 = new Ellipse(ellipse1.getCenter(), ellipse1.getWidthPoint(),ellipse1.getHeightPoint());
+		int hash_e1 = e1.hashCode();
+		assertEquals(hash1, hash_e1);
+		e1.move(5, 0);
+		assertNotSame(hash_e1, e1.hashCode()); // Object changed, hash should change
+	}
+	
+	@Test
+	public void boundaryRectangleTest() {
+		Rectangle r1 = new Rectangle(-5, 10, 5, -10);
+		assertEquals(r1, ellipse1.getBoundaryRectangle());
+		
+		Rectangle r2 = new Rectangle(-4, 11, 6, -9);
+		assertEquals(r2, ellipse2.getBoundaryRectangle());
+	}
+	
 	
 	@Test
 	public void shouldContainsPoint() throws Exception {
