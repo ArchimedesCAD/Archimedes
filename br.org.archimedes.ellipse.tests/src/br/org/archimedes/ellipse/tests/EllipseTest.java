@@ -11,6 +11,7 @@ import java.util.Collection;
 import org.junit.Before;
 import org.junit.Test;
 
+import br.org.archimedes.Constant;
 import br.org.archimedes.ellipse.Ellipse;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.InvalidParameterException;
@@ -23,60 +24,93 @@ import br.org.archimedes.model.Vector;
 
 public class EllipseTest {
 
-	private Point defaultWidthPoint;
-	private Point defaultHeightPoint;
-	private Point defaultCenter;
-	private Ellipse defaultEllipse;
+	private Point widthPoint1;
+	private Point heightPoint1;
+	private Point center1;
+	private Ellipse ellipse1;
+	
+	private Point widthPoint2;
+	private Point heightPoint2;
+	private Point center2;
+	private Ellipse ellipse2;
 	
 	@Before
 	public void setUp() throws Exception{
-		this.defaultCenter = new Point(0, 0);
-		this.defaultWidthPoint = new Point(0, 10);
-		this.defaultHeightPoint = new Point(5, 0);
-		this.defaultEllipse = new Ellipse(defaultCenter, defaultWidthPoint, defaultHeightPoint);
+		this.center1 = new Point(0, 0);
+		this.widthPoint1 = new Point(0, 10);
+		this.heightPoint1 = new Point(5, 0);
+		this.ellipse1 = new Ellipse(center1, widthPoint1, heightPoint1);
+		
+		this.center2 = new Point(1, 1);
+		this.widthPoint2 = new Point(6, 1);
+		this.heightPoint2 = new Point(1, 11);
+		this.ellipse2 = new Ellipse(center2, widthPoint2, heightPoint2);
 	}
 
 	@Test(expected=NullArgumentException.class)
 	public void shouldNotCreateEllipseIfCenterIsNotPassed() throws Exception {
-		new Ellipse(null, defaultWidthPoint, defaultHeightPoint);
+		new Ellipse(null, widthPoint1, heightPoint1);
 	}
 	
 	@Test(expected=InvalidArgumentException.class)
 	public void shouldNotCreateEllipseIfPointsAreTooCloseOfCenter() throws Exception {
-		new Ellipse(defaultCenter, defaultCenter, defaultHeightPoint);
+		new Ellipse(center1, center1, heightPoint1);
 	}
 	
 	@Test(expected=InvalidArgumentException.class)
 	public void shouldNotCreateEllipseIfColinearPointsArePassed() throws Exception {
-		new Ellipse(defaultCenter, new Point(-5,0), new Point(5,0));
+		new Ellipse(center1, new Point(-5,0), new Point(5,0));
 	}
 	
 	@Test
 	public void shouldEqualsToAnotherEllipseIfAllPointsAreEquals() throws Exception {
-		Ellipse ellipse = new Ellipse(defaultCenter, defaultWidthPoint, defaultHeightPoint);
+		Ellipse ellipse = new Ellipse(center1, widthPoint1, heightPoint1);
 		
-		assertTrue(defaultEllipse.equals(ellipse));
+		assertTrue(ellipse1.equals(ellipse));
 	}
 	
 	@Test
 	public void shouldGetEqualSemiMajorAxis() {
-		assertEquals(defaultEllipse.getSemiMajorAxis(), new Vector(defaultCenter, defaultWidthPoint));
+		assertEquals(ellipse1.getSemiMajorAxis(), new Vector(center1, widthPoint1));
+		
+		Vector expected = new Vector(new Point(1,1), new Point(1,11));
+		assertEquals(expected, ellipse2.getSemiMajorAxis());
+	}
+	@Test
+	public void getFiTest(){
+		assertEquals(Math.PI/2 ,ellipse1.getFi(), Constant.EPSILON);
+		assertEquals(0,ellipse2.getFi(), Constant.EPSILON);
+	}
+	
+	@Test
+	public void getSemiMinorAxisTest(){
+		Vector expected = new Vector(new Point(0,0), new Point(-5,0));
+		assertEquals(expected, ellipse1.getSemiMinorAxis());
+		
+		expected = new Vector(new Point(1,1), new Point(6,1));
+		assertEquals(expected, ellipse2.getSemiMinorAxis());
 	}
 	
 	@Test
 	public void shouldContainsPoint() throws Exception {
-		Point pointInside = new Point(2, 2);
-		Point frontierPoint = defaultHeightPoint;
+		Point frontierPoint1 = new Point(2, 9.16515138991168);
+		Point frontierPoint2 = heightPoint1;
+		Point frontierPoint3 = new Point(4, 5.999999999999998);
 		
-		assertTrue(defaultEllipse.contains(pointInside));
-		assertTrue(defaultEllipse.contains(frontierPoint));
+		assertFalse(ellipse1.contains(new Point(2, 2)));
+		assertFalse(ellipse1.contains(new Point(0,0)));
+		assertFalse(ellipse1.contains(new Point(-4,-2)));
+		
+		assertTrue(ellipse1.contains(frontierPoint1));
+		assertTrue(ellipse1.contains(frontierPoint2));
+		assertTrue(ellipse1.contains(frontierPoint3));
 	}
 	
 	@Test
 	public void shouldPositiveDirectionBeTrueWhenPointIsOutside() throws Exception {
 		Point pointOutside = new Point(20, 20);
 		
-		assertTrue(defaultEllipse.isPositiveDirection(pointOutside));
+		assertTrue(ellipse1.isPositiveDirection(pointOutside));
 	}
 	
 	@Test
@@ -87,9 +121,9 @@ public class EllipseTest {
 
 		Point oppositeHeightPoint = new Point(-5,0);
 		Point oppositeWidthPoint = new Point(0,-10);
-		Collection<Point> points = Arrays.asList(defaultCenter, defaultHeightPoint, defaultWidthPoint, oppositeHeightPoint, oppositeWidthPoint);
+		Collection<Point> points = Arrays.asList(center1, heightPoint1, widthPoint1, oppositeHeightPoint, oppositeWidthPoint);
 		
-		Collection<? extends ReferencePoint> referencePoints = defaultEllipse.getReferencePoints(container);
+		Collection<? extends ReferencePoint> referencePoints = ellipse1.getReferencePoints(container);
 	
 		for (ReferencePoint referencePoint : referencePoints) {
 			refPoints.add(referencePoint.getPoint());
@@ -100,17 +134,17 @@ public class EllipseTest {
 	
 	@Test(expected=InvalidParameterException.class)
 	public void shouldNotCalculateOffsetIfDistanceIsInvalid() throws Exception {
-		defaultEllipse.cloneWithDistance(-1000);
+		ellipse1.cloneWithDistance(-1000);
 	}
 
 	@Test
 	public void shouldCalculateOffset() throws Exception {
-		Ellipse expectedEllipse = new Ellipse(defaultCenter, new Point(0, 15), new Point(-10, 0));
+		Ellipse expectedEllipse = new Ellipse(center1, new Point(0, 15), new Point(-10, 0));
 		
-		Element offsetedEllipse = defaultEllipse.cloneWithDistance(5);
+		Element offsetedEllipse = ellipse1.cloneWithDistance(5);
 		assertEquals(expectedEllipse, offsetedEllipse);
 	
-		Ellipse ellipse = new Ellipse(defaultCenter, defaultWidthPoint, new Point(-5, 0));
+		Ellipse ellipse = new Ellipse(center1, widthPoint1, new Point(-5, 0));
 		
 		Element offsetedEllipse2 = ellipse.cloneWithDistance(5);
 		assertEquals(expectedEllipse, offsetedEllipse2);
@@ -119,17 +153,17 @@ public class EllipseTest {
 	@Test 
 	public void shouldReturnProjectionOfPointAtEllipse() throws Exception{
 		Point expectedPoint = new Point(5*Math.sqrt(2.0)/2.0,10*Math.sqrt(2.0)/2.0);
-		Point point = defaultEllipse.getProjectionOf(new Point(1, 1));
+		Point point = ellipse1.getProjectionOf(new Point(1, 1));
 		assertEquals(expectedPoint, point);
 	}
 	
 	@Test
 	public void shouldCalculateFocusPointsOfAnEllipse() {
 		double expectedF = Math.sqrt(10*10 - 5*5);
-		Vector expectedE1 = new Vector(defaultCenter, defaultWidthPoint).normalized();
-		Point expectedPoint1 = defaultCenter.addVector(expectedE1.multiply(expectedF));
-		Point expectedPoint2 = defaultCenter.addVector(expectedE1.multiply(-expectedF));
-		Collection<Point> focus = defaultEllipse.calculateFocusPoints();
+		Vector expectedE1 = new Vector(center1, widthPoint1).normalized();
+		Point expectedPoint1 = center1.addVector(expectedE1.multiply(expectedF));
+		Point expectedPoint2 = center1.addVector(expectedE1.multiply(-expectedF));
+		Collection<Point> focus = ellipse1.calculateFocusPoints();
 				
 		assertTrue(focus.contains(expectedPoint1));
 		assertTrue(focus.contains(expectedPoint2));
