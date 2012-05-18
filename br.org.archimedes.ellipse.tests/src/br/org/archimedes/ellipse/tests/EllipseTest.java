@@ -122,6 +122,18 @@ public class EllipseTest {
 		assertEquals(r2, ellipse2.getBoundaryRectangle());
 	}
 	
+	@Test
+	public void rotateTest() throws NullArgumentException{
+		Ellipse e1 = (Ellipse)ellipse1.clone();
+		e1.rotate(new Point(0,0), Math.PI/2);
+		assertEquals(e1.getFi() , Math.PI, Constant.EPSILON);
+		
+		Ellipse e2 = (Ellipse)ellipse2.clone();
+		e2.rotate(new Point(0,0), Math.PI/4);
+		assertEquals(e2.getFi() , Math.PI/4, Constant.EPSILON);
+		
+		
+	}
 	
 	@Test
 	public void shouldContainsPoint() throws Exception {
