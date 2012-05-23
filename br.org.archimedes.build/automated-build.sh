@@ -43,7 +43,7 @@ sed "s/test.eclipse.zip\=/test.eclipse.zip\=$WHERE\/br.org.archimedes.build\/$EC
 
 sed "s/PROJECT_ROOT/$WHERE/" maps/all-template.map > maps/all.map
 
-ant
+ant > output
 
 RET=$?
 
@@ -51,6 +51,7 @@ if [ ! "$RET" = "0" ]; then
   sleep 5
   echo
   echo "ANT log..."
+  cat output
   cat /tmp/pluginbuilder/br.org.archimedes.build/workspace/.metadata/.log
   exit $RET
 fi
