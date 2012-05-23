@@ -296,7 +296,8 @@ POSSIBILITY OF SUCH DAMAGES.
          download-size="0"
          install-size="0"
          version="0.0.0"
-         fragment="true"/>
+         fragment="true"
+         unpack="false"/>
 
    <plugin
          id="br.org.archimedes.opengl.macosx"
@@ -308,6 +309,14 @@ POSSIBILITY OF SUCH DAMAGES.
 
    <plugin
          id="br.org.archimedes.opengl.win32.x86"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+         
+   <plugin
+         id="br.org.archimedes.opengl.win32.x86_64"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -355,5 +364,7 @@ POSSIBILITY OF SUCH DAMAGES.
          install-size="0"
          version="0.0.0"
          unpack="false"/>
+
+
 
 </feature>
