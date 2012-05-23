@@ -281,10 +281,11 @@ public class Circle extends CurvedShape implements Offsetable {
     public Element cloneWithDistance (double distance) throws InvalidParameterException {
 
         if (distance < 0) {
-            if (Math.abs(this.getRadius() - distance) <= Constant.EPSILON
-                    || Math.abs(distance) > this.getRadius()) {
+        	if(Math.abs(this.getRadius() - Math.abs(distance)) <= Constant.EPSILON)
+        		throw new InvalidParameterException();
+        	
+            if (Math.abs(distance) > this.getRadius())
                 throw new InvalidParameterException();
-            }
         }
 
         Circle clone = null;

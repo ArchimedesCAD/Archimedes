@@ -409,6 +409,16 @@ public class HorizontalInfiniteLineTest extends InfiniteLineTestCase {
         safeRotate(line, new Point(0, 0), -Math.PI / 4);
         expected = new InfiniteLine(100 * COS_45, -100 * COS_45, 0, 0);
         Assert.assertEquals("Line should be equals.", expected, line);
+        
+        Point p1 = new Point(1,1);
+        Point p2 = new Point(0,2);
+        line = new InfiniteLine(p1, p2);
+        safeRotate(line, new Point(0, 0), Math.PI / 4);
+        expected = new InfiniteLine(0, Math.sqrt(2), Math.sqrt(2), Math.sqrt(2));
+        Assert.assertEquals("point should be equal.", expected.getInitialPoint(), new Point(0,Math.sqrt(2)));
+        Assert.assertEquals("point should be equal.", expected.getEndingPoint(), new Point(Math.sqrt(2),Math.sqrt(2)));
+        Assert.assertEquals("Line should be equals.", expected, line);
+        
     }
 
     @Test

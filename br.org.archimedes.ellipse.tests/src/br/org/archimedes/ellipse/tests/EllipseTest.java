@@ -19,6 +19,7 @@ import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Rectangle;
 import br.org.archimedes.model.ReferencePoint;
+import br.org.archimedes.model.Vector;
 
 public class EllipseTest {
 
@@ -55,6 +56,11 @@ public class EllipseTest {
 		Ellipse ellipse = new Ellipse(defaultCenter, defaultWidthPoint, defaultHeightPoint);
 		
 		assertTrue(defaultEllipse.equals(ellipse));
+	}
+	
+	@Test
+	public void shouldGetEqualSemiMajorAxis() {
+		assertEquals(defaultEllipse.getSemiMajorAxis(), new Vector(defaultCenter, defaultWidthPoint));
 	}
 	
 	@Test
@@ -112,8 +118,20 @@ public class EllipseTest {
 	
 	@Test 
 	public void shouldReturnProjectionOfPointAtEllipse() throws Exception{
-		Point expectedPoint = new Point(5*Math.sqrt(2.0)/2.0, 10*Math.sqrt(2.0)/2.0);
+		Point expectedPoint = new Point(5*Math.sqrt(2.0)/2.0,10*Math.sqrt(2.0)/2.0);
 		Point point = defaultEllipse.getProjectionOf(new Point(1, 1));
 		assertEquals(expectedPoint, point);
+	}
+	
+	@Test
+	public void shouldCalculateFocusPointsOfAnEllipse() {
+		double expectedF = Math.sqrt(10*10 - 5*5);
+		Vector expectedE1 = new Vector(defaultCenter, defaultWidthPoint).normalized();
+		Point expectedPoint1 = defaultCenter.addVector(expectedE1.multiply(expectedF));
+		Point expectedPoint2 = defaultCenter.addVector(expectedE1.multiply(-expectedF));
+		Collection<Point> focus = defaultEllipse.calculateFocusPoints();
+				
+		assertTrue(focus.contains(expectedPoint1));
+		assertTrue(focus.contains(expectedPoint2));
 	}
 }
