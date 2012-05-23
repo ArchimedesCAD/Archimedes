@@ -280,7 +280,8 @@ public class Ellipse extends Element implements Offsetable {
 		dy = y - getCenter().getY();
 		a = (new Vector(center, widthPoint)).getNorm();
 		b = (new Vector(center, heightPoint)).getNorm();
-		if (Double.compare((dx * dx) / (a * a) + (dy * dy) / (b * b), 1.0) <= 0)
+		
+		if (Math.abs(((dx * dx) / (a * a) + (dy * dy) / (b * b)) - 1.0) < Constant.EPSILON)
 			return true;
 		return false;
 	}
