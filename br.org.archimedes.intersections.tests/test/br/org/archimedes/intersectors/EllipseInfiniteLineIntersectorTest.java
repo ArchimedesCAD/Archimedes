@@ -52,10 +52,15 @@ public class EllipseInfiniteLineIntersectorTest extends Tester {
 
 		assertCollectionTheSame(interPoints,
 				intersector.getIntersections(ellipse, horizontalLine));
+	}
 
+	@Test
+	public void shouldReturnOneDiagonalTangencyPoint()
+			throws InvalidArgumentException, NullArgumentException {
 		double sqrt2 = Math.sqrt(2);
 		InfiniteLine diagonalLine = new InfiniteLine(sqrt2, 0.0, 0.0, sqrt2);
 
+		ArrayList<Point> interPoints = new ArrayList<Point>();
 		interPoints = new ArrayList<Point>();
 		interPoints.add(new Point(sqrt2 / 2, sqrt2 / 2));
 
@@ -74,6 +79,15 @@ public class EllipseInfiniteLineIntersectorTest extends Tester {
 
 		assertCollectionTheSame(interPoints,
 				intersector.getIntersections(ellipse, verticalLine));
+		
+		InfiniteLine horizontalLine = new InfiniteLine(0.0, 0.0, 1.0, 0.0);
+
+		interPoints = new ArrayList<Point>();
+		interPoints.add(new Point(-1.0, 0.0));
+		interPoints.add(new Point(1.0, 0.0));
+
+		assertCollectionTheSame(interPoints,
+				intersector.getIntersections(ellipse, horizontalLine));
 	}
 
 }
