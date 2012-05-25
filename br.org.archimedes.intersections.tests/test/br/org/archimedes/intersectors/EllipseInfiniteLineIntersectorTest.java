@@ -18,53 +18,31 @@ import br.org.archimedes.model.Point;
 public class EllipseInfiniteLineIntersectorTest extends Tester {
 
     private Ellipse ellipse;
-    private InfiniteLine infiniteLine;
     private EllipseInfiniteLineIntersector intersector;
-    
-    private Ellipse ellipse2;
-    private Ellipse ellipse3;
-    private Ellipse ellipse4;
     
     
     @Before
     public void SetUp() throws NullArgumentException, InvalidArgumentException
     {
-        this.ellipse = new Ellipse(new Point(0, 0), new Point(2, 0), new Point(0,1));
-        this.intersector = new EllipseInfiniteLineIntersector();
-        this.ellipse2 = new Ellipse(new Point(0, 0), new Point(2, -2), new Point(1,1));
-        this.ellipse3 = new Ellipse(new Point(0, 0), new Point(-2, -2), new Point(1,-1));
-        this.ellipse4 = new Ellipse(new Point(5, 6), new Point(3, 4), new Point(6, 5));
-        
+        ellipse = new Ellipse(new Point(0, 0), new Point(1, 0), new Point(0,1));
+        intersector = new EllipseInfiniteLineIntersector();
     }
 
     @Test
     public void shouldNotReturnIntersectionPoints() throws InvalidArgumentException, NullArgumentException
     {
-         this.infiniteLine = new InfiniteLine(2.1, 0, 2.1, 10);
-         assertCollectionTheSame(Collections.emptyList(), intersector.getIntersections(ellipse, infiniteLine));
-         
-         this.infiniteLine = new InfiniteLine(0, 2, 10, 2);
-         assertCollectionTheSame(Collections.emptyList(), intersector.getIntersections(ellipse, infiniteLine));
-         
-         this.infiniteLine = new InfiniteLine(3, 0, 3, 10);
-         assertCollectionTheSame(Collections.emptyList(), intersector.getIntersections(ellipse, infiniteLine));
-         
-         
+    	InfiniteLine verticalLine = new InfiniteLine(3.0, 0.0, 3.0, 1.0);
+        assertCollectionTheSame(new ArrayList<Point>(), intersector.getIntersections(ellipse, verticalLine));
     }
     
     @Test
     public void shouldReturnOneTangencyPoint() throws InvalidArgumentException, NullArgumentException
     {
-        this.infiniteLine = new InfiniteLine(2, 0, 2, 10);
-        List<Point> intersectionPoints = new ArrayList<Point>();
-        intersectionPoints.add(new Point(2, 0));
-        //assertCollectionTheSame(intersectionPoints, intersector.getIntersections(ellipse, infiniteLine));
-        
-        this.infiniteLine = new InfiniteLine(0, 1, 10, 1);
-        intersectionPoints = new ArrayList<Point>();
-        intersectionPoints.add(new Point(0, 1));
-        assertCollectionTheSame(intersectionPoints, intersector.getIntersections(ellipse, infiniteLine));
-        
+    	InfiniteLine verticalLine = new InfiniteLine(1.0, 0.0, 1.0, 1.0);
+    	ArrayList<Point> interPoints = new ArrayList<Point>();
+    	interPoints.add(new Point(1.0, 0.0));
+    	
+    	assertCollectionTheSame(interPoints, intersector.getIntersections(ellipse, verticalLine));
     }
     
     @Test
