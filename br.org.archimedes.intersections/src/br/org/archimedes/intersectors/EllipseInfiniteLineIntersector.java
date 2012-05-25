@@ -33,6 +33,16 @@ public class EllipseInfiniteLineIntersector implements Intersector {
 
 		Collection<Point> intersectionPoints = new LinkedList<Point>();
 		
+		Point projection;
+		
+		projection = infiniteLine.getProjectionOf(ellipse.getCenter());
+		
+		double canonical = ellipse.canonicalEllipseEquation(projection);
+		
+		if ( Math.abs(canonical - 1.0) <= Constant.EPSILON) {
+			intersectionPoints.add(projection);
+		} 
+		
 		return intersectionPoints;
 	}
 
