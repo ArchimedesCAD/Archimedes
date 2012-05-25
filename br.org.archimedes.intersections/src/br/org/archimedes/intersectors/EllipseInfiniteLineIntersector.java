@@ -103,11 +103,11 @@ public class EllipseInfiniteLineIntersector implements Intersector {
 			// delta < 0
 		} else if (delta < Constant.EPSILON) {
 			// delta == 0
-			solutions.add(-b / 2 * a);
+			solutions.add(-b / (2.0 * a));
 		} else {
 			// delta > 0
-			solutions.add((-b + Math.sqrt(delta)) / 2 * a);
-			solutions.add((-b - Math.sqrt(delta)) / 2 * a);
+			solutions.add((-b + Math.sqrt(delta)) / (2.0 * a));
+			solutions.add((-b - Math.sqrt(delta)) / (2.0 * a));
 		}
 		return solutions;
 	}
