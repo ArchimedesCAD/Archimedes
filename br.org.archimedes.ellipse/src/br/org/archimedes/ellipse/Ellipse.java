@@ -267,6 +267,12 @@ public class Ellipse extends Element implements Offsetable {
 
 	@Override
 	public boolean contains(Point point) {
+		if ( (Math.abs(canonicalEllipseEquation(point) - 1.0)) < Constant.EPSILON )
+			return true;
+		return false;
+	}
+	
+	public double canonicalEllipseEquation(Point point) {
 		double x, y, dx, dy, a, b;
 		Point rotPoint = point.clone();
 		try {
@@ -281,9 +287,7 @@ public class Ellipse extends Element implements Offsetable {
 		a = (new Vector(center, widthPoint)).getNorm();
 		b = (new Vector(center, heightPoint)).getNorm();
 		
-		if (Math.abs(((dx * dx) / (a * a) + (dy * dy) / (b * b)) - 1.0) < Constant.EPSILON)
-			return true;
-		return false;
+		return ((dx * dx) / (a * a) + (dy * dy) / (b * b));
 	}
 
 	public boolean isPositiveDirection(Point point) {
