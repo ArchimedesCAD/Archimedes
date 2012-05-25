@@ -5,6 +5,7 @@ fragment@br.org.archimedes.opengl.linux.x86=COPY,PROJECT_ROOT,br.org.archimedes.
 fragment@br.org.archimedes.opengl.linux.x86_64=COPY,PROJECT_ROOT,br.org.archimedes.opengl.linux.x86_64
 fragment@br.org.archimedes.opengl.macosx=COPY,PROJECT_ROOT,br.org.archimedes.opengl.macosx
 fragment@br.org.archimedes.opengl.win32.x86=COPY,PROJECT_ROOT,br.org.archimedes.opengl.win32.x86
+fragment@br.org.archimedes.opengl.win32.x86_64=COPY,PROJECT_ROOT,br.org.archimedes.opengl.win32.x86_64
 plugin@br.org.archimedes.core=COPY,PROJECT_ROOT,br.org.archimedes.core
 feature@br.org.archimedes.calculus.feature=COPY,PROJECT_ROOT,br.org.archimedes.calculus.feature
 plugin@br.org.archimedes.distance=COPY,PROJECT_ROOT,br.org.archimedes.distance
