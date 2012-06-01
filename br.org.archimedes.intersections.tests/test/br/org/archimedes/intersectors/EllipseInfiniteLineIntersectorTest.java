@@ -1,10 +1,7 @@
 package br.org.archimedes.intersectors;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -138,11 +135,9 @@ public class EllipseInfiniteLineIntersectorTest extends Tester {
 	@Test
 	public void shouldReturnOneDiagonalTangencyPoint2x1()
 			throws InvalidArgumentException, NullArgumentException {
-		
-		// FIXME: this test is probably wrong.
-		
+			
 		double sqrt3 = Math.sqrt(3.0);
-		InfiniteLine diagonalLine = new InfiniteLine(10, 0.0, 1.0, sqrt3 / 2.0);
+		InfiniteLine diagonalLine = new InfiniteLine(4, 0.0, 1.0, sqrt3 / 2.0);
 
 		ArrayList<Point> interPoints = new ArrayList<Point>();
 		interPoints = new ArrayList<Point>();
@@ -175,6 +170,9 @@ public class EllipseInfiniteLineIntersectorTest extends Tester {
 		
 		assertCollectionTheSame(generateList(-2.0, 0.0, 2.0, 0.0),
 				intersector.getIntersections(ellipse2x1, horizontalLine));
+		
+		assertCollectionTheSame(generateList(0.625, 0.9499177595981665, 1.3, 0.7599342076785331),
+				intersector.getIntersections(ellipse2x1, new InfiniteLine(4, 0.0, 1.3, Math.sqrt(2.31) / 2.0)));
 	}
 	
 	private ArrayList<Point> generateList(double x1, double y1, double x2, double y2) {
