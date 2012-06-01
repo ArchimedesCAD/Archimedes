@@ -16,7 +16,8 @@ public class EllipseInfiniteLineIntersectorTest extends Tester {
 
 	// TODO Create a test using an ellipse outside the origin
 	// TODO Create a test using a rotated ellipse
-	private Ellipse ellipse1x1, ellipse2x2, ellipse2x1;//, ellipse2x3;
+	private Ellipse ellipse1x1, ellipse2x2, ellipse2x1, ellipse2x1T,
+			ellipse2x3;
 	private EllipseInfiniteLineIntersector intersector;
 
 	@Before
@@ -27,6 +28,10 @@ public class EllipseInfiniteLineIntersectorTest extends Tester {
 				2));
 		ellipse2x1 = new Ellipse(new Point(0, 0), new Point(2, 0), new Point(0,
 				1));
+		ellipse2x1T = new Ellipse(new Point(-4, 2), new Point(-2, 2),
+				new Point(-4, 3));
+		ellipse2x3 = new Ellipse(new Point(-4, 2), new Point(
+				-1.401923788646684, 3.5), new Point(-5, 3.732050807568877));
 
 		intersector = new EllipseInfiniteLineIntersector();
 	}
@@ -41,6 +46,10 @@ public class EllipseInfiniteLineIntersectorTest extends Tester {
 				intersector.getIntersections(ellipse2x2, verticalLine));
 		assertCollectionTheSame(new ArrayList<Point>(),
 				intersector.getIntersections(ellipse2x1, verticalLine));
+		assertCollectionTheSame(new ArrayList<Point>(),
+				intersector.getIntersections(ellipse2x1T, verticalLine));
+		assertCollectionTheSame(new ArrayList<Point>(),
+				intersector.getIntersections(ellipse2x3, verticalLine));
 	}
 
 	@Test
@@ -102,6 +111,26 @@ public class EllipseInfiniteLineIntersectorTest extends Tester {
 		assertCollectionTheSame(interPoints,
 				intersector.getIntersections(ellipse2x1, horizontalLine));
 	}
+	
+	@Test
+	public void shouldReturnOneTangencyPoint2x1T()
+			throws InvalidArgumentException, NullArgumentException {
+		InfiniteLine verticalLine = new InfiniteLine(-2.0, 0.0, -2.0, 1.0);
+
+		ArrayList<Point> interPoints = new ArrayList<Point>();
+		interPoints.add(new Point(-2.0, 2.0));
+
+		assertCollectionTheSame(interPoints,
+				intersector.getIntersections(ellipse2x1T, verticalLine));
+
+		InfiniteLine horizontalLine = new InfiniteLine(-4.0, 3.0, -5.0, 3.0);
+
+		interPoints = new ArrayList<Point>();
+		interPoints.add(new Point(-4.0, 3.0));
+
+		assertCollectionTheSame(interPoints,
+				intersector.getIntersections(ellipse2x1T, horizontalLine));
+	}
 
 	@Test
 	public void shouldReturnOneDiagonalTangencyPoint1x1()
@@ -133,9 +162,22 @@ public class EllipseInfiniteLineIntersectorTest extends Tester {
 	}
 
 	@Test
+	public void shouldReturnOneDiagonalTangencyPoint2x3()
+			throws InvalidArgumentException, NullArgumentException {
+		InfiniteLine diagonalLine = new InfiniteLine(-1.0, 0.0, -4.7069360559627, -0.28210643262392987);
+
+		ArrayList<Point> interPoints = new ArrayList<Point>();
+		interPoints = new ArrayList<Point>();
+		interPoints.add(new Point(-4.7069360559627, -0.28210643262392987));
+
+		assertCollectionTheSame(interPoints,
+				intersector.getIntersections(ellipse2x3, diagonalLine));
+	}
+
+	@Test
 	public void shouldReturnOneDiagonalTangencyPoint2x1()
 			throws InvalidArgumentException, NullArgumentException {
-			
+
 		double sqrt3 = Math.sqrt(3.0);
 		InfiniteLine diagonalLine = new InfiniteLine(4, 0.0, 1.0, sqrt3 / 2.0);
 
@@ -148,6 +190,22 @@ public class EllipseInfiniteLineIntersectorTest extends Tester {
 	}
 
 	@Test
+	public void shouldReturnOneDiagonalTangencyPoint2x1T()
+			throws InvalidArgumentException, NullArgumentException {
+
+		double sqrt3 = Math.sqrt(3.0);
+		InfiniteLine diagonalLine = new InfiniteLine(4 -4, 0.0 +2, 1.0 -4, (sqrt3 / 2.0) +2);
+
+		ArrayList<Point> interPoints = new ArrayList<Point>();
+		interPoints = new ArrayList<Point>();
+		interPoints.add(new Point(1 - 4, sqrt3 / 2.0 + 2));
+
+		assertCollectionTheSame(interPoints,
+				intersector.getIntersections(ellipse2x1T, diagonalLine));
+	}
+
+	
+	@Test
 	public void shouldReturnTwoTangecyPoint() throws InvalidArgumentException,
 			NullArgumentException {
 		InfiniteLine verticalLine = new InfiniteLine(0.0, 0.0, 0.0, 1.0);
@@ -158,24 +216,27 @@ public class EllipseInfiniteLineIntersectorTest extends Tester {
 
 		assertCollectionTheSame(generateList(-1.0, 0.0, 1.0, 0.0),
 				intersector.getIntersections(ellipse1x1, horizontalLine));
-		
+
 		assertCollectionTheSame(generateList(0.0, -2.0, 0.0, 2.0),
 				intersector.getIntersections(ellipse2x2, verticalLine));
-		
+
 		assertCollectionTheSame(generateList(-2.0, 0.0, 2.0, 0.0),
 				intersector.getIntersections(ellipse2x2, horizontalLine));
-		
+
 		assertCollectionTheSame(generateList(0.0, -1.0, 0.0, 1.0),
 				intersector.getIntersections(ellipse2x1, verticalLine));
-		
+
 		assertCollectionTheSame(generateList(-2.0, 0.0, 2.0, 0.0),
 				intersector.getIntersections(ellipse2x1, horizontalLine));
-		
-		assertCollectionTheSame(generateList(0.625, 0.9499177595981665, 1.3, 0.7599342076785331),
-				intersector.getIntersections(ellipse2x1, new InfiniteLine(4, 0.0, 1.3, Math.sqrt(2.31) / 2.0)));
+
+		assertCollectionTheSame(
+				generateList(0.625, 0.9499177595981665, 1.3, 0.7599342076785331),
+				intersector.getIntersections(ellipse2x1, new InfiniteLine(4,
+						0.0, 1.3, Math.sqrt(2.31) / 2.0)));
 	}
-	
-	private ArrayList<Point> generateList(double x1, double y1, double x2, double y2) {
+
+	private ArrayList<Point> generateList(double x1, double y1, double x2,
+			double y2) {
 		ArrayList<Point> interPoints = new ArrayList<Point>();
 		interPoints.add(new Point(x1, y1));
 		interPoints.add(new Point(x2, y2));

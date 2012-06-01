@@ -36,7 +36,7 @@ public class EllipseInfiniteLineIntersector implements Intersector {
 		// A point L is in the Line-Ellipse intersection iff it satisfies both equations
 		
 		Collection<Point> intersections = new ArrayList<Point>();
-		double theta = ellipse.getFi();
+		double theta = -ellipse.getFi();
 
 		Point lineP = infiniteLine.getInitialPoint();
 		Vector lineD = new Vector(lineP, infiniteLine.getEndingPoint())
@@ -80,8 +80,8 @@ public class EllipseInfiniteLineIntersector implements Intersector {
 					solutionB, solutionC);
 			for (Double sol : solutions) {
 				Point p = lineP.addVector(lineD.multiply(sol));
-				// if(line.contains(p))
-				intersections.add(p);
+				if(infiniteLine.contains(p))
+					intersections.add(p);
 			}
 
 		} catch (InvalidArgumentException e) {
