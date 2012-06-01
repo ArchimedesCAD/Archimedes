@@ -72,6 +72,8 @@ public class EllipseLineIntersectorTest extends Tester {
     	Collection<Point> result = intersector.getIntersections(ellipse2, line);
         System.out.println(result);
         
+        // FIXME: ellipse2 is not actually rotated...
+        
         List<Point> intersectionPoints = new ArrayList<Point>();
         intersectionPoints.add(new Point(1.6, 0.4));
         assertCollectionTheSame(intersectionPoints, result);
