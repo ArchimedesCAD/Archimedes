@@ -52,6 +52,7 @@ if [ ! "$RET" = "0" ]; then
   echo
   echo "ANT log..."
   cat output
+  echo "End Output"
   cat /tmp/pluginbuilder/br.org.archimedes.build/workspace/.metadata/.log
   exit $RET
 fi
