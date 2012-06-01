@@ -14,6 +14,7 @@
 
 package br.org.archimedes.helper;
 
+import static org.junit.Assert.assertNotNull;
 import br.org.archimedes.Constant;
 import br.org.archimedes.Tester;
 import br.org.archimedes.exceptions.InvalidParameterException;
@@ -22,6 +23,7 @@ import br.org.archimedes.interfaces.Command;
 import br.org.archimedes.interfaces.Parser;
 
 import org.junit.Assert;
+import org.junit.Test;
 
 import java.util.List;
 
@@ -32,8 +34,8 @@ import java.util.List;
  * @author marivb
  */
 public abstract class FactoryTester extends Tester {
-
-    /**
+	
+	/**
      * Constructor.
      */
     public FactoryTester () {
@@ -247,4 +249,7 @@ public abstract class FactoryTester extends Tester {
         assertFinished(factory, done);
         assertMakeCommands(factory, false);
     }
+    
+    @Test
+    public abstract void testFactoryName ();
 }

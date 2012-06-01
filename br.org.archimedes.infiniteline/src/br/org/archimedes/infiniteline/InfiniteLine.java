@@ -492,5 +492,9 @@ public class InfiniteLine extends Element implements Offsetable, Filletable{
 		}
 		return click;
 	}
+	
+	
+	
+	
     
 }

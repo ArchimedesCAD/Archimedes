@@ -1,6 +1,7 @@
 
 package br.org.archimedes.text.edittext.tests;
 
+import static org.junit.Assert.assertNotNull;
 import br.org.archimedes.gui.opengl.Color;
 import br.org.archimedes.helper.FactoryTester;
 import br.org.archimedes.model.Drawing;
@@ -64,4 +65,10 @@ public class EditTextFactoryTest extends FactoryTester {
         set.add(text);
         assertSafeNext(factory, set, true);
     }
+    
+	@Override
+	@Test
+	public void testFactoryName() {
+		assertNotNull(factory.getName());
+	}
 }

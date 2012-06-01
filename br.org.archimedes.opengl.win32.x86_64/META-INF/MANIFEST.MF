@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Windows 64 Fragment
+Bundle-SymbolicName: br.org.archimedes.opengl.win32.x86_64
+Bundle-Version: 1.0.0
+Bundle-Vendor: LWJGL
+Fragment-Host: br.org.archimedes.opengl
+Bundle-RequiredExecutionEnvironment: J2SE-1.5

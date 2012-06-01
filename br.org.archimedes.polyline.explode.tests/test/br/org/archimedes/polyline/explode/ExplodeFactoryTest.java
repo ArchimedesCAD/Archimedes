@@ -12,6 +12,7 @@
  */
 package br.org.archimedes.polyline.explode;
 
+import static org.junit.Assert.assertNotNull;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.factories.CommandFactory;
@@ -227,4 +228,10 @@ public class ExplodeFactoryTest extends FactoryTester {
         }
         return result;
     }
+    
+	@Override
+	@Test
+	public void testFactoryName() {
+		assertNotNull(factory.getName());
+	}
 }

@@ -57,7 +57,7 @@ public class CircleLineIntersector implements Intersector {
 			e.printStackTrace();
 		}
 
-		if ((distance - circle.getRadius()) <= Constant.EPSILON) {
+		if (distance <= circle.getRadius() + Constant.EPSILON) {
 
 			Vector lineVector = new Vector(line.getInitialPoint(), line
 					.getEndingPoint());

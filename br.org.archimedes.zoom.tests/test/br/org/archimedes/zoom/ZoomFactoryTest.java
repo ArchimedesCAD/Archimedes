@@ -12,6 +12,8 @@
  */
 package br.org.archimedes.zoom;
 
+import static org.junit.Assert.assertNotNull;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -134,4 +136,10 @@ public class ZoomFactoryTest extends FactoryTester {
         assertSafeNext(factory, p1, false);
         assertSafeNext(factory, vector, true);
     }
+    
+	@Override
+	@Test
+	public void testFactoryName() {
+		assertNotNull(factory.getName());
+	}
 }

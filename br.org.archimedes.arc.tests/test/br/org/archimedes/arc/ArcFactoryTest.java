@@ -24,6 +24,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Belongs to package br.org.archimedes.tests.commands.
@@ -206,4 +207,10 @@ public class ArcFactoryTest extends FactoryTester {
 
         assertEquals("The arc factory name should be 'arc'.", "arc", factory.getName());
     }
+
+	@Override
+	@Test
+	public void testFactoryName() {
+		assertNotNull(factory.getName());
+	}
 }

@@ -61,7 +61,24 @@ public class Ellipse extends Element implements Offsetable {
 	public Point getHeightPoint() {
 		return heightPoint;
 	}
+	
+	public double getFi() {
+		return fi;
+	}
+	
+	public Vector getSemiMajorAxis() {
+		Vector widthVector = new Vector(center, widthPoint);
+		Vector heightVector = new Vector(center, heightPoint);
+		return (widthVector.getNorm() > heightVector.getNorm()) ? widthVector : heightVector;
+	}
 
+	public Vector getSemiMinorAxis() {
+		Vector widthVector = new Vector(center, widthPoint);
+		Vector heightVector = new Vector(center, heightPoint);
+		return (widthVector.getNorm() > heightVector.getNorm()) ? heightVector : widthVector;
+	}
+
+	
 	@Override
 	public Element clone() {
 		Ellipse ellipse = null;
@@ -263,7 +280,8 @@ public class Ellipse extends Element implements Offsetable {
 		dy = y - getCenter().getY();
 		a = (new Vector(center, widthPoint)).getNorm();
 		b = (new Vector(center, heightPoint)).getNorm();
-		if (Double.compare((dx * dx) / (a * a) + (dy * dy) / (b * b), 1.0) <= 0)
+		
+		if (Math.abs(((dx * dx) / (a * a) + (dy * dy) / (b * b)) - 1.0) < Constant.EPSILON)
 			return true;
 		return false;
 	}
@@ -463,9 +481,36 @@ public class Ellipse extends Element implements Offsetable {
 	}
 	
 	public Collection<Point> calculateFocusPoints() {
-	    //TODO Terminar este metodo!
 	    Collection<Point> focusPoints = new ArrayList<Point>();
+	    
+	    // Formulae reference:	http://www.mathopenref.com/ellipsefoci.html
+	    //						http://www.mathopenref.com/ellipsesemiaxes.html
+	    
+	    double widthDist = center.calculateDistance(widthPoint);
+		double heightDist = center.calculateDistance(heightPoint);
+		
+		double F = 0.0;
+		Vector e1 = null;
+		if(widthDist > heightDist) {
+			// The semi-major axis is the horizontal one.
+			F = Math.sqrt(widthDist * widthDist - heightDist * heightDist);
+			e1 = new Vector(center, widthPoint).normalized();
+		} else {
+			F = Math.sqrt(heightDist * heightDist - widthDist * widthDist);
+			e1 = new Vector(center, heightPoint).normalized();
+		}
+	    
+		focusPoints.add(center.addVector(e1.multiply(F)));
+		focusPoints.add(center.addVector(e1.multiply(-F)));
+	    
 	    return focusPoints;
+	}
+	
+	public void translateToPoint(Point destiny) {
+		Vector dist = new Vector(destiny, center);
+		center.addVector(dist);
+		widthPoint.addVector(dist);
+		heightPoint.addVector(dist);
 	}
 
 }

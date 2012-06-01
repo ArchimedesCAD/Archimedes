@@ -221,4 +221,9 @@ public class FactoryExampleFactory implements CommandFactory {
 
         return "Comando completado com sucesso";
     }
+
+	public boolean isTransformFactory() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

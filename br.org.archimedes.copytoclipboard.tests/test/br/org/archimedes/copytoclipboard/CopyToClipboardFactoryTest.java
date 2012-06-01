@@ -14,6 +14,7 @@
 
 package br.org.archimedes.copytoclipboard;
 
+import static org.junit.Assert.assertNotNull;
 import br.org.archimedes.gui.model.Workspace;
 import br.org.archimedes.helper.FactoryTester;
 import br.org.archimedes.model.Drawing;
@@ -138,4 +139,10 @@ public class CopyToClipboardFactoryTest extends FactoryTester {
                 .contains(element1));
         Assert.assertTrue("The element should be in the clipboard.", clipboard.contains(element2));
     }
+    
+	@Override
+	@Test
+	public void testFactoryName() {
+		assertNotNull(factory.getName());
+	}
 }
