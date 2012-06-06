@@ -1,13 +1,28 @@
 #!/bin/bash
 
+if [ "$1" == "--travis" ]; then
+	TRAVIS=true
+else
+	TRAVIS=false
+fi
+
 WHERE=$(pwd)
 WHERE="${WHERE//\//\\/}"
 
-ECLIPSE=eclipse-SDK-3.7.2-linux-gtk.tar.gz
-#ECLIPSE=eclipse-SDK-3.7.2-linux-gtk-x86_64.tar.gz
+BUILD_DIR=/tmp/pluginbuilder/br.org.archimedes.build
+
+if [ $TRAVIS ]; then
+	ECLIPSE=eclipse-SDK-3.7.2-linux-gtk.tar.gz
+else
+	ECLIPSE=eclipse-SDK-3.7.2-linux-gtk-x86_64.tar.gz
+fi
 
 cd br.org.archimedes.build
 
+echo "Starting space: "
+df -h
+
+echo
 echo "Downloading..."
 wget -N -nv "http://ftp.halifax.rwth-aachen.de/eclipse//eclipse/downloads/drops/R-3.7.2-201202080800/$ECLIPSE"
 wget -N -nv "http://ftp.halifax.rwth-aachen.de/eclipse//eclipse/downloads/drops/R-3.7.2-201202080800/eclipse-3.7.2-delta-pack.zip"
@@ -16,6 +31,10 @@ echo
 echo "Unpacking..."
 tar xf $ECLIPSE
 unzip -oq eclipse-3.7.2-delta-pack.zip
+
+if [ $TRAVIS ]; then
+	rm -f $ECLIPSE eclipse-3.7.2-delta-pack.zip
+fi
 
 # Installing plugins on Eclipse: http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/guide/p2_director.html
 echo
@@ -32,7 +51,7 @@ cd ..
 echo
 echo "Building..."
 echo "buildHome=`pwd`" > build_local.properties
-echo "buildDirectory=/tmp/pluginbuilder/br.org.archimedes.build" >> build_local.properties
+echo "buildDirectory=$BUILD_DIR" >> build_local.properties
 echo "eclipseDir=`pwd`/eclipse" >> build_local.properties
 echo "os=linux" >> build_local.properties
 echo "ws=gtk" >> build_local.properties
@@ -48,12 +67,16 @@ ant > output
 RET=$?
 
 if [ ! "$RET" = "0" ]; then
-  sleep 5
-  echo
-  echo "ANT log..."
-  cat output
-  echo "End Output"
-  cat /tmp/pluginbuilder/br.org.archimedes.build/workspace/.metadata/.log
-  exit $RET
+	sleep 5
+	echo
+	echo "ANT log..."
+	cat output
+	echo
+	echo "End Output"
+	cat $BUILD_DIR/workspace/.metadata/.log
+	echo
+	echo "Disk space:"
+	df -h
+	exit $RET
 fi
 
