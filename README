@@ -20,6 +20,7 @@ We are a new team working on Archimedes, We would like to show a tutorial of how
  - Note 1: To add more "Plug-ins" for Archimedes, find the project "br.org.archimedes.core", expand it. Find the file "archimedes.product", right-click it, select "Run As..."->"Run Configuration". In the left panel, select "Eclipse Application"->"archimedes.product". Select the tab "Plug-ins" and then press the "Add Required Plug-ins" button (or select manually any other plug-ins desired). Click "Apply" button.
  - Note 2: If you are getting some compile errors ("there are red signs on the projects"), try changing your Java default compile version. To do so, go to "Window"->"Preferences..." (or "Eclipse"->"Preferences..." on Mac), type 'compiler' , select the "Compiler" item on your left pane, change the "Compiler compliance level" to "1.5". It should rebuild the project and remove the compiler errors.
 
+Obs: To send your changes to the Archimede's GitHub repository, you nee privileges. to get then, send an e-mail to the Rep. admin.
 That's all
 
 
