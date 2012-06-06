@@ -3,6 +3,9 @@
 WHERE=$(pwd)
 WHERE="${WHERE//\//\\/}"
 
+BUILD_DIR=$(pwd)/tmp
+#BUILD_DIR=/tmp/pluginbuilder/br.org.archimedes.build
+
 ECLIPSE=eclipse-SDK-3.7.2-linux-gtk.tar.gz
 #ECLIPSE=eclipse-SDK-3.7.2-linux-gtk-x86_64.tar.gz
 
@@ -32,7 +35,7 @@ cd ..
 echo
 echo "Building..."
 echo "buildHome=`pwd`" > build_local.properties
-echo "buildDirectory=/tmp/pluginbuilder/br.org.archimedes.build" >> build_local.properties
+echo "buildDirectory=$BUILD_DIR" >> build_local.properties
 echo "eclipseDir=`pwd`/eclipse" >> build_local.properties
 echo "os=linux" >> build_local.properties
 echo "ws=gtk" >> build_local.properties
@@ -48,11 +51,14 @@ ant > output
 RET=$?
 
 if [ ! "$RET" = "0" ]; then
-  sleep 5
-  echo
-  echo "ANT log..."
-  cat output
-  cat /tmp/pluginbuilder/br.org.archimedes.build/workspace/.metadata/.log
-  exit $RET
+	sleep 5
+	echo
+	echo "ANT log..."
+	cat output
+	echo "End Output"
+	cat $BUILD_DIR/workspace/.metadata/.log
+	echo "Disk space:"
+	df -h
+	exit $RET
 fi
 
