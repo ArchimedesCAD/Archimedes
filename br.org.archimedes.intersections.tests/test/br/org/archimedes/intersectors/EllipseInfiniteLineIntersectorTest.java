@@ -1,6 +1,8 @@
 package br.org.archimedes.intersectors;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -10,6 +12,7 @@ import br.org.archimedes.ellipse.Ellipse;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.infiniteline.InfiniteLine;
+import br.org.archimedes.line.Line;
 import br.org.archimedes.model.Point;
 
 public class EllipseInfiniteLineIntersectorTest extends Tester {
@@ -243,4 +246,18 @@ public class EllipseInfiniteLineIntersectorTest extends Tester {
 		return interPoints;
 	}
 
+	@Test
+    public void shouldReturnTwoIntersectionPointRotated() throws InvalidArgumentException, NullArgumentException
+    {
+		InfiniteLine diagonalLine = new InfiniteLine(-8.0, 3.0, -2.0, -1.0);
+        Collection<Point> result = intersector.getIntersections(ellipse2x3, diagonalLine);
+        System.out.println(result);
+        
+        List<Point> intersectionPoints = new ArrayList<Point>();
+        intersectionPoints.add(new Point(-3.517944219543928,0.011962813029285257));
+        intersectionPoints.add(new Point(-6.5922956062404285,2.061530404160286));
+        assertCollectionTheSame(intersectionPoints, result);
+    }
+	
+	
 }
