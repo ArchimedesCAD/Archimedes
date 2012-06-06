@@ -12,7 +12,6 @@ import br.org.archimedes.ellipse.Ellipse;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.infiniteline.InfiniteLine;
-import br.org.archimedes.line.Line;
 import br.org.archimedes.model.Point;
 
 public class EllipseInfiniteLineIntersectorTest extends Tester {

@@ -1,7 +1,5 @@
 package br.org.archimedes.intersectors;
 
-import static org.junit.Assert.*;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -14,7 +12,6 @@ import br.org.archimedes.Tester;
 import br.org.archimedes.ellipse.Ellipse;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
-import br.org.archimedes.infiniteline.InfiniteLine;
 import br.org.archimedes.line.Line;
 import br.org.archimedes.model.Point;
 
@@ -24,7 +21,6 @@ public class EllipseLineIntersectorTest extends Tester {
     private Line line;
     private EllipseLineIntersector intersector;
     
-    private Ellipse ellipse2;
     private Ellipse ellipse2x3;
     
     
@@ -34,7 +30,6 @@ public class EllipseLineIntersectorTest extends Tester {
     	this.intersector = new EllipseLineIntersector();
     	
         this.ellipse = new Ellipse(new Point(0, 0), new Point(2, 0), new Point(0,1));
-        this.ellipse2 = new Ellipse(new Point(0, 0), new Point(2, 0), new Point(0,2));
         this.ellipse2x3 = new Ellipse(new Point(-4, 2), new Point(
 				-1.401923788646684, 3.5), new Point(-5, 3.732050807568877));
     }
