@@ -193,4 +193,10 @@
             <property name="launcherIcons" value="${brandingPlugin}/icons/icon.icns" />
 		</ant>
 	</target>
+	<target name="assemble.org.eclipse.pde.build.container.feature.macosx.cocoa.x86_64">
+ 		<ant antfile="${assembleScriptName}" dir="${buildDirectory}">			
+ 			<property name="archiveName" value="${archiveNamePrefix}-macosx.cocoa.x86_64.zip"/>
+            <property name="launcherIcons" value="${brandingPlugin}/icons/icon.icns" />
+		</ant>
+	</target>
 </project>
