@@ -1,7 +1,5 @@
 package br.org.archimedes.intersectors;
 
-import static org.junit.Assert.*;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -23,7 +21,7 @@ public class EllipseLineIntersectorTest extends Tester {
     private Line line;
     private EllipseLineIntersector intersector;
     
-    private Ellipse ellipse2;
+    private Ellipse ellipse2x3;
     
     
     @Before
@@ -32,7 +30,8 @@ public class EllipseLineIntersectorTest extends Tester {
     	this.intersector = new EllipseLineIntersector();
     	
         this.ellipse = new Ellipse(new Point(0, 0), new Point(2, 0), new Point(0,1));
-        this.ellipse2 = new Ellipse(new Point(0, 0), new Point(2, 0), new Point(0,2));
+        this.ellipse2x3 = new Ellipse(new Point(-4, 2), new Point(
+				-1.401923788646684, 3.5), new Point(-5, 3.732050807568877));
     }
 
     @Test
@@ -66,15 +65,16 @@ public class EllipseLineIntersectorTest extends Tester {
     }
     
     @Test
-    public void shouldReturnOneTangencyPointRotated() throws InvalidArgumentException, NullArgumentException
+    public void shouldReturnOneIntersectionPointRotated() throws InvalidArgumentException, NullArgumentException
     {
-        this.line = new Line(-15, 0, 10, 0);
-    	Collection<Point> result = intersector.getIntersections(ellipse2, line);
+        this.line = new Line(-1.0, 0.0, -4.7069360559627, -0.28210643262392987);
+    	Collection<Point> result = intersector.getIntersections(ellipse2x3, line);
         System.out.println(result);
         
         List<Point> intersectionPoints = new ArrayList<Point>();
-        intersectionPoints.add(new Point(1.6, 0.4));
+        intersectionPoints.add(new Point(-4.7069360559627, -0.28210643262392987));
         assertCollectionTheSame(intersectionPoints, result);
     }
-
+        
+    
 }
