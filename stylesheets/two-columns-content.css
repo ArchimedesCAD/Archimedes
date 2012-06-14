@@ -21,7 +21,7 @@ div.image img{
   width: 300px;}
 div.content_wrapper{
   margin: auto;
-  width: 600px;}
+  width: 700px;}
 div.menu{
   float:left;
   margin-left: 10px;}
@@ -29,7 +29,7 @@ div.menu{
   list-style-type: none;
   padding: 0;
   margin: 0 5px 0 0;
-  width: 140px }
+  width: 200px }
 .menu li {
   margin:20px 0;
   padding: 5px;
@@ -66,7 +66,7 @@ p {
   text-align:justify;
 }
 
-.spaceText {
+.text1 {
   font-weight:bold;
   font-family: Arial;
   text-align:justify;
