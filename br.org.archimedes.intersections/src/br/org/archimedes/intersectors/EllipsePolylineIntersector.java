@@ -22,7 +22,7 @@ public class EllipsePolylineIntersector implements Intersector{
 		Polyline polyline;
 		Ellipse ellipse;
 
-		if (element.getClass() == Line.class) {
+		if (element.getClass() == Polyline.class) {
 			polyline = (Polyline) element;
 			ellipse = (Ellipse) otherElement;
 		} else {
