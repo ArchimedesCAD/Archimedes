@@ -29,28 +29,30 @@ import br.org.archimedes.model.Rectangle;
  */
 public class NullIntersectionManager implements IntersectionManager {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.interfaces.IntersectionManager#intersects(br.org.archimedes.model.Rectangle,
-     *      br.org.archimedes.model.Element)
-     */
-    public boolean intersects (Rectangle rect, Element element) {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.org.archimedes.interfaces.IntersectionManager#intersects(br.org.archimedes
+	 * .model.Rectangle, br.org.archimedes.model.Element)
+	 */
+	public boolean intersects(Rectangle rect, Element element) {
 
-        return false;
-    }
+		return false;
+	}
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.interfaces.IntersectionManager#getIntersectionsBetween(br.org.archimedes.model.Element,
-     *      br.org.archimedes.model.Element)
-     */
-    public Collection<Point> getIntersectionsBetween (Element element,
-            Element otherElement) {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.org.archimedes.interfaces.IntersectionManager#getIntersectionsBetween
+	 * (br.org.archimedes.model.Element, br.org.archimedes.model.Element)
+	 */
+	public Collection<Point> getIntersectionsBetween(Element element,
+			Element otherElement) {
 
-        return Collections.emptyList();
-    }
+		return Collections.emptyList();
+	}
 
 	public Collection<Point> getIntersectionsBetween(Element element,
 			Collection<Element> otherElements) throws NullArgumentException {

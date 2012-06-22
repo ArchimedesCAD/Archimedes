@@ -13,6 +13,12 @@
  */
 package br.org.archimedes.trimmers;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
+import org.junit.Assert;
+import org.junit.Test;
+
 import br.org.archimedes.Tester;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
@@ -21,12 +27,6 @@ import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.semiline.Semiline;
 import br.org.archimedes.trims.interfaces.Trimmer;
-
-import org.junit.Assert;
-import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.Collection;
 
 public class InfiniteLineTrimTest extends Tester {
 
@@ -42,8 +42,8 @@ public class InfiniteLineTrimTest extends Tester {
 	@Test(expected = NullArgumentException.class)
 	public void testNullLineArgument() throws NullArgumentException {
 
-	    cutPoints.add(new Point(0.0, 2.0));
-        cutPoints.add(new Point(2.0, 2.0));
+		cutPoints.add(new Point(0.0, 2.0));
+		cutPoints.add(new Point(2.0, 2.0));
 		trimmer.trim(null, cutPoints, new Point(0.0, 0.0));
 	}
 
@@ -60,8 +60,8 @@ public class InfiniteLineTrimTest extends Tester {
 	public void infiniteLineTrimsCenter() throws NullArgumentException,
 			InvalidArgumentException {
 
-	    cutPoints.add(new Point(0.0, 2.0));
-        cutPoints.add(new Point(2.0, 2.0));
+		cutPoints.add(new Point(0.0, 2.0));
+		cutPoints.add(new Point(2.0, 2.0));
 		InfiniteLine horizontalXLine = new InfiniteLine(new Point(-1.0, 2.0),
 				new Point(3.0, 2.0));
 		Collection<Element> collection = trimmer.trim(horizontalXLine,
@@ -71,18 +71,17 @@ public class InfiniteLineTrimTest extends Tester {
 				new Point(-1.0, 2.0)));
 		assertCollectionContains(collection, new Semiline(new Point(2.0, 2.0),
 				new Point(3.0, 2.0)));
-		Assert
-				.assertEquals(
-						"A trim between references should produce exactly 2 semilines.",
-						2, collection.size());
+		Assert.assertEquals(
+				"A trim between references should produce exactly 2 semilines.",
+				2, collection.size());
 	}
 
 	@Test
 	public void infiniteLineDefinedVerySmallTrimsCenter()
 			throws NullArgumentException, InvalidArgumentException {
 
-        cutPoints.add(new Point(0.0, 2.0));
-        cutPoints.add(new Point(2.0, 2.0));
+		cutPoints.add(new Point(0.0, 2.0));
+		cutPoints.add(new Point(2.0, 2.0));
 		InfiniteLine horizontalXLine = new InfiniteLine(new Point(0.5, 2.0),
 				new Point(0.6, 2.0));
 		Collection<Element> collection = trimmer.trim(horizontalXLine,
@@ -92,18 +91,17 @@ public class InfiniteLineTrimTest extends Tester {
 				new Point(-1.0, 2.0)));
 		assertCollectionContains(collection, new Semiline(new Point(2.0, 2.0),
 				new Point(3.0, 2.0)));
-		Assert
-				.assertEquals(
-						"A trim between references should produce exactly 2 semilines.",
-						2, collection.size());
+		Assert.assertEquals(
+				"A trim between references should produce exactly 2 semilines.",
+				2, collection.size());
 	}
 
 	@Test
 	public void infiniteLineTrimsEndingPortionOfLineInitialEndClickLeft()
 			throws NullArgumentException, InvalidArgumentException {
 
-        cutPoints.add(new Point(0.0, 2.0));
-        cutPoints.add(new Point(2.0, 2.0));
+		cutPoints.add(new Point(0.0, 2.0));
+		cutPoints.add(new Point(2.0, 2.0));
 		InfiniteLine horizontalXLine = new InfiniteLine(new Point(-4.0, 2.0),
 				new Point(-2.0, 2.0));
 		Collection<Element> collection = trimmer.trim(horizontalXLine,
@@ -120,8 +118,8 @@ public class InfiniteLineTrimTest extends Tester {
 	public void infiniteLineTrimsEndingPortionOfLineInitialEndClickInitial()
 			throws NullArgumentException, InvalidArgumentException {
 
-        cutPoints.add(new Point(0.0, 2.0));
-        cutPoints.add(new Point(2.0, 2.0));
+		cutPoints.add(new Point(0.0, 2.0));
+		cutPoints.add(new Point(2.0, 2.0));
 		InfiniteLine horizontalXLine = new InfiniteLine(new Point(-4.0, 2.0),
 				new Point(-2.0, 2.0));
 		Collection<Element> collection = trimmer.trim(horizontalXLine,
@@ -138,8 +136,8 @@ public class InfiniteLineTrimTest extends Tester {
 	public void infiniteLineTrimsEndingPortionOfLineInitialEndClickCenter()
 			throws NullArgumentException, InvalidArgumentException {
 
-        cutPoints.add(new Point(0.0, 2.0));
-        cutPoints.add(new Point(2.0, 2.0));
+		cutPoints.add(new Point(0.0, 2.0));
+		cutPoints.add(new Point(2.0, 2.0));
 		InfiniteLine horizontalXLine = new InfiniteLine(new Point(-4.0, 2.0),
 				new Point(-2.0, 2.0));
 		Collection<Element> collection = trimmer.trim(horizontalXLine,
@@ -156,8 +154,8 @@ public class InfiniteLineTrimTest extends Tester {
 	public void infiniteLineTrimsEndingPortionOfLineInitialEndClickEnd()
 			throws NullArgumentException, InvalidArgumentException {
 
-        cutPoints.add(new Point(0.0, 2.0));
-        cutPoints.add(new Point(2.0, 2.0));
+		cutPoints.add(new Point(0.0, 2.0));
+		cutPoints.add(new Point(2.0, 2.0));
 		InfiniteLine horizontalXLine = new InfiniteLine(new Point(-4.0, 2.0),
 				new Point(-2.0, 2.0));
 		Collection<Element> collection = trimmer.trim(horizontalXLine,
@@ -174,8 +172,8 @@ public class InfiniteLineTrimTest extends Tester {
 	public void infiniteLineTrimsEndingPortionOfLineInitialEndClickRight()
 			throws NullArgumentException, InvalidArgumentException {
 
-        cutPoints.add(new Point(0.0, 2.0));
-        cutPoints.add(new Point(2.0, 2.0));
+		cutPoints.add(new Point(0.0, 2.0));
+		cutPoints.add(new Point(2.0, 2.0));
 		InfiniteLine horizontalXLine = new InfiniteLine(new Point(-4.0, 2.0),
 				new Point(-2.0, 2.0));
 		Collection<Element> collection = trimmer.trim(horizontalXLine,
@@ -192,8 +190,8 @@ public class InfiniteLineTrimTest extends Tester {
 	public void infiniteLineTrimsEndingPortionOfLineEndInitialClickLeft()
 			throws NullArgumentException, InvalidArgumentException {
 
-        cutPoints.add(new Point(0.0, 2.0));
-        cutPoints.add(new Point(2.0, 2.0));
+		cutPoints.add(new Point(0.0, 2.0));
+		cutPoints.add(new Point(2.0, 2.0));
 		InfiniteLine horizontalXLine = new InfiniteLine(new Point(-2.0, 2.0),
 				new Point(-4.0, 2.0));
 		Collection<Element> collection = trimmer.trim(horizontalXLine,
@@ -211,8 +209,8 @@ public class InfiniteLineTrimTest extends Tester {
 	public void infiniteLineTrimsEndingPortionOfLineEndInitialClickInitial()
 			throws NullArgumentException, InvalidArgumentException {
 
-        cutPoints.add(new Point(0.0, 2.0));
-        cutPoints.add(new Point(2.0, 2.0));
+		cutPoints.add(new Point(0.0, 2.0));
+		cutPoints.add(new Point(2.0, 2.0));
 		InfiniteLine horizontalXLine = new InfiniteLine(new Point(-2.0, 2.0),
 				new Point(-4.0, 2.0));
 		Collection<Element> collection = trimmer.trim(horizontalXLine,
@@ -229,8 +227,8 @@ public class InfiniteLineTrimTest extends Tester {
 	public void infiniteLineTrimsEndingPortionOfLineEndInitialClickCenter()
 			throws NullArgumentException, InvalidArgumentException {
 
-        cutPoints.add(new Point(0.0, 2.0));
-        cutPoints.add(new Point(2.0, 2.0));
+		cutPoints.add(new Point(0.0, 2.0));
+		cutPoints.add(new Point(2.0, 2.0));
 		InfiniteLine horizontalXLine = new InfiniteLine(new Point(-2.0, 2.0),
 				new Point(-4.0, 2.0));
 		Collection<Element> collection = trimmer.trim(horizontalXLine,
@@ -247,8 +245,8 @@ public class InfiniteLineTrimTest extends Tester {
 	public void infiniteLineTrimsEndingPortionOfLineEndInitialClickEnd()
 			throws NullArgumentException, InvalidArgumentException {
 
-        cutPoints.add(new Point(0.0, 2.0));
-        cutPoints.add(new Point(2.0, 2.0));
+		cutPoints.add(new Point(0.0, 2.0));
+		cutPoints.add(new Point(2.0, 2.0));
 		InfiniteLine horizontalXLine = new InfiniteLine(new Point(-2.0, 2.0),
 				new Point(-4.0, 2.0));
 		Collection<Element> collection = trimmer.trim(horizontalXLine,
@@ -265,8 +263,8 @@ public class InfiniteLineTrimTest extends Tester {
 	public void infiniteLineTrimsEndingPortionOfLineEndInitialClickRight()
 			throws NullArgumentException, InvalidArgumentException {
 
-        cutPoints.add(new Point(0.0, 2.0));
-        cutPoints.add(new Point(2.0, 2.0));
+		cutPoints.add(new Point(0.0, 2.0));
+		cutPoints.add(new Point(2.0, 2.0));
 		InfiniteLine horizontalXLine = new InfiniteLine(new Point(-2.0, 2.0),
 				new Point(-4.0, 2.0));
 		Collection<Element> collection = trimmer.trim(horizontalXLine,
@@ -283,7 +281,7 @@ public class InfiniteLineTrimTest extends Tester {
 	public void infiniteLineTrimsLefterPartWhenClickingExactlyOnIntersectionPoint()
 			throws NullArgumentException, InvalidArgumentException {
 
-        cutPoints.add(new Point(2.0, 2.0));
+		cutPoints.add(new Point(2.0, 2.0));
 		InfiniteLine horizontalXLine = new InfiniteLine(new Point(-1.0, 2.0),
 				new Point(3.0, 2.0));
 
@@ -302,7 +300,7 @@ public class InfiniteLineTrimTest extends Tester {
 	public void infiniteLineInverseDirectionTrimsLefterPartWhenClickingExactlyOnIntersectionPoint()
 			throws NullArgumentException, InvalidArgumentException {
 
-        cutPoints.add(new Point(2.0, 2.0));
+		cutPoints.add(new Point(2.0, 2.0));
 		InfiniteLine horizontalXLine = new InfiniteLine(new Point(3.0, 2.0),
 				new Point(-1.0, 2.0));
 

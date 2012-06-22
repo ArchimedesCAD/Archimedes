@@ -30,14 +30,15 @@ import br.org.archimedes.model.Point;
 public class CircleCircleIntersectorTests extends Tester {
 	Circle testCircle;
 	CircleCircleIntersector intersector;
-	
+
 	public void setUp() throws NullArgumentException, InvalidArgumentException {
 		testCircle = new Circle(new Point(0.0, 0.0), 1.0);
 		intersector = new CircleCircleIntersector();
 	}
-	
+
 	@Test
-	public void testNullArguments() throws NullArgumentException, InvalidArgumentException {
+	public void testNullArguments() throws NullArgumentException,
+			InvalidArgumentException {
 		try {
 			intersector.getIntersections(testCircle, null);
 			fail("The otherElement is null and getIntersections should have thrown a NullArgumentException");
@@ -57,45 +58,59 @@ public class CircleCircleIntersectorTests extends Tester {
 			// Passed
 		}
 	}
-	
+
 	@Test
-	public void noIntersections() throws NullArgumentException, InvalidArgumentException {
+	public void noIntersections() throws NullArgumentException,
+			InvalidArgumentException {
 		Circle anotherCircle = new Circle(new Point(3.0, 0.0), 1.0);
-		Assert.assertTrue(intersector.getIntersections(testCircle, anotherCircle).size() == 0);
+		Assert.assertTrue(intersector.getIntersections(testCircle,
+				anotherCircle).size() == 0);
 	}
-	
+
 	@Test
-	public void tangentOutside() throws NullArgumentException, InvalidArgumentException {
+	public void tangentOutside() throws NullArgumentException,
+			InvalidArgumentException {
 		Circle anotherCircle = new Circle(new Point(2.0, 0.0), 1.0);
-		assertCollectionTheSame(Collections.singleton(new Point(1.0, 0.0)), intersector.getIntersections(testCircle, anotherCircle));
+		assertCollectionTheSame(Collections.singleton(new Point(1.0, 0.0)),
+				intersector.getIntersections(testCircle, anotherCircle));
 	}
-	
+
 	@Test
-	public void tangentInside() throws NullArgumentException, InvalidArgumentException {
+	public void tangentInside() throws NullArgumentException,
+			InvalidArgumentException {
 		Circle anotherCircle = new Circle(new Point(0.5, 0.0), 0.5);
-		assertCollectionTheSame(Collections.singleton(new Point(1.0, 0.0)), intersector.getIntersections(testCircle, anotherCircle));
+		assertCollectionTheSame(Collections.singleton(new Point(1.0, 0.0)),
+				intersector.getIntersections(testCircle, anotherCircle));
 	}
-	
+
 	@Test
-	public void oneInsideOtherWithoutIntersection() throws NullArgumentException, InvalidArgumentException {
+	public void oneInsideOtherWithoutIntersection()
+			throws NullArgumentException, InvalidArgumentException {
 		Circle anotherCircle = new Circle(new Point(0.0, 0.0), 0.5);
-		Assert.assertTrue(intersector.getIntersections(testCircle, anotherCircle).size() == 0);
+		Assert.assertTrue(intersector.getIntersections(testCircle,
+				anotherCircle).size() == 0);
 	}
-	
+
 	@Test
-	public void theSameCircle() throws NullArgumentException, InvalidArgumentException {
+	public void theSameCircle() throws NullArgumentException,
+			InvalidArgumentException {
 		Circle anotherCircle = new Circle(new Point(0.0, 0.0), 1.0);
-		Assert.assertTrue(intersector.getIntersections(testCircle, anotherCircle).size() == 0);
+		Assert.assertTrue(intersector.getIntersections(testCircle,
+				anotherCircle).size() == 0);
 	}
-	
+
 	@Test
-	public void twoIntersections() throws NullArgumentException, InvalidArgumentException {
-		Circle circle = new Circle(new Point(0.5, Math.sqrt(Math.pow(1, 2)-Math.pow(0.5, 2))), 1.0);
-		Circle anotherCircle = new Circle(new Point(0.5, -(Math.sqrt(Math.pow(1, 2)-Math.pow(0.5, 2)))), 1.0);
-		
+	public void twoIntersections() throws NullArgumentException,
+			InvalidArgumentException {
+		Circle circle = new Circle(new Point(0.5, Math.sqrt(Math.pow(1, 2)
+				- Math.pow(0.5, 2))), 1.0);
+		Circle anotherCircle = new Circle(new Point(0.5, -(Math.sqrt(Math.pow(
+				1, 2) - Math.pow(0.5, 2)))), 1.0);
+
 		Collection<Point> intersectionPoints = new ArrayList<Point>();
 		intersectionPoints.add(new Point(0.0, 0.0));
 		intersectionPoints.add(new Point(1.0, 0.0));
-		assertCollectionTheSame(intersectionPoints, intersector.getIntersections(circle, anotherCircle));
+		assertCollectionTheSame(intersectionPoints,
+				intersector.getIntersections(circle, anotherCircle));
 	}
 }

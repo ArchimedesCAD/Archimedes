@@ -27,24 +27,26 @@ import br.org.archimedes.model.Point;
  */
 public interface ExtendManager {
 
-    /**
-     * Extends an element to the nearest reference
-     * 
-     * @param element
-     *            The element to be extended.
-     * @param references
-     *            References to extend the element
-     * @param click
-     *            Point where user clicked to choose which parts of the element shall be extended
-     * @throws NullArgumentException
-     *             If element, references or click is null
-     */
-    public Element extend (Element element, Collection<Element> references, Point click)
-            throws NullArgumentException;
+	/**
+	 * Extends an element to the nearest reference
+	 * 
+	 * @param element
+	 *            The element to be extended.
+	 * @param references
+	 *            References to extend the element
+	 * @param click
+	 *            Point where user clicked to choose which parts of the element
+	 *            shall be extended
+	 * @throws NullArgumentException
+	 *             If element, references or click is null
+	 */
+	public Element extend(Element element, Collection<Element> references,
+			Point click) throws NullArgumentException;
 
-    /**
-     * @return a collection of elements that are the infinite extension of element
-     */
-    public Collection<Element> getInfiniteExtensionElements (Element element);
+	/**
+	 * @return a collection of elements that are the infinite extension of
+	 *         element
+	 */
+	public Collection<Element> getInfiniteExtensionElements(Element element);
 
 }

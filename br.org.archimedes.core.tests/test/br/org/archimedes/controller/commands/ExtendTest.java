@@ -13,7 +13,6 @@
  */
 package br.org.archimedes.controller.commands;
 
-
 public class ExtendTest {
 	// TODO Testes para essa classe.
 }

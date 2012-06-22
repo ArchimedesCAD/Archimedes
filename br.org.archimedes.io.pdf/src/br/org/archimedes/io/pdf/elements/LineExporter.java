@@ -31,30 +31,33 @@ import com.lowagie.text.pdf.PdfContentByte;
  */
 public class LineExporter implements ElementExporter<Line> {
 
-    /*
-     * (non-Javadoc)
-     * @see br.org.archimedes.interfaces.ElementExporter#exportElement(br.org.archimedes
-     * .model.Element, java.io.OutputStream)
-     */
-    public void exportElement (Line line, Object outputObject) throws IOException {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.org.archimedes.interfaces.ElementExporter#exportElement(br.org.archimedes
+	 * .model.Element, java.io.OutputStream)
+	 */
+	public void exportElement(Line line, Object outputObject)
+			throws IOException {
 
-        PDFWriterHelper helper = (PDFWriterHelper) outputObject;
-        PdfContentByte cb = helper.getPdfContentByte();
+		PDFWriterHelper helper = (PDFWriterHelper) outputObject;
+		PdfContentByte cb = helper.getPdfContentByte();
 
-        Point initial = helper.modelToDocument(line.getInitialPoint());
-        Point ending = helper.modelToDocument(line.getEndingPoint());
-        float x = (float) initial.getX();
-        float y = (float) initial.getY();
-        cb.moveTo(x, y);
-        x = (float) ending.getX();
-        y = (float) ending.getY();
-        cb.lineTo(x, y);
-        cb.stroke();
-    }
+		Point initial = helper.modelToDocument(line.getInitialPoint());
+		Point ending = helper.modelToDocument(line.getEndingPoint());
+		float x = (float) initial.getX();
+		float y = (float) initial.getY();
+		cb.moveTo(x, y);
+		x = (float) ending.getX();
+		y = (float) ending.getY();
+		cb.lineTo(x, y);
+		cb.stroke();
+	}
 
-    public void exportElement (Line element, Object outputObject, Rectangle boundingBox)
-            throws IOException, NotSupportedException {
+	public void exportElement(Line element, Object outputObject,
+			Rectangle boundingBox) throws IOException, NotSupportedException {
 
-        throw new NotSupportedException();
-    }
+		throw new NotSupportedException();
+	}
 }

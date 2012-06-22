@@ -15,27 +15,30 @@ import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.semiline.Semiline;
 
-public class SemilineParser extends ElementParser{
-    
+public class SemilineParser extends ElementParser {
+
 	@Override
-	public Collection<Element> parse(DXFLayer layer) throws NullArgumentException, InvalidArgumentException {
-		
+	public Collection<Element> parse(DXFLayer layer)
+			throws NullArgumentException, InvalidArgumentException {
+
 		Collection<Element> archimedesSemilines = new ArrayList<Element>();
-		List<DXFRay> dxfSemilines = layer.getDXFEntities(DXFConstants.ENTITY_TYPE_RAY);
-		
-		if(dxfSemilines != null) {
+		List<DXFRay> dxfSemilines = layer
+				.getDXFEntities(DXFConstants.ENTITY_TYPE_RAY);
+
+		if (dxfSemilines != null) {
 			for (DXFRay dxfSemiline : dxfSemilines) {
-		  		org.kabeja.dxf.helpers.Point startPoint = dxfSemiline.getBasePoint();
-		  		Vector direction = dxfSemiline.getDirection();
-		  		
-		  		double x = startPoint.getX();
+				org.kabeja.dxf.helpers.Point startPoint = dxfSemiline
+						.getBasePoint();
+				Vector direction = dxfSemiline.getDirection();
+
+				double x = startPoint.getX();
 				double y = startPoint.getY();
-				
+
 				Point p1 = new Point(x, y);
-		  		Point p2 = new Point(direction.getX() + x, direction.getY() + y);
-		  		
+				Point p2 = new Point(direction.getX() + x, direction.getY() + y);
+
 				Semiline semiline = new Semiline(p1, p2);
-							
+
 				archimedesSemilines.add(semiline);
 			}
 		}

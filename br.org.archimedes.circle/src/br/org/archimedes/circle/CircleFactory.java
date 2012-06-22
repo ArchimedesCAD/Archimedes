@@ -13,6 +13,9 @@
  */
 package br.org.archimedes.circle;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import br.org.archimedes.Geometrics;
 import br.org.archimedes.controller.commands.PutOrRemoveElementCommand;
 import br.org.archimedes.exceptions.InvalidArgumentException;
@@ -27,175 +30,166 @@ import br.org.archimedes.model.Point;
 import br.org.archimedes.parser.DistanceParser;
 import br.org.archimedes.parser.PointParser;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class CircleFactory implements CommandFactory {
 
-    private Point center;
+	private Point center;
 
-    private double radius;
+	private double radius;
 
-    private Workspace workspace;
+	private Workspace workspace;
 
-    private boolean active;
+	private boolean active;
 
-    private PutOrRemoveElementCommand command;
+	private PutOrRemoveElementCommand command;
 
+	public CircleFactory() {
 
-    public CircleFactory () {
+		workspace = br.org.archimedes.Utils.getWorkspace();
+		deactivate();
+	}
 
-        workspace = br.org.archimedes.Utils.getWorkspace();
-        deactivate();
-    }
+	public String begin() {
 
-    public String begin () {
+		active = true;
+		br.org.archimedes.Utils.getController().deselectAll();
 
-        active = true;
-        br.org.archimedes.Utils.getController().deselectAll();
+		return Messages.SelectCenter;
+	}
 
-        return Messages.SelectCenter;
-    }
+	public String cancel() {
 
-    public String cancel () {
+		deactivate();
 
-        deactivate();
+		return Messages.Canceled;
+	}
 
-        return Messages.Canceled;
-    }
+	public void drawVisualHelper() {
 
-    public void drawVisualHelper () {
+		OpenGLWrapper opengl = br.org.archimedes.Utils.getOpenGLWrapper();
 
-        OpenGLWrapper opengl = br.org.archimedes.Utils.getOpenGLWrapper();
+		if (center != null && !isDone()) {
+			Point start = center;
+			Point end = workspace.getMousePosition();
 
-        if (center != null && !isDone()) {
-            Point start = center;
-            Point end = workspace.getMousePosition();
+			opengl.setLineStyle(OpenGLWrapper.STIPPLED_LINE);
 
-            opengl.setLineStyle(OpenGLWrapper.STIPPLED_LINE);
+			try {
+				double radius = Geometrics.calculateDistance(start, end);
+				Circle circle = new Circle(start, radius);
+				circle.draw(opengl);
+			} catch (NullArgumentException e) {
+				// Should not reach this block
+				e.printStackTrace();
+			} catch (InvalidArgumentException e) {
+				// Nothing to do, just don't draw the circle
+			}
+		}
+	}
 
-            try {
-                double radius = Geometrics.calculateDistance(start, end);
-                Circle circle = new Circle(start, radius);
-                circle.draw(opengl);
-            }
-            catch (NullArgumentException e) {
-                // Should not reach this block
-                e.printStackTrace();
-            }
-            catch (InvalidArgumentException e) {
-                // Nothing to do, just don't draw the circle
-            }
-        }
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.factories.CommandFactory#getCommands()
+	 */
+	public List<Command> getCommands() {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.factories.CommandFactory#getCommands()
-     */
-    public List<Command> getCommands () {
+		List<Command> cmds = null;
 
-        List<Command> cmds = null;
+		if (command != null) {
+			cmds = new ArrayList<Command>();
+			cmds.add(command);
+			command = null;
+		}
 
-        if (command != null) {
-            cmds = new ArrayList<Command>();
-            cmds.add(command);
-            command = null;
-        }
+		return cmds;
+	}
 
-        return cmds;
-    }
+	public String getName() {
 
-    public String getName () {
+		return "circle"; //$NON-NLS-1$;
+	}
 
-        return "circle"; //$NON-NLS-1$;
-    }
+	public Parser getNextParser() {
 
-    public Parser getNextParser () {
+		Parser returnParser = null;
+		if (active) {
+			if (center == null) {
+				returnParser = new PointParser();
+			} else {
+				returnParser = new DistanceParser(center);
+			}
+		}
+		return returnParser;
 
-        Parser returnParser = null;
-        if (active) {
-            if (center == null) {
-                returnParser = new PointParser();
-            }
-            else {
-                returnParser = new DistanceParser(center);
-            }
-        }
-        return returnParser;
+	}
 
-    }
+	public boolean isDone() {
 
-    public boolean isDone () {
+		return !active;
+	}
 
-        return !active;
-    }
+	public String next(Object parameter) throws InvalidParameterException {
 
-    public String next (Object parameter) throws InvalidParameterException {
+		String result = null;
 
-        String result = null;
+		if (isDone()) {
+			throw new InvalidParameterException();
+		}
 
-        if (isDone()) {
-            throw new InvalidParameterException();
-        }
+		if (parameter != null) {
+			try {
+				if (center == null) {
+					center = (Point) parameter;
+					workspace.setPerpendicularGripReferencePoint(center);
+					result = Messages.CircleFactory_SelectRadius;
+				} else {
+					radius = (Double) parameter;
+					workspace.setPerpendicularGripReferencePoint(null);
+					result = createCircle();
+				}
+			} catch (ClassCastException e) {
+				throw new InvalidParameterException();
+			}
+		} else {
+			throw new InvalidParameterException();
+		}
+		return result;
+	}
 
-        if (parameter != null) {
-            try {
-                if (center == null) {
-                    center = (Point) parameter;
-                    workspace.setPerpendicularGripReferencePoint(center);
-                    result = Messages.CircleFactory_SelectRadius;
-                }
-                else {
-                    radius = (Double) parameter;
-                    workspace.setPerpendicularGripReferencePoint(null);
-                    result = createCircle();
-                }
-            }
-            catch (ClassCastException e) {
-                throw new InvalidParameterException();
-            }
-        }
-        else {
-            throw new InvalidParameterException();
-        }
-        return result;
-    }
+	private void deactivate() {
 
-    private void deactivate () {
+		center = null;
+		radius = 0.0;
+		active = false;
+	}
 
-        center = null;
-        radius = 0.0;
-        active = false;
-    }
+	/**
+	 * Creates the circle and ends the command.
+	 * 
+	 * @return A nice message to the user.
+	 */
+	private String createCircle() {
 
-    /**
-     * Creates the circle and ends the command.
-     * 
-     * @return A nice message to the user.
-     */
-    private String createCircle () {
+		String result = null;
+		try {
+			Circle newCircle = new Circle(center, radius);
+			command = new PutOrRemoveElementCommand(newCircle, false);
+			result = Messages.Created;
+		} catch (Exception e) {
+			result = Messages.NotCreated;
+		}
+		deactivate();
+		return result;
+	}
 
-        String result = null;
-        try {
-            Circle newCircle = new Circle(center, radius);
-            command = new PutOrRemoveElementCommand(newCircle, false);
-            result = Messages.Created;
-        }
-        catch (Exception e) {
-            result = Messages.NotCreated;
-        }
-        deactivate();
-        return result;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.factories.CommandFactory#isTransformFactory()
+	 */
+	public boolean isTransformFactory() {
 
-    /* (non-Javadoc)
-     * @see br.org.archimedes.factories.CommandFactory#isTransformFactory()
-     */
-    public boolean isTransformFactory () {
-
-        return false;
-    }
+		return false;
+	}
 
 }

@@ -12,6 +12,10 @@
  */
 package br.org.archimedes.scale;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
 import br.org.archimedes.Geometrics;
 import br.org.archimedes.controller.Controller;
 import br.org.archimedes.exceptions.IllegalActionException;
@@ -31,10 +35,6 @@ import br.org.archimedes.parser.PointParser;
 import br.org.archimedes.parser.SimpleSelectionParser;
 import br.org.archimedes.parser.StringDecoratorParser;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
 /**
  * Belongs to package br.org.archimedes.scale.
  * 
@@ -42,380 +42,357 @@ import java.util.Set;
  */
 public class ScaleFactory implements CommandFactory {
 
-    private Set<Element> selection;
+	private Set<Element> selection;
 
-    private Point scaleReference;
+	private Point scaleReference;
 
-    private Workspace workspace;
+	private Workspace workspace;
 
-    private Controller controller;
+	private Controller controller;
 
-    private boolean active;
+	private boolean active;
 
-    private Command command;
+	private Command command;
 
-    private Double proportion;
+	private Double proportion;
 
-    private Double denominator;
+	private Double denominator;
 
-    private Point distanceReference;
+	private Point distanceReference;
 
-    private boolean getReference;
+	private boolean getReference;
 
+	public ScaleFactory() {
 
-    public ScaleFactory () {
+		controller = br.org.archimedes.Utils.getController();
+		workspace = br.org.archimedes.Utils.getWorkspace();
+		deactivate();
+	}
 
-        controller = br.org.archimedes.Utils.getController();
-        workspace = br.org.archimedes.Utils.getWorkspace();
-        deactivate();
-    }
+	public String begin() {
 
-    public String begin () {
+		active = true;
+		String returnValue = Messages.GetSelection;
+		try {
+			Set<Element> selection = controller.getCurrentSelectedElements();
 
-        active = true;
-        String returnValue = Messages.GetSelection;
-        try {
-            Set<Element> selection = controller.getCurrentSelectedElements();
+			if (selection != null && !selection.isEmpty()) {
+				returnValue = next(selection);
+			} else {
+				selection = null;
+			}
+		} catch (NoActiveDrawingException e) {
+			returnValue = cancel();
+		} catch (InvalidParameterException e) {
+			// Should not happen
+			e.printStackTrace();
+		}
 
-            if (selection != null && !selection.isEmpty()) {
-                returnValue = next(selection);
-            }
-            else {
-                selection = null;
-            }
-        }
-        catch (NoActiveDrawingException e) {
-            returnValue = cancel();
-        }
-        catch (InvalidParameterException e) {
-            // Should not happen
-            e.printStackTrace();
-        }
+		return returnValue;
+	}
 
-        return returnValue;
-    }
+	/**
+	 * Deactivates this factory
+	 */
+	private void deactivate() {
 
-    /**
-     * Deactivates this factory
-     */
-    private void deactivate () {
+		active = false;
+		selection = null;
+		scaleReference = null;
+		distanceReference = null;
+		denominator = null;
+		proportion = null;
+		getReference = false;
+	}
 
-        active = false;
-        selection = null;
-        scaleReference = null;
-        distanceReference = null;
-        denominator = null;
-        proportion = null;
-        getReference = false;
-    }
+	public String next(Object parameter) throws InvalidParameterException {
 
-    public String next (Object parameter) throws InvalidParameterException {
+		String result = null;
 
-        String result = null;
+		if (!active || parameter == null) {
+			throw new InvalidParameterException();
+		}
+		if (selection == null) {
+			result = tryGetSelection(parameter);
+		} else if (scaleReference == null) {
+			result = tryGetScaleReference(parameter);
+		} else if (getReference) {
+			result = tryGetReference(parameter);
+			getReference = false;
+		} else if (parameter.equals("r")) { //$NON-NLS-1$
+			getReference = true;
+			result = Messages.AfterR;
+		} else if (denominator != null) {
+			Double numerator = tryGetDouble(parameter);
+			proportion = numerator / denominator;
+		} else {
+			try {
+				proportion = tryGetDouble(parameter);
+			} catch (InvalidParameterException e) {
+				Point distancePoint;
+				try {
+					distancePoint = (Point) parameter;
+					denominator = Geometrics.calculateDistance(
+							distanceReference, distancePoint);
+					result = Messages.GetNumerator;
+				} catch (ClassCastException e1) {
+					throw new InvalidParameterException(
+							Messages.ExpectedDoubleOrPoint);
+				} catch (NullArgumentException e1) {
+					// Should never happen
+					e.printStackTrace();
+				}
+			}
+		}
 
-        if ( !active || parameter == null) {
-            throw new InvalidParameterException();
-        }
-        if (selection == null) {
-            result = tryGetSelection(parameter);
-        }
-        else if (scaleReference == null) {
-            result = tryGetScaleReference(parameter);
-        }
-        else if (getReference) {
-            result = tryGetReference(parameter);
-            getReference = false;
-        }
-        else if (parameter.equals("r")) { //$NON-NLS-1$
-            getReference = true;
-            result = Messages.AfterR;
-        }
-        else if (denominator != null) {
-            Double numerator = tryGetDouble(parameter);
-            proportion = numerator / denominator;
-        }
-        else {
-            try {
-                proportion = tryGetDouble(parameter);
-            }
-            catch (InvalidParameterException e) {
-                Point distancePoint;
-                try {
-                    distancePoint = (Point) parameter;
-                    denominator = Geometrics.calculateDistance(
-                            distanceReference, distancePoint);
-                    result = Messages.GetNumerator;
-                }
-                catch (ClassCastException e1) {
-                    throw new InvalidParameterException(Messages.ExpectedDoubleOrPoint);
-                }
-                catch (NullArgumentException e1) {
-                    // Should never happen
-                    e.printStackTrace();
-                }
-            }
-        }
+		if (proportion != null) {
+			result = completeCommand();
+			deactivate();
+		}
 
-        if (proportion != null) {
-            result = completeCommand();
-            deactivate();
-        }
+		return result;
+	}
 
-        return result;
-    }
+	/**
+	 * @param parameter
+	 *            The parameter to receive
+	 * @return A nice message to the user
+	 * @throws InvalidParameterException
+	 *             Thrown if the parameter is neither a double nor a point.
+	 */
+	private String tryGetReference(Object parameter)
+			throws InvalidParameterException {
 
-    /**
-     * @param parameter
-     *            The parameter to receive
-     * @return A nice message to the user
-     * @throws InvalidParameterException
-     *             Thrown if the parameter is neither a double nor a point.
-     */
-    private String tryGetReference (Object parameter)
-            throws InvalidParameterException {
+		String message = null;
+		try {
+			denominator = (Double) parameter;
+			message = Messages.GetNumerator;
+		} catch (ClassCastException e) {
+			try {
+				distanceReference = (Point) parameter;
+				message = Messages.GetProportion;
+			} catch (ClassCastException e1) {
+				throw new InvalidParameterException(
+						Messages.ExpectedDoubleOrPoint);
+			}
+		}
+		return message;
+	}
 
-        String message = null;
-        try {
-            denominator = (Double) parameter;
-            message = Messages.GetNumerator;
-        }
-        catch (ClassCastException e) {
-            try {
-                distanceReference = (Point) parameter;
-                message = Messages.GetProportion;
-            }
-            catch (ClassCastException e1) {
-                throw new InvalidParameterException(Messages.ExpectedDoubleOrPoint);
-            }
-        }
-        return message;
-    }
+	/**
+	 * Tries to get a double from the parameter.
+	 * 
+	 * @param parameter
+	 *            Potentially a double.
+	 * @return The double parsed.
+	 * @throws InvalidParameterException
+	 *             Thrown if the parameter is not a double.
+	 */
+	private Double tryGetDouble(Object parameter)
+			throws InvalidParameterException {
 
-    /**
-     * Tries to get a double from the parameter.
-     * 
-     * @param parameter
-     *            Potentially a double.
-     * @return The double parsed.
-     * @throws InvalidParameterException
-     *             Thrown if the parameter is not a double.
-     */
-    private Double tryGetDouble (Object parameter)
-            throws InvalidParameterException {
+		Double myDouble;
+		try {
+			myDouble = (Double) parameter;
+		} catch (ClassCastException e) {
+			throw new InvalidParameterException(Messages.ExpectedDouble);
+		}
+		return myDouble;
+	}
 
-        Double myDouble;
-        try {
-            myDouble = (Double) parameter;
-        }
-        catch (ClassCastException e) {
-            throw new InvalidParameterException(Messages.ExpectedDouble);
-        }
-        return myDouble;
-    }
+	/**
+	 * Tries to get a reference point from the parameter.
+	 * 
+	 * @param parameter
+	 *            Potentially a point.
+	 * @return A nice message for the user.
+	 * @throws InvalidParameterException
+	 *             Thrown if the parameter is not a point.
+	 */
+	private String tryGetScaleReference(Object parameter)
+			throws InvalidParameterException {
 
-    /**
-     * Tries to get a reference point from the parameter.
-     * 
-     * @param parameter
-     *            Potentially a point.
-     * @return A nice message for the user.
-     * @throws InvalidParameterException
-     *             Thrown if the parameter is not a point.
-     */
-    private String tryGetScaleReference (Object parameter)
-            throws InvalidParameterException {
+		String result;
+		try {
+			scaleReference = (Point) parameter;
+		} catch (ClassCastException e) {
+			throw new InvalidParameterException(Messages.ExpectedPoint);
+		}
+		distanceReference = scaleReference;
+		result = Messages.GetProportion;
+		workspace.setPerpendicularGripReferencePoint(scaleReference);
+		return result;
+	}
 
-        String result;
-        try {
-            scaleReference = (Point) parameter;
-        }
-        catch (ClassCastException e) {
-            throw new InvalidParameterException(Messages.ExpectedPoint);
-        }
-        distanceReference = scaleReference;
-        result = Messages.GetProportion;
-        workspace.setPerpendicularGripReferencePoint(scaleReference);
-        return result;
-    }
+	/**
+	 * Tries to get a selection from the parameter.
+	 * 
+	 * @param parameter
+	 *            Potentially a selection.
+	 * @return A nice message for the user.
+	 * @throws InvalidParameterException
+	 *             Thrown if the parameter is not a valid selection.
+	 */
+	@SuppressWarnings("unchecked")//$NON-NLS-1$
+	private String tryGetSelection(Object parameter)
+			throws InvalidParameterException {
 
-    /**
-     * Tries to get a selection from the parameter.
-     * 
-     * @param parameter
-     *            Potentially a selection.
-     * @return A nice message for the user.
-     * @throws InvalidParameterException
-     *             Thrown if the parameter is not a valid selection.
-     */
-    @SuppressWarnings("unchecked") //$NON-NLS-1$
-    private String tryGetSelection (Object parameter)
-            throws InvalidParameterException {
+		String result;
 
-        String result;
+		try {
+			selection = (Set<Element>) parameter;
+		} catch (ClassCastException e) {
+			throw new InvalidParameterException(Messages.SelectionExpected);
+		}
 
-        try {
-            selection = (Set<Element>) parameter;
-        }
-        catch (ClassCastException e) {
-            throw new InvalidParameterException(Messages.SelectionExpected);
-        }
+		if (selection.isEmpty()) {
+			selection = null;
+			result = Messages.GetSelection;
+		} else {
+			result = Messages.GetScaleReference;
+		}
+		return result;
+	}
 
-        if (selection.isEmpty()) {
-            selection = null;
-            result = Messages.GetSelection;
-        }
-        else {
-            result = Messages.GetScaleReference;
-        }
-        return result;
-    }
+	/**
+	 * Moves the elements from reference point to target.
+	 * 
+	 * @return A message to the user indicating if the command was successfully
+	 *         finished.
+	 */
+	private String completeCommand() {
 
-    /**
-     * Moves the elements from reference point to target.
-     * 
-     * @return A message to the user indicating if the command was successfully
-     *         finished.
-     */
-    private String completeCommand () {
+		String result = Messages.CommandFinished;
 
-        String result = Messages.CommandFinished;
+		try {
+			command = new ScaleCommand(selection, scaleReference, proportion);
+		} catch (Exception e) {
+			result = Messages.CommandFailed;
+		}
 
-        try {
-            command = new ScaleCommand(selection, scaleReference, proportion);
-        }
-        catch (Exception e) {
-            result = Messages.CommandFailed;
-        }
+		return result;
+	}
 
-        return result;
-    }
+	public boolean isDone() {
 
-    public boolean isDone () {
+		return !active;
+	}
 
-        return !active;
-    }
+	public String cancel() {
 
-    public String cancel () {
+		controller.deselectAll();
+		deactivate();
 
-        controller.deselectAll();
-        deactivate();
+		return Messages.CancelCommand;
+	}
 
-        return Messages.CancelCommand;
-    }
+	@Override
+	public String toString() {
 
-    @Override
-    public String toString () {
+		return "scale"; //$NON-NLS-1$
+	}
 
-        return "scale"; //$NON-NLS-1$
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.commands.Command#getNextParser()
+	 */
+	public Parser getNextParser() {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.commands.Command#getNextParser()
-     */
-    public Parser getNextParser () {
+		Parser returnParser = null;
 
-        Parser returnParser = null;
+		if (!active) {
+			returnParser = null;
+		} else if (selection == null) {
+			returnParser = new SimpleSelectionParser();
+		} else if (scaleReference == null) {
+			returnParser = new PointParser();
+		} else if (getReference) {
+			returnParser = new DoubleDecoratorParser(new PointParser());
+		} else if (denominator != null) {
+			returnParser = new DistanceParser(distanceReference);
+		} else {
+			Parser doubleDecorator = new DoubleDecoratorParser(
+					new PointParser());
+			returnParser = new StringDecoratorParser(doubleDecorator, "r"); //$NON-NLS-1$
+		}
 
-        if ( !active) {
-            returnParser = null;
-        }
-        else if (selection == null) {
-            returnParser = new SimpleSelectionParser();
-        }
-        else if (scaleReference == null) {
-            returnParser = new PointParser();
-        }
-        else if (getReference) {
-            returnParser = new DoubleDecoratorParser(new PointParser());
-        }
-        else if (denominator != null) {
-            returnParser = new DistanceParser(distanceReference);
-        }
-        else {
-            Parser doubleDecorator = new DoubleDecoratorParser(
-                    new PointParser());
-            returnParser = new StringDecoratorParser(doubleDecorator, "r"); //$NON-NLS-1$
-        }
+		return returnParser;
+	}
 
-        return returnParser;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.factories.CommandFactory#getCommands()
+	 */
+	public List<Command> getCommands() {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.factories.CommandFactory#getCommands()
-     */
-    public List<Command> getCommands () {
+		List<Command> cmds = null;
 
-        List<Command> cmds = null;
+		if (command != null) {
+			cmds = new ArrayList<Command>();
+			cmds.add(command);
+			command = null;
+		}
 
-        if (command != null) {
-            cmds = new ArrayList<Command>();
-            cmds.add(command);
-            command = null;
-        }
+		return cmds;
+	}
 
-        return cmds;
-    }
+	/**
+	 * @see br.org.archimedes.factories.CommandFactory#drawVisualHelper()
+	 */
+	public void drawVisualHelper() {
 
-    /**
-     * @see br.org.archimedes.factories.CommandFactory#drawVisualHelper()
-     */
-    public void drawVisualHelper () {
+		if (active) {
+			OpenGLWrapper opengl = br.org.archimedes.Utils.getOpenGLWrapper();
+			Point mousePosition = workspace.getMousePosition();
 
-        if (active) {
-            OpenGLWrapper opengl = br.org.archimedes.Utils.getOpenGLWrapper();
-            Point mousePosition = workspace.getMousePosition();
+			if (distanceReference != null && !getReference) {
+				opengl.drawFromModel(distanceReference, mousePosition);
+			}
 
-            if (distanceReference != null && !getReference) {
-                opengl.drawFromModel(distanceReference, mousePosition);
-            }
+			if (denominator != null) {
+				double distance = 1;
+				try {
+					distance = Geometrics.calculateDistance(distanceReference,
+							mousePosition);
+				} catch (NullArgumentException e) {
+					// Should not happen
+					e.printStackTrace();
+				}
+				double proportion = distance / denominator;
 
-            if (denominator != null) {
-                double distance = 1;
-                try {
-                    distance = Geometrics.calculateDistance(distanceReference,
-                            mousePosition);
-                }
-                catch (NullArgumentException e) {
-                    // Should not happen
-                    e.printStackTrace();
-                }
-                double proportion = distance / denominator;
+				for (Element element : selection) {
+					Element clone = element.clone();
+					try {
+						clone.scale(scaleReference, proportion);
+					} catch (IllegalActionException e) {
+						cancel();
+					} catch (NullArgumentException e) {
+						// Should not happen
+						e.printStackTrace();
+					}
+					clone.draw(opengl);
+				}
+			}
+		}
+	}
 
-                for (Element element : selection) {
-                    Element clone = element.clone();
-                    try {
-                        clone.scale(scaleReference, proportion);
-                    }
-                    catch (IllegalActionException e) {
-                        cancel();
-                    }
-                    catch (NullArgumentException e) {
-                        // Should not happen
-                        e.printStackTrace();
-                    }
-                    clone.draw(opengl);
-                }
-            }
-        }
-    }
+	/**
+	 * @see br.org.archimedes.factories.CommandFactory#getName()
+	 */
+	public String getName() {
 
-    /**
-     * @see br.org.archimedes.factories.CommandFactory#getName()
-     */
-    public String getName () {
+		return "scale"; //$NON-NLS-1$
+	}
 
-        return "scale"; //$NON-NLS-1$
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.factories.CommandFactory#isTransformFactory()
+	 */
+	public boolean isTransformFactory() {
 
-    /* (non-Javadoc)
-     * @see br.org.archimedes.factories.CommandFactory#isTransformFactory()
-     */
-    public boolean isTransformFactory () {
-
-        return true;
-    }
+		return true;
+	}
 }

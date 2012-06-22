@@ -13,16 +13,16 @@
 
 package br.org.archimedes.orto;
 
-import br.org.archimedes.Utils;
-import br.org.archimedes.gui.model.Workspace;
-import br.org.archimedes.model.Drawing;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import br.org.archimedes.Utils;
+import br.org.archimedes.gui.model.Workspace;
+import br.org.archimedes.model.Drawing;
 
 /**
  * Belongs to package br.org.archimedes.model.commands.
@@ -31,51 +31,50 @@ import static org.junit.Assert.assertTrue;
  */
 public class OrtoCommandTest {
 
-    private Drawing drawing;
+	private Drawing drawing;
 
-    private OrtoCommand ortoCommand;
+	private OrtoCommand ortoCommand;
 
-    private Workspace workspace;
+	private Workspace workspace;
 
+	@Before
+	public void setUp() throws Exception {
 
-    @Before
-    public void setUp () throws Exception {
+		drawing = new Drawing("Drawing");
+		workspace = Utils.getWorkspace();
+		ortoCommand = new OrtoCommand();
+	}
 
-        drawing = new Drawing("Drawing");
-        workspace = Utils.getWorkspace();
-        ortoCommand = new OrtoCommand();
-    }
+	@After
+	public void tearDown() throws Exception {
 
-    @After
-    public void tearDown () throws Exception {
+		if (workspace.isOrtoOn())
+			ortoCommand.doIt(null);
+	}
 
-        if (workspace.isOrtoOn())
-            ortoCommand.doIt(null);
-    }
+	@Test
+	public void ortoChangesPropertyOnNullDrawing() throws Exception {
 
-    @Test
-    public void ortoChangesPropertyOnNullDrawing () throws Exception {
+		ortoCommand.doIt(null);
 
-        ortoCommand.doIt(null);
+		assertTrue(workspace.isOrtoOn());
+	}
 
-        assertTrue(workspace.isOrtoOn());
-    }
+	@Test
+	public void ortoChangesPropertyOnValidDrawing() throws Exception {
 
-    @Test
-    public void ortoChangesPropertyOnValidDrawing () throws Exception {
+		ortoCommand.doIt(drawing);
 
-        ortoCommand.doIt(drawing);
+		assertTrue(workspace.isOrtoOn());
+	}
 
-        assertTrue(workspace.isOrtoOn());
-    }
+	@Test
+	public void ortoTogglesEachExecution() throws Exception {
 
-    @Test
-    public void ortoTogglesEachExecution () throws Exception {
+		ortoCommand.doIt(drawing);
+		assertTrue(workspace.isOrtoOn());
 
-        ortoCommand.doIt(drawing);
-        assertTrue(workspace.isOrtoOn());
-        
-        ortoCommand.doIt(drawing);
-        assertFalse(workspace.isOrtoOn());
-    }
+		ortoCommand.doIt(drawing);
+		assertFalse(workspace.isOrtoOn());
+	}
 }

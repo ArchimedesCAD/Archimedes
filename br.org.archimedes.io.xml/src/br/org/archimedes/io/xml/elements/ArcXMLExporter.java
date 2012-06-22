@@ -24,25 +24,26 @@ import br.org.archimedes.model.Rectangle;
 
 public class ArcXMLExporter implements ElementExporter<Arc> {
 
-    public void exportElement (Arc element, Object outputObject) throws IOException {
+	public void exportElement(Arc element, Object outputObject)
+			throws IOException {
 
-        OutputStream output = (OutputStream) outputObject;
-        StringBuilder lineTag = new StringBuilder();
+		OutputStream output = (OutputStream) outputObject;
+		StringBuilder lineTag = new StringBuilder();
 
-        lineTag.append("<arc>"); //$NON-NLS-1$
+		lineTag.append("<arc>"); //$NON-NLS-1$
 
-        lineTag.append(XMLExporterHelper.xmlFor(element.getInitialPoint())); //$NON-NLS-1$
-        lineTag.append(XMLExporterHelper.xmlFor(element.getIntermediatePoint())); //$NON-NLS-1$
-        lineTag.append(XMLExporterHelper.xmlFor(element.getEndingPoint())); //$NON-NLS-1$
+		lineTag.append(XMLExporterHelper.xmlFor(element.getInitialPoint())); //$NON-NLS-1$
+		lineTag.append(XMLExporterHelper.xmlFor(element.getIntermediatePoint())); //$NON-NLS-1$
+		lineTag.append(XMLExporterHelper.xmlFor(element.getEndingPoint())); //$NON-NLS-1$
 
-        lineTag.append("</arc>"); //$NON-NLS-1$
+		lineTag.append("</arc>"); //$NON-NLS-1$
 
-        output.write(lineTag.toString().getBytes());
-    }
+		output.write(lineTag.toString().getBytes());
+	}
 
-    public void exportElement (Arc element, Object outputObject, Rectangle boundingBox)
-            throws IOException, NotSupportedException {
+	public void exportElement(Arc element, Object outputObject,
+			Rectangle boundingBox) throws IOException, NotSupportedException {
 
-        throw new NotSupportedException();
-    }
+		throw new NotSupportedException();
+	}
 }

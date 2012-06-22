@@ -36,94 +36,98 @@ import br.org.archimedes.model.Point;
  */
 public class ExtendCommandTest extends Tester {
 
-    private Drawing drawing;
+	private Drawing drawing;
 
-    private ExtendCommand extendCommand;
+	private ExtendCommand extendCommand;
 
-    private InfiniteLine infiniteLine1;
+	private InfiniteLine infiniteLine1;
 
-    private InfiniteLine infiniteLine2;
+	private InfiniteLine infiniteLine2;
 
-    private Collection<Element> references;
+	private Collection<Element> references;
 
-    private HashMap<Point, Element> elementsToExtend;
+	private HashMap<Point, Element> elementsToExtend;
 
+	@Override
+	public void setUp() throws Exception {
 
-    @Override
-    public void setUp () throws Exception {
+		infiniteLine1 = new InfiniteLine(-10.0, -2.0, -10.0, 2.0);
+		infiniteLine2 = new InfiniteLine(10.0, -2.0, 10.0, 2.0);
+		references = new ArrayList<Element>();
+		references.add(infiniteLine1);
+		references.add(infiniteLine2);
+		elementsToExtend = new HashMap<Point, Element>();
+		drawing = new Drawing("Undo");
+		drawing.putElement(infiniteLine1, drawing.getCurrentLayer());
+		drawing.putElement(infiniteLine2, drawing.getCurrentLayer());
+	}
 
-        infiniteLine1 = new InfiniteLine( -10.0, -2.0, -10.0, 2.0);
-        infiniteLine2 = new InfiniteLine(10.0, -2.0, 10.0, 2.0);
-        references = new ArrayList<Element>();
-        references.add(infiniteLine1);
-        references.add(infiniteLine2);
-        elementsToExtend = new HashMap<Point, Element>();
-        drawing = new Drawing("Undo");
-        drawing.putElement(infiniteLine1, drawing.getCurrentLayer());
-        drawing.putElement(infiniteLine2, drawing.getCurrentLayer());
-    }
+	@Test
+	public void testExtendCommandDoItAndUndoItForLines() throws Exception {
 
-    @Test
-    public void testExtendCommandDoItAndUndoItForLines () throws Exception {
+		Point click = new Point(5.0, 0.0);
+		Line line = new Line(0.0, 0.0, 5.0, 0.0);
+		Line lineExtended = new Line(0.0, 0.0, 10.0, 0.0);
+		elementsToExtend.put(click, line);
+		drawing.putElement(line, drawing.getCurrentLayer());
+		extendCommand = new ExtendCommand(references, elementsToExtend);
+		extendCommand.doIt(drawing);
+		assertTrue(drawing.getVisibleContents().contains(lineExtended));
+		assertFalse(drawing.getVisibleContents().contains(line));
+		extendCommand.undoIt(drawing);
+		assertFalse(drawing.getVisibleContents().contains(lineExtended));
+		assertTrue(drawing.getVisibleContents().contains(line));
 
-        Point click = new Point(5.0, 0.0);
-        Line line = new Line(0.0, 0.0, 5.0, 0.0);
-        Line lineExtended = new Line(0.0, 0.0, 10.0, 0.0);
-        elementsToExtend.put(click, line);
-        drawing.putElement(line, drawing.getCurrentLayer());
-        extendCommand = new ExtendCommand(references, elementsToExtend);
-        extendCommand.doIt(drawing);
-        assertTrue(drawing.getVisibleContents().contains(lineExtended));
-        assertFalse(drawing.getVisibleContents().contains(line));
-        extendCommand.undoIt(drawing);
-        assertFalse(drawing.getVisibleContents().contains(lineExtended));
-        assertTrue(drawing.getVisibleContents().contains(line));
+	}
 
-    }
+	@Test
+	public void testExtendCommandDoItAndUndoItForArc() throws Exception {
 
-    @Test
-    public void testExtendCommandDoItAndUndoItForArc () throws Exception {
+		Point click = new Point(-5.0, 0.0);
+		Arc arc = new Arc(new Point(-15.0, 0.0), new Point(-10.0, -5.0),
+				new Point(-5.0, 0.0));
+		Arc arcExtended = new Arc(new Point(-15.0, 0.0),
+				new Point(-10.0, -5.0), new Point(-10.0, 5.0));
+		elementsToExtend.put(click, arc);
+		drawing.putElement(arc, drawing.getCurrentLayer());
+		extendCommand = new ExtendCommand(references, elementsToExtend);
+		extendCommand.doIt(drawing);
+		assertTrue(drawing.getVisibleContents().contains(arcExtended));
+		assertFalse(drawing.getVisibleContents().contains(arc));
+		extendCommand.undoIt(drawing);
+		assertFalse(drawing.getVisibleContents().contains(arcExtended));
+		assertTrue(drawing.getVisibleContents().contains(arc));
 
-        Point click = new Point( -5.0, 0.0);
-        Arc arc = new Arc(new Point( -15.0, 0.0), new Point( -10.0, -5.0), new Point( -5.0, 0.0));
-        Arc arcExtended = new Arc(new Point( -15.0, 0.0), new Point( -10.0, -5.0), new Point(
-                -10.0, 5.0));
-        elementsToExtend.put(click, arc);
-        drawing.putElement(arc, drawing.getCurrentLayer());
-        extendCommand = new ExtendCommand(references, elementsToExtend);
-        extendCommand.doIt(drawing);
-        assertTrue(drawing.getVisibleContents().contains(arcExtended));
-        assertFalse(drawing.getVisibleContents().contains(arc));
-        extendCommand.undoIt(drawing);
-        assertFalse(drawing.getVisibleContents().contains(arcExtended));
-        assertTrue(drawing.getVisibleContents().contains(arc));
+	}
 
-    }
+	@Test
+	public void testEquals() throws Exception {
 
-    @Test
-    public void testEquals () throws Exception {
+		Point clickForArc = new Point(-5.0, 0.0);
+		Arc arc = new Arc(new Point(-15.0, 0.0), new Point(-10.0, -5.0),
+				new Point(-5.0, 0.0));
+		elementsToExtend.put(clickForArc, arc);
+		drawing.putElement(arc, drawing.getCurrentLayer());
+		ExtendCommand extendCommandForArc = new ExtendCommand(references,
+				elementsToExtend);
 
-        Point clickForArc = new Point( -5.0, 0.0);
-        Arc arc = new Arc(new Point( -15.0, 0.0), new Point( -10.0, -5.0), new Point( -5.0, 0.0));
-        elementsToExtend.put(clickForArc, arc);
-        drawing.putElement(arc, drawing.getCurrentLayer());
-        ExtendCommand extendCommandForArc = new ExtendCommand(references, elementsToExtend);
+		Point clickForLine = new Point(5.0, 0.0);
+		Line line = new Line(0.0, 0.0, 5.0, 0.0);
+		HashMap<Point, Element> elementsToExtendToLine = new HashMap<Point, Element>();
+		elementsToExtendToLine.put(clickForLine, line);
+		drawing.putElement(line, drawing.getCurrentLayer());
+		ExtendCommand extendCommandForLine = new ExtendCommand(references,
+				elementsToExtendToLine);
 
-        Point clickForLine = new Point(5.0, 0.0);
-        Line line = new Line(0.0, 0.0, 5.0, 0.0);
-        HashMap<Point, Element> elementsToExtendToLine =  new HashMap<Point, Element>();
-        elementsToExtendToLine.put(clickForLine, line);
-        drawing.putElement(line, drawing.getCurrentLayer());
-        ExtendCommand extendCommandForLine = new ExtendCommand(references, elementsToExtendToLine);
+		ExtendCommand otherExtendCommandForLine = new ExtendCommand(references,
+				elementsToExtendToLine);
 
-        ExtendCommand otherExtendCommandForLine = new ExtendCommand(references, elementsToExtendToLine);
+		assertEquals(extendCommandForLine, otherExtendCommandForLine);
+		assertEquals(otherExtendCommandForLine, extendCommandForLine);
+		assertEquals(extendCommandForLine, extendCommandForLine);
+		assertFalse(extendCommandForArc.equals(extendCommandForLine));
+		assertFalse(extendCommandForLine.equals(extendCommandForArc));
 
-        assertEquals(extendCommandForLine, otherExtendCommandForLine);
-        assertEquals(otherExtendCommandForLine, extendCommandForLine);
-        assertEquals(extendCommandForLine, extendCommandForLine);
-        assertFalse(extendCommandForArc.equals(extendCommandForLine));
-        assertFalse(extendCommandForLine.equals(extendCommandForArc));
-
-    }
+	}
 
 }

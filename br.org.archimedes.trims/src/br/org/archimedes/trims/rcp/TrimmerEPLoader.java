@@ -31,57 +31,58 @@ import br.org.archimedes.trims.interfaces.Trimmer;
  */
 public class TrimmerEPLoader implements ExtensionTagHandler {
 
-    private static final String TRIMMER_EXTENSION_POINT_ID = "br.org.archimedes.trims.trimmer"; //$NON-NLS-1$
+	private static final String TRIMMER_EXTENSION_POINT_ID = "br.org.archimedes.trims.trimmer"; //$NON-NLS-1$
 
-    private static final String CLASS_ATTRIBUTE_NAME = "class"; //$NON-NLS-1$
+	private static final String CLASS_ATTRIBUTE_NAME = "class"; //$NON-NLS-1$
 
-    private static final String ELEMENT_ATTRIBUTE_NAME = "element"; //$NON-NLS-1$
+	private static final String ELEMENT_ATTRIBUTE_NAME = "element"; //$NON-NLS-1$
 
-    private final Map<Class<? extends Element>, Trimmer> trimmableElementsMap = new HashMap<Class<? extends Element>, Trimmer>();
+	private final Map<Class<? extends Element>, Trimmer> trimmableElementsMap = new HashMap<Class<? extends Element>, Trimmer>();
 
-    private ElementEPLoader elementLoader;
+	private ElementEPLoader elementLoader;
 
+	/**
+	 * Default constructor.
+	 */
+	public TrimmerEPLoader() {
 
-    /**
-     * Default constructor.
-     */
-    public TrimmerEPLoader () {
+		elementLoader = new ElementEPLoader();
+		if (trimmableElementsMap.isEmpty()) {
+			ExtensionLoader loader = new ExtensionLoader(
+					TRIMMER_EXTENSION_POINT_ID);
+			loader.loadExtension(this);
+		}
+	}
 
-        elementLoader = new ElementEPLoader();
-        if (trimmableElementsMap.isEmpty()) {
-            ExtensionLoader loader = new ExtensionLoader(
-                    TRIMMER_EXTENSION_POINT_ID);
-            loader.loadExtension(this);
-        }
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.org.archimedes.rcp.ExtensionTagHandler#handleTag(org.eclipse.core.
+	 * runtime.IConfigurationElement)
+	 */
+	public void handleTag(IConfigurationElement elementTag)
+			throws CoreException {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.rcp.ExtensionTagHandler#handleTag(org.eclipse.core.runtime.IConfigurationElement)
-     */
-    public void handleTag (IConfigurationElement elementTag)
-            throws CoreException {
+		String elementId = elementTag.getAttribute(ELEMENT_ATTRIBUTE_NAME); //$NON-NLS-1$
+		Class<? extends Element> element = elementLoader
+				.getElementClass(elementId);
 
-        String elementId = elementTag.getAttribute(ELEMENT_ATTRIBUTE_NAME); //$NON-NLS-1$
-        Class<? extends Element> element = elementLoader
-                .getElementClass(elementId);
+		if (element != null) {
+			Trimmer trimmer = null;
+			trimmer = (Trimmer) elementTag
+					.createExecutableExtension(CLASS_ATTRIBUTE_NAME);
+			trimmableElementsMap.put(element, trimmer);
+		}
+	}
 
-        if (element != null) {
-            Trimmer trimmer = null;
-            trimmer = (Trimmer) elementTag
-                    .createExecutableExtension(CLASS_ATTRIBUTE_NAME);
-            trimmableElementsMap.put(element, trimmer);
-        }
-    }
+	/**
+	 * @param elementClass
+	 *            The class of the element whose trimmer we want
+	 * @return The corresponding trimmer or null if none is found
+	 */
+	public Trimmer get(Class<? extends Element> elementClass) {
 
-    /**
-     * @param elementClass
-     *            The class of the element whose trimmer we want
-     * @return The corresponding trimmer or null if none is found
-     */
-    public Trimmer get (Class<? extends Element> elementClass) {
-
-        return trimmableElementsMap.get(elementClass);
-    }
+		return trimmableElementsMap.get(elementClass);
+	}
 }

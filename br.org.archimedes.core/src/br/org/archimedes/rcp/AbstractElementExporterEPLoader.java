@@ -28,84 +28,87 @@ import br.org.archimedes.model.Element;
  * 
  * @author night
  */
-public abstract class AbstractElementExporterEPLoader implements ExtensionTagHandler {
+public abstract class AbstractElementExporterEPLoader implements
+		ExtensionTagHandler {
 
-    private static final String CLASS_ATTRIBUTE_NAME = "class"; //$NON-NLS-1$
+	private static final String CLASS_ATTRIBUTE_NAME = "class"; //$NON-NLS-1$
 
-    private static final String ELEMENT_ID_ATTRIBUTE_NAME = "elementId"; //$NON-NLS-1$
+	private static final String ELEMENT_ID_ATTRIBUTE_NAME = "elementId"; //$NON-NLS-1$
 
-    private static final Map<String, ElementExporter<Element>> exporters = new HashMap<String, ElementExporter<Element>>();
+	private static final Map<String, ElementExporter<Element>> exporters = new HashMap<String, ElementExporter<Element>>();
 
+	/**
+	 * @return The Extension point ID to an exporter of an element
+	 */
+	public abstract String getElementExporterExtensionPointID();
 
-    /**
-     * @return The Extension point ID to an exporter of an element
-     */
-    public abstract String getElementExporterExtensionPointID ();
+	/**
+	 * Default constructor.
+	 */
+	public AbstractElementExporterEPLoader() {
 
-    /**
-     * Default constructor.
-     */
-    public AbstractElementExporterEPLoader () {
+		if (!hasKeysFor(getElementExporterExtensionPointID())) {
+			ExtensionLoader loader = new ExtensionLoader(
+					getElementExporterExtensionPointID());
+			loader.loadExtension(this);
+		}
+	}
 
-        if ( !hasKeysFor(getElementExporterExtensionPointID())) {
-            ExtensionLoader loader = new ExtensionLoader(getElementExporterExtensionPointID());
-            loader.loadExtension(this);
-        }
-    }
+	/**
+	 * @param elementExporterExtensionPointID
+	 * @return true if there is at least one key for that exporter, false
+	 *         otherwise
+	 */
+	private boolean hasKeysFor(String elementExporterExtensionPointID) {
 
-    /**
-     * @param elementExporterExtensionPointID
-     * @return true if there is at least one key for that exporter, false otherwise
-     */
-    private boolean hasKeysFor (String elementExporterExtensionPointID) {
+		Set<String> keySet = exporters.keySet();
+		for (String key : keySet) {
+			if (key.startsWith(elementExporterExtensionPointID))
+				return true;
+		}
+		return false;
+	}
 
-        Set<String> keySet = exporters.keySet();
-        for (String key : keySet) {
-            if (key.startsWith(elementExporterExtensionPointID))
-                return true;
-        }
-        return false;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.org.archimedes.rcp.ExtensionTagHandler#handleTag(org.eclipse.core.
+	 * runtime.IConfigurationElement)
+	 */
+	@SuppressWarnings("unchecked")
+	public void handleTag(IConfigurationElement element) throws CoreException {
 
-    /*
-     * (non-Javadoc)
-     * @see br.org.archimedes.rcp.ExtensionTagHandler#handleTag(org.eclipse.core.
-     * runtime.IConfigurationElement)
-     */
-    @SuppressWarnings("unchecked")
-    public void handleTag (IConfigurationElement element) throws CoreException {
+		String elementId = element.getAttribute(ELEMENT_ID_ATTRIBUTE_NAME);
 
-        String elementId = element.getAttribute(ELEMENT_ID_ATTRIBUTE_NAME);
+		ElementExporter<Element> exporter;
+		try {
+			exporter = (ElementExporter<Element>) element
+					.createExecutableExtension(CLASS_ATTRIBUTE_NAME);
+			exporters.put(composeKey(elementId), exporter);
+		} catch (CoreException e) {
+			e.printStackTrace();
+		}
+	}
 
-        ElementExporter<Element> exporter;
-        try {
-            exporter = (ElementExporter<Element>) element
-                    .createExecutableExtension(CLASS_ATTRIBUTE_NAME);
-            exporters.put(composeKey(elementId), exporter);
-        }
-        catch (CoreException e) {
-            e.printStackTrace();
-        }
-    }
+	/**
+	 * @param elementId
+	 *            The element the be key
+	 * @return The composed key
+	 */
+	private String composeKey(String elementId) {
 
-    /**
-     * @param elementId
-     *            The element the be key
-     * @return The composed key
-     */
-    private String composeKey (String elementId) {
+		return getElementExporterExtensionPointID() + ":" + elementId;
+	}
 
-        return getElementExporterExtensionPointID() + ":" + elementId;
-    }
+	/**
+	 * @param elementId
+	 *            The id of the element whose exporter we want to retrieve
+	 * @return The corresponding exporter or null if none was loaded
+	 */
+	public ElementExporter<Element> getExporter(String elementId) {
 
-    /**
-     * @param elementId
-     *            The id of the element whose exporter we want to retrieve
-     * @return The corresponding exporter or null if none was loaded
-     */
-    public ElementExporter<Element> getExporter (String elementId) {
-
-        return exporters.get(composeKey(elementId));
-    }
+		return exporters.get(composeKey(elementId));
+	}
 
 }

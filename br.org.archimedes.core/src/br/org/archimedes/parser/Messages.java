@@ -21,29 +21,28 @@ import org.eclipse.osgi.util.NLS;
  */
 public class Messages extends NLS {
 
-    private static final String BUNDLE_NAME = "br.org.archimedes.i18n.parsers"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = "br.org.archimedes.i18n.parsers"; //$NON-NLS-1$
 
-    public static String Direction_expectedDirection;
+	public static String Direction_expectedDirection;
 
-    public static String Point_expectingPoint;
+	public static String Point_expectingPoint;
 
-    public static String Text_confirmPoint;
+	public static String Text_confirmPoint;
 
-    public static String Text_iteration;
+	public static String Text_iteration;
 
-    public static String Text_no;
+	public static String Text_no;
 
-    public static String Text_yes;
-    
-    public static String Integer_expectingInteger;
+	public static String Text_yes;
 
-    static {
-        // initialize resource bundle
-        NLS.initializeMessages(BUNDLE_NAME, Messages.class);
-    }
+	public static String Integer_expectingInteger;
 
+	static {
+		// initialize resource bundle
+		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
+	}
 
-    private Messages () {
+	private Messages() {
 
-    }
+	}
 }

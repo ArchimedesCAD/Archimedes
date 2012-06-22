@@ -36,181 +36,180 @@ import br.org.archimedes.gui.model.Workspace;
  */
 public class TextEditor {
 
-    private Shell shell;
+	private Shell shell;
 
-    private GridLayout layout;
+	private GridLayout layout;
 
-    private Button okButton;
+	private Button okButton;
 
-    protected Workspace workspace;
+	protected Workspace workspace;
 
-    private Shell parent;
+	private Shell parent;
 
-    private Text text;
+	private Text text;
 
-    private String contents;
+	private String contents;
 
-    private Button cancelButton;
+	private Button cancelButton;
 
+	/**
+	 * Constructor. Builds a new Text Editor dialog.
+	 * 
+	 * @param text
+	 */
+	public TextEditor(Shell parent, String text) {
 
-    /**
-     * Constructor. Builds a new Text Editor dialog.
-     * 
-     * @param text
-     */
-    public TextEditor (Shell parent, String text) {
+		workspace = br.org.archimedes.Utils.getWorkspace();
+		this.parent = parent;
+		this.contents = text;
+		createShell();
+		createAndLayThingsOut();
+		shell.pack();
+	}
 
-        workspace = br.org.archimedes.Utils.getWorkspace();
-        this.parent = parent;
-        this.contents = text;
-        createShell();
-        createAndLayThingsOut();
-        shell.pack();
-    }
+	/**
+	 * return contents The edited text
+	 */
+	public String getContents() {
 
-    /**
-     * return contents The edited text
-     */
-    public String getContents () {
+		return contents;
+	}
 
-        return contents;
-    }
+	/**
+	 * Creates the widgets and lays them on the dialog.
+	 */
+	private void createAndLayThingsOut() {
 
-    /**
-     * Creates the widgets and lays them on the dialog.
-     */
-    private void createAndLayThingsOut () {
+		layout = new GridLayout(2, false);
+		layout.marginWidth = 16;
+		layout.marginHeight = 16;
+		layout.verticalSpacing = 16;
 
-        layout = new GridLayout(2, false);
-        layout.marginWidth = 16;
-        layout.marginHeight = 16;
-        layout.verticalSpacing = 16;
+		shell.setLayout(layout);
 
-        shell.setLayout(layout);
+		text = createTextInput();
+		text.setText(contents);
+		GridData layoutData = new GridData(SWT.FILL, SWT.CENTER, false, false);
+		layoutData.horizontalSpan = 2;
+		text.setLayoutData(layoutData);
 
-        text = createTextInput();
-        text.setText(contents);
-        GridData layoutData = new GridData(SWT.FILL, SWT.CENTER, false, false);
-        layoutData.horizontalSpan = 2;
-        text.setLayoutData(layoutData);
+		okButton = createOkButton();
+		layoutData = new GridData();
+		layoutData.widthHint = 120;
+		layoutData.horizontalAlignment = GridData.CENTER;
+		layoutData.verticalAlignment = GridData.VERTICAL_ALIGN_END;
+		okButton.setLayoutData(layoutData);
 
-        okButton = createOkButton();
-        layoutData = new GridData();
-        layoutData.widthHint = 120;
-        layoutData.horizontalAlignment = GridData.CENTER;
-        layoutData.verticalAlignment = GridData.VERTICAL_ALIGN_END;
-        okButton.setLayoutData(layoutData);
+		cancelButton = createCancelButton();
+		layoutData = new GridData();
+		layoutData.widthHint = 120;
+		layoutData.horizontalAlignment = GridData.CENTER;
+		layoutData.verticalAlignment = GridData.VERTICAL_ALIGN_BEGINNING;
+		cancelButton.setLayoutData(layoutData);
+	}
 
-        cancelButton = createCancelButton();
-        layoutData = new GridData();
-        layoutData.widthHint = 120;
-        layoutData.horizontalAlignment = GridData.CENTER;
-        layoutData.verticalAlignment = GridData.VERTICAL_ALIGN_BEGINNING;
-        cancelButton.setLayoutData(layoutData);
-    }
+	private Text createTextInput() {
 
-    private Text createTextInput () {
+		Text textWidget = new Text(shell, SWT.BORDER);
+		textWidget.addSelectionListener(new SelectionAdapter() {
 
-        Text textWidget = new Text(shell, SWT.BORDER);
-        textWidget.addSelectionListener(new SelectionAdapter() {
+			public void widgetDefaultSelected(SelectionEvent event) {
 
-            public void widgetDefaultSelected (SelectionEvent event) {
+				contents = text.getText();
+				shell.dispose();
+			}
+		});
+		return textWidget;
+	}
 
-                contents = text.getText();
-                shell.dispose();
-            }
-        });
-        return textWidget;
-    }
+	private void createShell() {
 
-    private void createShell () {
+		shell = new Shell(parent, SWT.DIALOG_TRIM);
+		shell.setText(Messages.TextEditor_WindowName);
 
-        shell = new Shell(parent, SWT.DIALOG_TRIM);
-        shell.setText(Messages.TextEditor_WindowName);
+		shell.addDisposeListener(new DisposeListener() {
 
-        shell.addDisposeListener(new DisposeListener() {
+			public void widgetDisposed(DisposeEvent arg0) {
 
-            public void widgetDisposed (DisposeEvent arg0) {
+				getParent().setEnabled(true);
+			}
+		});
 
-                getParent().setEnabled(true);
-            }
-        });
+		shell.addKeyListener(new KeyAdapter() {
 
-        shell.addKeyListener(new KeyAdapter() {
+			public void keyReleased(KeyEvent event) {
 
-            public void keyReleased (KeyEvent event) {
+				if (event.character == SWT.ESC) {
+					shell.dispose();
+				}
+			}
+		});
+	}
 
-                if (event.character == SWT.ESC) {
-                    shell.dispose();
-                }
-            }
-        });
-    }
+	/**
+	 * @return The parent of this window.
+	 */
+	public Shell getParent() {
 
-    /**
-     * @return The parent of this window.
-     */
-    public Shell getParent () {
+		return parent;
+	}
 
-        return parent;
-    }
+	/**
+	 * Creates the dialog's OK button.
+	 * 
+	 * @return The created button to be layed out.
+	 */
+	private Button createOkButton() {
 
-    /**
-     * Creates the dialog's OK button.
-     * 
-     * @return The created button to be layed out.
-     */
-    private Button createOkButton () {
+		Button okButton = new Button(shell, SWT.PUSH);
+		okButton.setText(Messages.OK);
 
-        Button okButton = new Button(shell, SWT.PUSH);
-        okButton.setText(Messages.OK);
+		okButton.addSelectionListener(new SelectionAdapter() {
 
-        okButton.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent event) {
 
-            public void widgetSelected (SelectionEvent event) {
+				contents = text.getText();
+				shell.dispose();
+			}
+		});
 
-                contents = text.getText();
-                shell.dispose();
-            }
-        });
+		return okButton;
+	}
 
-        return okButton;
-    }
+	/**
+	 * Creates the dialog's Cancel button.
+	 * 
+	 * @return The created button to be layed out.
+	 */
+	private Button createCancelButton() {
 
-    /**
-     * Creates the dialog's Cancel button.
-     * 
-     * @return The created button to be layed out.
-     */
-    private Button createCancelButton () {
+		Button cancelButton = new Button(shell, SWT.PUSH);
+		cancelButton.setText(Messages.Cancel);
 
-        Button cancelButton = new Button(shell, SWT.PUSH);
-        cancelButton.setText(Messages.Cancel);
+		cancelButton.addSelectionListener(new SelectionAdapter() {
 
-        cancelButton.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent event) {
 
-            public void widgetSelected (SelectionEvent event) {
+				shell.dispose();
+			}
+		});
 
-                shell.dispose();
-            }
-        });
+		return cancelButton;
+	}
 
-        return cancelButton;
-    }
+	/**
+	 * Opens the dialog for displaying. Disables the ability of the parent
+	 * window to receive any events.
+	 */
+	public String open() {
 
-    /**
-     * Opens the dialog for displaying. Disables the ability of the parent
-     * window to receive any events.
-     */
-    public String open () {
-
-        getParent().setEnabled(false);
-        shell.open();
-        Display display = parent.getDisplay();
-        while ( !shell.isDisposed()) {
-            if ( !display.readAndDispatch())
-                display.sleep();
-        }
-        return contents;
-    }
+		getParent().setEnabled(false);
+		shell.open();
+		Display display = parent.getDisplay();
+		while (!shell.isDisposed()) {
+			if (!display.readAndDispatch())
+				display.sleep();
+		}
+		return contents;
+	}
 }

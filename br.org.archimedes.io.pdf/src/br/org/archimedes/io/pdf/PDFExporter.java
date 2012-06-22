@@ -32,31 +32,31 @@ import com.lowagie.text.pdf.PdfWriter;
  */
 public class PDFExporter implements Exporter {
 
-    /*
-     * (non-Javadoc)
-     * @see
-     * br.org.archimedes.interfaces.Exporter#exportDrawing(br.org.archimedes
-     * .model.Drawing, java.io.OutputStream)
-     */
-    public void exportDrawing (Drawing drawing, OutputStream output)
-            throws IOException {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.org.archimedes.interfaces.Exporter#exportDrawing(br.org.archimedes
+	 * .model.Drawing, java.io.OutputStream)
+	 */
+	public void exportDrawing(Drawing drawing, OutputStream output)
+			throws IOException {
 
-        Rectangle rectangle = PageSize.A4.rotate();
-        Document document = new Document(rectangle);
+		Rectangle rectangle = PageSize.A4.rotate();
+		Document document = new Document(rectangle);
 
-        PdfWriter writer = null;
-        try {
-            writer = PdfWriter.getInstance(document, output);
-        }
-        catch (DocumentException e) {
-            // Should never happen since I just created a new document.
-            e.printStackTrace();
-        }
-        document.open();
-        PdfContentByte cb = writer.getDirectContent();
-        PDFWriter pdf = new PDFWriter(cb, rectangle);
-        pdf.write(drawing);
+		PdfWriter writer = null;
+		try {
+			writer = PdfWriter.getInstance(document, output);
+		} catch (DocumentException e) {
+			// Should never happen since I just created a new document.
+			e.printStackTrace();
+		}
+		document.open();
+		PdfContentByte cb = writer.getDirectContent();
+		PDFWriter pdf = new PDFWriter(cb, rectangle);
+		pdf.write(drawing);
 
-        document.close();
-    }
+		document.close();
+	}
 }

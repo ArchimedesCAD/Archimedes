@@ -21,30 +21,29 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 
 /**
- *
+ * 
  * @author <a href="mailto:david@steadystate.co.uk">David Schweinsberg</a>
  * @version $Id: LigatureSet.java,v 1.3 2004/08/18 07:15:21 vhardy Exp $
  */
 public class LigatureSet {
 
-    private int ligatureCount;
-    private int[] ligatureOffsets;
-    private Ligature[] ligatures;
+	private int ligatureCount;
+	private int[] ligatureOffsets;
+	private Ligature[] ligatures;
 
-    /** Creates new LigatureSet */
-    public LigatureSet(RandomAccessFile raf, int offset) throws IOException {
-        raf.seek(offset);
-        ligatureCount = raf.readUnsignedShort();
-        ligatureOffsets = new int[ligatureCount];
-        ligatures = new Ligature[ligatureCount];
-        for (int i = 0; i < ligatureCount; i++) {
-            ligatureOffsets[i] = raf.readUnsignedShort();
-        }
-        for (int i = 0; i < ligatureCount; i++) {
-            raf.seek(offset + ligatureOffsets[i]);
-            ligatures[i] = new Ligature(raf);
-        }
-    }
+	/** Creates new LigatureSet */
+	public LigatureSet(RandomAccessFile raf, int offset) throws IOException {
+		raf.seek(offset);
+		ligatureCount = raf.readUnsignedShort();
+		ligatureOffsets = new int[ligatureCount];
+		ligatures = new Ligature[ligatureCount];
+		for (int i = 0; i < ligatureCount; i++) {
+			ligatureOffsets[i] = raf.readUnsignedShort();
+		}
+		for (int i = 0; i < ligatureCount; i++) {
+			raf.seek(offset + ligatureOffsets[i]);
+			ligatures[i] = new Ligature(raf);
+		}
+	}
 
 }
-

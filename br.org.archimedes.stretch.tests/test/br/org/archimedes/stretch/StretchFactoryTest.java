@@ -12,19 +12,19 @@
  */
 package br.org.archimedes.stretch;
 
-import static org.junit.Assert.*;
-import static org.junit.Assert.assertNotNull;
-import br.org.archimedes.exceptions.InvalidArgumentException;
-import br.org.archimedes.helper.FactoryTester;
-import br.org.archimedes.model.Drawing;
-import br.org.archimedes.model.Element;
-import br.org.archimedes.stub.StubElement;
+import static org.junit.Assert.fail;
+
+import java.util.HashSet;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.HashSet;
+import br.org.archimedes.exceptions.InvalidArgumentException;
+import br.org.archimedes.helper.FactoryTester;
+import br.org.archimedes.model.Drawing;
+import br.org.archimedes.model.Element;
+import br.org.archimedes.stub.StubElement;
 
 /**
  * Belongs to package br.org.archimedes.stretch.
@@ -33,69 +33,68 @@ import java.util.HashSet;
  */
 public class StretchFactoryTest extends FactoryTester {
 
-    private HashSet<Element> selection;
+	private HashSet<Element> selection;
 
+	@Before
+	public void setUp() throws Exception {
 
-    @Before
-    public void setUp () throws Exception {
+		Drawing drawing = new Drawing("Teste");
+		Element element1 = new StubElement();
+		// TODO Usar o ponto new Point(1, 1)
+		Element element2 = new StubElement();
+		putSafeElementOnDrawing(element1, drawing);
+		putSafeElementOnDrawing(element2, drawing);
 
-        Drawing drawing = new Drawing("Teste");
-        Element element1 = new StubElement();
-        // TODO Usar o ponto new Point(1, 1)
-        Element element2 = new StubElement();
-        putSafeElementOnDrawing(element1, drawing);
-        putSafeElementOnDrawing(element2, drawing);
+		selection = new HashSet<Element>();
+		selection.add(element1);
+		selection.add(element2);
 
-        selection = new HashSet<Element>();
-        selection.add(element1);
-        selection.add(element2);
+		br.org.archimedes.Utils.getController().deselectAll();
+		br.org.archimedes.Utils.getController().setActiveDrawing(drawing);
+	}
 
-        br.org.archimedes.Utils.getController().deselectAll();
-        br.org.archimedes.Utils.getController().setActiveDrawing(drawing);
-    }
+	@After
+	public void tearDown() {
 
-    @After
-    public void tearDown () {
+		selection = null;
+		br.org.archimedes.Utils.getController().deselectAll();
+		br.org.archimedes.Utils.getController().setActiveDrawing(null);
+	}
 
-        selection = null;
-        br.org.archimedes.Utils.getController().deselectAll();
-        br.org.archimedes.Utils.getController().setActiveDrawing(null);
-    }
+	@Test
+	public void testProportion() {
 
-    @Test
-    public void testProportion () {
+		// TODO Not yet implemented
+		fail("Not yet implemented.");
+	}
 
-        // TODO Not yet implemented
-    	fail("Not yet implemented.");
-    }
+	@Test
+	public void testTwoPoints() {
 
-    @Test
-    public void testTwoPoints () {
+		// TODO Not yet implemented
+		fail("Not yet implemented.");
+	}
 
-        // TODO Not yet implemented
-    	fail("Not yet implemented.");
-    }
+	@Test
+	public void testROptionDoubleDouble() {
 
-    @Test
-    public void testROptionDoubleDouble () {
+		// TODO Not yet implemented
+		fail("Not yet implemented.");
+	}
 
-        // TODO Not yet implemented
-    	fail("Not yet implemented.");
-    }
+	@Test
+	public void testROptionThreePoints() {
 
-    @Test
-    public void testROptionThreePoints () {
+		// TODO Not yet implemented
+		fail("Not yet implemented.");
+	}
 
-        // TODO Not yet implemented
-    	fail("Not yet implemented.");
-    }
+	@Test
+	public void testCancel() throws InvalidArgumentException {
 
-    @Test
-    public void testCancel () throws InvalidArgumentException {
-
-        // TODO Not yet implemented
-    	fail("Not yet implemented.");
-    }
+		// TODO Not yet implemented
+		fail("Not yet implemented.");
+	}
 
 	@Override
 	@Test

@@ -30,64 +30,63 @@ import br.org.archimedes.model.Point;
  */
 public abstract class NPointsParser extends ElementParser {
 
-    private int pointNumber;
+	private int pointNumber;
 
+	/**
+	 * @param numberOfPoints
+	 *            The number of points this parser should read or a negative
+	 *            value to read as many points as available.
+	 */
+	protected NPointsParser(int numberOfPoints) {
 
-    /**
-     * @param numberOfPoints
-     *            The number of points this parser should read or a negative
-     *            value to read as many points as available.
-     */
-    protected NPointsParser (int numberOfPoints) {
+		this.pointNumber = numberOfPoints;
+	}
 
-        this.pointNumber = numberOfPoints;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.xml.ElementParser#parse(org.w3c.dom.Node)
+	 */
+	@Override
+	public Element parse(Node node) throws ElementCreationException {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.xml.ElementParser#parse(org.w3c.dom.Node)
-     */
-    @Override
-    public Element parse (Node node) throws ElementCreationException {
+		List<Point> points = extractPoints(node);
 
-        List<Point> points = extractPoints(node);
+		Element result = null;
+		if (points.size() == pointNumber || pointNumber < 0) {
+			result = createElement(points);
+		}
 
-        Element result = null;
-        if (points.size() == pointNumber || pointNumber < 0) {
-            result = createElement(points);
-        }
+		return result;
+	}
 
-        return result;
-    }
+	/**
+	 * @param node
+	 *            The node to which we wish to extract points from
+	 * @return A list of all the points that were extracted
+	 */
+	private List<Point> extractPoints(Node node) {
 
-    /**
-     * @param node
-     *            The node to which we wish to extract points from
-     * @return A list of all the points that were extracted
-     */
-    private List<Point> extractPoints (Node node) {
+		List<Point> points = new LinkedList<Point>();
+		NodeList nodesCollection = ((org.w3c.dom.Element) node)
+				.getElementsByTagName("point"); //$NON-NLS-1$
+		List<org.w3c.dom.Element> elementList = XMLUtils
+				.nodeListToList(nodesCollection);
+		for (org.w3c.dom.Element element : elementList) {
+			points.add(XMLUtils.nodeToPoint(element));
+		}
 
-        List<Point> points = new LinkedList<Point>();
-        NodeList nodesCollection = ((org.w3c.dom.Element) node)
-                .getElementsByTagName("point"); //$NON-NLS-1$
-        List<org.w3c.dom.Element> elementList = XMLUtils
-                .nodeListToList(nodesCollection);
-        for (org.w3c.dom.Element element : elementList) {
-            points.add(XMLUtils.nodeToPoint(element));
-        }
+		return points;
+	}
 
-        return points;
-    }
-
-    /**
-     * @param points
-     *            A list with the parsed points.
-     * @return The element that was created with those points.
-     * @throws ElementCreationException
-     *             Thrown if the element cannot be created
-     */
-    protected abstract Element createElement (List<Point> points)
-            throws ElementCreationException;
+	/**
+	 * @param points
+	 *            A list with the parsed points.
+	 * @return The element that was created with those points.
+	 * @throws ElementCreationException
+	 *             Thrown if the element cannot be created
+	 */
+	protected abstract Element createElement(List<Point> points)
+			throws ElementCreationException;
 
 }

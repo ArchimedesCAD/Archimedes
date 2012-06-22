@@ -24,84 +24,84 @@ import br.org.archimedes.interfaces.Parser;
  */
 public class DistanceParserTest extends Tester {
 	@Test
-    public void testDouble () {
+	public void testDouble() {
 
-        Parser dp = new DistanceParser();
-        Assert.assertFalse("Should not be done yet", dp.isDone());
+		Parser dp = new DistanceParser();
+		Assert.assertFalse("Should not be done yet", dp.isDone());
 
-        testInvalids(dp);
+		testInvalids(dp);
 
-        doSafeNext(dp, "52.6");
-        Assert.assertTrue("Should be done", dp.isDone());
-        Assert.assertEquals("Should be 52.6", 52.6, dp.getParameter());
-    }
-	
-	@Test
-    public void testPoints () {
-
-        Parser dp = new DistanceParser();
-        Assert.assertFalse("Should not be done yet", dp.isDone());
-
-        doSafeNext(dp, "0;0");
-        Assert.assertFalse("Should not be done", dp.isDone());
-        Assert.assertNull("Parameter should be null", dp.getParameter());
-
-        testInvalids(dp);
-
-        doSafeNext(dp, "0;15");
-        Assert.assertTrue("Should be done", dp.isDone());
-        Assert.assertEquals("Parameter should be correct", 15.0, dp.getParameter());
-    }
+		doSafeNext(dp, "52.6");
+		Assert.assertTrue("Should be done", dp.isDone());
+		Assert.assertEquals("Should be 52.6", 52.6, dp.getParameter());
+	}
 
 	@Test
-    public void testReturn () {
+	public void testPoints() {
 
-        Parser dp = new DistanceParser();
-        Assert.assertFalse("Should not be done yet", dp.isDone());
+		Parser dp = new DistanceParser();
+		Assert.assertFalse("Should not be done yet", dp.isDone());
 
-        doSafeNext(dp, "");
-        Assert.assertTrue("Should be done", dp.isDone());
-        Assert.assertNull("Parameter should be null", dp.getParameter());
-    }
+		doSafeNext(dp, "0;0");
+		Assert.assertFalse("Should not be done", dp.isDone());
+		Assert.assertNull("Parameter should be null", dp.getParameter());
 
-    /**
-     * Passes invalid parameters to the parser, assuring it throws exceptions.
-     * 
-     * @param parser
-     *            The parser to be tested
-     */
-    private void testInvalids (Parser parser) {
+		testInvalids(dp);
 
-        try {
-            parser.next("abc");
-            Assert.fail("Should not reach this point");
-        }
-        catch (InvalidParameterException e) {}
+		doSafeNext(dp, "0;15");
+		Assert.assertTrue("Should be done", dp.isDone());
+		Assert.assertEquals("Parameter should be correct", 15.0,
+				dp.getParameter());
+	}
 
-        try {
-            parser.next(null);
-            Assert.fail("Should not reach this point");
-        }
-        catch (InvalidParameterException e) {}
-    }
+	@Test
+	public void testReturn() {
 
-    /**
-     * Safely gives a parameter to a parser. Fails if any exception is thrown.
-     * 
-     * @param parser
-     *            The parser
-     * @param parameter
-     *            The parameter
-     */
+		Parser dp = new DistanceParser();
+		Assert.assertFalse("Should not be done yet", dp.isDone());
 
-    private void doSafeNext (Parser parser, String parameter) {
+		doSafeNext(dp, "");
+		Assert.assertTrue("Should be done", dp.isDone());
+		Assert.assertNull("Parameter should be null", dp.getParameter());
+	}
 
-        try {
-            parser.next(parameter);
-        }
-        catch (InvalidParameterException e) {
-            e.printStackTrace();
-            Assert.fail("Should not throw this exception");
-        }
-    }
+	/**
+	 * Passes invalid parameters to the parser, assuring it throws exceptions.
+	 * 
+	 * @param parser
+	 *            The parser to be tested
+	 */
+	private void testInvalids(Parser parser) {
+
+		try {
+			parser.next("abc");
+			Assert.fail("Should not reach this point");
+		} catch (InvalidParameterException e) {
+		}
+
+		try {
+			parser.next(null);
+			Assert.fail("Should not reach this point");
+		} catch (InvalidParameterException e) {
+		}
+	}
+
+	/**
+	 * Safely gives a parameter to a parser. Fails if any exception is thrown.
+	 * 
+	 * @param parser
+	 *            The parser
+	 * @param parameter
+	 *            The parameter
+	 */
+
+	private void doSafeNext(Parser parser, String parameter) {
+
+		try {
+			parser.next(parameter);
+		} catch (InvalidParameterException e) {
+			e.printStackTrace();
+			Assert.fail("Should not throw this exception");
+		}
+	}
 }

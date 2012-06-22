@@ -82,8 +82,8 @@ public class CircleInfiniteLineIntersectorTests extends Tester {
 	@Test
 	public void testNoIntersections() throws NullArgumentException,
 			InvalidArgumentException {
-		InfiniteLine testInfiniteLine = new InfiniteLine(new Point(-10.0, 10.0),
-				new Point(10.0, 10.0));
+		InfiniteLine testInfiniteLine = new InfiniteLine(
+				new Point(-10.0, 10.0), new Point(10.0, 10.0));
 		Collection<Point> intersections = intersector.getIntersections(
 				testCircle, testInfiniteLine);
 		assertCollectionTheSame(new ArrayList<Point>(), intersections);
@@ -96,8 +96,8 @@ public class CircleInfiniteLineIntersectorTests extends Tester {
 				new Point(5.0, -4.0));
 		Collection<Point> expected = new ArrayList<Point>();
 		expected.add(new Point(5.0, 0.0));
-		assertCollectionTheSame(expected, intersector.getIntersections(
-				testCircle, testInfiniteLine));
+		assertCollectionTheSame(expected,
+				intersector.getIntersections(testCircle, testInfiniteLine));
 	}
 
 	@Test
@@ -108,8 +108,8 @@ public class CircleInfiniteLineIntersectorTests extends Tester {
 		Collection<Point> expected = new ArrayList<Point>();
 		expected.add(new Point(-5.0, 0.0));
 		expected.add(new Point(5.0, 0.0));
-		assertCollectionTheSame(expected, intersector.getIntersections(
-				testCircle, testInfiniteLine));
+		assertCollectionTheSame(expected,
+				intersector.getIntersections(testCircle, testInfiniteLine));
 	}
 
 }

@@ -12,52 +12,59 @@
  */
 package br.org.archimedes;
 
-import br.org.archimedes.rcp.AbstractFileLocatorActivator;
-
-import org.osgi.framework.BundleContext;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.osgi.framework.BundleContext;
+
+import br.org.archimedes.rcp.AbstractFileLocatorActivator;
 
 /**
  * Belongs to package br.org.archimedes.
- *
+ * 
  * @author "Hugo Corbucci"
  */
 public class TestActivator extends AbstractFileLocatorActivator {
-    
-    private static TestActivator plugin;
 
-    /* (non-Javadoc)
-     * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
-     */
-    @Override
-    public void start (BundleContext context) throws Exception {
-        plugin = this;
-        super.start(context);
-    }
-    
-    /* (non-Javadoc)
-     * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
-     */
-    @Override
-    public void stop (BundleContext context) throws Exception {
-    
-        super.stop(context);
-        plugin = null;
-    }
-    
-    public static TestActivator getDefault () {
-        return plugin;
-    }
+	private static TestActivator plugin;
 
-    public static InputStream locateFile(String path) throws IOException {
-        return locateFile(path, getDefault().getBundle());
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext
+	 * )
+	 */
+	@Override
+	public void start(BundleContext context) throws Exception {
+		plugin = this;
+		super.start(context);
+	}
 
-    public static File resolveFile(String path) throws IOException {
-        return resolveFile(path, getDefault().getBundle());
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext
+	 * )
+	 */
+	@Override
+	public void stop(BundleContext context) throws Exception {
+
+		super.stop(context);
+		plugin = null;
+	}
+
+	public static TestActivator getDefault() {
+		return plugin;
+	}
+
+	public static InputStream locateFile(String path) throws IOException {
+		return locateFile(path, getDefault().getBundle());
+	}
+
+	public static File resolveFile(String path) throws IOException {
+		return resolveFile(path, getDefault().getBundle());
+	}
 }

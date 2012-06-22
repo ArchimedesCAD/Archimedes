@@ -13,16 +13,16 @@
 
 package br.org.archimedes.model;
 
-import br.org.archimedes.Tester;
-import br.org.archimedes.exceptions.NullArgumentException;
-import br.org.archimedes.line.Line;
+import java.util.Set;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Set;
+import br.org.archimedes.Tester;
+import br.org.archimedes.exceptions.NullArgumentException;
+import br.org.archimedes.line.Line;
 
 /**
  * Belongs to package br.org.archimedes.model.
@@ -31,52 +31,51 @@ import java.util.Set;
  */
 public class DrawingIntersectionTest extends Tester {
 
-    Drawing drawing;
+	Drawing drawing;
 
+	@Before
+	public void setUp() {
 
-    @Before
-    public void setUp () {
+		drawing = new Drawing(null);
+	}
 
-        drawing = new Drawing(null);
-    }
+	@After
+	public void tearDown() {
 
-    @After
-    public void tearDown () {
+		drawing = null;
+	}
 
-        drawing = null;
-    }
+	@Test
+	public void testSelectionIntersection() throws Exception {
 
-    @Test
-    public void testSelectionIntersection () throws Exception {
+		Element line1 = new Line(0.1, 0.1, 0.9, 0.9);
+		Element line2 = new Line(0.5, 0.5, 2, 2);
+		Rectangle rect1 = new Rectangle(0, 0, 1, 1);
+		Rectangle rect2 = new Rectangle(0, 0, -0.5, -0.5);
+		try {
+			putSafeElementOnDrawing(line1, drawing);
+			Set<Element> sel = drawing.getSelectionIntersection(rect1);
+			Assert.assertTrue("The line should be selected",
+					sel.contains(line1));
 
-        Element line1 = new Line(0.1, 0.1, 0.9, 0.9);
-        Element line2 = new Line(0.5, 0.5, 2, 2);
-        Rectangle rect1 = new Rectangle(0, 0, 1, 1);
-        Rectangle rect2 = new Rectangle(0, 0, -0.5, -0.5);
-        try {
-            putSafeElementOnDrawing(line1, drawing);
-            Set<Element> sel = drawing.getSelectionIntersection(rect1);
-            Assert.assertTrue("The line should be selected", sel.contains(line1));
+			putSafeElementOnDrawing(line2, drawing);
+			sel = drawing.getSelectionIntersection(rect1);
+			Assert.assertTrue("The lines should be selected",
+					sel.contains(line1) && sel.contains(line2));
 
-            putSafeElementOnDrawing(line2, drawing);
-            sel = drawing.getSelectionIntersection(rect1);
-            Assert.assertTrue("The lines should be selected", sel.contains(line1)
-                    && sel.contains(line2));
+			sel = drawing.getSelectionIntersection(rect2);
+			Assert.assertTrue("The lines should not be selected",
+					sel.size() == 0);
+		} catch (NullArgumentException e) {
+			e.printStackTrace();
+			Assert.fail("Should not throw this exception.");
+		}
 
-            sel = drawing.getSelectionIntersection(rect2);
-            Assert.assertTrue("The lines should not be selected", sel.size() == 0);
-        }
-        catch (NullArgumentException e) {
-            e.printStackTrace();
-            Assert.fail("Should not throw this exception.");
-        }
-
-        try {
-            drawing.getSelectionIntersection(null);
-            Assert.fail("Should not accept null rectangle.");
-        }
-        catch (NullArgumentException e) {
-            /* Should throw this exception */
-        }
-    }
+		try {
+			drawing.getSelectionIntersection(null);
+			Assert.fail("Should not accept null rectangle.");
+		} catch (NullArgumentException e) {
+			/* Should throw this exception */
+		}
+	}
 }

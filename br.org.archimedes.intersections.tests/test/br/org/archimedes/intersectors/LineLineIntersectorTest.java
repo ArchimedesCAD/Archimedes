@@ -29,7 +29,8 @@ import br.org.archimedes.model.Point;
 public class LineLineIntersectorTest extends Tester {
 
 	@Test
-	public void simpleLineIntersection() throws InvalidArgumentException, NullArgumentException {
+	public void simpleLineIntersection() throws InvalidArgumentException,
+			NullArgumentException {
 		LineLineIntersector lli = new LineLineIntersector();
 		Line line1 = new Line(1, 1, 10, 10);
 		Line line2 = new Line(-1, 3, 10, 3);
@@ -39,64 +40,71 @@ public class LineLineIntersectorTest extends Tester {
 	}
 
 	@Test
-	public void paralelsLinesIntersection() throws InvalidArgumentException, NullArgumentException {
+	public void paralelsLinesIntersection() throws InvalidArgumentException,
+			NullArgumentException {
 		LineLineIntersector lli = new LineLineIntersector();
 		Line line1 = new Line(1, 1, 10, 10);
 		Line line2 = new Line(2, 2, 12, 12);
 		Collection<Point> intersections = lli.getIntersections(line1, line2);
 		assertTrue(intersections.isEmpty());
 	}
-	
+
 	@Test
-	public void sameLineIntersection() throws InvalidArgumentException, NullArgumentException {
+	public void sameLineIntersection() throws InvalidArgumentException,
+			NullArgumentException {
 		LineLineIntersector lli = new LineLineIntersector();
 		Line line1 = new Line(2, 2, 12, 12);
 		Line line2 = new Line(2, 2, 12, 12);
 		Collection<Point> intersections = lli.getIntersections(line1, line2);
 		assertTrue(intersections.isEmpty());
 	}
-	
+
 	@Test
-	public void subLineIntersection() throws InvalidArgumentException, NullArgumentException {
+	public void subLineIntersection() throws InvalidArgumentException,
+			NullArgumentException {
 		LineLineIntersector lli = new LineLineIntersector();
 		Line line1 = new Line(2, 2, 12, 12);
 		Line line2 = new Line(3, 3, 10, 10);
 		Collection<Point> intersections = lli.getIntersections(line1, line2);
 		assertTrue(intersections.isEmpty());
 	}
-	
+
 	@Test
 	/* One line partially inside another */
-	public void interLineIntersection() throws InvalidArgumentException, NullArgumentException {
+	public void interLineIntersection() throws InvalidArgumentException,
+			NullArgumentException {
 		LineLineIntersector lli = new LineLineIntersector();
 		Line line1 = new Line(2, 2, 12, 12);
 		Line line2 = new Line(10, 10, 15, 15);
 		Collection<Point> intersections = lli.getIntersections(line1, line2);
 		assertTrue(intersections.isEmpty());
 	}
-	
+
 	@Test
-	/*Would intersect if one line was extended*/
-	public void noLineIntersectionWouldIfOneExtended() throws InvalidArgumentException, NullArgumentException {
+	/* Would intersect if one line was extended */
+	public void noLineIntersectionWouldIfOneExtended()
+			throws InvalidArgumentException, NullArgumentException {
 		LineLineIntersector lli = new LineLineIntersector();
 		Line line1 = new Line(2, 2, 12, 12);
 		Line line2 = new Line(4, 3, 3, -10);
 		Collection<Point> intersections = lli.getIntersections(line1, line2);
 		assertTrue(intersections.isEmpty());
 	}
-	
+
 	@Test
-	/*Would intersect if the two lines were extended*/
-	public void noLineIntersectionWouldIfTwoExtended() throws InvalidArgumentException, NullArgumentException {
+	/* Would intersect if the two lines were extended */
+	public void noLineIntersectionWouldIfTwoExtended()
+			throws InvalidArgumentException, NullArgumentException {
 		LineLineIntersector lli = new LineLineIntersector();
 		Line line1 = new Line(2, 2, 12, 12);
-		Line line2 = new Line(0,0 , 3, -10);
+		Line line2 = new Line(0, 0, 3, -10);
 		Collection<Point> intersections = lli.getIntersections(line1, line2);
 		assertTrue(intersections.isEmpty());
 	}
-	
+
 	@Test
-	public void onePointParallelLineIntersection() throws InvalidArgumentException, NullArgumentException {
+	public void onePointParallelLineIntersection()
+			throws InvalidArgumentException, NullArgumentException {
 		LineLineIntersector lli = new LineLineIntersector();
 		Line line1 = new Line(2, 2, 3, 3);
 		Line line2 = new Line(3, 3, 4, 4);
@@ -104,10 +112,11 @@ public class LineLineIntersectorTest extends Tester {
 		Collection<Point> intersections = lli.getIntersections(line1, line2);
 		assertCollectionTheSame(Collections.singleton(p0), intersections);
 	}
-	
+
 	@Test
 	/* End of one line intersects middle of the other */
-	public void onePointOrthogonalLineIntersection() throws InvalidArgumentException, NullArgumentException {
+	public void onePointOrthogonalLineIntersection()
+			throws InvalidArgumentException, NullArgumentException {
 		LineLineIntersector lli = new LineLineIntersector();
 		Line line1 = new Line(2, 2, 10, 10);
 		Line line2 = new Line(-4, 10, 3, 3);
@@ -115,20 +124,21 @@ public class LineLineIntersectorTest extends Tester {
 		Collection<Point> intersections = lli.getIntersections(line1, line2);
 		assertCollectionTheSame(Collections.singleton(p0), intersections);
 	}
-	
+
 	@Test
 	/* End of one line intersects end of the other */
-	public void onePointLineIntersection() throws InvalidArgumentException, NullArgumentException {
+	public void onePointLineIntersection() throws InvalidArgumentException,
+			NullArgumentException {
 		LineLineIntersector lli = new LineLineIntersector();
 		Line line1 = new Line(2, 2, 10, 10);
 		Line line2 = new Line(10, 10, 15, 20);
-		Point p0 = new Point(10,10);
+		Point p0 = new Point(10, 10);
 		Collection<Point> intersections = lli.getIntersections(line1, line2);
 		assertCollectionTheSame(Collections.singleton(p0), intersections);
 	}
-	
+
 	@Test
-	public void nullLineIntersection() throws InvalidArgumentException{
+	public void nullLineIntersection() throws InvalidArgumentException {
 		LineLineIntersector lli = new LineLineIntersector();
 		Line line1 = new Line(2, 2, 10, 10);
 		Line line2 = null;
@@ -137,23 +147,23 @@ public class LineLineIntersectorTest extends Tester {
 			lli.getIntersections(line1, line2);
 			fail("otherElement is null and then method LineLineIntersector.getIntersections() should have thrown NullArgumentException");
 		} catch (NullArgumentException e) {
-			//OK!!!
+			// OK!!!
 		}
-		
+
 		try {
 			lli.getIntersections(line2, line1);
 			fail("element is null and then method LineLineIntersector.getIntersections() should have thrown NullArgumentException");
 		} catch (NullArgumentException e) {
-			//OK!!!
+			// OK!!!
 		}
 	}
 	/*
-	@Test
-	public void nonLineIntersection() throws InvalidArgumentException, NullArgumentException {
-		LineLineIntersector lli = new LineLineIntersector();
-		Line line1 = new Line(2, 2, 10, 10);
-		
-		Collection<Point> intersections = lli.getIntersections(line1, p);
-		
-	}*/
+	 * @Test public void nonLineIntersection() throws InvalidArgumentException,
+	 * NullArgumentException { LineLineIntersector lli = new
+	 * LineLineIntersector(); Line line1 = new Line(2, 2, 10, 10);
+	 * 
+	 * Collection<Point> intersections = lli.getIntersections(line1, p);
+	 * 
+	 * }
+	 */
 }

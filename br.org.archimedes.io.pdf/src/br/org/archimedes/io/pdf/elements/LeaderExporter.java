@@ -13,6 +13,8 @@
 
 package br.org.archimedes.io.pdf.elements;
 
+import java.io.IOException;
+
 import br.org.archimedes.Constant;
 import br.org.archimedes.exceptions.NotSupportedException;
 import br.org.archimedes.interfaces.ElementExporter;
@@ -23,8 +25,6 @@ import br.org.archimedes.model.Rectangle;
 
 import com.lowagie.text.pdf.PdfContentByte;
 
-import java.io.IOException;
-
 /**
  * Belongs to package br.org.archimedes.io.pdf.
  * 
@@ -32,35 +32,43 @@ import java.io.IOException;
  */
 public class LeaderExporter implements ElementExporter<Leader> {
 
-    /* (non-Javadoc)
-     * @see br.org.archimedes.interfaces.ElementExporter#exportElement(br.org.archimedes.model.Element, java.lang.Object)
-     */
-    public void exportElement (Leader leader, Object outputObject) throws IOException,
-            NotSupportedException {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.org.archimedes.interfaces.ElementExporter#exportElement(br.org.archimedes
+	 * .model.Element, java.lang.Object)
+	 */
+	public void exportElement(Leader leader, Object outputObject)
+			throws IOException, NotSupportedException {
 
-        PDFWriterHelper helper = (PDFWriterHelper) outputObject;
-        PdfContentByte cb = helper.getPdfContentByte();
+		PDFWriterHelper helper = (PDFWriterHelper) outputObject;
+		PdfContentByte cb = helper.getPdfContentByte();
 
-        Point tip = leader.getPointer().getInitialPoint();
-        LineExporter exporter = new LineExporter();
-        exporter.exportElement(leader.getPointer(), outputObject);
-        exporter.exportElement(leader.getTextBase(), outputObject);
+		Point tip = leader.getPointer().getInitialPoint();
+		LineExporter exporter = new LineExporter();
+		exporter.exportElement(leader.getPointer(), outputObject);
+		exporter.exportElement(leader.getTextBase(), outputObject);
 
-        Point center = helper.modelToDocument(tip);
-        float centerX = (float) center.getX();
-        float centerY = (float) center.getY();
-        float radius = (float) Constant.LEADER_RADIUS;
-        cb.circle(centerX, centerY, radius);
+		Point center = helper.modelToDocument(tip);
+		float centerX = (float) center.getX();
+		float centerY = (float) center.getY();
+		float radius = (float) Constant.LEADER_RADIUS;
+		cb.circle(centerX, centerY, radius);
 
-        cb.closePathFillStroke();
-    }
+		cb.closePathFillStroke();
+	}
 
-    /* (non-Javadoc)
-     * @see br.org.archimedes.interfaces.ElementExporter#exportElement(br.org.archimedes.model.Element, java.lang.Object, br.org.archimedes.model.Rectangle)
-     */
-    public void exportElement (Leader element, Object outputObject, Rectangle boundingBox)
-            throws IOException, NotSupportedException {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.org.archimedes.interfaces.ElementExporter#exportElement(br.org.archimedes
+	 * .model.Element, java.lang.Object, br.org.archimedes.model.Rectangle)
+	 */
+	public void exportElement(Leader element, Object outputObject,
+			Rectangle boundingBox) throws IOException, NotSupportedException {
 
-        throw new NotSupportedException();
-    }
+		throw new NotSupportedException();
+	}
 }

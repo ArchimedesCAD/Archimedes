@@ -16,28 +16,27 @@ import org.eclipse.osgi.util.NLS;
 
 /**
  * Belongs to package br.org.archimedes.polyline.area.
- *
+ * 
  * @author nitao
- *
+ * 
  */
 public class Messages extends NLS {
 
-    private static final String BUNDLE_NAME = "br.org.archimedes.polyline.area.messages"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = "br.org.archimedes.polyline.area.messages"; //$NON-NLS-1$
 
-    public static String Area;
+	public static String Area;
 
-    public static String AreaCancel;
+	public static String AreaCancel;
 
-    public static String AreaError;
+	public static String AreaError;
 
-    public static String Perimeter;
-    static {
-        // initialize resource bundle
-        NLS.initializeMessages(BUNDLE_NAME, Messages.class);
-    }
+	public static String Perimeter;
+	static {
+		// initialize resource bundle
+		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
+	}
 
+	private Messages() {
 
-    private Messages () {
-
-    }
+	}
 }

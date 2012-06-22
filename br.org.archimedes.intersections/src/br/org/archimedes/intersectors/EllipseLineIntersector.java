@@ -16,10 +16,10 @@ public class EllipseLineIntersector implements Intersector {
 
 	public Collection<Point> getIntersections(Element element,
 			Element otherElement) throws NullArgumentException {
-		
+
 		if (element == null || otherElement == null)
 			throw new NullArgumentException();
-		
+
 		Line line;
 		Ellipse ellipse;
 
@@ -30,22 +30,24 @@ public class EllipseLineIntersector implements Intersector {
 			line = (Line) otherElement;
 			ellipse = (Ellipse) element;
 		}
-		
+
 		InfiniteLine infiniteLine = null;
 		try {
-			infiniteLine = new InfiniteLine(line.getInitialPoint(), line.getEndingPoint());
+			infiniteLine = new InfiniteLine(line.getInitialPoint(),
+					line.getEndingPoint());
 		} catch (InvalidArgumentException e) {
 			e.printStackTrace();
-		} 
-		
+		}
+
 		EllipseInfiniteLineIntersector intersector = new EllipseInfiniteLineIntersector();
-		Collection<Point> intersections = intersector.getIntersections(infiniteLine, ellipse);
-		
+		Collection<Point> intersections = intersector.getIntersections(
+				infiniteLine, ellipse);
+
 		Collection<Point> results = new ArrayList<Point>();
-		for(Point p : intersections)
-			if(line.contains(p))
+		for (Point p : intersections)
+			if (line.contains(p))
 				results.add(p);
-		
+
 		return results;
 	}
 }

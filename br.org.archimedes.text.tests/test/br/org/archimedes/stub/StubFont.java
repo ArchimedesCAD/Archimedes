@@ -13,15 +13,15 @@
 
 package br.org.archimedes.stub;
 
-import br.org.archimedes.text.tests.TestActivator;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import org.apache.batik.svggen.font.Font;
 import org.apache.batik.svggen.font.Glyph;
 import org.apache.batik.svggen.font.table.GlyphDescription;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import br.org.archimedes.text.tests.TestActivator;
 
 /**
  * Belongs to package br.org.archimedes.text.tests.
@@ -30,137 +30,134 @@ import java.io.IOException;
  */
 public class StubFont extends Font {
 
-    private int fontAdvanceWidth;
+	private int fontAdvanceWidth;
 
+	public StubFont(String path, int fontAdvanceWidth) {
 
-    public StubFont (String path, int fontAdvanceWidth) {
+		this.fontAdvanceWidth = fontAdvanceWidth;
+		File file = getFile(path);
+		if (file != null) {
+			read(path, file);
+		}
+	}
 
-        this.fontAdvanceWidth = fontAdvanceWidth;
-        File file = getFile(path);
-        if (file != null) {
-            read(path, file);
-        }
-    }
+	/**
+	 * @param path
+	 *            The original path
+	 * @param file
+	 *            The file that should be used to read
+	 */
+	private void read(String path, File file) {
 
-    /**
-     * @param path The original path
-     * @param file The file that should be used to read
-     */
-    private void read (String path, File file) {
+		try {
+			this.readFile(file);
+		} catch (FileNotFoundException e) {
+			// Couldn't find it. Maybe a hard read?
+			System.err.println("Couldn't find the file");
+			e.printStackTrace();
+			try {
+				this.read(path);
+			} catch (FileNotFoundException e1) {
+				// No way i'm gonna find it then :(
+				System.err.println("Hard read failure!");
+				e1.printStackTrace();
+			}
+		}
+	}
 
-        try {
-            this.readFile(file);
-        }
-        catch (FileNotFoundException e) {
-            // Couldn't find it. Maybe a hard read?
-            System.err.println("Couldn't find the file");
-            e.printStackTrace();
-            try {
-                this.read(path);
-            }
-            catch (FileNotFoundException e1) {
-                // No way i'm gonna find it then :(
-                System.err.println("Hard read failure!");
-                e1.printStackTrace();
-            }
-        }
-    }
+	/**
+	 * @param path
+	 *            The path to the file
+	 * @return A simple path if not a plug-in test, the file located through the
+	 *         activator otherwise (null if none could be found)
+	 */
+	private File getFile(String path) {
 
-    /**
-     * @param path
-     *            The path to the file
-     * @return A simple path if not a plug-in test, the file located through the activator otherwise
-     *         (null if none could be found)
-     */
-    private File getFile (String path) {
+		File file = null;
+		if (TestActivator.getDefault() == null) { // non plug-in test
+			file = new File(path);
+		} else {
+			try {
+				file = TestActivator.resolveFile(path);
+			} catch (IOException e) {
+				// Couldn't read it using the activator. Maybe forcing normal?
+				e.printStackTrace();
+			}
+		}
+		return file;
+	}
 
-        File file = null;
-        if (TestActivator.getDefault() == null) { // non plug-in test
-            file = new File(path);
-        }
-        else {
-            try {
-                file = TestActivator.resolveFile(path);
-            }
-            catch (IOException e) {
-                // Couldn't read it using the activator. Maybe forcing normal?
-                e.printStackTrace();
-            }
-        }
-        return file;
-    }
+	@Override
+	public Glyph getGlyph(int i) {
 
-    @Override
-    public Glyph getGlyph (int i) {
+		return new MockGlyph(new MockGlyphDescription(), (short) 0,
+				fontAdvanceWidth);
+	}
 
-        return new MockGlyph(new MockGlyphDescription(), (short) 0, fontAdvanceWidth);
-    }
+	private class MockGlyphDescription implements GlyphDescription {
 
+		public int getContourCount() {
 
-    private class MockGlyphDescription implements GlyphDescription {
+			return 0;
+		}
 
-        public int getContourCount () {
+		public int getEndPtOfContours(int i) {
 
-            return 0;
-        }
+			return 0;
+		}
 
-        public int getEndPtOfContours (int i) {
+		public byte getFlags(int i) {
 
-            return 0;
-        }
+			return 0;
+		}
 
-        public byte getFlags (int i) {
+		public int getPointCount() {
 
-            return 0;
-        }
+			return 0;
+		}
 
-        public int getPointCount () {
+		public short getXCoordinate(int i) {
 
-            return 0;
-        }
+			return 0;
+		}
 
-        public short getXCoordinate (int i) {
+		public short getXMaximum() {
 
-            return 0;
-        }
+			return 0;
+		}
 
-        public short getXMaximum () {
+		public short getXMinimum() {
 
-            return 0;
-        }
+			return 0;
+		}
 
-        public short getXMinimum () {
+		public short getYCoordinate(int i) {
 
-            return 0;
-        }
+			return 0;
+		}
 
-        public short getYCoordinate (int i) {
+		public short getYMaximum() {
 
-            return 0;
-        }
+			return 0;
+		}
 
-        public short getYMaximum () {
+		public short getYMinimum() {
 
-            return 0;
-        }
+			return 0;
+		}
 
-        public short getYMinimum () {
+		public boolean isComposite() {
 
-            return 0;
-        }
+			return false;
+		}
 
-        public boolean isComposite () {
+	}
 
-            return false;
-        }
+	private class MockGlyph extends Glyph {
 
-    }
+		public MockGlyph(GlyphDescription gd, short lsb, int advance) {
 
-    private class MockGlyph extends Glyph {
-
-        public MockGlyph (GlyphDescription gd, short lsb, int advance) {
-
-            super(gd, lsb, advance);
-        }
-    }
+			super(gd, lsb, advance);
+		}
+	}
 }

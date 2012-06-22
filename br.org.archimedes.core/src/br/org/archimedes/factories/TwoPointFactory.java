@@ -34,242 +34,232 @@ import br.org.archimedes.parser.VectorParser;
  */
 public abstract class TwoPointFactory implements CommandFactory {
 
-    private Point p1;
+	private Point p1;
 
-    private Vector vector;
+	private Vector vector;
 
-    private Workspace workspace;
+	private Workspace workspace;
 
-    private Controller controller;
+	private Controller controller;
 
-    private boolean active;
+	private boolean active;
 
-    private boolean end;
+	private boolean end;
 
-    private boolean ignoreOrto;
+	private boolean ignoreOrto;
 
+	/**
+	 * Constructor.
+	 */
+	public TwoPointFactory() {
 
-    /**
-     * Constructor.
-     */
-    public TwoPointFactory () {
+		this(true);
+	}
 
-        this(true);
-    }
+	/**
+	 * Constructor.
+	 * 
+	 * @param endWhenComplete
+	 *            If true, recieving two points will deactivate the factory. If
+	 *            false, after recieving to points and completing a command, the
+	 *            factory returns to a previous state.
+	 */
+	public TwoPointFactory(boolean endWhenComplete) {
 
-    /**
-     * Constructor.
-     * 
-     * @param endWhenComplete
-     *            If true, recieving two points will deactivate the factory. If
-     *            false, after recieving to points and completing a command, the
-     *            factory returns to a previous state.
-     */
-    public TwoPointFactory (boolean endWhenComplete) {
+		this(endWhenComplete, false);
+	}
 
-        this(endWhenComplete, false);
-    }
+	/**
+	 * Constructor.
+	 * 
+	 * @param endWhenComplete
+	 *            If true, recieving two points will deactivate the factory. If
+	 *            false, after recieving to points and completing a command, the
+	 *            factory returns to a previous state.
+	 * @param ignoreOrto
+	 *            If true, ignores the orto state.
+	 */
+	public TwoPointFactory(boolean endWhenComplete, boolean ignoreOrto) {
 
-    /**
-     * Constructor.
-     * 
-     * @param endWhenComplete
-     *            If true, recieving two points will deactivate the factory. If
-     *            false, after recieving to points and completing a command, the
-     *            factory returns to a previous state.
-     * @param ignoreOrto
-     *            If true, ignores the orto state.
-     */
-    public TwoPointFactory (boolean endWhenComplete, boolean ignoreOrto) {
+		// TODO Rever as mensagens. Esta tosco!!
+		workspace = Utils.getWorkspace();
+		controller = Utils.getController();
+		this.end = endWhenComplete;
+		this.ignoreOrto = ignoreOrto;
+		deactivate();
+	}
 
-        // TODO Rever as mensagens. Esta tosco!!
-        workspace = Utils.getWorkspace();
-        controller = Utils.getController();
-        this.end = endWhenComplete;
-        this.ignoreOrto = ignoreOrto;
-        deactivate();
-    }
+	public String begin() {
 
-    public String begin () {
+		active = true;
+		controller.deselectAll();
+		return Messages.TwoPointFactory_firstPoint;
+	}
 
-        active = true;
-        controller.deselectAll();
-        return Messages.TwoPointFactory_firstPoint;
-    }
+	public String next(Object parameter) throws InvalidParameterException {
 
-    public String next (Object parameter) throws InvalidParameterException {
+		String result = null;
 
-        String result = null;
+		if (p1 != null && parameter == null && !end) {
+			result = cancel();
+		} else if (parameter != null && !isDone()) {
+			if (p1 == null) {
+				try {
+					p1 = (Point) parameter;
+				} catch (ClassCastException e) {
+					throw new InvalidParameterException(Messages.ExpectedPoint);
+				}
 
-        if (p1 != null && parameter == null && !end) {
-            result = cancel();
-        }
-        else if (parameter != null && !isDone()) {
-            if (p1 == null) {
-                try {
-                    p1 = (Point) parameter;
-                }
-                catch (ClassCastException e) {
-                    throw new InvalidParameterException(
-                            Messages.ExpectedPoint);
-                }
+				result = Messages.TwoPointFactory_nextPoint;
+				workspace.setPerpendicularGripReferencePoint(p1);
+			} else {
+				try {
+					vector = (Vector) parameter;
+				} catch (ClassCastException e) {
+					throw new InvalidParameterException();
+				}
 
-                result = Messages.TwoPointFactory_nextPoint;
-                workspace.setPerpendicularGripReferencePoint(p1);
-            }
-            else {
-                try {
-                    vector = (Vector) parameter;
-                }
-                catch (ClassCastException e) {
-                    throw new InvalidParameterException();
-                }
+				Point p2 = p1.addVector(vector);
+				result = completeCommand(p1, p2);
+				if (end) {
+					deactivate();
+				} else {
+					p1 = p2;
+					vector = null;
+					result += Constant.NEW_LINE
+							+ Messages.TwoPointFactory_nextPoint;
+					workspace.setPerpendicularGripReferencePoint(p1);
+				}
+			}
+		} else {
+			throw new InvalidParameterException();
+		}
 
-                Point p2 = p1.addVector(vector);
-                result = completeCommand(p1, p2);
-                if (end) {
-                    deactivate();
-                }
-                else {
-                    p1 = p2;
-                    vector = null;
-                    result += Constant.NEW_LINE
-                            + Messages.TwoPointFactory_nextPoint;
-                    workspace.setPerpendicularGripReferencePoint(p1);
-                }
-            }
-        }
-        else {
-            throw new InvalidParameterException();
-        }
+		return result;
+	}
 
-        return result;
-    }
+	/**
+	 * Completes the command with the two points.
+	 * 
+	 * @param p1
+	 *            The first point
+	 * @param p2
+	 *            The second point
+	 * @return A nice message to the user.
+	 */
+	protected abstract String completeCommand(Point p1, Point p2);
 
-    /**
-     * Completes the command with the two points.
-     * 
-     * @param p1
-     *            The first point
-     * @param p2
-     *            The second point
-     * @return A nice message to the user.
-     */
-    protected abstract String completeCommand (Point p1, Point p2);
+	public String cancel() {
 
-    public String cancel () {
+		deactivate();
+		return Messages.TwoPointFactory_canceled;
+	}
 
-        deactivate();
-        return Messages.TwoPointFactory_canceled;
-    }
+	/**
+	 * Deactivates the command.
+	 */
+	protected void deactivate() {
 
-    /**
-     * Deactivates the command.
-     */
-    protected void deactivate () {
+		p1 = null;
+		vector = null;
+		active = false;
+		workspace.setPerpendicularGripReferencePoint(null);
+	}
 
-        p1 = null;
-        vector = null;
-        active = false;
-        workspace.setPerpendicularGripReferencePoint(null);
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.interpreter.Command#done()
+	 */
+	public boolean isDone() {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.interpreter.Command#done()
-     */
-    public boolean isDone () {
+		return !active;
+	}
 
-        return !active;
-    }
+	/**
+	 * Draws the visual helper for infinite line creation.
+	 */
+	public void drawVisualHelper() {
 
-    /**
-     * Draws the visual helper for infinite line creation.
-     */
-    public void drawVisualHelper () {
+		if (p1 != null && !isDone()) {
+			Point start = p1;
+			Point end = workspace.getMousePosition();
 
-        if (p1 != null && !isDone()) {
-            Point start = p1;
-            Point end = workspace.getMousePosition();
-            
-            if ( !ignoreOrto) { 
-            	try {
-                    end = Utils.transformVector(start, end);
-                }
-                catch (NullArgumentException e) {
-                    // Should not happen
-                    e.printStackTrace();
-                }
-            }
+			if (!ignoreOrto) {
+				try {
+					end = Utils.transformVector(start, end);
+				} catch (NullArgumentException e) {
+					// Should not happen
+					e.printStackTrace();
+				}
+			}
 
-            drawVisualHelper(start, end);
-        }
-    }
+			drawVisualHelper(start, end);
+		}
+	}
 
-    /**
-     * Draws the visual helper given two points.
-     * 
-     * @param writer
-     *            The writer where to draw
-     * @param start
-     *            The first point
-     * @param end
-     *            The second point
-     */
-    protected abstract void drawVisualHelper (Point start, Point end);
+	/**
+	 * Draws the visual helper given two points.
+	 * 
+	 * @param writer
+	 *            The writer where to draw
+	 * @param start
+	 *            The first point
+	 * @param end
+	 *            The second point
+	 */
+	protected abstract void drawVisualHelper(Point start, Point end);
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.commands.Command#getNextParser()
-     */
-    public Parser getNextParser () {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.commands.Command#getNextParser()
+	 */
+	public Parser getNextParser() {
 
-        Parser returnParser = null;
-        if (active) {
-            if (p1 == null) {
-                returnParser = new PointParser();
-            }
-            else {
-                returnParser = new ReturnDecoratorParser(new VectorParser(p1,
-                        ignoreOrto));
-            }
-        }
-        return returnParser;
-    }
+		Parser returnParser = null;
+		if (active) {
+			if (p1 == null) {
+				returnParser = new PointParser();
+			} else {
+				returnParser = new ReturnDecoratorParser(new VectorParser(p1,
+						ignoreOrto));
+			}
+		}
+		return returnParser;
+	}
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.factories.CommandFactory#getCommands()
-     */
-    public abstract List<Command> getCommands ();
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.factories.CommandFactory#getCommands()
+	 */
+	public abstract List<Command> getCommands();
 
-    /**
-     * Sets the initial point.
-     * 
-     * @param point
-     *            The new initial point
-     */
-    protected void setP1 (Point point) {
+	/**
+	 * Sets the initial point.
+	 * 
+	 * @param point
+	 *            The new initial point
+	 */
+	protected void setP1(Point point) {
 
-        workspace.setPerpendicularGripReferencePoint(point);
-        p1 = point;
-    }
+		workspace.setPerpendicularGripReferencePoint(point);
+		p1 = point;
+	}
 
-    /**
-     * @return Returns the p1.
-     */
-    protected Point getP1 () {
+	/**
+	 * @return Returns the p1.
+	 */
+	protected Point getP1() {
 
-        return p1;
-    }
+		return p1;
+	}
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.interfaces.CommandFactory#getName()
-     */
-    public abstract String getName ();
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.interfaces.CommandFactory#getName()
+	 */
+	public abstract String getName();
 }

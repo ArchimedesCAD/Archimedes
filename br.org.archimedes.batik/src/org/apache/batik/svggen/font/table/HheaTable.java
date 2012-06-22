@@ -20,108 +20,107 @@ import java.io.RandomAccessFile;
  */
 public class HheaTable implements Table {
 
-    private short ascender;
+	private short ascender;
 
-    private short descender;
+	private short descender;
 
-    private short lineGap;
+	private short lineGap;
 
-    private short advanceWidthMax;
+	private short advanceWidthMax;
 
-    private short minLeftSideBearing;
+	private short minLeftSideBearing;
 
-    private short minRightSideBearing;
+	private short minRightSideBearing;
 
-    private short xMaxExtent;
+	private short xMaxExtent;
 
-    private short caretSlopeRise;
+	private short caretSlopeRise;
 
-    private short caretSlopeRun;
+	private short caretSlopeRun;
 
-    private short metricDataFormat;
+	private short metricDataFormat;
 
-    private short numberOfHMetrics;
+	private short numberOfHMetrics;
 
+	@SuppressWarnings("unused")
+	protected HheaTable(DirectoryEntry de, RandomAccessFile raf)
+			throws IOException {
 
-    @SuppressWarnings("unused")
-    protected HheaTable (DirectoryEntry de, RandomAccessFile raf)
-            throws IOException {
+		raf.seek(de.getOffset());
+		int version = raf.readInt();
+		ascender = raf.readShort();
+		descender = raf.readShort();
+		lineGap = raf.readShort();
+		advanceWidthMax = raf.readShort();
+		minLeftSideBearing = raf.readShort();
+		minRightSideBearing = raf.readShort();
+		xMaxExtent = raf.readShort();
+		caretSlopeRise = raf.readShort();
+		caretSlopeRun = raf.readShort();
+		for (int i = 0; i < 5; i++) {
+			raf.readShort();
+		}
+		metricDataFormat = raf.readShort();
+		numberOfHMetrics = raf.readShort();
+	}
 
-        raf.seek(de.getOffset());
-        int version = raf.readInt();
-        ascender = raf.readShort();
-        descender = raf.readShort();
-        lineGap = raf.readShort();
-        advanceWidthMax = raf.readShort();
-        minLeftSideBearing = raf.readShort();
-        minRightSideBearing = raf.readShort();
-        xMaxExtent = raf.readShort();
-        caretSlopeRise = raf.readShort();
-        caretSlopeRun = raf.readShort();
-        for (int i = 0; i < 5; i++) {
-            raf.readShort();
-        }
-        metricDataFormat = raf.readShort();
-        numberOfHMetrics = raf.readShort();
-    }
+	public short getAdvanceWidthMax() {
 
-    public short getAdvanceWidthMax () {
+		return advanceWidthMax;
+	}
 
-        return advanceWidthMax;
-    }
+	public short getAscender() {
 
-    public short getAscender () {
+		return ascender;
+	}
 
-        return ascender;
-    }
+	public short getCaretSlopeRise() {
 
-    public short getCaretSlopeRise () {
+		return caretSlopeRise;
+	}
 
-        return caretSlopeRise;
-    }
+	public short getCaretSlopeRun() {
 
-    public short getCaretSlopeRun () {
+		return caretSlopeRun;
+	}
 
-        return caretSlopeRun;
-    }
+	public short getDescender() {
 
-    public short getDescender () {
+		return descender;
+	}
 
-        return descender;
-    }
+	public short getLineGap() {
 
-    public short getLineGap () {
+		return lineGap;
+	}
 
-        return lineGap;
-    }
+	public short getMetricDataFormat() {
 
-    public short getMetricDataFormat () {
+		return metricDataFormat;
+	}
 
-        return metricDataFormat;
-    }
+	public short getMinLeftSideBearing() {
 
-    public short getMinLeftSideBearing () {
+		return minLeftSideBearing;
+	}
 
-        return minLeftSideBearing;
-    }
+	public short getMinRightSideBearing() {
 
-    public short getMinRightSideBearing () {
+		return minRightSideBearing;
+	}
 
-        return minRightSideBearing;
-    }
+	public short getNumberOfHMetrics() {
 
-    public short getNumberOfHMetrics () {
+		return numberOfHMetrics;
+	}
 
-        return numberOfHMetrics;
-    }
+	public int getType() {
 
-    public int getType () {
+		return hhea;
+	}
 
-        return hhea;
-    }
+	public short getXMaxExtent() {
 
-    public short getXMaxExtent () {
-
-        return xMaxExtent;
-    }
+		return xMaxExtent;
+	}
 }

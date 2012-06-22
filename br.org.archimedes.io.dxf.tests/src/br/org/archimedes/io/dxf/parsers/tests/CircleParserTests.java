@@ -21,7 +21,7 @@ import br.org.archimedes.io.dxf.parsers.CircleParser;
 import br.org.archimedes.model.Element;
 
 public class CircleParserTests {
-	
+
 	private CircleParser circleParser;
 	private FileInputStream file;
 
@@ -30,11 +30,11 @@ public class CircleParserTests {
 		circleParser = new CircleParser();
 		file = new FileInputStream(new File("./files/circleTest.dxf"));
 	}
-	
+
 	@Test
 	public void shouldParseCircle() throws Exception {
 		DXFLayer layer = createDXFLayer();
-		
+
 		Collection<Element> parse = circleParser.parse(layer);
 		assertEquals(1, parse.size());
 		Element[] elements = parse.toArray(new Element[0]);
@@ -44,11 +44,9 @@ public class CircleParserTests {
 	private DXFLayer createDXFLayer() throws ParseException {
 		Parser kabejaParser = ParserBuilder.createDefaultParser();
 		kabejaParser.parse(file, DXFParser.DEFAULT_ENCODING);
-		
+
 		DXFLayer layer = kabejaParser.getDocument().getDXFLayer("0");
 		return layer;
 	}
-	
-	
 
 }

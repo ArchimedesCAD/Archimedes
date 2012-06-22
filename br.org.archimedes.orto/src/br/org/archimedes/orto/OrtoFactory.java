@@ -13,13 +13,13 @@
 
 package br.org.archimedes.orto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import br.org.archimedes.exceptions.InvalidParameterException;
 import br.org.archimedes.factories.CommandFactory;
 import br.org.archimedes.interfaces.Command;
 import br.org.archimedes.interfaces.Parser;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Belongs to package br.org.archimedes.commands.
@@ -28,65 +28,66 @@ import java.util.List;
  */
 public class OrtoFactory implements CommandFactory {
 
-    private Command command;
+	private Command command;
 
+	public String begin() {
 
-    public String begin () {
+		boolean isOn = br.org.archimedes.Utils.getWorkspace().isOrtoOn();
+		command = new OrtoCommand();
 
-        boolean isOn = br.org.archimedes.Utils.getWorkspace().isOrtoOn();
-        command = new OrtoCommand();
+		return !isOn ? Messages.OrtoOn : Messages.OrtoOff;
+	}
 
-        return !isOn ? Messages.OrtoOn : Messages.OrtoOff;
-    }
+	public String next(Object parameter) throws InvalidParameterException {
 
-    public String next (Object parameter) throws InvalidParameterException {
+		return null;
+	}
 
-        return null;
-    }
+	public boolean isDone() {
 
-    public boolean isDone () {
+		return true;
+	}
 
-        return true;
-    }
+	public String cancel() {
 
-    public String cancel () {
+		return null;
+	}
 
-        return null;
-    }
+	public void drawVisualHelper() {
 
-    public void drawVisualHelper () {
+		// No visual helper
+	}
 
-        // No visual helper
-    }
+	public String getName() {
 
-    public String getName () {
+		return "orto"; //$NON-NLS-1$
+	}
 
-        return "orto"; //$NON-NLS-1$
-    }
+	public Parser getNextParser() {
 
-    public Parser getNextParser () {
+		return null;
+	}
 
-        return null;
-    }
+	public List<Command> getCommands() {
 
-    public List<Command> getCommands () {
+		List<Command> cmds = null;
 
-        List<Command> cmds = null;
+		if (command != null) {
+			cmds = new ArrayList<Command>();
+			cmds.add(command);
+			command = null;
+		}
 
-        if (command != null) {
-            cmds = new ArrayList<Command>();
-            cmds.add(command);
-            command = null;
-        }
+		return cmds;
+	}
 
-        return cmds;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.factories.CommandFactory#isTransformFactory()
+	 */
+	public boolean isTransformFactory() {
 
-    /* (non-Javadoc)
-     * @see br.org.archimedes.factories.CommandFactory#isTransformFactory()
-     */
-    public boolean isTransformFactory () {
-
-        return false;
-    }
+		return false;
+	}
 }

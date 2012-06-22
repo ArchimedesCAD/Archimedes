@@ -26,35 +26,37 @@ import br.org.archimedes.stub.StubUndoableCommand;
  */
 public class MockMacroCommand extends MacroCommand {
 
-    private boolean calledDoIt = false;
+	private boolean calledDoIt = false;
 
-    private boolean calledUndoIt = false;
+	private boolean calledUndoIt = false;
 
+	public MockMacroCommand() throws NullArgumentException,
+			IllegalActionException {
 
-    public MockMacroCommand () throws NullArgumentException, IllegalActionException {
+		super(Collections.singletonList(new StubUndoableCommand()));
+	}
 
-        super(Collections.singletonList(new StubUndoableCommand()));
-    }
+	@Override
+	public void doIt(Drawing drawing) throws IllegalActionException,
+			NullArgumentException {
 
-    @Override
-    public void doIt (Drawing drawing) throws IllegalActionException, NullArgumentException {
+		calledDoIt = true;
+	}
 
-        calledDoIt = true;
-    }
+	@Override
+	public void undoIt(Drawing drawing) throws IllegalActionException,
+			NullArgumentException {
 
-    @Override
-    public void undoIt (Drawing drawing) throws IllegalActionException, NullArgumentException {
+		calledUndoIt = true;
+	}
 
-        calledUndoIt = true;
-    }
+	public boolean calledDoIt() {
 
-    public boolean calledDoIt () {
+		return calledDoIt;
+	}
 
-        return calledDoIt;
-    }
+	public boolean calledUndoIt() {
 
-    public boolean calledUndoIt () {
-
-        return calledUndoIt;
-    }
+		return calledUndoIt;
+	}
 }

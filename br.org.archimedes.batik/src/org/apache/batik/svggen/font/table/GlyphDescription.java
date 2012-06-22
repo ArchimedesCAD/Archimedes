@@ -19,21 +19,32 @@ package org.apache.batik.svggen.font.table;
 
 /**
  * Specifies access to glyph description classes, simple and composite.
+ * 
  * @version $Id: GlyphDescription.java,v 1.3 2004/08/18 07:15:21 vhardy Exp $
  * @author <a href="mailto:david@steadystate.co.uk">David Schweinsberg</a>
  */
 public interface GlyphDescription {
-    public int getEndPtOfContours(int i);
-    public byte getFlags(int i);
-    public short getXCoordinate(int i);
-    public short getYCoordinate(int i);
-    public short getXMaximum();
-    public short getXMinimum();
-    public short getYMaximum();
-    public short getYMinimum();
-    public boolean isComposite();
-    public int getPointCount();
-    public int getContourCount();
-    //  public int getComponentIndex(int c);
-    //  public int getComponentCount();
+	public int getEndPtOfContours(int i);
+
+	public byte getFlags(int i);
+
+	public short getXCoordinate(int i);
+
+	public short getYCoordinate(int i);
+
+	public short getXMaximum();
+
+	public short getXMinimum();
+
+	public short getYMaximum();
+
+	public short getYMinimum();
+
+	public boolean isComposite();
+
+	public int getPointCount();
+
+	public int getContourCount();
+	// public int getComponentIndex(int c);
+	// public int getComponentCount();
 }

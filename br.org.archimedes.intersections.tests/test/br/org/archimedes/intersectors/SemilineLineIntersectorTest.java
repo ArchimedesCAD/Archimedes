@@ -153,7 +153,7 @@ public class SemilineLineIntersectorTest extends Tester {
 
 		line1 = null;
 		line2 = new Line(2, 2, 10, 10);
-		
+
 		try {
 			lli.getIntersections(line1, line2);
 			fail("element is null and then method SemilineLineIntersector.getIntersections() should have thrown NullArgumentException");

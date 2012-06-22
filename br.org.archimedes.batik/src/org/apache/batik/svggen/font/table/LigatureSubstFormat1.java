@@ -21,36 +21,39 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 
 /**
- *
+ * 
  * @author <a href="mailto:david@steadystate.co.uk">David Schweinsberg</a>
- * @version $Id: LigatureSubstFormat1.java,v 1.3 2004/08/18 07:15:21 vhardy Exp $
+ * @version $Id: LigatureSubstFormat1.java,v 1.3 2004/08/18 07:15:21 vhardy Exp
+ *          $
  */
 public class LigatureSubstFormat1 extends LigatureSubst {
 
-    private int coverageOffset;
-    private int ligSetCount;
-    private int[] ligatureSetOffsets;
-    private LigatureSet[] ligatureSets;
+	private int coverageOffset;
+	private int ligSetCount;
+	private int[] ligatureSetOffsets;
+	private LigatureSet[] ligatureSets;
 
-    /** Creates new LigatureSubstFormat1 */
-    @SuppressWarnings("unused")
-    protected LigatureSubstFormat1(RandomAccessFile raf,int offset) throws IOException {
-        coverageOffset = raf.readUnsignedShort();
-        ligSetCount = raf.readUnsignedShort();
-        ligatureSetOffsets = new int[ligSetCount];
-        ligatureSets = new LigatureSet[ligSetCount];
-        for (int i = 0; i < ligSetCount; i++) {
-            ligatureSetOffsets[i] = raf.readUnsignedShort();
-        }
-        raf.seek(offset + coverageOffset);
-        Coverage coverage = Coverage.read(raf);
-        for (int i = 0; i < ligSetCount; i++) {
-            ligatureSets[i] = new LigatureSet(raf, offset + ligatureSetOffsets[i]);
-        }
-    }
+	/** Creates new LigatureSubstFormat1 */
+	@SuppressWarnings("unused")
+	protected LigatureSubstFormat1(RandomAccessFile raf, int offset)
+			throws IOException {
+		coverageOffset = raf.readUnsignedShort();
+		ligSetCount = raf.readUnsignedShort();
+		ligatureSetOffsets = new int[ligSetCount];
+		ligatureSets = new LigatureSet[ligSetCount];
+		for (int i = 0; i < ligSetCount; i++) {
+			ligatureSetOffsets[i] = raf.readUnsignedShort();
+		}
+		raf.seek(offset + coverageOffset);
+		Coverage coverage = Coverage.read(raf);
+		for (int i = 0; i < ligSetCount; i++) {
+			ligatureSets[i] = new LigatureSet(raf, offset
+					+ ligatureSetOffsets[i]);
+		}
+	}
 
-    public int getFormat() {
-        return 1;
-    }
+	public int getFormat() {
+		return 1;
+	}
 
 }

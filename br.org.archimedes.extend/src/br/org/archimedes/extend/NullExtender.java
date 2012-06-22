@@ -14,27 +14,27 @@
 
 package br.org.archimedes.extend;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.extend.interfaces.Extender;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
 public class NullExtender implements Extender {
 
-    public Element extend (Element element, Collection<Element> references, Point extremePoint)
-            throws NullArgumentException {
+	public Element extend(Element element, Collection<Element> references,
+			Point extremePoint) throws NullArgumentException {
 
-        return element;
-    }
+		return element;
+	}
 
-    public Collection<Element> getInfiniteExtensionElements (Element element) {
+	public Collection<Element> getInfiniteExtensionElements(Element element) {
 
-        Collection<Element> extension = new ArrayList<Element>(1);
-        extension.add(element);
-        return extension;
-    }
+		Collection<Element> extension = new ArrayList<Element>(1);
+		extension.add(element);
+		return extension;
+	}
 
 }

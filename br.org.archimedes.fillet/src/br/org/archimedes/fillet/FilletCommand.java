@@ -13,6 +13,8 @@
 
 package br.org.archimedes.fillet;
 
+import java.util.List;
+
 import br.org.archimedes.exceptions.IllegalActionException;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
@@ -22,157 +24,169 @@ import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
 
-import java.util.List;
-
 /**
  * @author Luiz Real, Ricardo Sider
  */
 public class FilletCommand implements UndoableCommand {
 
-    private final Element firstElement;
+	private final Element firstElement;
 
-    private final Point firstClick;
+	private final Point firstClick;
 
-    private final Element secondElement;
+	private final Element secondElement;
 
-    private final Point secondClick;
+	private final Point secondClick;
 
-    private Filleter filleter;
-    
-    private double radius;
+	private Filleter filleter;
 
-    private List<? extends UndoableCommand> commands;
+	private double radius;
 
+	private List<? extends UndoableCommand> commands;
 
-    /**
-     * @param firstElement
-     *            The first element selected by the user
-     * @param firstClick
-     *            The point clicked by the user to select the first element
-     * @param secondElement
-     *            The second element selected by the user
-     * @param secondClick
-     *            The point clicked by the user to select the second element
-     * @throws NullArgumentException
-     *             if one of the parameters is null
-     * @throws InvalidArgumentException
-     *             if one of the points is not part of their elements
-     */
-    public FilletCommand (Element firstElement, Point firstClick, Element secondElement,
-            Point secondClick, double radius) throws NullArgumentException, InvalidArgumentException {
+	/**
+	 * @param firstElement
+	 *            The first element selected by the user
+	 * @param firstClick
+	 *            The point clicked by the user to select the first element
+	 * @param secondElement
+	 *            The second element selected by the user
+	 * @param secondClick
+	 *            The point clicked by the user to select the second element
+	 * @throws NullArgumentException
+	 *             if one of the parameters is null
+	 * @throws InvalidArgumentException
+	 *             if one of the points is not part of their elements
+	 */
+	public FilletCommand(Element firstElement, Point firstClick,
+			Element secondElement, Point secondClick, double radius)
+			throws NullArgumentException, InvalidArgumentException {
 
-        if (firstElement == null || secondElement == null || firstClick == null
-                || secondClick == null) {
-            throw new NullArgumentException();
-        }
+		if (firstElement == null || secondElement == null || firstClick == null
+				|| secondClick == null) {
+			throw new NullArgumentException();
+		}
 
-        if ( !firstElement.contains(firstClick) || !secondElement.contains(secondClick)) {
-            throw new InvalidArgumentException();
-        }
+		if (!firstElement.contains(firstClick)
+				|| !secondElement.contains(secondClick)) {
+			throw new InvalidArgumentException();
+		}
 
-        this.firstElement = firstElement;
-        this.firstClick = firstClick;
-        this.secondElement = secondElement;
-        this.secondClick = secondClick;
+		this.firstElement = firstElement;
+		this.firstClick = firstClick;
+		this.secondElement = secondElement;
+		this.secondClick = secondClick;
 
-        commands = null;
+		commands = null;
 
-        this.radius = radius;
-        this.filleter = new DefaultFilleter(radius);
-        
-    }
+		this.radius = radius;
+		this.filleter = new DefaultFilleter(radius);
 
-    /*
-     * (non-Javadoc)
-     * @see br.org.archimedes.interfaces.UndoableCommand#undoIt(br.org.archimedes.model.Drawing)
-     */
-    public void undoIt (Drawing drawing) throws IllegalActionException, NullArgumentException {
+	}
 
-        if (drawing == null) {
-            throw new NullArgumentException();
-        }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.org.archimedes.interfaces.UndoableCommand#undoIt(br.org.archimedes
+	 * .model.Drawing)
+	 */
+	public void undoIt(Drawing drawing) throws IllegalActionException,
+			NullArgumentException {
 
-        if (commands != null) {
-            for (UndoableCommand cmd : commands) {
-                cmd.undoIt(drawing);
-            }
-        }
-        else {
-            throw new IllegalActionException();
-        }
-    }
+		if (drawing == null) {
+			throw new NullArgumentException();
+		}
 
-    /*
-     * (non-Javadoc)
-     * @see br.org.archimedes.interfaces.Command#doIt(br.org.archimedes.model.Drawing)
-     */
-    public void doIt (Drawing drawing) throws IllegalActionException, NullArgumentException {
+		if (commands != null) {
+			for (UndoableCommand cmd : commands) {
+				cmd.undoIt(drawing);
+			}
+		} else {
+			throw new IllegalActionException();
+		}
+	}
 
-        if (drawing == null) {
-            throw new NullArgumentException();
-        }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.org.archimedes.interfaces.Command#doIt(br.org.archimedes.model.Drawing
+	 * )
+	 */
+	public void doIt(Drawing drawing) throws IllegalActionException,
+			NullArgumentException {
 
-        commands = filleter.fillet(firstElement, firstClick, secondElement, secondClick);
-        for (UndoableCommand cmd : commands) {
-            cmd.doIt(drawing);
-        }
+		if (drawing == null) {
+			throw new NullArgumentException();
+		}
 
-    }
+		commands = filleter.fillet(firstElement, firstClick, secondElement,
+				secondClick);
+		for (UndoableCommand cmd : commands) {
+			cmd.doIt(drawing);
+		}
 
-    /**
-     * @param filleter
-     *            The filleter to be used (if not the default)
-     */
-    public void setFilleter (Filleter filleter) {
+	}
 
-        this.filleter = filleter;
-    }
+	/**
+	 * @param filleter
+	 *            The filleter to be used (if not the default)
+	 */
+	public void setFilleter(Filleter filleter) {
 
-    public Point getFirstClick () {
+		this.filleter = filleter;
+	}
 
-        return firstClick;
-    }
+	public Point getFirstClick() {
 
-    public Point getSecondClick () {
+		return firstClick;
+	}
 
-        return secondClick;
-    }
+	public Point getSecondClick() {
 
-    public Element getFirstElement () {
+		return secondClick;
+	}
 
-        return firstElement;
-    }
+	public Element getFirstElement() {
 
-    public Element getSecondElement () {
+		return firstElement;
+	}
 
-        return secondElement;
-    }
+	public Element getSecondElement() {
 
-    @Override
-    public boolean equals (Object obj) {
+		return secondElement;
+	}
 
-        if (obj instanceof FilletCommand) {
-            FilletCommand otherCommand = (FilletCommand) obj;
-            return getFirstElement().equals(otherCommand.getFirstElement())
-                    && getSecondElement().equals(otherCommand.getSecondElement())
-                    && getFirstClick().equals(otherCommand.getFirstClick())
-                    && getSecondClick().equals(otherCommand.getSecondClick());
-        }
-        return false;
-    }
+	@Override
+	public boolean equals(Object obj) {
 
-    @Override
-    public int hashCode () {
+		if (obj instanceof FilletCommand) {
+			FilletCommand otherCommand = (FilletCommand) obj;
+			return getFirstElement().equals(otherCommand.getFirstElement())
+					&& getSecondElement().equals(
+							otherCommand.getSecondElement())
+					&& getFirstClick().equals(otherCommand.getFirstClick())
+					&& getSecondClick().equals(otherCommand.getSecondClick());
+		}
+		return false;
+	}
 
-        // TODO implement and test this and the above
-        return getFirstElement().hashCode();
-    }
+	@Override
+	public int hashCode() {
 
-    /* (non-Javadoc)
-     * @see br.org.archimedes.interfaces.UndoableCommand#canMergeWith(br.org.archimedes.interfaces.UndoableCommand)
-     */
-    public boolean canMergeWith (UndoableCommand command) {
+		// TODO implement and test this and the above
+		return getFirstElement().hashCode();
+	}
 
-        return false;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.org.archimedes.interfaces.UndoableCommand#canMergeWith(br.org.archimedes
+	 * .interfaces.UndoableCommand)
+	 */
+	public boolean canMergeWith(UndoableCommand command) {
+
+		return false;
+	}
 }

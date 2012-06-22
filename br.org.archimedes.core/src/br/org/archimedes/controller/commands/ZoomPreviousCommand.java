@@ -27,21 +27,21 @@ public class ZoomPreviousCommand extends ZoomCommand {
 	protected double calculateZoom(Drawing drawing) {
 		if (zoomcmd == null)
 			zoomcmd = findPreviousZoom(drawing);
-	
+
 		if (zoomcmd != null)
 			return zoomcmd.getPreviousZoom();
-		
+
 		return 1.0;
 	}
 
 	private ZoomCommand findPreviousZoom(Drawing drawing) {
 		boolean isDone = false;
-				
+
 		Stack<UndoableCommand> undoHistory = drawing.getUndoHistory();
 		Stack<UndoableCommand> tempStack = new Stack<UndoableCommand>();
-		
+
 		ZoomCommand zc = null;
-		
+
 		if (undoHistory.size() > 0) {
 			while (undoHistory.size() > 0 && !isDone) {
 				UndoableCommand command = undoHistory.pop();
@@ -71,27 +71,22 @@ public class ZoomPreviousCommand extends ZoomCommand {
 	protected Point getNewViewport(Drawing drawing) {
 		if (zoomcmd == null)
 			zoomcmd = findPreviousZoom(drawing);
-	
+
 		if (zoomcmd != null) {
 			return zoomcmd.getPreviousViewport();
 		}
-		
+
 		return null;
 	}
 
-	/*@Override
-	protected Point getPreviousViewport(Drawing drawing) {
-		if (zoomcmd == null)
-			zoomcmd = findPreviousZoom(drawing);
-	
-		if (zoomcmd != null) {
-			previousViewPort = zoomcmd.getPreviousViewport(drawing);
-		}
-		
-		return previousViewPort;
-		return drawing.getViewportPosition();
-	}*/
+	/*
+	 * @Override protected Point getPreviousViewport(Drawing drawing) { if
+	 * (zoomcmd == null) zoomcmd = findPreviousZoom(drawing);
+	 * 
+	 * if (zoomcmd != null) { previousViewPort =
+	 * zoomcmd.getPreviousViewport(drawing); }
+	 * 
+	 * return previousViewPort; return drawing.getViewportPosition(); }
+	 */
 
-	
-	
 }

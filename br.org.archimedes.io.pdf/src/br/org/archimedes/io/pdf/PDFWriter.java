@@ -34,73 +34,72 @@ import com.lowagie.text.pdf.PdfContentByte;
  */
 public class PDFWriter {
 
-    private PDFWriterHelper helper;
+	private PDFWriterHelper helper;
 
+	/**
+	 * @param cb
+	 *            The pdf content byte used to draw
+	 * @param documentArea
+	 *            The documentArea to be used in the PDF
+	 */
+	public PDFWriter(PdfContentByte cb, Rectangle documentArea) {
 
-    /**
-     * @param cb
-     *            The pdf content byte used to draw
-     * @param documentArea
-     *            The documentArea to be used in the PDF
-     */
-    public PDFWriter (PdfContentByte cb, Rectangle documentArea) {
+		this.helper = new PDFWriterHelper(cb, documentArea);
+	}
 
-        this.helper = new PDFWriterHelper(cb, documentArea);
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @seebr.org.archimedes.model.writers.Writer#write(br.org.
+	 * archimedes.model.Drawing)
+	 */
+	public void write(Drawing drawing) {
 
-    /*
-     * (non-Javadoc)
-     * @seebr.org.archimedes.model.writers.Writer#write(br.org.
-     * archimedes.model.Drawing)
-     */
-    public void write (Drawing drawing) {
+		this.helper.setViewport(drawing.getViewportPosition());
+		this.helper.setZoom(drawing.getZoom());
 
-        this.helper.setViewport(drawing.getViewportPosition());
-        this.helper.setZoom(drawing.getZoom());
+		for (Layer layer : drawing.getLayerMap().values()) {
+			if (layer.isVisible()) {
+				write(layer);
+			}
+		}
+	}
 
-        for (Layer layer : drawing.getLayerMap().values()) {
-            if (layer.isVisible()) {
-                write(layer);
-            }
-        }
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @seebr.org.archimedes.model.writers.Writer#write(br.org.
+	 * archimedes.model.Layer)
+	 */
+	public void write(Layer layer) {
 
-    /*
-     * (non-Javadoc)
-     * @seebr.org.archimedes.model.writers.Writer#write(br.org.
-     * archimedes.model.Layer)
-     */
-    public void write (Layer layer) {
+		PdfContentByte cb = helper.getPdfContentByte();
+		cb.setLineWidth((float) layer.getThickness());
+		Color layerColor = layer.getPrintColor();
+		cb.setRGBColorStroke(layerColor.getRed(), layerColor.getGreen(),
+				layerColor.getBlue());
+		if (layer.getLineStyle() == LineStyle.STIPPED) {
+			cb.setLineDash(5, 0);
+		} else {
+			cb.setLineDash(0);
+		}
 
-        PdfContentByte cb = helper.getPdfContentByte();
-        cb.setLineWidth((float) layer.getThickness());
-        Color layerColor = layer.getPrintColor();
-        cb.setRGBColorStroke(layerColor.getRed(), layerColor.getGreen(),
-                layerColor.getBlue());
-        if (layer.getLineStyle() == LineStyle.STIPPED) {
-            cb.setLineDash(5, 0);
-        }
-        else {
-            cb.setLineDash(0);
-        }
+		ElementEPLoader elementEPLoader = new ElementEPLoader();
+		ElementExporterEPLoader exporterLoader = new ElementExporterEPLoader();
 
-        ElementEPLoader elementEPLoader = new ElementEPLoader();
-        ElementExporterEPLoader exporterLoader = new ElementExporterEPLoader();
-
-        for (Element element : layer.getElements()) {
-            String elementId = elementEPLoader.getElementId(element);
-            ElementExporter<Element> exporter = exporterLoader
-                    .getExporter(elementId);
-            try {
-                exporter.exportElement(element, helper);
-            }
-            catch (IOException e) {
-                // Something went wrong when writting this element.
-                // Just skip it and trace the log.
-                e.printStackTrace();
-            } catch (NotSupportedException e) {
-                // wont reach here
-            }
-        }
-    }
+		for (Element element : layer.getElements()) {
+			String elementId = elementEPLoader.getElementId(element);
+			ElementExporter<Element> exporter = exporterLoader
+					.getExporter(elementId);
+			try {
+				exporter.exportElement(element, helper);
+			} catch (IOException e) {
+				// Something went wrong when writting this element.
+				// Just skip it and trace the log.
+				e.printStackTrace();
+			} catch (NotSupportedException e) {
+				// wont reach here
+			}
+		}
+	}
 }

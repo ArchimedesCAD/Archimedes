@@ -21,34 +21,34 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 
 /**
- *
+ * 
  * @author <a href="mailto:david@steadystate.co.uk">David Schweinsberg</a>
  * @version $Id: KernSubtableFormat0.java,v 1.3 2004/08/18 07:15:21 vhardy Exp $
  */
 public class KernSubtableFormat0 extends KernSubtable {
-    
-    private int nPairs;
-    private KerningPair[] kerningPairs;
 
-    /** Creates new KernSubtableFormat0 */
-    @SuppressWarnings("unused")
-    protected KernSubtableFormat0(RandomAccessFile raf) throws IOException {
-        nPairs = raf.readUnsignedShort();
-        int searchRange = raf.readUnsignedShort();
-        int entrySelector = raf.readUnsignedShort();
-        int rangeShift = raf.readUnsignedShort();
-        kerningPairs = new KerningPair[nPairs];
-        for (int i = 0; i < nPairs; i++) {
-            kerningPairs[i] = new KerningPair(raf);
-        }
-    }
+	private int nPairs;
+	private KerningPair[] kerningPairs;
 
-    public int getKerningPairCount() {
-        return nPairs;
-    }
+	/** Creates new KernSubtableFormat0 */
+	@SuppressWarnings("unused")
+	protected KernSubtableFormat0(RandomAccessFile raf) throws IOException {
+		nPairs = raf.readUnsignedShort();
+		int searchRange = raf.readUnsignedShort();
+		int entrySelector = raf.readUnsignedShort();
+		int rangeShift = raf.readUnsignedShort();
+		kerningPairs = new KerningPair[nPairs];
+		for (int i = 0; i < nPairs; i++) {
+			kerningPairs[i] = new KerningPair(raf);
+		}
+	}
 
-    public KerningPair getKerningPair(int i) {
-        return kerningPairs[i];
-    }
+	public int getKerningPairCount() {
+		return nPairs;
+	}
+
+	public KerningPair getKerningPair(int i) {
+		return kerningPairs[i];
+	}
 
 }

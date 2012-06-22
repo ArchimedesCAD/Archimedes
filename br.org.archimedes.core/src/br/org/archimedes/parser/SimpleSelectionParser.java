@@ -42,15 +42,14 @@ public class SimpleSelectionParser implements Parser {
 	public String next(String message) throws InvalidParameterException {
 		if (Utils.isReturn(message)) {
 			try {
-                selection = br.org.archimedes.Utils.getController().getCurrentSelectedElements();
-            }
-            catch (NoActiveDrawingException e) {
-                // Should not happen.
-                e.printStackTrace();
-            }
-		}
-		else {
-            throw new InvalidParameterException();
+				selection = br.org.archimedes.Utils.getController()
+						.getCurrentSelectedElements();
+			} catch (NoActiveDrawingException e) {
+				// Should not happen.
+				e.printStackTrace();
+			}
+		} else {
+			throw new InvalidParameterException();
 		}
 		return null;
 	}

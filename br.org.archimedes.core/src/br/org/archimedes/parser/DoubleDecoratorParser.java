@@ -22,34 +22,35 @@ import br.org.archimedes.interfaces.Parser;
  */
 public class DoubleDecoratorParser extends DecoratorParser {
 
-    /**
-     * @param parser
-     *            The parser to decorate
-     */
-    public DoubleDecoratorParser (Parser parser) {
+	/**
+	 * @param parser
+	 *            The parser to decorate
+	 */
+	public DoubleDecoratorParser(Parser parser) {
 
-        super(parser);
-    }
+		super(parser);
+	}
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.parser.DecoratorParser#getParameter(java.lang.String)
-     */
-    @Override
-    protected Object getParameter (String message) {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.org.archimedes.parser.DecoratorParser#getParameter(java.lang.String)
+	 */
+	@Override
+	protected Object getParameter(String message) {
 
-        return Utils.getDouble(message);
-    }
+		return Utils.getDouble(message);
+	}
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.parser.DecoratorParser#accepts(java.lang.String)
-     */
-    @Override
-    protected boolean accepts (String message) {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.parser.DecoratorParser#accepts(java.lang.String)
+	 */
+	@Override
+	protected boolean accepts(String message) {
 
-        return Utils.isDouble(message);
-    }
+		return Utils.isDouble(message);
+	}
 }

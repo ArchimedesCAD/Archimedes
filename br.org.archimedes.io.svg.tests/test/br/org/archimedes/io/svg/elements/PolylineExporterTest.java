@@ -31,40 +31,39 @@ import br.org.archimedes.polyline.Polyline;
  */
 public class PolylineExporterTest extends Tester {
 
-    private Polyline polyline;
+	private Polyline polyline;
 
-    private PolylineExporter exporter;
+	private PolylineExporter exporter;
 
-    private ByteArrayOutputStream stream;
+	private ByteArrayOutputStream stream;
 
+	@Before
+	public void setUp() throws Exception {
 
-    @Before
-    public void setUp () throws Exception {
+		List<Point> list = new ArrayList<Point>();
+		list.add(new Point(0, 0));
+		list.add(new Point(0, 100));
+		list.add(new Point(100, 0));
+		list.add(new Point(100, 100));
 
-        List<Point> list = new ArrayList<Point>();
-        list.add(new Point(0, 0));
-        list.add(new Point(0, 100));
-        list.add(new Point(100, 0));
-        list.add(new Point(100, 100));
+		polyline = new Polyline(list);
+		exporter = new PolylineExporter();
+		stream = new ByteArrayOutputStream();
 
-        polyline = new Polyline(list);
-        exporter = new PolylineExporter();
-        stream = new ByteArrayOutputStream();
+	}
 
-    }
+	@Test
+	public void exportPolylineAsSVG() throws Exception {
 
-    @Test
-    public void exportPolylineAsSVG () throws Exception {
+		exporter.exportElement(polyline, stream);
 
-        exporter.exportElement(polyline, stream);
+		String expected = "<line x1=\"0\" y1=\"0\" x2=\"0\" y2=\"-100\" />"
+				+ "<line x1=\"0\" y1=\"-100\" x2=\"100\" y2=\"0\" />"
+				+ "<line x1=\"100\" y1=\"0\" x2=\"100\" y2=\"-100\" />";
 
-        String expected = "<line x1=\"0\" y1=\"0\" x2=\"0\" y2=\"-100\" />"
-                + "<line x1=\"0\" y1=\"-100\" x2=\"100\" y2=\"0\" />"
-                + "<line x1=\"100\" y1=\"0\" x2=\"100\" y2=\"-100\" />";
+		expected = expected.replaceAll("\\s", "");
 
-        expected = expected.replaceAll("\\s", "");
-
-        String result = stream.toString().replaceAll("\\s", "");
-        assertEquals(expected, result);
-    }
+		String result = stream.toString().replaceAll("\\s", "");
+		assertEquals(expected, result);
+	}
 }

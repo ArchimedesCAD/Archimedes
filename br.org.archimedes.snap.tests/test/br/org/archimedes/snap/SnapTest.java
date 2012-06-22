@@ -26,57 +26,53 @@ import br.org.archimedes.model.Drawing;
  */
 public class SnapTest {
 
-    /*
-     * Test method for
-     * 'br.org.archimedes.model.commands.OrtoCommand.doIt(Drawing)'
-     */
-    @Test
-    public void testDoIt () {
+	/*
+	 * Test method for
+	 * 'br.org.archimedes.model.commands.OrtoCommand.doIt(Drawing)'
+	 */
+	@Test
+	public void testDoIt() {
 
-        Drawing drawing = new Drawing("Drawing");
+		Drawing drawing = new Drawing("Drawing");
 
-        Workspace workspace = br.org.archimedes.Utils.getWorkspace();
-        boolean snap = workspace.isSnapOn();
+		Workspace workspace = br.org.archimedes.Utils.getWorkspace();
+		boolean snap = workspace.isSnapOn();
 
-        Command ortoCommand = new SnapCommand();
+		Command ortoCommand = new SnapCommand();
 
-        try {
-            ortoCommand.doIt(null);
-        }
-        catch (Exception e) {
-            Assert.fail("Should not throw any Exception.");
-        }
-        Assert.assertEquals("The snap state should have changed.", !snap,
-                workspace.isSnapOn());
+		try {
+			ortoCommand.doIt(null);
+		} catch (Exception e) {
+			Assert.fail("Should not throw any Exception.");
+		}
+		Assert.assertEquals("The snap state should have changed.", !snap,
+				workspace.isSnapOn());
 
-        try {
-            ortoCommand.doIt(drawing);
-        }
-        catch (Exception e) {
-            Assert.fail("Should not throw any exception");
-        }
+		try {
+			ortoCommand.doIt(drawing);
+		} catch (Exception e) {
+			Assert.fail("Should not throw any exception");
+		}
 
-        Assert.assertEquals("The snap state should have changed.", snap,
-                workspace.isSnapOn());
+		Assert.assertEquals("The snap state should have changed.", snap,
+				workspace.isSnapOn());
 
-        try {
-            ortoCommand.doIt(drawing);
-        }
-        catch (Exception e) {
-            Assert.fail("Should not throw any exception");
-        }
+		try {
+			ortoCommand.doIt(drawing);
+		} catch (Exception e) {
+			Assert.fail("Should not throw any exception");
+		}
 
-        Assert.assertEquals("The snap state should have changed.", !snap,
-                workspace.isSnapOn());
+		Assert.assertEquals("The snap state should have changed.", !snap,
+				workspace.isSnapOn());
 
-        try {
-            ortoCommand.doIt(drawing);
-        }
-        catch (Exception e) {
-            Assert.fail("Should not throw any exception");
-        }
+		try {
+			ortoCommand.doIt(drawing);
+		} catch (Exception e) {
+			Assert.fail("Should not throw any exception");
+		}
 
-        Assert.assertEquals("The snap state should have changed.", snap,
-                workspace.isSnapOn());
-    }
+		Assert.assertEquals("The snap state should have changed.", snap,
+				workspace.isSnapOn());
+	}
 }

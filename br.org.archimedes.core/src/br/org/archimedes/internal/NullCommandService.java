@@ -35,211 +35,246 @@ import org.eclipse.ui.menus.UIElement;
  */
 public class NullCommandService implements ICommandService {
 
-    /*
-     * (non-Javadoc)
-     * @seeorg.eclipse.ui.commands.ICommandService#addExecutionListener(org.eclipse.core.commands.
-     * IExecutionListener)
-     */
-    public void addExecutionListener (IExecutionListener listener) {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @seeorg.eclipse.ui.commands.ICommandService#addExecutionListener(org.eclipse
+	 * .core.commands. IExecutionListener)
+	 */
+	public void addExecutionListener(IExecutionListener listener) {
 
-    }
+	}
 
-    /*
-     * (non-Javadoc)
-     * @see org.eclipse.ui.commands.ICommandService#defineUncategorizedCategory(java.lang.String,
-     * java.lang.String)
-     */
-    public void defineUncategorizedCategory (String name, String description) {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.ui.commands.ICommandService#defineUncategorizedCategory(java
+	 * .lang.String, java.lang.String)
+	 */
+	public void defineUncategorizedCategory(String name, String description) {
 
-    }
+	}
 
-    /*
-     * (non-Javadoc)
-     * @see org.eclipse.ui.commands.ICommandService#deserialize(java.lang.String)
-     */
-    public ParameterizedCommand deserialize (String serializedParameterizedCommand)
-            throws NotDefinedException, SerializationException {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.ui.commands.ICommandService#deserialize(java.lang.String)
+	 */
+	public ParameterizedCommand deserialize(
+			String serializedParameterizedCommand) throws NotDefinedException,
+			SerializationException {
 
-        return null;
-    }
+		return null;
+	}
 
-    /*
-     * (non-Javadoc)
-     * @see org.eclipse.ui.commands.ICommandService#getCategory(java.lang.String)
-     */
-    public Category getCategory (String categoryId) {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.ui.commands.ICommandService#getCategory(java.lang.String)
+	 */
+	public Category getCategory(String categoryId) {
 
-        return null;
-    }
+		return null;
+	}
 
-    /*
-     * (non-Javadoc)
-     * @see org.eclipse.ui.commands.ICommandService#getCommand(java.lang.String)
-     */
-    public Command getCommand (String commandId) {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.ui.commands.ICommandService#getCommand(java.lang.String)
+	 */
+	public Command getCommand(String commandId) {
 
-        return null;
-    }
+		return null;
+	}
 
-    /*
-     * (non-Javadoc)
-     * @see org.eclipse.ui.commands.ICommandService#getDefinedCategories()
-     */
-    public Category[] getDefinedCategories () {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.ui.commands.ICommandService#getDefinedCategories()
+	 */
+	public Category[] getDefinedCategories() {
 
-        return null;
-    }
+		return null;
+	}
 
-    /*
-     * (non-Javadoc)
-     * @see org.eclipse.ui.commands.ICommandService#getDefinedCategoryIds()
-     */
-    @SuppressWarnings("unchecked")
-    public Collection getDefinedCategoryIds () {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.ui.commands.ICommandService#getDefinedCategoryIds()
+	 */
+	@SuppressWarnings("unchecked")
+	public Collection getDefinedCategoryIds() {
 
-        return null;
-    }
+		return null;
+	}
 
-    /*
-     * (non-Javadoc)
-     * @see org.eclipse.ui.commands.ICommandService#getDefinedCommandIds()
-     */
-    @SuppressWarnings("unchecked")
-    public Collection getDefinedCommandIds () {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.ui.commands.ICommandService#getDefinedCommandIds()
+	 */
+	@SuppressWarnings("unchecked")
+	public Collection getDefinedCommandIds() {
 
-        return null;
-    }
+		return null;
+	}
 
-    /*
-     * (non-Javadoc)
-     * @see org.eclipse.ui.commands.ICommandService#getDefinedCommands()
-     */
-    public Command[] getDefinedCommands () {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.ui.commands.ICommandService#getDefinedCommands()
+	 */
+	public Command[] getDefinedCommands() {
 
-        return null;
-    }
+		return null;
+	}
 
-    /*
-     * (non-Javadoc)
-     * @see org.eclipse.ui.commands.ICommandService#getDefinedParameterTypeIds()
-     */
-    @SuppressWarnings("unchecked")
-    public Collection getDefinedParameterTypeIds () {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.ui.commands.ICommandService#getDefinedParameterTypeIds()
+	 */
+	@SuppressWarnings("unchecked")
+	public Collection getDefinedParameterTypeIds() {
 
-        return null;
-    }
+		return null;
+	}
 
-    /*
-     * (non-Javadoc)
-     * @see org.eclipse.ui.commands.ICommandService#getDefinedParameterTypes()
-     */
-    public ParameterType[] getDefinedParameterTypes () {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.ui.commands.ICommandService#getDefinedParameterTypes()
+	 */
+	public ParameterType[] getDefinedParameterTypes() {
 
-        return null;
-    }
+		return null;
+	}
 
-    /*
-     * (non-Javadoc)
-     * @see
-     * org.eclipse.ui.commands.ICommandService#getHelpContextId(org.eclipse.core.commands.Command)
-     */
-    public String getHelpContextId (Command command) throws NotDefinedException {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.ui.commands.ICommandService#getHelpContextId(org.eclipse.
+	 * core.commands.Command)
+	 */
+	public String getHelpContextId(Command command) throws NotDefinedException {
 
-        return null;
-    }
+		return null;
+	}
 
-    /*
-     * (non-Javadoc)
-     * @see org.eclipse.ui.commands.ICommandService#getHelpContextId(java.lang.String)
-     */
-    public String getHelpContextId (String commandId) throws NotDefinedException {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.ui.commands.ICommandService#getHelpContextId(java.lang.String
+	 * )
+	 */
+	public String getHelpContextId(String commandId) throws NotDefinedException {
 
-        return null;
-    }
+		return null;
+	}
 
-    /*
-     * (non-Javadoc)
-     * @see org.eclipse.ui.commands.ICommandService#getParameterType(java.lang.String)
-     */
-    public ParameterType getParameterType (String parameterTypeId) {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.ui.commands.ICommandService#getParameterType(java.lang.String
+	 * )
+	 */
+	public ParameterType getParameterType(String parameterTypeId) {
 
-        return null;
-    }
+		return null;
+	}
 
-    /*
-     * (non-Javadoc)
-     * @see org.eclipse.ui.commands.ICommandService#readRegistry()
-     */
-    public void readRegistry () {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.ui.commands.ICommandService#readRegistry()
+	 */
+	public void readRegistry() {
 
-    }
+	}
 
-    /*
-     * (non-Javadoc)
-     * @see org.eclipse.ui.commands.ICommandService#refreshElements(java.lang.String, java.util.Map)
-     */
-    @SuppressWarnings("unchecked")
-    public void refreshElements (String commandId, Map filter) {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.ui.commands.ICommandService#refreshElements(java.lang.String,
+	 * java.util.Map)
+	 */
+	@SuppressWarnings("unchecked")
+	public void refreshElements(String commandId, Map filter) {
 
-    }
+	}
 
-    /*
-     * (non-Javadoc)
-     * @see
-     * org.eclipse.ui.commands.ICommandService#registerElement(org.eclipse.ui.commands.IElementReference
-     * )
-     */
-    public void registerElement (IElementReference elementReference) {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.ui.commands.ICommandService#registerElement(org.eclipse.ui
+	 * .commands.IElementReference )
+	 */
+	public void registerElement(IElementReference elementReference) {
 
-    }
+	}
 
-    /*
-     * (non-Javadoc)
-     * @see
-     * org.eclipse.ui.commands.ICommandService#registerElementForCommand(org.eclipse.core.commands
-     * .ParameterizedCommand, org.eclipse.ui.menus.UIElement)
-     */
-    public IElementReference registerElementForCommand (ParameterizedCommand command,
-            UIElement element) throws NotDefinedException {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.ui.commands.ICommandService#registerElementForCommand(org
+	 * .eclipse.core.commands .ParameterizedCommand,
+	 * org.eclipse.ui.menus.UIElement)
+	 */
+	public IElementReference registerElementForCommand(
+			ParameterizedCommand command, UIElement element)
+			throws NotDefinedException {
 
-        return null;
-    }
+		return null;
+	}
 
-    /*
-     * (non-Javadoc)
-     * @see
-     * org.eclipse.ui.commands.ICommandService#removeExecutionListener(org.eclipse.core.commands
-     * .IExecutionListener)
-     */
-    public void removeExecutionListener (IExecutionListener listener) {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.ui.commands.ICommandService#removeExecutionListener(org.eclipse
+	 * .core.commands .IExecutionListener)
+	 */
+	public void removeExecutionListener(IExecutionListener listener) {
 
-    }
+	}
 
-    /*
-     * (non-Javadoc)
-     * @see
-     * org.eclipse.ui.commands.ICommandService#setHelpContextId(org.eclipse.core.commands.IHandler,
-     * java.lang.String)
-     */
-    public void setHelpContextId (IHandler handler, String helpContextId) {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.ui.commands.ICommandService#setHelpContextId(org.eclipse.
+	 * core.commands.IHandler, java.lang.String)
+	 */
+	public void setHelpContextId(IHandler handler, String helpContextId) {
 
-    }
+	}
 
-    /*
-     * (non-Javadoc)
-     * @seeorg.eclipse.ui.commands.ICommandService#unregisterElement(org.eclipse.ui.commands.
-     * IElementReference)
-     */
-    public void unregisterElement (IElementReference elementReference) {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @seeorg.eclipse.ui.commands.ICommandService#unregisterElement(org.eclipse.
+	 * ui.commands. IElementReference)
+	 */
+	public void unregisterElement(IElementReference elementReference) {
 
-    }
+	}
 
-    /*
-     * (non-Javadoc)
-     * @see org.eclipse.ui.services.IDisposable#dispose()
-     */
-    public void dispose () {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.ui.services.IDisposable#dispose()
+	 */
+	public void dispose() {
 
-    }
+	}
 
 }

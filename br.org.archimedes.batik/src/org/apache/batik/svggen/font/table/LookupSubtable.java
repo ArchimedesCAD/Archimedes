@@ -18,7 +18,7 @@
 package org.apache.batik.svggen.font.table;
 
 /**
- *
+ * 
  * @author <a href="mailto:david@steadystate.co.uk">David Schweinsberg</a>
  * @version $Id: LookupSubtable.java,v 1.3 2004/08/18 07:15:21 vhardy Exp $
  */

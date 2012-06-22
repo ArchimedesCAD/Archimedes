@@ -22,33 +22,32 @@ import java.io.RandomAccessFile;
 
 /**
  * Coverage Index (GlyphID) = StartCoverageIndex + GlyphID - Start GlyphID
- *
+ * 
  * @author <a href="mailto:david@steadystate.co.uk">David Schweinsberg</a>
  * @version $Id: RangeRecord.java,v 1.3 2004/08/18 07:15:22 vhardy Exp $
  */
 public class RangeRecord {
 
-    private int start;
-    private int end;
-    private int startCoverageIndex;
+	private int start;
+	private int end;
+	private int startCoverageIndex;
 
-    /** Creates new RangeRecord */
-    public RangeRecord(RandomAccessFile raf) throws IOException {
-        start = raf.readUnsignedShort();
-        end = raf.readUnsignedShort();
-        startCoverageIndex = raf.readUnsignedShort();
-    }
+	/** Creates new RangeRecord */
+	public RangeRecord(RandomAccessFile raf) throws IOException {
+		start = raf.readUnsignedShort();
+		end = raf.readUnsignedShort();
+		startCoverageIndex = raf.readUnsignedShort();
+	}
 
-    public boolean isInRange(int glyphId) {
-        return (start <= glyphId && glyphId <= end);
-    }
-    
-    public int getCoverageIndex(int glyphId) {
-        if (isInRange(glyphId)) {
-            return startCoverageIndex + glyphId - start;
-        }
-        return -1;
-    }
+	public boolean isInRange(int glyphId) {
+		return (start <= glyphId && glyphId <= end);
+	}
+
+	public int getCoverageIndex(int glyphId) {
+		if (isInRange(glyphId)) {
+			return startCoverageIndex + glyphId - start;
+		}
+		return -1;
+	}
 
 }
-

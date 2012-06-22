@@ -13,23 +13,23 @@
 
 package br.org.archimedes.io.svg;
 
-import br.org.archimedes.Tester;
-import br.org.archimedes.model.Point;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import br.org.archimedes.Tester;
+import br.org.archimedes.model.Point;
 
 /**
  * @author Bruno da Hora, Luiz Real
  */
 public class SVGExporterHelperTest extends Tester {
 
-    @Test
-    public void verifyIfStringReturnedIsSVG () throws Exception {
+	@Test
+	public void verifyIfStringReturnedIsSVG() throws Exception {
 
-        assertEquals("1,-2", SVGExporterHelper.svgFor(new Point(1.0, 2.0)));
+		assertEquals("1,-2", SVGExporterHelper.svgFor(new Point(1.0, 2.0)));
 
-    }
+	}
 
 }

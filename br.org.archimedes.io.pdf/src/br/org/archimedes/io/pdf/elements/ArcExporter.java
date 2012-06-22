@@ -33,51 +33,52 @@ import com.lowagie.text.pdf.PdfContentByte;
  */
 public class ArcExporter implements ElementExporter<Arc> {
 
-    /*
-     * (non-Javadoc)
-     * @see br.org.archimedes.interfaces.ElementExporter#exportElement(br.org.archimedes
-     * .model.Element, java.io.OutputStream)
-     */
-    public void exportElement (Arc arc, Object outputObject) throws IOException {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.org.archimedes.interfaces.ElementExporter#exportElement(br.org.archimedes
+	 * .model.Element, java.io.OutputStream)
+	 */
+	public void exportElement(Arc arc, Object outputObject) throws IOException {
 
-        PDFWriterHelper helper = (PDFWriterHelper) outputObject;
-        PdfContentByte cb = helper.getPdfContentByte();
+		PDFWriterHelper helper = (PDFWriterHelper) outputObject;
+		PdfContentByte cb = helper.getPdfContentByte();
 
-        Point center = arc.getCenter();
-        Point initial = arc.getInitialPoint();
-        Point ending = arc.getEndingPoint();
-        float start = 0;
-        float extent = 0;
-        try {
-            start = (float) Geometrics.calculateAngle(center, initial);
-            extent = (float) Geometrics.calculateAngle(center, ending);
-        }
-        catch (NullArgumentException e) {
-            // Should never happen
-            e.printStackTrace();
-        }
-        start *= (180 / Math.PI);
-        extent *= (180 / Math.PI);
-        extent -= start;
-        if (extent < 0) {
-            extent += 360;
-        }
+		Point center = arc.getCenter();
+		Point initial = arc.getInitialPoint();
+		Point ending = arc.getEndingPoint();
+		float start = 0;
+		float extent = 0;
+		try {
+			start = (float) Geometrics.calculateAngle(center, initial);
+			extent = (float) Geometrics.calculateAngle(center, ending);
+		} catch (NullArgumentException e) {
+			// Should never happen
+			e.printStackTrace();
+		}
+		start *= (180 / Math.PI);
+		extent *= (180 / Math.PI);
+		extent -= start;
+		if (extent < 0) {
+			extent += 360;
+		}
 
-        center = helper.modelToDocument(center);
-        double radius = helper.getZoom() * arc.getRadius();
-        float x1 = (float) (center.getX() - radius);
-        float y1 = (float) (center.getY() - radius);
-        float x2 = (float) (center.getX() + radius);
-        float y2 = (float) (center.getY() + radius);
+		center = helper.modelToDocument(center);
+		double radius = helper.getZoom() * arc.getRadius();
+		float x1 = (float) (center.getX() - radius);
+		float y1 = (float) (center.getY() - radius);
+		float x2 = (float) (center.getX() + radius);
+		float y2 = (float) (center.getY() + radius);
 
-        cb.arc(x1, y1, x2, y2, start, extent);
-        cb.stroke();
-    }
+		cb.arc(x1, y1, x2, y2, start, extent);
+		cb.stroke();
+	}
 
-    public void exportElement (Arc element, Object outputObject, Rectangle boundingBox)
-            throws IOException, NotSupportedException {
+	public void exportElement(Arc element, Object outputObject,
+			Rectangle boundingBox) throws IOException, NotSupportedException {
 
-        throw new NotSupportedException();
-    }
+		throw new NotSupportedException();
+	}
 
 }

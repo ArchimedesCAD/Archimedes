@@ -31,92 +31,90 @@ import br.org.archimedes.model.Vector;
  */
 public class DistanceFactoryTest extends FactoryTester {
 
-    private CommandFactory factory;
+	private CommandFactory factory;
 
-    private Drawing drawing;
+	private Drawing drawing;
 
+	@Before
+	public void setUp() {
 
-    @Before
-    public void setUp () {
+		factory = new DistanceFactory();
+		drawing = new Drawing("Drawing");
+		br.org.archimedes.Utils.getController().setActiveDrawing(drawing);
+	}
 
-        factory = new DistanceFactory();
-        drawing = new Drawing("Drawing");
-        br.org.archimedes.Utils.getController().setActiveDrawing(drawing);
-    }
+	@After
+	public void tearDown() {
 
-    @After
-    public void tearDown () {
+		factory = null;
+		drawing = null;
+		br.org.archimedes.Utils.getController().setActiveDrawing(null);
+	}
 
-        factory = null;
-        drawing = null;
-        br.org.archimedes.Utils.getController().setActiveDrawing(null);
-    }
+	@Test
+	public void testDistCommand() {
 
-    @Test
-    public void testDistCommand () {
+		// Arguments
+		Point p1 = new Point(0, 0);
+		Point p2 = new Point(0, 5);
+		Vector vector = new Vector(p1, p2);
 
-        // Arguments
-        Point p1 = new Point(0, 0);
-        Point p2 = new Point(0, 5);
-        Vector vector = new Vector(p1, p2);
+		// Begin
+		assertBegin(factory, false);
 
-        // Begin
-        assertBegin(factory, false);
+		assertInvalidNext(factory, null);
+		assertInvalidNext(factory, new Object());
+		assertInvalidNext(factory, vector);
 
-        assertInvalidNext(factory, null);
-        assertInvalidNext(factory, new Object());
-        assertInvalidNext(factory, vector);
+		// First point
+		assertSafeNext(factory, p1, false);
 
-        // First point
-        assertSafeNext(factory, p1, false);
+		assertInvalidNext(factory, null);
+		assertInvalidNext(factory, new Object());
+		assertInvalidNext(factory, p2);
 
-        assertInvalidNext(factory, null);
-        assertInvalidNext(factory, new Object());
-        assertInvalidNext(factory, p2);
+		// Vector
+		assertSafeNext(factory, vector, true, false);
 
-        // Vector
-        assertSafeNext(factory, vector, true, false);
+		// Again
+		assertBegin(factory, false);
+		assertSafeNext(factory, p1, false);
+		assertSafeNext(factory, vector, true, false);
+	}
 
-        // Again
-        assertBegin(factory, false);
-        assertSafeNext(factory, p1, false);
-        assertSafeNext(factory, vector, true, false);
-    }
+	@Test
+	public void testCancel() {
 
-    @Test
-    public void testCancel () {
+		assertBegin(factory, false);
+		assertCancel(factory, false);
 
-        assertBegin(factory, false);
-        assertCancel(factory, false);
+		assertBegin(factory, false);
+		assertSafeNext(factory, new Point(10, 0), false);
+		assertCancel(factory, false);
+	}
 
-        assertBegin(factory, false);
-        assertSafeNext(factory, new Point(10, 0), false);
-        assertCancel(factory, false);
-    }
+	@Test
+	public void testAnswer() {
 
-    @Test
-    public void testAnswer () {
+		// Arguments
+		Point p1 = new Point(0, 0);
+		Point p2 = new Point(0, 5);
+		Vector vector = new Vector(p1, p2);
 
-        // Arguments
-        Point p1 = new Point(0, 0);
-        Point p2 = new Point(0, 5);
-        Vector vector = new Vector(p1, p2);
+		// Go to last
+		assertBegin(factory, false);
+		assertSafeNext(factory, p1, false);
 
-        // Go to last
-        assertBegin(factory, false);
-        assertSafeNext(factory, p1, false);
+		String message = null;
+		try {
+			message = factory.next(vector);
+		} catch (InvalidParameterException e) {
+			Assert.fail("Should not throw any exception");
+		}
+		Assert.assertNotNull("Returned message should not be null", message);
+		Assert.assertEquals("Message should be the distance", "" + 5.0, message);
+	}
 
-        String message = null;
-        try {
-            message = factory.next(vector);
-        }
-        catch (InvalidParameterException e) {
-            Assert.fail("Should not throw any exception");
-        }
-        Assert.assertNotNull("Returned message should not be null", message);
-        Assert.assertEquals("Message should be the distance", "" + 5.0, message);
-    }
-    
 	@Override
 	@Test
 	public void testFactoryName() {

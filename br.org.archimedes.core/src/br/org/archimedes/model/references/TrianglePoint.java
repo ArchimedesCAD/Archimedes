@@ -28,63 +28,63 @@ import br.org.archimedes.model.ReferencePoint;
  */
 public class TrianglePoint extends ReferencePoint {
 
-    public TrianglePoint (Point point) throws NullArgumentException {
+	public TrianglePoint(Point point) throws NullArgumentException {
 
-        super(point);
-    }
+		super(point);
+	}
 
-    public TrianglePoint (Point point, List<Point> pointsToMove)
-            throws NullArgumentException {
+	public TrianglePoint(Point point, List<Point> pointsToMove)
+			throws NullArgumentException {
 
-        super(point, pointsToMove);
-    }
+		super(point, pointsToMove);
+	}
 
-    public TrianglePoint (Point point, Point... pointsToMove)
-            throws NullArgumentException {
+	public TrianglePoint(Point point, Point... pointsToMove)
+			throws NullArgumentException {
 
-        super(point, pointsToMove);
-    }
+		super(point, pointsToMove);
+	}
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.model.ReferencePoint#draw()
-     */
-    @Override
-    public void draw () {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.model.ReferencePoint#draw()
+	 */
+	@Override
+	public void draw() {
 
-        OpenGLWrapper openGLWrapper = br.org.archimedes.Utils.getOpenGLWrapper();
+		OpenGLWrapper openGLWrapper = br.org.archimedes.Utils
+				.getOpenGLWrapper();
 
-        Point p1, p2, p3;
-        double size = br.org.archimedes.Utils.getWorkspace().getGripSize() * 2 / 3;
+		Point p1, p2, p3;
+		double size = br.org.archimedes.Utils.getWorkspace().getGripSize() * 2 / 3;
 
-        Point point = null;
-        try {
-            point = br.org.archimedes.Utils.getWorkspace().modelToScreen(getPoint());
-        }
-        catch (NullArgumentException e) {
-            // Should never reach this block since a mid point is created with a
-            // not null point
-            e.printStackTrace();
-        }
+		Point point = null;
+		try {
+			point = br.org.archimedes.Utils.getWorkspace().modelToScreen(
+					getPoint());
+		} catch (NullArgumentException e) {
+			// Should never reach this block since a mid point is created with a
+			// not null point
+			e.printStackTrace();
+		}
 
-        p1 = new Point(point.getX(), point.getY() + size);
-        p2 = new Point(point.getX() - (Math.sqrt(3) / 2) * size, point.getY()
-                - size / 2);
-        p3 = new Point(point.getX() + (Math.sqrt(3) / 2) * size, point.getY()
-                - size / 2);
+		p1 = new Point(point.getX(), point.getY() + size);
+		p2 = new Point(point.getX() - (Math.sqrt(3) / 2) * size, point.getY()
+				- size / 2);
+		p3 = new Point(point.getX() + (Math.sqrt(3) / 2) * size, point.getY()
+				- size / 2);
 
-        List<Point> triangle = new ArrayList<Point>();
-        triangle.add(p1);
-        triangle.add(p2);
-        triangle.add(p3);
-        try {
-            openGLWrapper.draw(triangle);
-        }
-        catch (NullArgumentException e) {
-            // Should never reach this block since triangle was initialized
-            e.printStackTrace();
-        }
-    }
+		List<Point> triangle = new ArrayList<Point>();
+		triangle.add(p1);
+		triangle.add(p2);
+		triangle.add(p3);
+		try {
+			openGLWrapper.draw(triangle);
+		} catch (NullArgumentException e) {
+			// Should never reach this block since triangle was initialized
+			e.printStackTrace();
+		}
+	}
 
 }

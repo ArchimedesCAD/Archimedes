@@ -14,14 +14,14 @@
 
 package br.org.archimedes.orto;
 
+import org.eclipse.core.commands.State;
+import org.eclipse.ui.commands.ICommandService;
+
 import br.org.archimedes.Utils;
 import br.org.archimedes.exceptions.IllegalActionException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.interfaces.Command;
 import br.org.archimedes.model.Drawing;
-
-import org.eclipse.core.commands.State;
-import org.eclipse.ui.commands.ICommandService;
 
 /**
  * Belongs to package br.org.archimedes.factories.
@@ -30,18 +30,23 @@ import org.eclipse.ui.commands.ICommandService;
  */
 public class OrtoCommand implements Command {
 
-    /*
-     * (non-Javadoc)
-     * @see br.org.archimedes.model.commands.Command#doIt(br.org.archimedes.model.Drawing)
-     */
-    public void doIt (Drawing drawing) throws IllegalActionException, NullArgumentException {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.org.archimedes.model.commands.Command#doIt(br.org.archimedes.model
+	 * .Drawing)
+	 */
+	public void doIt(Drawing drawing) throws IllegalActionException,
+			NullArgumentException {
 
-        ICommandService service = Utils.getCommandService();
-        org.eclipse.core.commands.Command command = service.getCommand(Activator.ORTO_COMMAND_ID);
-        State state = command.getState(Activator.ORTO_STATE);
-        Boolean newValue = !(Boolean) state.getValue();
-        state.setValue(newValue);
+		ICommandService service = Utils.getCommandService();
+		org.eclipse.core.commands.Command command = service
+				.getCommand(Activator.ORTO_COMMAND_ID);
+		State state = command.getState(Activator.ORTO_STATE);
+		Boolean newValue = !(Boolean) state.getValue();
+		state.setValue(newValue);
 
-        service.refreshElements(Activator.ORTO_COMMAND_ID, null);
-    }
+		service.refreshElements(Activator.ORTO_COMMAND_ID, null);
+	}
 }

@@ -13,14 +13,14 @@
 
 package br.org.archimedes.io.xml.elements;
 
+import java.io.IOException;
+import java.io.OutputStream;
+
 import br.org.archimedes.exceptions.NotSupportedException;
 import br.org.archimedes.interfaces.ElementExporter;
 import br.org.archimedes.io.xml.XMLExporterHelper;
 import br.org.archimedes.leader.Leader;
 import br.org.archimedes.model.Rectangle;
-
-import java.io.IOException;
-import java.io.OutputStream;
 
 /**
  * Belongs to package br.org.archimedes.line.xml.
@@ -29,29 +29,35 @@ import java.io.OutputStream;
  */
 public class LeaderXMLExporter implements ElementExporter<Leader> {
 
-    /*
-     * (non-Javadoc)
-     * @see br.org.archimedes.interfaces.ElementExporter#exportElement(br.org.archimedes
-     * .model.Element, java.io.OutputStream)
-     */
-    public void exportElement (Leader leader, Object outputObject) throws IOException {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.org.archimedes.interfaces.ElementExporter#exportElement(br.org.archimedes
+	 * .model.Element, java.io.OutputStream)
+	 */
+	public void exportElement(Leader leader, Object outputObject)
+			throws IOException {
 
-        OutputStream output = (OutputStream) outputObject;
-        
-        StringBuilder leaderTag = new StringBuilder();
-        leaderTag.append("<leader>"); //$NON-NLS-1$
-        
-        leaderTag.append(XMLExporterHelper.xmlFor(leader.getPointer().getInitialPoint()));
-        leaderTag.append(XMLExporterHelper.xmlFor(leader.getTextBase().getInitialPoint()));
-        leaderTag.append(XMLExporterHelper.xmlFor(leader.getTextBase().getEndingPoint()));
-        
-        leaderTag.append("</leader>"); //$NON-NLS-1$
-        output.write(leaderTag.toString().getBytes());
-    }
+		OutputStream output = (OutputStream) outputObject;
 
-    public void exportElement (Leader element, Object outputObject, Rectangle boundingBox)
-            throws IOException, NotSupportedException {
+		StringBuilder leaderTag = new StringBuilder();
+		leaderTag.append("<leader>"); //$NON-NLS-1$
 
-        throw new NotSupportedException();
-    }
+		leaderTag.append(XMLExporterHelper.xmlFor(leader.getPointer()
+				.getInitialPoint()));
+		leaderTag.append(XMLExporterHelper.xmlFor(leader.getTextBase()
+				.getInitialPoint()));
+		leaderTag.append(XMLExporterHelper.xmlFor(leader.getTextBase()
+				.getEndingPoint()));
+
+		leaderTag.append("</leader>"); //$NON-NLS-1$
+		output.write(leaderTag.toString().getBytes());
+	}
+
+	public void exportElement(Leader element, Object outputObject,
+			Rectangle boundingBox) throws IOException, NotSupportedException {
+
+		throw new NotSupportedException();
+	}
 }

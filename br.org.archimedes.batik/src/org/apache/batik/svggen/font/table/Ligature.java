@@ -21,32 +21,32 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 
 /**
- *
+ * 
  * @author <a href="mailto:david@steadystate.co.uk">David Schweinsberg</a>
  * @version $Id: Ligature.java,v 1.3 2004/08/18 07:15:21 vhardy Exp $
  */
 public class Ligature {
 
-    private int ligGlyph;
-    private int compCount;
-    private int[] components;
+	private int ligGlyph;
+	private int compCount;
+	private int[] components;
 
-    /** Creates new Ligature */
-    public Ligature(RandomAccessFile raf) throws IOException {
-        ligGlyph = raf.readUnsignedShort();
-        compCount = raf.readUnsignedShort();
-        components = new int[compCount - 1];
-        for (int i = 0; i < compCount - 1; i++) {
-            components[i] = raf.readUnsignedShort();
-        }
-    }
-    
-    public int getGlyphCount() {
-        return compCount;
-    }
-    
-    public int getGlyphId(int i) {
-        return (i == 0) ? ligGlyph : components[i-1];
-    }
+	/** Creates new Ligature */
+	public Ligature(RandomAccessFile raf) throws IOException {
+		ligGlyph = raf.readUnsignedShort();
+		compCount = raf.readUnsignedShort();
+		components = new int[compCount - 1];
+		for (int i = 0; i < compCount - 1; i++) {
+			components[i] = raf.readUnsignedShort();
+		}
+	}
+
+	public int getGlyphCount() {
+		return compCount;
+	}
+
+	public int getGlyphId(int i) {
+		return (i == 0) ? ligGlyph : components[i - 1];
+	}
 
 }

@@ -24,140 +24,139 @@ import br.org.archimedes.model.Drawing;
 
 public class InputControllerTest {
 
-    
-    /**
-     * Belongs to package br.org.archimedes.controller.
-     *
-     * @author night
-     *
-     */
-    public class InnerObserver implements Observer {
+	/**
+	 * Belongs to package br.org.archimedes.controller.
+	 * 
+	 * @author night
+	 * 
+	 */
+	public class InnerObserver implements Observer {
 
-        private String returnValue = null;
+		private String returnValue = null;
 
-        /* (non-Javadoc)
-         * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
-         */
-        public void update (Observable o, Object arg) {
-            
-                returnValue = arg.toString();
-        }
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see java.util.Observer#update(java.util.Observable,
+		 * java.lang.Object)
+		 */
+		public void update(Observable o, Object arg) {
 
-        /**
-         * @return The return value received or null if none
-         */
-        public String getReturnValue () {
+			returnValue = arg.toString();
+		}
 
-            return returnValue;
-        }
+		/**
+		 * @return The return value received or null if none
+		 */
+		public String getReturnValue() {
 
-    }
+			return returnValue;
+		}
 
-    private InputController interpreter;
+	}
 
-    private Controller controller;
+	private InputController interpreter;
 
+	private Controller controller;
 
-    public InputControllerTest () {
+	public InputControllerTest() {
 
-        interpreter = br.org.archimedes.Utils.getInputController();
-        controller = br.org.archimedes.Utils.getController();
-    }
+		interpreter = br.org.archimedes.Utils.getInputController();
+		controller = br.org.archimedes.Utils.getController();
+	}
 
-    @Before
-    public void setUp () {
+	@Before
+	public void setUp() {
 
-        controller.setActiveDrawing(new Drawing("Drawing"));
-    }
+		controller.setActiveDrawing(new Drawing("Drawing"));
+	}
 
-    @After
-    public void tearDown () {
+	@After
+	public void tearDown() {
 
-        controller.setActiveDrawing(null);
-    }
+		controller.setActiveDrawing(null);
+	}
 
-    // TODO Descobrir pq essa desgraca nao passa
+	// TODO Descobrir pq essa desgraca nao passa
 
-    /**
-     * Here we test the getInstance method from the class Interpreter. We also
-     * test if the Interpreter creates the tokens, and recognizes them. At last
-     * we execute commands.
-     */
-    @Test
-    public void testGetInstance () {
+	/**
+	 * Here we test the getInstance method from the class Interpreter. We also
+	 * test if the Interpreter creates the tokens, and recognizes them. At last
+	 * we execute commands.
+	 */
+	@Test
+	public void testGetInstance() {
 
-        Assert.assertNotNull(br.org.archimedes.Utils.getInputController());
+		Assert.assertNotNull(br.org.archimedes.Utils.getInputController());
 
-        repeatCommand();
-    }
+		repeatCommand();
+	}
 
-    @Test
-    public void testCancelNullCommand () {
+	@Test
+	public void testCancelNullCommand() {
 
-        InputController instance = br.org.archimedes.Utils.getInputController();
-        try {
-            instance.setCurrentFactory(null);
-            instance.cancelCurrentFactory();
-        }
-        catch (NullPointerException e) {
-            Assert.fail("Should not throw null pointer exception");
-        }
-    }
+		InputController instance = br.org.archimedes.Utils.getInputController();
+		try {
+			instance.setCurrentFactory(null);
+			instance.cancelCurrentFactory();
+		} catch (NullPointerException e) {
+			Assert.fail("Should not throw null pointer exception");
+		}
+	}
 
-    private void repeatCommand () {
+	private void repeatCommand() {
 
-        Drawing drawing = new Drawing("Drawing 1");
-        controller.setActiveDrawing(drawing);
-        interpreter.setDrawing(drawing);
+		Drawing drawing = new Drawing("Drawing 1");
+		controller.setActiveDrawing(drawing);
+		interpreter.setDrawing(drawing);
 
-        String answer = runCommand("xl", new String[] {"0.0;0.0", "1.0;1.0"});
-        Assert.assertNotNull("The answer should be that the line is ok.",
-                answer);
-        answer = runCommand("", new String[] {"1.0;0.0", "-1.0;-1.0"});
-        Assert.assertNotNull("The answer should be that the line is ok.",
-                answer);
-        answer = runCommand("  ", new String[] {"0.0;1.0", "0.0;-1.0"});
-        Assert.assertNotNull("The answer should be that the line is ok.",
-                answer);
+		String answer = runCommand("xl", new String[] { "0.0;0.0", "1.0;1.0" });
+		Assert.assertNotNull("The answer should be that the line is ok.",
+				answer);
+		answer = runCommand("", new String[] { "1.0;0.0", "-1.0;-1.0" });
+		Assert.assertNotNull("The answer should be that the line is ok.",
+				answer);
+		answer = runCommand("  ", new String[] { "0.0;1.0", "0.0;-1.0" });
+		Assert.assertNotNull("The answer should be that the line is ok.",
+				answer);
 
-        answer = runCommand("c", new String[] {"1.0;0.0", "0.0;0.0"});
-        Assert.assertNotNull(
-                "The answer should be that the circle is ok.", answer);
-        answer = runCommand("", new String[] {"0.0;0.0", "0.0;1.0"});
-        Assert.assertNotNull(
-                "The answer should be that the circle is ok.", answer);
-        answer = runCancelledCommand("", new String[] {"1.0;0.0"});
-        Assert.assertNotNull(
-                "The answer should be that the circle is canceled.",
-                answer);
+		answer = runCommand("c", new String[] { "1.0;0.0", "0.0;0.0" });
+		Assert.assertNotNull("The answer should be that the circle is ok.",
+				answer);
+		answer = runCommand("", new String[] { "0.0;0.0", "0.0;1.0" });
+		Assert.assertNotNull("The answer should be that the circle is ok.",
+				answer);
+		answer = runCancelledCommand("", new String[] { "1.0;0.0" });
+		Assert.assertNotNull(
+				"The answer should be that the circle is canceled.", answer);
 
-        answer = runCommand("c", new String[] {"0.0;0.0", "1.0;1.0"});
-        Assert.assertNotNull(
-                "The answer should be that the infinite line is ok.", answer);
+		answer = runCommand("c", new String[] { "0.0;0.0", "1.0;1.0" });
+		Assert.assertNotNull(
+				"The answer should be that the infinite line is ok.", answer);
 
-        // TODO Create tests that create identical lines
-    }
+		// TODO Create tests that create identical lines
+	}
 
-    private String runCancelledCommand (String command, String[] parameters) {
+	private String runCancelledCommand(String command, String[] parameters) {
 
-        runCommand(command, parameters);
-        InnerObserver resultObserver = new InnerObserver();
-        interpreter.addObserver(resultObserver);
-        interpreter.cancelCurrentFactory();
-        interpreter.deleteObserver(resultObserver);
+		runCommand(command, parameters);
+		InnerObserver resultObserver = new InnerObserver();
+		interpreter.addObserver(resultObserver);
+		interpreter.cancelCurrentFactory();
+		interpreter.deleteObserver(resultObserver);
 
-        return resultObserver.getReturnValue();
-    }
+		return resultObserver.getReturnValue();
+	}
 
-    private String runCommand (String command, String[] parameters) {
+	private String runCommand(String command, String[] parameters) {
 
-        InnerObserver resultObserver = new InnerObserver();
-        interpreter.addObserver(resultObserver);
-        interpreter.receiveText(command);
-        for (String parameter : parameters) {
-            interpreter.receiveText(parameter);
-        }
-        interpreter.deleteObserver(resultObserver);
-        return resultObserver.getReturnValue();
-    }
+		InnerObserver resultObserver = new InnerObserver();
+		interpreter.addObserver(resultObserver);
+		interpreter.receiveText(command);
+		for (String parameter : parameters) {
+			interpreter.receiveText(parameter);
+		}
+		interpreter.deleteObserver(resultObserver);
+		return resultObserver.getReturnValue();
+	}
 }

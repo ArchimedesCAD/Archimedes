@@ -28,31 +28,34 @@ import br.org.archimedes.model.Rectangle;
  */
 public class LineExporter implements ElementExporter<Line> {
 
-    /*
-     * (non-Javadoc)
-     * @see br.org.archimedes.interfaces.ElementExporter#exportElement(br.org.archimedes
-     * .model.Element, java.io.OutputStream)
-     */
-    public void exportElement (Line line, Object outputObject) throws IOException {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.org.archimedes.interfaces.ElementExporter#exportElement(br.org.archimedes
+	 * .model.Element, java.io.OutputStream)
+	 */
+	public void exportElement(Line line, Object outputObject)
+			throws IOException {
 
-        OutputStream output = (OutputStream) outputObject;
-        StringBuilder lineTag = new StringBuilder();
+		OutputStream output = (OutputStream) outputObject;
+		StringBuilder lineTag = new StringBuilder();
 
-        int x1 = (int) line.getInitialPoint().getX();
-        int y1 = (int) line.getInitialPoint().getY();
-        int x2 = (int) line.getEndingPoint().getX();
-        int y2 = (int) line.getEndingPoint().getY();
+		int x1 = (int) line.getInitialPoint().getX();
+		int y1 = (int) line.getInitialPoint().getY();
+		int x2 = (int) line.getEndingPoint().getX();
+		int y2 = (int) line.getEndingPoint().getY();
 
-        lineTag.append("<line x1=\"" + x1 + "\" y1=\"" + -y1 + "\" x2=\"" + x2 + "\" y2=\"" + -y2 //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-                + "\" />\n"); //$NON-NLS-1$
+		lineTag.append("<line x1=\"" + x1 + "\" y1=\"" + -y1 + "\" x2=\"" + x2 + "\" y2=\"" + -y2 //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ "\" />\n"); //$NON-NLS-1$
 
-        output.write(lineTag.toString().getBytes());
+		output.write(lineTag.toString().getBytes());
 
-    }
+	}
 
-    public void exportElement (Line element, Object outputObject, Rectangle boundingBox)
-            throws NotSupportedException {
+	public void exportElement(Line element, Object outputObject,
+			Rectangle boundingBox) throws NotSupportedException {
 
-        throw new NotSupportedException();
-    }
+		throw new NotSupportedException();
+	}
 }

@@ -19,138 +19,137 @@ import java.util.List;
 
 public class Rectangle {
 
-    private double x;
+	private double x;
 
-    private double y;
+	private double y;
 
-    private double width;
+	private double width;
 
-    private double height;
+	private double height;
 
+	/**
+	 * Constructor.
+	 * 
+	 * @param x1
+	 *            The x coordinate of one corner.
+	 * @param y1
+	 *            The y coordinate of one corner.
+	 * @param x2
+	 *            The x coordinate of the opposite corner.
+	 * @param y2
+	 *            The y coordinate of the opposite corner.
+	 */
+	public Rectangle(double x1, double y1, double x2, double y2) {
 
-    /**
-     * Constructor.
-     * 
-     * @param x1
-     *            The x coordinate of one corner.
-     * @param y1
-     *            The y coordinate of one corner.
-     * @param x2
-     *            The x coordinate of the opposite corner.
-     * @param y2
-     *            The y coordinate of the opposite corner.
-     */
-    public Rectangle (double x1, double y1, double x2, double y2) {
+		this.x = Math.min(x1, x2);
+		this.y = Math.min(y1, y2);
+		this.width = Math.abs(x1 - x2);
+		this.height = Math.abs(y1 - y2);
+	}
 
-        this.x = Math.min(x1, x2);
-        this.y = Math.min(y1, y2);
-        this.width = Math.abs(x1 - x2);
-        this.height = Math.abs(y1 - y2);
-    }
+	/**
+	 * @return A list of points of the rectangle in counter-clockwise order
+	 *         starting from the lower left one.
+	 */
+	public List<Point> getPoints() {
 
-    /**
-     * @return A list of points of the rectangle in counter-clockwise order starting from the lower
-     *         left one.
-     */
-    public List<Point> getPoints () {
+		ArrayList<Point> points = new ArrayList<Point>();
 
-        ArrayList<Point> points = new ArrayList<Point>();
+		Point lowerLeft = new Point(x, y);
+		Point upperLeft = new Point(x, y + height);
+		Point upperRight = new Point(x + width, y + height);
+		Point lowerRight = new Point(x + width, y);
 
-        Point lowerLeft = new Point(x, y);
-        Point upperLeft = new Point(x, y + height);
-        Point upperRight = new Point(x + width, y + height);
-        Point lowerRight = new Point(x + width, y);
+		points.add(lowerLeft);
+		points.add(lowerRight);
+		points.add(upperRight);
+		points.add(upperLeft);
 
-        points.add(lowerLeft);
-        points.add(lowerRight);
-        points.add(upperRight);
-        points.add(upperLeft);
+		return points;
+	}
 
-        return points;
-    }
+	/**
+	 * @return The string containing the rectangle starting point and dimensions
+	 */
+	public String toString() {
 
-    /**
-     * @return The string containing the rectangle starting point and dimensions
-     */
-    public String toString () {
+		String s = "(x,y,w,h) = (" + this.x + ", " + this.y + ", " + this.width //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ ", " + this.height + ")"; //$NON-NLS-1$ //$NON-NLS-2$
 
-        String s = "(x,y,w,h) = (" + this.x + ", " + this.y + ", " + this.width //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                + ", " + this.height + ")"; //$NON-NLS-1$ //$NON-NLS-2$
+		return s;
+	}
 
-        return s;
-    }
+	public boolean equals(Object object) {
 
-    public boolean equals (Object object) {
+		boolean equal = (object == this);
+		if (!equal && object != null && object.getClass() == this.getClass()) {
+			Rectangle rectangle = (Rectangle) object;
+			equal = getPoints().equals(rectangle.getPoints());
+		}
+		return equal;
+	}
 
-        boolean equal = (object == this);
-        if ( !equal && object != null && object.getClass() == this.getClass()) {
-            Rectangle rectangle = (Rectangle) object;
-            equal = getPoints().equals(rectangle.getPoints());
-        }
-        return equal;
-    }
+	public boolean isInside(Rectangle rectangle) {
 
-    public boolean isInside (Rectangle rectangle) {
+		boolean inside = x >= rectangle.x && y >= rectangle.y;
+		inside = inside && ((x - rectangle.x) + width <= rectangle.width);
+		inside = inside && ((y - rectangle.y) + height <= rectangle.height);
 
-        boolean inside = x >= rectangle.x && y >= rectangle.y;
-        inside = inside && ((x - rectangle.x) + width <= rectangle.width);
-        inside = inside && ((y - rectangle.y) + height <= rectangle.height);
+		return inside;
+	}
 
-        return inside;
-    }
+	public boolean contains(Point point) {
 
-    public boolean contains (Point point) {
+		return point.getX() > this.x && point.getX() < this.x + this.width
+				&& point.getY() > this.y && point.getY() < this.y + this.height;
 
-        return point.getX() > this.x && point.getX() < this.x + this.width && point.getY() > this.y
-                && point.getY() < this.y + this.height;
+	}
 
-    }
+	/**
+	 * @return The point that is in the lower left corner of the Rectangle.
+	 */
+	public Point getLowerLeft() {
 
-    /**
-     * @return The point that is in the lower left corner of the Rectangle.
-     */
-    public Point getLowerLeft () {
+		return new Point(x, y);
+	}
 
-        return new Point(x, y);
-    }
+	/**
+	 * @return The point that is in the upper right corner of the Rectangle.
+	 */
+	public Point getUpperRight() {
 
-    /**
-     * @return The point that is in the upper right corner of the Rectangle.
-     */
-    public Point getUpperRight () {
+		return new Point(x + width, y + height);
+	}
 
-        return new Point(x + width, y + height);
-    }
+	/**
+	 * @return The point that is in the lower right corner of the Rectangle.
+	 */
+	public Point getLowerRight() {
 
-    /**
-     * @return The point that is in the lower right corner of the Rectangle.
-     */
-    public Point getLowerRight () {
+		return new Point(x + width, y);
+	}
 
-        return new Point(x + width, y);
-    }
+	/**
+	 * @return The point that is in the upper left corner of the Rectangle.
+	 */
+	public Point getUpperLeft() {
 
-    /**
-     * @return The point that is in the upper left corner of the Rectangle.
-     */
-    public Point getUpperLeft () {
+		return new Point(x, y + height);
+	}
 
-        return new Point(x, y + height);
-    }
+	/**
+	 * @return The width of the rectangle.
+	 */
+	public double getWidth() {
 
-    /**
-     * @return The width of the rectangle.
-     */
-    public double getWidth () {
+		return width;
+	}
 
-        return width;
-    }
+	/**
+	 * @return The height of the rectangle.
+	 */
+	public double getHeight() {
 
-    /**
-     * @return The height of the rectangle.
-     */
-    public double getHeight () {
-
-        return height;
-    }
+		return height;
+	}
 }

@@ -19,12 +19,12 @@ package org.apache.batik.svggen.font.table;
 
 /**
  * Definition of Feature tags
- *
+ * 
  * @version $Id: FeatureTags.java,v 1.3 2004/08/18 07:15:20 vhardy Exp $
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
  */
 public interface FeatureTags {
-    String FEATURE_TAG_INIT = "init";
-    String FEATURE_TAG_MEDI = "medi";
-    String FEATURE_TAG_FINA = "fina";
+	String FEATURE_TAG_INIT = "init";
+	String FEATURE_TAG_MEDI = "medi";
+	String FEATURE_TAG_FINA = "fina";
 }

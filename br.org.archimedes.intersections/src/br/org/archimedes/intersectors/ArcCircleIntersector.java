@@ -40,24 +40,25 @@ public class ArcCircleIntersector implements Intersector {
 			baseArc = (Arc) otherElement;
 			circle = (Circle) element;
 		}
-		
+
 		Circle fakeCircle = null;
 		try {
 			fakeCircle = new Circle(baseArc.getCenter(), baseArc.getRadius());
 		} catch (InvalidArgumentException e) {
 			e.printStackTrace();
 		}
-		
+
 		CircleCircleIntersector cci = new CircleCircleIntersector();
-		Collection<Point> intersectionPoints = cci.getIntersections(circle, fakeCircle);
+		Collection<Point> intersectionPoints = cci.getIntersections(circle,
+				fakeCircle);
 		Collection<Point> arcIntersections = new ArrayList<Point>();
-		
-		for(Point p : intersectionPoints){
-			if(baseArc.contains(p)){
+
+		for (Point p : intersectionPoints) {
+			if (baseArc.contains(p)) {
 				arcIntersections.add(p);
 			}
 		}
-		
+
 		return arcIntersections;
 	}
 }

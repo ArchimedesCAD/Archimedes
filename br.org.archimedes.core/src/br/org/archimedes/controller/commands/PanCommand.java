@@ -18,7 +18,6 @@ import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Point;
 
-
 /**
  * Belongs to package br.org.archimedes.model.commands.
  * 
@@ -56,7 +55,9 @@ public class PanCommand extends ZoomCommand {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see br.org.archimedes.model.commands.TheZoomCommand#getNewViewport(br.org.archimedes.model.Drawing)
+	 * @see
+	 * br.org.archimedes.model.commands.TheZoomCommand#getNewViewport(br.org
+	 * .archimedes.model.Drawing)
 	 */
 	@Override
 	protected Point getNewViewport(Drawing drawing) {
@@ -67,7 +68,9 @@ public class PanCommand extends ZoomCommand {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see br.org.archimedes.model.commands.TheZoomCommand#calculateZoom(br.org.archimedes.model.Drawing)
+	 * @see
+	 * br.org.archimedes.model.commands.TheZoomCommand#calculateZoom(br.org.
+	 * archimedes.model.Drawing)
 	 */
 	@Override
 	protected double calculateZoom(Drawing drawing) {

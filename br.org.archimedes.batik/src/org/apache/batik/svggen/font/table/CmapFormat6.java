@@ -26,15 +26,20 @@ import java.io.RandomAccessFile;
  */
 public class CmapFormat6 extends CmapFormat {
 
-    protected CmapFormat6(RandomAccessFile raf) throws IOException {
-        super(raf);
-        format = 6;
-    }
+	protected CmapFormat6(RandomAccessFile raf) throws IOException {
+		super(raf);
+		format = 6;
+	}
 
-    public int getFirst() { return 0; }
-    public int getLast()  { return 0; }
-    
-    public int mapCharCode(int charCode) {
-        return 0;
-    }
+	public int getFirst() {
+		return 0;
+	}
+
+	public int getLast() {
+		return 0;
+	}
+
+	public int mapCharCode(int charCode) {
+		return 0;
+	}
 }

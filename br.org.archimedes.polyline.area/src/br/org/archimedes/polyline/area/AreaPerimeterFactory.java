@@ -15,12 +15,12 @@
 
 package br.org.archimedes.polyline.area;
 
+import java.util.List;
+
 import br.org.archimedes.Geometrics;
 import br.org.archimedes.exceptions.InvalidParameterException;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.polyline.PolylineFactory;
-
-import java.util.List;
 
 /**
  * Belongs to package br.org.archimedes.polyline.area.
@@ -29,53 +29,54 @@ import java.util.List;
  */
 public class AreaPerimeterFactory extends PolylineFactory {
 
-    /*
-     * (non-Javadoc)
-     * @see br.org.archimedes.polyline.PolylineFactory#next(java.lang.Object)
-     */
-    @Override
-    public String next (Object parameter) throws InvalidParameterException {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.polyline.PolylineFactory#next(java.lang.Object)
+	 */
+	@Override
+	public String next(Object parameter) throws InvalidParameterException {
 
-        // Contrary to the polyline factory, an Area Perimeter factory cant finish with less than 3
-        // points because it is unable to generate an area from 2 points.
-        if (parameter == null && getPointsSize() < 3) {
-            throw new InvalidParameterException();
-        }
+		// Contrary to the polyline factory, an Area Perimeter factory cant
+		// finish with less than 3
+		// points because it is unable to generate an area from 2 points.
+		if (parameter == null && getPointsSize() < 3) {
+			throw new InvalidParameterException();
+		}
 
-        return super.next(parameter);
-    }
+		return super.next(parameter);
+	}
 
-    protected String createCommand (List<Point> points) {
+	protected String createCommand(List<Point> points) {
 
-        String result;
+		String result;
 
-        try {
-            setCommand(null);
-            Point first = points.get(0);
-            int lastIndex = points.size() - 1;
-            Point last = points.get(lastIndex);
-            if (first.equals(last)) {
-                points.remove(lastIndex);
-            }
-            double area = Geometrics.calculateArea(points);
-            double perimeter = Geometrics.calculatePerimeter(points);
-            result = Messages.Area + " " + area + ", "; //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
-            result += Messages.Perimeter + " " + perimeter; //$NON-NLS-2$ //$NON-NLS-1$
-        }
-        catch (Exception e) {
-            result = Messages.AreaError;
-        }
-        return result;
-    }
+		try {
+			setCommand(null);
+			Point first = points.get(0);
+			int lastIndex = points.size() - 1;
+			Point last = points.get(lastIndex);
+			if (first.equals(last)) {
+				points.remove(lastIndex);
+			}
+			double area = Geometrics.calculateArea(points);
+			double perimeter = Geometrics.calculatePerimeter(points);
+			result = Messages.Area + " " + area + ", "; //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
+			result += Messages.Perimeter + " " + perimeter; //$NON-NLS-2$ //$NON-NLS-1$
+		} catch (Exception e) {
+			result = Messages.AreaError;
+		}
+		return result;
+	}
 
-    public String cancel () {
+	public String cancel() {
 
-        super.cancel();
-        return Messages.AreaCancel;
-    }
+		super.cancel();
+		return Messages.AreaCancel;
+	}
 
-    public String getName () {
+	public String getName() {
 
-        return "area"; //$NON-NLS-1$
-    }
+		return "area"; //$NON-NLS-1$
+	}
 }

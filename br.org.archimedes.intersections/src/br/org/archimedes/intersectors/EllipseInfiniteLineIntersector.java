@@ -33,8 +33,9 @@ public class EllipseInfiniteLineIntersector implements Intersector {
 
 		// Ellipse description: (x - x0)²/a² + (y - y0)²/b² = 1
 		// Line: p + v * d, d > 0
-		// A point L is in the Line-Ellipse intersection iff it satisfies both equations
-		
+		// A point L is in the Line-Ellipse intersection iff it satisfies both
+		// equations
+
 		Collection<Point> intersections = new ArrayList<Point>();
 		double theta = -ellipse.getFi();
 
@@ -80,7 +81,7 @@ public class EllipseInfiniteLineIntersector implements Intersector {
 					solutionB, solutionC);
 			for (Double sol : solutions) {
 				Point p = lineP.addVector(lineD.multiply(sol));
-				if(infiniteLine.contains(p))
+				if (infiniteLine.contains(p))
 					intersections.add(p);
 			}
 
@@ -95,9 +96,9 @@ public class EllipseInfiniteLineIntersector implements Intersector {
 
 		if (Math.abs(a) < Constant.EPSILON)
 			throw new InvalidArgumentException();
-		
+
 		ArrayList<Double> solutions = new ArrayList<Double>();
-		
+
 		double delta = delta(a, b, c);
 		if (delta < -Constant.EPSILON) {
 			// delta < 0

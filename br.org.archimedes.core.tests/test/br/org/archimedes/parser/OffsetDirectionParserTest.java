@@ -26,95 +26,95 @@ import br.org.archimedes.model.Point;
 public class OffsetDirectionParserTest extends Tester {
 
 	@Test
-    public void testPlus () {
+	public void testPlus() {
 
-        Parser dp = new DirectionParser();
-        Assert.assertFalse("Should not be done yet", dp.isDone());
+		Parser dp = new DirectionParser();
+		Assert.assertFalse("Should not be done yet", dp.isDone());
 
-        doSafeNext(dp, "+");
-        Assert.assertTrue("Should be done", dp.isDone());
-        Assert.assertEquals("Should be true for positive", true, dp
-                .getParameter());
-    }
-	
-	@Test
-    public void testMinus () {
-
-        Parser dp = new DirectionParser();
-        Assert.assertFalse("Should not be done yet", dp.isDone());
-
-        doSafeNext(dp, "-");
-        Assert.assertTrue("Should be done", dp.isDone());
-        Assert.assertEquals("Should be false for negative", false, dp
-                .getParameter());
-    }
+		doSafeNext(dp, "+");
+		Assert.assertTrue("Should be done", dp.isDone());
+		Assert.assertEquals("Should be true for positive", true,
+				dp.getParameter());
+	}
 
 	@Test
-    public void testPoint () {
+	public void testMinus() {
 
-        Parser dp = new DirectionParser();
-        Assert.assertFalse("Should not be done yet", dp.isDone());
+		Parser dp = new DirectionParser();
+		Assert.assertFalse("Should not be done yet", dp.isDone());
 
-        testInvalids(dp);
-
-        doSafeNext(dp, "15;35");
-
-        Assert.assertTrue("Should be done", dp.isDone());
-        Assert.assertEquals("Parameter should be correct", new Point(15, 35),
-                dp.getParameter());
-    }
+		doSafeNext(dp, "-");
+		Assert.assertTrue("Should be done", dp.isDone());
+		Assert.assertEquals("Should be false for negative", false,
+				dp.getParameter());
+	}
 
 	@Test
-    public void testReturn () {
+	public void testPoint() {
 
-        Parser dp = new DirectionParser();
-        Assert.assertFalse("Should not be done yet", dp.isDone());
+		Parser dp = new DirectionParser();
+		Assert.assertFalse("Should not be done yet", dp.isDone());
 
-        br.org.archimedes.Utils.getWorkspace().setMousePosition(new Point(40, 10));
+		testInvalids(dp);
 
-        doSafeNext(dp, "");
-        Assert.assertTrue("Should be done", dp.isDone());
-        Assert.assertEquals("Parameter should be a point", new Point(40, 10),
-                dp.getParameter());
-    }
+		doSafeNext(dp, "15;35");
 
-    /**
-     * Passes invalid parameters to the parser, assuring it throws exceptions.
-     * 
-     * @param parser
-     *            The parser to be tested
-     */
-    private void testInvalids (Parser parser) {
+		Assert.assertTrue("Should be done", dp.isDone());
+		Assert.assertEquals("Parameter should be correct", new Point(15, 35),
+				dp.getParameter());
+	}
 
-        try {
-            parser.next("abc");
-            Assert.fail("Should not reach this point");
-        }
-        catch (InvalidParameterException e) {}
+	@Test
+	public void testReturn() {
 
-        try {
-            parser.next(null);
-            Assert.fail("Should not reach this point");
-        }
-        catch (InvalidParameterException e) {}
-    }
+		Parser dp = new DirectionParser();
+		Assert.assertFalse("Should not be done yet", dp.isDone());
 
-    /**
-     * Safely gives a parameter to a parser. Fails if any exception is thrown.
-     * 
-     * @param parser
-     *            The parser
-     * @param parameter
-     *            The parameter
-     */
-    private void doSafeNext (Parser parser, String parameter) {
+		br.org.archimedes.Utils.getWorkspace().setMousePosition(
+				new Point(40, 10));
 
-        try {
-            parser.next(parameter);
-        }
-        catch (InvalidParameterException e) {
-            e.printStackTrace();
-            Assert.fail("Should not throw this exception");
-        }
-    }
+		doSafeNext(dp, "");
+		Assert.assertTrue("Should be done", dp.isDone());
+		Assert.assertEquals("Parameter should be a point", new Point(40, 10),
+				dp.getParameter());
+	}
+
+	/**
+	 * Passes invalid parameters to the parser, assuring it throws exceptions.
+	 * 
+	 * @param parser
+	 *            The parser to be tested
+	 */
+	private void testInvalids(Parser parser) {
+
+		try {
+			parser.next("abc");
+			Assert.fail("Should not reach this point");
+		} catch (InvalidParameterException e) {
+		}
+
+		try {
+			parser.next(null);
+			Assert.fail("Should not reach this point");
+		} catch (InvalidParameterException e) {
+		}
+	}
+
+	/**
+	 * Safely gives a parameter to a parser. Fails if any exception is thrown.
+	 * 
+	 * @param parser
+	 *            The parser
+	 * @param parameter
+	 *            The parameter
+	 */
+	private void doSafeNext(Parser parser, String parameter) {
+
+		try {
+			parser.next(parameter);
+		} catch (InvalidParameterException e) {
+			e.printStackTrace();
+			Assert.fail("Should not throw this exception");
+		}
+	}
 }

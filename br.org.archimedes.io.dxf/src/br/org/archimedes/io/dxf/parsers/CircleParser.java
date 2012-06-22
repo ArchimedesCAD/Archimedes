@@ -29,20 +29,23 @@ import br.org.archimedes.model.Point;
 public class CircleParser extends ElementParser {
 
 	@Override
-	public Collection<Element> parse(DXFLayer layer) throws NullArgumentException, InvalidArgumentException {
-		
+	public Collection<Element> parse(DXFLayer layer)
+			throws NullArgumentException, InvalidArgumentException {
+
 		Collection<Element> archimedesCircles = new ArrayList<Element>();
-		List<DXFCircle> dxfCircles = layer.getDXFEntities(DXFConstants.ENTITY_TYPE_CIRCLE);
-		
-		if(dxfCircles != null) {
+		List<DXFCircle> dxfCircles = layer
+				.getDXFEntities(DXFConstants.ENTITY_TYPE_CIRCLE);
+
+		if (dxfCircles != null) {
 			for (DXFCircle dxfCircle : dxfCircles) {
-		  		org.kabeja.dxf.helpers.Point centerPoint = dxfCircle.getCenterPoint();
-		  		
+				org.kabeja.dxf.helpers.Point centerPoint = dxfCircle
+						.getCenterPoint();
+
 				Point center = new Point(centerPoint.getX(), centerPoint.getY());
-		  		double radius = dxfCircle.getRadius();
-		  		
+				double radius = dxfCircle.getRadius();
+
 				Circle circle = new Circle(center, radius);
-							
+
 				archimedesCircles.add(circle);
 			}
 		}

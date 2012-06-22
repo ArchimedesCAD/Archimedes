@@ -18,10 +18,9 @@ import org.junit.Test;
 
 import br.org.archimedes.helper.FactoryTester;
 
-
 /**
  * Belongs to package br.org.archimedes.leader.
- *
+ * 
  * @author "Hugo Corbucci"
  */
 public class LeaderFactoryTest extends FactoryTester {
@@ -31,7 +30,7 @@ public class LeaderFactoryTest extends FactoryTester {
 	public void testFactoryName() {
 		// TODO Auto-generated method stub
 		fail("Not yet implemented.");
-		
+
 	}
-    // TODO Add tests to the Leader factory
+	// TODO Add tests to the Leader factory
 }

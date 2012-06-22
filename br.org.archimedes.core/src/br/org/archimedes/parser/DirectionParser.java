@@ -27,67 +27,63 @@ import br.org.archimedes.model.Point;
  */
 public class DirectionParser implements Parser {
 
-    private Object result;
+	private Object result;
 
+	/**
+	 * Constructor.
+	 */
+	public DirectionParser() {
 
-    /**
-     * Constructor.
-     */
-    public DirectionParser () {
+		result = null;
 
-        result = null;
+	}
 
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.interpreter.parser.Parser#next(java.lang.String)
+	 */
+	public String next(String message) throws InvalidParameterException {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.interpreter.parser.Parser#next(java.lang.String)
-     */
-    public String next (String message) throws InvalidParameterException {
+		String returnValue = null;
 
-        String returnValue = null;
+		if (message == null) {
+			throw new InvalidParameterException();
+		}
+		if (Utils.isPoint(message)) {
+			result = (Point) Utils.getPointCoordinates(message);
+		} else if (Utils.isReturn(message)) {
+			result = br.org.archimedes.Utils.getWorkspace()
+					.getActualMousePosition();
+		} else if (message.equals("+")) { //$NON-NLS-1$
+			result = true;
+		} else if (message.equals("-")) { //$NON-NLS-1$
+			result = false;
+		} else {
+			throw new InvalidParameterException(
+					Messages.Direction_expectedDirection);
+		}
 
-        if (message == null) {
-            throw new InvalidParameterException();
-        }
-        if (Utils.isPoint(message)) {
-            result = (Point) Utils.getPointCoordinates(message);
-        }
-        else if (Utils.isReturn(message)) {
-            result = br.org.archimedes.Utils.getWorkspace().getActualMousePosition();
-        }
-        else if (message.equals("+")) { //$NON-NLS-1$
-            result = true;
-        }
-        else if (message.equals("-")) { //$NON-NLS-1$
-            result = false;
-        }
-        else {
-            throw new InvalidParameterException(
-                    Messages.Direction_expectedDirection);
-        }
+		return returnValue;
+	}
 
-        return returnValue;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.interpreter.parser.Parser#isDone()
+	 */
+	public boolean isDone() {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.interpreter.parser.Parser#isDone()
-     */
-    public boolean isDone () {
+		return result != null;
+	}
 
-        return result != null;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.interpreter.parser.Parser#getParameter()
+	 */
+	public Object getParameter() {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.interpreter.parser.Parser#getParameter()
-     */
-    public Object getParameter () {
-
-        return result;
-    }
+		return result;
+	}
 }

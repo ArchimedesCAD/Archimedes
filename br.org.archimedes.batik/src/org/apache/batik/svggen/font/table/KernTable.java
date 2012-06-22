@@ -21,40 +21,43 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 
 /**
- *
+ * 
  * @author <a href="mailto:david@steadystate.co.uk">David Schweinsberg</a>
  * @version $Id: KernTable.java,v 1.3 2004/08/18 07:15:21 vhardy Exp $
  */
 public class KernTable implements Table {
-    
-    private int nTables;
-    private KernSubtable[] tables;
 
-    /** Creates new KernTable */
-    @SuppressWarnings("unused")
-    protected KernTable(DirectoryEntry de, RandomAccessFile raf) throws IOException {
-        raf.seek(de.getOffset());
-        int version = raf.readUnsignedShort();
-        nTables = raf.readUnsignedShort();
-        tables = new KernSubtable[nTables];
-        for (int i = 0; i < nTables; i++) {
-            tables[i] = KernSubtable.read(raf);
-        }
-    }
+	private int nTables;
+	private KernSubtable[] tables;
 
-    public int getSubtableCount() {
-        return nTables;
-    }
-    
-    public KernSubtable getSubtable(int i) {
-        return tables[i];
-    }
+	/** Creates new KernTable */
+	@SuppressWarnings("unused")
+	protected KernTable(DirectoryEntry de, RandomAccessFile raf)
+			throws IOException {
+		raf.seek(de.getOffset());
+		int version = raf.readUnsignedShort();
+		nTables = raf.readUnsignedShort();
+		tables = new KernSubtable[nTables];
+		for (int i = 0; i < nTables; i++) {
+			tables[i] = KernSubtable.read(raf);
+		}
+	}
 
-    /** Get the table type, as a table directory value.
-     * @return The table type
-     */
-    public int getType() {
-        return kern;
-    }
+	public int getSubtableCount() {
+		return nTables;
+	}
+
+	public KernSubtable getSubtable(int i) {
+		return tables[i];
+	}
+
+	/**
+	 * Get the table type, as a table directory value.
+	 * 
+	 * @return The table type
+	 */
+	public int getType() {
+		return kern;
+	}
 
 }

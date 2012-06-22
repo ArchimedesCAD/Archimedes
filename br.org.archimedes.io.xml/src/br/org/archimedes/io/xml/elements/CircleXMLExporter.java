@@ -29,33 +29,35 @@ import br.org.archimedes.model.Rectangle;
  */
 public class CircleXMLExporter implements ElementExporter<Circle> {
 
-    /**
-     * (non-Javadoc).
-     * 
-     * @see br.org.archimedes.interfaces.ElementExporter#exportElement(br.org.archimedes.model.Element,
-     *      java.io.OutputStream)
-     */
-    public void exportElement (Circle element, Object outputObject) throws IOException {
+	/**
+	 * (non-Javadoc).
+	 * 
+	 * @see br.org.archimedes.interfaces.ElementExporter#exportElement(br.org.archimedes.model.Element,
+	 *      java.io.OutputStream)
+	 */
+	public void exportElement(Circle element, Object outputObject)
+			throws IOException {
 
-        OutputStream output = (OutputStream) outputObject;
-        StringBuilder circleTag = new StringBuilder();
+		OutputStream output = (OutputStream) outputObject;
+		StringBuilder circleTag = new StringBuilder();
 
-        circleTag.append("<circle>"); //$NON-NLS-1$
+		circleTag.append("<circle>"); //$NON-NLS-1$
 
-        circleTag.append(XMLExporterHelper.xmlFor("point", element.getCenter())); //$NON-NLS-1$
+		circleTag
+				.append(XMLExporterHelper.xmlFor("point", element.getCenter())); //$NON-NLS-1$
 
-        circleTag.append("<radius>"); //$NON-NLS-1$
-        circleTag.append(element.getRadius());
-        circleTag.append("</radius>"); //$NON-NLS-1$
+		circleTag.append("<radius>"); //$NON-NLS-1$
+		circleTag.append(element.getRadius());
+		circleTag.append("</radius>"); //$NON-NLS-1$
 
-        circleTag.append("</circle>"); //$NON-NLS-1$
+		circleTag.append("</circle>"); //$NON-NLS-1$
 
-        output.write(circleTag.toString().getBytes());
-    }
+		output.write(circleTag.toString().getBytes());
+	}
 
-    public void exportElement (Circle element, Object outputObject, Rectangle boundingBox)
-            throws IOException, NotSupportedException {
+	public void exportElement(Circle element, Object outputObject,
+			Rectangle boundingBox) throws IOException, NotSupportedException {
 
-        throw new NotSupportedException();
-    }
+		throw new NotSupportedException();
+	}
 }

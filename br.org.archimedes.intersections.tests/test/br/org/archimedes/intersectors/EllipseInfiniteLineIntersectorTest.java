@@ -113,7 +113,7 @@ public class EllipseInfiniteLineIntersectorTest extends Tester {
 		assertCollectionTheSame(interPoints,
 				intersector.getIntersections(ellipse2x1, horizontalLine));
 	}
-	
+
 	@Test
 	public void shouldReturnOneTangencyPoint2x1T()
 			throws InvalidArgumentException, NullArgumentException {
@@ -166,7 +166,8 @@ public class EllipseInfiniteLineIntersectorTest extends Tester {
 	@Test
 	public void shouldReturnOneDiagonalTangencyPoint2x3()
 			throws InvalidArgumentException, NullArgumentException {
-		InfiniteLine diagonalLine = new InfiniteLine(-1.0, 0.0, -4.7069360559627, -0.28210643262392987);
+		InfiniteLine diagonalLine = new InfiniteLine(-1.0, 0.0,
+				-4.7069360559627, -0.28210643262392987);
 
 		ArrayList<Point> interPoints = new ArrayList<Point>();
 		interPoints = new ArrayList<Point>();
@@ -196,7 +197,8 @@ public class EllipseInfiniteLineIntersectorTest extends Tester {
 			throws InvalidArgumentException, NullArgumentException {
 
 		double sqrt3 = Math.sqrt(3.0);
-		InfiniteLine diagonalLine = new InfiniteLine(4 -4, 0.0 +2, 1.0 -4, (sqrt3 / 2.0) +2);
+		InfiniteLine diagonalLine = new InfiniteLine(4 - 4, 0.0 + 2, 1.0 - 4,
+				(sqrt3 / 2.0) + 2);
 
 		ArrayList<Point> interPoints = new ArrayList<Point>();
 		interPoints = new ArrayList<Point>();
@@ -206,7 +208,6 @@ public class EllipseInfiniteLineIntersectorTest extends Tester {
 				intersector.getIntersections(ellipse2x1T, diagonalLine));
 	}
 
-	
 	@Test
 	public void shouldReturnTwoTangecyPoint() throws InvalidArgumentException,
 			NullArgumentException {
@@ -246,17 +247,19 @@ public class EllipseInfiniteLineIntersectorTest extends Tester {
 	}
 
 	@Test
-    public void shouldReturnTwoIntersectionPointRotated() throws InvalidArgumentException, NullArgumentException
-    {
+	public void shouldReturnTwoIntersectionPointRotated()
+			throws InvalidArgumentException, NullArgumentException {
 		InfiniteLine diagonalLine = new InfiniteLine(-8.0, 3.0, -2.0, -1.0);
-        Collection<Point> result = intersector.getIntersections(ellipse2x3, diagonalLine);
-        System.out.println(result);
-        
-        List<Point> intersectionPoints = new ArrayList<Point>();
-        intersectionPoints.add(new Point(-3.517944219543928,0.011962813029285257));
-        intersectionPoints.add(new Point(-6.5922956062404285,2.061530404160286));
-        assertCollectionTheSame(intersectionPoints, result);
-    }
-	
-	
+		Collection<Point> result = intersector.getIntersections(ellipse2x3,
+				diagonalLine);
+		System.out.println(result);
+
+		List<Point> intersectionPoints = new ArrayList<Point>();
+		intersectionPoints.add(new Point(-3.517944219543928,
+				0.011962813029285257));
+		intersectionPoints
+				.add(new Point(-6.5922956062404285, 2.061530404160286));
+		assertCollectionTheSame(intersectionPoints, result);
+	}
+
 }

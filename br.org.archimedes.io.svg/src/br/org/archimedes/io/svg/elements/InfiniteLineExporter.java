@@ -31,73 +31,77 @@ import br.org.archimedes.model.Rectangle;
  */
 public class InfiniteLineExporter implements ElementExporter<InfiniteLine> {
 
-    /*
-     * (non-Javadoc)
-     * @see br.org.archimedes.interfaces.ElementExporter#exportElement(br.org.archimedes
-     * .model.Element, java.io.OutputStream)
-     */
-    public void exportElement (InfiniteLine line, Object outputObject) throws NotSupportedException {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.org.archimedes.interfaces.ElementExporter#exportElement(br.org.archimedes
+	 * .model.Element, java.io.OutputStream)
+	 */
+	public void exportElement(InfiniteLine line, Object outputObject)
+			throws NotSupportedException {
 
-        throw new NotSupportedException();
-    }
+		throw new NotSupportedException();
+	}
 
-    public void exportElement (InfiniteLine infiniteLine, Object outputObject, Rectangle boundingBox)
-            throws IOException {
-    	
-    	if(boundingBox == null){
-    		boundingBox = infiniteLine.getCreationBoundaryRectangle();
-    	}
+	public void exportElement(InfiniteLine infiniteLine, Object outputObject,
+			Rectangle boundingBox) throws IOException {
 
-        List<Point> points = infiniteLine.getPointsCrossing(boundingBox);
+		if (boundingBox == null) {
+			boundingBox = infiniteLine.getCreationBoundaryRectangle();
+		}
 
-        Line line = null;
+		List<Point> points = infiniteLine.getPointsCrossing(boundingBox);
 
-        if (points == null) {
+		Line line = null;
 
-            line = getIntersection(infiniteLine, boundingBox.getLowerLeft(), boundingBox
-                    .getLowerRight());
-            if (line == null) {
-                line = getIntersection(infiniteLine, boundingBox.getLowerRight(), boundingBox
-                        .getUpperRight());
-                if (line == null) {
-                    line = getIntersection(infiniteLine, boundingBox.getUpperRight(), boundingBox
-                            .getUpperLeft());
-                    if (line == null) {
-                        line = getIntersection(infiniteLine, boundingBox.getUpperLeft(),
-                                boundingBox.getLowerLeft());
-                    }
-                }
-            }
+		if (points == null) {
 
-        }
-        else {
-            try {
-                line = new Line(points.get(0), points.get(1));
-            }
-            catch (Exception e) {
-                // wont reach here
-            }
-        }
+			line = getIntersection(infiniteLine, boundingBox.getLowerLeft(),
+					boundingBox.getLowerRight());
+			if (line == null) {
+				line = getIntersection(infiniteLine,
+						boundingBox.getLowerRight(),
+						boundingBox.getUpperRight());
+				if (line == null) {
+					line = getIntersection(infiniteLine,
+							boundingBox.getUpperRight(),
+							boundingBox.getUpperLeft());
+					if (line == null) {
+						line = getIntersection(infiniteLine,
+								boundingBox.getUpperLeft(),
+								boundingBox.getLowerLeft());
+					}
+				}
+			}
 
-        if (line != null) {
-            LineExporter lineExporter = new LineExporter();
-            lineExporter.exportElement(line, outputObject);
-        }
+		} else {
+			try {
+				line = new Line(points.get(0), points.get(1));
+			} catch (Exception e) {
+				// wont reach here
+			}
+		}
 
-    }
+		if (line != null) {
+			LineExporter lineExporter = new LineExporter();
+			lineExporter.exportElement(line, outputObject);
+		}
 
-    private Line getIntersection (InfiniteLine infiniteLine, Point point1, Point point2) {
+	}
 
-        try {
-            if (infiniteLine.contains(point1) && infiniteLine.contains(point2)) {
-                return new Line(point1, point2);
-            }
-        }
-        catch (Exception e) {
-            // wont reach here
-        }
+	private Line getIntersection(InfiniteLine infiniteLine, Point point1,
+			Point point2) {
 
-        return null;
-    }
+		try {
+			if (infiniteLine.contains(point1) && infiniteLine.contains(point2)) {
+				return new Line(point1, point2);
+			}
+		} catch (Exception e) {
+			// wont reach here
+		}
+
+		return null;
+	}
 
 }

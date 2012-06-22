@@ -12,19 +12,19 @@
  */
 package br.org.archimedes.intersectors;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import org.junit.Before;
+import org.junit.Test;
+
 import br.org.archimedes.Tester;
 import br.org.archimedes.circle.Circle;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.polyline.Polyline;
-
-import org.junit.Before;
-import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public class CirclePolylineIntersectorTest extends Tester {
 
@@ -61,8 +61,8 @@ public class CirclePolylineIntersectorTest extends Tester {
 
 		Polyline polyline = new Polyline(linePoints);
 
-		assertCollectionTheSame(Collections.emptyList(), intersector
-				.getIntersections(testCircle, polyline));
+		assertCollectionTheSame(Collections.emptyList(),
+				intersector.getIntersections(testCircle, polyline));
 	}
 
 	@Test
@@ -82,8 +82,8 @@ public class CirclePolylineIntersectorTest extends Tester {
 		expected.add(new Point(-5.0, 0.0));
 		expected.add(new Point(5.0, 0.0));
 
-		assertCollectionTheSame(expected, intersector.getIntersections(
-				testCircle, polyline));
+		assertCollectionTheSame(expected,
+				intersector.getIntersections(testCircle, polyline));
 	}
 
 }

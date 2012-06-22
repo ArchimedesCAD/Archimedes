@@ -29,31 +29,32 @@ import br.org.archimedes.model.Rectangle;
  */
 public class EllipseXMLExporter implements ElementExporter<Ellipse> {
 
-    /**
-     * (non-Javadoc).
-     * 
-     * @see br.org.archimedes.interfaces.ElementExporter#exportElement(br.org.archimedes.model.Element,
-     *      java.io.OutputStream)
-     */
-    public void exportElement (Ellipse element, Object outputObject) throws IOException {
+	/**
+	 * (non-Javadoc).
+	 * 
+	 * @see br.org.archimedes.interfaces.ElementExporter#exportElement(br.org.archimedes.model.Element,
+	 *      java.io.OutputStream)
+	 */
+	public void exportElement(Ellipse element, Object outputObject)
+			throws IOException {
 
-        OutputStream output = (OutputStream) outputObject;
-        StringBuilder ellipseTag = new StringBuilder();
+		OutputStream output = (OutputStream) outputObject;
+		StringBuilder ellipseTag = new StringBuilder();
 
-        ellipseTag.append("<ellipse>"); //$NON-NLS-1$
-        
-        ellipseTag.append(XMLExporterHelper.xmlFor(element.getCenter())); //$NON-NLS-1$
-        ellipseTag.append(XMLExporterHelper.xmlFor(element.getWidthPoint())); //$NON-NLS-1$
-        ellipseTag.append(XMLExporterHelper.xmlFor(element.getHeightPoint())); //$NON-NLS-1$
-        
-        ellipseTag.append("</ellipse>"); //$NON-NLS-1$
+		ellipseTag.append("<ellipse>"); //$NON-NLS-1$
 
-        output.write(ellipseTag.toString().getBytes());
-    }
+		ellipseTag.append(XMLExporterHelper.xmlFor(element.getCenter())); //$NON-NLS-1$
+		ellipseTag.append(XMLExporterHelper.xmlFor(element.getWidthPoint())); //$NON-NLS-1$
+		ellipseTag.append(XMLExporterHelper.xmlFor(element.getHeightPoint())); //$NON-NLS-1$
 
-    public void exportElement (Ellipse element, Object outputObject, Rectangle boundingBox)
-            throws IOException, NotSupportedException {
+		ellipseTag.append("</ellipse>"); //$NON-NLS-1$
 
-        throw new NotSupportedException();
-    }
+		output.write(ellipseTag.toString().getBytes());
+	}
+
+	public void exportElement(Ellipse element, Object outputObject,
+			Rectangle boundingBox) throws IOException, NotSupportedException {
+
+		throw new NotSupportedException();
+	}
 }

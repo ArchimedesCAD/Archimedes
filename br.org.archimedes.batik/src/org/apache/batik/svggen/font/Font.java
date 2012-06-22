@@ -9,6 +9,11 @@
 
 package org.apache.batik.svggen.font;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.RandomAccessFile;
+
 import org.apache.batik.svggen.font.table.CmapTable;
 import org.apache.batik.svggen.font.table.GlyfTable;
 import org.apache.batik.svggen.font.table.HeadTable;
@@ -23,11 +28,6 @@ import org.apache.batik.svggen.font.table.Table;
 import org.apache.batik.svggen.font.table.TableDirectory;
 import org.apache.batik.svggen.font.table.TableFactory;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.RandomAccessFile;
-
 /**
  * The TrueType font.
  * 
@@ -36,212 +36,216 @@ import java.io.RandomAccessFile;
  */
 public class Font {
 
-    private String path;
+	private String path;
 
-    // private Interpreter interp = null;
-    // private Parser parser = null;
-    private TableDirectory tableDirectory = null;
+	// private Interpreter interp = null;
+	// private Parser parser = null;
+	private TableDirectory tableDirectory = null;
 
-    private Table[] tables;
+	private Table[] tables;
 
-    private Os2Table os2;
+	private Os2Table os2;
 
-    private CmapTable cmap;
+	private CmapTable cmap;
 
-    private GlyfTable glyf;
+	private GlyfTable glyf;
 
-    private HeadTable head;
+	private HeadTable head;
 
-    private HheaTable hhea;
+	private HheaTable hhea;
 
-    private HmtxTable hmtx;
+	private HmtxTable hmtx;
 
-    private LocaTable loca;
+	private LocaTable loca;
 
-    private MaxpTable maxp;
+	private MaxpTable maxp;
 
-    private NameTable name;
+	private NameTable name;
 
-    private PostTable post;
+	private PostTable post;
 
+	/**
+	 * Constructor
+	 */
+	public Font() {
 
-    /**
-     * Constructor
-     */
-    public Font () {
+	}
 
-    }
+	public Table getTable(int tableType) {
 
-    public Table getTable (int tableType) {
+		for (int i = 0; i < tables.length; i++) {
+			if ((tables[i] != null) && (tables[i].getType() == tableType)) {
+				return tables[i];
+			}
+		}
+		return null;
+	}
 
-        for (int i = 0; i < tables.length; i++) {
-            if ((tables[i] != null) && (tables[i].getType() == tableType)) {
-                return tables[i];
-            }
-        }
-        return null;
-    }
+	public Os2Table getOS2Table() {
 
-    public Os2Table getOS2Table () {
+		return os2;
+	}
 
-        return os2;
-    }
+	public CmapTable getCmapTable() {
 
-    public CmapTable getCmapTable () {
+		return cmap;
+	}
 
-        return cmap;
-    }
+	public HeadTable getHeadTable() {
 
-    public HeadTable getHeadTable () {
+		return head;
+	}
 
-        return head;
-    }
+	public HheaTable getHheaTable() {
 
-    public HheaTable getHheaTable () {
+		return hhea;
+	}
 
-        return hhea;
-    }
+	public HmtxTable getHmtxTable() {
 
-    public HmtxTable getHmtxTable () {
+		return hmtx;
+	}
 
-        return hmtx;
-    }
+	public LocaTable getLocaTable() {
 
-    public LocaTable getLocaTable () {
+		return loca;
+	}
 
-        return loca;
-    }
+	public MaxpTable getMaxpTable() {
 
-    public MaxpTable getMaxpTable () {
+		return maxp;
+	}
 
-        return maxp;
-    }
+	public NameTable getNameTable() {
 
-    public NameTable getNameTable () {
+		return name;
+	}
 
-        return name;
-    }
+	public PostTable getPostTable() {
 
-    public PostTable getPostTable () {
+		return post;
+	}
 
-        return post;
-    }
+	public int getAscent() {
 
-    public int getAscent () {
+		return hhea.getAscender();
+	}
 
-        return hhea.getAscender();
-    }
+	public int getDescent() {
 
-    public int getDescent () {
+		return hhea.getDescender();
+	}
 
-        return hhea.getDescender();
-    }
+	public int getNumGlyphs() {
 
-    public int getNumGlyphs () {
+		return maxp.getNumGlyphs();
+	}
 
-        return maxp.getNumGlyphs();
-    }
+	public Glyph getGlyph(int i) {
 
-    public Glyph getGlyph (int i) {
+		return (glyf.getDescription(i) != null) ? new Glyph(
+				glyf.getDescription(i), hmtx.getLeftSideBearing(i),
+				hmtx.getAdvanceWidth(i)) : null;
+	}
 
-        return (glyf.getDescription(i) != null) ? new Glyph(glyf.getDescription(i), hmtx
-                .getLeftSideBearing(i), hmtx.getAdvanceWidth(i)) : null;
-    }
+	public String getPath() {
 
-    public String getPath () {
+		return path;
+	}
 
-        return path;
-    }
+	public TableDirectory getTableDirectory() {
 
-    public TableDirectory getTableDirectory () {
+		return tableDirectory;
+	}
 
-        return tableDirectory;
-    }
+	/**
+	 * @param pathName
+	 *            Path to the TTF font file
+	 * @throws FileNotFoundException
+	 *             Thrown if the file cound't be read
+	 */
+	protected void read(String pathName) throws FileNotFoundException {
 
-    /**
-     * @param pathName
-     *            Path to the TTF font file
-     * @throws FileNotFoundException Thrown if the file cound't be read
-     */
-    protected void read (String pathName) throws FileNotFoundException {
+		path = pathName;
+		File f = new File(pathName);
 
-        path = pathName;
-        File f = new File(pathName);
+		readFile(f);
+	}
 
-        readFile(f);
-    }
+	/**
+	 * @param file
+	 *            The file to read
+	 * @throws FileNotFoundException
+	 *             Thrown if the file couldn't be found
+	 */
+	protected void readFile(File file) throws FileNotFoundException {
 
-    /**
-     * @param file The file to read
-     * @throws FileNotFoundException Thrown if the file couldn't be found
-     */
-    protected void readFile (File file) throws FileNotFoundException {
+		if (!file.exists()) {
+			throw new FileNotFoundException("Couldn't load file '"
+					+ file.getPath() + "'.");
+		}
 
-        if ( !file.exists()) {
-            throw new FileNotFoundException("Couldn't load file '" + file.getPath() + "'.");
-        }
+		try {
+			RandomAccessFile raf = new RandomAccessFile(file, "r");
+			tableDirectory = new TableDirectory(raf);
+			tables = new Table[tableDirectory.getNumTables()];
 
-        try {
-            RandomAccessFile raf = new RandomAccessFile(file, "r");
-            tableDirectory = new TableDirectory(raf);
-            tables = new Table[tableDirectory.getNumTables()];
+			// Load each of the tables
+			for (int i = 0; i < tableDirectory.getNumTables(); i++) {
+				tables[i] = TableFactory
+						.create(tableDirectory.getEntry(i), raf);
+			}
+			raf.close();
 
-            // Load each of the tables
-            for (int i = 0; i < tableDirectory.getNumTables(); i++) {
-                tables[i] = TableFactory.create(tableDirectory.getEntry(i), raf);
-            }
-            raf.close();
+			// Get references to commonly used tables
+			os2 = (Os2Table) getTable(Table.OS_2);
+			cmap = (CmapTable) getTable(Table.cmap);
+			glyf = (GlyfTable) getTable(Table.glyf);
+			head = (HeadTable) getTable(Table.head);
+			hhea = (HheaTable) getTable(Table.hhea);
+			hmtx = (HmtxTable) getTable(Table.hmtx);
+			loca = (LocaTable) getTable(Table.loca);
+			maxp = (MaxpTable) getTable(Table.maxp);
+			name = (NameTable) getTable(Table.name);
+			post = (PostTable) getTable(Table.post);
 
-            // Get references to commonly used tables
-            os2 = (Os2Table) getTable(Table.OS_2);
-            cmap = (CmapTable) getTable(Table.cmap);
-            glyf = (GlyfTable) getTable(Table.glyf);
-            head = (HeadTable) getTable(Table.head);
-            hhea = (HheaTable) getTable(Table.hhea);
-            hmtx = (HmtxTable) getTable(Table.hmtx);
-            loca = (LocaTable) getTable(Table.loca);
-            maxp = (MaxpTable) getTable(Table.maxp);
-            name = (NameTable) getTable(Table.name);
-            post = (PostTable) getTable(Table.post);
+			// Initialize the tables that require it
+			hmtx.init(hhea.getNumberOfHMetrics(),
+					maxp.getNumGlyphs() - hhea.getNumberOfHMetrics());
+			loca.init(maxp.getNumGlyphs(), head.getIndexToLocFormat() == 0);
+			glyf.init(maxp.getNumGlyphs(), loca);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
-            // Initialize the tables that require it
-            hmtx.init(hhea.getNumberOfHMetrics(), maxp.getNumGlyphs() - hhea.getNumberOfHMetrics());
-            loca.init(maxp.getNumGlyphs(), head.getIndexToLocFormat() == 0);
-            glyf.init(maxp.getNumGlyphs(), loca);
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+	public static Font create() {
 
-    public static Font create () {
+		return new Font();
+	}
 
-        return new Font();
-    }
+	/**
+	 * @param pathName
+	 *            Path to the TTF font file
+	 */
+	public static Font create(String pathName) {
 
-    /**
-     * @param pathName
-     *            Path to the TTF font file
-     */
-    public static Font create (String pathName) {
+		return create(new File(pathName));
+	}
 
-        return create(new File(pathName));
-    }
-    
-    /**
-     * @param file
-     *            TTF Font file
-     */
-    public static Font create (File file) {
+	/**
+	 * @param file
+	 *            TTF Font file
+	 */
+	public static Font create(File file) {
 
-        Font f = new Font();
-        try {
-            f.readFile(file);
-        }
-        catch (FileNotFoundException e) {
-            // Couldn't load. Just log
-            e.printStackTrace();
-        }
-        return f;
-    }
+		Font f = new Font();
+		try {
+			f.readFile(file);
+		} catch (FileNotFoundException e) {
+			// Couldn't load. Just log
+			e.printStackTrace();
+		}
+		return f;
+	}
 }

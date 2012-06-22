@@ -14,24 +14,27 @@ import br.org.archimedes.line.Line;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
 
-public class LineParser extends ElementParser{
-	
+public class LineParser extends ElementParser {
+
 	@Override
-	public Collection<Element> parse(DXFLayer layer) throws NullArgumentException, InvalidArgumentException {
-		
+	public Collection<Element> parse(DXFLayer layer)
+			throws NullArgumentException, InvalidArgumentException {
+
 		Collection<Element> archimedesLines = new ArrayList<Element>();
-		List<DXFLine> dxfLines = layer.getDXFEntities(DXFConstants.ENTITY_TYPE_LINE);
-		
-		if(dxfLines != null) {
+		List<DXFLine> dxfLines = layer
+				.getDXFEntities(DXFConstants.ENTITY_TYPE_LINE);
+
+		if (dxfLines != null) {
 			for (DXFLine dxfLine : dxfLines) {
-		  		org.kabeja.dxf.helpers.Point startPoint = dxfLine.getStartPoint();
-		  		org.kabeja.dxf.helpers.Point endPoint = dxfLine.getEndPoint();
-	
-		  		Point p1 = new Point(startPoint.getX(), startPoint.getY());
-		  		Point p2 = new Point(endPoint.getX(), endPoint.getY());
-		  		
+				org.kabeja.dxf.helpers.Point startPoint = dxfLine
+						.getStartPoint();
+				org.kabeja.dxf.helpers.Point endPoint = dxfLine.getEndPoint();
+
+				Point p1 = new Point(startPoint.getX(), startPoint.getY());
+				Point p2 = new Point(endPoint.getX(), endPoint.getY());
+
 				Line line = new Line(p1, p2);
-							
+
 				archimedesLines.add(line);
 			}
 		}

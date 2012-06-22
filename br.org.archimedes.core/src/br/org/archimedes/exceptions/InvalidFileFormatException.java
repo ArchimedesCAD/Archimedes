@@ -19,22 +19,21 @@ package br.org.archimedes.exceptions;
  */
 public class InvalidFileFormatException extends Exception {
 
-    private static final long serialVersionUID = 8659476098105784959L;
+	private static final long serialVersionUID = 8659476098105784959L;
 
-    private static final String invalid = Messages.FileFormat;
+	private static final String invalid = Messages.FileFormat;
 
+	/**
+	 * @param message
+	 *            The message.
+	 */
+	public InvalidFileFormatException(String message) {
 
-    /**
-     * @param message
-     *            The message.
-     */
-    public InvalidFileFormatException (String message) {
+		super(message);
+	}
 
-        super(message);
-    }
+	public InvalidFileFormatException() {
 
-    public InvalidFileFormatException () {
-
-        super(invalid);
-    }
+		super(invalid);
+	}
 }

@@ -17,11 +17,10 @@ package br.org.archimedes.exceptions;
  */
 public class NoActiveDrawingException extends Exception {
 
-    private static final long serialVersionUID = -8686433923335875955L;
+	private static final long serialVersionUID = -8686433923335875955L;
 
+	public String toString() {
 
-    public String toString () {
-
-        return Messages.NoDrawing;
-    }
+		return Messages.NoDrawing;
+	}
 }

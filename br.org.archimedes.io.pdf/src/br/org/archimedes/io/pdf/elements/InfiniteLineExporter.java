@@ -30,25 +30,28 @@ import br.org.archimedes.model.Rectangle;
  */
 public class InfiniteLineExporter implements ElementExporter<InfiniteLine> {
 
-    /*
-     * (non-Javadoc)
-     * @see br.org.archimedes.interfaces.ElementExporter#exportElement(br.org.archimedes
-     * .model.Element, java.lang.Object)
-     */
-    public void exportElement (InfiniteLine infiniteLine, Object outputObject) throws IOException {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.org.archimedes.interfaces.ElementExporter#exportElement(br.org.archimedes
+	 * .model.Element, java.lang.Object)
+	 */
+	public void exportElement(InfiniteLine infiniteLine, Object outputObject)
+			throws IOException {
 
-        PDFWriterHelper helper = (PDFWriterHelper) outputObject;
-        Rectangle viewArea = helper.getModelArea();
+		PDFWriterHelper helper = (PDFWriterHelper) outputObject;
+		Rectangle viewArea = helper.getModelArea();
 
-        List<Point> crossing = infiniteLine.getPointsCrossing(viewArea);
+		List<Point> crossing = infiniteLine.getPointsCrossing(viewArea);
 
-        LinePointsExporter exporter = new LinePointsExporter(helper);
-        exporter.exportLine(crossing);
-    }
+		LinePointsExporter exporter = new LinePointsExporter(helper);
+		exporter.exportLine(crossing);
+	}
 
-    public void exportElement (InfiniteLine element, Object outputObject, Rectangle boundingBox)
-            throws IOException, NotSupportedException {
+	public void exportElement(InfiniteLine element, Object outputObject,
+			Rectangle boundingBox) throws IOException, NotSupportedException {
 
-        throw new NotSupportedException();
-    }
+		throw new NotSupportedException();
+	}
 }

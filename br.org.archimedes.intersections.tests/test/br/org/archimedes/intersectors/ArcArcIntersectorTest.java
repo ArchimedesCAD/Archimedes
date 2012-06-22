@@ -12,6 +12,16 @@
  */
 package br.org.archimedes.intersectors;
 
+import static org.junit.Assert.fail;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
 import br.org.archimedes.Tester;
 import br.org.archimedes.arc.Arc;
 import br.org.archimedes.exceptions.InvalidArgumentException;
@@ -19,187 +29,173 @@ import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.intersections.interfaces.Intersector;
 import br.org.archimedes.model.Point;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-
-import static org.junit.Assert.fail;
-
 public class ArcArcIntersectorTest extends Tester {
 
-    Arc baseArc;
+	Arc baseArc;
 
-    Intersector intersector;
+	Intersector intersector;
 
+	@Before
+	public void setUp() throws NullArgumentException, InvalidArgumentException {
 
-    @Before
-    public void setUp () throws NullArgumentException, InvalidArgumentException {
+		intersector = new ArcArcIntersector();
+		baseArc = new Arc(new Point(0.0, 0.0), new Point(1.0, 1.0), new Point(
+				2.0, 0.0));
+	}
 
-        intersector = new ArcArcIntersector();
-        baseArc = new Arc(new Point(0.0, 0.0), new Point(1.0, 1.0), new Point(
-                2.0, 0.0));
-    }
+	@Test
+	public void nullArgumentsShouldThrowNullArgumentException() {
 
-    @Test
-    public void nullArgumentsShouldThrowNullArgumentException () {
+		try {
+			intersector.getIntersections(baseArc, null);
+			fail("The otherElement is null and getIntersections should have thrown a NullArgumentException");
+		} catch (NullArgumentException e) {
+			// Passed
+		}
+		try {
+			intersector.getIntersections(null, baseArc);
+			fail("The element is null and getIntersections should have thrown a NullArgumentException");
+		} catch (NullArgumentException e) {
+			// Passed
+		}
+		try {
+			intersector.getIntersections(null, null);
+			fail("Both elements are null and getIntersections should have thrown a NullArgumentException");
+		} catch (NullArgumentException e) {
+			// Passed
+		}
+		Assert.assertTrue("Threw all exceptions it should throw.", true);
+	}
 
-        try {
-            intersector.getIntersections(baseArc, null);
-            fail("The otherElement is null and getIntersections should have thrown a NullArgumentException");
-        }
-        catch (NullArgumentException e) {
-            // Passed
-        }
-        try {
-            intersector.getIntersections(null, baseArc);
-            fail("The element is null and getIntersections should have thrown a NullArgumentException");
-        }
-        catch (NullArgumentException e) {
-            // Passed
-        }
-        try {
-            intersector.getIntersections(null, null);
-            fail("Both elements are null and getIntersections should have thrown a NullArgumentException");
-        }
-        catch (NullArgumentException e) {
-            // Passed
-        }
-        Assert.assertTrue("Threw all exceptions it should throw.", true);
-    }
+	@Test
+	public void notIntersectingArcsShouldReturnNoIntersections()
+			throws NullArgumentException, InvalidArgumentException {
 
-    @Test
-    public void notIntersectingArcsShouldReturnNoIntersections ()
-            throws NullArgumentException, InvalidArgumentException {
+		Arc arc = new Arc(new Point(1.0, 0.5), new Point(2.0, -0.5), new Point(
+				3.0, 0.5));
 
-        Arc arc = new Arc(new Point(1.0, 0.5), new Point(2.0, -0.5), new Point(
-                3.0, 0.5));
+		assertCollectionTheSame(Collections.emptyList(),
+				intersector.getIntersections(arc, baseArc));
+	}
 
-        assertCollectionTheSame(Collections.emptyList(), intersector
-                .getIntersections(arc, baseArc));
-    }
+	@Test
+	public void noIntersectionPointsButWouldIfArcExtendedReturnsNoIntersections()
+			throws NullArgumentException, InvalidArgumentException {
 
-    @Test
-    public void noIntersectionPointsButWouldIfArcExtendedReturnsNoIntersections ()
-            throws NullArgumentException, InvalidArgumentException {
+		Arc arc = new Arc(new Point(4.0, 0.0), new Point(3.0, 1.0), new Point(
+				1.0, 1.1));
 
-        Arc arc = new Arc(new Point(4.0, 0.0), new Point(3.0, 1.0), new Point(
-                1.0, 1.1));
+		assertCollectionTheSame(Collections.emptyList(),
+				intersector.getIntersections(arc, baseArc));
+	}
 
-        assertCollectionTheSame(Collections.emptyList(), intersector
-                .getIntersections(arc, baseArc));
-    }
+	@Test
+	public void tangentArcInsideOnLimitReturnsNoIntersectionPoint()
+			throws NullArgumentException, InvalidArgumentException {
 
-    @Test
-    public void tangentArcInsideOnLimitReturnsNoIntersectionPoint ()
-            throws NullArgumentException, InvalidArgumentException {
+		Arc arc = new Arc(new Point(1.0, 0.9), new Point(1.9, 0.1), new Point(
+				2.0, 0.0));
 
-        Arc arc = new Arc(new Point(1.0, 0.9), new Point(1.9, 0.1), new Point(
-                2.0, 0.0));
+		assertCollectionTheSame(Collections.emptyList(),
+				intersector.getIntersections(arc, baseArc));
+	}
 
-        assertCollectionTheSame(Collections.emptyList(), intersector
-                .getIntersections(arc, baseArc));
-    }
+	@Test
+	public void tangentArcOutsideReturnsOneIntersectionPoint()
+			throws NullArgumentException, InvalidArgumentException {
 
-    @Test
-    public void tangentArcOutsideReturnsOneIntersectionPoint ()
-            throws NullArgumentException, InvalidArgumentException {
+		Arc arc = new Arc(new Point(0.0, 2.0), new Point(1.0, 1.0), new Point(
+				2.0, 2.0));
 
-        Arc arc = new Arc(new Point(0.0, 2.0), new Point(1.0, 1.0), new Point(
-                2.0, 2.0));
+		assertCollectionTheSame(Collections.singleton(new Point(1.0, 1.0)),
+				intersector.getIntersections(arc, baseArc));
+	}
 
-        assertCollectionTheSame(Collections.singleton(new Point(1.0, 1.0)),
-                intersector.getIntersections(arc, baseArc));
-    }
+	@Test
+	public void arcCompletesACircleReturnsTwoIntersectionPoints()
+			throws NullArgumentException, InvalidArgumentException {
 
-    @Test
-    public void arcCompletesACircleReturnsTwoIntersectionPoints ()
-            throws NullArgumentException, InvalidArgumentException {
+		Arc arc = new Arc(new Point(0.0, 0.0), new Point(1.0, -1.0), new Point(
+				2.0, 0.0));
 
-        Arc arc = new Arc(new Point(0.0, 0.0), new Point(1.0, -1.0), new Point(
-                2.0, 0.0));
+		Collection<Point> expected = new ArrayList<Point>();
+		expected.add(new Point(0.0, 0.0));
+		expected.add(new Point(2.0, 0.0));
 
-        Collection<Point> expected = new ArrayList<Point>();
-        expected.add(new Point(0.0, 0.0));
-        expected.add(new Point(2.0, 0.0));
+		assertCollectionTheSame(expected,
+				intersector.getIntersections(arc, baseArc));
+	}
 
-        assertCollectionTheSame(expected, intersector.getIntersections(arc,
-                baseArc));
-    }
+	@Test
+	public void arcAlmostCompletesACircleReturnsOneIntersectionPoint()
+			throws NullArgumentException, InvalidArgumentException {
 
-    @Test
-    public void arcAlmostCompletesACircleReturnsOneIntersectionPoint ()
-            throws NullArgumentException, InvalidArgumentException {
+		Arc arc = new Arc(new Point(0.0, 0.0), new Point(1.0, -1.0), new Point(
+				1.0 + Math.sqrt(3) / 2, -0.5));
 
-        Arc arc = new Arc(new Point(0.0, 0.0), new Point(1.0, -1.0), new Point(
-                1.0 + Math.sqrt(3) / 2, -0.5));
+		Collection<Point> expected = new ArrayList<Point>();
+		expected.add(new Point(0.0, 0.0));
 
-        Collection<Point> expected = new ArrayList<Point>();
-        expected.add(new Point(0.0, 0.0));
+		assertCollectionTheSame(expected,
+				intersector.getIntersections(arc, baseArc));
+	}
 
-        assertCollectionTheSame(expected, intersector.getIntersections(arc,
-                baseArc));
-    }
+	@Test
+	public void arcsCompletesACircleAndBypassAnExtremePointReturnsNoIntersectionPoints()
+			throws NullArgumentException, InvalidArgumentException {
 
-    @Test
-    public void arcsCompletesACircleAndBypassAnExtremePointReturnsNoIntersectionPoints ()
-            throws NullArgumentException, InvalidArgumentException {
+		Arc arc = new Arc(new Point(0.0, 0.0), new Point(1.0, -1.0), new Point(
+				1.0, 1.0));
 
-        Arc arc = new Arc(new Point(0.0, 0.0), new Point(1.0, -1.0), new Point(
-                1.0, 1.0));
+		assertCollectionTheSame(Collections.emptyList(),
+				intersector.getIntersections(arc, baseArc));
+	}
 
-        assertCollectionTheSame(Collections.emptyList(), intersector
-                .getIntersections(arc, baseArc));
-    }
+	@Test
+	public void arcCrossesArcReturnsTwoIntersectionPoints()
+			throws NullArgumentException, InvalidArgumentException {
 
-    @Test
-    public void arcCrossesArcReturnsTwoIntersectionPoints ()
-            throws NullArgumentException, InvalidArgumentException {
+		Arc arc = new Arc(new Point(0.0, 1.0), new Point(1.0, 0.0), new Point(
+				2.0, 1.0));
 
-        Arc arc = new Arc(new Point(0.0, 1.0), new Point(1.0, 0.0), new Point(
-                2.0, 1.0));
+		Collection<Point> expected = new ArrayList<Point>();
+		expected.add(new Point(1.0 - Math.sqrt(3.0) / 2.0, 0.5));
+		expected.add(new Point(1.0 + Math.sqrt(3.0) / 2.0, 0.5));
 
-        Collection<Point> expected = new ArrayList<Point>();
-        expected.add(new Point(1.0 - Math.sqrt(3.0) / 2.0, 0.5));
-        expected.add(new Point(1.0 + Math.sqrt(3.0) / 2.0, 0.5));
+		assertCollectionTheSame(expected,
+				intersector.getIntersections(arc, baseArc));
+	}
 
-        assertCollectionTheSame(expected, intersector.getIntersections(arc,
-                baseArc));
-    }
+	@Test
+	public void arcCrossesOneSideReturnsOneIntersectionPoint()
+			throws NullArgumentException, InvalidArgumentException {
 
-    @Test
-    public void arcCrossesOneSideReturnsOneIntersectionPoint ()
-            throws NullArgumentException, InvalidArgumentException {
+		Arc arc = new Arc(new Point(2.0, 2.0), new Point(1.0, 1.0), new Point(
+				1.5, 0.5));
 
-        Arc arc = new Arc(new Point(2.0, 2.0), new Point(1.0, 1.0), new Point(
-                1.5, 0.5));
+		assertCollectionTheSame(Collections.singleton(new Point(1.0, 1.0)),
+				intersector.getIntersections(arc, baseArc));
+	}
 
-        assertCollectionTheSame(Collections.singleton(new Point(1.0, 1.0)),
-                intersector.getIntersections(arc, baseArc));
-    }
+	@Test
+	public void arcCompletesWaveReturnsOneIntersectionPoint()
+			throws NullArgumentException, InvalidArgumentException {
 
-    @Test
-    public void arcCompletesWaveReturnsOneIntersectionPoint ()
-            throws NullArgumentException, InvalidArgumentException {
+		Arc arc = new Arc(new Point(2.0, 0.0), new Point(3.0, -1.0), new Point(
+				4.0, 0.0));
 
-        Arc arc = new Arc(new Point(2.0, 0.0), new Point(3.0, -1.0), new Point(
-                4.0, 0.0));
+		assertCollectionTheSame(Collections.singleton(new Point(2.0, 0.0)),
+				intersector.getIntersections(arc, baseArc));
+	}
 
-        assertCollectionTheSame(Collections.singleton(new Point(2.0, 0.0)),
-                intersector.getIntersections(arc, baseArc));
-    }
+	@Test
+	public void arcIntersectsArcOnTheEdgesReturnsNoIntersectionPoints()
+			throws NullArgumentException, InvalidArgumentException {
 
-    @Test
-    public void arcIntersectsArcOnTheEdgesReturnsNoIntersectionPoints ()
-            throws NullArgumentException, InvalidArgumentException {
+		Arc arc = new Arc(new Point(1 - Math.sqrt(2.0), 1), new Point(1.0,
+				1 - Math.sqrt(2.0)), new Point(1 + Math.sqrt(2.0), 1));
 
-        Arc arc = new Arc(new Point(1 - Math.sqrt(2.0), 1), new Point(1.0,
-                1 - Math.sqrt(2.0)), new Point(1 + Math.sqrt(2.0), 1));
-
-        assertCollectionTheSame(Collections.emptyList(), intersector
-                .getIntersections(arc, baseArc));
-    }
+		assertCollectionTheSame(Collections.emptyList(),
+				intersector.getIntersections(arc, baseArc));
+	}
 }

@@ -125,7 +125,7 @@ public final class XMLUtils {
 		Double returnValue = null;
 		try {
 			String nodeValue = node.getFirstChild().getNodeValue();
-            nodeValue = nodeValue.trim();
+			nodeValue = nodeValue.trim();
 			returnValue = nf.parse(nodeValue).doubleValue();
 		} catch (ParseException e) {
 			// Should never happen

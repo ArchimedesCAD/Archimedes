@@ -12,22 +12,20 @@
  */
 package br.org.archimedes.pan.tests;
 
-import static org.junit.Assert.*;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
 import br.org.archimedes.helper.FactoryTester;
 
-
 /**
  * Belongs to package br.org.archimedes.pan.tests.
- *
+ * 
  * @author "Hugo Corbucci"
- *
+ * 
  */
 public class PanFactoryTest extends FactoryTester {
-    
+
 	@Override
 	@Test
 	public void testFactoryName() {

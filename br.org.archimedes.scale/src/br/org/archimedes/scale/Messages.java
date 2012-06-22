@@ -16,44 +16,43 @@ import org.eclipse.osgi.util.NLS;
 
 /**
  * Belongs to package br.org.archimedes.scale.
- *
+ * 
  * @author nitao
- *
+ * 
  */
 public class Messages extends NLS {
 
-    private static final String BUNDLE_NAME = "br.org.archimedes.scale.messages"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = "br.org.archimedes.scale.messages"; //$NON-NLS-1$
 
-    public static String AfterR;
+	public static String AfterR;
 
-    public static String CancelCommand;
+	public static String CancelCommand;
 
-    public static String CommandFailed;
+	public static String CommandFailed;
 
-    public static String CommandFinished;
+	public static String CommandFinished;
 
-    public static String ExpectedDouble;
+	public static String ExpectedDouble;
 
-    public static String ExpectedDoubleOrPoint;
+	public static String ExpectedDoubleOrPoint;
 
-    public static String ExpectedPoint;
+	public static String ExpectedPoint;
 
-    public static String GetNumerator;
+	public static String GetNumerator;
 
-    public static String GetProportion;
+	public static String GetProportion;
 
-    public static String GetScaleReference;
+	public static String GetScaleReference;
 
-    public static String GetSelection;
+	public static String GetSelection;
 
-    public static String SelectionExpected;
-    static {
-        // initialize resource bundle
-        NLS.initializeMessages(BUNDLE_NAME, Messages.class);
-    }
+	public static String SelectionExpected;
+	static {
+		// initialize resource bundle
+		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
+	}
 
+	private Messages() {
 
-    private Messages () {
-
-    }
+	}
 }

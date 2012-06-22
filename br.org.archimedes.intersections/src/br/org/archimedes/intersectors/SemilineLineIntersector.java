@@ -32,7 +32,7 @@ public class SemilineLineIntersector implements Intersector {
 
 		if (element == null || otherElement == null)
 			throw new NullArgumentException();
-		
+
 		if (element.getClass() == Semiline.class) {
 			firstLine = (Semiline) element;
 			secondLine = (Line) otherElement;
@@ -40,21 +40,22 @@ public class SemilineLineIntersector implements Intersector {
 			firstLine = (Semiline) otherElement;
 			secondLine = (Line) element;
 		}
-		
 
 		Collection<Point> intersectionPoints = new LinkedList<Point>();
 
 		if (isParallelTo(firstLine, secondLine)) {
-			if (firstLine.getInitialPoint().equals(secondLine.getInitialPoint()) &&
-					!(secondLine.contains(firstLine.getDirectionPoint()) ||
-							firstLine.contains(secondLine.getEndingPoint())))
+			if (firstLine.getInitialPoint()
+					.equals(secondLine.getInitialPoint())
+					&& !(secondLine.contains(firstLine.getDirectionPoint()) || firstLine
+							.contains(secondLine.getEndingPoint())))
 				intersectionPoints.add(secondLine.getInitialPoint());
-			else if (firstLine.getInitialPoint().equals(secondLine.getEndingPoint()) &&
-					!(secondLine.contains(firstLine.getDirectionPoint()) ||
-							firstLine.contains(secondLine.getInitialPoint())))
+			else if (firstLine.getInitialPoint().equals(
+					secondLine.getEndingPoint())
+					&& !(secondLine.contains(firstLine.getDirectionPoint()) || firstLine
+							.contains(secondLine.getInitialPoint())))
 				intersectionPoints.add(secondLine.getEndingPoint());
-            return intersectionPoints;
-        }
+			return intersectionPoints;
+		}
 
 		// The first line will be represented by a1x + b1y + c1 = 0
 		// The second line will be represented by a2x + b2y + c2 = 0

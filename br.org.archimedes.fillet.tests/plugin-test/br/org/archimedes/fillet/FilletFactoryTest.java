@@ -12,6 +12,16 @@
  */
 package br.org.archimedes.fillet;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
+import java.util.Collections;
+import java.util.HashSet;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 import br.org.archimedes.factories.CommandFactory;
 import br.org.archimedes.helper.FactoryTester;
 import br.org.archimedes.line.Line;
@@ -21,116 +31,107 @@ import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Rectangle;
 import br.org.archimedes.model.Selection;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-import java.util.Collections;
-import java.util.HashSet;
-
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
-
 /**
  * @author Luiz Real, Bruno Klava
- *
+ * 
  */
 public class FilletFactoryTest extends FactoryTester {
-    private CommandFactory factory;
+	private CommandFactory factory;
 
-    private Drawing drawing;
+	private Drawing drawing;
 
-    private Selection firstSelection;
+	private Selection firstSelection;
 
-    private Line line1;
+	private Line line1;
 
-    private Line line2;
+	private Line line2;
 
-    private Selection secondSelection;
+	private Selection secondSelection;
 
-    private Selection multipleSelection;
+	private Selection multipleSelection;
 
+	@Before
+	public void setUp() throws Exception {
 
-    @Before
-    public void setUp () throws Exception {
+		line1 = new Line(0.0, 1.0, 0.0, 2.0);
+		line2 = new Line(1.0, 0.0, 2.0, 0.0);
+		factory = new FilletFactory();
+		drawing = new Drawing("Drawing");
+		drawing.putElement(line1, drawing.getCurrentLayer());
+		drawing.putElement(line2, drawing.getCurrentLayer());
+		firstSelection = new Selection(new Rectangle(-0.5, 0.5, 0.5, 1.5));
+		firstSelection.add(line1);
+		secondSelection = new Selection(new Rectangle(0.5, -0.5, 1.5, 0.5));
+		secondSelection.add(line2);
+		multipleSelection = new Selection(new Rectangle(-0.5, -0.5, 1.5, 1.5));
+		multipleSelection.add(line1);
+		multipleSelection.add(line2);
+		br.org.archimedes.Utils.getController().setActiveDrawing(drawing);
+	}
 
-        line1 = new Line(0.0, 1.0, 0.0, 2.0);
-        line2 = new Line(1.0, 0.0, 2.0, 0.0);
-        factory = new FilletFactory();
-        drawing = new Drawing("Drawing");
-        drawing.putElement(line1, drawing.getCurrentLayer());
-        drawing.putElement(line2, drawing.getCurrentLayer());
-        firstSelection = new Selection(new Rectangle(-0.5, 0.5, 0.5, 1.5));
-        firstSelection.add(line1);
-        secondSelection = new Selection(new Rectangle(0.5, -0.5, 1.5, 0.5));
-        secondSelection.add(line2);
-        multipleSelection = new Selection(new Rectangle(-0.5, -0.5, 1.5, 1.5));
-        multipleSelection.add(line1);
-        multipleSelection.add(line2);
-        br.org.archimedes.Utils.getController().setActiveDrawing(drawing);
-    }
+	@After
+	public void tearDown() throws Exception {
 
-    @After
-    public void tearDown () throws Exception {
+		br.org.archimedes.Utils.getController().setActiveDrawing(null);
+	}
 
-        br.org.archimedes.Utils.getController().setActiveDrawing(null);
-    }
-    
-    @Test
-    public void canFilletSelectingTwoElements () throws Exception {
+	@Test
+	public void canFilletSelectingTwoElements() throws Exception {
 
-        assertBegin(factory, false);
-        assertTrue(br.org.archimedes.Utils.getController().getCurrentSelectedElements().isEmpty());
-        
-        // First point
-        assertInvalidNext(factory, null);
-        assertInvalidNext(factory, new Object());
-        assertInvalidNext(factory, new HashSet<Element>());
-        assertInvalidNext(factory, new Selection());
-        
-        assertSafeNext(factory, firstSelection, false);
-        
-        // Second point
-        assertInvalidNext(factory, null);
-        assertInvalidNext(factory, new Object());
-        assertInvalidNext(factory, new HashSet<Element>());
-        assertInvalidNext(factory, new Selection());
-        
-        assertSafeNext(factory, secondSelection, true);
-        
-        // Again
-        assertBegin(factory, false);
-        assertSafeNext(factory, firstSelection, false);
-        assertSafeNext(factory, secondSelection, true);
-    }
-    
-    @Test
-    public void createTheCorrectCommand () throws Exception {
+		assertBegin(factory, false);
+		assertTrue(br.org.archimedes.Utils.getController()
+				.getCurrentSelectedElements().isEmpty());
 
-        factory.begin();
-        factory.next(firstSelection);
-        factory.next(secondSelection);
-        assertTrue(factory.isDone());
-        
-        FilletCommand expectedCommand = new FilletCommand(line1, new Point(0,1), line2, new Point(1,0), 0);
-        assertCollectionTheSame(Collections.singleton(expectedCommand), factory.getCommands());
-    }
-    
-    @Test
-    public void canCancelAPartialFillet () throws Exception {
+		// First point
+		assertInvalidNext(factory, null);
+		assertInvalidNext(factory, new Object());
+		assertInvalidNext(factory, new HashSet<Element>());
+		assertInvalidNext(factory, new Selection());
 
-        // Start and cancel
-        assertBegin(factory, false);
-        assertCancel(factory, false);
-        
-        // Cancel after first point
-        assertBegin(factory, false);
-        assertSafeNext(factory, secondSelection, false);
-        assertCancel(factory, false);
-        assertInvalidNext(factory, secondSelection);
-    }
-    
+		assertSafeNext(factory, firstSelection, false);
+
+		// Second point
+		assertInvalidNext(factory, null);
+		assertInvalidNext(factory, new Object());
+		assertInvalidNext(factory, new HashSet<Element>());
+		assertInvalidNext(factory, new Selection());
+
+		assertSafeNext(factory, secondSelection, true);
+
+		// Again
+		assertBegin(factory, false);
+		assertSafeNext(factory, firstSelection, false);
+		assertSafeNext(factory, secondSelection, true);
+	}
+
+	@Test
+	public void createTheCorrectCommand() throws Exception {
+
+		factory.begin();
+		factory.next(firstSelection);
+		factory.next(secondSelection);
+		assertTrue(factory.isDone());
+
+		FilletCommand expectedCommand = new FilletCommand(line1,
+				new Point(0, 1), line2, new Point(1, 0), 0);
+		assertCollectionTheSame(Collections.singleton(expectedCommand),
+				factory.getCommands());
+	}
+
+	@Test
+	public void canCancelAPartialFillet() throws Exception {
+
+		// Start and cancel
+		assertBegin(factory, false);
+		assertCancel(factory, false);
+
+		// Cancel after first point
+		assertBegin(factory, false);
+		assertSafeNext(factory, secondSelection, false);
+		assertCancel(factory, false);
+		assertInvalidNext(factory, secondSelection);
+	}
+
 	@Override
 	@Test
 	public void testFactoryName() {

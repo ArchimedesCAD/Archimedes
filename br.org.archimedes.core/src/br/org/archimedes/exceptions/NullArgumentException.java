@@ -20,11 +20,10 @@ package br.org.archimedes.exceptions;
  */
 public class NullArgumentException extends Exception {
 
-    private static final long serialVersionUID = 1286873386939409709L;
+	private static final long serialVersionUID = 1286873386939409709L;
 
+	public String toString() {
 
-    public String toString () {
-
-        return Messages.NullArgument;
-    }
+		return Messages.NullArgument;
+	}
 }

@@ -13,16 +13,16 @@
 
 package br.org.archimedes.stub;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.gui.opengl.OpenGLWrapper;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Rectangle;
 import br.org.archimedes.model.ReferencePoint;
-
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * Belongs to package br.org.archimedes.model.
@@ -31,83 +31,98 @@ import java.util.List;
  */
 public class StubElement extends Element {
 
-    /*
-     * (non-Javadoc)
-     * @see br.org.archimedes.model.Element#clone()
-     */
-    @Override
-    public Element clone () {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.model.Element#clone()
+	 */
+	@Override
+	public Element clone() {
 
-        return new StubElement();
-    }
+		return new StubElement();
+	}
 
-    /*
-     * (non-Javadoc)
-     * @see br.org.archimedes.model.Element#contains(br.org.archimedes.model.Point)
-     */
-    @Override
-    public boolean contains (Point point) throws NullArgumentException {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.org.archimedes.model.Element#contains(br.org.archimedes.model.Point)
+	 */
+	@Override
+	public boolean contains(Point point) throws NullArgumentException {
 
-        return false;
-    }
+		return false;
+	}
 
-    /*
-     * (non-Javadoc)
-     * @see br.org.archimedes.model.Element#draw(br.org.archimedes.gui.opengl.OpenGLWrapper)
-     */
-    @Override
-    public void draw (OpenGLWrapper wrapper) {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.model.Element#draw(br.org.archimedes.gui.opengl.
+	 * OpenGLWrapper)
+	 */
+	@Override
+	public void draw(OpenGLWrapper wrapper) {
 
-    }
+	}
 
-    /*
-     * (non-Javadoc)
-     * @see br.org.archimedes.model.Element#equals(java.lang.Object)
-     */
-    @Override
-    public boolean equals (Object object) {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.model.Element#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object object) {
 
-        return this == object;
-    }
+		return this == object;
+	}
 
-    /*
-     * (non-Javadoc)
-     * @see br.org.archimedes.model.Element#getBoundaryRectangle()
-     */
-    @Override
-    public Rectangle getBoundaryRectangle () {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.model.Element#getBoundaryRectangle()
+	 */
+	@Override
+	public Rectangle getBoundaryRectangle() {
 
-        return new Rectangle(0, 0, 1, 1);
-    }
+		return new Rectangle(0, 0, 1, 1);
+	}
 
-    /*
-     * (non-Javadoc)
-     * @see br.org.archimedes.model.Element#getPoints()
-     */
-    @Override
-    public List<Point> getPoints () {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.model.Element#getPoints()
+	 */
+	@Override
+	public List<Point> getPoints() {
 
-        return Collections.emptyList();
-    }
+		return Collections.emptyList();
+	}
 
-    /*
-     * (non-Javadoc)
-     * @see br.org.archimedes.model.Element#getProjectionOf(br.org.archimedes.model.Point)
-     */
-    @Override
-    public Point getProjectionOf (Point point) throws NullArgumentException {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.org.archimedes.model.Element#getProjectionOf(br.org.archimedes.model
+	 * .Point)
+	 */
+	@Override
+	public Point getProjectionOf(Point point) throws NullArgumentException {
 
-        return null;
-    }
+		return null;
+	}
 
-    /*
-     * (non-Javadoc)
-     * @see br.org.archimedes.model.Element#getReferencePoints(br.org.archimedes.model.Rectangle)
-     */
-    @Override
-    public Collection<? extends ReferencePoint> getReferencePoints (Rectangle area) {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.org.archimedes.model.Element#getReferencePoints(br.org.archimedes.
+	 * model.Rectangle)
+	 */
+	@Override
+	public Collection<? extends ReferencePoint> getReferencePoints(
+			Rectangle area) {
 
-        return Collections.emptyList();
-    }
+		return Collections.emptyList();
+	}
 
 }

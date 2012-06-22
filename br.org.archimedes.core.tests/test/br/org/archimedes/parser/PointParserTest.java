@@ -26,50 +26,47 @@ import br.org.archimedes.model.Point;
 public class PointParserTest extends Tester {
 
 	@Test
-    public void testPointParser () {
+	public void testPointParser() {
 
-        Parser pp = new PointParser();
-        Assert.assertFalse("Should not be done yet.", pp.isDone());
-        Assert.assertNull("Should have no parameter yet.", pp.getParameter());
+		Parser pp = new PointParser();
+		Assert.assertFalse("Should not be done yet.", pp.isDone());
+		Assert.assertNull("Should have no parameter yet.", pp.getParameter());
 
-        try {
-            pp.next("bla");
-            Assert.fail("Should not reach this code");
-        }
-        catch (InvalidParameterException e) {
-            // It's OK
-        }
-        Assert.assertFalse("Should not be done yet.", pp.isDone());
-        Assert.assertNull("Should have no parameter yet.", pp.getParameter());
+		try {
+			pp.next("bla");
+			Assert.fail("Should not reach this code");
+		} catch (InvalidParameterException e) {
+			// It's OK
+		}
+		Assert.assertFalse("Should not be done yet.", pp.isDone());
+		Assert.assertNull("Should have no parameter yet.", pp.getParameter());
 
-        try {
-            pp.next(null);
-            Assert.fail("Should not reach this code");
-        }
-        catch (InvalidParameterException e) {
-            // It's OK
-        }
-        Assert.assertFalse("Should not be done yet.", pp.isDone());
-        Assert.assertNull("Should have no parameter yet.", pp.getParameter());
+		try {
+			pp.next(null);
+			Assert.fail("Should not reach this code");
+		} catch (InvalidParameterException e) {
+			// It's OK
+		}
+		Assert.assertFalse("Should not be done yet.", pp.isDone());
+		Assert.assertNull("Should have no parameter yet.", pp.getParameter());
 
-        try {
-            pp.next("");
-            Assert.fail("Should not reach this code");
-        }
-        catch (InvalidParameterException e) {
-            // It's OK
-        }
-        Assert.assertFalse("Should not be done yet.", pp.isDone());
-        Assert.assertNull("Should have no parameter yet.", pp.getParameter());
+		try {
+			pp.next("");
+			Assert.fail("Should not reach this code");
+		} catch (InvalidParameterException e) {
+			// It's OK
+		}
+		Assert.assertFalse("Should not be done yet.", pp.isDone());
+		Assert.assertNull("Should have no parameter yet.", pp.getParameter());
 
-        try {
-            pp.next("10,6;-100");
-        }
-        catch (InvalidParameterException e) {
-            Assert.fail("Should not reach this code");
-        }
-        Object p = pp.getParameter();
-        Assert.assertTrue("Should be done.", pp.isDone());
-        Assert.assertEquals("Should be the same point", new Point(10.6, -100), p);
-    }
+		try {
+			pp.next("10,6;-100");
+		} catch (InvalidParameterException e) {
+			Assert.fail("Should not reach this code");
+		}
+		Object p = pp.getParameter();
+		Assert.assertTrue("Should be done.", pp.isDone());
+		Assert.assertEquals("Should be the same point", new Point(10.6, -100),
+				p);
+	}
 }

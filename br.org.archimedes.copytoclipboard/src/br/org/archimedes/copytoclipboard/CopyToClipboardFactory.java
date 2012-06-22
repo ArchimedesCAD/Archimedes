@@ -13,50 +13,52 @@
  */
 package br.org.archimedes.copytoclipboard;
 
+import java.util.List;
+import java.util.Set;
+
 import br.org.archimedes.exceptions.InvalidParameterException;
 import br.org.archimedes.factories.SelectorFactory;
 import br.org.archimedes.interfaces.Command;
 import br.org.archimedes.model.Element;
-
-import java.util.List;
-import java.util.Set;
 
 /**
  * @author César Seragiotto
  */
 public class CopyToClipboardFactory extends SelectorFactory {
 
-    @Override
-    protected String finishFactory (Set<Element> selection)
-            throws InvalidParameterException {
+	@Override
+	protected String finishFactory(Set<Element> selection)
+			throws InvalidParameterException {
 
-        br.org.archimedes.Utils.getController().copyToClipboard(selection);
+		br.org.archimedes.Utils.getController().copyToClipboard(selection);
 
-        return Messages.CommandFinished;
-    }
+		return Messages.CommandFinished;
+	}
 
-    @Override
-    protected String getCancelMessage () {
+	@Override
+	protected String getCancelMessage() {
 
-        return Messages.Cancelled;
-    }
+		return Messages.Cancelled;
+	}
 
-    public List<Command> getCommands () {
+	public List<Command> getCommands() {
 
-        // This doesn't generate commands since it only changes the clipboard
-        return null;
-    }
+		// This doesn't generate commands since it only changes the clipboard
+		return null;
+	}
 
-    public String getName () {
+	public String getName() {
 
-        return "copytoclipboard"; //$NON-NLS-1$
-    }
+		return "copytoclipboard"; //$NON-NLS-1$
+	}
 
-    /* (non-Javadoc)
-     * @see br.org.archimedes.factories.CommandFactory#isTransformFactory()
-     */
-    public boolean isTransformFactory () {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.factories.CommandFactory#isTransformFactory()
+	 */
+	public boolean isTransformFactory() {
 
-        return true;
-    }
+		return true;
+	}
 }

@@ -28,33 +28,30 @@ public class CirclePolylineIntersector implements Intersector {
 
 	public Collection<Point> getIntersections(Element element,
 			Element otherElement) throws NullArgumentException {
-		
+
 		if (element == null || otherElement == null)
 			throw new NullArgumentException();
-		
+
 		Circle circle;
 		Polyline polyline;
-		
-		if (element.getClass() == Circle.class)
-		{
+
+		if (element.getClass() == Circle.class) {
 			circle = (Circle) element;
 			polyline = (Polyline) otherElement;
-		}
-		else
-		{
+		} else {
 			circle = (Circle) otherElement;
 			polyline = (Polyline) element;
 		}
-		
+
 		List<Line> lines = polyline.getLines();
-		
+
 		Collection<Point> points = new ArrayList<Point>();
-		
+
 		CircleLineIntersector intersector = new CircleLineIntersector();
-		
+
 		for (Line line : lines)
 			points.addAll(intersector.getIntersections(circle, line));
-		
+
 		return points;
 	}
 

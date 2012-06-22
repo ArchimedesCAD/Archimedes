@@ -28,16 +28,16 @@ public class SemilineArcIntersector implements Intersector {
 
 	public Collection<Point> getIntersections(Element element,
 			Element otherElement) throws NullArgumentException {
-		
+
 		if (element == null || otherElement == null)
 			throw new NullArgumentException();
-		
+
 		SemilineCircleIntersector intersector = new SemilineCircleIntersector();
 		Arc arc = null;
 		Semiline semiline = null;
 		Circle circle = null;
 		Collection<Point> intersections = null;
-		
+
 		if (element.getClass() == Semiline.class) {
 			semiline = (Semiline) element;
 			arc = (Arc) otherElement;
@@ -45,23 +45,23 @@ public class SemilineArcIntersector implements Intersector {
 			semiline = (Semiline) otherElement;
 			arc = (Arc) element;
 		}
-		
+
 		try {
 			circle = new Circle(arc.getCenter(), arc.getRadius());
 		} catch (InvalidArgumentException e) {
 			e.printStackTrace();
 		}
-		
+
 		intersections = intersector.getIntersections(circle, semiline);
-		
+
 		Collection<Point> arcIntersections = new ArrayList<Point>();
-		
-		for(Point p : intersections){
-			if(arc.contains(p)){
+
+		for (Point p : intersections) {
+			if (arc.contains(p)) {
 				arcIntersections.add(p);
 			}
 		}
-		
+
 		return arcIntersections;
 	}
 

@@ -32,41 +32,39 @@ import br.org.archimedes.semiline.Semiline;
  */
 public class SemilineExporter implements ElementExporter<Semiline> {
 
-    public void exportElement (Semiline element, Object outputObject) throws IOException,
-            NotSupportedException {
+	public void exportElement(Semiline element, Object outputObject)
+			throws IOException, NotSupportedException {
 
-        throw new NotSupportedException();
-    }
+		throw new NotSupportedException();
+	}
 
-    public void exportElement (Semiline semiline, Object outputObject, Rectangle boundingBox)
-            throws IOException {
+	public void exportElement(Semiline semiline, Object outputObject,
+			Rectangle boundingBox) throws IOException {
 
-        try {
-            List<Point> points = semiline.getPointsCrossing(boundingBox);
+		try {
+			List<Point> points = semiline.getPointsCrossing(boundingBox);
 
-            if (points.size() > 0) {
-                LineExporter lineExporter = new LineExporter();
-                Point start, end;
-                if (points.size() == 1) {
-                    start = semiline.getInitialPoint();
-                }
-                else {
-                    start = points.get(1);
-                }
-                end = points.get(0);
-                if ( !start.equals(end)) {
-                    lineExporter.exportElement(new Line(start, end), outputObject);
-                }
-            }
-        }
-        catch (NullArgumentException e) {
-            // void Bounding box
-            e.printStackTrace();
-        }
-        catch (InvalidArgumentException e) {
-            // Should not happen
-            e.printStackTrace();
-        }
+			if (points.size() > 0) {
+				LineExporter lineExporter = new LineExporter();
+				Point start, end;
+				if (points.size() == 1) {
+					start = semiline.getInitialPoint();
+				} else {
+					start = points.get(1);
+				}
+				end = points.get(0);
+				if (!start.equals(end)) {
+					lineExporter.exportElement(new Line(start, end),
+							outputObject);
+				}
+			}
+		} catch (NullArgumentException e) {
+			// void Bounding box
+			e.printStackTrace();
+		} catch (InvalidArgumentException e) {
+			// Should not happen
+			e.printStackTrace();
+		}
 
-    }
+	}
 }

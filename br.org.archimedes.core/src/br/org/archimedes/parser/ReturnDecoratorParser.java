@@ -16,7 +16,6 @@ package br.org.archimedes.parser;
 import br.org.archimedes.Utils;
 import br.org.archimedes.interfaces.Parser;
 
-
 /**
  * Belongs to package br.org.archimedes.parser.<br>
  * This parser decorator checks if the parameter matches a string pattern or if
@@ -26,35 +25,35 @@ import br.org.archimedes.interfaces.Parser;
  */
 public class ReturnDecoratorParser extends DecoratorParser {
 
-    /**
-     * @param parser
-     *            The parser to decorate
-     */
-    public ReturnDecoratorParser (Parser parser) {
+	/**
+	 * @param parser
+	 *            The parser to decorate
+	 */
+	public ReturnDecoratorParser(Parser parser) {
 
-        super(parser);
-    }
+		super(parser);
+	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.org.archimedes.parser.DecoratorParser#getParameter(java.lang.String)
+	 */
+	@Override
+	protected Object getParameter(String message) {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.parser.DecoratorParser#getParameter(java.lang.String)
-     */
-    @Override
-    protected Object getParameter (String message) {
+		return null;
+	}
 
-        return null;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.parser.DecoratorParser#accepts(java.lang.String)
+	 */
+	@Override
+	protected boolean accepts(String message) {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.parser.DecoratorParser#accepts(java.lang.String)
-     */
-    @Override
-    protected boolean accepts (String message) {
-
-        return Utils.isReturn(message);
-    }
+		return Utils.isReturn(message);
+	}
 }

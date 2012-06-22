@@ -16,26 +16,24 @@ import org.eclipse.osgi.util.NLS;
 
 /**
  * Belongs to package br.org.archimedes.redo.
- *
+ * 
  * @author nitao
- *
+ * 
  */
 public class Messages {
 
-    private static final String BUNDLE_NAME = "br.org.archimedes.redo.messages"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = "br.org.archimedes.redo.messages"; //$NON-NLS-1$
 
-    public static String RedoPerformed;
-    
-    public static String notPerformed;
+	public static String RedoPerformed;
 
+	public static String notPerformed;
 
-    static {
-        // initialize resource bundle
-        NLS.initializeMessages(BUNDLE_NAME, Messages.class);
-    }
+	static {
+		// initialize resource bundle
+		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
+	}
 
+	private Messages() {
 
-    private Messages () {
-
-    }
+	}
 }

@@ -21,7 +21,7 @@ import br.org.archimedes.model.Element;
 import br.org.archimedes.text.Text;
 
 public class TextParserTests {
-	
+
 	private TextParser textParser;
 	private FileInputStream file;
 
@@ -30,11 +30,11 @@ public class TextParserTests {
 		textParser = new TextParser();
 		file = new FileInputStream(new File("./files/textTest.dxf"));
 	}
-	
+
 	@Test
 	public void shouldParseText() throws Exception {
 		DXFLayer layer = createDXFLayer();
-		
+
 		Collection<Element> parse = textParser.parse(layer);
 		assertEquals(1, parse.size());
 		Element[] elements = parse.toArray(new Element[0]);
@@ -45,7 +45,7 @@ public class TextParserTests {
 	private DXFLayer createDXFLayer() throws ParseException {
 		Parser kabejaParser = ParserBuilder.createDefaultParser();
 		kabejaParser.parse(file, DXFParser.DEFAULT_ENCODING);
-		
+
 		DXFLayer layer = kabejaParser.getDocument().getDXFLayer("0");
 		return layer;
 	}

@@ -53,279 +53,280 @@ import br.org.archimedes.model.Layer;
  * 
  * @author Hugo Corbucci
  */
-public class LayerComboContributionItem extends WorkbenchWindowControlContribution implements
-        IPartListener, Observer {
+public class LayerComboContributionItem extends
+		WorkbenchWindowControlContribution implements IPartListener, Observer {
 
-    /**
-     * Belongs to package br.org.archimedes.gui.rca.
-     * 
-     * @author "Hugo Corbucci"
-     */
-    private final class ComboKeyListener implements KeyListener {
+	/**
+	 * Belongs to package br.org.archimedes.gui.rca.
+	 * 
+	 * @author "Hugo Corbucci"
+	 */
+	private final class ComboKeyListener implements KeyListener {
 
-        public void keyPressed (KeyEvent e) {
+		public void keyPressed(KeyEvent e) {
 
-            forceFocusInterpreter();
-        }
+			forceFocusInterpreter();
+		}
 
-        public void keyReleased (KeyEvent e) {
+		public void keyReleased(KeyEvent e) {
 
-            forceFocusInterpreter();
-        }
-    }
+			forceFocusInterpreter();
+		}
+	}
 
-    /**
-     * Belongs to package br.org.archimedes.gui.rca.
-     * 
-     * @author "Hugo Corbucci"
-     */
-    private final class ComboFocusListener implements FocusListener {
+	/**
+	 * Belongs to package br.org.archimedes.gui.rca.
+	 * 
+	 * @author "Hugo Corbucci"
+	 */
+	private final class ComboFocusListener implements FocusListener {
 
-        public void focusGained (FocusEvent e) {
+		public void focusGained(FocusEvent e) {
 
-            if (System.getProperty("os.name").indexOf("Win") < 0) { //$NON-NLS-1$ //$NON-NLS-2$
-                // So that Non windows machines always have the focus on the
-                // interpreter since they can work like that
-                forceFocusInterpreter();
-            }
-        }
+			if (System.getProperty("os.name").indexOf("Win") < 0) { //$NON-NLS-1$ //$NON-NLS-2$
+				// So that Non windows machines always have the focus on the
+				// interpreter since they can work like that
+				forceFocusInterpreter();
+			}
+		}
 
-        public void focusLost (FocusEvent e) {
+		public void focusLost(FocusEvent e) {
 
-            forceFocusInterpreter();
-        }
-    }
+			forceFocusInterpreter();
+		}
+	}
 
-    /**
-     * Belongs to package br.org.archimedes.gui.rca.
-     * 
-     * @author "Hugo Corbucci"
-     */
-    private final class ComboSelectionListener implements SelectionListener {
+	/**
+	 * Belongs to package br.org.archimedes.gui.rca.
+	 * 
+	 * @author "Hugo Corbucci"
+	 */
+	private final class ComboSelectionListener implements SelectionListener {
 
-        private final Controller controller;
+		private final Controller controller;
 
+		/**
+		 * Constructor.
+		 * 
+		 * @param controller
+		 */
+		private ComboSelectionListener(Controller controller) {
 
-        /**
-         * Constructor.
-         * 
-         * @param controller
-         */
-        private ComboSelectionListener (Controller controller) {
+			this.controller = controller;
+		}
 
-            this.controller = controller;
-        }
+		public void widgetDefaultSelected(SelectionEvent e) {
 
-        public void widgetDefaultSelected (SelectionEvent e) {
+			forceFocusInterpreter();
+		}
 
-            forceFocusInterpreter();
-        }
+		public void widgetSelected(SelectionEvent e) {
 
-        public void widgetSelected (SelectionEvent e) {
+			try {
+				Drawing activeDrawing = this.controller.getActiveDrawing();
+				Combo combo = (Combo) e.widget;
+				int selectionIndex = combo.getSelectionIndex();
+				List<String> layers = activeDrawing.getLayerNames();
+				Map<String, Layer> layerMap = activeDrawing.getLayerMap();
+				String selectedLayerName = layers.get(selectionIndex);
+				Layer layer = layerMap.get(selectedLayerName);
 
-            try {
-                Drawing activeDrawing = this.controller.getActiveDrawing();
-                Combo combo = (Combo) e.widget;
-                int selectionIndex = combo.getSelectionIndex();
-                List<String> layers = activeDrawing.getLayerNames();
-                Map<String, Layer> layerMap = activeDrawing.getLayerMap();
-                String selectedLayerName = layers.get(selectionIndex);
-                Layer layer = layerMap.get(selectedLayerName);
+				if (!layer.isLocked()) {
+					activeDrawing.setCurrentLayer(selectionIndex);
+				} else {
+					String currentLayerName = activeDrawing.getCurrentLayer()
+							.getName();
+					int currentIndex = layers.indexOf(currentLayerName);
 
-                if ( !layer.isLocked()) {
-                    activeDrawing.setCurrentLayer(selectionIndex);
-                }
-                else {
-                    String currentLayerName = activeDrawing.getCurrentLayer().getName();
-                    int currentIndex = layers.indexOf(currentLayerName);
+					combo.select(currentIndex);
+					br.org.archimedes.Utils
+							.getInputController()
+							.printInInterpreter(
+									Messages.LayerComboContributionItem_LayerLocked);
+				}
 
-                    combo.select(currentIndex);
-                    br.org.archimedes.Utils.getInputController().printInInterpreter(
-                            Messages.LayerComboContributionItem_LayerLocked);
-                }
+				forceFocusInterpreter();
+			} catch (NoActiveDrawingException e1) {
+				deactivateCombo();
+			} catch (IllegalActionException e1) {
+				// Should never happen
+				e1.printStackTrace();
+			}
+		}
+	}
 
-                forceFocusInterpreter();
-            }
-            catch (NoActiveDrawingException e1) {
-                deactivateCombo();
-            }
-            catch (IllegalActionException e1) {
-                // Should never happen
-                e1.printStackTrace();
-            }
-        }
-    }
+	private Combo layersCombo;
 
+	private Drawing currentDrawing;
 
-    private Combo layersCombo;
+	/**
+	 * Forces the focus to the interprter view
+	 */
+	protected void forceFocusInterpreter() {
 
-    private Drawing currentDrawing;
+		IWorkbenchPage activePage = getWorkbenchWindow().getActivePage();
+		IViewPart part = activePage.findView(InterpreterView.ID);
+		part.setFocus();
+	}
 
+	/**
+	 * @param drawing
+	 *            The drawing that contains the layers that should populate the
+	 *            combo
+	 */
+	private void setObservedDrawing(Drawing drawing) {
 
-    /**
-     * Forces the focus to the interprter view
-     */
-    protected void forceFocusInterpreter () {
+		if (currentDrawing != drawing) {
+			currentDrawing = drawing;
+			drawing.addObserver(this);
+			populate(drawing);
+		}
+	}
 
-        IWorkbenchPage activePage = getWorkbenchWindow().getActivePage();
-        IViewPart part = activePage.findView(InterpreterView.ID);
-        part.setFocus();
-    }
+	/**
+	 * @param drawing
+	 */
+	private void populate(Drawing drawing) {
 
-    /**
-     * @param drawing
-     *            The drawing that contains the layers that should populate the combo
-     */
-    private void setObservedDrawing (Drawing drawing) {
+		layersCombo.removeAll();
+		layersCombo.setText(""); //$NON-NLS-1$
+		List<String> layerNames = drawing.getLayerNames();
+		int i = 0;
+		boolean done = false;
+		for (String layerName : layerNames) {
+			layersCombo.add(layerName);
+			if (!done && drawing.getCurrentLayer().getName().equals(layerName)) {
+				layersCombo.select(i);
+				done = true;
+			}
+			i++;
+		}
+		layersCombo.setEnabled(true);
+		// FIXME Needs resizing once populated
+	}
 
-        if (currentDrawing != drawing) {
-            currentDrawing = drawing;
-            drawing.addObserver(this);
-            populate(drawing);
-        }
-    }
+	/**
+	 * Deactivates the combo
+	 */
+	private void deactivateCombo() {
 
-    /**
-     * @param drawing
-     */
-    private void populate (Drawing drawing) {
+		if (currentDrawing != null) {
+			currentDrawing.deleteObserver(this);
+		}
+		currentDrawing = null;
+		layersCombo.removeAll();
+		layersCombo.setText(Messages.LayerComboContributionItem_NoDrawing);
+		layersCombo.setEnabled(false);
+	}
 
-        layersCombo.removeAll();
-        layersCombo.setText(""); //$NON-NLS-1$
-        List<String> layerNames = drawing.getLayerNames();
-        int i = 0;
-        boolean done = false;
-        for (String layerName : layerNames) {
-            layersCombo.add(layerName);
-            if ( !done && drawing.getCurrentLayer().getName().equals(layerName)) {
-                layersCombo.select(i);
-                done = true;
-            }
-            i++;
-        }
-        layersCombo.setEnabled(true);
-        // FIXME Needs resizing once populated
-    }
+	/**
+	 * @see org.eclipse.ui.IPartListener#partActivated(org.eclipse.ui.IWorkbenchPart)
+	 */
+	public void partActivated(IWorkbenchPart part) {
 
-    /**
-     * Deactivates the combo
-     */
-    private void deactivateCombo () {
+		if (part != null && part.getClass() == DrawingEditor.class) {
+			DrawingEditor editor = (DrawingEditor) part;
+			DrawingInput editorInput = (DrawingInput) editor.getEditorInput();
+			Drawing drawing = editorInput.getDrawing();
+			setObservedDrawing(drawing);
+			getParent().update(true);
+		}
+	}
 
-        if (currentDrawing != null) {
-            currentDrawing.deleteObserver(this);
-        }
-        currentDrawing = null;
-        layersCombo.removeAll();
-        layersCombo.setText(Messages.LayerComboContributionItem_NoDrawing);
-        layersCombo.setEnabled(false);
-    }
+	/**
+	 * @see org.eclipse.ui.IPartListener#partBroughtToTop(org.eclipse.ui.IWorkbenchPart)
+	 */
+	public void partBroughtToTop(IWorkbenchPart part) {
 
-    /**
-     * @see org.eclipse.ui.IPartListener#partActivated(org.eclipse.ui.IWorkbenchPart)
-     */
-    public void partActivated (IWorkbenchPart part) {
+		// What mather is being activated
+	}
 
-        if (part != null && part.getClass() == DrawingEditor.class) {
-            DrawingEditor editor = (DrawingEditor) part;
-            DrawingInput editorInput = (DrawingInput) editor.getEditorInput();
-            Drawing drawing = editorInput.getDrawing();
-            setObservedDrawing(drawing);
-            getParent().update(true);
-        }
-    }
+	/**
+	 * @see org.eclipse.ui.IPartListener#partClosed(org.eclipse.ui.IWorkbenchPart)
+	 */
+	public void partClosed(IWorkbenchPart part) {
 
-    /**
-     * @see org.eclipse.ui.IPartListener#partBroughtToTop(org.eclipse.ui.IWorkbenchPart)
-     */
-    public void partBroughtToTop (IWorkbenchPart part) {
+		if (part != null && part.getClass() == DrawingEditor.class) {
+			deactivateCombo();
+		}
+	}
 
-        // What mather is being activated
-    }
+	/**
+	 * @see org.eclipse.ui.IPartListener#partDeactivated(org.eclipse.ui.IWorkbenchPart)
+	 */
+	public void partDeactivated(IWorkbenchPart part) {
 
-    /**
-     * @see org.eclipse.ui.IPartListener#partClosed(org.eclipse.ui.IWorkbenchPart)
-     */
-    public void partClosed (IWorkbenchPart part) {
+		// Nothing to do when a part is deactivated (because another one will be
+		// activated)
+	}
 
-        if (part != null && part.getClass() == DrawingEditor.class) {
-            deactivateCombo();
-        }
-    }
+	/**
+	 * @see org.eclipse.ui.IPartListener#partOpened(org.eclipse.ui.IWorkbenchPart)
+	 */
+	public void partOpened(IWorkbenchPart part) {
 
-    /**
-     * @see org.eclipse.ui.IPartListener#partDeactivated(org.eclipse.ui.IWorkbenchPart)
-     */
-    public void partDeactivated (IWorkbenchPart part) {
+		// If a part is open but not active, I don't care
+	}
 
-        // Nothing to do when a part is deactivated (because another one will be
-        // activated)
-    }
+	/**
+	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+	 */
+	public void update(Observable arg0, Object arg1) {
 
-    /**
-     * @see org.eclipse.ui.IPartListener#partOpened(org.eclipse.ui.IWorkbenchPart)
-     */
-    public void partOpened (IWorkbenchPart part) {
+		if (arg1 != null && arg0 == currentDrawing
+				&& arg1.getClass() == Layer.class) {
+			populate(currentDrawing);
+			getParent().update(true);
+		}
+	}
 
-        // If a part is open but not active, I don't care
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.jface.action.ControlContribution#createControl(org.eclipse
+	 * .swt.widgets.Composite)
+	 */
+	@Override
+	protected Control createControl(Composite parent) {
 
-    /**
-     * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
-     */
-    public void update (Observable arg0, Object arg1) {
+		final Controller controller = br.org.archimedes.Utils.getController();
+		Composite top = new Composite(parent, SWT.NONE);
+		GridLayoutFactory.fillDefaults().applyTo(top);
+		layersCombo = new Combo(top, SWT.READ_ONLY);
+		layersCombo
+				.addSelectionListener(new ComboSelectionListener(controller));
+		layersCombo.addFocusListener(new ComboFocusListener());
+		layersCombo.addKeyListener(new ComboKeyListener());
 
-        if (arg1 != null && arg0 == currentDrawing && arg1.getClass() == Layer.class) {
-            populate(currentDrawing);
-            getParent().update(true);
-        }
-    }
+		try {
+			Drawing activeDrawing = controller.getActiveDrawing();
+			setObservedDrawing(activeDrawing);
+		} catch (NoActiveDrawingException e) {
+			deactivateCombo();
+		}
 
-    /*
-     * (non-Javadoc)
-     * @see
-     * org.eclipse.jface.action.ControlContribution#createControl(org.eclipse.swt.widgets.Composite)
-     */
-    @Override
-    protected Control createControl (Composite parent) {
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING)
+				.grab(true, false).applyTo(layersCombo);
 
-        final Controller controller = br.org.archimedes.Utils.getController();
-        Composite top = new Composite(parent, SWT.NONE);
-        GridLayoutFactory.fillDefaults().applyTo(top);
-        layersCombo = new Combo(top, SWT.READ_ONLY);
-        layersCombo.addSelectionListener(new ComboSelectionListener(controller));
-        layersCombo.addFocusListener(new ComboFocusListener());
-        layersCombo.addKeyListener(new ComboKeyListener());
+		IWorkbenchWindow window = getWorkbenchWindow();
+		window.addPageListener(new IPageListener() {
 
-        try {
-            Drawing activeDrawing = controller.getActiveDrawing();
-            setObservedDrawing(activeDrawing);
-        }
-        catch (NoActiveDrawingException e) {
-            deactivateCombo();
-        }
+			public void pageActivated(IWorkbenchPage page) {
 
-        GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).grab(true, false).applyTo(
-                layersCombo);
+				// I don't care. I will get the part events.
+			}
 
-        IWorkbenchWindow window = getWorkbenchWindow();
-        window.addPageListener(new IPageListener() {
+			public void pageClosed(IWorkbenchPage page) {
 
-            public void pageActivated (IWorkbenchPage page) {
+				page.removePartListener(LayerComboContributionItem.this);
+			}
 
-                // I don't care. I will get the part events.
-            }
+			public void pageOpened(IWorkbenchPage page) {
 
-            public void pageClosed (IWorkbenchPage page) {
-
-                page.removePartListener(LayerComboContributionItem.this);
-            }
-
-            public void pageOpened (IWorkbenchPage page) {
-
-                page.addPartListener(LayerComboContributionItem.this);
-            }
-        });
-        return top;
-    }
+				page.addPartListener(LayerComboContributionItem.this);
+			}
+		});
+		return top;
+	}
 }

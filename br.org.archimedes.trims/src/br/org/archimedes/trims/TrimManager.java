@@ -28,34 +28,33 @@ import br.org.archimedes.trims.rcp.TrimmerEPLoader;
  */
 public class TrimManager implements br.org.archimedes.interfaces.TrimManager {
 
-    private static final Trimmer NULL_TRIMMER = new NullTrimmer();
+	private static final Trimmer NULL_TRIMMER = new NullTrimmer();
 
-    private TrimmerEPLoader loader;
+	private TrimmerEPLoader loader;
 
+	/**
+	 * Default constructor.
+	 */
+	public TrimManager() {
 
-    /**
-     * Default constructor.
-     */
-    public TrimManager () {
+		loader = new TrimmerEPLoader();
+	}
 
-        loader = new TrimmerEPLoader();
-    }
+	public TrimManager(TrimmerEPLoader loader) {
+		this.loader = loader;
+	}
 
-    public TrimManager (TrimmerEPLoader loader) {
-    	this.loader = loader;
-    }
-    
-    public Collection<Element> getTrimOf (Element element,
-            Collection<Point> cutPoints, Point click)
-            throws NullArgumentException {
+	public Collection<Element> getTrimOf(Element element,
+			Collection<Point> cutPoints, Point click)
+			throws NullArgumentException {
 
-        return getTrimmerFor(element).trim(element, cutPoints, click);
-    }
+		return getTrimmerFor(element).trim(element, cutPoints, click);
+	}
 
-    private Trimmer getTrimmerFor (Element element) {
+	private Trimmer getTrimmerFor(Element element) {
 
-        Class<? extends Element> elementClass = element.getClass();
-        Trimmer trimmer = loader.get(elementClass);
-        return trimmer == null ? NULL_TRIMMER : trimmer;
-    }
+		Class<? extends Element> elementClass = element.getClass();
+		Trimmer trimmer = loader.get(elementClass);
+		return trimmer == null ? NULL_TRIMMER : trimmer;
+	}
 }

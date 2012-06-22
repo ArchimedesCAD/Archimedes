@@ -12,22 +12,20 @@
  */
 package br.org.archimedes.orto;
 
-import static org.junit.Assert.*;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
 import br.org.archimedes.helper.FactoryTester;
 
-
 /**
  * Belongs to package br.org.archimedes.orto.
- *
+ * 
  * @author "Hugo Corbucci"
  */
 public class OrtoFactoryTest extends FactoryTester {
 
-    // TODO Test the Orto factory
+	// TODO Test the Orto factory
 	@Override
 	@Test
 	public void testFactoryName() {

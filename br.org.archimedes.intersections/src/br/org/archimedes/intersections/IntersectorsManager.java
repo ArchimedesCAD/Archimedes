@@ -34,94 +34,94 @@ import br.org.archimedes.model.Rectangle;
  */
 public class IntersectorsManager implements IntersectionManager {
 
-    private ElementIntersectionEPLoader loader;
+	private ElementIntersectionEPLoader loader;
 
+	/**
+	 * Default constructor
+	 */
+	public IntersectorsManager() {
 
-    /**
-     * Default constructor
-     */
-    public IntersectorsManager () {
+		loader = new ElementIntersectionEPLoader();
+	}
 
-        loader = new ElementIntersectionEPLoader();
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.org.archimedes.interfaces.IntersectionManager#intersects(br.org.archimedes
+	 * .model.Rectangle, br.org.archimedes.model.Element)
+	 */
+	public boolean intersects(Rectangle rect, Element element)
+			throws NullArgumentException {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.interfaces.IntersectionManager#intersects(br.org.archimedes.model.Rectangle,
-     *      br.org.archimedes.model.Element)
-     */
-    public boolean intersects (Rectangle rect, Element element)
-            throws NullArgumentException {
+		if (rect == null) {
+			throw new NullArgumentException();
+		}
 
-        if (rect == null) {
-            throw new NullArgumentException();
-        }
+		boolean intersects = false;
 
-        boolean intersects = false;
+		Collection<Line> borders = new LinkedList<Line>();
+		addLineIfNotSame(borders, rect.getUpperLeft(), rect.getUpperRight());
+		addLineIfNotSame(borders, rect.getUpperRight(), rect.getLowerRight());
+		addLineIfNotSame(borders, rect.getLowerRight(), rect.getLowerLeft());
+		addLineIfNotSame(borders, rect.getLowerLeft(), rect.getUpperLeft());
 
-        Collection<Line> borders = new LinkedList<Line>();
-        addLineIfNotSame(borders, rect.getUpperLeft(), rect.getUpperRight());
-        addLineIfNotSame(borders, rect.getUpperRight(), rect.getLowerRight());
-        addLineIfNotSame(borders, rect.getLowerRight(), rect.getLowerLeft());
-        addLineIfNotSame(borders, rect.getLowerLeft(), rect.getUpperLeft());
+		for (Line line : borders) {
+			intersects = intersects
+					|| !getIntersectionsBetween(element, line).isEmpty();
+		}
 
-        for (Line line : borders) {
-            intersects = intersects
-                    || !getIntersectionsBetween(element, line).isEmpty();
-        }
+		return intersects;
+	}
 
-        return intersects;
-    }
+	/**
+	 * @param borders
+	 *            The collection to add the line
+	 * @param initial
+	 *            The initial point
+	 * @param ending
+	 *            The ending point
+	 */
+	private void addLineIfNotSame(Collection<Line> borders, Point initial,
+			Point ending) {
 
-    /**
-     * @param borders
-     *            The collection to add the line
-     * @param initial
-     *            The initial point
-     * @param ending
-     *            The ending point
-     */
-    private void addLineIfNotSame (Collection<Line> borders, Point initial,
-            Point ending) {
+		try {
+			if (!initial.equals(ending)) {
+				borders.add(new Line(initial, ending));
+			}
+		} catch (NullArgumentException e) {
+			// Should not happen since this should be used safely
+			e.printStackTrace();
+		} catch (InvalidArgumentException e) {
+			// Should not happen since this should be used safely
+			e.printStackTrace();
+		}
+	}
 
-        try {
-            if ( !initial.equals(ending)) {
-                borders.add(new Line(initial, ending));
-            }
-        }
-        catch (NullArgumentException e) {
-            // Should not happen since this should be used safely
-            e.printStackTrace();
-        }
-        catch (InvalidArgumentException e) {
-            // Should not happen since this should be used safely
-            e.printStackTrace();
-        }
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.org.archimedes.interfaces.IntersectionManager#getIntersectionsBetween
+	 * (br.org.archimedes.model.Element, br.org.archimedes.model.Element)
+	 */
+	public Collection<Point> getIntersectionsBetween(Element element,
+			Element otherElement) throws NullArgumentException {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.interfaces.IntersectionManager#getIntersectionsBetween(br.org.archimedes.model.Element,
-     *      br.org.archimedes.model.Element)
-     */
-    public Collection<Point> getIntersectionsBetween (Element element,
-            Element otherElement) throws NullArgumentException {
-
-        Intersector intersector = loader.getIntersectorFor(element,
-                otherElement);
-        return intersector.getIntersections(element, otherElement);
-    }
+		Intersector intersector = loader.getIntersectorFor(element,
+				otherElement);
+		return intersector.getIntersections(element, otherElement);
+	}
 
 	public Collection<Point> getIntersectionsBetween(Element element,
-			Collection<Element> otherElements) throws NullArgumentException{
+			Collection<Element> otherElements) throws NullArgumentException {
 		Collection<Point> intersections = new ArrayList<Point>();
-		
+
 		for (Element otherElement : otherElements) {
-			intersections.addAll(getIntersectionsBetween(element, otherElement));
+			intersections
+					.addAll(getIntersectionsBetween(element, otherElement));
 		}
-		
+
 		return intersections;
 	}
 }

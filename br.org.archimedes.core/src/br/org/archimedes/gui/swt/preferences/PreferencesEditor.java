@@ -31,9 +31,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.PlatformUI;
 
 import br.org.archimedes.Utils;
 import br.org.archimedes.gui.opengl.Color;
@@ -48,207 +45,209 @@ import br.org.archimedes.gui.swt.Messages;
  */
 public class PreferencesEditor {
 
-    private Shell shell;
+	private Shell shell;
 
-    private Shell parent;
+	private Shell parent;
 
-    private Button okButton;
+	private Button okButton;
 
-    private Label warningIcon;
+	private Label warningIcon;
 
-    private Label warningLabel;
-    
-    private PreferencesForm form;
-    
-    private HashMap<String, Color> colors;
-	
+	private Label warningLabel;
+
+	private PreferencesForm form;
+
+	private HashMap<String, Color> colors;
+
 	private final DrawingEditor drawingEditor;
 
+	/**
+	 * Constructor.
+	 * 
+	 * @param parent
+	 *            The parent of the Shell
+	 * @param backgroundColor
+	 *            The workspace current background color
+	 */
+	public PreferencesEditor(Shell parent, HashMap<String, Color> colors,
+			DrawingEditor drawingEditor) {
 
-    /**
-     * Constructor.
-     * 
-     * @param parent
-     *            The parent of the Shell
-     * @param backgroundColor
-     * 			  The workspace current background color 
-     */
-    public PreferencesEditor (Shell parent, HashMap<String, Color> colors, DrawingEditor drawingEditor) {
+		this.parent = parent;
+		this.colors = colors;
+		this.drawingEditor = drawingEditor;
+		createShell();
 
-        this.parent = parent;
-        this.colors = colors;
-        this.drawingEditor = drawingEditor;
-        createShell();
+		this.form = new PreferencesForm(shell, this);
 
-        this.form = new PreferencesForm(shell, this);
-       
-        createWarning();
-        createButtons();
+		createWarning();
+		createButtons();
 
-        shell.pack();
-    }
+		shell.pack();
+	}
 
-    /**
-     * Shows the window.
-     */
-    public void open () {
+	/**
+	 * Shows the window.
+	 */
+	public void open() {
 
-        parent.setEnabled(false);
-        shell.setVisible(true);
-        shell.open();
-    }
+		parent.setEnabled(false);
+		shell.setVisible(true);
+		shell.open();
+	}
 
-    /**
-     * Creates the shell and all the other components
-     */
-    public void createShell () {
+	/**
+	 * Creates the shell and all the other components
+	 */
+	public void createShell() {
 
-        shell = new Shell(parent);
-        shell.setText(Messages.PreferencesEditor_Title);
+		shell = new Shell(parent);
+		shell.setText(Messages.PreferencesEditor_Title);
 
-        shell.addDisposeListener(new DisposeListener() {
+		shell.addDisposeListener(new DisposeListener() {
 
-            public void widgetDisposed (DisposeEvent e) {
+			public void widgetDisposed(DisposeEvent e) {
 
-                parent.setEnabled(true);
-            }
-        });
-        shell.addShellListener(new ShellListener() {
+				parent.setEnabled(true);
+			}
+		});
+		shell.addShellListener(new ShellListener() {
 
-            public void shellActivated (ShellEvent e) {
+			public void shellActivated(ShellEvent e) {
 
-                // Ignore
-            }
+				// Ignore
+			}
 
-            public void shellClosed (ShellEvent e) {
+			public void shellClosed(ShellEvent e) {
 
-                e.doit = okButton.isEnabled();
-                if ( !e.doit) {
-                    ErrorDialog error = new ErrorDialog(shell,
-                            Messages.CloseError_Title, Messages.CloseError_Message, null, 0);
-                    error.open();
-                }
-            }
+				e.doit = okButton.isEnabled();
+				if (!e.doit) {
+					ErrorDialog error = new ErrorDialog(shell,
+							Messages.CloseError_Title,
+							Messages.CloseError_Message, null, 0);
+					error.open();
+				}
+			}
 
-            public void shellDeactivated (ShellEvent e) {
+			public void shellDeactivated(ShellEvent e) {
 
-                // Ignore
-            }
+				// Ignore
+			}
 
-            public void shellDeiconified (ShellEvent e) {
+			public void shellDeiconified(ShellEvent e) {
 
-                // Ignore
-            }
+				// Ignore
+			}
 
-            public void shellIconified (ShellEvent e) {
+			public void shellIconified(ShellEvent e) {
 
-                // Ignore
-            }
+				// Ignore
+			}
 
-        });
-        RowLayout layout = new RowLayout();
-        layout.type = SWT.VERTICAL;
-        layout.marginHeight = 5;
-        layout.marginWidth = 5;
-        layout.spacing = 8;
-        layout.fill = true;
-        shell.setLayout(layout);
-    }
+		});
+		RowLayout layout = new RowLayout();
+		layout.type = SWT.VERTICAL;
+		layout.marginHeight = 5;
+		layout.marginWidth = 5;
+		layout.spacing = 8;
+		layout.fill = true;
+		shell.setLayout(layout);
+	}
 
-    /**
-     * Creates a warning composite.
-     */
-    private void createWarning () {
+	/**
+	 * Creates a warning composite.
+	 */
+	private void createWarning() {
 
-        Composite warningComposite = new Composite(shell, SWT.NONE);
-        RowLayout rowLayout = new RowLayout();
-        rowLayout.type = SWT.HORIZONTAL;
-        warningComposite.setLayout(rowLayout);
+		Composite warningComposite = new Composite(shell, SWT.NONE);
+		RowLayout rowLayout = new RowLayout();
+		rowLayout.type = SWT.HORIZONTAL;
+		warningComposite.setLayout(rowLayout);
 
-        warningIcon = new Label(warningComposite, SWT.NONE);
-        RowData rowData = new RowData();
-        rowData.height = 16;
-        rowData.width = 20;
-        warningIcon.setLayoutData(rowData);
+		warningIcon = new Label(warningComposite, SWT.NONE);
+		RowData rowData = new RowData();
+		rowData.height = 16;
+		rowData.width = 20;
+		warningIcon.setLayoutData(rowData);
 
-        warningLabel = new Label(warningComposite, SWT.NONE);
-        rowData = new RowData();
-        rowData.height = 16;
-        rowData.width = 500;
-        warningLabel.setLayoutData(rowData);
+		warningLabel = new Label(warningComposite, SWT.NONE);
+		rowData = new RowData();
+		rowData.height = 16;
+		rowData.width = 500;
+		warningLabel.setLayoutData(rowData);
 
-        warningIcon.setVisible(true);
-        warningLabel.setVisible(true);
-    }
-    
-    public SelectionAdapter getOKSelectionAdapter() {
-    	return new SelectionAdapter() {
-            public void widgetSelected (SelectionEvent e) {
-            	Utils.getWorkspace().setGripSelectionColor(getColor("gripSelection"));
-            	Utils.getWorkspace().setGripMouseOverColor(getColor("gripMouseOver"));
-            	Utils.getWorkspace().setCursorColor(getColor("cursor"));
-            	Utils.getWorkspace().setBackgroundColor(getColor("background"));
-            	Utils.getWorkspace().saveProperties(false);
-                shell.dispose();
-                drawingEditor.update(null, null);
-            }
-        };
-    }
-    
-    /**
-     * Creates the buttons
-     */
-    private void createButtons () {
+		warningIcon.setVisible(true);
+		warningLabel.setVisible(true);
+	}
 
-        Composite buttonsComposite = new Composite(shell, SWT.NONE);
-        buttonsComposite.setLayout(new FillLayout());
-        
-        okButton = new Button(buttonsComposite, SWT.PUSH);
-        okButton.setText(Messages.OK);
-        okButton.addSelectionListener(getOKSelectionAdapter());
+	public SelectionAdapter getOKSelectionAdapter() {
+		return new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				Utils.getWorkspace().setGripSelectionColor(
+						getColor("gripSelection"));
+				Utils.getWorkspace().setGripMouseOverColor(
+						getColor("gripMouseOver"));
+				Utils.getWorkspace().setCursorColor(getColor("cursor"));
+				Utils.getWorkspace().setBackgroundColor(getColor("background"));
+				Utils.getWorkspace().saveProperties(false);
+				shell.dispose();
+				drawingEditor.update(null, null);
+			}
+		};
+	}
 
-        okButton.setVisible(true);
-    }
+	/**
+	 * Creates the buttons
+	 */
+	private void createButtons() {
 
-    /**
-     * @see org.eclipse.swt.widgets.Shell#isDisposed()
-     */
-    public boolean isDisposed () {
+		Composite buttonsComposite = new Composite(shell, SWT.NONE);
+		buttonsComposite.setLayout(new FillLayout());
 
-        return shell.isDisposed();
-    }
+		okButton = new Button(buttonsComposite, SWT.PUSH);
+		okButton.setText(Messages.OK);
+		okButton.addSelectionListener(getOKSelectionAdapter());
 
+		okButton.setVisible(true);
+	}
 
-    /**
-     * @param icon
-     *            The icon to be shown
-     * @param message
-     *            The message to be displayed
-     */
-    protected void setWarning (Image icon, String message) {
+	/**
+	 * @see org.eclipse.swt.widgets.Shell#isDisposed()
+	 */
+	public boolean isDisposed() {
 
-        warningIcon.setImage(icon);
-        warningLabel.setText(message);
-    }
+		return shell.isDisposed();
+	}
 
-    /**
-     * @param closable
-     *            true if this editor can be closed, false otherwise.
-     */
-    public void setClosable (boolean closable) {
+	/**
+	 * @param icon
+	 *            The icon to be shown
+	 * @param message
+	 *            The message to be displayed
+	 */
+	protected void setWarning(Image icon, String message) {
 
-        okButton.setEnabled(closable);
-    }
-    
-    public void setColor(String name, Color color) {
-    	colors.put(name, color);
-    }
-    
-    public Color getColor(String name) {
-    	Color color = this.colors.get(name);
-    	if(color == null){
-    		color = new Color(0,0,0);
-    	}
-    	return color;
-    }
+		warningIcon.setImage(icon);
+		warningLabel.setText(message);
+	}
+
+	/**
+	 * @param closable
+	 *            true if this editor can be closed, false otherwise.
+	 */
+	public void setClosable(boolean closable) {
+
+		okButton.setEnabled(closable);
+	}
+
+	public void setColor(String name, Color color) {
+		colors.put(name, color);
+	}
+
+	public Color getColor(String name) {
+		Color color = this.colors.get(name);
+		if (color == null) {
+			color = new Color(0, 0, 0);
+		}
+		return color;
+	}
 }

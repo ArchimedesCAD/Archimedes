@@ -16,24 +16,23 @@ import org.eclipse.osgi.util.NLS;
 
 /**
  * Belongs to package br.org.archimedes.infiniteline.
- *
+ * 
  * @author nitao
- *
+ * 
  */
 public class Messages extends NLS {
 
-    private static final String BUNDLE_NAME = "br.org.archimedes.infiniteline.messages"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = "br.org.archimedes.infiniteline.messages"; //$NON-NLS-1$
 
-    public static String Created;
+	public static String Created;
 
-    public static String NotCreated;
-    static {
-        // initialize resource bundle
-        NLS.initializeMessages(BUNDLE_NAME, Messages.class);
-    }
+	public static String NotCreated;
+	static {
+		// initialize resource bundle
+		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
+	}
 
+	private Messages() {
 
-    private Messages () {
-
-    }
+	}
 }

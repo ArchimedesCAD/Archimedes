@@ -20,22 +20,21 @@ package br.org.archimedes.exceptions;
  */
 public class MissingResourceException extends Exception {
 
-    private static final long serialVersionUID = -8374743243325085092L;
+	private static final long serialVersionUID = -8374743243325085092L;
 
-    private static final String message = Messages.MissingResource;
+	private static final String message = Messages.MissingResource;
 
+	/**
+	 * @param message
+	 *            The message.
+	 */
+	public MissingResourceException(String message) {
 
-    /**
-     * @param message
-     *            The message.
-     */
-    public MissingResourceException (String message) {
+		super(message);
+	}
 
-        super(message);
-    }
+	public MissingResourceException() {
 
-    public MissingResourceException () {
-
-        super(message);
-    }
+		super(message);
+	}
 }

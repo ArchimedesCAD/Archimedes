@@ -28,13 +28,13 @@ public class SemilinePolylineIntersector implements Intersector {
 
 	public Collection<Point> getIntersections(Element element,
 			Element otherElement) throws NullArgumentException {
-		
+
 		Semiline baseLine;
 		Polyline polyline;
-		
-		if(element == null || otherElement == null)
+
+		if (element == null || otherElement == null)
 			throw new NullArgumentException();
-		
+
 		if (element.getClass() == Semiline.class) {
 			baseLine = (Semiline) element;
 			polyline = (Polyline) otherElement;
@@ -42,7 +42,6 @@ public class SemilinePolylineIntersector implements Intersector {
 			baseLine = (Semiline) otherElement;
 			polyline = (Polyline) element;
 		}
-		
 
 		List<Line> lines = polyline.getLines();
 		Collection<Point> intersectionPoints = new ArrayList<Point>();
@@ -51,12 +50,11 @@ public class SemilinePolylineIntersector implements Intersector {
 
 		SemilineLineIntersector semilineLineIntersector = new SemilineLineIntersector();
 		for (Line line : lines) {
-			intersection = semilineLineIntersector.getIntersections(line, baseLine);
+			intersection = semilineLineIntersector.getIntersections(line,
+					baseLine);
 			intersectionPoints.addAll(intersection);
 		}
 		return intersectionPoints;
 	}
-	
 
-	
 }

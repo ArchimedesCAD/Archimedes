@@ -24,67 +24,63 @@ import br.org.archimedes.interfaces.Parser;
  */
 public class TextParser implements Parser {
 
-    private String message;
+	private String message;
 
-    private boolean awaitConfirmation;
+	private boolean awaitConfirmation;
 
+	/**
+	 * @param content
+	 */
+	public TextParser() {
 
-    /**
-     * @param content
-     */
-    public TextParser () {
+		message = null;
+		awaitConfirmation = false;
+	}
 
-        message = null;
-        awaitConfirmation = false;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.interpreter.parser.Parser#next(java.lang.String)
+	 */
+	public String next(String message) throws InvalidParameterException {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.interpreter.parser.Parser#next(java.lang.String)
-     */
-    public String next (String message) throws InvalidParameterException {
+		String returnValue = null;
+		if (Utils.isPoint(message)) {
+			returnValue = Messages.Text_confirmPoint;
+			returnValue += " " + message; //$NON-NLS-1$
+			awaitConfirmation = true;
+			this.message = message;
+		} else if (awaitConfirmation) {
+			if (message.equalsIgnoreCase(Messages.Text_yes)) {
+				awaitConfirmation = false;
+			} else if (message.equalsIgnoreCase(Messages.Text_no)) {
+				awaitConfirmation = false;
+				this.message = null;
+				returnValue = Messages.Text_iteration;
+			}
+		} else {
+			this.message = message;
+		}
+		return returnValue;
+	}
 
-        String returnValue = null;
-        if (Utils.isPoint(message)) {
-            returnValue = Messages.Text_confirmPoint;
-            returnValue += " " + message; //$NON-NLS-1$
-            awaitConfirmation = true;
-            this.message = message;
-        }
-        else if (awaitConfirmation) {
-            if (message.equalsIgnoreCase(Messages.Text_yes)) {
-                awaitConfirmation = false;
-            }
-            else if (message.equalsIgnoreCase(Messages.Text_no)) {
-                awaitConfirmation = false;
-                this.message = null;
-                returnValue = Messages.Text_iteration;
-            }
-        }
-        else {
-            this.message = message;
-        }
-        return returnValue;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.interpreter.parser.Parser#isDone()
+	 */
+	public boolean isDone() {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.interpreter.parser.Parser#isDone()
-     */
-    public boolean isDone () {
+		return (message != null && !awaitConfirmation);
+	}
 
-        return (message != null && !awaitConfirmation);
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.interpreter.parser.Parser#getParameter()
+	 */
+	public Object getParameter() {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.interpreter.parser.Parser#getParameter()
-     */
-    public Object getParameter () {
-
-        return awaitConfirmation ? null : message;
-    }
+		return awaitConfirmation ? null : message;
+	}
 }

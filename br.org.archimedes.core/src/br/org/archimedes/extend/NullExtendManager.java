@@ -23,15 +23,15 @@ import br.org.archimedes.model.Point;
 
 public class NullExtendManager implements ExtendManager {
 
-    public Element extend (Element element, Collection<Element> references, Point click)
-            throws NullArgumentException {
-        
-        return element;
-    }
+	public Element extend(Element element, Collection<Element> references,
+			Point click) throws NullArgumentException {
 
-    public Collection<Element> getInfiniteExtensionElements (Element element) {
+		return element;
+	}
 
-        return null;
-    }
+	public Collection<Element> getInfiniteExtensionElements(Element element) {
+
+		return null;
+	}
 
 }

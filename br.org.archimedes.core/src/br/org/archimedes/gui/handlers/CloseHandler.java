@@ -27,24 +27,26 @@ import org.eclipse.ui.handlers.HandlerUtil;
  */
 public class CloseHandler extends AbstractHandler {
 
-    private static final String CLOSE_ALL_PARAMETER_ID = "br.org.archimedes.core.close.all"; //$NON-NLS-1$
+	private static final String CLOSE_ALL_PARAMETER_ID = "br.org.archimedes.core.close.all"; //$NON-NLS-1$
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.
+	 * ExecutionEvent)
+	 */
+	public Object execute(ExecutionEvent event) throws ExecutionException {
 
-    /*
-     * (non-Javadoc)
-     * @see org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.ExecutionEvent)
-     */
-    public Object execute (ExecutionEvent event) throws ExecutionException {
-
-        String all = event.getParameter(CLOSE_ALL_PARAMETER_ID);
-        IWorkbenchPage activePage = HandlerUtil.getActiveWorkbenchWindow(event).getActivePage();
-        if (all != null && Boolean.parseBoolean(all)) {
-            activePage.closeAllEditors(true);
-        }
-        else {
-            IEditorPart editor = HandlerUtil.getActiveEditor(event);
-            activePage.closeEditor(editor, true);
-        }
-        return null;
-    }
+		String all = event.getParameter(CLOSE_ALL_PARAMETER_ID);
+		IWorkbenchPage activePage = HandlerUtil.getActiveWorkbenchWindow(event)
+				.getActivePage();
+		if (all != null && Boolean.parseBoolean(all)) {
+			activePage.closeAllEditors(true);
+		} else {
+			IEditorPart editor = HandlerUtil.getActiveEditor(event);
+			activePage.closeEditor(editor, true);
+		}
+		return null;
+	}
 }

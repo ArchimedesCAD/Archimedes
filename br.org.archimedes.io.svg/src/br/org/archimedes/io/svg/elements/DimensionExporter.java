@@ -13,14 +13,14 @@
 
 package br.org.archimedes.io.svg.elements;
 
+import java.io.IOException;
+import java.util.Collection;
+
 import br.org.archimedes.dimension.Dimension;
 import br.org.archimedes.exceptions.NotSupportedException;
 import br.org.archimedes.interfaces.ElementExporter;
 import br.org.archimedes.line.Line;
 import br.org.archimedes.model.Rectangle;
-
-import java.io.IOException;
-import java.util.Collection;
 
 /**
  * Belongs to package br.org.archimedes.io.svg.
@@ -29,25 +29,28 @@ import java.util.Collection;
  */
 public class DimensionExporter implements ElementExporter<Dimension> {
 
-    /*
-     * (non-Javadoc)
-     * @see br.org.archimedes.interfaces.ElementExporter#exportElement(br.org.archimedes
-     * .model.Element, java.io.OutputStream)
-     */
-    public void exportElement (Dimension dimension, Object outputObject) throws IOException {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.org.archimedes.interfaces.ElementExporter#exportElement(br.org.archimedes
+	 * .model.Element, java.io.OutputStream)
+	 */
+	public void exportElement(Dimension dimension, Object outputObject)
+			throws IOException {
 
-        Collection<Line> linesToDraw = dimension.getLinesToDraw();
-        LineExporter exporter = new LineExporter();
-        for (Line line : linesToDraw) {
-            exporter.exportElement(line, outputObject);
-        }
+		Collection<Line> linesToDraw = dimension.getLinesToDraw();
+		LineExporter exporter = new LineExporter();
+		for (Line line : linesToDraw) {
+			exporter.exportElement(line, outputObject);
+		}
 
-        new TextExporter().exportElement(dimension.getText(), outputObject);
-    }
+		new TextExporter().exportElement(dimension.getText(), outputObject);
+	}
 
-    public void exportElement (Dimension element, Object outputObject, Rectangle boundingBox)
-            throws NotSupportedException {
+	public void exportElement(Dimension element, Object outputObject,
+			Rectangle boundingBox) throws NotSupportedException {
 
-        throw new NotSupportedException();
-    }
+		throw new NotSupportedException();
+	}
 }

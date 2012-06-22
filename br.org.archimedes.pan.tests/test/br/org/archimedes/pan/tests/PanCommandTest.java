@@ -13,7 +13,6 @@
  */
 package br.org.archimedes.pan.tests;
 
-
 import junit.framework.Assert;
 
 import org.junit.After;
@@ -27,8 +26,8 @@ import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Point;
 
-public class PanCommandTest extends Tester{
-	
+public class PanCommandTest extends Tester {
+
 	private PanCommand pan;
 
 	private Drawing drawing;
@@ -43,7 +42,7 @@ public class PanCommandTest extends Tester{
 	}
 
 	@After
-	public void tearDown() throws Exception {		
+	public void tearDown() throws Exception {
 		pan = null;
 		drawing = null;
 	}
@@ -90,7 +89,8 @@ public class PanCommandTest extends Tester{
 		safeDoIt();
 		Assert.assertEquals("The viewport position should have been updated.",
 				new Point(14, 42), drawing.getViewportPosition());
-		Assert.assertEquals("The zoom should be the same.", zoom, drawing.getZoom());
+		Assert.assertEquals("The zoom should be the same.", zoom,
+				drawing.getZoom());
 	}
 
 	private void safeDoIt() {
@@ -122,8 +122,10 @@ public class PanCommandTest extends Tester{
 		} catch (Exception e) {
 			Assert.fail("Should not throw any exception.");
 		}
-		Assert.assertEquals("The viewport position should be back to the original.",
+		Assert.assertEquals(
+				"The viewport position should be back to the original.",
 				new Point(0, 0), drawing.getViewportPosition());
-		Assert.assertEquals("The zoom should be the same.", zoom, drawing.getZoom());
+		Assert.assertEquals("The zoom should be the same.", zoom,
+				drawing.getZoom());
 	}
 }

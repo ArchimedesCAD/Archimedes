@@ -15,6 +15,16 @@
 package br.org.archimedes.copytoclipboard;
 
 import static org.junit.Assert.assertNotNull;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Set;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
 import br.org.archimedes.gui.model.Workspace;
 import br.org.archimedes.helper.FactoryTester;
 import br.org.archimedes.model.Drawing;
@@ -22,124 +32,115 @@ import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Selection;
 import br.org.archimedes.stub.StubElement;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Set;
-
 public class CopyToClipboardFactoryTest extends FactoryTester {
 
-    /**
-     * Belongs to package br.org.archimedes.copytoclipboard.
-     * 
-     * @author "Hugo Corbucci"
-     */
-    public class ClonableStubElement extends StubElement {
+	/**
+	 * Belongs to package br.org.archimedes.copytoclipboard.
+	 * 
+	 * @author "Hugo Corbucci"
+	 */
+	public class ClonableStubElement extends StubElement {
 
-        private int id;
+		private int id;
 
+		public ClonableStubElement(int id) {
 
-        public ClonableStubElement (int id) {
+			this.id = id;
+		}
 
-            this.id = id;
-        }
+		@Override
+		public Element clone() {
 
-        @Override
-        public Element clone () {
+			return new ClonableStubElement(this.id);
+		}
 
-            return new ClonableStubElement(this.id);
-        }
+		@Override
+		public boolean equals(Object object) {
 
-        @Override
-        public boolean equals (Object object) {
+			ClonableStubElement other = null;
+			if (object instanceof ClonableStubElement) {
+				other = (ClonableStubElement) object;
+				return other.id == id;
+			}
+			return false;
+		}
+	}
 
-            ClonableStubElement other = null;
-            if (object instanceof ClonableStubElement) {
-                other = (ClonableStubElement) object;
-                return other.id == id;
-            }
-            return false;
-        }
-    }
+	private Drawing drawing;
 
+	private CopyToClipboardFactory factory;
 
-    private Drawing drawing;
+	@Before
+	public void setUp() {
 
-    private CopyToClipboardFactory factory;
+		drawing = new Drawing("Teste");
+		br.org.archimedes.Utils.getController().setActiveDrawing(drawing);
+		factory = new CopyToClipboardFactory();
+	}
 
+	@After
+	public void tearDown() {
 
-    @Before
-    public void setUp () {
+		br.org.archimedes.Utils.getController().deselectAll();
+		br.org.archimedes.Utils.getController().setActiveDrawing(null);
+		br.org.archimedes.Utils.getWorkspace().getClipboard().clear();
+	}
 
-        drawing = new Drawing("Teste");
-        br.org.archimedes.Utils.getController().setActiveDrawing(drawing);
-        factory = new CopyToClipboardFactory();
-    }
+	@Test
+	public void canCopyWithExistingSelectionAndContentStaysOnClipboard() {
 
-    @After
-    public void tearDown () {
+		Element element1 = new ClonableStubElement(1);
+		putSafeElementOnDrawing(element1, drawing);
+		Element element2 = new ClonableStubElement(2);
+		putSafeElementOnDrawing(element2, drawing);
 
-        br.org.archimedes.Utils.getController().deselectAll();
-        br.org.archimedes.Utils.getController().setActiveDrawing(null);
-        br.org.archimedes.Utils.getWorkspace().getClipboard().clear();
-    }
+		Selection selection = new Selection();
+		selection.add(element1);
+		drawing.setSelection(selection);
 
-    @Test
-    public void canCopyWithExistingSelectionAndContentStaysOnClipboard () {
+		assertBegin(factory, true, false);
 
-        Element element1 = new ClonableStubElement(1);
-        putSafeElementOnDrawing(element1, drawing);
-        Element element2 = new ClonableStubElement(2);
-        putSafeElementOnDrawing(element2, drawing);
+		Workspace workspace = br.org.archimedes.Utils.getWorkspace();
+		Collection<Element> clipboard = workspace.getClipboard();
+		Assert.assertTrue("The element should be in the clipboard.",
+				clipboard.contains(element1));
+		Assert.assertFalse("The element should not be in the clipboard.",
+				clipboard.contains(element2));
+	}
 
-        Selection selection = new Selection();
-        selection.add(element1);
-        drawing.setSelection(selection);
+	@Test
+	public void canCancelWithoutPassingSelection() throws Exception {
 
-        assertBegin(factory, true, false);
+		assertBegin(factory, false, false);
+		assertCancel(factory, false);
+	}
 
-        Workspace workspace = br.org.archimedes.Utils.getWorkspace();
-        Collection<Element> clipboard = workspace.getClipboard();
-        Assert.assertTrue("The element should be in the clipboard.", clipboard.contains(element1));
-        Assert.assertFalse("The element should not be in the clipboard.", clipboard
-                .contains(element2));
-    }
+	@Test
+	public void canCopyWithNewSelectionAndContentStaysOnClipboard()
+			throws Exception {
 
-    @Test
-    public void canCancelWithoutPassingSelection () throws Exception {
+		Element element1 = new ClonableStubElement(1);
+		putSafeElementOnDrawing(element1, drawing);
+		Element element2 = new ClonableStubElement(2);
+		putSafeElementOnDrawing(element2, drawing);
 
-        assertBegin(factory, false, false);
-        assertCancel(factory, false);
-    }
+		Set<Element> selection = Collections.singleton(element2);
 
-    @Test
-    public void canCopyWithNewSelectionAndContentStaysOnClipboard () throws Exception {
+		assertBegin(factory, false, false);
 
-        Element element1 = new ClonableStubElement(1);
-        putSafeElementOnDrawing(element1, drawing);
-        Element element2 = new ClonableStubElement(2);
-        putSafeElementOnDrawing(element2, drawing);
+		assertInvalidNext(factory, new Object());
 
-        Set<Element> selection = Collections.singleton(element2);
+		// Selection
+		assertSafeNext(factory, selection, true, false);
 
-        assertBegin(factory, false, false);
+		Workspace workspace = br.org.archimedes.Utils.getWorkspace();
+		Collection<Element> clipboard = workspace.getClipboard();
+		Assert.assertFalse("The element should not be in the clipboard.",
+				clipboard.contains(element1));
+		Assert.assertTrue("The element should be in the clipboard.",
+				clipboard.contains(element2));
+	}
 
-        assertInvalidNext(factory, new Object());
-
-        // Selection
-        assertSafeNext(factory, selection, true, false);
-
-        Workspace workspace = br.org.archimedes.Utils.getWorkspace();
-        Collection<Element> clipboard = workspace.getClipboard();
-        Assert.assertFalse("The element should not be in the clipboard.", clipboard
-                .contains(element1));
-        Assert.assertTrue("The element should be in the clipboard.", clipboard.contains(element2));
-    }
-    
 	@Override
 	@Test
 	public void testFactoryName() {

@@ -30,32 +30,33 @@ import br.org.archimedes.model.Rectangle;
  */
 public class InfiniteLineXMLExporter implements ElementExporter<InfiniteLine> {
 
-    /**
-     * (non-Javadoc).
-     * 
-     * @see br.org.archimedes.interfaces.ElementExporter#exportElement(br.org.archimedes.model.Element,
-     *      java.lang.Object)
-     */
-    public void exportElement (InfiniteLine element, Object outputObject) throws IOException {
+	/**
+	 * (non-Javadoc).
+	 * 
+	 * @see br.org.archimedes.interfaces.ElementExporter#exportElement(br.org.archimedes.model.Element,
+	 *      java.lang.Object)
+	 */
+	public void exportElement(InfiniteLine element, Object outputObject)
+			throws IOException {
 
-        OutputStream output = (OutputStream) outputObject;
+		OutputStream output = (OutputStream) outputObject;
 
-        StringBuilder sb = new StringBuilder();
-        sb.append("<infiniteline>"); //$NON-NLS-1$
+		StringBuilder sb = new StringBuilder();
+		sb.append("<infiniteline>"); //$NON-NLS-1$
 
-        sb.append(XMLExporterHelper.xmlFor("point", element.getInitialPoint())); //$NON-NLS-1$
-        sb.append(XMLExporterHelper.xmlFor("point", element.getEndingPoint())); //$NON-NLS-1$
+		sb.append(XMLExporterHelper.xmlFor("point", element.getInitialPoint())); //$NON-NLS-1$
+		sb.append(XMLExporterHelper.xmlFor("point", element.getEndingPoint())); //$NON-NLS-1$
 
-        sb.append("</infiniteline>"); //$NON-NLS-1$
+		sb.append("</infiniteline>"); //$NON-NLS-1$
 
-        output.write(sb.toString().getBytes());
-    }
+		output.write(sb.toString().getBytes());
+	}
 
-    public void exportElement (InfiniteLine element, Object outputObject, Rectangle boundingBox)
-            throws IOException, NotSupportedException {
+	public void exportElement(InfiniteLine element, Object outputObject,
+			Rectangle boundingBox) throws IOException, NotSupportedException {
 
-        throw new NotSupportedException();
+		throw new NotSupportedException();
 
-    }
+	}
 
 }

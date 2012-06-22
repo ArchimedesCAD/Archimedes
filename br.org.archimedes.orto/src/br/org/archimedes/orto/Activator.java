@@ -31,44 +31,50 @@ import org.osgi.framework.BundleContext;
  */
 public class Activator extends AbstractUIPlugin {
 
-    public static final String PLUGIN_ID = "br.org.archimedes.orto"; //$NON-NLS-1$
+	public static final String PLUGIN_ID = "br.org.archimedes.orto"; //$NON-NLS-1$
 
-    public static final String ORTO_COMMAND_ID = "br.org.archimedes.orto.command"; //$NON-NLS-1$
+	public static final String ORTO_COMMAND_ID = "br.org.archimedes.orto.command"; //$NON-NLS-1$
 
-    public static final String ORTO_STATE = "br.org.archimedes.orto.state"; //$NON-NLS-1$
+	public static final String ORTO_STATE = "br.org.archimedes.orto.state"; //$NON-NLS-1$
 
-    /* (non-Javadoc)
-     * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
-     */
-    @Override
-    public void start (BundleContext context) throws Exception {
-    
-        super.start(context);
-        earlyStartup();
-    }
-    
-    /*
-     * (non-Javadoc)
-     * @see org.eclipse.ui.IStartup#earlyStartup()
-     */
-    public void earlyStartup () {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext
+	 * )
+	 */
+	@Override
+	public void start(BundleContext context) throws Exception {
 
-        UIJob job = new UIJob("InitCommandsWorkaround") {
+		super.start(context);
+		earlyStartup();
+	}
 
-            public IStatus runInUIThread (IProgressMonitor monitor) {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.ui.IStartup#earlyStartup()
+	 */
+	public void earlyStartup() {
 
-                ICommandService commandService = (ICommandService) PlatformUI.getWorkbench()
-                        .getActiveWorkbenchWindow().getService(ICommandService.class);
-                Command command = commandService.getCommand(ORTO_COMMAND_ID);
-                State state = command.getState(ORTO_STATE);
-                state.setValue(false);
-                if (command.getHandler().isEnabled()) {
-                    commandService.refreshElements(ORTO_COMMAND_ID, null);
-                }
-                return new Status(IStatus.OK, PLUGIN_ID,
-                        "Init commands workaround performed succesfully");
-            }
-        };
-        job.schedule();
-    }
+		UIJob job = new UIJob("InitCommandsWorkaround") {
+
+			public IStatus runInUIThread(IProgressMonitor monitor) {
+
+				ICommandService commandService = (ICommandService) PlatformUI
+						.getWorkbench().getActiveWorkbenchWindow()
+						.getService(ICommandService.class);
+				Command command = commandService.getCommand(ORTO_COMMAND_ID);
+				State state = command.getState(ORTO_STATE);
+				state.setValue(false);
+				if (command.getHandler().isEnabled()) {
+					commandService.refreshElements(ORTO_COMMAND_ID, null);
+				}
+				return new Status(IStatus.OK, PLUGIN_ID,
+						"Init commands workaround performed succesfully");
+			}
+		};
+		job.schedule();
+	}
 }

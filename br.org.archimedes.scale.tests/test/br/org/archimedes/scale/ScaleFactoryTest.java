@@ -14,6 +14,13 @@
 package br.org.archimedes.scale;
 
 import static org.junit.Assert.assertNotNull;
+
+import java.util.HashSet;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.factories.CommandFactory;
 import br.org.archimedes.helper.FactoryTester;
@@ -22,12 +29,6 @@ import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.stub.StubElement;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-import java.util.HashSet;
-
 /**
  * Belongs to package br.org.archimedes.factories.
  * 
@@ -35,222 +36,221 @@ import java.util.HashSet;
  */
 public class ScaleFactoryTest extends FactoryTester {
 
-    private CommandFactory factory;
+	private CommandFactory factory;
 
-    private HashSet<Element> selection;
+	private HashSet<Element> selection;
 
-    private Point reference;
+	private Point reference;
 
-    private double proportion;
+	private double proportion;
 
+	@Before
+	public void setUp() throws Exception {
 
-    @Before
-    public void setUp () throws Exception {
+		Drawing drawing = new Drawing("Teste");
+		Element element1 = new StubElement();
+		// TODO Usar o ponto new Point(1, 1)
+		Element element2 = new StubElement();
+		putSafeElementOnDrawing(element1, drawing);
+		putSafeElementOnDrawing(element2, drawing);
 
-        Drawing drawing = new Drawing("Teste");
-        Element element1 = new StubElement();
-        // TODO Usar o ponto new Point(1, 1)
-        Element element2 = new StubElement();
-        putSafeElementOnDrawing(element1, drawing);
-        putSafeElementOnDrawing(element2, drawing);
+		selection = new HashSet<Element>();
+		selection.add(element1);
+		selection.add(element2);
 
-        selection = new HashSet<Element>();
-        selection.add(element1);
-        selection.add(element2);
+		factory = new ScaleFactory();
 
-        factory = new ScaleFactory();
+		reference = new Point(50, 50);
+		proportion = 1.6;
+		br.org.archimedes.Utils.getController().deselectAll();
+		br.org.archimedes.Utils.getController().setActiveDrawing(drawing);
+	}
 
-        reference = new Point(50, 50);
-        proportion = 1.6;
-        br.org.archimedes.Utils.getController().deselectAll();
-        br.org.archimedes.Utils.getController().setActiveDrawing(drawing);
-    }
+	@After
+	public void tearDown() {
 
-    @After
-    public void tearDown () {
+		factory = null;
+		selection = null;
+		reference = null;
+		proportion = 1.0;
+		br.org.archimedes.Utils.getController().deselectAll();
+		br.org.archimedes.Utils.getController().setActiveDrawing(null);
+	}
 
-        factory = null;
-        selection = null;
-        reference = null;
-        proportion = 1.0;
-        br.org.archimedes.Utils.getController().deselectAll();
-        br.org.archimedes.Utils.getController().setActiveDrawing(null);
-    }
+	@Test
+	public void testProportion() {
 
-    @Test
-    public void testProportion () {
+		// Begin
+		assertBegin(factory, false);
 
-        // Begin
-        assertBegin(factory, false);
+		sendsInvalids(factory);
+		assertInvalidNext(factory, reference);
+		assertInvalidNext(factory, proportion);
 
-        sendsInvalids(factory);
-        assertInvalidNext(factory, reference);
-        assertInvalidNext(factory, proportion);
+		// Selection
+		assertSafeNext(factory, selection, false);
 
-        // Selection
-        assertSafeNext(factory, selection, false);
+		sendsInvalids(factory);
+		assertInvalidNext(factory, selection);
+		assertInvalidNext(factory, proportion);
 
-        sendsInvalids(factory);
-        assertInvalidNext(factory, selection);
-        assertInvalidNext(factory, proportion);
+		// Point
+		assertSafeNext(factory, reference, false);
 
-        // Point
-        assertSafeNext(factory, reference, false);
+		sendsInvalids(factory);
+		assertInvalidNext(factory, selection);
 
-        sendsInvalids(factory);
-        assertInvalidNext(factory, selection);
+		// Proportion
+		assertSafeNext(factory, proportion, true);
 
-        // Proportion
-        assertSafeNext(factory, proportion, true);
+		sendsInvalids(factory);
+		assertInvalidNext(factory, selection);
+		assertInvalidNext(factory, reference);
+		assertInvalidNext(factory, proportion);
 
-        sendsInvalids(factory);
-        assertInvalidNext(factory, selection);
-        assertInvalidNext(factory, reference);
-        assertInvalidNext(factory, proportion);
+		// Use the same command
+		assertBegin(factory, false);
+		assertSafeNext(factory, selection, false);
+		assertSafeNext(factory, reference, false);
+		assertSafeNext(factory, proportion, true);
+	}
 
-        // Use the same command
-        assertBegin(factory, false);
-        assertSafeNext(factory, selection, false);
-        assertSafeNext(factory, reference, false);
-        assertSafeNext(factory, proportion, true);
-    }
+	@Test
+	public void testTwoPoints() {
 
-    @Test
-    public void testTwoPoints () {
+		// Arguments
+		Point numeratorPoint = new Point(50, 20);
+		Double denominator = 60.0;
 
-        // Arguments
-        Point numeratorPoint = new Point(50, 20);
-        Double denominator = 60.0;
+		// Begin
+		assertBegin(factory, false);
+		assertSafeNext(factory, selection, false);
+		assertSafeNext(factory, reference, false);
 
-        // Begin
-        assertBegin(factory, false);
-        assertSafeNext(factory, selection, false);
-        assertSafeNext(factory, reference, false);
+		// Point
+		assertSafeNext(factory, numeratorPoint, false);
 
-        // Point
-        assertSafeNext(factory, numeratorPoint, false);
+		// Double
+		assertSafeNext(factory, denominator, true);
 
-        // Double
-        assertSafeNext(factory, denominator, true);
+		// Use the same command
+		assertBegin(factory, false);
+		assertSafeNext(factory, selection, false);
+		assertSafeNext(factory, reference, false);
+		assertSafeNext(factory, numeratorPoint, false);
+		assertSafeNext(factory, denominator, true);
+	}
 
-        // Use the same command
-        assertBegin(factory, false);
-        assertSafeNext(factory, selection, false);
-        assertSafeNext(factory, reference, false);
-        assertSafeNext(factory, numeratorPoint, false);
-        assertSafeNext(factory, denominator, true);
-    }
+	@Test
+	public void testROptionDoubleDouble() {
 
-    @Test
-    public void testROptionDoubleDouble () {
+		// Arguments
+		String option = "r";
+		Double numerator = 5.0, denominator = 20.0;
 
-        // Arguments
-        String option = "r";
-        Double numerator = 5.0, denominator = 20.0;
+		// Begin
+		assertBegin(factory, false);
+		assertSafeNext(factory, selection, false);
+		assertSafeNext(factory, reference, false);
 
-        // Begin
-        assertBegin(factory, false);
-        assertSafeNext(factory, selection, false);
-        assertSafeNext(factory, reference, false);
+		// Option
+		assertSafeNext(factory, option, false);
 
-        // Option
-        assertSafeNext(factory, option, false);
+		sendsInvalids(factory);
+		assertInvalidNext(factory, selection);
+		assertInvalidNext(factory, option);
 
-        sendsInvalids(factory);
-        assertInvalidNext(factory, selection);
-        assertInvalidNext(factory, option);
+		// Double
+		assertSafeNext(factory, numerator, false);
 
-        // Double
-        assertSafeNext(factory, numerator, false);
+		// Double
+		assertSafeNext(factory, denominator, true);
 
-        // Double
-        assertSafeNext(factory, denominator, true);
+		// Use the same command
+		assertBegin(factory, false);
+		assertSafeNext(factory, selection, false);
+		assertSafeNext(factory, reference, false);
+		assertSafeNext(factory, option, false);
+		assertSafeNext(factory, numerator, false);
+		assertSafeNext(factory, denominator, true);
+	}
 
-        // Use the same command
-        assertBegin(factory, false);
-        assertSafeNext(factory, selection, false);
-        assertSafeNext(factory, reference, false);
-        assertSafeNext(factory, option, false);
-        assertSafeNext(factory, numerator, false);
-        assertSafeNext(factory, denominator, true);
-    }
+	@Test
+	public void testROptionThreePoints() {
 
-    @Test
-    public void testROptionThreePoints () {
+		// Arguments
+		String option = "r";
+		Point referencePoint = new Point(0, 0);
+		Point numeratorPoint = new Point(0, 40);
+		Double denominator = 20.0;
 
-        // Arguments
-        String option = "r";
-        Point referencePoint = new Point(0, 0);
-        Point numeratorPoint = new Point(0, 40);
-        Double denominator = 20.0;
+		// Begin
+		assertBegin(factory, false);
+		assertSafeNext(factory, selection, false);
+		assertSafeNext(factory, reference, false);
 
-        // Begin
-        assertBegin(factory, false);
-        assertSafeNext(factory, selection, false);
-        assertSafeNext(factory, reference, false);
+		sendsInvalids(factory);
+		assertInvalidNext(factory, selection);
 
-        sendsInvalids(factory);
-        assertInvalidNext(factory, selection);
+		// Option
+		assertSafeNext(factory, option, false);
 
-        // Option
-        assertSafeNext(factory, option, false);
+		sendsInvalids(factory);
+		assertInvalidNext(factory, selection);
+		assertInvalidNext(factory, option);
 
-        sendsInvalids(factory);
-        assertInvalidNext(factory, selection);
-        assertInvalidNext(factory, option);
+		// Point
+		assertSafeNext(factory, referencePoint, false);
 
-        // Point
-        assertSafeNext(factory, referencePoint, false);
+		// Point
+		assertSafeNext(factory, numeratorPoint, false);
 
-        // Point
-        assertSafeNext(factory, numeratorPoint, false);
+		// Double
+		assertSafeNext(factory, denominator, true);
 
-        // Double
-        assertSafeNext(factory, denominator, true);
+		// Use the same command
+		assertBegin(factory, false);
+		assertSafeNext(factory, selection, false);
+		assertSafeNext(factory, reference, false);
+		assertSafeNext(factory, option, false);
+		assertSafeNext(factory, referencePoint, false);
+		assertSafeNext(factory, numeratorPoint, false);
+		assertSafeNext(factory, denominator, true);
+	}
 
-        // Use the same command
-        assertBegin(factory, false);
-        assertSafeNext(factory, selection, false);
-        assertSafeNext(factory, reference, false);
-        assertSafeNext(factory, option, false);
-        assertSafeNext(factory, referencePoint, false);
-        assertSafeNext(factory, numeratorPoint, false);
-        assertSafeNext(factory, denominator, true);
-    }
+	/**
+	 * Sends garbage to the command.
+	 * 
+	 * @param command
+	 *            The command to be used.
+	 */
+	private void sendsInvalids(CommandFactory command) {
 
-    /**
-     * Sends garbage to the command.
-     * 
-     * @param command
-     *            The command to be used.
-     */
-    private void sendsInvalids (CommandFactory command) {
+		assertInvalidNext(factory, new Object());
+		assertInvalidNext(factory, null);
+	}
 
-        assertInvalidNext(factory, new Object());
-        assertInvalidNext(factory, null);
-    }
+	@Test
+	public void testCancel() throws InvalidArgumentException {
 
-    @Test
-    public void testCancel () throws InvalidArgumentException {
+		assertBegin(factory, false);
+		assertCancel(factory, false);
 
-        assertBegin(factory, false);
-        assertCancel(factory, false);
+		assertBegin(factory, false);
+		assertSafeNext(factory, selection, false);
+		assertCancel(factory, false);
 
-        assertBegin(factory, false);
-        assertSafeNext(factory, selection, false);
-        assertCancel(factory, false);
+		assertBegin(factory, false);
+		assertSafeNext(factory, selection, false);
+		assertSafeNext(factory, reference, false);
+		assertCancel(factory, false);
 
-        assertBegin(factory, false);
-        assertSafeNext(factory, selection, false);
-        assertSafeNext(factory, reference, false);
-        assertCancel(factory, false);
+		assertBegin(factory, false);
+		assertSafeNext(factory, selection, false);
+		assertSafeNext(factory, reference, false);
+		assertSafeNext(factory, 1.58, true);
+	}
 
-        assertBegin(factory, false);
-        assertSafeNext(factory, selection, false);
-        assertSafeNext(factory, reference, false);
-        assertSafeNext(factory, 1.58, true);
-    }
-    
 	@Override
 	@Test
 	public void testFactoryName() {

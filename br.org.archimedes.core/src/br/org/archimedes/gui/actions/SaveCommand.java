@@ -149,7 +149,7 @@ public class SaveCommand implements Command {
 		while (!finished) {
 			saveDialog.setFilterPath(lastDirectory);
 			String rawFilePath = saveDialog.open();
-			if(rawFilePath == null) {
+			if (rawFilePath == null) {
 				return null;
 			}
 			String extension = getExtension(saveDialog.getFilterExtensions(),

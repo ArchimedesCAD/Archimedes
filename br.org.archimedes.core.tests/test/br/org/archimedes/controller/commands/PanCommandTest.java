@@ -14,92 +14,98 @@
 
 package br.org.archimedes.controller.commands;
 
+import static org.junit.Assert.assertEquals;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 import br.org.archimedes.Constant;
 import br.org.archimedes.exceptions.IllegalActionException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Point;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
-
 public class PanCommandTest {
 
-    private PanCommand pan;
+	private PanCommand pan;
 
-    private Drawing drawing;
+	private Drawing drawing;
 
+	@Before
+	public void setUp() throws Exception {
 
-    @Before
-    public void setUp () throws Exception {
+		Point original = new Point(0, 0);
+		Point viewport = new Point(14, 42);
+		pan = new PanCommand(original, viewport);
+		drawing = new Drawing("Drawing");
+	}
 
-        Point original = new Point(0, 0);
-        Point viewport = new Point(14, 42);
-        pan = new PanCommand(original, viewport);
-        drawing = new Drawing("Drawing");
-    }
+	@After
+	public void tearDown() throws Exception {
 
-    @After
-    public void tearDown () throws Exception {
+		pan = null;
+		drawing = null;
+	}
 
-        pan = null;
-        drawing = null;
-    }
+	/*
+	 * Test method for
+	 * 'br.org.archimedes.controller.commands.PanCommand.PanCommand(Point,
+	 * Point)'
+	 */
+	@Test(expected = IllegalActionException.class)
+	public void creatingPanWithTwoEqualPointsThrowsException() throws Exception {
 
-    /*
-     * Test method for 'br.org.archimedes.controller.commands.PanCommand.PanCommand(Point, Point)'
-     */
-    @Test(expected = IllegalActionException.class)
-    public void creatingPanWithTwoEqualPointsThrowsException () throws Exception {
+		new PanCommand(new Point(10, 10), new Point(10, 10));
+	}
 
-        new PanCommand(new Point(10, 10), new Point(10, 10));
-    }
+	@Test(expected = NullArgumentException.class)
+	public void creatingPanWithNullsThrowsException() throws Exception {
 
-    @Test(expected = NullArgumentException.class)
-    public void creatingPanWithNullsThrowsException () throws Exception {
+		new PanCommand(null, null);
+	}
 
-        new PanCommand(null, null);
-    }
+	@Test(expected = NullArgumentException.class)
+	public void executingOnANullDrawingThrowsException() throws Exception {
 
-    @Test(expected = NullArgumentException.class)
-    public void executingOnANullDrawingThrowsException () throws Exception {
+		pan.doIt(null);
+	}
 
-        pan.doIt(null);
-    }
+	/*
+	 * Test method for
+	 * 'br.org.archimedes.controller.commands.PanCommand.doIt(Drawing)'
+	 */
+	@Test
+	public void executingWorksFine() throws Exception {
 
-    /*
-     * Test method for 'br.org.archimedes.controller.commands.PanCommand.doIt(Drawing)'
-     */
-    @Test
-    public void executingWorksFine () throws Exception {
+		double zoom = drawing.getZoom();
+		pan.doIt(drawing);
+		Point viewport = drawing.getViewportPosition();
+		assertEquals("The viewport position should have been updated.",
+				new Point(14, 42), viewport);
+		assertEquals("The zoom should be the same.", zoom, drawing.getZoom(),
+				Constant.EPSILON);
+	}
 
-        double zoom = drawing.getZoom();
-        pan.doIt(drawing);
-        Point viewport = drawing.getViewportPosition();
-        assertEquals("The viewport position should have been updated.", new Point(14, 42), viewport);
-        assertEquals("The zoom should be the same.", zoom, drawing.getZoom(), Constant.EPSILON);
-    }
+	@Test(expected = NullArgumentException.class)
+	public void undoingOnANullDrawingThrowsException() throws Exception {
 
-    @Test(expected = NullArgumentException.class)
-    public void undoingOnANullDrawingThrowsException () throws Exception {
+		pan.undoIt(null);
+	}
 
-        pan.undoIt(null);
-    }
+	/*
+	 * Test method for
+	 * 'br.org.archimedes.controller.commands.PanCommand.undoIt(Drawing)'
+	 */
+	@Test
+	public void testUndoIt() throws Exception {
 
-    /*
-     * Test method for 'br.org.archimedes.controller.commands.PanCommand.undoIt(Drawing)'
-     */
-    @Test
-    public void testUndoIt () throws Exception {
-
-        double zoom = drawing.getZoom();
-        pan.doIt(drawing);
-        pan.undoIt(drawing);
-        assertEquals("The viewport position should be back to the original.", new Point(0, 0),
-                drawing.getViewportPosition());
-        assertEquals("The zoom should be the same.", zoom, drawing.getZoom(), Constant.EPSILON);
-    }
+		double zoom = drawing.getZoom();
+		pan.doIt(drawing);
+		pan.undoIt(drawing);
+		assertEquals("The viewport position should be back to the original.",
+				new Point(0, 0), drawing.getViewportPosition());
+		assertEquals("The zoom should be the same.", zoom, drawing.getZoom(),
+				Constant.EPSILON);
+	}
 }

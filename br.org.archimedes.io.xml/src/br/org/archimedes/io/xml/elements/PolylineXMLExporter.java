@@ -25,25 +25,26 @@ import br.org.archimedes.polyline.Polyline;
 
 public class PolylineXMLExporter implements ElementExporter<Polyline> {
 
-    public void exportElement (Polyline element, Object outputObject) throws IOException {
+	public void exportElement(Polyline element, Object outputObject)
+			throws IOException {
 
-        OutputStream output = (OutputStream) outputObject;
+		OutputStream output = (OutputStream) outputObject;
 
-        StringBuilder lineTag = new StringBuilder();
-        lineTag.append("<polyline>"); //$NON-NLS-1$
+		StringBuilder lineTag = new StringBuilder();
+		lineTag.append("<polyline>"); //$NON-NLS-1$
 
-        for (Point p : element.getPoints()) {
-            lineTag.append(XMLExporterHelper.xmlFor("point", p)); //$NON-NLS-1$
-        }
+		for (Point p : element.getPoints()) {
+			lineTag.append(XMLExporterHelper.xmlFor("point", p)); //$NON-NLS-1$
+		}
 
-        lineTag.append("</polyline>"); //$NON-NLS-1$
+		lineTag.append("</polyline>"); //$NON-NLS-1$
 
-        output.write(lineTag.toString().getBytes());
-    }
+		output.write(lineTag.toString().getBytes());
+	}
 
-    public void exportElement (Polyline element, Object outputObject, Rectangle boundingBox)
-            throws IOException, NotSupportedException {
+	public void exportElement(Polyline element, Object outputObject,
+			Rectangle boundingBox) throws IOException, NotSupportedException {
 
-        throw new NotSupportedException();
-    }
+		throw new NotSupportedException();
+	}
 }

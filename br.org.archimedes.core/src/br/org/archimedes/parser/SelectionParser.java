@@ -24,55 +24,54 @@ import br.org.archimedes.model.Selection;
  */
 public class SelectionParser implements Parser {
 
-    private Selection selection;
+	private Selection selection;
 
+	public SelectionParser() {
 
-    public SelectionParser () {
+		selection = null;
+		br.org.archimedes.Utils.getController().deselectAll();
+	}
 
-        selection = null;
-        br.org.archimedes.Utils.getController().deselectAll();
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.interpreter.parser.Parser#next(java.lang.String)
+	 */
+	public String next(String message) throws InvalidParameterException {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.interpreter.parser.Parser#next(java.lang.String)
-     */
-    public String next (String message) throws InvalidParameterException {
+		try {
+			selection = br.org.archimedes.Utils.getController()
+					.getCurrentSelection();
+		} catch (NoActiveDrawingException e) {
+			// Should not happen.
+			e.printStackTrace();
+		}
 
-        try {
-            selection = br.org.archimedes.Utils.getController().getCurrentSelection();
-        }
-        catch (NoActiveDrawingException e) {
-            // Should not happen.
-            e.printStackTrace();
-        }
+		if (selection.isEmpty()) {
+			selection = null;
+			throw new InvalidParameterException();
+		}
 
-        if (selection.isEmpty()) {
-            selection = null;
-            throw new InvalidParameterException();
-        }
+		return null;
+	}
 
-        return null;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.interpreter.parser.Parser#isDone()
+	 */
+	public boolean isDone() {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.interpreter.parser.Parser#isDone()
-     */
-    public boolean isDone () {
+		return selection != null;
+	}
 
-        return selection != null;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.interpreter.parser.Parser#getParameter()
+	 */
+	public Object getParameter() {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.interpreter.parser.Parser#getParameter()
-     */
-    public Object getParameter () {
-
-        return selection;
-    }
+		return selection;
+	}
 }

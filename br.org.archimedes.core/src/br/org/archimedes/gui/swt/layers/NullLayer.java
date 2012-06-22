@@ -22,11 +22,11 @@ import br.org.archimedes.model.LineStyle;
  */
 public class NullLayer extends Layer {
 
-    /**
-     * Default constructor
-     */
-    public NullLayer () {
+	/**
+	 * Default constructor
+	 */
+	public NullLayer() {
 
-        super(null, "", LineStyle.CONTINUOUS, 0); //$NON-NLS-1$
-    }
+		super(null, "", LineStyle.CONTINUOUS, 0); //$NON-NLS-1$
+	}
 }

@@ -13,49 +13,49 @@
 
 package br.org.archimedes.io.svg.elements;
 
-import br.org.archimedes.Tester;
-import br.org.archimedes.leader.Leader;
-import br.org.archimedes.model.Point;
+import static org.junit.Assert.assertEquals;
+
+import java.io.ByteArrayOutputStream;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.ByteArrayOutputStream;
-
-import static org.junit.Assert.assertEquals;
+import br.org.archimedes.Tester;
+import br.org.archimedes.leader.Leader;
+import br.org.archimedes.model.Point;
 
 /**
  * @author Luiz Real and Ricardo Sider
  */
 public class LeaderExporterTest extends Tester {
 
-    private Leader leader;
+	private Leader leader;
 
-    private LeaderExporter exporter;
+	private LeaderExporter exporter;
 
-    private ByteArrayOutputStream stream;
+	private ByteArrayOutputStream stream;
 
+	@Before
+	public void setUp() throws Exception {
 
-    @Before
-    public void setUp () throws Exception {
+		leader = new Leader(new Point(100, 0), new Point(0, 0), new Point(100,
+				100));
+		exporter = new LeaderExporter();
+		stream = new ByteArrayOutputStream();
+	}
 
-        leader = new Leader(new Point(100, 0), new Point(0, 0), new Point(100, 100));
-        exporter = new LeaderExporter();
-        stream = new ByteArrayOutputStream();
-    }
+	@Test
+	public void exportLeaderAsSVG() throws Exception {
 
-    @Test
-    public void exportLeaderAsSVG () throws Exception {
+		exporter.exportElement(leader, stream);
 
-        exporter.exportElement(leader, stream);
+		String expected = "<circle fill=\"none\" cx=\"100\" cy=\"0\" r=\"5\"/>"
+				+ "<line x1=\"100\" y1=\"0\" x2=\"0\" y2=\"0\" />"
+				+ "<line x1=\"0\" y1=\"0\" x2=\"100\" y2=\"-100\" />";
 
-        String expected = "<circle fill=\"none\" cx=\"100\" cy=\"0\" r=\"5\"/>"
-                + "<line x1=\"100\" y1=\"0\" x2=\"0\" y2=\"0\" />"
-                + "<line x1=\"0\" y1=\"0\" x2=\"100\" y2=\"-100\" />";
+		expected = expected.replaceAll("\\s", "");
 
-        expected = expected.replaceAll("\\s", "");
-
-        String result = stream.toString().replaceAll("\\s", "");
-        assertEquals(expected, result);
-    }
+		String result = stream.toString().replaceAll("\\s", "");
+		assertEquals(expected, result);
+	}
 }

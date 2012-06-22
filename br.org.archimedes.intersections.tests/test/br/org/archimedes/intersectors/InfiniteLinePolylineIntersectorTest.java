@@ -12,16 +12,7 @@
  */
 package br.org.archimedes.intersectors;
 
-import br.org.archimedes.Tester;
-import br.org.archimedes.exceptions.InvalidArgumentException;
-import br.org.archimedes.exceptions.NullArgumentException;
-import br.org.archimedes.infiniteline.InfiniteLine;
-import br.org.archimedes.intersections.interfaces.Intersector;
-import br.org.archimedes.model.Point;
-import br.org.archimedes.polyline.Polyline;
-
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -30,7 +21,16 @@ import java.util.List;
 
 import junit.framework.Assert;
 
-import static org.junit.Assert.fail;
+import org.junit.Before;
+import org.junit.Test;
+
+import br.org.archimedes.Tester;
+import br.org.archimedes.exceptions.InvalidArgumentException;
+import br.org.archimedes.exceptions.NullArgumentException;
+import br.org.archimedes.infiniteline.InfiniteLine;
+import br.org.archimedes.intersections.interfaces.Intersector;
+import br.org.archimedes.model.Point;
+import br.org.archimedes.polyline.Polyline;
 
 public class InfiniteLinePolylineIntersectorTest extends Tester {
 
@@ -98,8 +98,8 @@ public class InfiniteLinePolylineIntersectorTest extends Tester {
 		polyPoints.add(new Point(-1.0, 0.0));
 		Polyline testPoly = new Polyline(polyPoints);
 
-		assertCollectionTheSame(Collections.emptyList(), intersector
-				.getIntersections(testPoly, infiniteLine));
+		assertCollectionTheSame(Collections.emptyList(),
+				intersector.getIntersections(testPoly, infiniteLine));
 	}
 
 	@Test
@@ -116,20 +116,22 @@ public class InfiniteLinePolylineIntersectorTest extends Tester {
 		expected.add(new Point(-1.0, -1.0));
 		expected.add(new Point(0.0, 0.0));
 		expected.add(new Point(1.0, 1.0));
-		
-		Collection<Point> real = intersector.getIntersections(testPoly, infiniteLine);
+
+		Collection<Point> real = intersector.getIntersections(testPoly,
+				infiniteLine);
 		assertCollectionTheSame(expected, real);
 	}
-	
+
 	@Test
-	public void infinitelineContainsPolylineReturnsNoIntersectionPoints() throws NullArgumentException, InvalidArgumentException {
+	public void infinitelineContainsPolylineReturnsNoIntersectionPoints()
+			throws NullArgumentException, InvalidArgumentException {
 		List<Point> polyPoints = new ArrayList<Point>();
 		polyPoints.add(new Point(-1.0, -1.0));
 		polyPoints.add(new Point(1.0, 1.0));
 		polyPoints.add(new Point(0.0, 0.0));
 		Polyline testPoly = new Polyline(polyPoints);
 
-		assertCollectionTheSame(Collections.emptyList(), intersector
-				.getIntersections(testPoly, infiniteLine));
+		assertCollectionTheSame(Collections.emptyList(),
+				intersector.getIntersections(testPoly, infiniteLine));
 	}
 }

@@ -13,97 +13,97 @@
 
 package br.org.archimedes.fillet;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import br.org.archimedes.interfaces.Filleter;
 import br.org.archimedes.interfaces.UndoableCommand;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Luiz Real, Ricardo Sider
  */
 public class MockFilleter implements Filleter {
 
-    private boolean called = false;
+	private boolean called = false;
 
-    private Element receivedE1;
+	private Element receivedE1;
 
-    private Point receivedClick1;
+	private Point receivedClick1;
 
-    private Element receivedE2;
+	private Element receivedE2;
 
-    private Point receivedClick2;
+	private Point receivedClick2;
 
-    private MockMacroCommand macroCommand;
+	private MockMacroCommand macroCommand;
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.org.archimedes.interfaces.Filleter#fillet(br.org.archimedes.model.
+	 * Element, br.org.archimedes.model.Point, br.org.archimedes.model.Element,
+	 * br.org.archimedes.model.Point)
+	 */
+	public List<? extends UndoableCommand> fillet(Element e1, Point click1,
+			Element e2, Point click2) {
 
-    /*
-     * (non-Javadoc)
-     * @see br.org.archimedes.interfaces.Filleter#fillet(br.org.archimedes.model.Element,
-     * br.org.archimedes.model.Point, br.org.archimedes.model.Element,
-     * br.org.archimedes.model.Point)
-     */
-    public List<? extends UndoableCommand> fillet (Element e1, Point click1, Element e2,
-            Point click2) {
+		this.receivedE1 = e1;
+		this.receivedClick1 = click1;
+		this.receivedE2 = e2;
+		this.receivedClick2 = click2;
+		called = true;
+		try {
+			macroCommand = new MockMacroCommand();
+		} catch (Exception e) {
+			// Should not happen
+			e.printStackTrace();
+		}
 
-        this.receivedE1 = e1;
-        this.receivedClick1 = click1;
-        this.receivedE2 = e2;
-        this.receivedClick2 = click2;
-        called = true;
-        try {
-            macroCommand = new MockMacroCommand();
-        }
-        catch (Exception e) {
-            // Should not happen
-            e.printStackTrace();
-        }
+		return new ArrayList<MockMacroCommand>();
+	}
 
-        return new ArrayList<MockMacroCommand>();
-    }
+	public boolean calledFillet() {
 
-    public boolean calledFillet () {
+		return called;
+	}
 
-        return called;
-    }
+	/**
+	 * @return the receivedE1
+	 */
+	public Element getReceivedE1() {
 
-    /**
-     * @return the receivedE1
-     */
-    public Element getReceivedE1 () {
+		return receivedE1;
+	}
 
-        return receivedE1;
-    }
+	/**
+	 * @return the receivedClick1
+	 */
+	public Point getReceivedClick1() {
 
-    /**
-     * @return the receivedClick1
-     */
-    public Point getReceivedClick1 () {
+		return receivedClick1;
+	}
 
-        return receivedClick1;
-    }
+	/**
+	 * @return the receivedE2
+	 */
+	public Element getReceivedE2() {
 
-    /**
-     * @return the receivedE2
-     */
-    public Element getReceivedE2 () {
+		return receivedE2;
+	}
 
-        return receivedE2;
-    }
+	/**
+	 * @return the receivedClick2
+	 */
+	public Point getReceivedClick2() {
 
-    /**
-     * @return the receivedClick2
-     */
-    public Point getReceivedClick2 () {
+		return receivedClick2;
+	}
 
-        return receivedClick2;
-    }
+	public MockMacroCommand getGeneratedMacroCommand() {
 
-    public MockMacroCommand getGeneratedMacroCommand () {
-
-        return macroCommand;
-    }
+		return macroCommand;
+	}
 
 }

@@ -40,10 +40,11 @@ public class PolyLineParser extends NPointsParser {
 	 * @see br.org.archimedes.xml.NPointsParser#createElement(java.util.List)
 	 */
 	@Override
-	protected Element createElement(List<Point> points) throws ElementCreationException {
-	    
+	protected Element createElement(List<Point> points)
+			throws ElementCreationException {
+
 		return getElementFactory().createElement("br.org.archimedes.polyline", //$NON-NLS-1$
-                points);
+				points);
 	}
 
 }

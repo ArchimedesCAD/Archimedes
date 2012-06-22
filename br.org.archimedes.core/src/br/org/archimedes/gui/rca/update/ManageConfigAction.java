@@ -26,53 +26,52 @@ import org.eclipse.update.ui.UpdateManagerUI;
  */
 public class ManageConfigAction implements IWorkbenchWindowActionDelegate {
 
-    private IWorkbenchWindow window;
+	private IWorkbenchWindow window;
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.ui.IWorkbenchWindowActionDelegate#dispose()
+	 */
+	public void dispose() {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.ui.IWorkbenchWindowActionDelegate#dispose()
-     */
-    public void dispose () {
+		window = null;
+	}
 
-        window = null;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.ui.IWorkbenchWindowActionDelegate#init(org.eclipse.ui.
+	 * IWorkbenchWindow)
+	 */
+	public void init(IWorkbenchWindow window) {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.ui.IWorkbenchWindowActionDelegate#init(org.eclipse.ui.IWorkbenchWindow)
-     */
-    public void init (IWorkbenchWindow window) {
+		this.window = window;
+	}
 
-        this.window = window;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.ui.IActionDelegate#run(org.eclipse.jface.action.IAction)
+	 */
+	public void run(IAction action) {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.ui.IActionDelegate#run(org.eclipse.jface.action.IAction)
-     */
-    public void run (IAction action) {
+		BusyIndicator.showWhile(window.getShell().getDisplay(), new Runnable() {
+			public void run() {
+				UpdateManagerUI.openConfigurationManager(window.getShell());
+			}
+		});
+	}
 
-        BusyIndicator.showWhile(window.getShell().getDisplay(),
-                new Runnable() {
-                  public void run() {
-                    UpdateManagerUI
-                        .openConfigurationManager(window.getShell());
-                  }
-                });
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.ui.IActionDelegate#selectionChanged(org.eclipse.jface.action
+	 * .IAction, org.eclipse.jface.viewers.ISelection)
+	 */
+	public void selectionChanged(IAction action, ISelection selection) {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.ui.IActionDelegate#selectionChanged(org.eclipse.jface.action.IAction,
-     *      org.eclipse.jface.viewers.ISelection)
-     */
-    public void selectionChanged (IAction action, ISelection selection) {
-
-        // Ignores selection changes
-    }
+		// Ignores selection changes
+	}
 }

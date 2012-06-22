@@ -21,27 +21,27 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 
 /**
- *
+ * 
  * @author <a href="mailto:david@steadystate.co.uk">David Schweinsberg</a>
  * @version $Id: FeatureRecord.java,v 1.3 2004/08/18 07:15:20 vhardy Exp $
  */
 public class FeatureRecord {
 
-    private int tag;
-    private int offset;
+	private int tag;
+	private int offset;
 
-    /** Creates new FeatureRecord */
-    public FeatureRecord(RandomAccessFile raf) throws IOException {
-        tag = raf.readInt();
-        offset = raf.readUnsignedShort();
-    }
+	/** Creates new FeatureRecord */
+	public FeatureRecord(RandomAccessFile raf) throws IOException {
+		tag = raf.readInt();
+		offset = raf.readUnsignedShort();
+	}
 
-    public int getTag() {
-        return tag;
-    }
-    
-    public int getOffset() {
-        return offset;
-    }
+	public int getTag() {
+		return tag;
+	}
+
+	public int getOffset() {
+		return offset;
+	}
 
 }

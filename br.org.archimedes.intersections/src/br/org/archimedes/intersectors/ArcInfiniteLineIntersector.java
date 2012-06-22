@@ -26,44 +26,42 @@ import br.org.archimedes.model.Point;
 
 public class ArcInfiniteLineIntersector implements Intersector {
 
-    public Collection<Point> getIntersections (Element element,
-            Element otherElement) throws NullArgumentException {
+	public Collection<Point> getIntersections(Element element,
+			Element otherElement) throws NullArgumentException {
 
-        if (element == null || otherElement == null)
-            throw new NullArgumentException();
+		if (element == null || otherElement == null)
+			throw new NullArgumentException();
 
-        CircleInfiniteLineIntersector intersector = new CircleInfiniteLineIntersector();
-        Arc arc = null;
-        InfiniteLine infiniteline = null;
-        Circle circle = null;
-        Collection<Point> intersections = null;
+		CircleInfiniteLineIntersector intersector = new CircleInfiniteLineIntersector();
+		Arc arc = null;
+		InfiniteLine infiniteline = null;
+		Circle circle = null;
+		Collection<Point> intersections = null;
 
-        if (element.getClass() == InfiniteLine.class) {
-            infiniteline = (InfiniteLine) element;
-            arc = (Arc) otherElement;
-        }
-        else {
-            infiniteline = (InfiniteLine) otherElement;
-            arc = (Arc) element;
-        }
+		if (element.getClass() == InfiniteLine.class) {
+			infiniteline = (InfiniteLine) element;
+			arc = (Arc) otherElement;
+		} else {
+			infiniteline = (InfiniteLine) otherElement;
+			arc = (Arc) element;
+		}
 
-        try {
-            circle = new Circle(arc.getCenter(), arc.getRadius());
-        }
-        catch (InvalidArgumentException e) {
-            e.printStackTrace();
-        }
+		try {
+			circle = new Circle(arc.getCenter(), arc.getRadius());
+		} catch (InvalidArgumentException e) {
+			e.printStackTrace();
+		}
 
-        intersections = intersector.getIntersections(circle, infiniteline);
+		intersections = intersector.getIntersections(circle, infiniteline);
 
-        Collection<Point> arcIntersections = new ArrayList<Point>();
+		Collection<Point> arcIntersections = new ArrayList<Point>();
 
-        for (Point p : intersections) {
-            if (arc.contains(p)) {
-                arcIntersections.add(p);
-            }
-        }
-        return arcIntersections;
-    }
+		for (Point p : intersections) {
+			if (arc.contains(p)) {
+				arcIntersections.add(p);
+			}
+		}
+		return arcIntersections;
+	}
 
 }

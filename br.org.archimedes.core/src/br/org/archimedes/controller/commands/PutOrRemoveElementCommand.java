@@ -31,210 +31,218 @@ import br.org.archimedes.model.Layer;
  */
 public class PutOrRemoveElementCommand implements UndoableCommand {
 
-    private Collection<Element> elements;
+	private Collection<Element> elements;
 
-    private boolean remove;
+	private boolean remove;
 
+	/**
+	 * Constructor.
+	 * 
+	 * @param remove
+	 *            true if the element is to be removed, false if it is to be
+	 *            added
+	 */
+	private PutOrRemoveElementCommand(boolean remove) {
 
-    /**
-     * Constructor.
-     * 
-     * @param remove
-     *            true if the element is to be removed, false if it is to be added
-     */
-    private PutOrRemoveElementCommand (boolean remove) {
+		this.remove = remove;
+	}
 
-        this.remove = remove;
-    }
+	/**
+	 * Constructor.
+	 * 
+	 * @param newElement
+	 *            The element to be put.
+	 * @param remove
+	 *            true if the element is to be removed, false if it is to be
+	 *            added
+	 * @throws NullArgumentException
+	 *             Thrown if the element is null.
+	 */
+	public PutOrRemoveElementCommand(Element newElement, boolean remove)
+			throws NullArgumentException {
 
-    /**
-     * Constructor.
-     * 
-     * @param newElement
-     *            The element to be put.
-     * @param remove
-     *            true if the element is to be removed, false if it is to be added
-     * @throws NullArgumentException
-     *             Thrown if the element is null.
-     */
-    public PutOrRemoveElementCommand (Element newElement, boolean remove)
-            throws NullArgumentException {
+		this(remove);
+		if (newElement == null) {
+			throw new NullArgumentException();
+		}
+		elements = new ArrayList<Element>();
+		elements.add(newElement);
+	}
 
-        this(remove);
-        if (newElement == null) {
-            throw new NullArgumentException();
-        }
-        elements = new ArrayList<Element>();
-        elements.add(newElement);
-    }
+	/**
+	 * Constructor.
+	 * 
+	 * @param newElements
+	 *            A collection of elements to be put or removed.
+	 * @param remove
+	 *            true if the element is to be removed, false if it is to be
+	 *            added
+	 * @throws NullArgumentException
+	 *             Thrown if the collection of elements is null.
+	 */
+	public PutOrRemoveElementCommand(Collection<Element> newElements,
+			boolean remove) throws NullArgumentException {
 
-    /**
-     * Constructor.
-     * 
-     * @param newElements
-     *            A collection of elements to be put or removed.
-     * @param remove
-     *            true if the element is to be removed, false if it is to be added
-     * @throws NullArgumentException
-     *             Thrown if the collection of elements is null.
-     */
-    public PutOrRemoveElementCommand (Collection<Element> newElements, boolean remove)
-            throws NullArgumentException {
+		this(remove);
+		if (newElements == null) {
+			throw new NullArgumentException();
+		}
+		elements = new ArrayList<Element>(newElements);
+	}
 
-        this(remove);
-        if (newElements == null) {
-            throw new NullArgumentException();
-        }
-        elements = new ArrayList<Element>(newElements);
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.model.commands.Command#doIt()
+	 */
+	public void doIt(Drawing drawing) throws NullArgumentException,
+			IllegalActionException {
 
-    /*
-     * (non-Javadoc)
-     * @see br.org.archimedes.model.commands.Command#doIt()
-     */
-    public void doIt (Drawing drawing) throws NullArgumentException, IllegalActionException {
+		if (drawing == null) {
+			throw new NullArgumentException();
+		}
 
-        if (drawing == null) {
-            throw new NullArgumentException();
-        }
+		if (remove) {
+			removeElements(drawing);
+		} else {
+			putElements(drawing);
+		}
+	}
 
-        if (remove) {
-            removeElements(drawing);
-        }
-        else {
-            putElements(drawing);
-        }
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.model.commands.UndoableCommand#undoIt()
+	 */
+	public void undoIt(Drawing drawing) throws IllegalActionException,
+			NullArgumentException {
 
-    /*
-     * (non-Javadoc)
-     * @see br.org.archimedes.model.commands.UndoableCommand#undoIt()
-     */
-    public void undoIt (Drawing drawing) throws IllegalActionException, NullArgumentException {
+		if (drawing == null) {
+			throw new NullArgumentException();
+		}
 
-        if (drawing == null) {
-            throw new NullArgumentException();
-        }
+		if (!remove) {
+			removeElements(drawing);
+		} else {
+			putElements(drawing);
+		}
+	}
 
-        if ( !remove) {
-            removeElements(drawing);
-        }
-        else {
-            putElements(drawing);
-        }
-    }
+	/**
+	 * Puts the elements on the drawing
+	 * 
+	 * @param drawing
+	 *            The drawing
+	 * @throws IllegalActionException
+	 *             In case the elements are not there
+	 */
+	private void putElements(Drawing drawing) throws IllegalActionException {
 
-    /**
-     * Puts the elements on the drawing
-     * 
-     * @param drawing
-     *            The drawing
-     * @throws IllegalActionException
-     *             In case the elements are not there
-     */
-    private void putElements (Drawing drawing) throws IllegalActionException {
+		for (Element element : elements) {
+			Layer layer = getDestinationLayer(drawing, element);
 
-        for (Element element : elements) {
-            Layer layer = getDestinationLayer(drawing, element);
+			if (layer.isLocked() || layer.contains(element)) {
+				throw new IllegalActionException(Messages.PutOrRemove_notPut);
+			}
 
-            if (layer.isLocked() || layer.contains(element)) {
-                throw new IllegalActionException(Messages.PutOrRemove_notPut);
-            }
+			addElementToDrawing(element, drawing, layer);
+		}
+	}
 
-            addElementToDrawing(element, drawing, layer);
-        }
-    }
+	/**
+	 * @param element
+	 *            The element to add
+	 * @param drawing
+	 *            The drawing to add to
+	 * @param layer
+	 *            The layer of the element
+	 * @throws IllegalActionException
+	 *             Thrown if cannot add this element to this layer on this
+	 *             drawing
+	 */
+	private void addElementToDrawing(Element element, Drawing drawing,
+			Layer layer) throws IllegalActionException {
 
-    /**
-     * @param element
-     *            The element to add
-     * @param drawing
-     *            The drawing to add to
-     * @param layer
-     *            The layer of the element
-     * @throws IllegalActionException
-     *             Thrown if cannot add this element to this layer on this drawing
-     */
-    private void addElementToDrawing (Element element, Drawing drawing, Layer layer)
-            throws IllegalActionException {
+		try {
+			drawing.putElement(element, layer);
+		} catch (NullArgumentException e) {
+			// Should not happen
+			e.printStackTrace();
+		}
+	}
 
-        try {
-            drawing.putElement(element, layer);
-        }
-        catch (NullArgumentException e) {
-            // Should not happen
-            e.printStackTrace();
-        }
-    }
+	/**
+	 * @param drawing
+	 *            The drawing from which I wish to know the layer destination
+	 * @param element
+	 *            The element I am trying to know the destination layer
+	 * @return The destination layer to use
+	 */
+	private Layer getDestinationLayer(Drawing drawing, Element element) {
 
-    /**
-     * @param drawing
-     *            The drawing from which I wish to know the layer destination
-     * @param element
-     *            The element I am trying to know the destination layer
-     * @return The destination layer to use
-     */
-    private Layer getDestinationLayer (Drawing drawing, Element element) {
+		Layer layer = element.getLayer();
+		if (layer == null) {
+			layer = drawing.getCurrentLayer();
+		}
+		return layer;
+	}
 
-        Layer layer = element.getLayer();
-        if (layer == null) {
-            layer = drawing.getCurrentLayer();
-        }
-        return layer;
-    }
+	/**
+	 * Removes the elements from the drawing
+	 * 
+	 * @param drawing
+	 *            The drawing
+	 * @throws IllegalActionException
+	 *             In case the elements are already there
+	 */
+	private void removeElements(Drawing drawing) throws IllegalActionException {
 
-    /**
-     * Removes the elements from the drawing
-     * 
-     * @param drawing
-     *            The drawing
-     * @throws IllegalActionException
-     *             In case the elements are already there
-     */
-    private void removeElements (Drawing drawing) throws IllegalActionException {
+		for (Element element : elements) {
+			Layer layer = element.getLayer();
+			if (layer == null || layer.isLocked()) {
+				throw new IllegalActionException(
+						Messages.PutOrRemove_notRemoved);
+			}
+		}
 
-        for (Element element : elements) {
-            Layer layer = element.getLayer();
-            if (layer == null || layer.isLocked()) {
-                throw new IllegalActionException(Messages.PutOrRemove_notRemoved);
-            }
-        }
+		for (Element element : elements) {
+			try {
+				drawing.removeElement(element);
+			} catch (IllegalActionException e) {
+				throw new IllegalActionException(
+						Messages.PutOrRemove_notRemoved);
+			} catch (NullArgumentException e) {
+				// Ignores a null element
+			}
+		}
+	}
 
-        for (Element element : elements) {
-            try {
-                drawing.removeElement(element);
-            }
-            catch (IllegalActionException e) {
-                throw new IllegalActionException(Messages.PutOrRemove_notRemoved);
-            }
-            catch (NullArgumentException e) {
-                // Ignores a null element
-            }
-        }
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.org.archimedes.interfaces.UndoableCommand#canMergeWith(br.org.archimedes
+	 * .interfaces.UndoableCommand)
+	 */
+	public boolean canMergeWith(UndoableCommand command) {
 
-    /* (non-Javadoc)
-     * @see br.org.archimedes.interfaces.UndoableCommand#canMergeWith(br.org.archimedes.interfaces.UndoableCommand)
-     */
-    public boolean canMergeWith (UndoableCommand command) {
+		return false;
+	}
 
-        return false;
-    }
-    
-    @Override
-    public boolean equals(Object o) {
-    	if (o instanceof PutOrRemoveElementCommand) {
-    		PutOrRemoveElementCommand other = (PutOrRemoveElementCommand) o;
-    		for (Element element : other.elements) {
-                if ( !this.elements.contains(element)) {
-                    return false;
-                }
-            }
-    		if (other.remove != this.remove) {
-    			return false;
-    		}
-    		return true;
-    	}
-    	return false;
-    }
+	@Override
+	public boolean equals(Object o) {
+		if (o instanceof PutOrRemoveElementCommand) {
+			PutOrRemoveElementCommand other = (PutOrRemoveElementCommand) o;
+			for (Element element : other.elements) {
+				if (!this.elements.contains(element)) {
+					return false;
+				}
+			}
+			if (other.remove != this.remove) {
+				return false;
+			}
+			return true;
+		}
+		return false;
+	}
 }

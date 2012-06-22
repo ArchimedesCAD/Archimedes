@@ -25,31 +25,30 @@ import br.org.archimedes.model.Point;
  */
 public class ThreePointParser extends NPointsParser {
 
-    private String className;
+	private String className;
 
+	/**
+	 * Default constructor
+	 * 
+	 * @param className
+	 *            The class name to be created
+	 */
+	protected ThreePointParser(String className) {
 
-    /**
-     * Default constructor
-     * 
-     * @param className
-     *            The class name to be created
-     */
-    protected ThreePointParser (String className) {
+		super(3);
+		this.className = className;
+	}
 
-        super(3);
-        this.className = className;
-    }
+	/**
+	 * @see br.org.archimedes.io.xml.parsers.NPointsParser#createElement(java.util.List)
+	 */
+	@Override
+	protected Element createElement(List<Point> points)
+			throws ElementCreationException {
 
-    /**
-     * @see br.org.archimedes.io.xml.parsers.NPointsParser#createElement(java.util.List)
-     */
-    @Override
-    protected Element createElement (List<Point> points)
-            throws ElementCreationException {
-
-        Element element = getElementFactory().createElement(className,
-                points.get(0), points.get(1), points.get(2));
-        return element;
-    }
+		Element element = getElementFactory().createElement(className,
+				points.get(0), points.get(1), points.get(2));
+		return element;
+	}
 
 }

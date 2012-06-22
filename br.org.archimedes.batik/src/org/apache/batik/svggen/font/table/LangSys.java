@@ -21,35 +21,34 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 
 /**
- *
+ * 
  * @author <a href="mailto:david@steadystate.co.uk">David Schweinsberg</a>
  * @version $Id: LangSys.java,v 1.3 2004/08/18 07:15:21 vhardy Exp $
  */
 public class LangSys {
 
-    private int featureCount;
-    private int[] featureIndex;
-    
-    /** Creates new LangSys */
-    @SuppressWarnings("unused")
-    protected LangSys(RandomAccessFile raf) throws IOException {
-        int lookupOrder = raf.readUnsignedShort();
-        int reqFeatureIndex = raf.readUnsignedShort();
-        featureCount = raf.readUnsignedShort();
-        featureIndex = new int[featureCount];
-        for (int i = 0; i < featureCount; i++) {
-            featureIndex[i] = raf.readUnsignedShort();
-        }
-    }
-    
-    protected boolean isFeatureIndexed(int n) {
-        for (int i = 0; i < featureCount; i++) {
-            if (featureIndex[i] == n) {
-                return true;
-            }
-        }
-        return false;
-    }
+	private int featureCount;
+	private int[] featureIndex;
+
+	/** Creates new LangSys */
+	@SuppressWarnings("unused")
+	protected LangSys(RandomAccessFile raf) throws IOException {
+		int lookupOrder = raf.readUnsignedShort();
+		int reqFeatureIndex = raf.readUnsignedShort();
+		featureCount = raf.readUnsignedShort();
+		featureIndex = new int[featureCount];
+		for (int i = 0; i < featureCount; i++) {
+			featureIndex[i] = raf.readUnsignedShort();
+		}
+	}
+
+	protected boolean isFeatureIndexed(int n) {
+		for (int i = 0; i < featureCount; i++) {
+			if (featureIndex[i] == n) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 }
-

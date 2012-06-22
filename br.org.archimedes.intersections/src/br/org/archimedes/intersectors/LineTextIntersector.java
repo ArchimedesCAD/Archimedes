@@ -12,6 +12,9 @@
  */
 package br.org.archimedes.intersectors;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.intersections.interfaces.Intersector;
@@ -20,17 +23,14 @@ import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.text.Text;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
 public class LineTextIntersector implements Intersector {
 
 	public Collection<Point> getIntersections(Element element,
 			Element otherElement) throws NullArgumentException {
-		
+
 		if (element == null || otherElement == null)
 			throw new NullArgumentException();
-		
+
 		Line line;
 		Text text;
 		LineLineIntersector intersector = new LineLineIntersector();
@@ -42,7 +42,8 @@ public class LineTextIntersector implements Intersector {
 			line = (Line) otherElement;
 			text = (Text) element;
 		}
-		Collection<Point> boundaryPoints = text.getBoundaryRectangle().getPoints();
+		Collection<Point> boundaryPoints = text.getBoundaryRectangle()
+				.getPoints();
 		Point lastPoint = null;
 		Collection<Line> boundaryLines = new ArrayList<Line>();
 		for (Point boundaryPoint : boundaryPoints) {

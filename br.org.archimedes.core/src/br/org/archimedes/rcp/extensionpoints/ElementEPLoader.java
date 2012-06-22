@@ -31,86 +31,83 @@ import br.org.archimedes.rcp.ExtensionTagHandler;
  */
 public class ElementEPLoader implements ExtensionTagHandler {
 
-    private static final String ELEMENT_EXTENSION_POINT_ID = "br.org.archimedes.core.element"; //$NON-NLS-1$
+	private static final String ELEMENT_EXTENSION_POINT_ID = "br.org.archimedes.core.element"; //$NON-NLS-1$
 
-    private static final String ELEMENT_ID_ATTRIBUTE_NAME = "id"; //$NON-NLS-1$
+	private static final String ELEMENT_ID_ATTRIBUTE_NAME = "id"; //$NON-NLS-1$
 
-    private static final String CLASS_ATTRIBUTE = "class"; //$NON-NLS-1$
+	private static final String CLASS_ATTRIBUTE = "class"; //$NON-NLS-1$
 
-    private static final Map<String, Class<? extends Element>> idToElementClassMap = new HashMap<String, Class<? extends Element>>();
+	private static final Map<String, Class<? extends Element>> idToElementClassMap = new HashMap<String, Class<? extends Element>>();
 
-    private static final Map<Class<? extends Element>, String> elementToIdMap = new HashMap<Class<? extends Element>, String>();
+	private static final Map<Class<? extends Element>, String> elementToIdMap = new HashMap<Class<? extends Element>, String>();
 
-    private static final Map<String, CommandFactory> elementFactoryMap = new HashMap<String, CommandFactory>();
+	private static final Map<String, CommandFactory> elementFactoryMap = new HashMap<String, CommandFactory>();
 
+	/**
+	 * Default constructor. Loads the maps if they are empty (not loaded or
+	 * without any element).
+	 */
+	public ElementEPLoader() {
 
-    /**
-     * Default constructor. Loads the maps if they are empty (not loaded or
-     * without any element).
-     */
-    public ElementEPLoader () {
+		if (idToElementClassMap.isEmpty() && elementToIdMap.isEmpty()) {
+			ExtensionLoader loader = new ExtensionLoader(
+					ELEMENT_EXTENSION_POINT_ID);
+			loader.loadExtension(this);
+		}
+	}
 
-        if (idToElementClassMap.isEmpty() && elementToIdMap.isEmpty()) {
-            ExtensionLoader loader = new ExtensionLoader(
-                    ELEMENT_EXTENSION_POINT_ID);
-            loader.loadExtension(this);
-        }
-    }
+	/**
+	 * Unchecked because Class.forName (to get a reference to the element's
+	 * class) is not generic check safe.
+	 * 
+	 * @see br.org.archimedes.rcp.ExtensionTagHandler#handleTag(org.eclipse.core.runtime.IConfigurationElement)
+	 */
+	@SuppressWarnings("unchecked")
+	public void handleTag(IConfigurationElement elementTag)
+			throws CoreException {
 
-    /**
-     * Unchecked because Class.forName (to get a reference to the element's
-     * class) is not generic check safe.
-     * 
-     * @see br.org.archimedes.rcp.ExtensionTagHandler#handleTag(org.eclipse.core.runtime.IConfigurationElement)
-     */
-    @SuppressWarnings("unchecked")
-    public void handleTag (IConfigurationElement elementTag)
-            throws CoreException {
+		String elementId = elementTag.getAttribute(ELEMENT_ID_ATTRIBUTE_NAME);
+		try {
+			// Must be the class because it cant be instantiated easily
+			// (no empty args constructor)
+			Class<? extends Element> elementClass = (Class<? extends Element>) Class
+					.forName(elementTag.getAttribute(CLASS_ATTRIBUTE));
+			elementToIdMap.put(elementClass, elementId);
+			idToElementClassMap.put(elementId, elementClass);
+		} catch (InvalidRegistryObjectException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// Element's plugin not loaded. Just ignoring
+			e.printStackTrace();
+		}
+	}
 
-        String elementId = elementTag.getAttribute(ELEMENT_ID_ATTRIBUTE_NAME);
-        try {
-            // Must be the class because it cant be instantiated easily
-            // (no empty args constructor)
-            Class<? extends Element> elementClass = (Class<? extends Element>) Class
-                    .forName(elementTag.getAttribute(CLASS_ATTRIBUTE));
-            elementToIdMap.put(elementClass, elementId);
-            idToElementClassMap.put(elementId, elementClass);
-        }
-        catch (InvalidRegistryObjectException e) {
-            e.printStackTrace();
-        }
-        catch (ClassNotFoundException e) {
-            // Element's plugin not loaded. Just ignoring
-            e.printStackTrace();
-        }
-    }
+	/**
+	 * @param element
+	 *            The element from which we want the extension's id
+	 * @return The element extension id string
+	 */
+	public String getElementId(Element element) {
 
-    /**
-     * @param element
-     *            The element from which we want the extension's id
-     * @return The element extension id string
-     */
-    public String getElementId (Element element) {
+		return elementToIdMap.get(element.getClass());
+	}
 
-        return elementToIdMap.get(element.getClass());
-    }
+	/**
+	 * @param elementId
+	 *            The element id from which we desire the class
+	 * @return The class corresponding to that element or null if it was not
+	 *         found
+	 */
+	public Class<? extends Element> getElementClass(String elementId) {
 
-    /**
-     * @param elementId
-     *            The element id from which we desire the class
-     * @return The class corresponding to that element or null if it was not
-     *         found
-     */
-    public Class<? extends Element> getElementClass (String elementId) {
+		return idToElementClassMap.get(elementId);
+	}
 
-        return idToElementClassMap.get(elementId);
-    }
+	/**
+	 * @return A map to access an element factory
+	 */
+	public Map<String, CommandFactory> getElementFactoryMap() {
 
-    /**
-     * @return A map to access an element factory
-     */
-    public Map<String, CommandFactory> getElementFactoryMap () {
-
-        return elementFactoryMap;
-    }
+		return elementFactoryMap;
+	}
 }

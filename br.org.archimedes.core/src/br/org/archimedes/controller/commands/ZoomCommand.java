@@ -29,100 +29,101 @@ import br.org.archimedes.model.Point;
  */
 public abstract class ZoomCommand implements UndoableCommand {
 
-    private double previousZoom;
+	private double previousZoom;
 
-    private Point previousViewport;
+	private Point previousViewport;
 
-    private double newZoom;
+	private double newZoom;
 
-    private Point newViewport;
+	private Point newViewport;
 
+	public ZoomCommand() {
 
-    public ZoomCommand () {
+		previousZoom = -1;
+		previousViewport = null;
+	}
 
-        previousZoom = -1;
-        previousViewport = null;
-    }
+	public void doIt(Drawing drawing) throws IllegalActionException,
+			NullArgumentException {
 
-    public void doIt (Drawing drawing) throws IllegalActionException, NullArgumentException {
+		if (drawing == null) {
+			throw new NullArgumentException();
+		}
 
-        if (drawing == null) {
-            throw new NullArgumentException();
-        }
+		if (previousZoom < 0) {
+			previousZoom = drawing.getZoom();
+			previousViewport = drawing.getViewportPosition();
+			newZoom = calculateZoom(drawing);
+			newViewport = getNewViewport(drawing);
+		}
 
-        if (previousZoom < 0) {
-            previousZoom = drawing.getZoom();
-            previousViewport = drawing.getViewportPosition();
-            newZoom = calculateZoom(drawing);
-            newViewport = getNewViewport(drawing);
-        }
+		if (newZoom > Constant.ZOOM_SUPERIOR_LIMIT) {
+			newZoom = previousZoom;
+			newViewport = previousViewport;
+			throw new IllegalActionException(Messages.Zoom_reachedMax);
+		}
 
-        if (newZoom > Constant.ZOOM_SUPERIOR_LIMIT) {
-            newZoom = previousZoom;
-            newViewport = previousViewport;
-            throw new IllegalActionException(Messages.Zoom_reachedMax);
-        }
+		if (newViewport != null) {
+			drawing.setViewportPosition(newViewport);
+		}
+		drawing.setZoom(newZoom);
+	}
 
-        if (newViewport != null) {
-            drawing.setViewportPosition(newViewport);
-        }
-        drawing.setZoom(newZoom);
-    }
+	public void undoIt(Drawing drawing) throws IllegalActionException,
+			NullArgumentException {
 
-    public void undoIt (Drawing drawing) throws IllegalActionException, NullArgumentException {
+		if (drawing == null) {
+			throw new NullArgumentException();
+		}
 
-        if (drawing == null) {
-            throw new NullArgumentException();
-        }
+		if (previousZoom <= 0) {
+			throw new IllegalActionException();
+		} else {
+			drawing.setZoom(previousZoom);
+			if (previousViewport != null) {
+				drawing.setViewportPosition(previousViewport);
+			}
+		}
+	}
 
-        if (previousZoom <= 0) {
-            throw new IllegalActionException();
-        }
-        else {
-            drawing.setZoom(previousZoom);
-            if (previousViewport != null) {
-                drawing.setViewportPosition(previousViewport);
-            }
-        }
-    }
+	/**
+	 * @param drawing
+	 *            The drawing of which the viewport must be changed.
+	 * @return The new viewport position or null if it shouldn't be changed.
+	 */
+	protected abstract Point getNewViewport(Drawing drawing);
 
-    /**
-     * @param drawing
-     *            The drawing of which the viewport must be changed.
-     * @return The new viewport position or null if it shouldn't be changed.
-     */
-    protected abstract Point getNewViewport (Drawing drawing);
+	/**
+	 * @param drawing
+	 *            The drawing on which the zoom must be performed.
+	 * @return The new zoom factor
+	 */
+	protected abstract double calculateZoom(Drawing drawing);
 
-    /**
-     * @param drawing
-     *            The drawing on which the zoom must be performed.
-     * @return The new zoom factor
-     */
-    protected abstract double calculateZoom (Drawing drawing);
+	/**
+	 * @return Returns the previousZoom.
+	 */
+	protected double getPreviousZoom() {
 
-    /**
-     * @return Returns the previousZoom.
-     */
-    protected double getPreviousZoom () {
+		return previousZoom;
+	}
 
-        return previousZoom;
-    }
+	/**
+	 * @return The previous viewport position
+	 */
+	protected Point getPreviousViewport() {
 
-    /**
-     * @return The previous viewport position
-     */
-    protected Point getPreviousViewport () {
+		return this.previousViewport;
+	}
 
-        return this.previousViewport;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @seebr.org.archimedes.interfaces.UndoableCommand#canMergeWith(br.org.
+	 * archimedes.interfaces. UndoableCommand)
+	 */
+	public boolean canMergeWith(UndoableCommand command) {
 
-    /*
-     * (non-Javadoc)
-     * @seebr.org.archimedes.interfaces.UndoableCommand#canMergeWith(br.org.archimedes.interfaces.
-     * UndoableCommand)
-     */
-    public boolean canMergeWith (UndoableCommand command) {
-
-        return ZoomCommand.class.isAssignableFrom(command.getClass());
-    }
+		return ZoomCommand.class.isAssignableFrom(command.getClass());
+	}
 }

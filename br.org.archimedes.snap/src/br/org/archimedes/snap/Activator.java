@@ -31,45 +31,50 @@ import org.osgi.framework.BundleContext;
  */
 public class Activator extends AbstractUIPlugin {
 
-    protected static final String PLUGIN_ID = "br.org.archimedes.snap"; //$NON-NLS-1$
+	protected static final String PLUGIN_ID = "br.org.archimedes.snap"; //$NON-NLS-1$
 
-    public static final String SNAP_COMMAND_ID = "br.org.archimedes.snap.command"; //$NON-NLS-1$
+	public static final String SNAP_COMMAND_ID = "br.org.archimedes.snap.command"; //$NON-NLS-1$
 
-    public static final String SNAP_STATE = "br.org.archimedes.snap.state"; //$NON-NLS-1$
+	public static final String SNAP_STATE = "br.org.archimedes.snap.state"; //$NON-NLS-1$
 
-    
-    /* (non-Javadoc)
-     * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
-     */
-    @Override
-    public void start (BundleContext context) throws Exception {
-    
-        super.start(context);
-        earlyStartup();
-    }
-    
-    /*
-     * (non-Javadoc)
-     * @see org.eclipse.ui.IStartup#earlyStartup()
-     */
-    private void earlyStartup () {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext
+	 * )
+	 */
+	@Override
+	public void start(BundleContext context) throws Exception {
 
-        UIJob job = new UIJob("InitCommandsWorkaround") {
+		super.start(context);
+		earlyStartup();
+	}
 
-            public IStatus runInUIThread (IProgressMonitor monitor) {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.ui.IStartup#earlyStartup()
+	 */
+	private void earlyStartup() {
 
-                ICommandService commandService = (ICommandService) PlatformUI.getWorkbench()
-                        .getActiveWorkbenchWindow().getService(ICommandService.class);
-                Command command = commandService.getCommand(SNAP_COMMAND_ID);
-                State state = command.getState(SNAP_STATE);
-                state.setValue(true);
-                if (command.getHandler().isEnabled()) {
-                    commandService.refreshElements(SNAP_COMMAND_ID, null);
-                }
-                return new Status(IStatus.OK, PLUGIN_ID,
-                        "Init commands workaround performed succesfully");
-            }
-        };
-        job.schedule();
-    }
+		UIJob job = new UIJob("InitCommandsWorkaround") {
+
+			public IStatus runInUIThread(IProgressMonitor monitor) {
+
+				ICommandService commandService = (ICommandService) PlatformUI
+						.getWorkbench().getActiveWorkbenchWindow()
+						.getService(ICommandService.class);
+				Command command = commandService.getCommand(SNAP_COMMAND_ID);
+				State state = command.getState(SNAP_STATE);
+				state.setValue(true);
+				if (command.getHandler().isEnabled()) {
+					commandService.refreshElements(SNAP_COMMAND_ID, null);
+				}
+				return new Status(IStatus.OK, PLUGIN_ID,
+						"Init commands workaround performed succesfully");
+			}
+		};
+		job.schedule();
+	}
 }

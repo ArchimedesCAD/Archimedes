@@ -55,8 +55,8 @@ public class SemilineTrimmer implements Trimmer {
 		SortedSet<ComparablePoint> sortedPointSet = getSortedPointSet(line,
 				line.getInitialPoint(), cutPoints);
 
-		Vector direction = new Vector(line.getInitialPoint(), line
-				.getDirectionPoint());
+		Vector direction = new Vector(line.getInitialPoint(),
+				line.getDirectionPoint());
 
 		Vector clickVector = new Vector(line.getInitialPoint(), click);
 		double key = direction.dotProduct(clickVector);
@@ -75,8 +75,7 @@ public class SemilineTrimmer implements Trimmer {
 
 			Vector dir = new Vector(new Point(line.getDirectionPoint().getX()
 					- line.getInitialPoint().getX(), line.getDirectionPoint()
-					.getY()
-					- line.getInitialPoint().getY()));
+					.getY() - line.getInitialPoint().getY()));
 
 			if (tailSet.size() == 0 && headSet.size() > 0) {
 				Point initialPoint = headSet.last().getPoint();

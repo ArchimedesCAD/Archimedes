@@ -12,8 +12,10 @@
  */
 package br.org.archimedes.leader;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import br.org.archimedes.Constant;
-import br.org.archimedes.Geometrics;
 import br.org.archimedes.Utils;
 import br.org.archimedes.controller.Controller;
 import br.org.archimedes.controller.commands.PutOrRemoveElementCommand;
@@ -28,249 +30,242 @@ import br.org.archimedes.model.Vector;
 import br.org.archimedes.parser.PointParser;
 import br.org.archimedes.parser.VectorParser;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Belongs to package br.org.archimedes.leader.
  */
 public class LeaderFactory implements CommandFactory {
 
-    private Point p1;
+	private Point p1;
 
-    private Point p2;
+	private Point p2;
 
-    private Point p3;
+	private Point p3;
 
-    private Workspace workspace;
+	private Workspace workspace;
 
-    private Controller controller;
+	private Controller controller;
 
-    private boolean active;
+	private boolean active;
 
-    private PutOrRemoveElementCommand command;
+	private PutOrRemoveElementCommand command;
 
+	/**
+	 * Constructor.
+	 */
+	public LeaderFactory() {
 
-    /**
-     * Constructor.
-     */
-    public LeaderFactory () {
+		workspace = Utils.getWorkspace();
+		controller = Utils.getController();
+		deactivate();
+	}
 
-        workspace = Utils.getWorkspace();
-        controller = Utils.getController();
-        deactivate();
-    }
+	public String begin() {
 
-    public String begin () {
+		active = true;
+		return "Enter the first point in form x;y or click the desired position";
+	}
 
-        active = true;
-        return "Enter the first point in form x;y or click the desired position";
-    }
+	/**
+	 * Deactivates the factory.
+	 */
+	private void deactivate() {
 
-    /**
-     * Deactivates the factory.
-     */
-    private void deactivate () {
+		controller.deselectAll();
+		active = false;
+		p1 = null;
+		p2 = null;
+		p3 = null;
+	}
 
-        controller.deselectAll();
-        active = false;
-        p1 = null;
-        p2 = null;
-        p3 = null;
-    }
+	public String next(Object parameter) throws InvalidParameterException {
 
-    public String next (Object parameter) throws InvalidParameterException {
+		String result = null;
 
-        String result = null;
+		if (!isDone()) {
+			if (parameter == null) {
+				throw new InvalidParameterException();
+			} else if (p1 == null) {
+				Point point = null;
+				try {
+					point = (Point) parameter;
+				} catch (ClassCastException e) {
+					throw new InvalidParameterException("Expected POINT");
+				}
+				p1 = point;
+				result = "Enter a point or a distance";
+				workspace.setPerpendicularGripReferencePoint(point);
+			} else {
+				Vector vector = null;
+				try {
+					vector = (Vector) parameter;
+				} catch (ClassCastException e) {
+					throw new InvalidParameterException("Expected POINT");
+				}
 
-        if ( !isDone()) {
-            if (parameter == null) {
-                throw new InvalidParameterException();
-            }
-            else if (p1 == null) {
-                Point point = null;
-                try {
-                    point = (Point) parameter;
-                }
-                catch (ClassCastException e) {
-                    throw new InvalidParameterException("Expected POINT");
-                }
-                p1 = point;
-                result = "Enter a point or a distance";
-                workspace.setPerpendicularGripReferencePoint(point);
-            }
-            else {
-                Vector vector = null;
-                try {
-                    vector = (Vector) parameter;
-                }
-                catch (ClassCastException e) {
-                    throw new InvalidParameterException("Expected POINT");
-                }
+				if (p2 == null) {
+					p2 = p1.addVector(vector);
+					result = "Enter a distance or a mouse-given point";
+					workspace.setPerpendicularGripReferencePoint(p2);
+				} else {
+					p3 = p2.addVector(vector);
+					result = createLeader();
+					deactivate();
+				}
+			}
+		} else {
+			throw new InvalidParameterException();
+		}
 
-                if (p2 == null) {
-                    p2 = p1.addVector(vector);
-                    result = "Enter a distance or a mouse-given point";
-                    workspace.setPerpendicularGripReferencePoint(p2);
-                }
-                else {
-                    p3 = p2.addVector(vector);
-                    result = createLeader();
-                    deactivate();
-                }
-            }
-        }
-        else {
-            throw new InvalidParameterException();
-        }
+		return result;
+	}
 
-        return result;
-    }
+	/**
+	 * Attempts to create the leader.
+	 * 
+	 * @return The message to return to the user.
+	 */
+	private String createLeader() {
 
-    /**
-     * Attempts to create the leader.
-     * 
-     * @return The message to return to the user.
-     */
-    private String createLeader () {
+		String result;
 
-        String result;
+		try {
+			Leader leader = new Leader(p1, p2, p3);
+			command = new PutOrRemoveElementCommand(leader, false);
+			result = "Leader created";
+		} catch (Exception e) {
+			e.printStackTrace();
+			// Should not get here
+			result = "Could not create the leader";
+		}
 
-        try {
-            Leader leader = new Leader(p1, p2, p3);
-            command = new PutOrRemoveElementCommand(leader, false);
-            result = "Leader created";
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            // Should not get here
-            result = "Could not create the leader";
-        }
+		return result;
+	}
 
-        return result;
-    }
+	public String cancel() {
 
-    public String cancel () {
+		deactivate();
 
-        deactivate();
+		return "Leader canceled";
+	}
 
-        return "Leader canceled";
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.interpreter.Command#done()
+	 */
+	public boolean isDone() {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.interpreter.Command#done()
-     */
-    public boolean isDone () {
+		return !active;
+	}
 
-        return !active;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.org.archimedes.factories.CommandFactory#drawVisualHelper(br.org.archimedes
+	 * .model.writers.Writer)
+	 */
+	public void drawVisualHelper() {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.factories.CommandFactory#drawVisualHelper(br.org.archimedes.model.writers.Writer)
-     */
-    public void drawVisualHelper () {
+		if (p1 != null && p3 == null) {
+			Point point = workspace.getMousePosition();
+			Point initial = p1;
 
-        if (p1 != null && p3 == null) {
-            Point point = workspace.getMousePosition();
-            Point initial = p1;
+			try {
+				List<Point> circle = getPointsForCircle(p1,
+						Constant.LEADER_RADIUS);
+				Utils.getOpenGLWrapper().drawFromModel(circle);
 
-            try {
-                List<Point> circle = getPointsForCircle(p1, Constant.LEADER_RADIUS);
-                Utils.getOpenGLWrapper().drawFromModel(circle);
-                
-                if (p2 != null) {
-                    Utils.getOpenGLWrapper().drawFromModel(p1, p2);
-                    initial = p2;
-                }
+				if (p2 != null) {
+					Utils.getOpenGLWrapper().drawFromModel(p1, p2);
+					initial = p2;
+				}
 
-                point = Utils.transformVector(initial, point);
+				point = Utils.transformVector(initial, point);
 
-                Utils.getOpenGLWrapper().drawFromModel(initial, point);
-            }
-            catch (NullArgumentException e) {
-                // Should never reach this exception.
-                e.printStackTrace();
-            }
-        }
-    }
-    
-    // TODO Refactor to extract this functionality somewhere everyone can use it
-    /**
-     * @param center The center of the circle 
-     * @param radius The radius of the circle 
-     * @return The points that draw a circle
-     */
-    private List<Point> getPointsForCircle (Point center, double radius) {
+				Utils.getOpenGLWrapper().drawFromModel(initial, point);
+			} catch (NullArgumentException e) {
+				// Should never reach this exception.
+				e.printStackTrace();
+			}
+		}
+	}
 
-        ArrayList<Point> points = new ArrayList<Point>();
-        double increment = Math.PI / 360;
+	// TODO Refactor to extract this functionality somewhere everyone can use it
+	/**
+	 * @param center
+	 *            The center of the circle
+	 * @param radius
+	 *            The radius of the circle
+	 * @return The points that draw a circle
+	 */
+	private List<Point> getPointsForCircle(Point center, double radius) {
 
-        for (double angle = 0; angle <= Math.PI*2; angle += increment) {
-            double x = center.getX() + radius * Math.cos(angle);
-            double y = center.getY() + radius * Math.sin(angle);
-            points.add(new Point(x, y));
-        }
-        double x = center.getX() + radius * Math.cos(Math.PI*2);
-        double y = center.getY() + radius * Math.sin(Math.PI*2);
-        points.add(new Point(x, y));
-        return points;
-    }
+		ArrayList<Point> points = new ArrayList<Point>();
+		double increment = Math.PI / 360;
 
-    public String getName () {
+		for (double angle = 0; angle <= Math.PI * 2; angle += increment) {
+			double x = center.getX() + radius * Math.cos(angle);
+			double y = center.getY() + radius * Math.sin(angle);
+			points.add(new Point(x, y));
+		}
+		double x = center.getX() + radius * Math.cos(Math.PI * 2);
+		double y = center.getY() + radius * Math.sin(Math.PI * 2);
+		points.add(new Point(x, y));
+		return points;
+	}
 
-        return "leader"; //NON-NLS-1$
-    }
+	public String getName() {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.commands.Command#getNextParser()
-     */
-    public Parser getNextParser () {
+		return "leader"; // NON-NLS-1$
+	}
 
-        Parser parser = null;
-        if (active) {
-            if (p1 == null) {
-                parser = new PointParser();
-            }
-            else if (p2 == null) {
-                parser = new VectorParser(p1, false);
-            }
-            else {
-                parser = new VectorParser(p2, false);
-            }
-        }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.commands.Command#getNextParser()
+	 */
+	public Parser getNextParser() {
 
-        return parser;
-    }
+		Parser parser = null;
+		if (active) {
+			if (p1 == null) {
+				parser = new PointParser();
+			} else if (p2 == null) {
+				parser = new VectorParser(p1, false);
+			} else {
+				parser = new VectorParser(p2, false);
+			}
+		}
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.factories.CommandFactory#getCommands()
-     */
-    public List<Command> getCommands () {
+		return parser;
+	}
 
-        List<Command> cmds = null;
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.factories.CommandFactory#getCommands()
+	 */
+	public List<Command> getCommands() {
 
-        if (command != null) {
-            cmds = new ArrayList<Command>();
-            cmds.add(command);
-            command = null;
-        }
+		List<Command> cmds = null;
 
-        return cmds;
-    }
+		if (command != null) {
+			cmds = new ArrayList<Command>();
+			cmds.add(command);
+			command = null;
+		}
 
-    /* (non-Javadoc)
-     * @see br.org.archimedes.factories.CommandFactory#isTransformFactory()
-     */
-    public boolean isTransformFactory () {
+		return cmds;
+	}
 
-        return false;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.factories.CommandFactory#isTransformFactory()
+	 */
+	public boolean isTransformFactory() {
+
+		return false;
+	}
 }

@@ -21,17 +21,17 @@ import br.org.archimedes.rcp.AbstractElementExporterEPLoader;
  */
 public class ElementExporterEPLoader extends AbstractElementExporterEPLoader {
 
-    private static final String ELEMENT_EXPORTER_EXTENSION_POINT_ID = "br.org.archimedes.io.xml.xmlElementExporter"; //$NON-NLS-1$
+	private static final String ELEMENT_EXPORTER_EXTENSION_POINT_ID = "br.org.archimedes.io.xml.xmlElementExporter"; //$NON-NLS-1$
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @seebr.org.archimedes.rcp.AbstractElementExporterEPLoader#
+	 * getElementExporterExtensionPointID()
+	 */
+	@Override
+	public String getElementExporterExtensionPointID() {
 
-    /*
-     * (non-Javadoc)
-     * @seebr.org.archimedes.rcp.AbstractElementExporterEPLoader#
-     * getElementExporterExtensionPointID()
-     */
-    @Override
-    public String getElementExporterExtensionPointID () {
-
-        return ELEMENT_EXPORTER_EXTENSION_POINT_ID;
-    }
+		return ELEMENT_EXPORTER_EXTENSION_POINT_ID;
+	}
 }

@@ -39,118 +39,116 @@ import br.org.archimedes.rcp.extensionpoints.NativeFormatEPLoader;
  */
 public class LoadCommand {
 
-    protected Shell parent;
+	protected Shell parent;
 
-    private MessageBox error;
+	private MessageBox error;
 
-    private NativeFormatEPLoader nativeLoader;
+	private NativeFormatEPLoader nativeLoader;
 
+	/**
+	 * Constructor
+	 * 
+	 * @param shell
+	 *            DialogBox's parent
+	 */
+	public LoadCommand(Shell shell) {
 
-    /**
-     * Constructor
-     * 
-     * @param shell
-     *            DialogBox's parent
-     */
-    public LoadCommand (Shell shell) {
+		nativeLoader = new NativeFormatEPLoader();
+		this.parent = shell;
 
-        nativeLoader = new NativeFormatEPLoader();
-        this.parent = shell;
+		error = createErrorMessageBox();
+	}
 
-        error = createErrorMessageBox();
-    }
+	/**
+	 * Creates the error message box that will be show when the file cannot be
+	 * loaded
+	 * 
+	 * @return The created message box
+	 */
+	protected MessageBox createErrorMessageBox() {
 
-    /**
-     * Creates the error message box that will be show when the file cannot be loaded
-     * @return The created message box
-     */
-    protected MessageBox createErrorMessageBox () {
+		MessageBox error = new MessageBox(parent, SWT.OK | SWT.ICON_ERROR);
+		error.setMessage(Messages.Load_InvalidFileTitle);
+		error.setText(Messages.Load_InvalidFileText);
+		return error;
+	}
 
-        MessageBox error = new MessageBox(parent, SWT.OK | SWT.ICON_ERROR);
-        error.setMessage(Messages.Load_InvalidFileTitle);
-        error.setText(Messages.Load_InvalidFileText);
-        return error;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.gui.actions.Command#execute()
+	 */
+	public Drawing execute() {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.gui.actions.Command#execute()
-     */
-    public Drawing execute () {
+		FileDialog dialog = createFileDialog();
 
-        FileDialog dialog = createFileDialog();
+		Workspace workspace = br.org.archimedes.Utils.getWorkspace();
+		String lastDirectory = workspace.getLastUsedDirectory()
+				.getAbsolutePath();
 
-        Workspace workspace = br.org.archimedes.Utils.getWorkspace();
-        String lastDirectory = workspace.getLastUsedDirectory()
-                .getAbsolutePath();
+		Drawing drawing = null;
+		String filePath;
+		do {
+			dialog.setFilterPath(lastDirectory);
+			filePath = dialog.open();
 
-        Drawing drawing = null;
-        String filePath;
-        do {
-            dialog.setFilterPath(lastDirectory);
-            filePath = dialog.open();
+			if (filePath != null) {
+				File file = new File(filePath);
+				lastDirectory = file.getParent();
+				if (file.exists() && file.canRead()) {
+					Importer importer = getImporterFor(file);
 
-            if (filePath != null) {
-                File file = new File(filePath);
-                lastDirectory = file.getParent();
-                if (file.exists() && file.canRead()) {
-                    Importer importer = getImporterFor(file);
+					try {
+						InputStream input = new FileInputStream(filePath);
+						drawing = importer.importDrawing(input);
+					} catch (InvalidFileFormatException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IOException e) {
+						// Shouldn't happen since I checked just before
+						e.printStackTrace();
+					}
 
-                    try {
-                        InputStream input = new FileInputStream(filePath);
-                        drawing = importer.importDrawing(input);
-                    }
-                    catch (InvalidFileFormatException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
-                    catch (IOException e) {
-                        // Shouldn't happen since I checked just before
-                        e.printStackTrace();
-                    }
+					if (drawing == null) {
+						error.open();
+					} else {
+						drawing.setFile(file);
+					}
+				}
+			}
+		} while (drawing == null && filePath != null);
 
-                    if (drawing == null) {
-                        error.open();
-                    } else {
-                        drawing.setFile(file);
-                    }
-                }
-            }
-        }
-        while (drawing == null && filePath != null);
+		return drawing;
+	}
 
-        return drawing;
-    }
+	/**
+	 * @param file
+	 *            The file to be imported
+	 * @return An importer for this type of file (type deduced from extension)
+	 */
+	protected Importer getImporterFor(File file) {
 
-    /**
-     * @param file The file to be imported
-     * @return An importer for this type of file (type deduced from extension)
-     */
-    protected Importer getImporterFor (File file) {
+		String filename = file.getName();
+		String extension = filename.substring(filename.lastIndexOf(".") + 1); //$NON-NLS-1$
+		Importer importer = nativeLoader.getImporter(extension);
+		return importer;
+	}
 
-        String filename = file.getName();
-        String extension = filename.substring(filename
-                .lastIndexOf(".") + 1); //$NON-NLS-1$
-        Importer importer = nativeLoader.getImporter(extension);
-        return importer;
-    }
+	/**
+	 * @return A dialog for the user to choose a file to open
+	 */
+	public FileDialog createFileDialog() {
 
-    /**
-     * @return A dialog for the user to choose a file to open
-     */
-    public FileDialog createFileDialog () {
-
-        FileDialog dialog = new FileDialog(parent, SWT.OPEN);
-        List<String> filters = new LinkedList<String>();
-        for (String extension : nativeLoader.getExtensionsArray()) {
+		FileDialog dialog = new FileDialog(parent, SWT.OPEN);
+		List<String> filters = new LinkedList<String>();
+		for (String extension : nativeLoader.getExtensionsArray()) {
 			String filter = "*." + extension; //$NON-NLS-1$
 			filters.add(filter);
 		}
-        String[] filtersArray = filters.toArray(new String[0]);
+		String[] filtersArray = filters.toArray(new String[0]);
 		dialog.setFilterExtensions(filtersArray);
 
-        dialog.setText(Messages.Load_OpenDialog);
-        return dialog;
-    }
+		dialog.setText(Messages.Load_OpenDialog);
+		return dialog;
+	}
 }

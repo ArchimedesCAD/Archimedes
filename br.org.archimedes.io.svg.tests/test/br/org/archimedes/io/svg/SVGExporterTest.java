@@ -13,13 +13,6 @@
 
 package br.org.archimedes.io.svg;
 
-import br.org.archimedes.Tester;
-import br.org.archimedes.model.Drawing;
-
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -28,72 +21,82 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Locale;
 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import br.org.archimedes.Tester;
+import br.org.archimedes.model.Drawing;
+
 /**
  * @author Bruno da Hora, Luiz Real
  */
 public class SVGExporterTest extends Tester {
 
-    @Before
-    public void setUp () {
+	@Before
+	public void setUp() {
 
-        Locale.setDefault(Locale.US);
-    }
+		Locale.setDefault(Locale.US);
+	}
 
-    @Test
-    public void emptyDrawingAsSVGShouldCreateSimpleSVG () throws Exception {
+	@Test
+	public void emptyDrawingAsSVGShouldCreateSimpleSVG() throws Exception {
 
-        SVGExporter exporter = new SVGExporter();
-        Drawing drawing = new Drawing("Drawing");
-        OutputStream output = new ByteArrayOutputStream();
-        exporter.exportDrawing(drawing, output);
+		SVGExporter exporter = new SVGExporter();
+		Drawing drawing = new Drawing("Drawing");
+		OutputStream output = new ByteArrayOutputStream();
+		exporter.exportDrawing(drawing, output);
 
-        String result = output.toString();
-        output.close();
+		String result = output.toString();
+		output.close();
 
-        String expected = readFromFile("../br.org.archimedes.io.svg.tests/emptyDrawing.svg");
+		String expected = readFromFile("../br.org.archimedes.io.svg.tests/emptyDrawing.svg");
 
-        result = result.replaceAll("\\s", "");
-        expected = expected.replaceAll("\\s", "");
+		result = result.replaceAll("\\s", "");
+		expected = expected.replaceAll("\\s", "");
 
-        Assert.assertEquals("An empty drawing is not being generate as expected", expected, result);
-    }
-    
-    // TODO An integration test for SVG exporting to ensure all elements are correctly registered.
+		Assert.assertEquals(
+				"An empty drawing is not being generate as expected", expected,
+				result);
+	}
 
-    /**
-     * @param filename
-     *            The name of the file
-     * @return The string corresponding to the whole file
-     */
-    private String readFromFile (String filename) throws IOException {
+	// TODO An integration test for SVG exporting to ensure all elements are
+	// correctly registered.
 
-        StringBuilder builder = new StringBuilder();
-        InputStream input = readFile(filename);
+	/**
+	 * @param filename
+	 *            The name of the file
+	 * @return The string corresponding to the whole file
+	 */
+	private String readFromFile(String filename) throws IOException {
 
-        int c;
-        while ((c = input.read()) >= 0) {
-            builder.append((char) c);
-        }
+		StringBuilder builder = new StringBuilder();
+		InputStream input = readFile(filename);
 
-        return builder.toString();
-    }
+		int c;
+		while ((c = input.read()) >= 0) {
+			builder.append((char) c);
+		}
 
-    /**
-     * @param fileName
-     *            The file name to load
-     * @return An input stream to the start of the file or null if no file could be found
-     * @throws FileNotFoundException
-     *             Thrown if there was a problem loading the file
-     */
-    private InputStream readFile (String fileName) throws FileNotFoundException {
+		return builder.toString();
+	}
 
-        InputStream input;
-        if (TestActivator.getDefault() == null) { // Non plugin test
-            input = new FileInputStream(fileName);
-        }
-        else {
-            input = TestActivator.locateFile(fileName);
-        }
-        return input;
-    }
+	/**
+	 * @param fileName
+	 *            The file name to load
+	 * @return An input stream to the start of the file or null if no file could
+	 *         be found
+	 * @throws FileNotFoundException
+	 *             Thrown if there was a problem loading the file
+	 */
+	private InputStream readFile(String fileName) throws FileNotFoundException {
+
+		InputStream input;
+		if (TestActivator.getDefault() == null) { // Non plugin test
+			input = new FileInputStream(fileName);
+		} else {
+			input = TestActivator.locateFile(fileName);
+		}
+		return input;
+	}
 }

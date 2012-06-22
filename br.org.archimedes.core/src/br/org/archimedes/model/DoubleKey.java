@@ -20,52 +20,50 @@ package br.org.archimedes.model;
  */
 public class DoubleKey implements Key {
 
-    private Double d;
+	private Double d;
 
+	/**
+	 * @param d
+	 *            The double value of this Key.
+	 */
+	public DoubleKey(double d) {
 
-    /**
-     * @param d
-     *            The double value of this Key.
-     */
-    public DoubleKey (double d) {
+		this.d = d;
+	}
 
-        this.d = d;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Comparable#compareTo(T)
+	 */
+	public int compareTo(Key o) {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see java.lang.Comparable#compareTo(T)
-     */
-    public int compareTo (Key o) {
+		int returnValue;
+		if (o.getClass() == this.getClass()) {
+			DoubleKey doubleKey = (DoubleKey) o;
+			returnValue = this.compareTo(doubleKey);
+		} else {
+			returnValue = o.compareTo(this) * -1;
+		}
+		return returnValue;
+	}
 
-        int returnValue;
-        if (o.getClass() == this.getClass()) {
-            DoubleKey doubleKey = (DoubleKey) o;
-            returnValue = this.compareTo(doubleKey);
-        }
-        else {
-            returnValue = o.compareTo(this) * -1;
-        }
-        return returnValue;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Comparable#compareTo(T)
+	 */
+	public int compareTo(DoubleKey o) {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see java.lang.Comparable#compareTo(T)
-     */
-    public int compareTo (DoubleKey o) {
+		return d.compareTo(o.getDouble());
+	}
 
-        return d.compareTo(o.getDouble());
-    }
+	/**
+	 * @return The double value of this key.
+	 */
+	public double getDouble() {
 
-    /**
-     * @return The double value of this key.
-     */
-    public double getDouble () {
-
-        return d;
-    }
+		return d;
+	}
 
 }

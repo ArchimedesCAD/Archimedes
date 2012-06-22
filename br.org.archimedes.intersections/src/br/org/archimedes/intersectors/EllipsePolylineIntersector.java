@@ -12,13 +12,13 @@ import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.polyline.Polyline;
 
-public class EllipsePolylineIntersector implements Intersector{
+public class EllipsePolylineIntersector implements Intersector {
 
 	public Collection<Point> getIntersections(Element element,
 			Element otherElement) throws NullArgumentException {
 		if (element == null || otherElement == null)
 			throw new NullArgumentException();
-		
+
 		Polyline polyline;
 		Ellipse ellipse;
 
@@ -29,15 +29,15 @@ public class EllipsePolylineIntersector implements Intersector{
 			polyline = (Polyline) otherElement;
 			ellipse = (Ellipse) element;
 		}
-		
+
 		Collection<Point> results = new ArrayList<Point>();
 		List<Line> lines = polyline.getLines();
-		
+
 		EllipseLineIntersector intersector = new EllipseLineIntersector();
-		
+
 		for (Line line : lines)
 			results.addAll(intersector.getIntersections(ellipse, line));
-		
+
 		return results;
 	}
 

@@ -21,38 +21,38 @@ import br.org.archimedes.gui.opengl.OpenGLWrapper;
  */
 public enum LineStyle {
 
-    CONTINUOUS {
+	CONTINUOUS {
 
-        public String getName () {
+		public String getName() {
 
-            return Messages.LineStyle_0;
-        }
+			return Messages.LineStyle_0;
+		}
 
-        public int getOpenGLStyle () {
+		public int getOpenGLStyle() {
 
-            return OpenGLWrapper.CONTINUOUS_LINE;
-        }
-    },
-    STIPPED {
+			return OpenGLWrapper.CONTINUOUS_LINE;
+		}
+	},
+	STIPPED {
 
-        public String getName () {
+		public String getName() {
 
-            return Messages.LineStyle_1;
-        }
+			return Messages.LineStyle_1;
+		}
 
-        public int getOpenGLStyle () {
+		public int getOpenGLStyle() {
 
-            return OpenGLWrapper.STIPPLED_LINE;
-        }
-    };
+			return OpenGLWrapper.STIPPLED_LINE;
+		}
+	};
 
-    /**
-     * @return The name of this line style
-     */
-    public abstract String getName ();
+	/**
+	 * @return The name of this line style
+	 */
+	public abstract String getName();
 
-    /**
-     * @return The openGL style of this line.
-     */
-    public abstract int getOpenGLStyle ();
+	/**
+	 * @return The openGL style of this line.
+	 */
+	public abstract int getOpenGLStyle();
 }

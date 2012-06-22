@@ -21,90 +21,93 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 
 /**
- *
+ * 
  * @author <a href="mailto:david@steadystate.co.uk">David Schweinsberg</a>
  * @version $Id: GsubTable.java,v 1.4 2004/08/18 07:15:21 vhardy Exp $
  */
 public class GsubTable implements Table, LookupSubtableFactory {
 
-    private ScriptList scriptList;
-    private FeatureList featureList;
-    private LookupList lookupList;
-    
-    protected GsubTable(DirectoryEntry de, RandomAccessFile raf) throws IOException {
-        raf.seek(de.getOffset());
+	private ScriptList scriptList;
+	private FeatureList featureList;
+	private LookupList lookupList;
 
-        // GSUB Header
-        /* int version = */     raf.readInt();
-        int scriptListOffset  = raf.readUnsignedShort();
-        int featureListOffset = raf.readUnsignedShort();
-        int lookupListOffset  = raf.readUnsignedShort();
+	protected GsubTable(DirectoryEntry de, RandomAccessFile raf)
+			throws IOException {
+		raf.seek(de.getOffset());
 
-        // Script List
-        scriptList = new ScriptList(raf, de.getOffset() + scriptListOffset);
+		// GSUB Header
+		/* int version = */raf.readInt();
+		int scriptListOffset = raf.readUnsignedShort();
+		int featureListOffset = raf.readUnsignedShort();
+		int lookupListOffset = raf.readUnsignedShort();
 
-        // Feature List
-        featureList = new FeatureList(raf, de.getOffset() + featureListOffset);
-        
-        // Lookup List
-        lookupList = new LookupList(raf, de.getOffset() + lookupListOffset, this);
-    }
+		// Script List
+		scriptList = new ScriptList(raf, de.getOffset() + scriptListOffset);
 
-    /**
-     * 1 - Single - Replace one glyph with one glyph 
-     * 2 - Multiple - Replace one glyph with more than one glyph 
-     * 3 - Alternate - Replace one glyph with one of many glyphs 
-     * 4 - Ligature - Replace multiple glyphs with one glyph 
-     * 5 - Context - Replace one or more glyphs in context 
-     * 6 - Chaining - Context Replace one or more glyphs in chained context
-     */
-    public LookupSubtable read(int type, RandomAccessFile raf, int offset)
-    throws IOException {
-        LookupSubtable s = null;
-        switch (type) {
-        case 1:
-            s = SingleSubst.read(raf, offset);
-            break;
-        case 2:
-//            s = MultipleSubst.read(raf, offset);
-            break;
-        case 3:
-//            s = AlternateSubst.read(raf, offset);
-            break;
-        case 4:
-            s = LigatureSubst.read(raf, offset);
-            break;
-        case 5:
-//            s = ContextSubst.read(raf, offset);
-            break;
-        case 6:
-//            s = ChainingSubst.read(raf, offset);
-            break;
-        }
-        return s;
-    }
+		// Feature List
+		featureList = new FeatureList(raf, de.getOffset() + featureListOffset);
 
-    /** Get the table type, as a table directory value.
-     * @return The table type
-     */
-    public int getType() {
-        return GSUB;
-    }
+		// Lookup List
+		lookupList = new LookupList(raf, de.getOffset() + lookupListOffset,
+				this);
+	}
 
-    public ScriptList getScriptList() {
-        return scriptList;
-    }
+	/**
+	 * 1 - Single - Replace one glyph with one glyph 2 - Multiple - Replace one
+	 * glyph with more than one glyph 3 - Alternate - Replace one glyph with one
+	 * of many glyphs 4 - Ligature - Replace multiple glyphs with one glyph 5 -
+	 * Context - Replace one or more glyphs in context 6 - Chaining - Context
+	 * Replace one or more glyphs in chained context
+	 */
+	public LookupSubtable read(int type, RandomAccessFile raf, int offset)
+			throws IOException {
+		LookupSubtable s = null;
+		switch (type) {
+		case 1:
+			s = SingleSubst.read(raf, offset);
+			break;
+		case 2:
+			// s = MultipleSubst.read(raf, offset);
+			break;
+		case 3:
+			// s = AlternateSubst.read(raf, offset);
+			break;
+		case 4:
+			s = LigatureSubst.read(raf, offset);
+			break;
+		case 5:
+			// s = ContextSubst.read(raf, offset);
+			break;
+		case 6:
+			// s = ChainingSubst.read(raf, offset);
+			break;
+		}
+		return s;
+	}
 
-    public FeatureList getFeatureList() {
-        return featureList;
-    }
+	/**
+	 * Get the table type, as a table directory value.
+	 * 
+	 * @return The table type
+	 */
+	public int getType() {
+		return GSUB;
+	}
 
-    public LookupList getLookupList() {
-        return lookupList;
-    }
+	public ScriptList getScriptList() {
+		return scriptList;
+	}
 
-    public String toString() {
-        return "GSUB";
-    }
+	public FeatureList getFeatureList() {
+		return featureList;
+	}
+
+	public LookupList getLookupList() {
+		return lookupList;
+	}
+
+	public String toString() {
+		return "GSUB";
+	}
 
 }

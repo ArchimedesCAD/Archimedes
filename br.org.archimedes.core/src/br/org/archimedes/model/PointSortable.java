@@ -20,16 +20,16 @@ import java.util.SortedSet;
  */
 public interface PointSortable {
 
-    /**
-     * Get a collection of sorted points along this element starting from the
-     * reference point.
-     * 
-     * @param referencePoint
-     *            The point to be considered the starting point
-     * @param points
-     *            A collection of points contained in the element
-     * @return The sorted set of the points
-     */
-    public SortedSet<ComparablePoint> getSortedPointSet (Point referencePoint,
-            Collection<Point> intersectionPoints);
+	/**
+	 * Get a collection of sorted points along this element starting from the
+	 * reference point.
+	 * 
+	 * @param referencePoint
+	 *            The point to be considered the starting point
+	 * @param points
+	 *            A collection of points contained in the element
+	 * @return The sorted set of the points
+	 */
+	public SortedSet<ComparablePoint> getSortedPointSet(Point referencePoint,
+			Collection<Point> intersectionPoints);
 }

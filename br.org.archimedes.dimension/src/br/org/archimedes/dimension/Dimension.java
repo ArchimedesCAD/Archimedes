@@ -65,13 +65,13 @@ public class Dimension extends Element {
 	 * @param distance
 	 *            The point that determines where the dimension will be placed
 	 * @param text
-	 * 			  The text of the dimension
+	 *            The text of the dimension
 	 * @throws NullArgumentException
 	 *             In case any point is null.
 	 * @throws InvalidArgumentException
 	 *             In case the initial and ending points are the same.
 	 */
-	public Dimension (Point initialPoint, Point endingPoint, Point distance,
+	public Dimension(Point initialPoint, Point endingPoint, Point distance,
 			Double fontSize, Text text) throws NullArgumentException,
 			InvalidArgumentException {
 
@@ -103,7 +103,7 @@ public class Dimension extends Element {
 	 * @throws InvalidArgumentException
 	 *             In case the initial and ending points are the same.
 	 */
-	public Dimension (Point initialPoint, Point endingPoint, Point distance,
+	public Dimension(Point initialPoint, Point endingPoint, Point distance,
 			Double fontSize) throws NullArgumentException,
 			InvalidArgumentException {
 
@@ -138,7 +138,7 @@ public class Dimension extends Element {
 	 * @throws InvalidArgumentException
 	 *             In case the initial and ending point are the same.
 	 */
-	public Dimension (Point initialPoint, Point endingPoint, Double distance,
+	public Dimension(Point initialPoint, Point endingPoint, Double distance,
 			Double fontSize) throws NullArgumentException,
 			InvalidArgumentException {
 
@@ -162,8 +162,9 @@ public class Dimension extends Element {
 	 * @throws InvalidArgumentException
 	 *             In case the initial and ending point are the same.
 	 */
-	public Dimension (Point initialPoint, Point endingPoint, Double distance,
-			Double fontSize, Font font) throws NullArgumentException, InvalidArgumentException {
+	public Dimension(Point initialPoint, Point endingPoint, Double distance,
+			Double fontSize, Font font) throws NullArgumentException,
+			InvalidArgumentException {
 
 		if (initialPoint == null || endingPoint == null || distance == null
 				|| fontSize == null) {
@@ -190,22 +191,20 @@ public class Dimension extends Element {
 	 * Recalculates the distance point to be the middle of the dimension line,
 	 * so that it may be used as a snap point.
 	 */
-	private void remakeDistance () {
+	private void remakeDistance() {
 
 		Line dimLine = getDimensionLine();
 		Point newDistance = distance;
 		try {
 			newDistance = Geometrics.getMeanPoint(dimLine.getInitialPoint(),
 					dimLine.getEndingPoint());
-		}
-		catch (NullArgumentException e) {
+		} catch (NullArgumentException e) {
 			// Should never happen
 			e.printStackTrace();
 		}
 		Vector toMove = new Vector(distance, newDistance);
 		distance.move(toMove.getX(), toMove.getY());
 	}
-
 
 	private String getDistanceText() throws NullArgumentException {
 		Line lineToMeasure = getDimensionLine();
@@ -219,11 +218,13 @@ public class Dimension extends Element {
 
 	/**
 	 * Makes the text for this dimension.
-	 * @param font The font to be used for the Text
+	 * 
+	 * @param font
+	 *            The font to be used for the Text
 	 * 
 	 * @return The created text.
 	 */
-	private Text makeText (Font font) {
+	private Text makeText(Font font) {
 		Line lineToMeasure = getDimensionLine();
 		Point initial = lineToMeasure.getInitialPoint();
 		Point ending = lineToMeasure.getEndingPoint();
@@ -235,14 +236,12 @@ public class Dimension extends Element {
 			double width = text.getWidth();
 
 			if (isDimLineHorizontal()) {
-				text.move( -width / 2.0, DIST_FROM_ELEMENT);
-			}
-			else {
+				text.move(-width / 2.0, DIST_FROM_ELEMENT);
+			} else {
 				text.rotate(mean.clone(), Math.PI / 2.0);
-				text.move( -DIST_FROM_ELEMENT, -width / 2.0);
+				text.move(-DIST_FROM_ELEMENT, -width / 2.0);
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			// Should not happen
 			e.printStackTrace();
 		}
@@ -252,17 +251,17 @@ public class Dimension extends Element {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.org.archimedes.model.Element#clone()
 	 */
 	@Override
-	public Element clone () {
+	public Element clone() {
 
 		Dimension clone = null;
 		try {
 			clone = new Dimension(initialPoint.clone(), endingPoint.clone(),
 					distance.clone(), fontSize, text.clone());
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			// Should never happen
 			e.printStackTrace();
 		}
@@ -271,11 +270,12 @@ public class Dimension extends Element {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see
 	 * br.org.archimedes.model.Element#contains(br.org.archimedes.model.Point)
 	 */
 	@Override
-	public boolean contains (Point point) throws NullArgumentException {
+	public boolean contains(Point point) throws NullArgumentException {
 
 		// Dimension will not be used for trim, extend, fillet or intersection
 		// snap points.
@@ -284,13 +284,14 @@ public class Dimension extends Element {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.org.archimedes.model.Element#equals(java.lang.Object)
 	 */
 	@Override
-	public boolean equals (Object object) {
+	public boolean equals(Object object) {
 
 		boolean result = (object == this);
-		if ( !result && object != null && object.getClass() == getClass()) {
+		if (!result && object != null && object.getClass() == getClass()) {
 			Dimension other = (Dimension) object;
 			Line line = getDimensionLine();
 			Line otherLine = other.getDimensionLine();
@@ -300,11 +301,9 @@ public class Dimension extends Element {
 				Point otherEnding = other.getEndingPoint();
 				if (otherInitial.equals(getInitialPoint())) {
 					result = otherEnding.equals(getEndingPoint());
-				}
-				else if (otherInitial.equals(getEndingPoint())) {
+				} else if (otherInitial.equals(getEndingPoint())) {
 					result = otherInitial.equals(getEndingPoint());
-				}
-				else {
+				} else {
 					result = false;
 				}
 			}
@@ -315,14 +314,13 @@ public class Dimension extends Element {
 	/**
 	 * @return The line that should be measured.
 	 */
-	private Line getDimensionLine () {
+	private Line getDimensionLine() {
 
 		Point first, second;
 		if (isDimLineHorizontal()) {
 			first = new Point(initialPoint.getX(), distance.getY());
 			second = new Point(endingPoint.getX(), distance.getY());
-		}
-		else {
+		} else {
 			first = new Point(distance.getX(), initialPoint.getY());
 			second = new Point(distance.getX(), endingPoint.getY());
 		}
@@ -330,8 +328,7 @@ public class Dimension extends Element {
 		Line dimLine = null;
 		try {
 			dimLine = new Line(first, second);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			// Should not happen
 			e.printStackTrace();
 		}
@@ -342,7 +339,7 @@ public class Dimension extends Element {
 	/**
 	 * @return true if the dimension line is horizontal, false if it is vertical
 	 */
-	private boolean isDimLineHorizontal () {
+	private boolean isDimLineHorizontal() {
 
 		Point point1 = new Point(initialPoint.getX(), endingPoint.getY());
 		Point point2 = new Point(endingPoint.getX(), initialPoint.getY());
@@ -354,8 +351,7 @@ public class Dimension extends Element {
 					endingPoint, distance);
 			otherDeterminant = Geometrics.calculateDeterminant(point1, point2,
 					distance);
-		}
-		catch (NullArgumentException e) {
+		} catch (NullArgumentException e) {
 			// Should not happen
 			e.printStackTrace();
 		}
@@ -366,7 +362,7 @@ public class Dimension extends Element {
 	/**
 	 * @return Returns the initialPoint.
 	 */
-	public Point getInitialPoint () {
+	public Point getInitialPoint() {
 
 		return this.initialPoint;
 	}
@@ -374,17 +370,18 @@ public class Dimension extends Element {
 	/**
 	 * @return Returns the endingPoint.
 	 */
-	public Point getEndingPoint () {
+	public Point getEndingPoint() {
 
 		return this.endingPoint;
 	}
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.org.archimedes.model.Element#getBoundaryRectangle()
 	 */
 	@Override
-	public Rectangle getBoundaryRectangle () {
+	public Rectangle getBoundaryRectangle() {
 
 		Rectangle boundary = null;
 
@@ -408,10 +405,11 @@ public class Dimension extends Element {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.org.archimedes.model.Element#getPoints()
 	 */
 	@Override
-	public List<Point> getPoints () {
+	public List<Point> getPoints() {
 
 		List<Point> points = new ArrayList<Point>();
 		points.add(initialPoint);
@@ -423,12 +421,13 @@ public class Dimension extends Element {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see
 	 * br.org.archimedes.model.Element#getProjectionOf(br.org.archimedes.model
 	 * .Point)
 	 */
 	@Override
-	public Point getProjectionOf (Point point) throws NullArgumentException {
+	public Point getProjectionOf(Point point) throws NullArgumentException {
 
 		// Dimension will not be used for perpendicular snap points.
 		return null;
@@ -436,12 +435,13 @@ public class Dimension extends Element {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see
 	 * br.org.archimedes.model.Element#getReferencePoints(br.org.archimedes.
 	 * model.Rectangle)
 	 */
 	@Override
-	public Collection<ReferencePoint> getReferencePoints (Rectangle area) {
+	public Collection<ReferencePoint> getReferencePoints(Rectangle area) {
 
 		ArrayList<ReferencePoint> references = new ArrayList<ReferencePoint>();
 		try {
@@ -449,8 +449,7 @@ public class Dimension extends Element {
 			references.add(new SquarePoint(endingPoint, endingPoint));
 			references.add(new SquarePoint(distance, distance));
 			references.addAll(text.getReferencePoints(area));
-		}
-		catch (NullArgumentException e) {
+		} catch (NullArgumentException e) {
 			// Should not happen
 			e.printStackTrace();
 		}
@@ -459,17 +458,19 @@ public class Dimension extends Element {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.org.archimedes.model.Element#move(java.util.Collection,
 	 * br.org.archimedes.model.Vector)
 	 */
-	public void move (Collection<Point> pointsToMove, Vector vector)
-	throws NullArgumentException {
+	public void move(Collection<Point> pointsToMove, Vector vector)
+			throws NullArgumentException {
 
 		super.move(pointsToMove, vector);
 		remakeDistance();
-		if ( !pointsToMove.contains(text.getLowerLeft())) {
+		if (!pointsToMove.contains(text.getLowerLeft())) {
 			try {
-				text = new Text(getDistanceText(), text.getLowerLeft(), text.getSize());
+				text = new Text(getDistanceText(), text.getLowerLeft(),
+						text.getSize());
 			} catch (InvalidArgumentException e) {
 				// Should not happen
 				e.printStackTrace();
@@ -480,7 +481,7 @@ public class Dimension extends Element {
 	/**
 	 * @return The lines to be drawn for this dimension
 	 */
-	public Collection<Line> getLinesToDraw () {
+	public Collection<Line> getLinesToDraw() {
 
 		double sign = 0;
 		Line dimLine = null, initialLine = null, endingLine = null;
@@ -493,7 +494,7 @@ public class Dimension extends Element {
 
 				double dimInitial = initialX + (sign * DIST_AFTER_LINE);
 				double dimEnding = endingPoint.getX()
-				- (sign * DIST_AFTER_LINE);
+						- (sign * DIST_AFTER_LINE);
 
 				dimLine = new Line(dimInitial, distance.getY(), dimEnding,
 						distance.getY());
@@ -516,13 +517,12 @@ public class Dimension extends Element {
 					endingLine = new Line(endingPoint.getX(), endingInitial,
 							endingPoint.getX(), endingEnding);
 				}
-			}
-			else {
+			} else {
 				sign = Math.signum(initialY - endingPoint.getY());
 
 				double dimInitial = initialY + (sign * DIST_AFTER_LINE);
 				double dimEnding = endingPoint.getY()
-				- (sign * DIST_AFTER_LINE);
+						- (sign * DIST_AFTER_LINE);
 
 				dimLine = new Line(distance.getX(), dimInitial,
 						distance.getX(), dimEnding);
@@ -554,8 +554,7 @@ public class Dimension extends Element {
 			if (endingLine != null) {
 				lines.add(endingLine);
 			}
-		}
-		catch (InvalidArgumentException e) {
+		} catch (InvalidArgumentException e) {
 			// Should not happen
 			e.printStackTrace();
 		}
@@ -566,29 +565,31 @@ public class Dimension extends Element {
 	/**
 	 * @return The distance Point (not yet very useful)
 	 */
-	public Point getDistancePoint () {
+	public Point getDistancePoint() {
 
 		return distance;
 	}
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
-	public String toString () {
+	public String toString() {
 
 		return "Dimension: measures " + initialPoint.toString() + " and " //$NON-NLS-1$ //$NON-NLS-2$
-		+ endingPoint.toString() + " at distance " //$NON-NLS-1$
-		+ distance.toString();
+				+ endingPoint.toString() + " at distance " //$NON-NLS-1$
+				+ distance.toString();
 	}
 
 	@Override
-	public void draw (OpenGLWrapper wrapper) {
+	public void draw(OpenGLWrapper wrapper) {
 		Collection<Line> linesToDraw = getLinesToDraw();
 		try {
 			InputController inputController = Utils.getInputController();
 			CommandFactory currentFactory = inputController.getCurrentFactory();
-			if (currentFactory != null && currentFactory instanceof QuickMoveFactory) {
+			if (currentFactory != null
+					&& currentFactory instanceof QuickMoveFactory) {
 				QuickMoveFactory quickMoveFactory = (QuickMoveFactory) currentFactory;
 				if (!quickMoveFactory.isMoving(this)) {
 					text.draw(wrapper);
@@ -597,11 +598,9 @@ public class Dimension extends Element {
 				text.draw(wrapper);
 			}
 			for (Line line : linesToDraw) {
-				wrapper.drawFromModel(new ArrayList<Point>(line
-						.getPoints()));
+				wrapper.drawFromModel(new ArrayList<Point>(line.getPoints()));
 			}
-		}
-		catch (NullArgumentException e) {
+		} catch (NullArgumentException e) {
 			// Won't happen, but anyway...
 			e.printStackTrace();
 		}
@@ -610,7 +609,7 @@ public class Dimension extends Element {
 	/**
 	 * @return the text
 	 */
-	public Text getText () {
+	public Text getText() {
 
 		return this.text;
 	}
@@ -618,7 +617,7 @@ public class Dimension extends Element {
 	/**
 	 * @return The size of the text contained in this dimension
 	 */
-	public double getTextSize () {
+	public double getTextSize() {
 
 		return this.text.getSize();
 	}
@@ -629,11 +628,9 @@ public class Dimension extends Element {
 		try {
 			text.draw(wrapper);
 			for (Line line : linesToDraw) {
-				wrapper.drawFromModel(new ArrayList<Point>(line
-						.getPoints()));
+				wrapper.drawFromModel(new ArrayList<Point>(line.getPoints()));
 			}
-		}
-		catch (NullArgumentException e) {
+		} catch (NullArgumentException e) {
 			// Won't happen, but anyway...
 			e.printStackTrace();
 		}

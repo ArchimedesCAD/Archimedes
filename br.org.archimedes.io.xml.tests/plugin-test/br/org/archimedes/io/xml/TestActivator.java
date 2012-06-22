@@ -13,12 +13,12 @@
 
 package br.org.archimedes.io.xml;
 
-import br.org.archimedes.rcp.AbstractFileLocatorActivator;
+import java.io.IOException;
+import java.io.InputStream;
 
 import org.osgi.framework.BundleContext;
 
-import java.io.IOException;
-import java.io.InputStream;
+import br.org.archimedes.rcp.AbstractFileLocatorActivator;
 
 /**
  * Belongs to package br.org.archimedes.io.xml.
@@ -27,44 +27,48 @@ import java.io.InputStream;
  */
 public class TestActivator extends AbstractFileLocatorActivator {
 
-    private static TestActivator plugin;
+	private static TestActivator plugin;
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext
+	 * )
+	 */
+	@Override
+	public void start(BundleContext context) throws Exception {
 
-    /*
-     * (non-Javadoc)
-     * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
-     */
-    @Override
-    public void start (BundleContext context) throws Exception {
+		super.start(context);
+		plugin = this;
+	}
 
-        super.start(context);
-        plugin = this;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext
+	 * )
+	 */
+	@Override
+	public void stop(BundleContext context) throws Exception {
 
-    /*
-     * (non-Javadoc)
-     * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
-     */
-    @Override
-    public void stop (BundleContext context) throws Exception {
+		plugin = null;
+		super.stop(context);
+	}
 
-        plugin = null;
-        super.stop(context);
-    }
+	public static TestActivator getDefault() {
 
-    public static TestActivator getDefault () {
+		return plugin;
+	}
 
-        return plugin;
-    }
+	public static InputStream locateFile(String path) {
 
-    public static InputStream locateFile (String path) {
-
-        try {
-            return TestActivator.locateFile(path, getDefault().getBundle());
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+		try {
+			return TestActivator.locateFile(path, getDefault().getBundle());
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 }

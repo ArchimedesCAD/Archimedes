@@ -27,25 +27,24 @@ import br.org.archimedes.model.Point;
  */
 public class CircleParser extends ElementParser {
 
-    @Override
-    public Element parse (Node childNode) throws ElementCreationException {
+	@Override
+	public Element parse(Node childNode) throws ElementCreationException {
 
-        Point circleCenter = null;
-        double circleRadius = 0.0;
+		Point circleCenter = null;
+		double circleRadius = 0.0;
 
-        NodeList nodesCollection = childNode.getChildNodes();
-        for (int i = 0; i < nodesCollection.getLength(); i++) {
-            Node node = nodesCollection.item(i);
+		NodeList nodesCollection = childNode.getChildNodes();
+		for (int i = 0; i < nodesCollection.getLength(); i++) {
+			Node node = nodesCollection.item(i);
 
-            if (node.getNodeName() == "point") { //$NON-NLS-1$
-                circleCenter = XMLUtils.nodeToPoint(node);
-            }
-            else if (node.getNodeName() == "radius") { //$NON-NLS-1$
-                circleRadius = XMLUtils.nodeToDouble(node);
-            }
-        }
+			if (node.getNodeName() == "point") { //$NON-NLS-1$
+				circleCenter = XMLUtils.nodeToPoint(node);
+			} else if (node.getNodeName() == "radius") { //$NON-NLS-1$
+				circleRadius = XMLUtils.nodeToDouble(node);
+			}
+		}
 
-        return getElementFactory().createElement("br.org.archimedes.circle", //$NON-NLS-1$
-                circleCenter, circleRadius);
-    }
+		return getElementFactory().createElement("br.org.archimedes.circle", //$NON-NLS-1$
+				circleCenter, circleRadius);
+	}
 }

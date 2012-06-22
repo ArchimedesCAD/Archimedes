@@ -12,23 +12,23 @@
  */
 package br.org.archimedes.intersectors;
 
-import br.org.archimedes.Tester;
-import br.org.archimedes.exceptions.InvalidArgumentException;
-import br.org.archimedes.exceptions.NullArgumentException;
-import br.org.archimedes.intersections.interfaces.Intersector;
-import br.org.archimedes.model.Point;
-import br.org.archimedes.polyline.Polyline;
-
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.Assert.fail;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import br.org.archimedes.Tester;
+import br.org.archimedes.exceptions.InvalidArgumentException;
+import br.org.archimedes.exceptions.NullArgumentException;
+import br.org.archimedes.intersections.interfaces.Intersector;
+import br.org.archimedes.model.Point;
+import br.org.archimedes.polyline.Polyline;
 
 public class PolylinePolylineIntersectorTest extends Tester {
 	Polyline polyline;
@@ -81,8 +81,8 @@ public class PolylinePolylineIntersectorTest extends Tester {
 		polyPoints.add(new Point(2.5, -0.5));
 		Polyline testPoly = new Polyline(polyPoints);
 
-		assertCollectionTheSame(Collections.emptyList(), intersector
-				.getIntersections(testPoly, polyline));
+		assertCollectionTheSame(Collections.emptyList(),
+				intersector.getIntersections(testPoly, polyline));
 	}
 
 	@Test
@@ -96,9 +96,10 @@ public class PolylinePolylineIntersectorTest extends Tester {
 		assertCollectionTheSame(Collections.singleton(new Point(0.0, 1.0)),
 				intersector.getIntersections(testPoly, polyline));
 	}
-	
+
 	@Test
-	public void polylineIntersectingPolylineThreeTimesReturnsThreeIntersectionPoints() throws NullArgumentException, InvalidArgumentException {
+	public void polylineIntersectingPolylineThreeTimesReturnsThreeIntersectionPoints()
+			throws NullArgumentException, InvalidArgumentException {
 		List<Point> polyPoints = new ArrayList<Point>();
 		polyPoints.add(new Point(0.0, 2.0));
 		polyPoints.add(new Point(0.0, 0.0));
@@ -109,20 +110,21 @@ public class PolylinePolylineIntersectorTest extends Tester {
 		expected.add(new Point(0.0, 1.0));
 		expected.add(new Point(0.0, 0.0));
 		expected.add(new Point(1.0, -1.0));
-		
-		assertCollectionTheSame(expected, intersector
-				.getIntersections(testPoly, polyline));
+
+		assertCollectionTheSame(expected,
+				intersector.getIntersections(testPoly, polyline));
 	}
-	
+
 	@Test
-	public void polylineContainsPolylineReturnsNoIntersectionPoints() throws NullArgumentException, InvalidArgumentException {
+	public void polylineContainsPolylineReturnsNoIntersectionPoints()
+			throws NullArgumentException, InvalidArgumentException {
 		List<Point> polyPoints = new ArrayList<Point>();
 		polyPoints.add(new Point(0.0, 0.0));
 		polyPoints.add(new Point(-0.5, -0.5));
 		polyPoints.add(new Point(0.5, 0.5));
 		Polyline testPoly = new Polyline(polyPoints);
 
-		assertCollectionTheSame(Collections.emptyList(), intersector
-				.getIntersections(testPoly, polyline));
+		assertCollectionTheSame(Collections.emptyList(),
+				intersector.getIntersections(testPoly, polyline));
 	}
 }

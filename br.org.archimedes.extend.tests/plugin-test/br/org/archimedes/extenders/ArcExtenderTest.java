@@ -29,82 +29,86 @@ import br.org.archimedes.model.Point;
 
 public class ArcExtenderTest extends Tester {
 
-    private List<Element> referencesArray;
+	private List<Element> referencesArray;
 
-    private Arc originArc;
+	private Arc originArc;
 
-    private ArcExtender extender;
+	private ArcExtender extender;
 
-    private Point rightQuarter;
+	private Point rightQuarter;
 
-    private Point bottomQuarter;
+	private Point bottomQuarter;
 
-    private Point leftQuarter;
+	private Point leftQuarter;
 
-    private Point topQuarter;
+	private Point topQuarter;
 
+	@Before
+	public void setUp() throws Exception {
 
-    @Before
-    public void setUp () throws Exception {
+		extender = new ArcExtender();
+		Element reference = new Line(0, 0, 0, 100);
+		rightQuarter = new Point(1.0, 0.0);
+		bottomQuarter = new Point(0.0, -1.0);
+		leftQuarter = new Point(-1.0, 0.0);
+		topQuarter = new Point(0.0, 1.0);
+		originArc = new Arc(rightQuarter, bottomQuarter, leftQuarter);
+		referencesArray = new ArrayList<Element>();
+		referencesArray.add(reference);
+	}
 
-        extender = new ArcExtender();
-        Element reference = new Line(0, 0, 0, 100);
-        rightQuarter = new Point(1.0, 0.0);
-        bottomQuarter = new Point(0.0, -1.0);
-        leftQuarter = new Point( -1.0, 0.0);
-        topQuarter = new Point(0.0, 1.0);
-        originArc = new Arc(rightQuarter, bottomQuarter, leftQuarter);
-        referencesArray = new ArrayList<Element>();
-        referencesArray.add(reference);
-    }
+	@Test
+	public void extendsClockwiseWithClickOnLeftQuarter() throws Exception {
 
-    @Test
-    public void extendsClockwiseWithClickOnLeftQuarter () throws Exception {
+		extender.extend(originArc, referencesArray, leftQuarter);
+		Assert.assertEquals(new Arc(rightQuarter, bottomQuarter, topQuarter),
+				originArc);
+	}
 
-        extender.extend(originArc, referencesArray, leftQuarter);
-        Assert.assertEquals(new Arc(rightQuarter, bottomQuarter, topQuarter), originArc);
-    }
+	@Test
+	public void extendsCounterClockwiseWithClickOnRightQuarter()
+			throws Exception {
 
-    @Test
-    public void extendsCounterClockwiseWithClickOnRightQuarter () throws Exception {
+		extender.extend(originArc, referencesArray, rightQuarter);
+		Assert.assertEquals(new Arc(topQuarter, bottomQuarter, leftQuarter),
+				originArc);
+	}
 
-        extender.extend(originArc, referencesArray, rightQuarter);
-        Assert.assertEquals(new Arc(topQuarter, bottomQuarter, leftQuarter), originArc);
-    }
+	@Test
+	public void extendsCounterClockwiseWithClickOnBorderAndMultipleReferences()
+			throws Exception {
 
-    @Test
-    public void extendsCounterClockwiseWithClickOnBorderAndMultipleReferences () throws Exception {
+		referencesArray.add(new Line(COS_45, -2, COS_45, 10));
+		extender.extend(originArc, referencesArray, rightQuarter);
+		Assert.assertEquals(new Arc(new Point(COS_45, COS_45), bottomQuarter,
+				leftQuarter), originArc);
+	}
 
-        referencesArray.add(new Line(COS_45, -2, COS_45, 10));
-        extender.extend(originArc, referencesArray, rightQuarter);
-        Assert.assertEquals(new Arc(new Point(COS_45, COS_45), bottomQuarter, leftQuarter),
-                originArc);
-    }
+	@Test
+	public void doesntExtendWithNoIntersection() throws Exception {
 
-    @Test
-    public void doesntExtendWithNoIntersection () throws Exception {
+		Arc arc = new Arc(new Point(1, 2), new Point(2, 1), new Point(3, 1));
 
-        Arc arc = new Arc(new Point(1, 2), new Point(2, 1), new Point(3, 1));
+		extender.extend(arc, referencesArray, rightQuarter);
+		Assert.assertEquals(new Arc(new Point(1, 2), new Point(2, 1),
+				new Point(3, 1)), arc);
+	}
 
-        extender.extend(arc, referencesArray, rightQuarter);
-        Assert.assertEquals(new Arc(new Point(1, 2), new Point(2, 1), new Point(3, 1)), arc);
-    }
+	@Test(expected = NullArgumentException.class)
+	public void extendsWithNoReference() throws Exception {
 
-    @Test(expected = NullArgumentException.class)
-    public void extendsWithNoReference () throws Exception {
+		extender.extend(originArc, null, rightQuarter);
+	}
 
-        extender.extend(originArc, null, rightQuarter);
-    }
+	@Test(expected = NullArgumentException.class)
+	public void extendsWithNoElement() throws Exception {
 
-    @Test(expected = NullArgumentException.class)
-    public void extendsWithNoElement () throws Exception {
+		extender.extend(null, referencesArray, rightQuarter);
+	}
 
-        extender.extend(null, referencesArray, rightQuarter);
-    }
+	@Test(expected = NullArgumentException.class)
+	public void extendsWithNoClick() throws Exception {
 
-    @Test(expected = NullArgumentException.class)
-    public void extendsWithNoClick () throws Exception {
-
-        extender.extend(originArc, referencesArray, null);
-    }
+		extender.extend(originArc, referencesArray, null);
+	}
 }

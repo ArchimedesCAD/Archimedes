@@ -14,12 +14,12 @@
 
 package br.org.archimedes.model;
 
-import br.org.archimedes.Constant;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Assert;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import br.org.archimedes.Constant;
 
 /**
  * Belongs to package br.org.archimedes.tests.model.
@@ -28,141 +28,156 @@ import static org.junit.Assert.assertEquals;
  */
 public class PointTest {
 
-    Point point;
+	Point point;
 
+	@Test
+	public void testCreatePoint() {
 
-    @Test
-    public void testCreatePoint () {
+		/* cases */
+		testPointCase(0, 0);
+		testPointCase(1, 1);
+		testPointCase(4, 7);
+		testPointCase(-4, -4);
+		testPointCase(-3, 4);
+		testPointCase(5, -3);
+		testPointCase(-8, 0);
+	}
 
-        /* cases */
-        testPointCase(0, 0);
-        testPointCase(1, 1);
-        testPointCase(4, 7);
-        testPointCase( -4, -4);
-        testPointCase( -3, 4);
-        testPointCase(5, -3);
-        testPointCase( -8, 0);
-    }
+	private void testPointCase(double x, double y) {
 
-    private void testPointCase (double x, double y) {
+		point = new Point(x, y);
+		Assert.assertNotNull("The object Point is null!", point);
+		Assert.assertTrue("The x coordinate of the point is wrong!",
+				point.getX() == x);
+		Assert.assertTrue("The y coordinate of the point is wrong!",
+				point.getY() == y);
 
-        point = new Point(x, y);
-        Assert.assertNotNull("The object Point is null!", point);
-        Assert.assertTrue("The x coordinate of the point is wrong!", point.getX() == x);
-        Assert.assertTrue("The y coordinate of the point is wrong!", point.getY() == y);
+		/* testing the equals method */
 
-        /* testing the equals method */
+		Assert.assertFalse(point.toString() + " == null point",
+				point.equals(null));
 
-        Assert.assertFalse(point.toString() + " == null point", point.equals(null));
+		Assert.assertTrue(point.toString() + " != (" + x + "," + y + ")",
+				point.equals(new Point(x, y)));
+		Assert.assertEquals(point.hashCode(), new Point(x, y).hashCode());
 
-        Assert.assertTrue(point.toString() + " != (" + x + "," + y + ")", point.equals(new Point(x,
-                y)));
-        Assert.assertEquals(point.hashCode(), new Point(x, y).hashCode());
+		Assert.assertFalse(point.toString() + " == (" + x + "," + y + ")",
+				point.equals(new Point(x + 1, y)));
+		Assert.assertFalse(point.toString() + " == (" + x + "," + y + ")",
+				point.equals(new Point(x, y + 1)));
+	}
 
-        Assert.assertFalse(point.toString() + " == (" + x + "," + y + ")", point.equals(new Point(
-                x + 1, y)));
-        Assert.assertFalse(point.toString() + " == (" + x + "," + y + ")", point.equals(new Point(
-                x, y + 1)));
-    }
+	@Test
+	public void testIsInside() {
 
-    @Test
-    public void testIsInside () {
+		Rectangle rect = new Rectangle(0, 0, 100, 100);
 
-        Rectangle rect = new Rectangle(0, 0, 100, 100);
+		Point point = new Point(0, 0);
+		Assert.assertTrue("The point should be inside the rectangle !",
+				point.isInside(rect));
 
-        Point point = new Point(0, 0);
-        Assert.assertTrue("The point should be inside the rectangle !", point.isInside(rect));
+		point = new Point(50, 50);
+		Assert.assertTrue("The point should be inside the rectangle !",
+				point.isInside(rect));
 
-        point = new Point(50, 50);
-        Assert.assertTrue("The point should be inside the rectangle !", point.isInside(rect));
+		point = new Point(-100, 0);
+		Assert.assertFalse("The point should be outside the rectangle !",
+				point.isInside(rect));
 
-        point = new Point( -100, 0);
-        Assert.assertFalse("The point should be outside the rectangle !", point.isInside(rect));
+		point = new Point(0, -100);
+		Assert.assertFalse("The point should be outside the rectangle !",
+				point.isInside(rect));
 
-        point = new Point(0, -100);
-        Assert.assertFalse("The point should be outside the rectangle !", point.isInside(rect));
+		point = new Point(200, 50);
+		Assert.assertFalse("The point should be outside the rectangle !",
+				point.isInside(rect));
 
-        point = new Point(200, 50);
-        Assert.assertFalse("The point should be outside the rectangle !", point.isInside(rect));
+		point = new Point(50, 200);
+		Assert.assertFalse("The point should be outside the rectangle !",
+				point.isInside(rect));
 
-        point = new Point(50, 200);
-        Assert.assertFalse("The point should be outside the rectangle !", point.isInside(rect));
+	}
 
-    }
+	@Test
+	public void testCopy() {
 
-    @Test
-    public void testCopy () {
+		Point point = new Point(0.0, 6.4);
+		Point copyPoint = point.clone();
+		Assert.assertTrue("The points should be the same.",
+				point.equals(copyPoint));
+		Assert.assertEquals(point, copyPoint);
 
-        Point point = new Point(0.0, 6.4);
-        Point copyPoint = point.clone();
-        Assert.assertTrue("The points should be the same.", point.equals(copyPoint));
-        Assert.assertEquals(point, copyPoint);
+		point = new Point(-0.0, -6.4);
+		copyPoint = point.clone();
+		Assert.assertTrue("The points should be the same.",
+				point.equals(copyPoint));
+		Assert.assertEquals(point, copyPoint);
 
-        point = new Point( -0.0, -6.4);
-        copyPoint = point.clone();
-        Assert.assertTrue("The points should be the same.", point.equals(copyPoint));
-        Assert.assertEquals(point, copyPoint);
+		point = new Point(-1.0, 2.5);
+		copyPoint = point.clone();
+		Assert.assertTrue("The points should be the same.",
+				point.equals(copyPoint));
+		Assert.assertEquals(point, copyPoint);
 
-        point = new Point( -1.0, 2.5);
-        copyPoint = point.clone();
-        Assert.assertTrue("The points should be the same.", point.equals(copyPoint));
-        Assert.assertEquals(point, copyPoint);
+		point = new Point(2.5, -1.5);
+		copyPoint = point.clone();
+		Assert.assertTrue("The points should be the same.",
+				point.equals(copyPoint));
+		Assert.assertEquals(point, copyPoint);
+	}
 
-        point = new Point(2.5, -1.5);
-        copyPoint = point.clone();
-        Assert.assertTrue("The points should be the same.", point.equals(copyPoint));
-        Assert.assertEquals(point, copyPoint);
-    }
+	@Test
+	public void shouldRespectEqualsAndHashCodeContract() throws Exception {
 
-    @Test
-    public void shouldRespectEqualsAndHashCodeContract () throws Exception {
+		Point point = new Point(0, 0);
+		Assert.assertTrue(point.equals(point));
+		Assert.assertEquals(point.hashCode(), point.hashCode());
 
-        Point point = new Point(0, 0);
-        Assert.assertTrue(point.equals(point));
-        Assert.assertEquals(point.hashCode(), point.hashCode());
+		Assert.assertFalse(point.equals(null));
+		Assert.assertFalse(point.equals(new Object()));
 
-        Assert.assertFalse(point.equals(null));
-        Assert.assertFalse(point.equals(new Object()));
+		Point other = new Point(0, 0);
+		Assert.assertTrue(point.equals(other));
+		Assert.assertEquals(point.hashCode(), other.hashCode());
 
-        Point other = new Point(0, 0);
-        Assert.assertTrue(point.equals(other));
-        Assert.assertEquals(point.hashCode(), other.hashCode());
+		other = new Point(1, 0);
+		Assert.assertFalse(point.equals(other));
 
-        other = new Point(1, 0);
-        Assert.assertFalse(point.equals(other));
+		other = new Point(0.0 + Constant.EPSILON / 2, 0);
+		Assert.assertTrue(point.equals(other));
+		Assert.assertEquals(point.hashCode(), other.hashCode());
 
-        other = new Point(0.0 + Constant.EPSILON / 2, 0);
-        Assert.assertTrue(point.equals(other));
-        Assert.assertEquals(point.hashCode(), other.hashCode());
+		other = new Point(0.0, 0.0 + Constant.EPSILON / 2);
+		Assert.assertTrue(point.equals(other));
+		Assert.assertEquals(point.hashCode(), other.hashCode());
 
-        other = new Point(0.0, 0.0 + Constant.EPSILON / 2);
-        Assert.assertTrue(point.equals(other));
-        Assert.assertEquals(point.hashCode(), other.hashCode());
+		other = new Point(0.0 + (Constant.EPSILON / Math.PI),
+				0.0 + (Constant.EPSILON / Math.PI));
+		Assert.assertTrue(point.equals(other));
+		Assert.assertEquals(point.hashCode(), other.hashCode());
 
-        other = new Point(0.0 + (Constant.EPSILON / Math.PI), 0.0 + (Constant.EPSILON / Math.PI));
-        Assert.assertTrue(point.equals(other));
-        Assert.assertEquals(point.hashCode(), other.hashCode());
+		point = new Point(1.0, 1.0);
+		other = new Point(1.0 + (Constant.EPSILON / Math.PI),
+				1.0 - (Constant.EPSILON / Math.PI));
+		Assert.assertTrue(point.equals(other));
+		Assert.assertEquals(point.hashCode(), other.hashCode());
 
-        point = new Point(1.0, 1.0);
-        other = new Point(1.0 + (Constant.EPSILON / Math.PI), 1.0 - (Constant.EPSILON / Math.PI));
-        Assert.assertTrue(point.equals(other));
-        Assert.assertEquals(point.hashCode(), other.hashCode());
+		point = new Point(1.0, 1.0);
+		other = new Point(1.0 + (2 * Constant.EPSILON),
+				1.0 - (2 * Constant.EPSILON));
+		Assert.assertFalse(point.equals(other));
+	}
 
-        point = new Point(1.0, 1.0);
-        other = new Point(1.0 + (2 * Constant.EPSILON), 1.0 - (2 * Constant.EPSILON));
-        Assert.assertFalse(point.equals(other));
-    }
-    
-    // TODO Tests for the rotate
-    
-    @Test
-    public void rotateShouldUseAReferenceClone () throws Exception {
+	// TODO Tests for the rotate
 
-        Point point = new Point(10,10);
-        point.rotate(point, Math.PI);
-        assertEquals(new Point(10,10), point);
-        
-        point.rotate(new Point(0,0), Math.PI);
-        assertEquals(new Point(-10,-10), point);
-    }
+	@Test
+	public void rotateShouldUseAReferenceClone() throws Exception {
+
+		Point point = new Point(10, 10);
+		point.rotate(point, Math.PI);
+		assertEquals(new Point(10, 10), point);
+
+		point.rotate(new Point(0, 0), Math.PI);
+		assertEquals(new Point(-10, -10), point);
+	}
 }

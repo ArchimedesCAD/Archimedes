@@ -22,36 +22,35 @@ import org.eclipse.osgi.util.NLS;
  */
 public class Messages extends NLS {
 
-    private static final String BUNDLE_NAME = "br.org.archimedes.io.svg.messages"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = "br.org.archimedes.io.svg.messages"; //$NON-NLS-1$
 
-    public static String SVGWizardExporter_ErrorBoxTitle;
+	public static String SVGWizardExporter_ErrorBoxTitle;
 
-    public static String SVGExporter_NoExporter;
+	public static String SVGExporter_NoExporter;
 
-    public static String SVGWizardExporter_ErrorBoxMessage;
+	public static String SVGWizardExporter_ErrorBoxMessage;
 
-    public static String SVGWizardExporter_ExporterName;
+	public static String SVGWizardExporter_ExporterName;
 
-    public static String SVGFilePickerPage_WindowTitle;
+	public static String SVGFilePickerPage_WindowTitle;
 
-    public static String SVGFilePickerPage_WindowMessage;
+	public static String SVGFilePickerPage_WindowMessage;
 
-    public static String SVGFilePickerPage_Extension;
+	public static String SVGFilePickerPage_Extension;
 
-    public static String SVGFilePickerPage_ExtensionName;
+	public static String SVGFilePickerPage_ExtensionName;
 
-    public static String SVGFilePickerPage_ChooseWindowMessage;
+	public static String SVGFilePickerPage_ChooseWindowMessage;
 
-    public static String SVGFilePickerPage_BrowseButtonText;
+	public static String SVGFilePickerPage_BrowseButtonText;
 
-    public static String SVGFilePickerPage_BrowseButtonTooltip;
-    static {
-        // initialize resource bundle
-        NLS.initializeMessages(BUNDLE_NAME, Messages.class);
-    }
+	public static String SVGFilePickerPage_BrowseButtonTooltip;
+	static {
+		// initialize resource bundle
+		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
+	}
 
+	private Messages() {
 
-    private Messages () {
-
-    }
+	}
 }

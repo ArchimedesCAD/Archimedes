@@ -32,91 +32,90 @@ import br.org.archimedes.semiline.Semiline;
 
 public class SemilineExtender implements Extender {
 
-    public Element extend (Element element, Collection<Element> references, Point click)
-            throws NullArgumentException {
+	public Element extend(Element element, Collection<Element> references,
+			Point click) throws NullArgumentException {
 
-        IntersectionManager intersectionManager = new IntersectionManagerEPLoader()
-                .getIntersectionManager();
+		IntersectionManager intersectionManager = new IntersectionManagerEPLoader()
+				.getIntersectionManager();
 
-        if (element == null || references == null || click == null) {
-            throw new NullArgumentException();
-        }
+		if (element == null || references == null || click == null) {
+			throw new NullArgumentException();
+		}
 
-        Semiline semiline = (Semiline) element.clone();
+		Semiline semiline = (Semiline) element.clone();
 
-        try {
-            Semiline offset = new Semiline(semiline.getDirectionPoint(), semiline.getInitialPoint());
-            Collection<Point> intersectionPoints = intersectionManager.getIntersectionsBetween(
-                    offset, references);
+		try {
+			Semiline offset = new Semiline(semiline.getDirectionPoint(),
+					semiline.getInitialPoint());
+			Collection<Point> intersectionPoints = intersectionManager
+					.getIntersectionsBetween(offset, references);
 
-            if ( !intersectionPoints.isEmpty()) {
-                doExtend(semiline, intersectionPoints);
-            }
-        }
-        catch (InvalidArgumentException e) {
-            // wont reach here
-            e.printStackTrace();
-        }
-        
-        return semiline;
-    }
+			if (!intersectionPoints.isEmpty()) {
+				doExtend(semiline, intersectionPoints);
+			}
+		} catch (InvalidArgumentException e) {
+			// wont reach here
+			e.printStackTrace();
+		}
 
-    private void doExtend (Semiline semiline, Collection<Point> intersectionPoints)
-            throws NullArgumentException {
+		return semiline;
+	}
 
-        Point nearestExtremePoint = semiline.getInitialPoint();
-        Point nearestReferencePoint = getNearestReferencePoint(semiline, intersectionPoints,
-                nearestExtremePoint);
+	private void doExtend(Semiline semiline,
+			Collection<Point> intersectionPoints) throws NullArgumentException {
 
-        if (nearestReferencePoint != null) {
-            Vector dir = new Vector(nearestExtremePoint, nearestReferencePoint);
-            semiline.move(Collections.singletonList(nearestExtremePoint), dir);
-        }
-    }
+		Point nearestExtremePoint = semiline.getInitialPoint();
+		Point nearestReferencePoint = getNearestReferencePoint(semiline,
+				intersectionPoints, nearestExtremePoint);
 
-    private Point getNearestReferencePoint (Semiline semiline,
-            Collection<Point> intersectionPoints, Point nearestExtremePoint)
-            throws NullArgumentException {
+		if (nearestReferencePoint != null) {
+			Vector dir = new Vector(nearestExtremePoint, nearestReferencePoint);
+			semiline.move(Collections.singletonList(nearestExtremePoint), dir);
+		}
+	}
 
-        double minDistance = Double.MAX_VALUE;
+	private Point getNearestReferencePoint(Semiline semiline,
+			Collection<Point> intersectionPoints, Point nearestExtremePoint)
+			throws NullArgumentException {
 
-        Point nearestReferencePoint = null;
-        for (Point point : intersectionPoints) {
-            if (semiline.contains(point)) {
-                continue;
-            }
+		double minDistance = Double.MAX_VALUE;
 
-            double distanceToRef = Geometrics.calculateDistance(point, nearestExtremePoint);
-            if (distanceToRef < minDistance) {
-                nearestReferencePoint = point;
-                minDistance = distanceToRef;
-            }
-        }
-        return nearestReferencePoint;
-    }
+		Point nearestReferencePoint = null;
+		for (Point point : intersectionPoints) {
+			if (semiline.contains(point)) {
+				continue;
+			}
 
-    public Collection<Element> getInfiniteExtensionElements (Element element) {
+			double distanceToRef = Geometrics.calculateDistance(point,
+					nearestExtremePoint);
+			if (distanceToRef < minDistance) {
+				nearestReferencePoint = point;
+				minDistance = distanceToRef;
+			}
+		}
+		return nearestReferencePoint;
+	}
 
-        if ( !(element instanceof Semiline)) {
-            throw new IllegalArgumentException();
-        }
+	public Collection<Element> getInfiniteExtensionElements(Element element) {
 
-        Semiline semiline = (Semiline) element;
+		if (!(element instanceof Semiline)) {
+			throw new IllegalArgumentException();
+		}
 
-        Collection<Element> extension = new ArrayList<Element>(1);
+		Semiline semiline = (Semiline) element;
 
-        try {
-            InfiniteLine infiniteLine = new InfiniteLine(semiline.getInitialPoint(), semiline
-                    .getDirectionPoint());
-            extension.add(infiniteLine);
-        }
-        catch (NullArgumentException e) {
-            // will not reach here
-        }
-        catch (InvalidArgumentException e) {
-            // will not reach here
-        }
+		Collection<Element> extension = new ArrayList<Element>(1);
 
-        return extension;
-    }
+		try {
+			InfiniteLine infiniteLine = new InfiniteLine(
+					semiline.getInitialPoint(), semiline.getDirectionPoint());
+			extension.add(infiniteLine);
+		} catch (NullArgumentException e) {
+			// will not reach here
+		} catch (InvalidArgumentException e) {
+			// will not reach here
+		}
+
+		return extension;
+	}
 }

@@ -13,6 +13,13 @@
 package br.org.archimedes.paste;
 
 import static org.junit.Assert.assertNotNull;
+
+import java.util.Collection;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 import br.org.archimedes.Constant;
 import br.org.archimedes.controller.Controller;
 import br.org.archimedes.factories.CommandFactory;
@@ -23,59 +30,54 @@ import br.org.archimedes.model.Layer;
 import br.org.archimedes.model.LineStyle;
 import br.org.archimedes.stub.StubElement;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-import java.util.Collection;
-
 public class PasteFactoryTest extends FactoryTester {
 
-    private CommandFactory factory;
+	private CommandFactory factory;
 
-    private Controller controller;
+	private Controller controller;
 
-    private Drawing drawing;
+	private Drawing drawing;
 
+	@Before
+	public void setUp() {
 
-    @Before
-    public void setUp () {
+		factory = new PasteFactory();
+		controller = br.org.archimedes.Utils.getController();
+		drawing = new Drawing("Teste");
+		controller.setActiveDrawing(drawing);
+	}
 
-        factory = new PasteFactory();
-        controller = br.org.archimedes.Utils.getController();
-        drawing = new Drawing("Teste");
-        controller.setActiveDrawing(drawing);
-    }
+	@After
+	public void tearDown() {
 
-    @After
-    public void tearDown () {
+		drawing = null;
+		controller.deselectAll();
+		controller.setActiveDrawing(null);
+		br.org.archimedes.Utils.getWorkspace().getClipboard().clear();
+	}
 
-        drawing = null;
-        controller.deselectAll();
-        controller.setActiveDrawing(null);
-        br.org.archimedes.Utils.getWorkspace().getClipboard().clear();
-    }
+	@Test
+	public void testPaste() {
+		Layer defaultLayer = new Layer(Constant.WHITE, "",
+				LineStyle.CONTINUOUS, 1);
 
-    @Test
-    public void testPaste () {
-        Layer defaultLayer = new Layer(Constant.WHITE, "", LineStyle.CONTINUOUS, 1);
+		Element element = new StubElement();
+		element.setLayer(defaultLayer);
 
-        Element element = new StubElement();
-        element.setLayer(defaultLayer);
-        
-        Collection<Element> clipboard = br.org.archimedes.Utils.getWorkspace().getClipboard();
-        clipboard.add(element);
+		Collection<Element> clipboard = br.org.archimedes.Utils.getWorkspace()
+				.getClipboard();
+		clipboard.add(element);
 
-        assertBegin(factory, true);
+		assertBegin(factory, true);
 
-        Element element2 = new StubElement();
-        element2.setLayer(defaultLayer);
-        clipboard.clear();
-        clipboard.add(element2);
+		Element element2 = new StubElement();
+		element2.setLayer(defaultLayer);
+		clipboard.clear();
+		clipboard.add(element2);
 
-        assertBegin(factory, true);
-    }
-    
+		assertBegin(factory, true);
+	}
+
 	@Override
 	@Test
 	public void testFactoryName() {

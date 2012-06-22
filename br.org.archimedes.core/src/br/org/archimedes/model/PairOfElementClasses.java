@@ -16,10 +16,11 @@ package br.org.archimedes.model;
 public class PairOfElementClasses {
 
 	private Class<? extends Element> element;
-	
+
 	private Class<? extends Element> otherElement;
-	
-	public PairOfElementClasses(Class<? extends Element> element, Class<? extends Element> otherElement) {
+
+	public PairOfElementClasses(Class<? extends Element> element,
+			Class<? extends Element> otherElement) {
 		this.element = element;
 		this.otherElement = otherElement;
 	}
@@ -37,7 +38,8 @@ public class PairOfElementClasses {
 		final int PRIME = 31;
 		int result = 1;
 		result = PRIME * result + ((element == null) ? 0 : element.hashCode());
-		result = result + ((otherElement == null) ? 0 : otherElement.hashCode());
+		result = result
+				+ ((otherElement == null) ? 0 : otherElement.hashCode());
 		return result;
 	}
 
@@ -53,17 +55,19 @@ public class PairOfElementClasses {
 		if (element == null) {
 			if (other.element != null)
 				return false;
-		} else if (!element.equals(other.element) && !element.equals(other.otherElement))
+		} else if (!element.equals(other.element)
+				&& !element.equals(other.otherElement))
 			return false;
 		if (otherElement == null) {
 			if (other.otherElement != null)
 				return false;
-		} else if (!otherElement.equals(other.otherElement) && !otherElement.equals(other.element))
+		} else if (!otherElement.equals(other.otherElement)
+				&& !otherElement.equals(other.element))
 			return false;
-		if (element.equals(otherElement) && !other.element.equals(other.otherElement))
+		if (element.equals(otherElement)
+				&& !other.element.equals(other.otherElement))
 			return false;
 		return true;
 	}
 
-	
 }

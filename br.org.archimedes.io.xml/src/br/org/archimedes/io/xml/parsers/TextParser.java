@@ -27,37 +27,36 @@ import br.org.archimedes.model.Point;
  */
 public class TextParser extends ElementParser {
 
-    /*
-     * (non-Javadoc)
-     * @see br.org.archimedes.xml.ElementParser#parse(org.w3c.dom.Node)
-     */
-    @Override
-    public Element parse (Node node) throws ElementCreationException {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.xml.ElementParser#parse(org.w3c.dom.Node)
+	 */
+	@Override
+	public Element parse(Node node) throws ElementCreationException {
 
-        Point lowerLeft = null;
-        double size = 0.0;
-        String content = null;
+		Point lowerLeft = null;
+		double size = 0.0;
+		String content = null;
 
-        NodeList nodesCollection = node.getChildNodes();
-        for (int i = 0; i < nodesCollection.getLength(); i++) {
-            Node childNode = nodesCollection.item(i);
+		NodeList nodesCollection = node.getChildNodes();
+		for (int i = 0; i < nodesCollection.getLength(); i++) {
+			Node childNode = nodesCollection.item(i);
 
-            if (childNode.getNodeName() == "point") { //$NON-NLS-1$
-                lowerLeft = XMLUtils.nodeToPoint(childNode);
-            }
-            else if (childNode.getNodeName() == "size") { //$NON-NLS-1$
-                size = XMLUtils.nodeToDouble(childNode);
-            }
-            else if (childNode.getNodeName() == "content") { //$NON-NLS-1$
-                Node firstChild = childNode.getFirstChild();
-                if (firstChild != null) {
-                    content = firstChild.getNodeValue();
-                }
-            }
-        }
+			if (childNode.getNodeName() == "point") { //$NON-NLS-1$
+				lowerLeft = XMLUtils.nodeToPoint(childNode);
+			} else if (childNode.getNodeName() == "size") { //$NON-NLS-1$
+				size = XMLUtils.nodeToDouble(childNode);
+			} else if (childNode.getNodeName() == "content") { //$NON-NLS-1$
+				Node firstChild = childNode.getFirstChild();
+				if (firstChild != null) {
+					content = firstChild.getNodeValue();
+				}
+			}
+		}
 
-        return getElementFactory().createElement("br.org.archimedes.text", //$NON-NLS-1$
-                content, lowerLeft, size);
-    }
+		return getElementFactory().createElement("br.org.archimedes.text", //$NON-NLS-1$
+				content, lowerLeft, size);
+	}
 
 }

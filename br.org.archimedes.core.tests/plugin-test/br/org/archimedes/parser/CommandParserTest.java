@@ -13,22 +13,22 @@
 
 package br.org.archimedes.parser;
 
-import br.org.archimedes.factories.CommandFactory;
+import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertNull;
+import br.org.archimedes.factories.CommandFactory;
 
 public class CommandParserTest {
 
-    /**
-     * Tests: the recognition of the commands (String).
-     */
-    @Test
-    public void test () {
+	/**
+	 * Tests: the recognition of the commands (String).
+	 */
+	@Test
+	public void test() {
 
-        CommandParser cp = new CommandParser();
-        CommandFactory com = cp.getCommand("invalid");
-        assertNull(com);
-    }
+		CommandParser cp = new CommandParser();
+		CommandFactory com = cp.getCommand("invalid");
+		assertNull(com);
+	}
 }

@@ -29,153 +29,158 @@ import br.org.archimedes.parser.CommandParser;
  */
 public class IdleState extends InputState {
 
-    private static final String IDLE = "br.org.archimedes.idle"; //$NON-NLS-1$
+	private static final String IDLE = "br.org.archimedes.idle"; //$NON-NLS-1$
 
-    private CommandFactory previousFactory;
+	private CommandFactory previousFactory;
 
-    private InputState nextState;
+	private InputState nextState;
 
-    private boolean nextShould;
+	private boolean nextShould;
 
-    private Drawing currentDrawing;
+	private Drawing currentDrawing;
 
-    private DisabledState disabledState;
+	private DisabledState disabledState;
 
+	public IdleState(DisabledState previousState) {
 
-    public IdleState (DisabledState previousState) {
+		previousFactory = null;
+		disabledState = previousState;
+	}
 
-        previousFactory = null;
-        disabledState = previousState;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.org.archimedes.controller.InputState#receiveText(java.lang.String)
+	 */
+	public String receiveText(String text) {
 
-    /*
-     * (non-Javadoc)
-     * @see br.org.archimedes.controller.InputState#receiveText(java.lang.String)
-     */
-    public String receiveText (String text) {
+		String returnValue = null;
+		CommandFactory factory = null;
+		nextState = this;
+		nextShould = false;
+		if (text == null || text.trim().equals("")) { //$NON-NLS-1$
+			factory = previousFactory;
+		} else {
+			CommandParser parser = br.org.archimedes.Utils.getInputController()
+					.getCommandParser();
+			factory = parser.getCommand(text);
+		}
 
-        String returnValue = null;
-        CommandFactory factory = null;
-        nextState = this;
-        nextShould = false;
-        if (text == null || text.trim().equals("")) { //$NON-NLS-1$
-            factory = previousFactory;
-        }
-        else {
-            CommandParser parser = br.org.archimedes.Utils.getInputController().getCommandParser();
-            factory = parser.getCommand(text);
-        }
+		if (factory != null) {
+			returnValue = setCurrentFactory(factory);
+		} else if (Utils.isPoint(text)) {
+			Point point = Utils.getPointCoordinates(text);
+			try {
+				if (!br.org.archimedes.Utils.getController().movePoint(point)) {
+					nextState = new SelectionState(this);
+					nextShould = true;
+				}
+			} catch (NoActiveDrawingException e) {
+				// Should never happen
+				e.printStackTrace();
+			}
+		} else {
+			returnValue = Messages.Invalid + Constant.NEW_LINE
+					+ Messages.Waiting;
+		}
 
-        if (factory != null) {
-            returnValue = setCurrentFactory(factory);
-        }
-        else if (Utils.isPoint(text)) {
-            Point point = Utils.getPointCoordinates(text);
-            try {
-                if ( !br.org.archimedes.Utils.getController().movePoint(point)) {
-                    nextState = new SelectionState(this);
-                    nextShould = true;
-                }
-            }
-            catch (NoActiveDrawingException e) {
-                // Should never happen
-                e.printStackTrace();
-            }
-        }
-        else {
-            returnValue = Messages.Invalid + Constant.NEW_LINE + Messages.Waiting;
-        }
+		return returnValue;
+	}
 
-        return returnValue;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.controller.InputState#getNext()
+	 */
+	public InputState getNext() {
 
-    /*
-     * (non-Javadoc)
-     * @see br.org.archimedes.controller.InputState#getNext()
-     */
-    public InputState getNext () {
+		return nextState;
+	}
 
-        return nextState;
-    }
+	/**
+	 * Set the current factory to the specified one and execute it.
+	 * 
+	 * @param factory
+	 *            The factory to be executed.
+	 * @return The message that should be printed.
+	 */
+	protected String setCurrentFactory(CommandFactory factory) {
 
-    /**
-     * Set the current factory to the specified one and execute it.
-     * 
-     * @param factory
-     *            The factory to be executed.
-     * @return The message that should be printed.
-     */
-    protected String setCurrentFactory (CommandFactory factory) {
+		String returnValue = factory.getName().toUpperCase() + ": " //$NON-NLS-1$
+				+ factory.begin();
+		CommandParser parser = br.org.archimedes.Utils.getInputController()
+				.getCommandParser();
+		if (parser.getCommand(factory.getName()) != null) {
+			previousFactory = factory;
+		}
 
-        String returnValue = factory.getName().toUpperCase() + ": " //$NON-NLS-1$
-                + factory.begin();
-        CommandParser parser = br.org.archimedes.Utils.getInputController().getCommandParser();
-        if (parser.getCommand(factory.getName()) != null) {
-            previousFactory = factory;
-        }
+		if (factory.isDone()) {
+			try {
+				br.org.archimedes.Utils.getController().execute(
+						factory.getCommands());
+			} catch (IllegalActionException e) {
+				returnValue = factory.getName().toUpperCase()
+						+ ": " + e.getMessage() + Constant.NEW_LINE //$NON-NLS-1$
+						+ Messages.Waiting;
+			} catch (NoActiveDrawingException e) {
+				nextState = disabledState;
+				returnValue = Messages.NoDrawing;
+			}
+		} else {
+			nextState = new ActiveState(this, factory, currentDrawing);
+		}
 
-        if (factory.isDone()) {
-            try {
-                br.org.archimedes.Utils.getController().execute(factory.getCommands());
-            }
-            catch (IllegalActionException e) {
-                returnValue = factory.getName().toUpperCase()
-                        + ": " + e.getMessage() + Constant.NEW_LINE //$NON-NLS-1$
-                        + Messages.Waiting;
-            }
-            catch (NoActiveDrawingException e) {
-                nextState = disabledState;
-                returnValue = Messages.NoDrawing;
-            }
-        }
-        else {
-            nextState = new ActiveState(this, factory, currentDrawing);
-        }
+		nextShould = false;
+		return returnValue;
+	}
 
-        nextShould = false;
-        return returnValue;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.controller.InputState#nextShouldHandle()
+	 */
+	public boolean nextShouldHandle() {
 
-    /*
-     * (non-Javadoc)
-     * @see br.org.archimedes.controller.InputState#nextShouldHandle()
-     */
-    public boolean nextShouldHandle () {
+		return nextShould;
+	}
 
-        return nextShould;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.org.archimedes.controller.InputState#changedDrawing(br.org.archimedes
+	 * .model.Drawing)
+	 */
+	public InputState changedDrawing(Drawing currentDrawing) {
 
-    /*
-     * (non-Javadoc)
-     * @see br.org.archimedes.controller.InputState#changedDrawing(br.org.archimedes.model.Drawing)
-     */
-    public InputState changedDrawing (Drawing currentDrawing) {
+		InputState state = this;
+		this.currentDrawing = currentDrawing;
+		if (currentDrawing == null) {
+			state = disabledState;
+		}
+		return state;
+	}
 
-        InputState state = this;
-        this.currentDrawing = currentDrawing;
-        if (currentDrawing == null) {
-            state = disabledState;
-        }
-        return state;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.controller.InputState#cancel()
+	 */
+	public String cancel() {
 
-    /*
-     * (non-Javadoc)
-     * @see br.org.archimedes.controller.InputState#cancel()
-     */
-    public String cancel () {
+		nextState = this;
+		return Messages.Waiting;
+	}
 
-        nextState = this;
-        return Messages.Waiting;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.controller.InputState#getContextId()
+	 */
+	@Override
+	public String getContextId() {
 
-    /*
-     * (non-Javadoc)
-     * @see br.org.archimedes.controller.InputState#getContextId()
-     */
-    @Override
-    public String getContextId () {
-
-        return IDLE;
-    }
+		return IDLE;
+	}
 }

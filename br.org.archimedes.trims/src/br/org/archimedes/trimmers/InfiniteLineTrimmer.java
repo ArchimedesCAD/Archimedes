@@ -13,6 +13,11 @@
  */
 package br.org.archimedes.trimmers;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.SortedSet;
+import java.util.TreeSet;
+
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.infiniteline.InfiniteLine;
@@ -23,11 +28,6 @@ import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Vector;
 import br.org.archimedes.semiline.Semiline;
 import br.org.archimedes.trims.interfaces.Trimmer;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 public class InfiniteLineTrimmer implements Trimmer {
 
@@ -49,8 +49,8 @@ public class InfiniteLineTrimmer implements Trimmer {
 		SortedSet<ComparablePoint> sortedPointSet = getSortedPointSet(line,
 				line.getInitialPoint(), cutPoints);
 
-		Vector direction = new Vector(line.getInitialPoint(), line
-				.getEndingPoint());
+		Vector direction = new Vector(line.getInitialPoint(),
+				line.getEndingPoint());
 
 		Vector clickVector = new Vector(line.getInitialPoint(), click);
 		double key = direction.dotProduct(clickVector);
@@ -73,11 +73,11 @@ public class InfiniteLineTrimmer implements Trimmer {
 				Point initialPoint = tailSet.first().getPoint();
 
 				if (line.getInitialPoint().compareTo(line.getEndingPoint()) < 0) {
-					direction = new Vector(line.getInitialPoint(), line
-							.getEndingPoint());
+					direction = new Vector(line.getInitialPoint(),
+							line.getEndingPoint());
 				} else {
-					direction = new Vector(line.getEndingPoint(), line
-							.getInitialPoint());
+					direction = new Vector(line.getEndingPoint(),
+							line.getInitialPoint());
 				}
 
 				clickPoint.getPoint().setX(

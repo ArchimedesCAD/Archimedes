@@ -21,9 +21,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.opengl.GLCanvas;
 import org.eclipse.swt.opengl.GLData;
 import org.eclipse.swt.widgets.Shell;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -32,10 +29,10 @@ import br.org.archimedes.model.Drawing;
 
 public class OpenGLWrapperTest {
 
-    OpenGLWrapper openGL = br.org.archimedes.Utils.getOpenGLWrapper();
+	OpenGLWrapper openGL = br.org.archimedes.Utils.getOpenGLWrapper();
 
-    @Ignore
-    @Test
+	@Ignore
+	@Test
 	public void testAddDrawingContext() {
 
 		Drawing drawing = new Drawing("Drawing");

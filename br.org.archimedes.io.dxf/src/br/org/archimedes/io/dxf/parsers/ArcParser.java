@@ -14,30 +14,36 @@ import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
 
-public class ArcParser extends ElementParser{
+public class ArcParser extends ElementParser {
 
 	@Override
-	public Collection<Element> parse(DXFLayer layer) throws NullArgumentException, InvalidArgumentException {
-		
+	public Collection<Element> parse(DXFLayer layer)
+			throws NullArgumentException, InvalidArgumentException {
+
 		ArrayList<Element> archimedesArcs = new ArrayList<Element>();
 		@SuppressWarnings("unchecked")
-        List<DXFArc> dxfArcs = layer.getDXFEntities(DXFConstants.ENTITY_TYPE_ARC);
+		List<DXFArc> dxfArcs = layer
+				.getDXFEntities(DXFConstants.ENTITY_TYPE_ARC);
 
-		if(dxfArcs != null) {
+		if (dxfArcs != null) {
 			for (DXFArc dxfArc : dxfArcs) {
-		  		
+
 				boolean isCounterClockwise = dxfArc.isCounterClockwise();
-				
-				Point initialPoint = transformToArchimedesPoint(dxfArc.getStartPoint());
-				Point endingPoint = transformToArchimedesPoint(dxfArc.getEndPoint());
-				Point centerPoint = transformToArchimedesPoint(dxfArc.getCenterPoint());
-		  		
-		  		Arc arc = new Arc(initialPoint, endingPoint, centerPoint, !isCounterClockwise);
-		  		
+
+				Point initialPoint = transformToArchimedesPoint(dxfArc
+						.getStartPoint());
+				Point endingPoint = transformToArchimedesPoint(dxfArc
+						.getEndPoint());
+				Point centerPoint = transformToArchimedesPoint(dxfArc
+						.getCenterPoint());
+
+				Arc arc = new Arc(initialPoint, endingPoint, centerPoint,
+						!isCounterClockwise);
+
 				archimedesArcs.add(arc);
 			}
 		}
 		return archimedesArcs;
-		
+
 	}
 }
