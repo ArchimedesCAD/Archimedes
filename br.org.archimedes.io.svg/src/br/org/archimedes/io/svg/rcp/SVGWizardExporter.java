@@ -50,9 +50,8 @@ public class SVGWizardExporter extends Wizard implements IExportWizard,
      */
     @Override
     public boolean canFinish () {
-
         String filePath = fileModel.getFilePath();
-        if (filePath == null
+        if (filePath == null || filePath.trim().length() == 0 || selection.isEmpty()
                 || selection.getFirstElement().getClass() != Drawing.class) {
             return false;
         }
@@ -63,7 +62,7 @@ public class SVGWizardExporter extends Wizard implements IExportWizard,
             return false;
         }
         else if ( !file.exists()) {
-            File parent = file.getParentFile();
+            File parent = file.getAbsoluteFile().getParentFile();
             return parent != null && parent.isDirectory() && parent.canWrite();
         }
         else {
