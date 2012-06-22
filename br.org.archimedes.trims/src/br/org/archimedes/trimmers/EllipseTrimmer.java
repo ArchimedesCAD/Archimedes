@@ -44,7 +44,7 @@ public class EllipseTrimmer implements Trimmer {
 
 	}
 
-	private SortedSet<ComparablePoint> getSortedPointSet(Circle circle,
+	private SortedSet<ComparablePoint> getSortedPointSet(Ellipse circle,
 			Point referencePoint, Collection<Point> cutPoints) {
 
 		SortedSet<ComparablePoint> sortedSet = new TreeSet<ComparablePoint>();
