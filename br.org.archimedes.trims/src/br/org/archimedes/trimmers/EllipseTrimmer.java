@@ -20,10 +20,6 @@ import br.org.archimedes.trims.interfaces.Trimmer;
 
 public class EllipseTrimmer implements Trimmer {
 
-	public EllipseTrimmer() {
-
-	}
-
 	public Collection<Element> trim(Element element,
 			Collection<Point> cutPoints, Point click)
 			throws NullArgumentException {
@@ -32,33 +28,32 @@ public class EllipseTrimmer implements Trimmer {
 			throw new NullArgumentException();
 		}
 		Ellipse ellipse = (Ellipse) element;
-
-		System.out.println("cut: " + cutPoints);
-		System.out.println("click: " + click);
-
 		Collection<Element> trimResult = new ArrayList<Element>();
 
 		if (cutPoints.size() <= 1)
 			return Collections.singleton(element);
-		// TODO: Create a method to ordenate a list of points relatively to the
-		// ellipse.
-		SortedSet<ComparablePoint> sortedPointSet = getSortedPointSet(
-				ellipse,
-				ellipse.getCenter().clone()
-						.addVector(ellipse.getSemiMajorAxis()), cutPoints);
-		ComparablePoint clickPoint = null;
 
+		// using the point on the end of the major axis
 		Point initialPoint = ellipse.getCenter().clone();
 		initialPoint.addVector(ellipse.getSemiMajorAxis());
+		
+		// Sort the cut points.
+		SortedSet<ComparablePoint> sortedPointSet = getSortedPointSet(ellipse,
+				initialPoint, cutPoints);
 
+		// Create the base comparison point, using the mouse click point.
+		ComparablePoint clickPoint = null;
 		try {
 			double key = Geometrics.calculateRelativeAngle(ellipse.getCenter(),
 					initialPoint, click);
 			clickPoint = new ComparablePoint(click, new DoubleKey(key));
+
 		} catch (NullArgumentException e) {
-			// Should never reach
 			e.printStackTrace();
 		}
+
+		System.out.println("click: " + clickPoint);
+		System.out.println("sort: " + sortedPointSet);
 
 		SortedSet<ComparablePoint> negativeIntersections = sortedPointSet
 				.headSet(clickPoint);
