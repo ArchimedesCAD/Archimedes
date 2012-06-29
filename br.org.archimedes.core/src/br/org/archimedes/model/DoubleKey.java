@@ -66,4 +66,9 @@ public class DoubleKey implements Key {
 		return d;
 	}
 
+	@Override
+	public String toString() {
+		return "DoubleKey [" + d + "]";
+	}
+
 }

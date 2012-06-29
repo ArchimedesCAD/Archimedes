@@ -109,7 +109,6 @@ public class CircleTrimmer implements Trimmer {
 		}
 
 		return trimResult;
-
 	}
 
 	private SortedSet<ComparablePoint> getSortedPointSet(Circle circle,
