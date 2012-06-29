@@ -16,7 +16,7 @@ Require-Bundle: org.eclipse.core.runtime,
  br.org.archimedes.polyline;bundle-version="0.58.0",
  br.org.archimedes.curvedshape;bundle-version="0.58.0";resolution:=optional,
  br.org.archimedes.arc;bundle-version="0.58.0";resolution:=optional,
- br.org.archimedes.ellipse;bundle-version="1.0.0",
+ br.org.archimedes.ellipse;bundle-version="0.66.0",
  br.org.archimedes.circle;bundle-version="0.64.0"
 Export-Package: br.org.archimedes.trimmers,
  br.org.archimedes.trims,
