@@ -9,4 +9,4 @@ Require-Bundle: br.org.archimedes.core,
  br.org.archimedes.core.tests,
  br.org.archimedes.mirror,
  org.junit4
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

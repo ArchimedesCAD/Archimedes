@@ -10,5 +10,5 @@ Require-Bundle: br.org.archimedes.core,
  br.org.archimedes.polyline.explode,
  br.org.archimedes.core.tests,
  org.junit4
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: br.org.archimedes.polyline.explode

@@ -8,5 +8,5 @@ Require-Bundle: br.org.archimedes.core,
  br.org.archimedes.core.tests,
  br.org.archimedes.zoom,
  org.junit4
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: br.org.archimedes.zoom

@@ -19,5 +19,5 @@ Export-Package: br.org.archimedes.extend,
  br.org.archimedes.extend.interfaces,
  br.org.archimedes.extenders,
  br.org.archimedes.extend.rcp
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-Vendor: Hugo Corbucci

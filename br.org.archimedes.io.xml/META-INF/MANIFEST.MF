@@ -23,5 +23,5 @@ Require-Bundle: br.org.archimedes.core;bundle-version="0.64.0",
 Export-Package: br.org.archimedes.io.xml,
  br.org.archimedes.io.xml.elements;x-friends:="br.org.archimedes.io.xml.tests",
  br.org.archimedes.io.xml.parsers;x-friends:="br.org.archimedes.io.xml.tests"
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy

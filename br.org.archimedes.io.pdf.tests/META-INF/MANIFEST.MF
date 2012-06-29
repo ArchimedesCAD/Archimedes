@@ -4,7 +4,7 @@ Bundle-Name: PDF export tests Plug-in
 Bundle-SymbolicName: br.org.archimedes.io.pdf.tests
 Bundle-Version: 0.58.0
 Bundle-Vendor: Hugo Corbucci
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Require-Bundle: br.org.archimedes.core,
  br.org.archimedes.core.tests,
  br.org.archimedes.io.pdf,

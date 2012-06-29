@@ -15,7 +15,7 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="3.4.0",
  br.org.archimedes.opengl;bundle-version="2.0.1",
  br.org.archimedes.batik;visibility:=reexport
 Eclipse-BuddyPolicy: registered
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: br.org.archimedes,
  br.org.archimedes.controller,
  br.org.archimedes.controller.commands,

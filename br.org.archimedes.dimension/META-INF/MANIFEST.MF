@@ -9,7 +9,7 @@ Require-Bundle: org.eclipse.ui,
  br.org.archimedes.core;bundle-version="0.64.0",
  br.org.archimedes.line;bundle-version="0.64.0",
  br.org.archimedes.text;bundle-version="0.64.0"
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Eclipse-RegisterBuddy: br.org.archimedes.core
 Export-Package: br.org.archimedes.dimension
 Bundle-Vendor: Hugo Corbucci

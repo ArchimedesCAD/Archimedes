@@ -27,7 +27,7 @@ Export-Package: br.org.archimedes,
  br.org.archimedes.gui.opengl,
  br.org.archimedes.model,
  br.org.archimedes.parser
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ClassPath: .,
  lib/mockito-all-1.7.jar
 Bundle-Activator: br.org.archimedes.TestActivator

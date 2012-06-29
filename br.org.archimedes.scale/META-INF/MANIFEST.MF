@@ -9,4 +9,4 @@ Require-Bundle: org.eclipse.ui,
  br.org.archimedes.core;bundle-version="0.64.0"
 Bundle-Vendor: Hugo Corbucci
 Export-Package: br.org.archimedes.scale
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

@@ -4,7 +4,7 @@ Bundle-Name: Intersectiors Tests Plug-in
 Bundle-SymbolicName: br.org.archimedes.intersections.tests
 Bundle-Version: 0.58.0
 Bundle-Vendor: Hugo Corbucci
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: br.org.archimedes.intersectors
 Require-Bundle: br.org.archimedes.core,
  br.org.archimedes.curvedshape,

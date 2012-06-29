@@ -19,7 +19,7 @@ Require-Bundle: org.eclipse.ui,
  br.org.archimedes.semiline;bundle-version="0.57.4";resolution:=optional,
  br.org.archimedes.text;bundle-version="0.57.4";resolution:=optional,
  br.org.archimedes.curvedshape;bundle-version="0.57.4";resolution:=optional
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Export-Package: br.org.archimedes.io.svg,
  br.org.archimedes.io.svg.elements

@@ -6,4 +6,4 @@ Bundle-Version: 0.58.0
 Bundle-Vendor: Tarantulus Corporation
 Fragment-Host: br.org.archimedes.line
 Bundle-Localization: plugin
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
