@@ -57,48 +57,6 @@ public class ElipseTrimTest extends Tester {
 	}
 
 	@Test
-	public void twoIntersectionPointsTrimEllipseResultsHalfEllipse()
-			throws NullArgumentException, InvalidArgumentException {
-
-		Collection<Point> cutPoints = new ArrayList<Point>();
-		cutPoints.add(new Point(0.0, 1.0));
-		cutPoints.add(new Point(0.0, -1.0));
-
-		Collection<Element> trimmed = trimmer.trim(testEllipse, cutPoints,
-				new Point(1.0, 0.0));
-		assertCollectionTheSame(Collections.singleton(new Arc(new Point(0.0,
-				1.0), new Point(-1.0, 0.0), new Point(0.0, -1.0))), trimmed);
-	}
-
-	@Test
-	public void twoSecantLinesTrimsCircleResultsThreeQuartersOfCircle()
-			throws NullArgumentException, InvalidArgumentException {
-
-		Collection<Point> cutPoints = new ArrayList<Point>();
-		cutPoints.add(new Point(0.0, 1.0));
-		cutPoints.add(new Point(0.0, -1.0));
-		cutPoints.add(new Point(1.0, 0.0));
-		cutPoints.add(new Point(-1.0, 0.0));
-		Collection<Element> trimmed = trimmer.trim(testEllipse, cutPoints,
-				new Point(COS_45, COS_45));
-		assertCollectionTheSame(Collections.singleton(new Arc(new Point(0.0,
-				1.0), new Point(-1.0, 0.0), new Point(1.0, 0.0))), trimmed);
-	}
-
-	@Test
-	public void twoIntersectionPointsTrimCircleResultsLeftHalfOfCircleWhenClickedInIntersection()
-			throws NullArgumentException, InvalidArgumentException {
-
-		Collection<Point> cutPoints = new ArrayList<Point>();
-		cutPoints.add(new Point(0.0, 1.0));
-		cutPoints.add(new Point(0.0, -1.0));
-		Collection<Element> trimmed = trimmer.trim(testEllipse, cutPoints,
-				new Point(0.0, 1.0));
-		assertCollectionTheSame(Collections.singleton(new Arc(new Point(0.0,
-				1.0), new Point(-1.0, 0.0), new Point(0.0, -1.0))), trimmed);
-	}
-
-	@Test
 	public void emptyIntersectionListDoesntTrimCircle()
 			throws NullArgumentException, InvalidArgumentException {
 

@@ -3,20 +3,16 @@ package br.org.archimedes.trimmers;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
 import br.org.archimedes.Geometrics;
-import br.org.archimedes.arc.Arc;
 import br.org.archimedes.ellipse.Ellipse;
-import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.model.ComparablePoint;
 import br.org.archimedes.model.DoubleKey;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
-import br.org.archimedes.model.Vector;
 import br.org.archimedes.trims.interfaces.Trimmer;
 
 public class EllipseTrimmer implements Trimmer {
@@ -58,9 +54,6 @@ public class EllipseTrimmer implements Trimmer {
 			e.printStackTrace();
 		}
 
-		System.out.println("click: " + clickPoint);
-		System.out.println("sort: " + sortedPointSet);
-
 		SortedSet<ComparablePoint> negativeIntersections = sortedPointSet
 				.headSet(clickPoint);
 		SortedSet<ComparablePoint> positiveIntersections = sortedPointSet
@@ -77,15 +70,7 @@ public class EllipseTrimmer implements Trimmer {
 		else
 			last = positiveIntersections.last().getPoint();
 
-		try {
-			System.out.println("first = " + first + "; last = " + last);
-			Vector radius = new Vector(first, last);
-			Element arc = new Arc(first, last, first.clone().addVector(
-					radius.multiply(0.5)), true);
-			trimResult.add(arc);
-		} catch (InvalidArgumentException e) {
-			e.printStackTrace();
-		}
+		// TODO: Create the EllipseArc here.
 
 		return trimResult;
 	}
