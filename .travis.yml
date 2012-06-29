@@ -1,3 +1,6 @@
 language: java
 script: "br.org.archimedes.build/automated-build.sh --travis"
-
+jdk:
+  - openjdk6
+  - openjdk7
+  - oraclejdk7
