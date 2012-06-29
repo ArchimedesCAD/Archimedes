@@ -3,6 +3,7 @@ package br.org.archimedes.trimmers;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -21,14 +22,19 @@ import br.org.archimedes.trims.interfaces.Trimmer;
 public class EllipseTrimmer implements Trimmer {
 
 	public Collection<Element> trim(Element element,
-			Collection<Point> cutPoints, Point click)
+			Collection<Point> givenCutPoints, Point click)
 			throws NullArgumentException {
 
-		if (element == null || cutPoints == null || click == null) {
+		if (element == null || givenCutPoints == null || click == null) {
 			throw new NullArgumentException();
 		}
 		Ellipse ellipse = (Ellipse) element;
+		Collection<Point> cutPoints = new ArrayList<Point>();
 		Collection<Element> trimResult = new ArrayList<Element>();
+
+		for (Point p : givenCutPoints)
+			if (ellipse.contains(p))
+				cutPoints.add(p);
 
 		if (cutPoints.size() <= 1)
 			return Collections.singleton(element);
@@ -36,7 +42,7 @@ public class EllipseTrimmer implements Trimmer {
 		// using the point on the end of the major axis
 		Point initialPoint = ellipse.getCenter().clone();
 		initialPoint.addVector(ellipse.getSemiMajorAxis());
-		
+
 		// Sort the cut points.
 		SortedSet<ComparablePoint> sortedPointSet = getSortedPointSet(ellipse,
 				initialPoint, cutPoints);
