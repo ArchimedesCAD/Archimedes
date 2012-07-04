@@ -57,6 +57,7 @@
 					<element ref="archimedes:arc"/>
 					<element ref="archimedes:rectangle"/>
 					<element ref="archimedes:line"/>
+					<element ref="archimedes:ellipse"/>
 					<element ref="archimedes:leader"/>
 					<element ref="archimedes:dimension"/>
                 </choice>
