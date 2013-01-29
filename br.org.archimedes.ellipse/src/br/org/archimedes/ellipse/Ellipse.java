@@ -25,7 +25,7 @@ public class Ellipse extends Element implements Offsetable {
 	private Point center;
 	private Point widthPoint;
 	private Point heightPoint;
-	private double fi;
+	private double phi;// rotation angle
 
 	public Ellipse(Point center, Point widthPoint, Point heightPoint)
 			throws NullArgumentException, InvalidArgumentException {
@@ -35,7 +35,7 @@ public class Ellipse extends Element implements Offsetable {
 		this.center = center;
 		this.widthPoint = widthPoint;
 		this.heightPoint = calculateHeightPoint(center, widthPoint, heightPoint);
-		this.fi = calculateFi(center, widthPoint);
+		this.phi = calculatePhi(center, widthPoint);
 	}
 
 	public Ellipse(Point focus1, Point focus2, Double radius)
@@ -46,9 +46,9 @@ public class Ellipse extends Element implements Offsetable {
 		this.center = new Point((focus1.getX() + focus2.getX()) / 2,
 				(focus1.getY() + focus2.getY()) / 2);
 		this.widthPoint = center.addVector(new Vector(focus1, focus2));
-		this.fi = calculateFi(center, widthPoint);
+		this.phi = calculatePhi(center, widthPoint);
 
-		double angle = this.fi + Math.PI / 2; // rotaciona 90 graus.
+		double angle = this.phi + Math.PI / 2; // rotaciona 90 graus.
 		this.heightPoint = new Point(center.getX() + radius * Math.cos(angle),
 				center.getY() + radius * Math.sin(angle));
 
@@ -67,7 +67,7 @@ public class Ellipse extends Element implements Offsetable {
 	}
 
 	public double getFi() {
-		return fi;
+		return phi;
 	}
 
 	public Vector getSemiMajorAxis() {
@@ -151,17 +151,17 @@ public class Ellipse extends Element implements Offsetable {
 
 		double a = (new Vector(center, widthPoint)).getNorm();
 		double b = (new Vector(center, heightPoint)).getNorm();
-		double f = a * Math.cos(this.fi);
-		double g = b * Math.sin(this.fi);
+		double f = a * Math.cos(this.phi);
+		double g = b * Math.sin(this.phi);
 
 		double t1 = Math.acos(f / Math.sqrt(f * f + g * g));
 		double t2 = Math.acos(-f / Math.sqrt(f * f + g * g));
 		double t3 = -Math.acos(f / Math.sqrt(f * f + g * g));
 		double t4 = -Math.acos(-f / Math.sqrt(f * f + g * g));
 
-		if (fi < 0) {
-			Point x1 = calculatePointFromAngle(t1, fi);
-			Point x4 = calculatePointFromAngle(t4, fi);
+		if (phi < 0) {
+			Point x1 = calculatePointFromAngle(t1, phi);
+			Point x4 = calculatePointFromAngle(t4, phi);
 			if (x1.getX() < x4.getX()) {
 				xmin = x1;
 				xmax = x4;
@@ -170,8 +170,8 @@ public class Ellipse extends Element implements Offsetable {
 				xmax = x1;
 			}
 		} else {
-			Point x2 = calculatePointFromAngle(t2, fi);
-			Point x3 = calculatePointFromAngle(t3, fi);
+			Point x2 = calculatePointFromAngle(t2, phi);
+			Point x3 = calculatePointFromAngle(t3, phi);
 			if (x2.getX() < x3.getX()) {
 				xmin = x2;
 				xmax = x3;
@@ -181,17 +181,17 @@ public class Ellipse extends Element implements Offsetable {
 			}
 		}
 
-		f = a * Math.sin(this.fi);
-		g = b * Math.cos(this.fi);
+		f = a * Math.sin(this.phi);
+		g = b * Math.cos(this.phi);
 
 		t1 = Math.acos(f / Math.sqrt(f * f + g * g));
 		t2 = Math.acos(-f / Math.sqrt(f * f + g * g));
 		t3 = -Math.acos(f / Math.sqrt(f * f + g * g));
 		t4 = -Math.acos(-f / Math.sqrt(f * f + g * g));
 
-		if ((fi > 0 && fi < Math.PI / 2) || (fi > -Math.PI / 2 && fi < 0)) {
-			Point y1 = calculatePointFromAngle(t1, fi);
-			Point y4 = calculatePointFromAngle(t4, fi);
+		if ((phi > 0 && phi < Math.PI / 2) || (phi > -Math.PI / 2 && phi < 0)) {
+			Point y1 = calculatePointFromAngle(t1, phi);
+			Point y4 = calculatePointFromAngle(t4, phi);
 			if (y1.getY() < y4.getY()) {
 				ymin = y1;
 				ymax = y4;
@@ -200,8 +200,8 @@ public class Ellipse extends Element implements Offsetable {
 				ymax = y1;
 			}
 		} else {
-			Point y2 = calculatePointFromAngle(t2, fi);
-			Point y3 = calculatePointFromAngle(t3, fi);
+			Point y2 = calculatePointFromAngle(t2, phi);
+			Point y3 = calculatePointFromAngle(t3, phi);
 			if (y2.getY() < y3.getY()) {
 				ymin = y2;
 				ymax = y3;
@@ -231,7 +231,7 @@ public class Ellipse extends Element implements Offsetable {
 				references.add(reference);
 			}
 			for (double angle = initialAngle; angle < endingAngle; angle += increment) {
-				Point point = calculatePointFromAngle(angle, fi);
+				Point point = calculatePointFromAngle(angle, phi);
 				reference = new RhombusPoint(point);
 				if (reference.isInside(area)) {
 					references.add(reference);
@@ -288,7 +288,7 @@ public class Ellipse extends Element implements Offsetable {
 		double x, y, dx, dy, a, b;
 		Point rotPoint = point.clone();
 		try {
-			rotPoint.rotate(center, -fi);
+			rotPoint.rotate(center, -phi);
 		} catch (NullArgumentException e) {
 			e.printStackTrace();
 		}
@@ -326,7 +326,7 @@ public class Ellipse extends Element implements Offsetable {
 		widthPoint.rotate(rotateReference, angle);
 		heightPoint.rotate(rotateReference, angle);
 
-		this.fi = calculateFi(center, widthPoint);
+		this.phi = calculatePhi(center, widthPoint);
 	}
 
 	public boolean isClosed() {
@@ -380,7 +380,7 @@ public class Ellipse extends Element implements Offsetable {
 		Collection<Point> points = new ArrayList<Point>();
 
 		Point rotPoint = point.clone();
-		rotPoint.rotate(center, -fi);
+		rotPoint.rotate(center, -phi);
 
 		Vector ray = new Vector(center, rotPoint);
 		Vector e1 = new Vector(new Point(0, 0), new Point(1, 0));
@@ -394,8 +394,8 @@ public class Ellipse extends Element implements Offsetable {
 			point1 = calculatePointFromAngle(angle, 0);
 			point2 = calculatePointFromAngle(Math.PI + angle, 0);
 		}
-		point1.rotate(point1, fi);
-		point2.rotate(point2, fi);
+		point1.rotate(point1, phi);
+		point2.rotate(point2, phi);
 
 		points.add(point1);
 		points.add(point2);
@@ -412,9 +412,9 @@ public class Ellipse extends Element implements Offsetable {
 		ArrayList<Point> points = new ArrayList<Point>();
 
 		for (double angle = initialAngle; angle <= endingAngle; angle += increment) {
-			points.add(calculatePointFromAngle(angle, fi));
+			points.add(calculatePointFromAngle(angle, phi));
 		}
-		points.add(calculatePointFromAngle(endingAngle, fi));
+		points.add(calculatePointFromAngle(endingAngle, phi));
 
 		wrapper.setPrimitiveType(OpenGLWrapper.PRIMITIVE_LINE_STRIP);
 		try {
@@ -429,7 +429,7 @@ public class Ellipse extends Element implements Offsetable {
 	public void mirror(Point p1, Point p2) throws NullArgumentException,
 			IllegalActionException {
 		super.mirror(p1, p2);
-		this.fi = calculateFi(center, widthPoint);
+		this.phi = calculatePhi(center, widthPoint);
 	}
 
 	private Point calculatePointFromAngle(double angle, double fi) {
@@ -477,7 +477,7 @@ public class Ellipse extends Element implements Offsetable {
 		verifyNotInvalid(center.calculateDistance(heightPoint));
 	}
 
-	private double calculateFi(Point center, Point widthPoint) {
+	private double calculatePhi(Point center, Point widthPoint) {
 		Vector xaxis = new Vector(new Point(1, 0));
 		Vector haxis = new Vector(center, widthPoint);
 		if (center.getY() < widthPoint.getY())
