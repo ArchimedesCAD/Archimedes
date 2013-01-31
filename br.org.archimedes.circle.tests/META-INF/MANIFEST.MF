@@ -7,7 +7,6 @@ Bundle-Vendor: Hugo Corbucci
 Require-Bundle: br.org.archimedes.core,
  br.org.archimedes.core.tests,
  br.org.archimedes.circle,
- br.org.archimedes.curvedshape,
  org.junit4
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: br.org.archimedes.circle

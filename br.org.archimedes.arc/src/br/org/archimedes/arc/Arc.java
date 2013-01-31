@@ -15,13 +15,13 @@
 
 package br.org.archimedes.arc;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
 import br.org.archimedes.Constant;
 import br.org.archimedes.Geometrics;
-import br.org.archimedes.curvedshape.CurvedShape;
 import br.org.archimedes.exceptions.IllegalActionException;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.InvalidParameterException;
@@ -41,8 +41,10 @@ import br.org.archimedes.model.references.TrianglePoint;
  * This class represents an Arc of a circle. It is very similar to the circle
  * but adds some complexity to restrict the start and end of the arc.
  */
-public class Arc extends CurvedShape implements Offsetable {
+public class Arc extends Element implements Offsetable {
 
+	private Point centerPoint;
+	
 	private Point initialPoint;
 
 	private Point endingPoint;
@@ -573,8 +575,8 @@ public class Arc extends CurvedShape implements Offsetable {
 		boolean isOutside = false;
 
 		try {
-			if (Geometrics.calculateDistance(this.getCenter(), point) > Geometrics
-					.calculateDistance(this.getCenter(), this.getInitialPoint())) {
+			if (Geometrics.calculateDistance(this.getCenterPoint(), point) > Geometrics
+					.calculateDistance(this.getCenterPoint(), this.getInitialPoint())) {
 				isOutside = true;
 			}
 		} catch (NullArgumentException e) {
@@ -632,25 +634,15 @@ public class Arc extends CurvedShape implements Offsetable {
 	 */
 	@Override
 	public void draw(OpenGLWrapper wrapper) {
-
-		Point center = this.getCenter();
-
-		double initialAngle = 0.0;
-		double endingAngle = 0.0;
+		ArrayList<Point> points;
 		try {
-			initialAngle = Geometrics.calculateAngle(center,
-					this.getInitialPoint());
-			endingAngle = Geometrics.calculateAngle(center,
-					this.getEndingPoint());
+			points = Geometrics.pointsOfArcCircle(getCenterPoint(), getInitialPoint(), getEndingPoint());
+
+			wrapper.setPrimitiveType(OpenGLWrapper.PRIMITIVE_LINE_STRIP);
+			wrapper.drawFromModel(points);
 		} catch (NullArgumentException e) {
-			// Should never reach this block
 			e.printStackTrace();
 		}
-
-		if (initialAngle > endingAngle) {
-			endingAngle += 2.0 * Math.PI;
-		}
-		this.drawCurvedShape(wrapper, center, initialAngle, endingAngle);
 	}
 
 	/**
@@ -749,5 +741,13 @@ public class Arc extends CurvedShape implements Offsetable {
 		extremes.add(getInitialPoint());
 		extremes.add(getEndingPoint());
 		return extremes;
+	}
+
+	public Point getCenterPoint() {
+		return centerPoint;
+	}
+
+	public void setCenterPoint(Point centerPoint) {
+		this.centerPoint = centerPoint;
 	}
 }

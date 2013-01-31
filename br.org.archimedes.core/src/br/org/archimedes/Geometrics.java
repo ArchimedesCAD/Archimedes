@@ -853,4 +853,34 @@ public class Geometrics {
 
 		return pointAngle;
 	}
+	
+	public static ArrayList<Point> pointsOfArcCircle(Point center, Point initialPoint, Point finalPoint) 
+			throws NullArgumentException {
+		double initialAngle = calculateAngle(center,initialPoint);
+		double endingAngle = calculateAngle(center,finalPoint);
+		double radius = calculateDistance(initialPoint, center);
+		
+		return pointsOfArcCircle(center, radius, initialAngle, endingAngle);
+	}
+	
+	public static ArrayList<Point> pointsOfArcCircle(Point center, double radius, double initialAngle, double endingAngle) {
+		if (initialAngle >= endingAngle) {
+			endingAngle += 2.0 * Math.PI;
+		}
+		
+		ArrayList<Point> points = new ArrayList<Point>();
+		double increment = Math.PI / 360;
+
+		for (double angle = initialAngle; angle <= endingAngle; angle += increment) {
+			double x = center.getX() + radius * Math.cos(angle);
+			double y = center.getY() + radius * Math.sin(angle);
+			points.add(new Point(x, y));
+		}
+
+		double x = center.getX() + radius * Math.cos(endingAngle);
+		double y = center.getY() + radius * Math.sin(endingAngle);
+		points.add(new Point(x, y));
+		return points;
+	}
+	
 }

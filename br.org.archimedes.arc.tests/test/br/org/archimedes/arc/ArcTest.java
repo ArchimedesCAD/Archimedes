@@ -269,11 +269,11 @@ public class ArcTest extends Tester {
 	public void centerPointIsCalculatedCorrectly()
 			throws InvalidArgumentException, NullArgumentException {
 
-		Assert.assertEquals(center, arc1.getCenter());
-		Assert.assertEquals(center, arc2.getCenter());
-		Assert.assertEquals(center, arc3.getCenter());
+		Assert.assertEquals(center, arc1.getCenterPoint());
+		Assert.assertEquals(center, arc2.getCenterPoint());
+		Assert.assertEquals(center, arc3.getCenterPoint());
 		Arc arc = new Arc(new Point(-4, 0), new Point(-2, 2), new Point(0, 0));
-		Assert.assertEquals(new Point(-2, 0), arc.getCenter());
+		Assert.assertEquals(new Point(-2, 0), arc.getCenterPoint());
 	}
 
 	@Test

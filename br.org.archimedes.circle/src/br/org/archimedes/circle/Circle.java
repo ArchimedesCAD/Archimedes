@@ -21,7 +21,6 @@ import java.util.List;
 
 import br.org.archimedes.Constant;
 import br.org.archimedes.Geometrics;
-import br.org.archimedes.curvedshape.CurvedShape;
 import br.org.archimedes.exceptions.IllegalActionException;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.InvalidParameterException;
@@ -39,7 +38,7 @@ import br.org.archimedes.model.references.RhombusPoint;
 /**
  * Belongs to package br.org.archimedes.model.
  */
-public class Circle extends CurvedShape implements Offsetable {
+public class Circle extends Element implements Offsetable {
 
 	private Point center;
 
@@ -70,7 +69,7 @@ public class Circle extends CurvedShape implements Offsetable {
 		this.radius = Math.abs(radius);
 	}
 
-	public CurvedShape clone() {
+	public Element clone() {
 
 		Circle circle = null;
 
@@ -355,7 +354,14 @@ public class Circle extends CurvedShape implements Offsetable {
 
 	@Override
 	public void draw(OpenGLWrapper wrapper) {
+		ArrayList<Point> points;
+		try {
+			points = Geometrics.pointsOfArcCircle(this.getCenter(), radius, 0, 2 * Math.PI);
 
-		this.drawCurvedShape(wrapper, this.getCenter(), 0, 2 * Math.PI);
+			wrapper.setPrimitiveType(OpenGLWrapper.PRIMITIVE_LINE_STRIP);
+			wrapper.drawFromModel(points);
+		} catch (NullArgumentException e) {
+			e.printStackTrace();
+		}
 	}
 }
