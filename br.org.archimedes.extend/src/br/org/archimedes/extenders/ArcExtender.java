@@ -73,7 +73,7 @@ public class ArcExtender implements Extender {
 		IntersectionManager intersectionManager = new IntersectionManagerEPLoader()
 				.getIntersectionManager();
 
-		Circle circle = new Circle(arc.getCenter(), arc.getRadius());
+		Circle circle = new Circle(arc.getCenterPoint(), arc.getRadius());
 
 		return intersectionManager.getIntersectionsBetween(circle, references);
 	}
@@ -121,7 +121,7 @@ public class ArcExtender implements Extender {
 		Collection<Element> extension = new ArrayList<Element>(1);
 
 		try {
-			Circle circle = new Circle(arc.getCenter(), arc.getRadius());
+			Circle circle = new Circle(arc.getCenterPoint(), arc.getRadius());
 			extension.add(circle);
 		} catch (NullArgumentException e) {
 			// will not reach here

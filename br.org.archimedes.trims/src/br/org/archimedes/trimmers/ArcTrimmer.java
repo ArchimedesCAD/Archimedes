@@ -76,7 +76,7 @@ public class ArcTrimmer implements Trimmer {
 					&& positiveIntersections.size() > 0) {
 				Point firstPositive = positiveIntersections.first().getPoint();
 				Element resultArc = new Arc(firstPositive,
-						arc.getEndingPoint(), arc.getCenter(), true);
+						arc.getEndingPoint(), arc.getCenterPoint(), true);
 				resultArc.setLayer(arc.getLayer());
 
 				trimResult.add(resultArc);
@@ -84,7 +84,7 @@ public class ArcTrimmer implements Trimmer {
 					&& negativeIntersections.size() > 0) {
 				Point lastNegative = negativeIntersections.last().getPoint();
 				Element resultArc = new Arc(arc.getInitialPoint(),
-						lastNegative, arc.getCenter(), true);
+						lastNegative, arc.getCenterPoint(), true);
 				resultArc.setLayer(arc.getLayer());
 
 				trimResult.add(resultArc);
@@ -93,13 +93,13 @@ public class ArcTrimmer implements Trimmer {
 				Point firstPositive = positiveIntersections.first().getPoint();
 				Point lastNegative = negativeIntersections.last().getPoint();
 				Element arc1 = new Arc(arc.getInitialPoint(), lastNegative,
-						arc.getCenter(), true);
+						arc.getCenterPoint(), true);
 				arc1.setLayer(arc.getLayer());
 
 				trimResult.add(arc1);
 
 				Element arc2 = new Arc(firstPositive, arc.getEndingPoint(),
-						arc.getCenter(), true);
+						arc.getCenterPoint(), true);
 				arc2.setLayer(arc.getLayer());
 
 				trimResult.add(arc2);
@@ -153,12 +153,12 @@ public class ArcTrimmer implements Trimmer {
 			e.printStackTrace();
 		}
 		if (contained) {
-			arcAngle = Geometrics.calculateRelativeAngle(arc.getCenter(),
+			arcAngle = Geometrics.calculateRelativeAngle(arc.getCenterPoint(),
 					arc.getInitialPoint(), point);
 		} else {
-			arcAngle = Geometrics.calculateRelativeAngle(arc.getCenter(),
+			arcAngle = Geometrics.calculateRelativeAngle(arc.getCenterPoint(),
 					arc.getEndingPoint(), point);
-			arcAngle -= Geometrics.calculateRelativeAngle(arc.getCenter(),
+			arcAngle -= Geometrics.calculateRelativeAngle(arc.getCenterPoint(),
 					arc.getEndingPoint(), arc.getInitialPoint());
 		}
 		return arcAngle;

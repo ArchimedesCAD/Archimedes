@@ -43,7 +43,7 @@ public class ArcCircleIntersector implements Intersector {
 
 		Circle fakeCircle = null;
 		try {
-			fakeCircle = new Circle(baseArc.getCenter(), baseArc.getRadius());
+			fakeCircle = new Circle(baseArc.getCenterPoint(), baseArc.getRadius());
 		} catch (InvalidArgumentException e) {
 			e.printStackTrace();
 		}

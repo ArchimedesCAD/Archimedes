@@ -56,7 +56,7 @@ public class ArcExporter implements ElementExporter<Arc> {
 	 */
 	private double getAngle(Arc arc) {
 
-		Point center = arc.getCenter();
+		Point center = arc.getCenterPoint();
 		Point initialPoint = arc.getInitialPoint();
 		Point endingPoint = arc.getEndingPoint();
 		try {

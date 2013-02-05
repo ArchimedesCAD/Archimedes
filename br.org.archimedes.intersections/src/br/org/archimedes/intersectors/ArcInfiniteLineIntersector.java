@@ -47,7 +47,7 @@ public class ArcInfiniteLineIntersector implements Intersector {
 		}
 
 		try {
-			circle = new Circle(arc.getCenter(), arc.getRadius());
+			circle = new Circle(arc.getCenterPoint(), arc.getRadius());
 		} catch (InvalidArgumentException e) {
 			e.printStackTrace();
 		}

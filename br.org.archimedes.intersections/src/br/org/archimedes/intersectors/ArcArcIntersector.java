@@ -37,7 +37,7 @@ public class ArcArcIntersector implements Intersector {
 		Collection<Point> arcIntersections = new ArrayList<Point>();
 
 		if (Math.abs(arc.getRadius() - arc2.getRadius()) < Constant.EPSILON
-				&& arc.getCenter().equals(arc2.getCenter())) {
+				&& arc.getCenterPoint().equals(arc2.getCenterPoint())) {
 			if (!arc.contains(arc2) && !arc2.contains(arc)) {
 				if (arc.getEndingPoint().equals(arc2.getInitialPoint())
 						|| arc.getEndingPoint().equals(arc2.getEndingPoint())) {
@@ -65,7 +65,7 @@ public class ArcArcIntersector implements Intersector {
 		Circle circle = null;
 
 		try {
-			circle = new Circle(arc.getCenter(), arc.getRadius());
+			circle = new Circle(arc.getCenterPoint(), arc.getRadius());
 		} catch (InvalidArgumentException e) {
 			e.printStackTrace();
 		}

@@ -45,7 +45,7 @@ public class ArcExporter implements ElementExporter<Arc> {
 		PDFWriterHelper helper = (PDFWriterHelper) outputObject;
 		PdfContentByte cb = helper.getPdfContentByte();
 
-		Point center = arc.getCenter();
+		Point center = arc.getCenterPoint();
 		Point initial = arc.getInitialPoint();
 		Point ending = arc.getEndingPoint();
 		float start = 0;
