@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import br.org.archimedes.Geometrics;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.InvalidParameterException;
 import br.org.archimedes.exceptions.NullArgumentException;
@@ -14,7 +15,6 @@ import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Rectangle;
 import br.org.archimedes.model.ReferencePoint;
 import br.org.archimedes.model.Vector;
-import br.org.archimedes.Geometrics;
 
 public class EllipticArc extends Element implements Offsetable {
 
@@ -210,13 +210,59 @@ public class EllipticArc extends Element implements Offsetable {
 
 	@Override
 	public List<Point> getPoints() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Point> points = new ArrayList<Point>();
+		points.add(center);
+		points.add(widthPoint);
+		points.add(heightPoint);
+		points.add(initialPoint);
+		points.add(endPoint);
+
+		return points;
+	}
+	
+	private Point calculatePointFromAngle(double angle, double phi) {
+
+		Vector haxis = new Vector(center, widthPoint);
+		Vector vaxis = new Vector(center, heightPoint);
+
+		double x = center.getX() + haxis.getNorm() * Math.cos(angle)
+				* Math.cos(phi) - vaxis.getNorm() * Math.sin(angle)
+				* Math.sin(phi);
+		double y = center.getY() + haxis.getNorm() * Math.cos(angle)
+				* Math.sin(phi) + vaxis.getNorm() * Math.sin(angle)
+				* Math.cos(phi);
+		return new Point(x, y);
 	}
 
 	@Override
 	public void draw(OpenGLWrapper wrapper) {
-		// TODO Auto-generated method stub
+		double initialAngle = 0.0;
+		double endingAngle = 0.0;
+		double increment = Math.PI / 360;
+		ArrayList<Point> points = new ArrayList<Point>();
+
+		try {
+			initialAngle = Geometrics.calculateAngle(center, initialPoint);
+			endingAngle = Geometrics.calculateAngle(center, endPoint);
+		} catch (NullArgumentException e1) {
+			//This should never happen
+			e1.printStackTrace();
+		}
 		
+		if(initialAngle > endAngle)
+			initialAngle -= 2*Math.PI;
+		
+		for (double angle = initialAngle; angle <= endingAngle; angle += increment) {
+			points.add(calculatePointFromAngle(angle, phi));
+		}
+		points.add(calculatePointFromAngle(endingAngle, phi));
+
+		wrapper.setPrimitiveType(OpenGLWrapper.PRIMITIVE_LINE_STRIP);
+		try {
+			wrapper.drawFromModel(points);
+		} catch (NullArgumentException e) {
+			// Should never reach this block.
+			e.printStackTrace();
+		}
 	}
 }
