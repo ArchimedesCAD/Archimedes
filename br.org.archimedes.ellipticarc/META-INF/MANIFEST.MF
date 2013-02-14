@@ -5,5 +5,7 @@ Bundle-SymbolicName: br.org.archimedes.ellipticarc;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: br.org.archimedes.ellipticarc
-Import-Package: br.org.archimedes.exceptions,
+Import-Package: br.org.archimedes,
+ br.org.archimedes.exceptions,
+ br.org.archimedes.gui.opengl,
  br.org.archimedes.model

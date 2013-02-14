@@ -883,4 +883,29 @@ public class Geometrics {
 		return points;
 	}
 	
+	public static double calculatePhi(Point center, Point widthPoint) {
+		Vector xaxis = new Vector(new Point(1, 0));
+		Vector haxis = new Vector(center, widthPoint);
+		if (center.getY() < widthPoint.getY())
+			return Math.acos((xaxis.dotProduct(haxis))
+					/ (xaxis.getNorm() * haxis.getNorm()));
+		else
+			return -Math.acos((xaxis.dotProduct(haxis))
+					/ (xaxis.getNorm() * haxis.getNorm()));
+	}
+
+	public static boolean IsPointInEllipse(Point center, Point widthPoint,
+			ArrayList<Point> focus, Point testPoint) {
+		Vector haxis = new Vector(center, widthPoint); //a
+		Vector pointToFocus1 = new Vector(testPoint, focus.get(0));
+		Vector pointToFocus2 = new Vector(testPoint, focus.get(1));
+		
+		//Verify if PF1 + PF2 = 2a
+		return CompareDoubles(pointToFocus1.getNorm() + pointToFocus2.getNorm(), 2*haxis.getNorm(), Constant.EPSILON);
+	}
+
+	private static boolean CompareDoubles(double x, double y, double epsilon) {
+		return Math.abs(x-y) <= epsilon;
+	}
+	
 }

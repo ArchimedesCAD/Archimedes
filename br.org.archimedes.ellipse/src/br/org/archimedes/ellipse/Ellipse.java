@@ -35,7 +35,7 @@ public class Ellipse extends Element implements Offsetable {
 		this.center = center;
 		this.widthPoint = widthPoint;
 		this.heightPoint = calculateHeightPoint(center, widthPoint, heightPoint);
-		this.phi = calculatePhi(center, widthPoint);
+		this.phi = Geometrics.calculatePhi(center, widthPoint);
 	}
 
 	public Ellipse(Point focus1, Point focus2, Double radius)
@@ -46,7 +46,7 @@ public class Ellipse extends Element implements Offsetable {
 		this.center = new Point((focus1.getX() + focus2.getX()) / 2,
 				(focus1.getY() + focus2.getY()) / 2);
 		this.widthPoint = center.addVector(new Vector(focus1, focus2));
-		this.phi = calculatePhi(center, widthPoint);
+		this.phi = Geometrics.calculatePhi(center, widthPoint);
 
 		double angle = this.phi + Math.PI / 2; // rotaciona 90 graus.
 		this.heightPoint = new Point(center.getX() + radius * Math.cos(angle),
@@ -326,7 +326,7 @@ public class Ellipse extends Element implements Offsetable {
 		widthPoint.rotate(rotateReference, angle);
 		heightPoint.rotate(rotateReference, angle);
 
-		this.phi = calculatePhi(center, widthPoint);
+		this.phi = Geometrics.calculatePhi(center, widthPoint);
 	}
 
 	public boolean isClosed() {
@@ -429,20 +429,20 @@ public class Ellipse extends Element implements Offsetable {
 	public void mirror(Point p1, Point p2) throws NullArgumentException,
 			IllegalActionException {
 		super.mirror(p1, p2);
-		this.phi = calculatePhi(center, widthPoint);
+		this.phi = Geometrics.calculatePhi(center, widthPoint);
 	}
 
-	private Point calculatePointFromAngle(double angle, double fi) {
+	private Point calculatePointFromAngle(double angle, double phi) {
 
 		Vector haxis = new Vector(center, widthPoint);
 		Vector vaxis = new Vector(center, heightPoint);
 
 		double x = center.getX() + haxis.getNorm() * Math.cos(angle)
-				* Math.cos(fi) - vaxis.getNorm() * Math.sin(angle)
-				* Math.sin(fi);
+				* Math.cos(phi) - vaxis.getNorm() * Math.sin(angle)
+				* Math.sin(phi);
 		double y = center.getY() + haxis.getNorm() * Math.cos(angle)
-				* Math.sin(fi) + vaxis.getNorm() * Math.sin(angle)
-				* Math.cos(fi);
+				* Math.sin(phi) + vaxis.getNorm() * Math.sin(angle)
+				* Math.cos(phi);
 		return new Point(x, y);
 	}
 
@@ -475,17 +475,6 @@ public class Ellipse extends Element implements Offsetable {
 
 		verifyNotInvalid(center.calculateDistance(widthPoint));
 		verifyNotInvalid(center.calculateDistance(heightPoint));
-	}
-
-	private double calculatePhi(Point center, Point widthPoint) {
-		Vector xaxis = new Vector(new Point(1, 0));
-		Vector haxis = new Vector(center, widthPoint);
-		if (center.getY() < widthPoint.getY())
-			return Math.acos((xaxis.dotProduct(haxis))
-					/ (xaxis.getNorm() * haxis.getNorm()));
-		else
-			return -Math.acos((xaxis.dotProduct(haxis))
-					/ (xaxis.getNorm() * haxis.getNorm()));
 	}
 
 	private Point calculateHeightPoint(Point center, Point widthPoint,

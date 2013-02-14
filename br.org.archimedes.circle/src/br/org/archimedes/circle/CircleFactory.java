@@ -124,12 +124,10 @@ public class CircleFactory implements CommandFactory {
 	}
 
 	public boolean isDone() {
-
 		return !active;
 	}
 
 	public String next(Object parameter) throws InvalidParameterException {
-
 		String result = null;
 
 		if (isDone()) {
