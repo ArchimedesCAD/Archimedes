@@ -19,6 +19,11 @@ public class EllipticArcTest {
 	private EllipticArc ellipticArc1;
 	private Point leftPoint1;
 	private Point downPoint1;
+	private Point center2;
+	private Point width2;
+	private Point height2;
+	private Point point2;
+	private EllipticArc ellipticArc2;
 
 	@Before
 	public void setUp() throws Exception {
@@ -28,6 +33,13 @@ public class EllipticArcTest {
 		this.leftPoint1 = new Point(-5, 0);
 		this.downPoint1 = new Point(0, -10);
 		this.ellipticArc1 = new EllipticArc(center1, topPoint1, rightPoint1, topPoint1, rightPoint1);
+		
+		//Ellipsis with center (1,3), width 4, height 2, rotation pi/4
+		this.center2 = new Point(1, 3);
+		this.width2 = new Point((1+2*Math.sqrt(2)), 3+2*Math.sqrt(2));
+		this.height2 = new Point(1-Math.sqrt(2), 3+Math.sqrt(2));
+		this.point2 = new Point(-0.2105959185290501960466747148889, 4.610745958380194886214239587598331451157839);
+		this.ellipticArc2 = new EllipticArc(center2, width2, height2, height2, width2);
 	}
 	@Test
 	public void shouldEqualsToAnotherEllipseIfAllPointsAreEquals()
@@ -103,15 +115,25 @@ public class EllipticArcTest {
 		
 	}
 	@Test
-	public void EllipticArcContains() throws InvalidArgumentException, NullArgumentException{
+	public void EllipticArcContains1() throws InvalidArgumentException, NullArgumentException{
 		EllipticArc e = new EllipticArc(center1, topPoint1, rightPoint1, downPoint1, topPoint1);
 		assertTrue(e.contains(rightPoint1));
 		
 	}
 	@Test
+	public void EllipticArcContains2() throws InvalidArgumentException, NullArgumentException{
+		EllipticArc e = new EllipticArc(center2, width2, height2, width2, height2);
+		assertTrue(e.contains(point2));
+	}
+	@Test
 	public void EllipticArcNotContains1() throws InvalidArgumentException, NullArgumentException{
 		EllipticArc e = new EllipticArc(center1, topPoint1, rightPoint1, downPoint1, topPoint1);
 		assertFalse(e.contains(leftPoint1));
+		
+	}
+	@Test
+	public void EllipticArcNotContains2() throws InvalidArgumentException, NullArgumentException{
+		assertFalse(ellipticArc2.contains(point2));
 		
 	}
 }
