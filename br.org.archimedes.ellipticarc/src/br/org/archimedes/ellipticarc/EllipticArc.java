@@ -1,3 +1,17 @@
+/**
+ * Copyright (c) 2006, 2009 Hugo Corbucci and others.<br>
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html<br>
+ * <br>
+ * Contributors:<br>
+ * Hugo Corbucci - initial API and implementation<br>
+ * Roberto L. M. Rodrigues, Eduardo Morais and Neuton Jr.<br>
+ * <br>
+ * This file was created on 2013/01/31, 13:06:39, by Roberto L. M. Rodrigues and Neuton Jr.<br>
+ * It is part of package br.org.archimedes.ellipticArc on the br.org.archimedes.ellipticArc project.<br>
+ */
+
 package br.org.archimedes.ellipticarc;
 
 import java.util.ArrayList;
@@ -190,8 +204,21 @@ public class EllipticArc extends Element implements Offsetable {
 
 	@Override
 	public Point getProjectionOf(Point point) throws NullArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		if(point == null)
+			throw new NullArgumentException();
+		Point projection = null;
+		
+		Collection<Point> intersectionWithLine = getPointsForEllipse();
+
+		double closestDist = Double.MAX_VALUE;
+		for (Point intersection : intersectionWithLine) {
+			double dist = Geometrics.calculateDistance(point, intersection);
+			if (dist < closestDist) {
+				projection = intersection;
+				closestDist = dist;
+			}
+		}
+		return projection;
 	}
 
 	@Override
@@ -236,6 +263,18 @@ public class EllipticArc extends Element implements Offsetable {
 
 	@Override
 	public void draw(OpenGLWrapper wrapper) {
+		ArrayList<Point> points = getPointsForEllipse();
+
+		wrapper.setPrimitiveType(OpenGLWrapper.PRIMITIVE_LINE_STRIP);
+		try {
+			wrapper.drawFromModel(points);
+		} catch (NullArgumentException e) {
+			// Should never reach this block.
+			e.printStackTrace();
+		}
+	}
+
+	private ArrayList<Point> getPointsForEllipse() {
 		double initialAngle = 0.0;
 		double endingAngle = 0.0;
 		double increment = Math.PI / 360;
@@ -256,13 +295,6 @@ public class EllipticArc extends Element implements Offsetable {
 			points.add(calculatePointFromAngle(angle, phi));
 		}
 		points.add(calculatePointFromAngle(endingAngle, phi));
-
-		wrapper.setPrimitiveType(OpenGLWrapper.PRIMITIVE_LINE_STRIP);
-		try {
-			wrapper.drawFromModel(points);
-		} catch (NullArgumentException e) {
-			// Should never reach this block.
-			e.printStackTrace();
-		}
+		return points;
 	}
 }
