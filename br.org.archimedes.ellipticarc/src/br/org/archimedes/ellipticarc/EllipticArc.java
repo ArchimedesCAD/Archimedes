@@ -197,8 +197,23 @@ public class EllipticArc extends Element implements Offsetable {
 
 	@Override
 	public Rectangle getBoundaryRectangle() {
-		// TODO Auto-generated method stub
-		return null;
+		Collection<Point> intersectionWithLine = getPointsForEllipse();
+
+		double maxX = - Double.MAX_VALUE;
+		double maxY = - Double.MAX_VALUE;
+		double minX = Double.MAX_VALUE;
+		double minY = Double.MAX_VALUE;
+		for (Point intersection : intersectionWithLine) {
+			if(maxX > intersection.getX())
+				maxX = intersection.getX();
+			if(maxY > intersection.getY())
+				maxY = intersection.getY();
+			if(minX < intersection.getX())
+				minX = intersection.getX();
+			if(minY < intersection.getY())
+				minY = intersection.getY();
+		}
+		return new Rectangle(minX, minY, maxX, maxY);
 	}
 
 	@Override
