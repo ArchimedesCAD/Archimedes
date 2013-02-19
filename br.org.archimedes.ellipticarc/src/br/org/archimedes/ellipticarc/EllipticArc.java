@@ -41,6 +41,7 @@ public class EllipticArc extends Element implements Offsetable {
 	private Point endPoint;
 	private double phi;
 	private ArrayList<Point> focus;
+	ArrayList<Point> points = null;
 
 	public EllipticArc(Point center, Point widthPoint, Point heightPoint,
 			Point initialPoint, Point endPoint) throws InvalidArgumentException, NullArgumentException {
@@ -128,6 +129,7 @@ public class EllipticArc extends Element implements Offsetable {
 
 	public void setCenter(Point center) {
 		this.center = center;
+		this.points = null;
 	}
 
 	public Point getWidthPoint() {
@@ -136,6 +138,7 @@ public class EllipticArc extends Element implements Offsetable {
 
 	public void setWidthPoint(Point widthPoint) {
 		this.widthPoint = widthPoint;
+		this.points = null;
 	}
 
 	public Point getHeightPoint() {
@@ -144,6 +147,7 @@ public class EllipticArc extends Element implements Offsetable {
 
 	public void setHeightPoint(Point heightPoint) {
 		this.heightPoint = heightPoint;
+		this.points = null;
 	}
 
 	public Point getInitialPoint() {
@@ -152,6 +156,7 @@ public class EllipticArc extends Element implements Offsetable {
 
 	public void setInitialPoint(Point initialPoint) {
 		this.initialPoint = initialPoint;
+		this.points = null;
 	}
 
 	public Point getEndPoint() {
@@ -160,6 +165,7 @@ public class EllipticArc extends Element implements Offsetable {
 
 	public void setEndPoint(Point endPoint) {
 		this.endPoint = endPoint;
+		this.points = null;
 	}
 
 	@Override
@@ -278,7 +284,10 @@ public class EllipticArc extends Element implements Offsetable {
 		double initialAngle = 0.0;
 		double endingAngle = 0.0;
 		double increment = Math.PI / 360;
-		ArrayList<Point> points = new ArrayList<Point>();
+		if (this.points != null)
+			return points;
+		
+		points = new ArrayList<Point>();
 
 		try {
 			initialAngle = Geometrics.calculateAngle(center, initialPoint);
