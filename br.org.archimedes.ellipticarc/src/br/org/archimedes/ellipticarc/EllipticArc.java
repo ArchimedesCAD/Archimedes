@@ -45,6 +45,25 @@ public class EllipticArc extends Element implements Offsetable {
 	private ArrayList<Point> focus;
 	ArrayList<Point> points = null;
 
+	/**
+	 * Constructor.
+	 * 
+	 * @param center
+	 *            The elliptic arc's center
+	 * @param widthPoint
+	 *            The elliptic arc's width point
+	 * @param heightPoint
+	 *            The elliptic arc's height point
+	 * @param initialPoint
+	 *            The elliptic arc's initial point
+	 * @param endPoint
+	 *            The elliptic arc's end point
+	 * @throws NullArgumentException
+	 *             In case the point is null
+	 * @throws InvalidArgumentException
+	 *             In case the distance between focus and center
+	 */
+	
 	public EllipticArc(Point center, Point widthPoint, Point heightPoint,
 			Point initialPoint, Point endPoint) throws InvalidArgumentException, NullArgumentException {
 		if(center == null || widthPoint == null || heightPoint == null ||
