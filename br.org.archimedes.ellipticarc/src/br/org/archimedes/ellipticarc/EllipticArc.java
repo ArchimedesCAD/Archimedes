@@ -33,8 +33,8 @@ import br.org.archimedes.model.Vector;
 public class EllipticArc extends Element implements Offsetable {
 
 	private Point center;
-	private Point widthPoint;
-	private Point heightPoint;
+	private Point widthPoint;//a
+	private Point heightPoint;//b
 	private Point initialPoint;
 	private double initialAngle;
 	private double endAngle;
@@ -171,8 +171,7 @@ public class EllipticArc extends Element implements Offsetable {
 	@Override
 	public boolean isPositiveDirection(Point point)
 			throws NullArgumentException {
-		// TODO Auto-generated method stub
-		return false;
+		return !contains(point);
 	}
 
 	@Override
@@ -197,29 +196,48 @@ public class EllipticArc extends Element implements Offsetable {
 
 	@Override
 	public Rectangle getBoundaryRectangle() {
-		Collection<Point> intersectionWithLine = getPointsForEllipse();
-
-		double maxX = - Double.MAX_VALUE;
-		double maxY = - Double.MAX_VALUE;
-		double minX = Double.MAX_VALUE;
-		double minY = Double.MAX_VALUE;
-		for (Point intersection : intersectionWithLine) {
-			if(maxX > intersection.getX())
-				maxX = intersection.getX();
-			if(maxY > intersection.getY())
-				maxY = intersection.getY();
-			if(minX < intersection.getX())
-				minX = intersection.getX();
-			if(minY < intersection.getY())
-				minY = intersection.getY();
-		}
-		return new Rectangle(minX, minY, maxX, maxY);
+//		
+//		Collection<Point> intersectionWithLine = getPointsForEllipse();
+//
+//		double maxX = - Double.MAX_VALUE;
+//		double maxY = - Double.MAX_VALUE;
+//		double minX = Double.MAX_VALUE;
+//		double minY = Double.MAX_VALUE;
+//		for (Point intersection : intersectionWithLine) {
+//			if(maxX < intersection.getX())
+//				maxX = intersection.getX();
+//			if(maxY < intersection.getY())
+//				maxY = intersection.getY();
+//			if(minX > intersection.getX())
+//				minX = intersection.getX();
+//			if(minY > intersection.getY())
+//				minY = intersection.getY();
+//		}
+//		return new Rectangle(minX, minY, maxX, maxY);
+		
+		double a = Math.abs(center.getX() - widthPoint.getX());
+		double b = Math.abs(center.getY() - heightPoint.getY());
+		
+		double t1 = Math.atan((- b / a) * Math.tan(phi));
+		double t2 = Math.atan((- b / a) * Math.tan(phi))+Math.PI;
+		double t = Math.max(t1, t2);
+		double x = center.getX() + a * Math.cos(t) * Math.cos(phi) - b * Math.sin(t) * Math.sin(phi);
+		
+		double t3 = Math.atan((b / a) * 1/Math.tan(phi));
+		double t4 = Math.atan((b / a) * 1/Math.tan(phi))+Math.PI;
+		double t5 = Math.max(t3, t4);
+		double y = center.getY() + a * Math.cos(t5) * Math.sin(phi) + b * Math.sin(t5) * Math.cos(phi);
+		
+		return new Rectangle(x, y, x, y);
 	}
 
 	@Override
 	public Collection<? extends ReferencePoint> getReferencePoints(
 			Rectangle area) {
-		// TODO Auto-generated method stub
+
+		//references = new ArrayList<ReferencePoint>();
+		//references.add(getCenter());
+				
 		return null;
 	}
 

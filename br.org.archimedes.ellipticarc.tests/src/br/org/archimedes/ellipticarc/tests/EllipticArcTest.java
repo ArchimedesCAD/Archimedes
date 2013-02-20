@@ -1,15 +1,18 @@
 package br.org.archimedes.ellipticarc.tests;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import br.org.archimedes.Constant;
 import br.org.archimedes.ellipticarc.EllipticArc;
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.model.Point;
+import br.org.archimedes.model.Rectangle;
 
 public class EllipticArcTest {
 	
@@ -34,7 +37,7 @@ public class EllipticArcTest {
 		this.downPoint1 = new Point(0, -10);
 		this.ellipticArc1 = new EllipticArc(center1, topPoint1, rightPoint1, topPoint1, rightPoint1);
 		
-		//Ellipsis with center (1,3), width 4, height 2, rotation pi/4
+		//Ellipse with center (1,3), width 4, height 2, rotation pi/4
 		this.center2 = new Point(1, 3);
 		this.width2 = new Point((1+2*Math.sqrt(2)), 3+2*Math.sqrt(2));
 		this.height2 = new Point(1-Math.sqrt(2), 3+Math.sqrt(2));
@@ -135,5 +138,17 @@ public class EllipticArcTest {
 	public void EllipticArcNotContains2() throws InvalidArgumentException, NullArgumentException{
 		assertFalse(ellipticArc2.contains(point2));
 		
+	}
+	@Test
+	public void testGetBoundaryRectangle(){
+		assertEquals(ellipticArc1.getBoundaryRectangle(), new Rectangle(-5, 10, 5, -10));
+	}
+	@Test
+	public void testGetBoundaryRectangle2(){
+		Rectangle actual = ellipticArc2.getBoundaryRectangle();
+		assertEquals(1+Math.sqrt(10), actual.getUpperRight().getX(), Constant.EPSILON);
+		assertEquals(1-Math.sqrt(10), actual.getLowerLeft().getX(), Constant.EPSILON);
+		assertEquals(3+Math.sqrt(10), actual.getUpperRight().getY(), Constant.EPSILON);
+		assertEquals(3-Math.sqrt(10), actual.getLowerLeft().getY(), Constant.EPSILON);
 	}
 }
