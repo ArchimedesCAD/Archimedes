@@ -52,7 +52,6 @@ public class Rectangle {
 	 *  
 	 *  @parm p1
 	 *  		 The coordinate of one corner.
-	 *  
 	 *  @parm p2
 	 *  		 The coordinate of the opposite corner.
 	 */
