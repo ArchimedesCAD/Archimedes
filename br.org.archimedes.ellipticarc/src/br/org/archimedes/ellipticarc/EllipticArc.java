@@ -80,6 +80,8 @@ public class EllipticArc extends Element implements Offsetable {
 		this.center = center;
 		this.widthPoint = widthPoint;
 		this.heightPoint = heightPoint;
+		this.a = center.calculateDistance(widthPoint);
+		this.b = center.calculateDistance(heightPoint);
 		this.focus = calculateFocusPoints();
 		this.endAngle = Geometrics.calculateAngle(center, endPoint);
 		this.initialAngle = Geometrics.calculateAngle(center, initialPoint);
@@ -91,11 +93,6 @@ public class EllipticArc extends Element implements Offsetable {
 		this.initialPoint = initialPoint;
 		this.endPoint = endPoint;
 		this.phi = Geometrics.calculatePhi(center, widthPoint);
-		
-		Vector haxis = new Vector(center, widthPoint);
-		Vector vaxis = new Vector(center, heightPoint);
-		a = haxis.getNorm();
-		b = vaxis.getNorm();
 	}
 
 	public boolean equals(EllipticArc ellipticArc) {
@@ -126,17 +123,14 @@ public class EllipticArc extends Element implements Offsetable {
 		// Formulae reference: http://www.mathopenref.com/ellipsefoci.html
 		// http://www.mathopenref.com/ellipsesemiaxes.html
 
-		double widthDist = center.calculateDistance(widthPoint);
-		double heightDist = center.calculateDistance(heightPoint);
-
 		double F = 0.0;
 		Vector e1 = null;
-		if (widthDist > heightDist) {
+		if (a > b) {
 			// The semi-major axis is the horizontal one.
-			F = Math.sqrt(widthDist * widthDist - heightDist * heightDist);
+			F = Math.sqrt(a * a - b * b);
 			e1 = new Vector(center, widthPoint).normalized();
 		} else {
-			F = Math.sqrt(heightDist * heightDist - widthDist * widthDist);
+			F = Math.sqrt(b * b - a * a);
 			e1 = new Vector(center, heightPoint).normalized();
 		}
 
