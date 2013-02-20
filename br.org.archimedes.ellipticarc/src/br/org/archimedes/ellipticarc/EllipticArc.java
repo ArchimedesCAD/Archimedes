@@ -170,7 +170,7 @@ public class EllipticArc extends Element implements Offsetable {
 	@Override
 	public Rectangle getBoundaryRectangle() {
 		
-		double[] coordinate = getExtremePoints(a, b);
+		double[] coordinate = getAngleOfPointsWithExtremeCoordinates(a, b);
 		double x1 = calculatePointFromAngle(coordinate[0], phi).getX();
 		double x2 = calculatePointFromAngle(coordinate[1], phi).getX();
 		
@@ -180,20 +180,20 @@ public class EllipticArc extends Element implements Offsetable {
 		return new Rectangle(x1, y1, x2, y2);
 	}
 
-	private double[] getExtremePoints(double a, double b) {
-		double extremeCoordinateX1 = Math.atan((- b / a) * Math.tan(phi));
-		double extremeCoordinateX2 = extremeCoordinateX1 + Math.PI;
+	private double[] getAngleOfPointsWithExtremeCoordinates(double a, double b) {
+		double angleOfExtremeCoordinateX1 = Math.atan((- b / a) * Math.tan(phi));
+		double angleOfExtremeCoordinateX2 = angleOfExtremeCoordinateX1 + Math.PI;
 		
-		double extremeCoordinateY1 = Math.atan((b / a) * 1/Math.tan(phi));
-		double extremeCoordinateY2 = extremeCoordinateY1 + Math.PI;
-		double[] returnValue = {extremeCoordinateX1,extremeCoordinateX2, extremeCoordinateY1, extremeCoordinateY2};
+		double angleOfExtremeCoordinateY1 = Math.atan((b / a) * 1/Math.tan(phi));
+		double angleOfExtremeCoordinateY2 = angleOfExtremeCoordinateY1 + Math.PI;
+		double[] returnValue = {angleOfExtremeCoordinateX1,angleOfExtremeCoordinateX2, angleOfExtremeCoordinateY1, angleOfExtremeCoordinateY2};
 		return returnValue;
 	}
 
 	@Override
 	public Collection<? extends ReferencePoint> getReferencePoints(
 			Rectangle area) {
-
+		//TODO
 		//references = new ArrayList<ReferencePoint>();
 		//references.add(getCenter());
 				
