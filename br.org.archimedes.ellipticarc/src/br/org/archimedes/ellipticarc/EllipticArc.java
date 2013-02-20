@@ -40,6 +40,8 @@ public class EllipticArc extends Element implements Offsetable {
 	private double endAngle;
 	private Point endPoint;
 	private double phi;
+	private double a; // semi-major axis
+	private double b; // semi-minor axis
 	private ArrayList<Point> focus;
 	ArrayList<Point> points = null;
 
@@ -71,8 +73,10 @@ public class EllipticArc extends Element implements Offsetable {
 		this.endPoint = endPoint;
 		this.phi = Geometrics.calculatePhi(center, widthPoint);
 		
-		
-		// TODO Auto-generated constructor stub
+		Vector haxis = new Vector(center, widthPoint);
+		Vector vaxis = new Vector(center, heightPoint);
+		a = haxis.getNorm();
+		b = vaxis.getNorm();
 	}
 
 	public boolean equals(EllipticArc ellipticArc) {
@@ -197,12 +201,8 @@ public class EllipticArc extends Element implements Offsetable {
 
 	@Override
 	public Rectangle getBoundaryRectangle() {
-		Vector haxis = new Vector(center, widthPoint);
-		Vector vaxis = new Vector(center, heightPoint);
-		double a = haxis.getNorm();
-		double b = vaxis.getNorm();
 		
-		double[] coordinate = getExtremePoints(haxis, vaxis);
+		double[] coordinate = getExtremePoints(a, b);
 		double x1 = calculatePointFromAngle(coordinate[0], phi).getX();
 		double x2 = calculatePointFromAngle(coordinate[1], phi).getX();
 		
@@ -212,11 +212,11 @@ public class EllipticArc extends Element implements Offsetable {
 		return new Rectangle(x1, y1, x2, y2);
 	}
 
-	private double[] getExtremePoints(Vector haxis, Vector vaxis) {
-		double extremeCoordinateX1 = Math.atan((-vaxis.getNorm() / haxis.getNorm()) * Math.tan(phi));
+	private double[] getExtremePoints(double a, double b) {
+		double extremeCoordinateX1 = Math.atan((- b / a) * Math.tan(phi));
 		double extremeCoordinateX2 = extremeCoordinateX1 + Math.PI;
 		
-		double extremeCoordinateY1 = Math.atan((vaxis.getNorm() / haxis.getNorm()) * 1/Math.tan(phi));
+		double extremeCoordinateY1 = Math.atan((b / a) * 1/Math.tan(phi));
 		double extremeCoordinateY2 = extremeCoordinateY1 + Math.PI;
 		double[] returnValue = {extremeCoordinateX1,extremeCoordinateX2, extremeCoordinateY1, extremeCoordinateY2};
 		return returnValue;
@@ -279,14 +279,11 @@ public class EllipticArc extends Element implements Offsetable {
 	
 	private Point calculatePointFromAngle(double angle, double phi) {
 
-		Vector haxis = new Vector(center, widthPoint);
-		Vector vaxis = new Vector(center, heightPoint);
-
-		double x = center.getX() + haxis.getNorm() * Math.cos(angle)
-				* Math.cos(phi) - vaxis.getNorm() * Math.sin(angle)
+		double x = center.getX() + a * Math.cos(angle)
+				* Math.cos(phi) - b * Math.sin(angle)
 				* Math.sin(phi);
-		double y = center.getY() + haxis.getNorm() * Math.cos(angle)
-				* Math.sin(phi) + vaxis.getNorm() * Math.sin(angle)
+		double y = center.getY() + a * Math.cos(angle)
+				* Math.sin(phi) + b * Math.sin(angle)
 				* Math.cos(phi);
 		return new Point(x, y);
 	}
