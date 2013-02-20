@@ -104,11 +104,11 @@ public class EllipticArc extends Element implements Offsetable {
 
 		if (ellipticArc == null) {
 			result = false;
-		} else if (!this.center.equals(ellipticArc.getCenter())
-				|| !this.widthPoint.equals(ellipticArc.getWidthPoint())
-				|| !this.heightPoint.equals(ellipticArc.getHeightPoint())
-				|| !this.endPoint.equals(ellipticArc.getEndPoint())
-				|| !this.initialPoint.equals(ellipticArc.getInitialPoint())) {
+		} else if (!this.center.equals(center)
+				|| !this.widthPoint.equals(widthPoint)
+				|| !this.heightPoint.equals(heightPoint)
+				|| !this.endPoint.equals(endPoint)
+				|| !this.initialPoint.equals(initialPoint)) {
 			result = false;
 		}
 		
@@ -146,26 +146,7 @@ public class EllipticArc extends Element implements Offsetable {
 		return focusPoints;
 	}
 
-	public Point getCenter() {
-		return center;
-	}
-
-	public Point getWidthPoint() {
-		return widthPoint;
-	}
-
-	public Point getHeightPoint() {
-		return heightPoint;
-	}
-
-	public Point getInitialPoint() {
-		return initialPoint;
-	}
-
-	public Point getEndPoint() {
-		return endPoint;
-	}
-
+	
 	@Override
 	public boolean isPositiveDirection(Point point)
 			throws NullArgumentException {
