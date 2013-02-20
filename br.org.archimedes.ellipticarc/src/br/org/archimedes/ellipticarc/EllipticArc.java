@@ -33,8 +33,8 @@ import br.org.archimedes.model.Vector;
 public class EllipticArc extends Element implements Offsetable {
 
 	private Point center;
-	private Point widthPoint;//a
-	private Point heightPoint;//b
+	private Point widthPoint;
+	private Point heightPoint;
 	private Point initialPoint;
 	private double initialAngle;
 	private double endAngle;
@@ -129,6 +129,7 @@ public class EllipticArc extends Element implements Offsetable {
 
 	public void setCenter(Point center) {
 		this.center = center;
+		//TODO Recalculate everything when something changes
 		this.points = null;
 	}
 
@@ -196,39 +197,29 @@ public class EllipticArc extends Element implements Offsetable {
 
 	@Override
 	public Rectangle getBoundaryRectangle() {
-//		
-//		Collection<Point> intersectionWithLine = getPointsForEllipse();
-//
-//		double maxX = - Double.MAX_VALUE;
-//		double maxY = - Double.MAX_VALUE;
-//		double minX = Double.MAX_VALUE;
-//		double minY = Double.MAX_VALUE;
-//		for (Point intersection : intersectionWithLine) {
-//			if(maxX < intersection.getX())
-//				maxX = intersection.getX();
-//			if(maxY < intersection.getY())
-//				maxY = intersection.getY();
-//			if(minX > intersection.getX())
-//				minX = intersection.getX();
-//			if(minY > intersection.getY())
-//				minY = intersection.getY();
-//		}
-//		return new Rectangle(minX, minY, maxX, maxY);
+		Vector haxis = new Vector(center, widthPoint);
+		Vector vaxis = new Vector(center, heightPoint);
+		double a = haxis.getNorm();
+		double b = vaxis.getNorm();
 		
-		double a = Math.abs(center.getX() - widthPoint.getX());
-		double b = Math.abs(center.getY() - heightPoint.getY());
+		double[] coordinate = getExtremePoints(haxis, vaxis);
+		double x1 = calculatePointFromAngle(coordinate[0], phi).getX();
+		double x2 = calculatePointFromAngle(coordinate[1], phi).getX();
 		
-		double t1 = Math.atan((- b / a) * Math.tan(phi));
-		double t2 = Math.atan((- b / a) * Math.tan(phi))+Math.PI;
-		double t = Math.max(t1, t2);
-		double x = center.getX() + a * Math.cos(t) * Math.cos(phi) - b * Math.sin(t) * Math.sin(phi);
+		double y1 = calculatePointFromAngle(coordinate[2], phi).getY();
+		double y2 = calculatePointFromAngle(coordinate[3], phi).getY();
 		
-		double t3 = Math.atan((b / a) * 1/Math.tan(phi));
-		double t4 = Math.atan((b / a) * 1/Math.tan(phi))+Math.PI;
-		double t5 = Math.max(t3, t4);
-		double y = center.getY() + a * Math.cos(t5) * Math.sin(phi) + b * Math.sin(t5) * Math.cos(phi);
+		return new Rectangle(x1, y1, x2, y2);
+	}
+
+	private double[] getExtremePoints(Vector haxis, Vector vaxis) {
+		double extremeCoordinateX1 = Math.atan((-vaxis.getNorm() / haxis.getNorm()) * Math.tan(phi));
+		double extremeCoordinateX2 = extremeCoordinateX1 + Math.PI;
 		
-		return new Rectangle(x, y, x, y);
+		double extremeCoordinateY1 = Math.atan((vaxis.getNorm() / haxis.getNorm()) * 1/Math.tan(phi));
+		double extremeCoordinateY2 = extremeCoordinateY1 + Math.PI;
+		double[] returnValue = {extremeCoordinateX1,extremeCoordinateX2, extremeCoordinateY1, extremeCoordinateY2};
+		return returnValue;
 	}
 
 	@Override

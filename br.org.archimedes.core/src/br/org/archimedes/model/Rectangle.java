@@ -46,6 +46,19 @@ public class Rectangle {
 		this.width = Math.abs(x1 - x2);
 		this.height = Math.abs(y1 - y2);
 	}
+	
+	/**
+	 *  Constructor
+	 *  
+	 *  @parm p1
+	 *  		 The coordinate of one corner.
+	 *  
+	 *  @parm p2
+	 *  		 The coordinate of the opposite corner.
+	 */
+	public Rectangle(Point p1, Point p2) {
+		this(p1.getX(), p1.getY(), p2.getX(), p2.getY());
+	}
 
 	/**
 	 * @return A list of points of the rectangle in counter-clockwise order
