@@ -131,46 +131,20 @@ public class EllipticArc extends Element implements Offsetable {
 		return center;
 	}
 
-	public void setCenter(Point center) {
-		this.center = center;
-		//TODO Recalculate everything when something changes
-		this.points = null;
-	}
-
 	public Point getWidthPoint() {
 		return widthPoint;
-	}
-
-	public void setWidthPoint(Point widthPoint) {
-		this.widthPoint = widthPoint;
-		this.points = null;
 	}
 
 	public Point getHeightPoint() {
 		return heightPoint;
 	}
 
-	public void setHeightPoint(Point heightPoint) {
-		this.heightPoint = heightPoint;
-		this.points = null;
-	}
-
 	public Point getInitialPoint() {
 		return initialPoint;
 	}
 
-	public void setInitialPoint(Point initialPoint) {
-		this.initialPoint = initialPoint;
-		this.points = null;
-	}
-
 	public Point getEndPoint() {
 		return endPoint;
-	}
-
-	public void setEndPoint(Point endPoint) {
-		this.endPoint = endPoint;
-		this.points = null;
 	}
 
 	@Override
