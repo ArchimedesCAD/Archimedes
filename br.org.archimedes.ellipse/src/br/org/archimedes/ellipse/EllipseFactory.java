@@ -38,7 +38,7 @@ public class EllipseFactory implements CommandFactory {
 
 	private PutOrRemoveElementCommand command;
 
-	private boolean isCenterProtocol; // centro e eixos
+	private boolean isCenterProtocol; // center and axis
 
 	public EllipseFactory() {
 
@@ -78,10 +78,8 @@ public class EllipseFactory implements CommandFactory {
 					line = new Line(start, end);
 					line.draw(opengl);
 				} catch (NullArgumentException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (InvalidArgumentException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			} else if (center != null && widthPoint != null && !isDone()) {
@@ -114,10 +112,8 @@ public class EllipseFactory implements CommandFactory {
 					line = new Line(f1, f2);
 					line.draw(opengl);
 				} catch (NullArgumentException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (InvalidArgumentException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			} else if (focus1 != null && focus2 != null && !isDone()) {

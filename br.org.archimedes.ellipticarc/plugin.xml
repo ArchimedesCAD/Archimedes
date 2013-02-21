@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="br.org.archimedes.core.element">
+         <element id="br.org.archimedes.ellipticarc" name="EllipticArc" 
+         	class="br.org.archimedes.ellipticarc.EllipticArc"
+         	factory="br.org.archimedes.ellipticarc.EllipticArcFactory"
+         	shortcut="ela" />
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:create?after=ellipse">
+         <command
+               commandId="br.org.archimedes.core.factoryactivator"
+               icon="icons/ellipticarc.png"
+               id="ellipticarc"
+               label="%command.ellipticarc.label"
+               mnemonic="%command.ellipticarc.mnemonic"
+               style="push"
+               tooltip="%command.ellipticarc.tooltip">
+            <parameter
+                  name="br.org.archimedes.core.factoryactivator.name"
+                  value="br.org.archimedes.ellipticArc">
+            </parameter>
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="toolbar:create?after=ellipse">
+         <command
+               commandId="br.org.archimedes.core.factoryactivator"
+               icon="icons/ellipticarc.png"
+               id="ellipticarc"
+               label="%command.ellipticarc.label"
+               mnemonic="%command.ellipticarc.mnemonic"
+               style="push"
+               tooltip="%command.ellipticarc.tooltip">
+            <parameter
+                  name="br.org.archimedes.core.factoryactivator.name"
+                  value="br.org.archimedes.ellipticArc">
+            </parameter>
+         </command>
+      </menuContribution>
+   </extension>
+
+</plugin>
