@@ -86,7 +86,6 @@ public class EllipticArc extends Element implements Offsetable {
 		this.endAngle = Geometrics.calculateAngle(center, endPoint);
 		this.initialAngle = Geometrics.calculateAngle(center, initialPoint);
 
-		
 		if(!contains(initialPoint) || !contains(endPoint))
 			throw new InvalidArgumentException();
 		
@@ -169,8 +168,12 @@ public class EllipticArc extends Element implements Offsetable {
 
 	@Override
 	public Rectangle getBoundaryRectangle() {
-		
 		double[] coordinate = getAngleOfPointsWithExtremeCoordinates(a, b);
+		Point[] extremePoints = new Point[4];
+		for (int i=0; i<4; i++)
+			extremePoints[i] = calculatePointFromAngle(coordinate[i], phi);
+		
+		//TODO We have to check if the angles fall between initialAngle and finalAngle
 		double x1 = calculatePointFromAngle(coordinate[0], phi).getX();
 		double x2 = calculatePointFromAngle(coordinate[1], phi).getX();
 		

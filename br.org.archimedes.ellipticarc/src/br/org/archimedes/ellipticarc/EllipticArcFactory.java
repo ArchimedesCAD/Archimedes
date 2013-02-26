@@ -53,13 +53,11 @@ public class EllipticArcFactory implements CommandFactory {
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+		return "ellipticArc";
 	}
 
 	@Override
 	public boolean isTransformFactory() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
