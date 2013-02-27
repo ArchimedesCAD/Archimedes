@@ -9,10 +9,10 @@ We are a new team working on Archimedes, We would like to show a tutorial of how
 2. Download and install an Eclipse version above 3.4. Make sure it has all of the Eclipse RCP plugins. We suggest "Eclipse for RCP and RAP Developers". The installation just involves unpacking the zip or tar.gz file you downloaded. Enter to the folder that was created on the previous step, there should be an executable called 'eclipse'. Run that executable.
 
 3. Download the Archimedes project. You need to create a git account (http://github.com). To get the code:
- - as a user (Git read-only access), use "git://github.com/ArchimedesLabXP2012/Archimedes.git".
- - as a developer (Git read-write access), use "git@github.com:ArchimedesLabXP2012/Archimedes.git". This option needs a code access, for that you must send an e-mail to the admin of the project.
+ - as a user (Git read-only access), use "git://github.com/ArchimedesCAD/Archimedes.git".
+ - as a developer (Git read-write access), use "git@github.com:ArchimedesCAD/Archimedes.git". This option needs a code access, for that you must send an e-mail to the admin of the project.
 
-4. Import the project on Eclipse. Go to "File"->"Import". Select "Git"->"Projects from Git". Press Next, select the URI option and press Next. Fill in the URI field with "git@github.com:ArchimedesLabXP2012/Archimedes.git". Then press next to maintain the default options. Finally press finish.
+4. Import the project on Eclipse. Go to "File"->"Import". Select "Git"->"Projects from Git". Press Next, select the URI option and press Next. Fill in the URI field with "git@github.com:ArchimedesCAD/Archimedes.git". Then press next to maintain the default options. Finally press finish.
 
 5. Run Archimedes. For that, find the project "br.org.archimedes.core", expand it. Find the file "archimedes.product", right-click it, "Run As..."->"Eclipse Application". On Mac, that's enough. It all works. On Linux, there is a problem, because it doesn't select all plugins needed. It then pops an error dialog, press proceed button.
 
