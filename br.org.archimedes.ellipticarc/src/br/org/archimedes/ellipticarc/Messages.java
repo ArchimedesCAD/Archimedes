@@ -27,5 +27,7 @@ public class Messages extends NLS {
 	public static final String EllipticArcFactory_SelectRadius = "Specify Radius";
 	public static final String EllipticArcFactory_SelectEndPoint = "Specify End Point";
 	public static final String EllipticArcFactory_SelectInitialPoint = "Specify Initial Point";
-
+	public static final String Created = null;
+	public static final String NotCreatedBecauseNullArgument = null;
+	public static final String NotCreatedBecauseInvalidArgument = null;
 }

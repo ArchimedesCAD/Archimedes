@@ -17,7 +17,10 @@ package br.org.archimedes.ellipticarc;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.org.archimedes.controller.commands.PutOrRemoveElementCommand;
+import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.InvalidParameterException;
+import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.factories.CommandFactory;
 import br.org.archimedes.gui.model.Workspace;
 import br.org.archimedes.interfaces.Command;
@@ -128,8 +131,24 @@ public class EllipticArcFactory implements CommandFactory {
 	}
 
 	private String createEllipticArc() {
-		// TODO Auto-generated method stub
-		return null;
+		String result = null;
+		EllipticArc newEllipticArc;
+		try {
+			if (isCenterProtocol) {
+				newEllipticArc = new EllipticArc(center, widthPoint, heightPoint, initialPoint, endPoint);
+			} else {
+				//newEllipticArc = new EllipticArc(focus1, focus2, radius);
+				newEllipticArc = new EllipticArc(center, widthPoint, heightPoint, initialPoint, endPoint);
+			}
+			command = new PutOrRemoveElementCommand(newEllipticArc, false);
+			result = Messages.Created;
+		} catch (NullArgumentException e) {
+			result = Messages.NotCreatedBecauseNullArgument;
+		} catch (InvalidArgumentException e) {
+			result = Messages.NotCreatedBecauseInvalidArgument;
+		}
+		deactivate();
+		return result;
 	}
 
 	@Override
