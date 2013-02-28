@@ -41,6 +41,8 @@ Require-Bundle: br.org.archimedes.arc.tests;bundle-version="0.58.0",
  br.org.archimedes.trims.tests;bundle-version="0.58.0",
  br.org.archimedes.undo.tests;bundle-version="0.58.0",
  br.org.archimedes.zoom.tests;bundle-version="0.58.0",
- org.junit
+ org.junit,
+ br.org.archimedes.ellipse.tests;bundle-version="0.66.0",
+ br.org.archimedes.ellipticarc.tests;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6

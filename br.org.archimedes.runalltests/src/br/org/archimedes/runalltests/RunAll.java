@@ -24,6 +24,8 @@ import br.org.archimedes.dimension.test.DimensionFactoryTest;
 import br.org.archimedes.dimension.test.DimensionTest;
 import br.org.archimedes.distance.DistanceFactoryTest;
 import br.org.archimedes.erase.EraseFactoryTest;
+import br.org.archimedes.ellipse.tests.EllipseTest;
+import br.org.archimedes.ellipticarc.tests.EllipticArcTest;
 import br.org.archimedes.extend.ExtendCommandTest;
 import br.org.archimedes.extend.ExtendManagerTest;
 import br.org.archimedes.extenders.ArcExtenderTest;
@@ -138,9 +140,10 @@ import br.org.archimedes.zoom.ZoomFactoryTest;
 		DistanceParserTest.class, DoubleDecoratorParserTest.class,
 		DrawingIntersectionTest.class, DrawingTest.class,
 		EditTextCommandTest.class, EditTextFactoryTest.class,
-		EraseFactoryTest.class, ExplodeFactoryTest.class,
-		ExtendCommandTest.class, ExtendManagerTest.class, ExtendTest.class,
-		FilletCommandTest.class, FilletFactoryTest.class, GeometricsTest.class,
+		EllipseTest.class, EllipticArcTest.class, EraseFactoryTest.class,
+		ExplodeFactoryTest.class, ExtendCommandTest.class,
+		ExtendManagerTest.class, ExtendTest.class, FilletCommandTest.class,
+		FilletFactoryTest.class, GeometricsTest.class,
 		HorizontalInfiniteLineTest.class, InfiniteLineExporterTest.class,
 		InfiniteLinePolylineIntersectorTest.class, InfiniteLineTrimTest.class,
 		InputControllerTest.class, LeaderExporterTest.class, LeaderTest.class,
