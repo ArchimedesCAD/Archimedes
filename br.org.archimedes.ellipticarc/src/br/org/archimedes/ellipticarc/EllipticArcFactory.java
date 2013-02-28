@@ -1,6 +1,7 @@
 package br.org.archimedes.ellipticarc;
 
-import org.eclipse.swt.widgets.List;
+import java.util.ArrayList;
+import java.util.List;
 
 import br.org.archimedes.exceptions.InvalidParameterException;
 import br.org.archimedes.factories.CommandFactory;
@@ -11,12 +12,19 @@ import br.org.archimedes.interfaces.Parser;
 public class EllipticArcFactory implements CommandFactory {
 	private Workspace workspace;
 	private boolean active;
+	private Command command;
+	private boolean isCenterProtocol;
 
 	public EllipticArcFactory() {
 
 		workspace = br.org.archimedes.Utils.getWorkspace();
 		deactivate();
 		this.isCenterProtocol = false;
+	}
+
+	private void deactivate() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
