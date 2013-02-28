@@ -884,14 +884,11 @@ public class Geometrics {
 	}
 	
 	public static double calculatePhi(Point center, Point widthPoint) {
-		Vector xaxis = new Vector(new Point(1, 0));
 		Vector haxis = new Vector(center, widthPoint);
 		if (center.getY() < widthPoint.getY())
-			return Math.acos((xaxis.dotProduct(haxis))
-					/ (xaxis.getNorm() * haxis.getNorm()));
+			return Math.acos(haxis.getX() / haxis.getNorm());
 		else
-			return -Math.acos((xaxis.dotProduct(haxis))
-					/ (xaxis.getNorm() * haxis.getNorm()));
+			return -Math.acos(haxis.getX() / haxis.getNorm());
 	}
 
 	public static boolean IsPointInEllipse(Point center, Point widthPoint,
