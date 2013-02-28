@@ -23,57 +23,56 @@ import br.org.archimedes.model.Point;
 
 public class MouseMoveHandler extends Observable {
 
-    private static MouseMoveHandler instance;
+	private static MouseMoveHandler instance;
 
+	/**
+	 * Constructor. It's Empty.
+	 */
+	private MouseMoveHandler() {
 
-    /**
-     * Constructor. It's Empty.
-     */
-    private MouseMoveHandler () {
+	}
 
-    }
+	/**
+	 * @return the unique instance of the MouseClickHandler.
+	 */
+	public static MouseMoveHandler getInstance() {
 
-    /**
-     * @return the unique instance of the MouseClickHandler.
-     */
-    public static MouseMoveHandler getInstance () {
+		if (instance == null) {
+			instance = new MouseMoveHandler();
+		}
+		return instance;
+	}
 
-        if (instance == null) {
-            instance = new MouseMoveHandler();
-        }
-        return instance;
-    }
+	/**
+	 * This method receives the mouse move event from the current Canvas, and
+	 * sends to the observers the normalized point.
+	 * 
+	 * @param event
+	 *            The mouse event received
+	 */
+	public void receiveMouseMove(MouseEvent event) {
 
-    /**
-     * This method receives the mouse move event from the current Canvas, and
-     * sends to the observers the normalized point.
-     * 
-     * @param event The mouse event received
-     */
-    public void receiveMouseMove (MouseEvent event) {
+		Point point;
 
-        Point point;
+		Canvas canvas = (Canvas) event.getSource();
 
-        Canvas canvas = (Canvas) event.getSource();
+		Rectangle rect = canvas.getClientArea();
 
-        Rectangle rect = canvas.getClientArea();
+		double x = (double) event.x;
+		double y = (double) event.y;
 
-        double x = (double) event.x;
-        double y = (double) event.y;
+		point = new Point(x - rect.width / 2, (rect.height - y) - rect.height
+				/ 2);
 
-        point = new Point(x - rect.width / 2, (rect.height - y) - rect.height
-                / 2);
-
-        Workspace workspace = br.org.archimedes.Utils.getWorkspace();
-        try {
+		Workspace workspace = br.org.archimedes.Utils.getWorkspace();
+		try {
 			point = workspace.screenToModel(point);
-        }
-        catch (NullArgumentException e) {
-            e.printStackTrace();
-        }
-        workspace.setMousePosition(point);
-        
-        setChanged();
-        notifyObservers(point);
-    }
+		} catch (NullArgumentException e) {
+			e.printStackTrace();
+		}
+		workspace.setMousePosition(point);
+
+		setChanged();
+		notifyObservers(point);
+	}
 }

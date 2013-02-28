@@ -19,22 +19,21 @@ package br.org.archimedes.interfaces;
  */
 public class FileModelImpl implements FileModel {
 
-    private String filePath;
+	private String filePath;
 
+	/**
+	 * @see br.org.archimedes.interfaces.FileModel#getFilePath()
+	 */
+	public String getFilePath() {
 
-    /**
-     * @see br.org.archimedes.interfaces.FileModel#getFilePath()
-     */
-    public String getFilePath () {
+		return filePath;
+	}
 
-        return filePath;
-    }
+	/**
+	 * @see br.org.archimedes.interfaces.FileModel#setFilePath(java.lang.String)
+	 */
+	public void setFilePath(String path) {
 
-    /**
-     * @see br.org.archimedes.interfaces.FileModel#setFilePath(java.lang.String)
-     */
-    public void setFilePath (String path) {
-
-        this.filePath = path;
-    }
+		this.filePath = path;
+	}
 }

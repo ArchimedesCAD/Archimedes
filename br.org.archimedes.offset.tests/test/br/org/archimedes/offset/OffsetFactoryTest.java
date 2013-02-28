@@ -13,6 +13,13 @@
 package br.org.archimedes.offset;
 
 import static org.junit.Assert.assertNotNull;
+
+import java.util.HashSet;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 import br.org.archimedes.controller.Controller;
 import br.org.archimedes.exceptions.InvalidParameterException;
 import br.org.archimedes.exceptions.NullArgumentException;
@@ -25,199 +32,201 @@ import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Selection;
 import br.org.archimedes.stub.StubElement;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-import java.util.HashSet;
-
 public class OffsetFactoryTest extends FactoryTester {
 
-    
-    /**
-     * Belongs to package br.org.archimedes.offset.
-     *
-     * @author "Hugo Corbucci"
-     */
-    public class OffsetableStubElement extends StubElement implements Offsetable {
+	/**
+	 * Belongs to package br.org.archimedes.offset.
+	 * 
+	 * @author "Hugo Corbucci"
+	 */
+	public class OffsetableStubElement extends StubElement implements
+			Offsetable {
 
-        /* (non-Javadoc)
-         * @see br.org.archimedes.model.Offsetable#cloneWithDistance(double)
-         */
-        public Element cloneWithDistance (double distance) throws InvalidParameterException {
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see br.org.archimedes.model.Offsetable#cloneWithDistance(double)
+		 */
+		public Element cloneWithDistance(double distance)
+				throws InvalidParameterException {
 
-            return null;
-        }
+			return null;
+		}
 
-        /* (non-Javadoc)
-         * @see br.org.archimedes.model.Offsetable#isPositiveDirection(br.org.archimedes.model.Point)
-         */
-        public boolean isPositiveDirection (Point point) throws NullArgumentException {
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see
+		 * br.org.archimedes.model.Offsetable#isPositiveDirection(br.org.archimedes
+		 * .model.Point)
+		 */
+		public boolean isPositiveDirection(Point point)
+				throws NullArgumentException {
 
-            return false;
-        }
-    }
+			return false;
+		}
+	}
 
-    private Controller controller;
+	private Controller controller;
 
-    private Drawing drawing;
+	private Drawing drawing;
 
-    private CommandFactory factory;
+	private CommandFactory factory;
 
-    @Before
-    public void setUp () {
+	@Before
+	public void setUp() {
 
-        factory = new OffsetFactory();
+		factory = new OffsetFactory();
 
-        controller = br.org.archimedes.Utils.getController();
-        drawing = new Drawing("Teste");
-        controller.setActiveDrawing(drawing);
-    }
+		controller = br.org.archimedes.Utils.getController();
+		drawing = new Drawing("Teste");
+		controller.setActiveDrawing(drawing);
+	}
 
-    @After
-    public void tearDown () {
+	@After
+	public void tearDown() {
 
-        controller.setActiveDrawing(null);
-        controller.deselectAll();
-    }
+		controller.setActiveDrawing(null);
+		controller.deselectAll();
+	}
 
-    @Test
-    public void testOffset () {
-        Element element = new OffsetableStubElement();
-        putSafeElementOnDrawing(element, drawing);
+	@Test
+	public void testOffset() {
+		Element element = new OffsetableStubElement();
+		putSafeElementOnDrawing(element, drawing);
 
-        HashSet<Element> selection = new HashSet<Element>();
-        selection.add(element);
+		HashSet<Element> selection = new HashSet<Element>();
+		selection.add(element);
 
-        // Begin
-        assertBegin(factory, false);
+		// Begin
+		assertBegin(factory, false);
 
-        assertInvalidNext(factory, new Object());
-        assertInvalidNext(factory, selection);
-        assertInvalidNext(factory, true);
+		assertInvalidNext(factory, new Object());
+		assertInvalidNext(factory, selection);
+		assertInvalidNext(factory, true);
 
-        // Distance
-        assertSafeNext(factory, 10.0, false);
+		// Distance
+		assertSafeNext(factory, 10.0, false);
 
-        assertInvalidNext(factory, new Object());
-        assertInvalidNext(factory, 10.0);
-        assertInvalidNext(factory, true);
+		assertInvalidNext(factory, new Object());
+		assertInvalidNext(factory, 10.0);
+		assertInvalidNext(factory, true);
 
-        // Selection
-        assertSafeNext(factory, selection, false);
+		// Selection
+		assertSafeNext(factory, selection, false);
 
-        assertInvalidNext(factory, new Object());
-        assertInvalidNext(factory, 10.0);
-        assertInvalidNext(factory, selection);
+		assertInvalidNext(factory, new Object());
+		assertInvalidNext(factory, 10.0);
+		assertInvalidNext(factory, selection);
 
-        // true/false
-        assertSafeNext(factory, true, false, true);
+		// true/false
+		assertSafeNext(factory, true, false, true);
 
-        assertInvalidNext(factory, new Object());
-        assertInvalidNext(factory, 10.0);
-        assertInvalidNext(factory, selection);
+		assertInvalidNext(factory, new Object());
+		assertInvalidNext(factory, 10.0);
+		assertInvalidNext(factory, selection);
 
-        // true/false
-        assertSafeNext(factory, false, false, true);
+		// true/false
+		assertSafeNext(factory, false, false, true);
 
-        assertInvalidNext(factory, new Object());
-        assertInvalidNext(factory, 10.0);
-        assertInvalidNext(factory, selection);
+		assertInvalidNext(factory, new Object());
+		assertInvalidNext(factory, 10.0);
+		assertInvalidNext(factory, selection);
 
-        // Cancel
-        assertCancel(factory, false);
-    }
+		// Cancel
+		assertCancel(factory, false);
+	}
 
-    @Test
-    public void testOffsetWithSelection () {
-        Element element = new OffsetableStubElement();
-        putSafeElementOnDrawing(element, drawing);
+	@Test
+	public void testOffsetWithSelection() {
+		Element element = new OffsetableStubElement();
+		putSafeElementOnDrawing(element, drawing);
 
-        Selection selection = new Selection();
-        selection.add(element);
-        drawing.setSelection(selection);
+		Selection selection = new Selection();
+		selection.add(element);
+		drawing.setSelection(selection);
 
-        // Begin
-        assertBegin(factory, false);
+		// Begin
+		assertBegin(factory, false);
 
-        assertInvalidNext(factory, new Object());
-        assertInvalidNext(factory, selection);
-        assertInvalidNext(factory, true);
+		assertInvalidNext(factory, new Object());
+		assertInvalidNext(factory, selection);
+		assertInvalidNext(factory, true);
 
-        // Distance
-        assertSafeNext(factory, 10.0, false);
+		// Distance
+		assertSafeNext(factory, 10.0, false);
 
-        assertInvalidNext(factory, new Object());
-        assertInvalidNext(factory, 10.0);
-        assertInvalidNext(factory, selection);
+		assertInvalidNext(factory, new Object());
+		assertInvalidNext(factory, 10.0);
+		assertInvalidNext(factory, selection);
 
-        // true/false
-        assertSafeNext(factory, true, false, true);
+		// true/false
+		assertSafeNext(factory, true, false, true);
 
-        assertInvalidNext(factory, new Object());
-        assertInvalidNext(factory, 10.0);
-        assertInvalidNext(factory, selection);
+		assertInvalidNext(factory, new Object());
+		assertInvalidNext(factory, 10.0);
+		assertInvalidNext(factory, selection);
 
-        // true/false
-        assertSafeNext(factory, false, false, true);
+		// true/false
+		assertSafeNext(factory, false, false, true);
 
-        assertInvalidNext(factory, new Object());
-        assertInvalidNext(factory, 10.0);
-        assertInvalidNext(factory, selection);
+		assertInvalidNext(factory, new Object());
+		assertInvalidNext(factory, 10.0);
+		assertInvalidNext(factory, selection);
 
-        // Cancel
-        assertCancel(factory, false);
-    }
+		// Cancel
+		assertCancel(factory, false);
+	}
 
-    @Test
-    public void testCancel () {
-        Element element = new OffsetableStubElement();
-        putSafeElementOnDrawing(element, drawing);
+	@Test
+	public void testCancel() {
+		Element element = new OffsetableStubElement();
+		putSafeElementOnDrawing(element, drawing);
 
-        HashSet<Element> selection = new HashSet<Element>();
-        selection.add(element);
+		HashSet<Element> selection = new HashSet<Element>();
+		selection.add(element);
 
-        assertBegin(factory, false);
-        assertCancel(factory, false);
+		assertBegin(factory, false);
+		assertCancel(factory, false);
 
-        assertBegin(factory, false);
-        assertSafeNext(factory, 10.0, false);
-        assertCancel(factory, false);
+		assertBegin(factory, false);
+		assertSafeNext(factory, 10.0, false);
+		assertCancel(factory, false);
 
-        assertBegin(factory, false);
-        assertSafeNext(factory, 10.0, false);
-        assertSafeNext(factory, selection, false);
-        assertCancel(factory, false);
+		assertBegin(factory, false);
+		assertSafeNext(factory, 10.0, false);
+		assertSafeNext(factory, selection, false);
+		assertCancel(factory, false);
 
-        assertBegin(factory, false);
-        assertSafeNext(factory, 10.0, false);
-        assertSafeNext(factory, selection, false);
-        assertSafeNext(factory, true, false, true);
-        assertCancel(factory, false);
-    }
-    
-    @Test
-    public void testCancelWithSelection () {
-        Element element = new OffsetableStubElement();
-        putSafeElementOnDrawing(element, drawing);
+		assertBegin(factory, false);
+		assertSafeNext(factory, 10.0, false);
+		assertSafeNext(factory, selection, false);
+		assertSafeNext(factory, true, false, true);
+		assertCancel(factory, false);
+	}
 
-        Selection selection = new Selection();
-        selection.add(element);
-        drawing.setSelection(selection);
+	@Test
+	public void testCancelWithSelection() {
+		Element element = new OffsetableStubElement();
+		putSafeElementOnDrawing(element, drawing);
 
-        assertBegin(factory, false);
-        assertCancel(factory, false);
+		Selection selection = new Selection();
+		selection.add(element);
+		drawing.setSelection(selection);
 
-        assertBegin(factory, false);
-        assertSafeNext(factory, 10.0, false);
-        assertCancel(factory, false);
+		assertBegin(factory, false);
+		assertCancel(factory, false);
 
-        assertBegin(factory, false);
-        assertSafeNext(factory, 10.0, false);
-        assertSafeNext(factory, true, false, true);
-        assertCancel(factory, false);
-    }
-    
+		assertBegin(factory, false);
+		assertSafeNext(factory, 10.0, false);
+		assertCancel(factory, false);
+
+		assertBegin(factory, false);
+		assertSafeNext(factory, 10.0, false);
+		assertSafeNext(factory, true, false, true);
+		assertCancel(factory, false);
+	}
+
 	@Override
 	@Test
 	public void testFactoryName() {

@@ -26,37 +26,35 @@ import org.eclipse.core.runtime.Platform;
  */
 public class ExtensionLoader {
 
-    private String extensionName;
+	private String extensionName;
 
+	public ExtensionLoader(String extensionName) {
 
-    public ExtensionLoader (String extensionName) {
+		this.extensionName = extensionName;
+	}
 
-        this.extensionName = extensionName;
-    }
+	public void loadExtension(ExtensionTagHandler handler) {
 
-    public void loadExtension (ExtensionTagHandler handler) {
-
-        IExtensionRegistry registry = Platform.getExtensionRegistry();
-        if (registry != null) {
-            IExtensionPoint extensionPoint = registry
-                    .getExtensionPoint(extensionName);
-            if (extensionPoint != null) {
-                IExtension[] extensions = extensionPoint.getExtensions();
-                for (IExtension extension : extensions) {
-                    IConfigurationElement[] configElements = extension
-                            .getConfigurationElements();
-                    for (IConfigurationElement tag : configElements) {
-                        try {
-                            handler.handleTag(tag);
-                        }
-                        catch (CoreException e) {
-                            // Then it cannot be loaded and something went
-                            // really wrong. Just printing for log reasons.
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            }
-        }
-    }
+		IExtensionRegistry registry = Platform.getExtensionRegistry();
+		if (registry != null) {
+			IExtensionPoint extensionPoint = registry
+					.getExtensionPoint(extensionName);
+			if (extensionPoint != null) {
+				IExtension[] extensions = extensionPoint.getExtensions();
+				for (IExtension extension : extensions) {
+					IConfigurationElement[] configElements = extension
+							.getConfigurationElements();
+					for (IConfigurationElement tag : configElements) {
+						try {
+							handler.handleTag(tag);
+						} catch (CoreException e) {
+							// Then it cannot be loaded and something went
+							// really wrong. Just printing for log reasons.
+							e.printStackTrace();
+						}
+					}
+				}
+			}
+		}
+	}
 }

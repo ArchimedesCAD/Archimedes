@@ -29,143 +29,138 @@ import br.org.archimedes.model.Rectangle;
  */
 public class SelectionCommand implements Command {
 
-    private static boolean shiftSelected;
+	private static boolean shiftSelected;
 
-    private static SelectionCommand active;
+	private static SelectionCommand active;
 
-    private Point p1;
+	private Point p1;
 
-    private Controller controller;
+	private Controller controller;
 
+	/**
+	 * Constructor.<br>
+	 * Creates a new selection command ignoring the previous selection.
+	 * 
+	 * @param point
+	 *            The first point in the selection
+	 */
+	public SelectionCommand(Point point) {
 
-    /**
-     * Constructor.<br>
-     * Creates a new selection command ignoring the previous selection.
-     * 
-     * @param point
-     *            The first point in the selection
-     */
-    public SelectionCommand (Point point) {
+		p1 = point;
+		controller = br.org.archimedes.Utils.getController();
+		active = this;
+	}
 
-        p1 = point;
-        controller = br.org.archimedes.Utils.getController();
-        active = this;
-    }
+	/**
+	 * Draws the visual helper for selection.
+	 */
+	public void drawVisualHelper() {
 
-    /**
-     * Draws the visual helper for selection.
-     */
-    public void drawVisualHelper () {
-    	
-        Point start = p1;
-        Point end = br.org.archimedes.Utils.getWorkspace().getActualMousePosition();
+		Point start = p1;
+		Point end = br.org.archimedes.Utils.getWorkspace()
+				.getActualMousePosition();
 
-        Rectangle rectangle = new Rectangle(start.getX(), start.getY(), end
-                .getX(), end.getY());
-        OpenGLWrapper opengl = br.org.archimedes.Utils.getOpenGLWrapper();
-        Color cursorColor = Utils.getWorkspace().getCursorColor();
-        opengl.setColor(cursorColor);
-        opengl.setLineWidth(OpenGLWrapper.NORMAL_WIDTH);
-        if (end.getX() <= start.getX()) {
-            opengl.setLineStyle(OpenGLWrapper.STIPPLED_LINE);
-        }
+		Rectangle rectangle = new Rectangle(start.getX(), start.getY(),
+				end.getX(), end.getY());
+		OpenGLWrapper opengl = br.org.archimedes.Utils.getOpenGLWrapper();
+		Color cursorColor = Utils.getWorkspace().getCursorColor();
+		opengl.setColor(cursorColor);
+		opengl.setLineWidth(OpenGLWrapper.NORMAL_WIDTH);
+		if (end.getX() <= start.getX()) {
+			opengl.setLineStyle(OpenGLWrapper.STIPPLED_LINE);
+		}
 
-        opengl.setPrimitiveType(OpenGLWrapper.PRIMITIVE_LINE_LOOP);
-        try {
-            opengl.drawFromModel(rectangle.getPoints());
-        }
-        catch (NullArgumentException e) {
-            // Should never reach this block.
-            e.printStackTrace();
-        }
-    }
+		opengl.setPrimitiveType(OpenGLWrapper.PRIMITIVE_LINE_LOOP);
+		try {
+			opengl.drawFromModel(rectangle.getPoints());
+		} catch (NullArgumentException e) {
+			// Should never reach this block.
+			e.printStackTrace();
+		}
+	}
 
-    /**
-     * @return Returns the shiftSelected.
-     */
-    public static boolean isShiftSelected () {
+	/**
+	 * @return Returns the shiftSelected.
+	 */
+	public static boolean isShiftSelected() {
 
-        return shiftSelected;
-    }
+		return shiftSelected;
+	}
 
-    /**
-     * @param shiftSelected
-     *            The shiftSelected to set.
-     */
-    public static void setShiftSelected (boolean shiftSelected) {
+	/**
+	 * @param shiftSelected
+	 *            The shiftSelected to set.
+	 */
+	public static void setShiftSelected(boolean shiftSelected) {
 
-        SelectionCommand.shiftSelected = shiftSelected;
-    }
+		SelectionCommand.shiftSelected = shiftSelected;
+	}
 
-    public boolean execute () {
+	public boolean execute() {
 
-        boolean finished = false;
-        try {
-            finished = controller.select(p1, shiftSelected);
-        }
-        catch (NullArgumentException e) {
-            // p1 is not initialized ???
-        }
-        catch (NoActiveDrawingException e) {
-            // Should not happen
-            e.printStackTrace();
-        }
+		boolean finished = false;
+		try {
+			finished = controller.select(p1, shiftSelected);
+		} catch (NullArgumentException e) {
+			// p1 is not initialized ???
+		} catch (NoActiveDrawingException e) {
+			// Should not happen
+			e.printStackTrace();
+		}
 
-        if (finished) {
-            cancel();
-        }
+		if (finished) {
+			cancel();
+		}
 
-        return true;
-    }
+		return true;
+	}
 
-    public static boolean isActive () {
+	public static boolean isActive() {
 
-        return active != null;
-    }
+		return active != null;
+	}
 
-    public boolean isDone () {
+	public boolean isDone() {
 
-        return active == null;
-    }
+		return active == null;
+	}
 
-    /**
-     * @returns The active command.
-     */
-    public static SelectionCommand getActive () {
+	/**
+	 * @returns The active command.
+	 */
+	public static SelectionCommand getActive() {
 
-        return active;
-    }
+		return active;
+	}
 
-    /**
-     * Receives the second point of the selection.
-     * 
-     * @param point
-     *            Second point of the selection.
-     */
-    public void execute (Point point) {
+	/**
+	 * Receives the second point of the selection.
+	 * 
+	 * @param point
+	 *            Second point of the selection.
+	 */
+	public void execute(Point point) {
 
-        if (point != null) {
-            try {
-                controller.select(p1, point, shiftSelected);
-                cancel();
-            }
-            catch (NullArgumentException e) {
-                // Should never reach this code
-                e.printStackTrace();
-            }
-            catch (NoActiveDrawingException e) {
-                // Should not happen
-                e.printStackTrace();
-            }
-        }
-    }
+		if (point != null) {
+			try {
+				controller.select(p1, point, shiftSelected);
+				cancel();
+			} catch (NullArgumentException e) {
+				// Should never reach this code
+				e.printStackTrace();
+			} catch (NoActiveDrawingException e) {
+				// Should not happen
+				e.printStackTrace();
+			}
+		}
+	}
 
-    /**
-     * Cancels this command.
-     */
-    public void cancel () {
+	/**
+	 * Cancels this command.
+	 */
+	public void cancel() {
 
-        active = null;
-//        Window.getInstance().update();
-    }
+		active = null;
+		// Window.getInstance().update();
+	}
 }

@@ -13,72 +13,76 @@
 
 package br.org.archimedes.parser;
 
-import br.org.archimedes.Utils;
-import br.org.archimedes.exceptions.InvalidParameterException;
-import br.org.archimedes.model.Drawing;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import br.org.archimedes.Utils;
+import br.org.archimedes.exceptions.InvalidParameterException;
+import br.org.archimedes.model.Drawing;
 
 /**
  * Belongs to package br.org.archimedes.parser.
  */
 public class SimpleSelectionParserTest {
 
-    private SimpleSelectionParser selectionParser;
+	private SimpleSelectionParser selectionParser;
 
+	@Before
+	public void setUp() throws Exception {
 
-    @Before
-    public void setUp () throws Exception {
+		Utils.getController().setActiveDrawing(new Drawing(""));
+		selectionParser = new SimpleSelectionParser();
+		assertFalse("Should not be done yet", selectionParser.isDone());
+		assertNull("The parameter should be null",
+				selectionParser.getParameter());
+	}
 
-        Utils.getController().setActiveDrawing(new Drawing(""));
-        selectionParser = new SimpleSelectionParser();
-        assertFalse("Should not be done yet", selectionParser.isDone());
-        assertNull("The parameter should be null", selectionParser.getParameter());
-    }
+	@After
+	public void tearDown() throws Exception {
 
-    @After
-    public void tearDown () throws Exception {
+		Utils.getController().setActiveDrawing(null);
+		selectionParser = null;
+	}
 
-        Utils.getController().setActiveDrawing(null);
-        selectionParser = null;
-    }
+	@Test(expected = InvalidParameterException.class)
+	public void passingNullToSelectionParserThrowsException() throws Exception {
 
-    @Test(expected = InvalidParameterException.class)
-    public void passingNullToSelectionParserThrowsException () throws Exception {
+		selectionParser.next(null);
+	}
 
-        selectionParser.next(null);
-    }
+	@Test(expected = InvalidParameterException.class)
+	public void passingAMessageToSelectionParserThrowsException()
+			throws Exception {
 
-    @Test(expected = InvalidParameterException.class)
-    public void passingAMessageToSelectionParserThrowsException () throws Exception {
+		selectionParser.next("bla");
+	}
 
-        selectionParser.next("bla");
-    }
+	@Test(expected = InvalidParameterException.class)
+	public void passingAPointToSelectionParserThrowsException()
+			throws Exception {
 
-    @Test(expected = InvalidParameterException.class)
-    public void passingAPointToSelectionParserThrowsException () throws Exception {
+		selectionParser.next("10;5");
+	}
 
-        selectionParser.next("10;5");
-    }
+	@Test(expected = InvalidParameterException.class)
+	public void passingANumberToSelectionParserThrowsException()
+			throws Exception {
 
-    @Test(expected = InvalidParameterException.class)
-    public void passingANumberToSelectionParserThrowsException () throws Exception {
+		selectionParser.next("10,6");
+	}
 
-        selectionParser.next("10,6");
-    }
+	@Test
+	public void testSelectionParser() throws Exception {
 
-    @Test
-    public void testSelectionParser () throws Exception {
-
-        selectionParser.next("");
-        assertTrue("Should be done", selectionParser.isDone());
-        assertNotNull("The parameter should not be null", selectionParser.getParameter());
-    }
+		selectionParser.next("");
+		assertTrue("Should be done", selectionParser.isDone());
+		assertNotNull("The parameter should not be null",
+				selectionParser.getParameter());
+	}
 }

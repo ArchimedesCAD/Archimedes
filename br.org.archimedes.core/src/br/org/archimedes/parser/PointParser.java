@@ -22,51 +22,49 @@ import br.org.archimedes.model.Point;
  */
 public class PointParser implements Parser {
 
-    private Point point;
+	private Point point;
 
+	/**
+	 * Constructor.
+	 */
+	public PointParser() {
 
-    /**
-     * Constructor.
-     */
-    public PointParser () {
+		point = null;
+	}
 
-        point = null;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.interpreter.parser.Parser#next(java.lang.String)
+	 */
+	public String next(String message) throws InvalidParameterException {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.interpreter.parser.Parser#next(java.lang.String)
-     */
-    public String next (String message) throws InvalidParameterException {
+		if (Utils.isPoint(message)) {
+			point = Utils.getPointCoordinates(message);
+		} else {
+			throw new InvalidParameterException(Messages.Point_expectingPoint);
+		}
 
-        if (Utils.isPoint(message)) {
-            point = Utils.getPointCoordinates(message);
-        }
-        else {
-            throw new InvalidParameterException(Messages.Point_expectingPoint);
-        }
+		return null;
+	}
 
-        return null;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.interpreter.parser.Parser#isDone()
+	 */
+	public boolean isDone() {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.interpreter.parser.Parser#isDone()
-     */
-    public boolean isDone () {
+		return (point != null);
+	}
 
-        return (point != null);
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.interpreter.parser.Parser#getParameter()
+	 */
+	public Object getParameter() {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.interpreter.parser.Parser#getParameter()
-     */
-    public Object getParameter () {
-
-        return point;
-    }
+		return point;
+	}
 }

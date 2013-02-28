@@ -24,34 +24,34 @@ import br.org.archimedes.model.Rectangle;
  * 
  * @author night
  */
-public interface ElementExporter <T extends Element> {
+public interface ElementExporter<T extends Element> {
 
-    /**
-     * @param element
-     *            The element of type T.
-     * @param output
-     *            The output to which the element must be written. Users must known which class this
-     *            is.
-     * @throws IOException
-     *             In case of any IO problem.
-     * @throws NotSupportedException
-     *             In case the method is not supported.
-     */
-    public void exportElement (T element, Object outputObject) throws IOException,
-            NotSupportedException;
+	/**
+	 * @param element
+	 *            The element of type T.
+	 * @param output
+	 *            The output to which the element must be written. Users must
+	 *            known which class this is.
+	 * @throws IOException
+	 *             In case of any IO problem.
+	 * @throws NotSupportedException
+	 *             In case the method is not supported.
+	 */
+	public void exportElement(T element, Object outputObject)
+			throws IOException, NotSupportedException;
 
-    /**
-     * @param element
-     *            The element of type T.
-     * @param output
-     *            The output to which the element must be written. Users must known which class this
-     *            is.
-     * @param boundingBox
-     * @throws IOException
-     *             In case of any IO problem.
-     * @throws NotSupportedException
-     *             In case the method is not supported.
-     */
-    public void exportElement (T element, Object outputObject, Rectangle boundingBox)
-            throws IOException, NotSupportedException;
+	/**
+	 * @param element
+	 *            The element of type T.
+	 * @param output
+	 *            The output to which the element must be written. Users must
+	 *            known which class this is.
+	 * @param boundingBox
+	 * @throws IOException
+	 *             In case of any IO problem.
+	 * @throws NotSupportedException
+	 *             In case the method is not supported.
+	 */
+	public void exportElement(T element, Object outputObject,
+			Rectangle boundingBox) throws IOException, NotSupportedException;
 }

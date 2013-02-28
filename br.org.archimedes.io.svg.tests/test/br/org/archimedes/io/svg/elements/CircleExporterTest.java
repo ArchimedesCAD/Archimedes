@@ -13,53 +13,52 @@
 
 package br.org.archimedes.io.svg.elements;
 
-import br.org.archimedes.Tester;
-import br.org.archimedes.circle.Circle;
-import br.org.archimedes.model.Point;
+import static org.junit.Assert.assertEquals;
+
+import java.io.ByteArrayOutputStream;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.ByteArrayOutputStream;
-
-import static org.junit.Assert.*;
+import br.org.archimedes.Tester;
+import br.org.archimedes.circle.Circle;
+import br.org.archimedes.model.Point;
 
 /**
  * @author Luiz Real and Bruno Klava
  */
 public class CircleExporterTest extends Tester {
 
-    private CircleExporter exporter;
+	private CircleExporter exporter;
 
-    private ByteArrayOutputStream stream;
+	private ByteArrayOutputStream stream;
 
+	@Before
+	public void setUp() throws Exception {
 
-    @Before
-    public void setUp () throws Exception {
+		exporter = new CircleExporter();
+		stream = new ByteArrayOutputStream();
+	}
 
-        exporter = new CircleExporter();
-        stream = new ByteArrayOutputStream();
-    }
+	@Test
+	public void exportCircleInTheCenterAsSVG() throws Exception {
 
-    @Test
-    public void exportCircleInTheCenterAsSVG () throws Exception {
+		Circle circle = new Circle(new Point(0.0, 0.0), 1.0);
+		exporter.exportElement(circle, stream);
+		String expected = "<circle fill=\"none\" cx=\"0\" cy=\"0\" r=\"1\"/>\n"
+				.replaceAll("\\s", "");
+		String result = stream.toString().replaceAll("\\s", "");
+		assertEquals(expected, result);
+	}
 
-        Circle circle = new Circle(new Point(0.0, 0.0), 1.0);
-        exporter.exportElement(circle, stream);
-        String expected = "<circle fill=\"none\" cx=\"0\" cy=\"0\" r=\"1\"/>\n".replaceAll("\\s",
-                "");
-        String result = stream.toString().replaceAll("\\s", "");
-        assertEquals(expected, result);
-    }
+	@Test
+	public void exportCircleInSomewhereAsSVG() throws Exception {
 
-    @Test
-    public void exportCircleInSomewhereAsSVG () throws Exception {
-
-        Circle circle = new Circle(new Point(10.0, 5.0), 4.5);
-        exporter.exportElement(circle, stream);
-        String expected = "<circle fill=\"none\" cx=\"10\" cy=\"-5\" r=\"4\"/>\n".replaceAll("\\s",
-                "");
-        String result = stream.toString().replaceAll("\\s", "");
-        assertEquals(expected, result);
-    }
+		Circle circle = new Circle(new Point(10.0, 5.0), 4.5);
+		exporter.exportElement(circle, stream);
+		String expected = "<circle fill=\"none\" cx=\"10\" cy=\"-5\" r=\"4\"/>\n"
+				.replaceAll("\\s", "");
+		String result = stream.toString().replaceAll("\\s", "");
+		assertEquals(expected, result);
+	}
 }

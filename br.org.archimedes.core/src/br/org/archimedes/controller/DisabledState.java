@@ -23,81 +23,92 @@ import br.org.archimedes.model.Drawing;
  */
 public class DisabledState extends InputState {
 
-    private static final String DISABLED = "br.org.archimedes.disabled"; //$NON-NLS-1$
+	private static final String DISABLED = "br.org.archimedes.disabled"; //$NON-NLS-1$
 
-    private IdleState idleState;    
+	private IdleState idleState;
 
-    /**
-     * @param previousState
-     *            The previous input state.
-     */
-    public DisabledState () {
+	/**
+	 * @param previousState
+	 *            The previous input state.
+	 */
+	public DisabledState() {
 
-        idleState = new IdleState(this);
-    }
+		idleState = new IdleState(this);
+	}
 
-    /*
-     * (non-Javadoc)
-     * @see br.org.archimedes.controller.InputState#receiveText(java.lang.String)
-     */
-    public String receiveText (String text) {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.org.archimedes.controller.InputState#receiveText(java.lang.String)
+	 */
+	public String receiveText(String text) {
 
-        return Messages.NoDrawing;
-    }
+		return Messages.NoDrawing;
+	}
 
-    /*
-     * (non-Javadoc)
-     * @see br.org.archimedes.controller.InputState#getNext()
-     */
-    public InputState getNext () {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.controller.InputState#getNext()
+	 */
+	public InputState getNext() {
 
-        return this;
-    }
+		return this;
+	}
 
-    /*
-     * (non-Javadoc)
-     * @see br.org.archimedes.controller.InputState#nextShouldHandle()
-     */
-    public boolean nextShouldHandle () {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.controller.InputState#nextShouldHandle()
+	 */
+	public boolean nextShouldHandle() {
 
-        return false;
-    }
+		return false;
+	}
 
-    /*
-     * (non-Javadoc)
-     * @see br.org.archimedes.controller.InputState#changedDrawing(br.org.archimedes.model.Drawing)
-     */
-    public InputState changedDrawing (Drawing currentDrawing) {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.org.archimedes.controller.InputState#changedDrawing(br.org.archimedes
+	 * .model.Drawing)
+	 */
+	public InputState changedDrawing(Drawing currentDrawing) {
 
-        return idleState.changedDrawing(currentDrawing);
-    }
+		return idleState.changedDrawing(currentDrawing);
+	}
 
-    /*
-     * (non-Javadoc)
-     * @see br.org.archimedes.controller.InputState#cancel()
-     */
-    public String cancel () {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.controller.InputState#cancel()
+	 */
+	public String cancel() {
 
-        return null;
-    }
+		return null;
+	}
 
-    /*
-     * (non-Javadoc)
-     * @seebr.org.archimedes.controller.InputState#setCurrentFactory(br.org.archimedes.factories.
-     * CommandFactory)
-     */
-    @Override
-    protected String setCurrentFactory (CommandFactory factory) {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @seebr.org.archimedes.controller.InputState#setCurrentFactory(br.org.
+	 * archimedes.factories. CommandFactory)
+	 */
+	@Override
+	protected String setCurrentFactory(CommandFactory factory) {
 
-        return Messages.NoDrawing;
-    }
+		return Messages.NoDrawing;
+	}
 
-    /* (non-Javadoc)
-     * @see br.org.archimedes.controller.InputState#getContextId()
-     */
-    @Override
-    public String getContextId () {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.controller.InputState#getContextId()
+	 */
+	@Override
+	public String getContextId() {
 
-        return DISABLED;
-    }
+		return DISABLED;
+	}
 }

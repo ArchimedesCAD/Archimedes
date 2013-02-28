@@ -31,72 +31,73 @@ import br.org.archimedes.rcp.ExtensionTagHandler;
  */
 public class NativeFormatEPLoader implements ExtensionTagHandler {
 
-    private static final String NATIVE_FORMAT_EXTENSION_POINT_ID = "br.org.archimedes.core.nativeFormat"; //$NON-NLS-1$
+	private static final String NATIVE_FORMAT_EXTENSION_POINT_ID = "br.org.archimedes.core.nativeFormat"; //$NON-NLS-1$
 
-    private static final String IMPORTER_ATTRIBUTE_NAME = "importer"; //$NON-NLS-1$
+	private static final String IMPORTER_ATTRIBUTE_NAME = "importer"; //$NON-NLS-1$
 
-    private static final String EXPORTER_ATTRIBUTE_NAME = "exporter"; //$NON-NLS-1$
+	private static final String EXPORTER_ATTRIBUTE_NAME = "exporter"; //$NON-NLS-1$
 
-    private static final String EXTENSION_ATTRIBUTE_NAME = "extension"; //$NON-NLS-1$
+	private static final String EXTENSION_ATTRIBUTE_NAME = "extension"; //$NON-NLS-1$
 
-    private static final Map<String, Importer> nativeImporters = new HashMap<String, Importer>();
+	private static final Map<String, Importer> nativeImporters = new HashMap<String, Importer>();
 
-    private static final Map<String, Exporter> nativeExporters = new HashMap<String, Exporter>();
+	private static final Map<String, Exporter> nativeExporters = new HashMap<String, Exporter>();
 
+	/**
+	 * Default constructor. Loads importers if none listed so far
+	 */
+	public NativeFormatEPLoader() {
 
-    /**
-     * Default constructor. Loads importers if none listed so far
-     */
-    public NativeFormatEPLoader () {
+		if (nativeImporters.isEmpty()) {
+			ExtensionLoader loader = new ExtensionLoader(
+					NATIVE_FORMAT_EXTENSION_POINT_ID);
+			loader.loadExtension(this);
+		}
+	}
 
-        if (nativeImporters.isEmpty()) {
-            ExtensionLoader loader = new ExtensionLoader(
-                    NATIVE_FORMAT_EXTENSION_POINT_ID);
-            loader.loadExtension(this);
-        }
-    }
+	/**
+	 * @return An array of natively supported extensions
+	 */
+	public String[] getExtensionsArray() {
 
-    /**
-     * @return An array of natively supported extensions
-     */
-    public String[] getExtensionsArray () {
+		Set<String> extensionsSet = nativeImporters.keySet();
+		String[] result = new String[extensionsSet.size()];
+		return extensionsSet.toArray(result);
+	}
 
-        Set<String> extensionsSet = nativeImporters.keySet();
-        String[] result = new String[extensionsSet.size()];
-        return extensionsSet.toArray(result);
-    }
+	/**
+	 * @param extension
+	 *            The extension from which we want the importer of
+	 * @return The corresponding importer or null if none is found for that
+	 *         extension
+	 */
+	public Importer getImporter(String extension) {
 
-    /**
-     * @param extension
-     *            The extension from which we want the importer of
-     * @return The corresponding importer or null if none is found for that
-     *         extension
-     */
-    public Importer getImporter (String extension) {
+		return nativeImporters.get(extension);
+	}
 
-        return nativeImporters.get(extension);
-    }
+	/**
+	 * @param extension
+	 * @return
+	 */
+	public Exporter getExporter(String extension) {
 
-    /**
-     * @param extension
-     * @return
-     */
-    public Exporter getExporter (String extension) {
+		return nativeExporters.get(extension);
+	}
 
-        return nativeExporters.get(extension);
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.org.archimedes.rcp.ExtensionTagHandler#handleTag(org.eclipse.core.
+	 * runtime.IConfigurationElement)
+	 */
+	public void handleTag(IConfigurationElement tag) throws CoreException {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.rcp.ExtensionTagHandler#handleTag(org.eclipse.core.runtime.IConfigurationElement)
-     */
-    public void handleTag (IConfigurationElement tag) throws CoreException {
-
-        String extension = tag.getAttribute(EXTENSION_ATTRIBUTE_NAME);
-        nativeImporters.put(extension, (Importer) tag
-                .createExecutableExtension(IMPORTER_ATTRIBUTE_NAME));
-        nativeExporters.put(extension, (Exporter) tag
-                .createExecutableExtension(EXPORTER_ATTRIBUTE_NAME));
-    }
+		String extension = tag.getAttribute(EXTENSION_ATTRIBUTE_NAME);
+		nativeImporters.put(extension, (Importer) tag
+				.createExecutableExtension(IMPORTER_ATTRIBUTE_NAME));
+		nativeExporters.put(extension, (Exporter) tag
+				.createExecutableExtension(EXPORTER_ATTRIBUTE_NAME));
+	}
 }

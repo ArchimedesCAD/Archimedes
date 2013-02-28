@@ -16,14 +16,12 @@ import org.kabeja.parser.ParseException;
 import org.kabeja.parser.Parser;
 import org.kabeja.parser.ParserBuilder;
 
-import br.org.archimedes.circle.Circle;
 import br.org.archimedes.ellipse.Ellipse;
-import br.org.archimedes.io.dxf.parsers.CircleParser;
 import br.org.archimedes.io.dxf.parsers.EllipseParser;
 import br.org.archimedes.model.Element;
 
 public class EllipseParserTests {
-	
+
 	private EllipseParser ellipseParser;
 	private FileInputStream file;
 
@@ -32,11 +30,11 @@ public class EllipseParserTests {
 		ellipseParser = new EllipseParser();
 		file = new FileInputStream(new File("./files/ellipseTest.dxf"));
 	}
-	
+
 	@Test
 	public void shouldParseEllipse() throws Exception {
 		DXFLayer layer = createDXFLayer();
-		
+
 		Collection<Element> parse = ellipseParser.parse(layer);
 		assertEquals(1, parse.size());
 		Element[] elements = parse.toArray(new Element[0]);
@@ -46,11 +44,9 @@ public class EllipseParserTests {
 	private DXFLayer createDXFLayer() throws ParseException {
 		Parser kabejaParser = ParserBuilder.createDefaultParser();
 		kabejaParser.parse(file, DXFParser.DEFAULT_ENCODING);
-		
+
 		DXFLayer layer = kabejaParser.getDocument().getDXFLayer("0");
 		return layer;
 	}
-	
-	
 
 }

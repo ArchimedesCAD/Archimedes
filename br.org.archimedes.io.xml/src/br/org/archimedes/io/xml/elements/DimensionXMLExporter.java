@@ -23,40 +23,40 @@ import br.org.archimedes.io.xml.XMLExporterHelper;
 import br.org.archimedes.model.Rectangle;
 
 /**
- * XML Exporter for the Dimension element. Is independent from the Line and Text exporter although
- * the element cannot exist if those elements are not present.
+ * XML Exporter for the Dimension element. Is independent from the Line and Text
+ * exporter although the element cannot exist if those elements are not present.
  * 
  * @author julien
  * @author eduardo
  */
 public class DimensionXMLExporter implements ElementExporter<Dimension> {
 
-    public void exportElement (final Dimension dimension, final Object outputObject)
-            throws IOException {
+	public void exportElement(final Dimension dimension,
+			final Object outputObject) throws IOException {
 
-        OutputStream output = (OutputStream) outputObject;
-        StringBuilder dimensionTag = new StringBuilder();
-        dimensionTag.append("<dimension>"); //$NON-NLS-1$
+		OutputStream output = (OutputStream) outputObject;
+		StringBuilder dimensionTag = new StringBuilder();
+		dimensionTag.append("<dimension>"); //$NON-NLS-1$
 
-        dimensionTag.append(XMLExporterHelper.xmlFor("point", dimension //$NON-NLS-1$
-                .getInitialPoint()));
-        dimensionTag.append(XMLExporterHelper.xmlFor("point", dimension //$NON-NLS-1$
-                .getEndingPoint()));
-        dimensionTag.append(XMLExporterHelper.xmlFor("point", dimension //$NON-NLS-1$
-                .getDistancePoint()));
+		dimensionTag.append(XMLExporterHelper.xmlFor("point", dimension //$NON-NLS-1$
+				.getInitialPoint()));
+		dimensionTag.append(XMLExporterHelper.xmlFor("point", dimension //$NON-NLS-1$
+				.getEndingPoint()));
+		dimensionTag.append(XMLExporterHelper.xmlFor("point", dimension //$NON-NLS-1$
+				.getDistancePoint()));
 
-        dimensionTag.append("<size>"); //$NON-NLS-1$
-        dimensionTag.append(dimension.getTextSize());
-        dimensionTag.append("</size>\n"); //$NON-NLS-1$
+		dimensionTag.append("<size>"); //$NON-NLS-1$
+		dimensionTag.append(dimension.getTextSize());
+		dimensionTag.append("</size>\n"); //$NON-NLS-1$
 
-        dimensionTag.append("</dimension>"); //$NON-NLS-1$
+		dimensionTag.append("</dimension>"); //$NON-NLS-1$
 
-        output.write(dimensionTag.toString().getBytes());
-    }
+		output.write(dimensionTag.toString().getBytes());
+	}
 
-    public void exportElement (Dimension element, Object outputObject, Rectangle boundingBox)
-            throws IOException, NotSupportedException {
+	public void exportElement(Dimension element, Object outputObject,
+			Rectangle boundingBox) throws IOException, NotSupportedException {
 
-        throw new NotSupportedException();
-    }
+		throw new NotSupportedException();
+	}
 }

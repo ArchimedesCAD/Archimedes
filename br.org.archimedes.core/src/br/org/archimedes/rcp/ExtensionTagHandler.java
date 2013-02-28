@@ -22,5 +22,5 @@ import org.eclipse.core.runtime.IConfigurationElement;
  */
 public interface ExtensionTagHandler {
 
-    public void handleTag (IConfigurationElement tag) throws CoreException;
+	public void handleTag(IConfigurationElement tag) throws CoreException;
 }

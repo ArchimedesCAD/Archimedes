@@ -21,27 +21,27 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 
 /**
- *
+ * 
  * @author <a href="mailto:david@steadystate.co.uk">David Schweinsberg</a>
  * @version $Id: ScriptRecord.java,v 1.3 2004/08/18 07:15:22 vhardy Exp $
  */
 public class ScriptRecord {
 
-    private int tag;
-    private int offset;
-    
-    /** Creates new ScriptRecord */
-    protected ScriptRecord(RandomAccessFile raf) throws IOException {
-        tag = raf.readInt();
-        offset = raf.readUnsignedShort();
-    }
+	private int tag;
+	private int offset;
 
-    public int getTag() {
-        return tag;
-    }
-    
-    public int getOffset() {
-        return offset;
-    }
+	/** Creates new ScriptRecord */
+	protected ScriptRecord(RandomAccessFile raf) throws IOException {
+		tag = raf.readInt();
+		offset = raf.readUnsignedShort();
+	}
+
+	public int getTag() {
+		return tag;
+	}
+
+	public int getOffset() {
+		return offset;
+	}
 
 }

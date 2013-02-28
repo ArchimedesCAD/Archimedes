@@ -21,22 +21,22 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 
 /**
- *
+ * 
  * @author <a href="mailto:david@steadystate.co.uk">David Schweinsberg</a>
  * @version $Id: KernSubtableFormat2.java,v 1.3 2004/08/18 07:15:21 vhardy Exp $
  */
 public class KernSubtableFormat2 extends KernSubtable {
 
-    /** Creates new KernSubtableFormat2 */
-    protected KernSubtableFormat2(RandomAccessFile raf) throws IOException {
-    }
+	/** Creates new KernSubtableFormat2 */
+	protected KernSubtableFormat2(RandomAccessFile raf) throws IOException {
+	}
 
-    public int getKerningPairCount() {
-        return 0;
-    }
+	public int getKerningPairCount() {
+		return 0;
+	}
 
-    public KerningPair getKerningPair(int i) {
-        return null;
-    }
+	public KerningPair getKerningPair(int i) {
+		return null;
+	}
 
 }

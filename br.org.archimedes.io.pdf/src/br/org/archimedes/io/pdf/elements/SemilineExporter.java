@@ -31,31 +31,33 @@ import br.org.archimedes.semiline.Semiline;
  */
 public class SemilineExporter implements ElementExporter<Semiline> {
 
-    /*
-     * (non-Javadoc)
-     * @see br.org.archimedes.interfaces.ElementExporter#exportElement(br.org.archimedes
-     * .model.Element, java.lang.Object)
-     */
-    public void exportElement (Semiline semiline, Object outputObject) throws IOException {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.org.archimedes.interfaces.ElementExporter#exportElement(br.org.archimedes
+	 * .model.Element, java.lang.Object)
+	 */
+	public void exportElement(Semiline semiline, Object outputObject)
+			throws IOException {
 
-        PDFWriterHelper helper = (PDFWriterHelper) outputObject;
-        Rectangle viewArea = helper.getModelArea();
+		PDFWriterHelper helper = (PDFWriterHelper) outputObject;
+		Rectangle viewArea = helper.getModelArea();
 
-        List<Point> crossing;
-        try {
-            crossing = semiline.getPointsCrossing(viewArea);
-            LinePointsExporter exporter = new LinePointsExporter(helper);
-            exporter.exportLine(crossing);
-        }
-        catch (NullArgumentException e) {
-            // Should never happen. Dont allow an empty view area
-            e.printStackTrace();
-        }
-    }
+		List<Point> crossing;
+		try {
+			crossing = semiline.getPointsCrossing(viewArea);
+			LinePointsExporter exporter = new LinePointsExporter(helper);
+			exporter.exportLine(crossing);
+		} catch (NullArgumentException e) {
+			// Should never happen. Dont allow an empty view area
+			e.printStackTrace();
+		}
+	}
 
-    public void exportElement (Semiline element, Object outputObject, Rectangle boundingBox)
-            throws IOException, NotSupportedException {
+	public void exportElement(Semiline element, Object outputObject,
+			Rectangle boundingBox) throws IOException, NotSupportedException {
 
-        throw new NotSupportedException();
-    }
+		throw new NotSupportedException();
+	}
 }

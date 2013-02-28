@@ -25,134 +25,126 @@ import br.org.archimedes.semiline.Semiline;
 
 public class SemilineInfiniteLineIntersector implements Intersector {
 
-    /*
-     * If the lines are parallels, including case of the InfiniteLine containing
-     * the Line, this method returns a empty LinkedList
-     */
-    public Collection<Point> getIntersections (Element element,
-            Element otherElement) throws NullArgumentException {
+	/*
+	 * If the lines are parallels, including case of the InfiniteLine containing
+	 * the Line, this method returns a empty LinkedList
+	 */
+	public Collection<Point> getIntersections(Element element,
+			Element otherElement) throws NullArgumentException {
 
-        InfiniteLine infiniteLine;
-        Semiline semiline;
+		InfiniteLine infiniteLine;
+		Semiline semiline;
 
-        if (element == null || otherElement == null)
-            throw new NullArgumentException();
+		if (element == null || otherElement == null)
+			throw new NullArgumentException();
 
-        if (element.getClass() == Semiline.class) {
-            infiniteLine = (InfiniteLine) otherElement;
-            semiline = (Semiline) element;
-        }
-        else {
-            infiniteLine = (InfiniteLine) element;
-            semiline = (Semiline) otherElement;
-        }
+		if (element.getClass() == Semiline.class) {
+			infiniteLine = (InfiniteLine) otherElement;
+			semiline = (Semiline) element;
+		} else {
+			infiniteLine = (InfiniteLine) element;
+			semiline = (Semiline) otherElement;
+		}
 
-        if (element == null || otherElement == null)
-            throw new NullArgumentException();
+		if (element == null || otherElement == null)
+			throw new NullArgumentException();
 
-        Collection<Point> intersectionPoints = new LinkedList<Point>();
+		Collection<Point> intersectionPoints = new LinkedList<Point>();
 
-        if (isParallelTo(semiline, infiniteLine)) {
-            return intersectionPoints;
-        }
+		if (isParallelTo(semiline, infiniteLine)) {
+			return intersectionPoints;
+		}
 
-        // The first line will be represented by a1x + b1y + c1 = 0
-        // The second line will be represented by a2x + b2y + c2 = 0
-        double a1, b1, c1;
-        double a2, b2, c2;
-        
-        Point initialPoint = semiline.getInitialPoint();
-        Point endingPoint = semiline.getDirectionPoint();
+		// The first line will be represented by a1x + b1y + c1 = 0
+		// The second line will be represented by a2x + b2y + c2 = 0
+		double a1, b1, c1;
+		double a2, b2, c2;
 
-        Point secondInitialPoint = infiniteLine.getInitialPoint();
-        Point secondEndingPoint = infiniteLine.getEndingPoint();
+		Point initialPoint = semiline.getInitialPoint();
+		Point endingPoint = semiline.getDirectionPoint();
 
-        a1 = initialPoint.getY() - endingPoint.getY();
-        b1 = endingPoint.getX() - initialPoint.getX();
-        c1 = (initialPoint.getX() - endingPoint.getX()) * initialPoint.getY()
-                + (endingPoint.getY() - initialPoint.getY())
-                * initialPoint.getX();
+		Point secondInitialPoint = infiniteLine.getInitialPoint();
+		Point secondEndingPoint = infiniteLine.getEndingPoint();
 
-        a2 = secondInitialPoint.getY() - secondEndingPoint.getY();
-        b2 = secondEndingPoint.getX() - secondInitialPoint.getX();
-        c2 = (secondInitialPoint.getX() - secondEndingPoint.getX())
-                * secondInitialPoint.getY()
-                + (secondEndingPoint.getY() - secondInitialPoint.getY())
-                * secondInitialPoint.getX();
+		a1 = initialPoint.getY() - endingPoint.getY();
+		b1 = endingPoint.getX() - initialPoint.getX();
+		c1 = (initialPoint.getX() - endingPoint.getX()) * initialPoint.getY()
+				+ (endingPoint.getY() - initialPoint.getY())
+				* initialPoint.getX();
 
-        if ( !((Math.abs(a1 * b2 - b1 * a2) <= Constant.EPSILON) && (Math
-                .abs(c1 - c2) <= Constant.EPSILON))) {
+		a2 = secondInitialPoint.getY() - secondEndingPoint.getY();
+		b2 = secondEndingPoint.getX() - secondInitialPoint.getX();
+		c2 = (secondInitialPoint.getX() - secondEndingPoint.getX())
+				* secondInitialPoint.getY()
+				+ (secondEndingPoint.getY() - secondInitialPoint.getY())
+				* secondInitialPoint.getX();
 
-            double yIntersection = 0.0;
-            double xIntersection = 0.0;
+		if (!((Math.abs(a1 * b2 - b1 * a2) <= Constant.EPSILON) && (Math.abs(c1
+				- c2) <= Constant.EPSILON))) {
 
-            if (Math.abs(a1) <= Constant.EPSILON) {
-                yIntersection = -(c1 / b1);
-                xIntersection = -(b2 * yIntersection + c2) / a2;
-            }
-            else if (Math.abs(a2) <= Constant.EPSILON) {
-                yIntersection = -(c2 / b2);
-                xIntersection = -(b1 * yIntersection + c1) / a1;
-            }
-            else if (Math.abs(b1) <= Constant.EPSILON) {
-                xIntersection = -(c1 / a1);
-                yIntersection = -(a2 * xIntersection + c2) / b2;
-            }
-            else if (Math.abs(b2) <= Constant.EPSILON) {
-                xIntersection = -(c2 / a2);
-                yIntersection = -(a1 * xIntersection + c1) / b1;
-            }
-            else {
-                yIntersection = ((c1 * a2) - (c2 * a1))
-                        / ((b2 * a1) - (b1 * a2));
-                xIntersection = -(c1 / a1) - (b1 / a1) * yIntersection;
-            }
-            Point intersection = new Point(xIntersection, yIntersection);
-            if (semiline.contains(intersection)
-                    && infiniteLine.contains(intersection))
-                intersectionPoints.add(intersection);
-        }
+			double yIntersection = 0.0;
+			double xIntersection = 0.0;
 
-        return intersectionPoints;
-    }
+			if (Math.abs(a1) <= Constant.EPSILON) {
+				yIntersection = -(c1 / b1);
+				xIntersection = -(b2 * yIntersection + c2) / a2;
+			} else if (Math.abs(a2) <= Constant.EPSILON) {
+				yIntersection = -(c2 / b2);
+				xIntersection = -(b1 * yIntersection + c1) / a1;
+			} else if (Math.abs(b1) <= Constant.EPSILON) {
+				xIntersection = -(c1 / a1);
+				yIntersection = -(a2 * xIntersection + c2) / b2;
+			} else if (Math.abs(b2) <= Constant.EPSILON) {
+				xIntersection = -(c2 / a2);
+				yIntersection = -(a1 * xIntersection + c1) / b1;
+			} else {
+				yIntersection = ((c1 * a2) - (c2 * a1))
+						/ ((b2 * a1) - (b1 * a2));
+				xIntersection = -(c1 / a1) - (b1 / a1) * yIntersection;
+			}
+			Point intersection = new Point(xIntersection, yIntersection);
+			if (semiline.contains(intersection)
+					&& infiniteLine.contains(intersection))
+				intersectionPoints.add(intersection);
+		}
 
-    public boolean isParallelTo (Element element1, Element element2) {
+		return intersectionPoints;
+	}
 
-        boolean isParallel = false;
+	public boolean isParallelTo(Element element1, Element element2) {
 
-        Semiline firstLine = ((Semiline)element1);
-        InfiniteLine secondLine = ((InfiniteLine)element2);
-        
-        Point initialPoint = firstLine.getInitialPoint();
-        Point endingPoint = firstLine.getDirectionPoint();
+		boolean isParallel = false;
 
-        Point secondInitialPoint = secondLine.getInitialPoint();
-        Point secondEndingPoint = secondLine.getEndingPoint();
+		Semiline firstLine = ((Semiline) element1);
+		InfiniteLine secondLine = ((InfiniteLine) element2);
 
-        if (firstLine != null && secondLine != null) {
-            double deltay1 = initialPoint.getY()
-                    - endingPoint.getY();
-            double deltax1 = initialPoint.getX()
-                    - endingPoint.getX();
-            double deltay2 = secondInitialPoint.getY()
-                    - secondEndingPoint.getY();
-            double deltax2 = secondInitialPoint.getX()
-                    - secondEndingPoint.getX();
+		Point initialPoint = firstLine.getInitialPoint();
+		Point endingPoint = firstLine.getDirectionPoint();
 
-            if (Math.abs(deltax1) <= Constant.EPSILON
-                    && Math.abs(deltax2) <= Constant.EPSILON) {
-                isParallel = true;
-            }
-            else {
-                double m1 = deltay1 / deltax1;
-                double m2 = deltay2 / deltax2;
-                if (Math.abs(m1 - m2) <= Constant.EPSILON) {
-                    isParallel = true;
-                }
-            }
+		Point secondInitialPoint = secondLine.getInitialPoint();
+		Point secondEndingPoint = secondLine.getEndingPoint();
 
-        }
+		if (firstLine != null && secondLine != null) {
+			double deltay1 = initialPoint.getY() - endingPoint.getY();
+			double deltax1 = initialPoint.getX() - endingPoint.getX();
+			double deltay2 = secondInitialPoint.getY()
+					- secondEndingPoint.getY();
+			double deltax2 = secondInitialPoint.getX()
+					- secondEndingPoint.getX();
 
-        return isParallel;
-    }
+			if (Math.abs(deltax1) <= Constant.EPSILON
+					&& Math.abs(deltax2) <= Constant.EPSILON) {
+				isParallel = true;
+			} else {
+				double m1 = deltay1 / deltax1;
+				double m2 = deltay2 / deltax2;
+				if (Math.abs(m1 - m2) <= Constant.EPSILON) {
+					isParallel = true;
+				}
+			}
+
+		}
+
+		return isParallel;
+	}
 }

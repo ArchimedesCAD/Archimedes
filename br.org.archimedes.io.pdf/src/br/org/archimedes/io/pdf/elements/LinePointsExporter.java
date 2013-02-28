@@ -26,36 +26,35 @@ import com.lowagie.text.pdf.PdfContentByte;
  */
 public class LinePointsExporter {
 
-    private PDFWriterHelper helper;
+	private PDFWriterHelper helper;
 
+	/**
+	 * @param helper
+	 *            The helper to be used
+	 */
+	public LinePointsExporter(PDFWriterHelper helper) {
 
-    /**
-     * @param helper
-     *            The helper to be used
-     */
-    public LinePointsExporter (PDFWriterHelper helper) {
+		this.helper = helper;
+	}
 
-        this.helper = helper;
-    }
+	/**
+	 * @param points
+	 *            The points that form the line within the helper view area
+	 */
+	public void exportLine(List<Point> points) {
+		PdfContentByte cb = helper.getPdfContentByte();
 
-    /**
-     * @param points
-     *            The points that form the line within the helper view area
-     */
-    public void exportLine (List<Point> points) {
-        PdfContentByte cb = helper.getPdfContentByte();
+		if (points != null && points.size() == 2) {
+			Point initial = points.get(0);
+			Point ending = points.get(1);
 
-        if(points != null && points.size() == 2) {
-            Point initial = points.get(0);
-            Point ending = points.get(1);
-            
-            float x = (float) initial.getX();
-            float y = (float) initial.getY();
-            cb.moveTo(x, y);
-            x = (float) ending.getX();
-            y = (float) ending.getY();
-            cb.lineTo(x, y);
-            cb.stroke();
-        }
-    }
+			float x = (float) initial.getX();
+			float y = (float) initial.getY();
+			cb.moveTo(x, y);
+			x = (float) ending.getX();
+			y = (float) ending.getY();
+			cb.lineTo(x, y);
+			cb.stroke();
+		}
+	}
 }

@@ -13,26 +13,26 @@
 
 package br.org.archimedes.trims;
 
+import java.util.Map;
+
 import br.org.archimedes.model.Element;
 import br.org.archimedes.trims.interfaces.Trimmer;
 import br.org.archimedes.trims.rcp.TrimmerEPLoader;
 
-import java.util.Map;
-
 public class MockTrimmerEPLoader extends TrimmerEPLoader {
 
-    private final Map<Class<? extends Element>, Trimmer> trimmerOptions;
+	private final Map<Class<? extends Element>, Trimmer> trimmerOptions;
 
+	public MockTrimmerEPLoader(
+			Map<Class<? extends Element>, Trimmer> trimmerOptions) {
 
-    public MockTrimmerEPLoader (Map<Class<? extends Element>, Trimmer> trimmerOptions) {
+		this.trimmerOptions = trimmerOptions;
+	}
 
-        this.trimmerOptions = trimmerOptions;
-    }
+	@Override
+	public Trimmer get(Class<? extends Element> elementClass) {
 
-    @Override
-    public Trimmer get (Class<? extends Element> elementClass) {
-
-        return trimmerOptions.get(elementClass);
-    }
+		return trimmerOptions.get(elementClass);
+	}
 
 }

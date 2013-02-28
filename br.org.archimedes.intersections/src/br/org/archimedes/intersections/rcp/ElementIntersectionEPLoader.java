@@ -33,66 +33,68 @@ import br.org.archimedes.rcp.extensionpoints.ElementEPLoader;
  */
 public class ElementIntersectionEPLoader implements ExtensionTagHandler {
 
-    private static final String CLASS_ATTRIBUTE_NAME = "class";
+	private static final String CLASS_ATTRIBUTE_NAME = "class";
 
-    private static final String SECOND_ELEMENT_ATTRIBUTE_NAME = "otherElement";
+	private static final String SECOND_ELEMENT_ATTRIBUTE_NAME = "otherElement";
 
-    private static final String FIRST_ELEMENT_ATTRIBUTE_NAME = "element";
+	private static final String FIRST_ELEMENT_ATTRIBUTE_NAME = "element";
 
-    private final static String ELEMENT_INTERSECTOR_EP_ID = "br.org.archimedes.intersections.elementsIntersector";
+	private final static String ELEMENT_INTERSECTOR_EP_ID = "br.org.archimedes.intersections.elementsIntersector";
 
-    private final static Intersector NULL_INTERSECTOR = new NullIntersector();
+	private final static Intersector NULL_INTERSECTOR = new NullIntersector();
 
-    private ElementEPLoader elementLoader;
+	private ElementEPLoader elementLoader;
 
-    private final Map<PairOfElementClasses, Intersector> elementsToIntersectorMap = new HashMap<PairOfElementClasses, Intersector>();;
+	private final Map<PairOfElementClasses, Intersector> elementsToIntersectorMap = new HashMap<PairOfElementClasses, Intersector>();;
 
+	/**
+	 * Default constructor.
+	 */
+	public ElementIntersectionEPLoader() {
 
-    /**
-     * Default constructor.
-     */
-    public ElementIntersectionEPLoader () {
+		elementLoader = new ElementEPLoader();
+		if (elementsToIntersectorMap.isEmpty()) {
+			ExtensionLoader loader = new ExtensionLoader(
+					ELEMENT_INTERSECTOR_EP_ID);
+			loader.loadExtension(this);
+		}
+	}
 
-        elementLoader = new ElementEPLoader();
-        if(elementsToIntersectorMap.isEmpty()) {
-            ExtensionLoader loader = new ExtensionLoader(ELEMENT_INTERSECTOR_EP_ID);
-            loader.loadExtension(this);
-        }
-    }
+	public Intersector getIntersectorFor(Element element, Element otherElement) {
 
-    public Intersector getIntersectorFor (Element element, Element otherElement) {
+		Class<? extends Element> e1Class = element.getClass();
+		Class<? extends Element> e2Class = otherElement.getClass();
 
-        Class<? extends Element> e1Class = element.getClass();
-        Class<? extends Element> e2Class = otherElement.getClass();
+		PairOfElementClasses pair = new PairOfElementClasses(e1Class, e2Class);
+		Intersector intersector = elementsToIntersectorMap.get(pair);
+		return intersector == null ? NULL_INTERSECTOR : intersector;
+	}
 
-        PairOfElementClasses pair = new PairOfElementClasses(e1Class, e2Class);
-        Intersector intersector = elementsToIntersectorMap.get(pair);
-        return intersector == null ? NULL_INTERSECTOR : intersector;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.org.archimedes.rcp.ExtensionTagHandler#handleTag(org.eclipse.core.
+	 * runtime.IConfigurationElement)
+	 */
+	public void handleTag(IConfigurationElement elementTag)
+			throws CoreException {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.rcp.ExtensionTagHandler#handleTag(org.eclipse.core.runtime.IConfigurationElement)
-     */
-    public void handleTag (IConfigurationElement elementTag)
-            throws CoreException {
+		String elementId = elementTag
+				.getAttribute(FIRST_ELEMENT_ATTRIBUTE_NAME);
+		String otherElementId = elementTag
+				.getAttribute(SECOND_ELEMENT_ATTRIBUTE_NAME);
+		Class<? extends Element> element = elementLoader
+				.getElementClass(elementId);
+		Class<? extends Element> otherElement = elementLoader
+				.getElementClass(otherElementId);
 
-        String elementId = elementTag
-                .getAttribute(FIRST_ELEMENT_ATTRIBUTE_NAME);
-        String otherElementId = elementTag
-                .getAttribute(SECOND_ELEMENT_ATTRIBUTE_NAME);
-        Class<? extends Element> element = elementLoader
-                .getElementClass(elementId);
-        Class<? extends Element> otherElement = elementLoader
-                .getElementClass(otherElementId);
-
-        if (element != null && otherElement != null) {
-            Intersector inter = null;
-            inter = (Intersector) elementTag
-                    .createExecutableExtension(CLASS_ATTRIBUTE_NAME);
-            elementsToIntersectorMap.put(new PairOfElementClasses(element,
-                    otherElement), inter);
-        }
-    }
+		if (element != null && otherElement != null) {
+			Intersector inter = null;
+			inter = (Intersector) elementTag
+					.createExecutableExtension(CLASS_ATTRIBUTE_NAME);
+			elementsToIntersectorMap.put(new PairOfElementClasses(element,
+					otherElement), inter);
+		}
+	}
 }

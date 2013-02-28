@@ -13,98 +13,98 @@
 
 package br.org.archimedes.parser;
 
-import br.org.archimedes.Constant;
-import br.org.archimedes.exceptions.InvalidParameterException;
-import br.org.archimedes.model.Point;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import br.org.archimedes.Constant;
+import br.org.archimedes.exceptions.InvalidParameterException;
+import br.org.archimedes.model.Point;
+
 /**
  * Belongs to package br.org.archimedes.parser.
  */
 public class ZoomParserTest {
 
-    private ZoomParser zp;
+	private ZoomParser zp;
 
+	@Before
+	public void setUp() {
 
-    @Before
-    public void setUp () {
+		zp = new ZoomParser();
+		assertFalse("Should not be done", zp.isDone());
+		assertNull("Parameter should be null", zp.getParameter());
+	}
 
-        zp = new ZoomParser();
-        assertFalse("Should not be done", zp.isDone());
-        assertNull("Parameter should be null", zp.getParameter());
-    }
+	@After
+	public void tearDown() {
 
-    @After
-    public void tearDown () {
+		zp = null;
+	}
 
-        zp = null;
-    }
+	@Test
+	public void testRelativeZoom() throws Exception {
 
-    @Test
-    public void testRelativeZoom () throws Exception {
+		zp.next("10");
+		assertTrue("Should be done", zp.isDone());
 
-        zp.next("10");
-        assertTrue("Should be done", zp.isDone());
+		Double d = (Double) zp.getParameter();
+		assertNotNull("Parameter should not be null", d);
+		assertEquals("Parameter should be 10", 10.0, d, Constant.EPSILON);
+	}
 
-        Double d = (Double) zp.getParameter();
-        assertNotNull("Parameter should not be null", d);
-        assertEquals("Parameter should be 10", 10.0, d, Constant.EPSILON);
-    }
+	@Test
+	public void testZoomByArea() throws Exception {
 
-    @Test
-    public void testZoomByArea () throws Exception {
+		zp.next("10;10");
+		assertTrue("Should be done", zp.isDone());
+		assertEquals("Parameter should be a point", new Point(10, 10),
+				zp.getParameter());
+	}
 
-        zp.next("10;10");
-        assertTrue("Should be done", zp.isDone());
-        assertEquals("Parameter should be a point", new Point(10, 10), zp.getParameter());
-    }
+	@Test(expected = InvalidParameterException.class)
+	public void zoomThrowsExceptionOnNull() throws Exception {
 
-    @Test(expected = InvalidParameterException.class)
-    public void zoomThrowsExceptionOnNull () throws Exception {
+		zp.next(null);
+	}
 
-        zp.next(null);
-    }
+	@Test(expected = InvalidParameterException.class)
+	public void zoomThrowsExceptionOnText() throws Exception {
 
-    @Test(expected = InvalidParameterException.class)
-    public void zoomThrowsExceptionOnText () throws Exception {
+		zp.next("bla");
+	}
 
-        zp.next("bla");
-    }
+	@Test(expected = InvalidParameterException.class)
+	public void zoomThrowsExceptionOnEnter() throws Exception {
 
-    @Test(expected = InvalidParameterException.class)
-    public void zoomThrowsExceptionOnEnter () throws Exception {
+		zp.next("");
+	}
 
-        zp.next("");
-    }
+	@Test
+	public void testExtended() throws Exception {
 
-    @Test
-    public void testExtended () throws Exception {
+		zp.next("e");
+		assertTrue("Should be done", zp.isDone());
 
-        zp.next("e");
-        assertTrue("Should be done", zp.isDone());
+		String e = (String) zp.getParameter();
+		assertNotNull("Parameter should not be null", e);
+		assertEquals("Should be an \"e\"", "e", e);
+	}
 
-        String e = (String) zp.getParameter();
-        assertNotNull("Parameter should not be null", e);
-        assertEquals("Should be an \"e\"", "e", e);
-    }
+	@Test
+	public void testPrevious() throws Exception {
 
-    @Test
-    public void testPrevious () throws Exception {
+		zp.next("p");
+		assertTrue("Should be done", zp.isDone());
 
-        zp.next("p");
-        assertTrue("Should be done", zp.isDone());
-
-        String p = (String) zp.getParameter();
-        assertNotNull("Parameter should not be null", p);
-        assertEquals("Should be a \"p\"", "p", p);
-    }
+		String p = (String) zp.getParameter();
+		assertNotNull("Parameter should not be null", p);
+		assertEquals("Should be a \"p\"", "p", p);
+	}
 }

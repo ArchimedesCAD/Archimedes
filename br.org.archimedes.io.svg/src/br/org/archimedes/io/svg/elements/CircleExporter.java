@@ -28,24 +28,25 @@ import br.org.archimedes.model.Rectangle;
  */
 public class CircleExporter implements ElementExporter<Circle> {
 
-    public void exportElement (Circle circle, Object outputObject) throws IOException {
+	public void exportElement(Circle circle, Object outputObject)
+			throws IOException {
 
-        OutputStream output = (OutputStream) outputObject;
-        StringBuilder lineTag = new StringBuilder();
+		OutputStream output = (OutputStream) outputObject;
+		StringBuilder lineTag = new StringBuilder();
 
-        int x = (int) circle.getCenter().getX();
-        int y = (int) circle.getCenter().getY();
-        int r = (int) circle.getRadius();
+		int x = (int) circle.getCenter().getX();
+		int y = (int) circle.getCenter().getY();
+		int r = (int) circle.getRadius();
 
-        lineTag.append("<circle fill=\"none\" cx=\"" + x + "\" cy=\"" + -y + "\" r=\"" + r //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                + "\"/>\n"); //$NON-NLS-1$
+		lineTag.append("<circle fill=\"none\" cx=\"" + x + "\" cy=\"" + -y + "\" r=\"" + r //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ "\"/>\n"); //$NON-NLS-1$
 
-        output.write(lineTag.toString().getBytes());
-    }
+		output.write(lineTag.toString().getBytes());
+	}
 
-    public void exportElement (Circle element, Object outputObject, Rectangle boundingBox)
-            throws NotSupportedException {
+	public void exportElement(Circle element, Object outputObject,
+			Rectangle boundingBox) throws NotSupportedException {
 
-        throw new NotSupportedException();
-    }
+		throw new NotSupportedException();
+	}
 }

@@ -16,31 +16,30 @@ import org.eclipse.osgi.util.NLS;
 
 /**
  * Belongs to package br.org.archimedes.circle.
- *
+ * 
  * @author nitao
- *
+ * 
  */
 public class Messages extends NLS {
 
-    private static final String BUNDLE_NAME = "br.org.archimedes.circle.messages"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = "br.org.archimedes.circle.messages"; //$NON-NLS-1$
 
-    public static String Canceled;
+	public static String Canceled;
 
-    public static String CircleFactory_SelectRadius;
+	public static String CircleFactory_SelectRadius;
 
-    public static String Created;
+	public static String Created;
 
-    public static String NotCreated;
+	public static String NotCreated;
 
-    public static String SelectCenter;
+	public static String SelectCenter;
 
-    static {
-        // initialize resource bundle
-        NLS.initializeMessages(BUNDLE_NAME, Messages.class);
-    }
+	static {
+		// initialize resource bundle
+		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
+	}
 
+	private Messages() {
 
-    private Messages () {
-
-    }
+	}
 }

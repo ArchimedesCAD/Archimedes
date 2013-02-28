@@ -13,26 +13,26 @@
 
 package br.org.archimedes.extend;
 
+import java.util.Map;
+
 import br.org.archimedes.extend.interfaces.Extender;
 import br.org.archimedes.extend.rcp.ExtenderEPLoader;
 import br.org.archimedes.model.Element;
 
-import java.util.Map;
-
 public class MockExtenderEPLoader extends ExtenderEPLoader {
 
-    private final Map<Class<? extends Element>, Extender> extenderOptions;
+	private final Map<Class<? extends Element>, Extender> extenderOptions;
 
+	public MockExtenderEPLoader(
+			Map<Class<? extends Element>, Extender> extenderOptions) {
 
-    public MockExtenderEPLoader (Map<Class<? extends Element>, Extender> extenderOptions) {
+		this.extenderOptions = extenderOptions;
+	}
 
-        this.extenderOptions = extenderOptions;
-    }
+	@Override
+	public Extender get(Class<? extends Element> elementClass) {
 
-    @Override
-    public Extender get (Class<? extends Element> elementClass) {
-
-        return extenderOptions.get(elementClass);
-    }
+		return extenderOptions.get(elementClass);
+	}
 
 }

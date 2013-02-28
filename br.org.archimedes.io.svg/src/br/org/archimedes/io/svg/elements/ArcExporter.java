@@ -12,6 +12,9 @@
  */
 package br.org.archimedes.io.svg.elements;
 
+import java.io.IOException;
+import java.io.OutputStream;
+
 import br.org.archimedes.Geometrics;
 import br.org.archimedes.arc.Arc;
 import br.org.archimedes.exceptions.NotSupportedException;
@@ -21,62 +24,58 @@ import br.org.archimedes.io.svg.SVGExporterHelper;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Rectangle;
 
-import java.io.IOException;
-import java.io.OutputStream;
-
 public class ArcExporter implements ElementExporter<Arc> {
 
-    public void exportElement (Arc arc, Object outputObject) throws IOException {
+	public void exportElement(Arc arc, Object outputObject) throws IOException {
 
-        Point initial = arc.getInitialPoint();
-        Point ending = arc.getEndingPoint();
-        int radius = (int) arc.getRadius();
+		Point initial = arc.getInitialPoint();
+		Point ending = arc.getEndingPoint();
+		int radius = (int) arc.getRadius();
 
-        OutputStream output = (OutputStream) outputObject;
-        StringBuilder lineTag = new StringBuilder();
+		OutputStream output = (OutputStream) outputObject;
+		StringBuilder lineTag = new StringBuilder();
 
-        lineTag.append("<path d=\"M"); //$NON-NLS-1$
-        lineTag.append(SVGExporterHelper.svgFor(initial));
+		lineTag.append("<path d=\"M"); //$NON-NLS-1$
+		lineTag.append(SVGExporterHelper.svgFor(initial));
 
-        lineTag.append(" A" + radius + "," + radius); //$NON-NLS-1$ //$NON-NLS-2$
-        
-        boolean largeArc = getAngle(arc) >= Math.PI;
-        lineTag.append(" 0 " + (largeArc ? "1" : "0") + " 0 "); //$NON-NLS-1$ //$NON-NLS-2$
-        
-        lineTag.append(SVGExporterHelper.svgFor(ending));
-        lineTag.append("\" />\n"); //$NON-NLS-1$
+		lineTag.append(" A" + radius + "," + radius); //$NON-NLS-1$ //$NON-NLS-2$
 
+		boolean largeArc = getAngle(arc) >= Math.PI;
+		lineTag.append(" 0 " + (largeArc ? "1" : "0") + " 0 "); //$NON-NLS-1$ //$NON-NLS-2$
 
-        output.write(lineTag.toString().getBytes());
-    }
-    
-    /**
-     * @param arc The arc we want to know the angle of
-     * @return The angle value from initial to the end from the center
-     */
-    private double getAngle (Arc arc) {
+		lineTag.append(SVGExporterHelper.svgFor(ending));
+		lineTag.append("\" />\n"); //$NON-NLS-1$
 
-        Point center = arc.getCenter();
-        Point initialPoint = arc.getInitialPoint();
-        Point endingPoint = arc.getEndingPoint();
-        try {
-            double firstAngle = Geometrics.calculateAngle(center, initialPoint);
-            double secondAngle = Geometrics.calculateAngle(center, endingPoint);
-            double result = secondAngle - firstAngle;
-            if(result < 0) { // We want absolute values from 0
-                result += (Math.PI*2);
-            }
-            return result;
-        }
-        catch (NullArgumentException e) {
-            // Shouldn't happen since all points are valid
-            e.printStackTrace();
-            return 0;
-        }
-    }
+		output.write(lineTag.toString().getBytes());
+	}
 
-    public void exportElement (Arc element, Object outputObject, Rectangle boundingBox)
-            throws NotSupportedException {
-        throw new NotSupportedException();
-    }
+	/**
+	 * @param arc
+	 *            The arc we want to know the angle of
+	 * @return The angle value from initial to the end from the center
+	 */
+	private double getAngle(Arc arc) {
+
+		Point center = arc.getCenterPoint();
+		Point initialPoint = arc.getInitialPoint();
+		Point endingPoint = arc.getEndingPoint();
+		try {
+			double firstAngle = Geometrics.calculateAngle(center, initialPoint);
+			double secondAngle = Geometrics.calculateAngle(center, endingPoint);
+			double result = secondAngle - firstAngle;
+			if (result < 0) { // We want absolute values from 0
+				result += (Math.PI * 2);
+			}
+			return result;
+		} catch (NullArgumentException e) {
+			// Shouldn't happen since all points are valid
+			e.printStackTrace();
+			return 0;
+		}
+	}
+
+	public void exportElement(Arc element, Object outputObject,
+			Rectangle boundingBox) throws NotSupportedException {
+		throw new NotSupportedException();
+	}
 }

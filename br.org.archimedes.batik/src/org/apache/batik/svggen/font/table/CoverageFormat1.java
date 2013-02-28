@@ -21,35 +21,35 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 
 /**
- *
+ * 
  * @author <a href="mailto:david@steadystate.co.uk">David Schweinsberg</a>
  * @version $Id: CoverageFormat1.java,v 1.4 2004/08/18 07:15:20 vhardy Exp $
  */
 public class CoverageFormat1 extends Coverage {
 
-    private int glyphCount;
-    private int[] glyphIds;
+	private int glyphCount;
+	private int[] glyphIds;
 
-    /** Creates new CoverageFormat1 */
-    protected CoverageFormat1(RandomAccessFile raf) throws IOException {
-        glyphCount = raf.readUnsignedShort();
-        glyphIds = new int[glyphCount];
-        for (int i = 0; i < glyphCount; i++) {
-            glyphIds[i] = raf.readUnsignedShort();
-        }
-    }
+	/** Creates new CoverageFormat1 */
+	protected CoverageFormat1(RandomAccessFile raf) throws IOException {
+		glyphCount = raf.readUnsignedShort();
+		glyphIds = new int[glyphCount];
+		for (int i = 0; i < glyphCount; i++) {
+			glyphIds[i] = raf.readUnsignedShort();
+		}
+	}
 
-    public int getFormat() {
-        return 1;
-    }
+	public int getFormat() {
+		return 1;
+	}
 
-    public int findGlyph(int glyphId) {
-        for (int i = 0; i < glyphCount; i++) {
-            if (glyphIds[i] == glyphId) {
-                return i;
-            }
-        }
-        return -1;
-    }
+	public int findGlyph(int glyphId) {
+		for (int i = 0; i < glyphCount; i++) {
+			if (glyphIds[i] == glyphId) {
+				return i;
+			}
+		}
+		return -1;
+	}
 
 }

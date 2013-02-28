@@ -28,87 +28,81 @@ import br.org.archimedes.model.Point;
  */
 public class DistanceParser implements Parser {
 
-    private Double distance;
+	private Double distance;
 
-    private Point p1;
-    
-    private boolean done;
+	private Point p1;
 
+	private boolean done;
 
-    /**
-     * Constructor.
-     */
-    public DistanceParser () {
-        this(null);
-    }
-    
-    public DistanceParser (Point p1) {
+	/**
+	 * Constructor.
+	 */
+	public DistanceParser() {
+		this(null);
+	}
 
-        distance = null;
-        this.p1 = p1;
-        done = false;
-    }
+	public DistanceParser(Point p1) {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.interpreter.parser.Parser#next(java.lang.String)
-     */
-    public String next (String message) throws InvalidParameterException {
+		distance = null;
+		this.p1 = p1;
+		done = false;
+	}
 
-        String returnValue = null;
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.interpreter.parser.Parser#next(java.lang.String)
+	 */
+	public String next(String message) throws InvalidParameterException {
 
-        Workspace workspace = Utils.getWorkspace();
+		String returnValue = null;
 
-        if (Utils.isPoint(message)) {
-            Point point = (Point) Utils.getPointCoordinates(message);
-            if (p1 == null) {
-                p1 = point;
-                workspace.setPerpendicularGripReferencePoint(p1);
-            }
-            else {
-                try {
-                    distance = Geometrics.calculateDistance(p1, point);
-                    done = true;
-                }
-                catch (NullArgumentException e) {
-                    // Should not happen.
-                    e.printStackTrace();
-                }
-            }
-        }
-        else if (Utils.isDouble(message)) {
-            distance = Math.abs((Double) Utils.getDouble(message));
-            done = true;
-        }
-        else if (Utils.isReturn(message)) {
-            distance = null;
-            done = true;
-        }
-        else {
-            throw new InvalidParameterException();
-        }
+		Workspace workspace = Utils.getWorkspace();
 
-        return returnValue;
-    }
+		if (Utils.isPoint(message)) {
+			Point point = (Point) Utils.getPointCoordinates(message);
+			if (p1 == null) {
+				p1 = point;
+				workspace.setPerpendicularGripReferencePoint(p1);
+			} else {
+				try {
+					distance = Geometrics.calculateDistance(p1, point);
+					done = true;
+				} catch (NullArgumentException e) {
+					// Should not happen.
+					e.printStackTrace();
+				}
+			}
+		} else if (Utils.isDouble(message)) {
+			distance = Math.abs((Double) Utils.getDouble(message));
+			done = true;
+		} else if (Utils.isReturn(message)) {
+			distance = null;
+			done = true;
+		} else {
+			throw new InvalidParameterException();
+		}
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.interpreter.parser.Parser#isDone()
-     */
-    public boolean isDone () {
+		return returnValue;
+	}
 
-        return done;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.interpreter.parser.Parser#isDone()
+	 */
+	public boolean isDone() {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.interpreter.parser.Parser#getParameter()
-     */
-    public Object getParameter () {
+		return done;
+	}
 
-        return distance;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.interpreter.parser.Parser#getParameter()
+	 */
+	public Object getParameter() {
+
+		return distance;
+	}
 }

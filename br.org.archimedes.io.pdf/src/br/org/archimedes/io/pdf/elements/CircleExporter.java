@@ -31,28 +31,31 @@ import com.lowagie.text.pdf.PdfContentByte;
  */
 public class CircleExporter implements ElementExporter<Circle> {
 
-    /*
-     * (non-Javadoc)
-     * @see br.org.archimedes.interfaces.ElementExporter#exportElement(br.org.archimedes
-     * .model.Element, java.io.OutputStream)
-     */
-    public void exportElement (Circle circle, Object outputObject) throws IOException {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.org.archimedes.interfaces.ElementExporter#exportElement(br.org.archimedes
+	 * .model.Element, java.io.OutputStream)
+	 */
+	public void exportElement(Circle circle, Object outputObject)
+			throws IOException {
 
-        PDFWriterHelper helper = (PDFWriterHelper) outputObject;
-        PdfContentByte cb = helper.getPdfContentByte();
+		PDFWriterHelper helper = (PDFWriterHelper) outputObject;
+		PdfContentByte cb = helper.getPdfContentByte();
 
-        Point center = helper.modelToDocument(circle.getCenter());
-        float centerX = (float) center.getX();
-        float centerY = (float) center.getY();
-        float radius = (float) (helper.getZoom() * circle.getRadius());
-        cb.circle(centerX, centerY, radius);
+		Point center = helper.modelToDocument(circle.getCenter());
+		float centerX = (float) center.getX();
+		float centerY = (float) center.getY();
+		float radius = (float) (helper.getZoom() * circle.getRadius());
+		cb.circle(centerX, centerY, radius);
 
-        cb.closePathStroke();
-    }
+		cb.closePathStroke();
+	}
 
-    public void exportElement (Circle element, Object outputObject, Rectangle boundingBox)
-            throws IOException, NotSupportedException {
+	public void exportElement(Circle element, Object outputObject,
+			Rectangle boundingBox) throws IOException, NotSupportedException {
 
-        throw new NotSupportedException();
-    }
+		throw new NotSupportedException();
+	}
 }

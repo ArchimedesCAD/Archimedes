@@ -21,27 +21,27 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 
 /**
- *
+ * 
  * @author <a href="mailto:david@steadystate.co.uk">David Schweinsberg</a>
  * @version $Id: LangSysRecord.java,v 1.3 2004/08/18 07:15:21 vhardy Exp $
  */
 public class LangSysRecord {
 
-    private int tag;
-    private int offset;
-    
-    /** Creates new LangSysRecord */
-    public LangSysRecord(RandomAccessFile raf) throws IOException {
-        tag = raf.readInt();
-        offset = raf.readUnsignedShort();
-    }
+	private int tag;
+	private int offset;
 
-    public int getTag() {
-        return tag;
-    }
+	/** Creates new LangSysRecord */
+	public LangSysRecord(RandomAccessFile raf) throws IOException {
+		tag = raf.readInt();
+		offset = raf.readUnsignedShort();
+	}
 
-    public int getOffset() {
-        return offset;
-    }
+	public int getTag() {
+		return tag;
+	}
+
+	public int getOffset() {
+		return offset;
+	}
 
 }

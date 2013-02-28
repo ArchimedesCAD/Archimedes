@@ -29,136 +29,136 @@ import br.org.archimedes.model.Vector;
  */
 public class VectorParser implements Parser {
 
-    private boolean ignoreTransformation;
+	private boolean ignoreTransformation;
 
-    private Point p1;
+	private Point p1;
 
-    private Point p2;
+	private Point p2;
 
+	/**
+	 * Constructor.<BR>
+	 * Assumes the first point of the vector is (0,0).
+	 */
+	public VectorParser() {
 
-    /**
-     * Constructor.<BR>
-     * Assumes the first point of the vector is (0,0).
-     */
-    public VectorParser () {
+		this(null, false);
+	}
 
-        this(null, false);
-    }
+	/**
+	 * Constructor.<BR>
+	 * Assumes that the orto should not be ignored.
+	 * 
+	 * @param point
+	 *            The first point of the vector.
+	 */
+	public VectorParser(Point point) {
+		this(point, false);
+	}
 
-    /**
-     * Constructor.<BR>
-     * Assumes that the orto should not be ignored.
-     * 
-     * @param point
-     *            The first point of the vector.
-     */
-    public VectorParser (Point point) {
-        this(point, false);
-    }
+	/**
+	 * Constructor.<BR>
+	 * 
+	 * @param point
+	 *            The first point of the vector.
+	 * @param ignoreTransformation
+	 *            true if the Orto and shift should be ignored, false otherwise.
+	 */
+	public VectorParser(Point point, boolean ignoreTransformation) {
 
-    /**
-     * Constructor.<BR>
-     * 
-     * @param point
-     *            The first point of the vector.
-     * @param ignoreTransformation
-     *            true if the Orto and shift should be ignored, false otherwise.
-     */
-    public VectorParser (Point point, boolean ignoreTransformation) {
+		p1 = (point == null ? new Point(0, 0) : point);
+		this.ignoreTransformation = ignoreTransformation;
+	}
 
-        p1 = (point == null ? new Point(0, 0) : point);
-        this.ignoreTransformation = ignoreTransformation;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.interpreter.parser.Parser#next(java.lang.String)
+	 */
+	public String next(String message) throws InvalidParameterException {
 
-    /*
-     * (non-Javadoc)
-     * @see br.org.archimedes.interpreter.parser.Parser#next(java.lang.String)
-     */
-    public String next (String message) throws InvalidParameterException {
+		if (message == null) {
+			throw new InvalidParameterException();
+		}
 
-        if (message == null) {
-            throw new InvalidParameterException();
-        }
+		// TODO forbid zero length vectors
+		if (Utils.isPoint(message)) {
+			p2 = applyTransformation(Utils.getPointCoordinates(message));
+		} else if (message.startsWith("@") //$NON-NLS-1$
+				&& Utils.isPoint(message.substring(1))) {
+			Point relative = Utils.getPointCoordinates(message.substring(1));
+			Vector offset = new Vector(new Point(0, 0), relative);
+			p2 = p1.addVector(offset);
+		} else if (Utils.isDouble(message)) {
+			double distance = Utils.getDouble(message);
+			p2 = getMousePositionWithDistance("", distance); // $NON-NLS-1$
+		} else {
+			throw new InvalidParameterException();
+		}
 
-        // TODO forbid zero length vectors
-        if (Utils.isPoint(message)) {
-            p2 = applyTransformation(Utils.getPointCoordinates(message));
-        }
-        else if (message.startsWith("@") //$NON-NLS-1$
-                && Utils.isPoint(message.substring(1))) {
-            Point relative = Utils.getPointCoordinates(message.substring(1));
-            Vector offset = new Vector(new Point(0, 0), relative);
-            p2 = p1.addVector(offset);
-        }
-        else if (Utils.isDouble(message)) {
-            double distance = Utils.getDouble(message);
-            p2 = getMousePositionWithDistance("", distance); // $NON-NLS-1$
-        }
-        else {
-            throw new InvalidParameterException();
-        }
+		return null;
+	}
 
-        return null;
-    }
+	/**
+	 * @return Point with orto (if it shouldnt ignore orto) the given point
+	 *         otherwise
+	 */
+	private Point applyTransformation(Point point) {
+		if (!ignoreTransformation) {
+			try {
+				return Utils.transformVector(p1, point);
+			} catch (NullArgumentException e) {
+				// Should not happen
+				e.printStackTrace();
+			}
+		}
+		return point;
+	}
 
-    /**
-     * @return Point with orto (if it shouldnt ignore orto) the given point otherwise
-     */
-    private Point applyTransformation (Point point) {
-        if ( !ignoreTransformation) {
-            try {
-                return Utils.transformVector(p1, point);
-            }
-            catch (NullArgumentException e) {
-                // Should not happen
-                e.printStackTrace();
-            }
-        }
-        return point;
-    }
+	/**
+	 * @param message
+	 *            The message to parse
+	 * @param distance
+	 *            The distance from the first point to use
+	 * @return The point at the given distance from the first one on the
+	 *         direction of the mouse
+	 */
+	private Point getMousePositionWithDistance(String message, double distance) {
 
-    /**
-     * @param message
-     *            The message to parse
-     * @param distance
-     *            The distance from the first point to use
-     * @return The point at the given distance from the first one on the direction of the mouse
-     */
-    private Point getMousePositionWithDistance (String message, double distance) {
+		Point directionPoint = Utils.getPointCoordinates(message);
+		if (directionPoint == null) {
+			directionPoint = br.org.archimedes.Utils.getWorkspace()
+					.getMousePosition();
+		}
 
-        Point directionPoint = Utils.getPointCoordinates(message);
-        if (directionPoint == null) {
-            directionPoint = br.org.archimedes.Utils.getWorkspace().getMousePosition();
-        }
+		directionPoint = applyTransformation(directionPoint);
 
-        directionPoint = applyTransformation(directionPoint);
+		try {
+			return Geometrics.calculatePoint(distance, p1, directionPoint);
+		} catch (NullArgumentException e) {
+			// This should never happen
+			e.printStackTrace();
+		}
 
-        try {
-            return Geometrics.calculatePoint(distance, p1, directionPoint);
-        }
-        catch (NullArgumentException e) {
-            // This should never happen
-            e.printStackTrace();
-        }
+		return null;
+	}
 
-        return null;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.interpreter.parser.Parser#isDone()
+	 */
+	public boolean isDone() {
 
-    /*
-     * (non-Javadoc)
-     * @see br.org.archimedes.interpreter.parser.Parser#isDone()
-     */
-    public boolean isDone () {
+		return (p2 != null);
+	}
 
-        return (p2 != null);
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.interpreter.parser.Parser#getParameter()
+	 */
+	public Object getParameter() {
 
-    /*
-     * (non-Javadoc)
-     * @see br.org.archimedes.interpreter.parser.Parser#getParameter()
-     */
-    public Object getParameter () {
-
-        return p2 != null ? new Vector(p1, p2) : null;
-    }
+		return p2 != null ? new Vector(p1, p2) : null;
+	}
 }

@@ -24,9 +24,14 @@ import br.org.archimedes.model.Drawing;
  */
 public class StubCommand implements Command {
 
-    /* (non-Javadoc)
-     * @see br.org.archimedes.interfaces.Command#doIt(br.org.archimedes.model.Drawing)
-     */
-    public void doIt (Drawing drawing) throws IllegalActionException, NullArgumentException {
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.org.archimedes.interfaces.Command#doIt(br.org.archimedes.model.Drawing
+	 * )
+	 */
+	public void doIt(Drawing drawing) throws IllegalActionException,
+			NullArgumentException {
+	}
 }

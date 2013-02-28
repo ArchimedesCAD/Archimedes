@@ -20,129 +20,128 @@ import java.io.RandomAccessFile;
  */
 public class MaxpTable implements Table {
 
-    private int numGlyphs;
+	private int numGlyphs;
 
-    private int maxPoints;
+	private int maxPoints;
 
-    private int maxContours;
+	private int maxContours;
 
-    private int maxCompositePoints;
+	private int maxCompositePoints;
 
-    private int maxCompositeContours;
+	private int maxCompositeContours;
 
-    private int maxZones;
+	private int maxZones;
 
-    private int maxTwilightPoints;
+	private int maxTwilightPoints;
 
-    private int maxStorage;
+	private int maxStorage;
 
-    private int maxFunctionDefs;
+	private int maxFunctionDefs;
 
-    private int maxInstructionDefs;
+	private int maxInstructionDefs;
 
-    private int maxStackElements;
+	private int maxStackElements;
 
-    private int maxSizeOfInstructions;
+	private int maxSizeOfInstructions;
 
-    private int maxComponentElements;
+	private int maxComponentElements;
 
-    private int maxComponentDepth;
+	private int maxComponentDepth;
 
+	@SuppressWarnings("unused")
+	protected MaxpTable(DirectoryEntry de, RandomAccessFile raf)
+			throws IOException {
 
-    @SuppressWarnings("unused")
-    protected MaxpTable (DirectoryEntry de, RandomAccessFile raf)
-            throws IOException {
+		raf.seek(de.getOffset());
+		int versionNumber = raf.readInt();
+		numGlyphs = raf.readUnsignedShort();
+		maxPoints = raf.readUnsignedShort();
+		maxContours = raf.readUnsignedShort();
+		maxCompositePoints = raf.readUnsignedShort();
+		maxCompositeContours = raf.readUnsignedShort();
+		maxZones = raf.readUnsignedShort();
+		maxTwilightPoints = raf.readUnsignedShort();
+		maxStorage = raf.readUnsignedShort();
+		maxFunctionDefs = raf.readUnsignedShort();
+		maxInstructionDefs = raf.readUnsignedShort();
+		maxStackElements = raf.readUnsignedShort();
+		maxSizeOfInstructions = raf.readUnsignedShort();
+		maxComponentElements = raf.readUnsignedShort();
+		maxComponentDepth = raf.readUnsignedShort();
+	}
 
-        raf.seek(de.getOffset());
-        int versionNumber = raf.readInt();
-        numGlyphs = raf.readUnsignedShort();
-        maxPoints = raf.readUnsignedShort();
-        maxContours = raf.readUnsignedShort();
-        maxCompositePoints = raf.readUnsignedShort();
-        maxCompositeContours = raf.readUnsignedShort();
-        maxZones = raf.readUnsignedShort();
-        maxTwilightPoints = raf.readUnsignedShort();
-        maxStorage = raf.readUnsignedShort();
-        maxFunctionDefs = raf.readUnsignedShort();
-        maxInstructionDefs = raf.readUnsignedShort();
-        maxStackElements = raf.readUnsignedShort();
-        maxSizeOfInstructions = raf.readUnsignedShort();
-        maxComponentElements = raf.readUnsignedShort();
-        maxComponentDepth = raf.readUnsignedShort();
-    }
+	public int getMaxComponentDepth() {
 
-    public int getMaxComponentDepth () {
+		return maxComponentDepth;
+	}
 
-        return maxComponentDepth;
-    }
+	public int getMaxComponentElements() {
 
-    public int getMaxComponentElements () {
+		return maxComponentElements;
+	}
 
-        return maxComponentElements;
-    }
+	public int getMaxCompositeContours() {
 
-    public int getMaxCompositeContours () {
+		return maxCompositeContours;
+	}
 
-        return maxCompositeContours;
-    }
+	public int getMaxCompositePoints() {
 
-    public int getMaxCompositePoints () {
+		return maxCompositePoints;
+	}
 
-        return maxCompositePoints;
-    }
+	public int getMaxContours() {
 
-    public int getMaxContours () {
+		return maxContours;
+	}
 
-        return maxContours;
-    }
+	public int getMaxFunctionDefs() {
 
-    public int getMaxFunctionDefs () {
+		return maxFunctionDefs;
+	}
 
-        return maxFunctionDefs;
-    }
+	public int getMaxInstructionDefs() {
 
-    public int getMaxInstructionDefs () {
+		return maxInstructionDefs;
+	}
 
-        return maxInstructionDefs;
-    }
+	public int getMaxPoints() {
 
-    public int getMaxPoints () {
+		return maxPoints;
+	}
 
-        return maxPoints;
-    }
+	public int getMaxSizeOfInstructions() {
 
-    public int getMaxSizeOfInstructions () {
+		return maxSizeOfInstructions;
+	}
 
-        return maxSizeOfInstructions;
-    }
+	public int getMaxStackElements() {
 
-    public int getMaxStackElements () {
+		return maxStackElements;
+	}
 
-        return maxStackElements;
-    }
+	public int getMaxStorage() {
 
-    public int getMaxStorage () {
+		return maxStorage;
+	}
 
-        return maxStorage;
-    }
+	public int getMaxTwilightPoints() {
 
-    public int getMaxTwilightPoints () {
+		return maxTwilightPoints;
+	}
 
-        return maxTwilightPoints;
-    }
+	public int getMaxZones() {
 
-    public int getMaxZones () {
+		return maxZones;
+	}
 
-        return maxZones;
-    }
+	public int getNumGlyphs() {
 
-    public int getNumGlyphs () {
+		return numGlyphs;
+	}
 
-        return numGlyphs;
-    }
+	public int getType() {
 
-    public int getType () {
-
-        return maxp;
-    }
+		return maxp;
+	}
 }

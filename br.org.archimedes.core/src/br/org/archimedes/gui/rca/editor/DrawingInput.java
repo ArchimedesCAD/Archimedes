@@ -24,57 +24,56 @@ import br.org.archimedes.model.Drawing;
 
 public class DrawingInput implements IEditorInput {
 
-    private Drawing drawing;
+	private Drawing drawing;
 
+	public DrawingInput(Drawing drawing) {
 
-    public DrawingInput (Drawing drawing) {
+		this.drawing = drawing;
+	}
 
-        this.drawing = drawing;
-    }
+	public boolean exists() {
 
-    public boolean exists () {
+		return drawing.getFile() != null && drawing.getFile().exists();
+	}
 
-        return drawing.getFile() != null && drawing.getFile().exists();
-    }
+	public ImageDescriptor getImageDescriptor() {
 
-    public ImageDescriptor getImageDescriptor () {
+		// TODO Add a miniature of the view
+		return null;
+	}
 
-        // TODO Add a miniature of the view
-        return null;
-    }
+	public String getName() {
 
-    public String getName () {
+		String name = drawing.getTitle();
+		if (drawing.getFile() != null) {
+			name = drawing.getFile().getName();
+		}
+		return name;
+	}
 
-        String name = drawing.getTitle();
-        if (drawing.getFile() != null) {
-            name = drawing.getFile().getName();
-        }
-        return name;
-    }
+	public IPersistableElement getPersistable() {
 
-    public IPersistableElement getPersistable () {
+		return null;
+	}
 
-        return null;
-    }
+	public String getToolTipText() {
 
-    public String getToolTipText () {
+		String name = Messages.NeverSaved;
+		File file = drawing.getFile();
+		if (file != null) {
+			name = file.getAbsolutePath();
+		}
+		return name;
+	}
 
-        String name = Messages.NeverSaved;
-        File file = drawing.getFile();
-        if (file != null) {
-            name = file.getAbsolutePath();
-        }
-        return name;
-    }
+	@SuppressWarnings("unchecked")
+	public Object getAdapter(Class adapter) {
 
-    @SuppressWarnings("unchecked")
-    public Object getAdapter (Class adapter) {
+		return null;
+	}
 
-        return null;
-    }
+	public Drawing getDrawing() {
 
-    public Drawing getDrawing () {
-
-        return drawing;
-    }
+		return drawing;
+	}
 }

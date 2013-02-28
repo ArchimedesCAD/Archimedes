@@ -14,6 +14,14 @@
 package br.org.archimedes.rotate;
 
 import static org.junit.Assert.assertNotNull;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 import br.org.archimedes.controller.Controller;
 import br.org.archimedes.factories.CommandFactory;
 import br.org.archimedes.helper.FactoryTester;
@@ -23,13 +31,6 @@ import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Vector;
 import br.org.archimedes.stub.StubElement;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-import java.util.HashSet;
-import java.util.Set;
-
 /**
  * Belongs to package br.org.archimedes.rotate.
  * 
@@ -37,155 +38,154 @@ import java.util.Set;
  */
 public class RotateFactoryTest extends FactoryTester {
 
-    private Set<Element> selection;
+	private Set<Element> selection;
 
-    private Point reference;
+	private Point reference;
 
-    private Vector vector;
+	private Vector vector;
 
-    private RotateFactory factory;
+	private RotateFactory factory;
 
+	@Before
+	public void setUp() {
 
-    @Before
-    public void setUp () {
+		Element element1 = new StubElement();
+		Element element2 = new StubElement();
+		factory = new RotateFactory();
 
-        Element element1 = new StubElement();
-        Element element2 = new StubElement();
-        factory = new RotateFactory();
+		// Arguments
+		selection = new HashSet<Element>();
+		selection.add(element1);
+		selection.add(element2);
+		reference = new Point(100, 100);
+		vector = new Vector(reference, new Point(0, 0));
 
-        // Arguments
-        selection = new HashSet<Element>();
-        selection.add(element1);
-        selection.add(element2);
-        reference = new Point(100, 100);
-        vector = new Vector(reference, new Point(0, 0));
+		Controller controller = br.org.archimedes.Utils.getController();
+		controller.deselectAll();
+		controller.setActiveDrawing(new Drawing("Test"));
+	}
 
-        Controller controller = br.org.archimedes.Utils.getController();
-        controller.deselectAll();
-        controller.setActiveDrawing(new Drawing("Test"));
-    }
+	@After
+	public void tearDown() {
 
-    @After
-    public void tearDown () {
+		factory = null;
+		vector = null;
+		reference = null;
+		selection = null;
+		Controller controller = br.org.archimedes.Utils.getController();
+		controller.deselectAll();
+		controller.setActiveDrawing(null);
+	}
 
-        factory = null;
-        vector = null;
-        reference = null;
-        selection = null;
-        Controller controller = br.org.archimedes.Utils.getController();
-        controller.deselectAll();
-        controller.setActiveDrawing(null);
-    }
+	@Test
+	public void testUsualRotate() {
 
-    @Test
-    public void testUsualRotate () {
+		// Begin
+		assertBegin(factory, false);
 
-        // Begin
-        assertBegin(factory, false);
+		sendsInvalids(factory);
+		assertInvalidNext(factory, reference);
+		assertInvalidNext(factory, vector);
 
-        sendsInvalids(factory);
-        assertInvalidNext(factory, reference);
-        assertInvalidNext(factory, vector);
+		// Selection
+		assertSafeNext(factory, selection, false);
 
-        // Selection
-        assertSafeNext(factory, selection, false);
+		sendsInvalids(factory);
+		assertInvalidNext(factory, selection);
+		assertInvalidNext(factory, vector);
 
-        sendsInvalids(factory);
-        assertInvalidNext(factory, selection);
-        assertInvalidNext(factory, vector);
+		// Point
+		assertSafeNext(factory, reference, false);
 
-        // Point
-        assertSafeNext(factory, reference, false);
+		sendsInvalids(factory);
+		assertInvalidNext(factory, selection);
+		assertInvalidNext(factory, reference);
 
-        sendsInvalids(factory);
-        assertInvalidNext(factory, selection);
-        assertInvalidNext(factory, reference);
+		// Vector
+		assertSafeNext(factory, vector, true);
 
-        // Vector
-        assertSafeNext(factory, vector, true);
+		sendsInvalids(factory);
+		assertInvalidNext(factory, selection);
+		assertInvalidNext(factory, reference);
+		assertInvalidNext(factory, vector);
 
-        sendsInvalids(factory);
-        assertInvalidNext(factory, selection);
-        assertInvalidNext(factory, reference);
-        assertInvalidNext(factory, vector);
+		// Use the same factory
+		assertBegin(factory, false);
+		assertSafeNext(factory, selection, false);
+		assertSafeNext(factory, reference, false);
+		assertSafeNext(factory, vector, true);
+	}
 
-        // Use the same factory
-        assertBegin(factory, false);
-        assertSafeNext(factory, selection, false);
-        assertSafeNext(factory, reference, false);
-        assertSafeNext(factory, vector, true);
-    }
+	@Test
+	public void testRedefineRotate() {
 
-    @Test
-    public void testRedefineRotate () {
+		assertBegin(factory, false);
+		assertSafeNext(factory, selection, false);
+		assertSafeNext(factory, reference, false);
 
-        assertBegin(factory, false);
-        assertSafeNext(factory, selection, false);
-        assertSafeNext(factory, reference, false);
+		// "r"
+		assertSafeNext(factory, "r", false);
 
-        // "r"
-        assertSafeNext(factory, "r", false);
+		// Point
+		Point point = new Point(50, 50);
+		assertSafeNext(factory, point, false);
 
-        // Point
-        Point point = new Point(50, 50);
-        assertSafeNext(factory, point, false);
+		// Vector
+		Vector myVector = new Vector(point, new Point(0, -50));
+		assertSafeNext(factory, myVector, false);
 
-        // Vector
-        Vector myVector = new Vector(point, new Point(0, -50));
-        assertSafeNext(factory, myVector, false);
+		// Vector
+		assertSafeNext(factory, vector, true);
 
-        // Vector
-        assertSafeNext(factory, vector, true);
+		sendsInvalids(factory);
+		assertInvalidNext(factory, selection);
+		assertInvalidNext(factory, reference);
+		assertInvalidNext(factory, "r");
+		assertInvalidNext(factory, vector);
 
-        sendsInvalids(factory);
-        assertInvalidNext(factory, selection);
-        assertInvalidNext(factory, reference);
-        assertInvalidNext(factory, "r");
-        assertInvalidNext(factory, vector);
+		// Use the same factory
+		assertBegin(factory, false);
+		assertSafeNext(factory, selection, false);
+		assertSafeNext(factory, reference, false);
+		assertSafeNext(factory, "r", false);
+		assertSafeNext(factory, point, false);
+		assertSafeNext(factory, myVector, false);
+		assertSafeNext(factory, vector, true);
+	}
 
-        // Use the same factory
-        assertBegin(factory, false);
-        assertSafeNext(factory, selection, false);
-        assertSafeNext(factory, reference, false);
-        assertSafeNext(factory, "r", false);
-        assertSafeNext(factory, point, false);
-        assertSafeNext(factory, myVector, false);
-        assertSafeNext(factory, vector, true);
-    }
+	/**
+	 * Sends garbage to the command.
+	 * 
+	 * @param command
+	 *            The command to be used.
+	 */
+	private void sendsInvalids(CommandFactory command) {
 
-    /**
-     * Sends garbage to the command.
-     * 
-     * @param command
-     *            The command to be used.
-     */
-    private void sendsInvalids (CommandFactory command) {
+		assertInvalidNext(factory, new Object());
+		assertInvalidNext(factory, null);
+	}
 
-        assertInvalidNext(factory, new Object());
-        assertInvalidNext(factory, null);
-    }
+	@Test
+	public void testCancel() {
 
-    @Test
-    public void testCancel () {
+		assertBegin(factory, false);
+		assertCancel(factory, false);
 
-        assertBegin(factory, false);
-        assertCancel(factory, false);
+		assertBegin(factory, false);
+		assertSafeNext(factory, selection, false);
+		assertCancel(factory, false);
 
-        assertBegin(factory, false);
-        assertSafeNext(factory, selection, false);
-        assertCancel(factory, false);
+		assertBegin(factory, false);
+		assertSafeNext(factory, selection, false);
+		assertSafeNext(factory, reference, false);
+		assertCancel(factory, false);
 
-        assertBegin(factory, false);
-        assertSafeNext(factory, selection, false);
-        assertSafeNext(factory, reference, false);
-        assertCancel(factory, false);
+		assertBegin(factory, false);
+		assertSafeNext(factory, selection, false);
+		assertSafeNext(factory, reference, false);
+		assertSafeNext(factory, vector, true);
+	}
 
-        assertBegin(factory, false);
-        assertSafeNext(factory, selection, false);
-        assertSafeNext(factory, reference, false);
-        assertSafeNext(factory, vector, true);
-    }
-    
 	@Override
 	@Test
 	public void testFactoryName() {

@@ -29,31 +29,30 @@ import br.org.archimedes.model.Point;
  */
 public class LineExporterTest extends Tester {
 
-    private Line line;
+	private Line line;
 
-    private LineExporter exporter;
+	private LineExporter exporter;
 
-    private ByteArrayOutputStream stream;
+	private ByteArrayOutputStream stream;
 
+	@Before
+	public void setUp() throws Exception {
 
-    @Before
-    public void setUp () throws Exception {
+		line = new Line(new Point(0, 0), new Point(100, 100));
+		exporter = new LineExporter();
+		stream = new ByteArrayOutputStream();
+	}
 
-        line = new Line(new Point(0, 0), new Point(100, 100));
-        exporter = new LineExporter();
-        stream = new ByteArrayOutputStream();
-    }
+	@Test
+	public void exportLineAsSVG() throws Exception {
 
-    @Test
-    public void exportLineAsSVG () throws Exception {
+		exporter.exportElement(line, stream);
 
-        exporter.exportElement(line, stream);
+		String expected = "<line x1=\"0\" y1=\"0\" x2=\"100\" y2=\"-100\" />";
 
-        String expected = "<line x1=\"0\" y1=\"0\" x2=\"100\" y2=\"-100\" />";
+		expected = expected.replaceAll("\\s", "");
 
-        expected = expected.replaceAll("\\s", "");
-
-        String result = stream.toString().replaceAll("\\s", "");
-        assertEquals(expected, result);
-    }
+		String result = stream.toString().replaceAll("\\s", "");
+		assertEquals(expected, result);
+	}
 }

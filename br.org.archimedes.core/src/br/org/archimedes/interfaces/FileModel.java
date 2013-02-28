@@ -19,7 +19,7 @@ package br.org.archimedes.interfaces;
  */
 public interface FileModel {
 
-    public void setFilePath (String path);
+	public void setFilePath(String path);
 
-    public String getFilePath ();
+	public String getFilePath();
 }

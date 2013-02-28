@@ -1,9 +1,9 @@
 #!/bin/bash
 
 if [ "$1" == "--travis" ]; then
-	TRAVIS=true
+	TRAVIS=1
 else
-	TRAVIS=false
+	TRAVIS=0
 fi
 
 WHERE=$(pwd)
@@ -11,7 +11,7 @@ WHERE="${WHERE//\//\\/}"
 
 BUILD_DIR=/tmp/pluginbuilder/br.org.archimedes.build
 
-if [ $TRAVIS ]; then
+if [ $TRAVIS -eq 1 ]; then
 	ECLIPSE=eclipse-SDK-3.7.2-linux-gtk.tar.gz
 else
 	ECLIPSE=eclipse-SDK-3.7.2-linux-gtk-x86_64.tar.gz
@@ -23,16 +23,24 @@ echo "Starting space: "
 df -h
 
 echo
+echo "Running on travis? $TRAVIS"
+
+echo
 echo "Downloading..."
-wget -N -nv "http://ftp.halifax.rwth-aachen.de/eclipse//eclipse/downloads/drops/R-3.7.2-201202080800/$ECLIPSE"
-wget -N -nv "http://ftp.halifax.rwth-aachen.de/eclipse//eclipse/downloads/drops/R-3.7.2-201202080800/eclipse-3.7.2-delta-pack.zip"
+if [ $TRAVIS -eq 1 ]; then
+  wget "http://www.eclipse.org/downloads/download.php?file=/eclipse/downloads/drops/R-3.7.2-201202080800/$ECLIPSE&r=1" -O $ECLIPSE
+  wget "http://www.eclipse.org/downloads/download.php?file=/eclipse/downloads/drops/R-3.7.2-201202080800/eclipse-3.7.2-delta-pack.zip&r=1" -O eclipse-3.7.2-delta-pack.zip
+else
+  wget -N "http://espelhos.edugraf.ufsc.br/eclipse//eclipse/downloads/drops/R-3.7.2-201202080800/eclipse-SDK-3.7.2-linux-gtk-x86_64.tar.gz"
+  wget -N "http://eclipse.c3sl.ufpr.br/eclipse/downloads/drops/R-3.7.2-201202080800/eclipse-3.7.2-delta-pack.zip"
+fi
 
 echo
 echo "Unpacking..."
 tar xf $ECLIPSE
 unzip -oq eclipse-3.7.2-delta-pack.zip
 
-if [ $TRAVIS ]; then
+if [ $TRAVIS -eq 1 ]; then
 	rm -f $ECLIPSE eclipse-3.7.2-delta-pack.zip
 fi
 

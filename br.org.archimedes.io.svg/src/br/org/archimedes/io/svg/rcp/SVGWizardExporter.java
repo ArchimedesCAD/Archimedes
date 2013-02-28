@@ -12,11 +12,10 @@
  */
 package br.org.archimedes.io.svg.rcp;
 
-import br.org.archimedes.interfaces.DrawingExporter;
-import br.org.archimedes.interfaces.FileModel;
-import br.org.archimedes.interfaces.FileModelImpl;
-import br.org.archimedes.io.svg.SVGExporter;
-import br.org.archimedes.model.Drawing;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
@@ -25,10 +24,11 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IExportWizard;
 import org.eclipse.ui.IWorkbench;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import br.org.archimedes.interfaces.DrawingExporter;
+import br.org.archimedes.interfaces.FileModel;
+import br.org.archimedes.interfaces.FileModelImpl;
+import br.org.archimedes.io.svg.SVGExporter;
+import br.org.archimedes.model.Drawing;
 
 /**
  * Belongs to package br.org.archimedes.io.svg.
@@ -36,89 +36,84 @@ import java.io.OutputStream;
  * @author Hugo Corbucci
  */
 public class SVGWizardExporter extends Wizard implements IExportWizard,
-        DrawingExporter {
+		DrawingExporter {
 
-    private FileModel fileModel = new FileModelImpl();
+	private FileModel fileModel = new FileModelImpl();
 
-    private IStructuredSelection selection;
+	private IStructuredSelection selection;
 
-    private IWorkbench workbench;
+	private IWorkbench workbench;
 
+	/**
+	 * @see org.eclipse.jface.wizard.Wizard#canFinish()
+	 */
+	@Override
+	public boolean canFinish() {
+		String filePath = fileModel.getFilePath();
+		if (filePath == null || filePath.trim().length() == 0
+				|| selection.isEmpty()
+				|| selection.getFirstElement().getClass() != Drawing.class) {
+			return false;
+		}
 
-    /**
-     * @see org.eclipse.jface.wizard.Wizard#canFinish()
-     */
-    @Override
-    public boolean canFinish () {
+		File file = new File(filePath);
 
-        String filePath = fileModel.getFilePath();
-        if (filePath == null
-                || selection.getFirstElement().getClass() != Drawing.class) {
-            return false;
-        }
+		if (file.isDirectory()) {
+			return false;
+		} else if (!file.exists()) {
+			File parent = file.getAbsoluteFile().getParentFile();
+			return parent != null && parent.isDirectory() && parent.canWrite();
+		} else {
+			return file.canWrite();
+		}
+	}
 
-        File file = new File(filePath);
+	/**
+	 * @see org.eclipse.jface.wizard.Wizard#performFinish()
+	 */
+	@Override
+	public boolean performFinish() {
 
-        if (file.isDirectory()) {
-            return false;
-        }
-        else if ( !file.exists()) {
-            File parent = file.getParentFile();
-            return parent != null && parent.isDirectory() && parent.canWrite();
-        }
-        else {
-            return file.canWrite();
-        }
-    }
+		SVGExporter exporter = new SVGExporter();
+		try {
+			OutputStream output = new FileOutputStream(fileModel.getFilePath());
+			Drawing drawing = (Drawing) selection.getFirstElement();
+			exporter.exportDrawing(drawing, output);
+		} catch (IOException e) {
+			e.printStackTrace();
+			Shell shell = workbench.getActiveWorkbenchWindow().getShell();
+			MessageBox box = new MessageBox(shell);
+			box.setMessage(Messages.SVGWizardExporter_ErrorBoxTitle);
+			box.setText(Messages.SVGWizardExporter_ErrorBoxMessage);
 
-    /**
-     * @see org.eclipse.jface.wizard.Wizard#performFinish()
-     */
-    @Override
-    public boolean performFinish () {
+			return false;
+		}
 
-        SVGExporter exporter = new SVGExporter();
-        try {
-            OutputStream output = new FileOutputStream(fileModel.getFilePath());
-            Drawing drawing = (Drawing) selection.getFirstElement();
-            exporter.exportDrawing(drawing, output);
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-            Shell shell = workbench.getActiveWorkbenchWindow().getShell();
-            MessageBox box = new MessageBox(shell);
-            box.setMessage(Messages.SVGWizardExporter_ErrorBoxTitle);
-            box
-                    .setText(Messages.SVGWizardExporter_ErrorBoxMessage);
+		return true;
+	}
 
-            return false;
-        }
+	/**
+	 * @see org.eclipse.ui.IWorkbenchWizard#init(org.eclipse.ui.IWorkbench,
+	 *      org.eclipse.jface.viewers.IStructuredSelection)
+	 */
+	public void init(IWorkbench workbench, IStructuredSelection selection) {
 
-        return true;
-    }
+		this.workbench = workbench;
+		this.selection = selection;
+	}
 
-    /**
-     * @see org.eclipse.ui.IWorkbenchWizard#init(org.eclipse.ui.IWorkbench,
-     *      org.eclipse.jface.viewers.IStructuredSelection)
-     */
-    public void init (IWorkbench workbench, IStructuredSelection selection) {
+	public String getName() {
 
-        this.workbench = workbench;
-        this.selection = selection;
-    }
+		return Messages.SVGWizardExporter_ExporterName;
+	}
 
-    public String getName () {
+	/**
+	 * @see org.eclipse.jface.wizard.Wizard#addPages()
+	 */
+	@Override
+	public void addPages() {
 
-        return Messages.SVGWizardExporter_ExporterName;
-    }
-
-    /**
-     * @see org.eclipse.jface.wizard.Wizard#addPages()
-     */
-    @Override
-    public void addPages () {
-
-        super.addPages();
-        this.addPage(new SVGFilePickerPage(fileModel));
-    }
+		super.addPages();
+		this.addPage(new SVGFilePickerPage(fileModel));
+	}
 }

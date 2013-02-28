@@ -32,100 +32,103 @@ import br.org.archimedes.rcp.extensionpoints.IntersectionManagerEPLoader;
 
 public class ArcExtender implements Extender {
 
-    public Element extend (Element element, Collection<Element> references, Point extremePoint)
-            throws NullArgumentException {
-        
-        if (element == null || references == null || extremePoint == null) {
-            throw new NullArgumentException();
-        }
+	public Element extend(Element element, Collection<Element> references,
+			Point extremePoint) throws NullArgumentException {
 
-        Arc arc = (Arc) element.clone();
-        if (extremePoint.equals(arc.getInitialPoint()))
-            extremePoint = arc.getInitialPoint();
-        else
-            extremePoint = arc.getEndingPoint();
+		if (element == null || references == null || extremePoint == null) {
+			throw new NullArgumentException();
+		}
 
-        try {
-            Collection<Point> intersectionPoints = getIntersectionPoints(references, arc);
+		Arc arc = (Arc) element.clone();
+		if (extremePoint.equals(arc.getInitialPoint()))
+			extremePoint = arc.getInitialPoint();
+		else
+			extremePoint = arc.getEndingPoint();
 
-            if ( !intersectionPoints.isEmpty()) {
-                Point nearestReferencePoint = getNearestReferencePoint(arc, extremePoint,
-                        intersectionPoints);
+		try {
+			Collection<Point> intersectionPoints = getIntersectionPoints(
+					references, arc);
 
-                Vector offsetVector = new Vector(extremePoint, nearestReferencePoint);
-                arc.move(Collections.singletonList(extremePoint), offsetVector);
-                
-            }
-        }
-        catch (InvalidArgumentException e) {
-            // won't reach here
-            e.printStackTrace();
-        }
-        
-        return arc;
-    }
+			if (!intersectionPoints.isEmpty()) {
+				Point nearestReferencePoint = getNearestReferencePoint(arc,
+						extremePoint, intersectionPoints);
 
-    private Collection<Point> getIntersectionPoints (Collection<Element> references, Arc arc)
-            throws NullArgumentException, InvalidArgumentException {
+				Vector offsetVector = new Vector(extremePoint,
+						nearestReferencePoint);
+				arc.move(Collections.singletonList(extremePoint), offsetVector);
 
-        IntersectionManager intersectionManager = new IntersectionManagerEPLoader()
-                .getIntersectionManager();
+			}
+		} catch (InvalidArgumentException e) {
+			// won't reach here
+			e.printStackTrace();
+		}
 
-        Circle circle = new Circle(arc.getCenter(), arc.getRadius());
+		return arc;
+	}
 
-        return intersectionManager.getIntersectionsBetween(circle, references);
-    }
+	private Collection<Point> getIntersectionPoints(
+			Collection<Element> references, Arc arc)
+			throws NullArgumentException, InvalidArgumentException {
 
-    private Point getNearestReferencePoint (Arc arc, Point nearestExtremePoint,
-            Collection<Point> intersectionPoints) throws NullArgumentException {
+		IntersectionManager intersectionManager = new IntersectionManagerEPLoader()
+				.getIntersectionManager();
 
-        Point nearestReferencePoint = null;
-        double minDistance = Double.MAX_VALUE;
+		Circle circle = new Circle(arc.getCenterPoint(), arc.getRadius());
 
-        for (Point point : intersectionPoints) {
-            double distanceToRef = Geometrics.calculateDistance(point, nearestExtremePoint);
-            if ( !arc.contains(point) && distanceToRef < minDistance) {
-                nearestReferencePoint = point;
-                minDistance = distanceToRef;
-            }
-        }
-        return nearestReferencePoint;
-    }
+		return intersectionManager.getIntersectionsBetween(circle, references);
+	}
 
-    Point getNearestExtremePoint (Arc arc, Point point) throws NullArgumentException {
+	private Point getNearestReferencePoint(Arc arc, Point nearestExtremePoint,
+			Collection<Point> intersectionPoints) throws NullArgumentException {
 
-        double distanceToInitial = Geometrics.calculateDistance(point, arc.getInitialPoint());
-        double distanceToEnding = Geometrics.calculateDistance(point, arc.getEndingPoint());
+		Point nearestReferencePoint = null;
+		double minDistance = Double.MAX_VALUE;
 
-        if (distanceToEnding <= distanceToInitial) {
-            return arc.getEndingPoint();
-        }
-        else {
-            return arc.getInitialPoint();
-        }
-    }
+		for (Point point : intersectionPoints) {
+			double distanceToRef = Geometrics.calculateDistance(point,
+					nearestExtremePoint);
+			if (!arc.contains(point) && distanceToRef < minDistance) {
+				nearestReferencePoint = point;
+				minDistance = distanceToRef;
+			}
+		}
+		return nearestReferencePoint;
+	}
 
-    public Collection<Element> getInfiniteExtensionElements (Element element) {
+	Point getNearestExtremePoint(Arc arc, Point point)
+			throws NullArgumentException {
 
-        if ( !(element instanceof Arc)) {
-            throw new IllegalArgumentException();
-        }
+		double distanceToInitial = Geometrics.calculateDistance(point,
+				arc.getInitialPoint());
+		double distanceToEnding = Geometrics.calculateDistance(point,
+				arc.getEndingPoint());
 
-        Arc arc = (Arc) element;
+		if (distanceToEnding <= distanceToInitial) {
+			return arc.getEndingPoint();
+		} else {
+			return arc.getInitialPoint();
+		}
+	}
 
-        Collection<Element> extension = new ArrayList<Element>(1);
+	public Collection<Element> getInfiniteExtensionElements(Element element) {
 
-        try {
-            Circle circle = new Circle(arc.getCenter(), arc.getRadius());
-            extension.add(circle);
-        }
-        catch (NullArgumentException e) {
-            // will not reach here
-        }
-        catch (InvalidArgumentException e) {
-            // will not reach here
-        }
+		if (!(element instanceof Arc)) {
+			throw new IllegalArgumentException();
+		}
 
-        return extension;
-    }
+		Arc arc = (Arc) element;
+
+		Collection<Element> extension = new ArrayList<Element>(1);
+
+		try {
+			Circle circle = new Circle(arc.getCenterPoint(), arc.getRadius());
+			extension.add(circle);
+		} catch (NullArgumentException e) {
+			// will not reach here
+		} catch (InvalidArgumentException e) {
+			// will not reach here
+		}
+
+		return extension;
+	}
 }

@@ -16,36 +16,35 @@ import org.eclipse.osgi.util.NLS;
 
 /**
  * Belongs to package br.org.archimedes.text.
- *
+ * 
  * @author nitao
- *
+ * 
  */
 public class Messages extends NLS {
 
-    private static final String BUNDLE_NAME = "br.org.archimedes.text.messages"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = "br.org.archimedes.text.messages"; //$NON-NLS-1$
 
-    public static String Cancel;
+	public static String Cancel;
 
-    public static String Created;
+	public static String Created;
 
-    public static String ExpectedDist;
+	public static String ExpectedDist;
 
-    public static String ExpectedPoint;
+	public static String ExpectedPoint;
 
-    public static String ExpectedText;
+	public static String ExpectedText;
 
-    public static String Iteration1;
+	public static String Iteration1;
 
-    public static String Iteration2;
+	public static String Iteration2;
 
-    public static String Iteration3;
-    static {
-        // initialize resource bundle
-        NLS.initializeMessages(BUNDLE_NAME, Messages.class);
-    }
+	public static String Iteration3;
+	static {
+		// initialize resource bundle
+		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
+	}
 
+	private Messages() {
 
-    private Messages () {
-
-    }
+	}
 }

@@ -23,17 +23,17 @@ import br.org.archimedes.model.Element;
  * 
  * @author night
  */
-public interface ElementImporter <T extends Element> {
+public interface ElementImporter<T extends Element> {
 
-    /**
-     * @param input
-     *            The input from which the element must be read.
-     * @return The element of type T.
-     * @throws InvalidFileFormatException
-     *             In case the input is not in the expected format.
-     * @throws IOException
-     *             In case of any other IO problem.
-     */
-    public T importElement (InputStream input)
-            throws InvalidFileFormatException, IOException;
+	/**
+	 * @param input
+	 *            The input from which the element must be read.
+	 * @return The element of type T.
+	 * @throws InvalidFileFormatException
+	 *             In case the input is not in the expected format.
+	 * @throws IOException
+	 *             In case of any other IO problem.
+	 */
+	public T importElement(InputStream input)
+			throws InvalidFileFormatException, IOException;
 }

@@ -32,7 +32,7 @@ public class CircleLineIntersector implements Intersector {
 
 		if (element == null || otherElement == null)
 			throw new NullArgumentException();
-		
+
 		Collection<Point> intersections = new ArrayList<Point>();
 
 		Line line;
@@ -45,10 +45,10 @@ public class CircleLineIntersector implements Intersector {
 			line = (Line) otherElement;
 			circle = (Circle) element;
 		}
-		
+
 		Point projection = null;
 		double distance = 0.0;
-		
+
 		try {
 			projection = line.getProjectionOf(circle.getCenter());
 			distance = Geometrics.calculateDistance(circle.getCenter(),
@@ -59,8 +59,8 @@ public class CircleLineIntersector implements Intersector {
 
 		if (distance <= circle.getRadius() + Constant.EPSILON) {
 
-			Vector lineVector = new Vector(line.getInitialPoint(), line
-					.getEndingPoint());
+			Vector lineVector = new Vector(line.getInitialPoint(),
+					line.getEndingPoint());
 			lineVector = Geometrics.normalize(lineVector);
 
 			double semiCord = Math.sqrt(circle.getRadius() * circle.getRadius()
@@ -73,7 +73,8 @@ public class CircleLineIntersector implements Intersector {
 
 			if (line.contains(intersection1))
 				intersections.add(intersection1);
-			if (!intersection2.equals(intersection1) && line.contains(intersection2)) {
+			if (!intersection2.equals(intersection1)
+					&& line.contains(intersection2)) {
 				intersections.add(intersection2);
 			}
 		}

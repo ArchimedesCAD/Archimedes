@@ -21,33 +21,33 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 
 /**
- *
+ * 
  * @author <a href="mailto:david@steadystate.co.uk">David Schweinsberg</a>
  * @version $Id: KerningPair.java,v 1.3 2004/08/18 07:15:21 vhardy Exp $
  */
 public class KerningPair {
 
-    private int left;
-    private int right;
-    private short value;
+	private int left;
+	private int right;
+	private short value;
 
-    /** Creates new KerningPair */
-    protected KerningPair(RandomAccessFile raf) throws IOException {
-        left = raf.readUnsignedShort();
-        right = raf.readUnsignedShort();
-        value = raf.readShort();
-    }
+	/** Creates new KerningPair */
+	protected KerningPair(RandomAccessFile raf) throws IOException {
+		left = raf.readUnsignedShort();
+		right = raf.readUnsignedShort();
+		value = raf.readShort();
+	}
 
-    public int getLeft() {
-        return left;
-    }
+	public int getLeft() {
+		return left;
+	}
 
-    public int getRight() {
-        return right;
-    }
+	public int getRight() {
+		return right;
+	}
 
-    public short getValue() {
-        return value;
-    }
+	public short getValue() {
+		return value;
+	}
 
 }

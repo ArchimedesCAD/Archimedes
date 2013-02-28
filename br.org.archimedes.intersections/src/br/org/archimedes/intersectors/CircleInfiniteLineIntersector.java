@@ -25,14 +25,14 @@ import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Vector;
 
-public class CircleInfiniteLineIntersector implements Intersector{
+public class CircleInfiniteLineIntersector implements Intersector {
 
 	public Collection<Point> getIntersections(Element element,
 			Element otherElement) throws NullArgumentException {
 
 		if (element == null || otherElement == null)
 			throw new NullArgumentException();
-		
+
 		Collection<Point> intersections = new ArrayList<Point>();
 
 		InfiniteLine infiniteLine;
@@ -45,10 +45,10 @@ public class CircleInfiniteLineIntersector implements Intersector{
 			infiniteLine = (InfiniteLine) otherElement;
 			circle = (Circle) element;
 		}
-		
+
 		Point projection = null;
 		double distance = 0.0;
-		
+
 		try {
 			projection = infiniteLine.getProjectionOf(circle.getCenter());
 			distance = Geometrics.calculateDistance(circle.getCenter(),
@@ -59,8 +59,9 @@ public class CircleInfiniteLineIntersector implements Intersector{
 
 		if ((distance - circle.getRadius()) <= Constant.EPSILON) {
 
-			Vector infiniteLineVector = new Vector(infiniteLine.getInitialPoint(), infiniteLine
-					.getEndingPoint());
+			Vector infiniteLineVector = new Vector(
+					infiniteLine.getInitialPoint(),
+					infiniteLine.getEndingPoint());
 			infiniteLineVector = Geometrics.normalize(infiniteLineVector);
 
 			double semiCord = Math.sqrt(circle.getRadius() * circle.getRadius()
@@ -73,7 +74,8 @@ public class CircleInfiniteLineIntersector implements Intersector{
 
 			if (infiniteLine.contains(intersection1))
 				intersections.add(intersection1);
-			if (!intersection2.equals(intersection1) && infiniteLine.contains(intersection2)) {
+			if (!intersection2.equals(intersection1)
+					&& infiniteLine.contains(intersection2)) {
 				intersections.add(intersection2);
 			}
 		}

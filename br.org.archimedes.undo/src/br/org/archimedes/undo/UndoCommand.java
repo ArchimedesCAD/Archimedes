@@ -23,36 +23,36 @@ import br.org.archimedes.undo.internal.Messages;
 
 public class UndoCommand implements Command {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.model.commands.Command#doIt(br.org.archimedes.model.Drawing)
-     */
-    public void doIt (Drawing drawing) throws IllegalActionException,
-            NullArgumentException {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.org.archimedes.model.commands.Command#doIt(br.org.archimedes.model
+	 * .Drawing)
+	 */
+	public void doIt(Drawing drawing) throws IllegalActionException,
+			NullArgumentException {
 
-        if (drawing == null) {
-            throw new NullArgumentException();
-        }
+		if (drawing == null) {
+			throw new NullArgumentException();
+		}
 
-        Stack<UndoableCommand> undoHistory = drawing.getUndoHistory();
-        Stack<UndoableCommand> redoHistory = drawing.getRedoHistory();
+		Stack<UndoableCommand> undoHistory = drawing.getUndoHistory();
+		Stack<UndoableCommand> redoHistory = drawing.getRedoHistory();
 
-        if (undoHistory.size() > 0) {
-            UndoableCommand command = undoHistory.pop();
-            redoHistory.push(command);
-            command.undoIt(drawing);
-        }
-        else {
-            throw new IllegalActionException(
-                    Messages.notPerformed);
-        }
+		if (undoHistory.size() > 0) {
+			UndoableCommand command = undoHistory.pop();
+			redoHistory.push(command);
+			command.undoIt(drawing);
+		} else {
+			throw new IllegalActionException(Messages.notPerformed);
+		}
 
-        // TODO Modificar isso para usar o Observer nos bot�es
-        // Criar m�todo no drawing void
-        // manipulateHistories(Stack<UndoableCommand> toBePoped,
-        // Stack<UndoableCommand> toBePushed) throws ...
-        // Ele manipula as pilhas e j� notifica os observadores de uma mudan�a
-        // nestes estados.
-    }
+		// TODO Modificar isso para usar o Observer nos bot�es
+		// Criar m�todo no drawing void
+		// manipulateHistories(Stack<UndoableCommand> toBePoped,
+		// Stack<UndoableCommand> toBePushed) throws ...
+		// Ele manipula as pilhas e j� notifica os observadores de uma mudan�a
+		// nestes estados.
+	}
 }

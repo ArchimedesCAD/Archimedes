@@ -13,7 +13,7 @@
 
 package br.org.archimedes.orto;
 
-import br.org.archimedes.Utils;
+import java.util.Map;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.Command;
@@ -25,7 +25,7 @@ import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.ui.commands.IElementUpdater;
 import org.eclipse.ui.menus.UIElement;
 
-import java.util.Map;
+import br.org.archimedes.Utils;
 
 /**
  * Belongs to package br.org.archimedes.orto.
@@ -34,30 +34,32 @@ import java.util.Map;
  */
 public class OrtoHandler extends AbstractHandler implements IElementUpdater {
 
-    /**
-     * @see org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.ExecutionEvent)
-     */
-    public Object execute (ExecutionEvent event) throws ExecutionException {
+	/**
+	 * @see org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.ExecutionEvent)
+	 */
+	public Object execute(ExecutionEvent event) throws ExecutionException {
 
-        ICommandService service = (ICommandService) PlatformUI.getWorkbench().getService(
-                ICommandService.class);
-        Command command = service.getCommand(Activator.ORTO_COMMAND_ID);
-        State state = command.getState(Activator.ORTO_STATE);
-        boolean newValue = !(Boolean) state.getValue();
-        state.setValue(newValue);
+		ICommandService service = (ICommandService) PlatformUI.getWorkbench()
+				.getService(ICommandService.class);
+		Command command = service.getCommand(Activator.ORTO_COMMAND_ID);
+		State state = command.getState(Activator.ORTO_STATE);
+		boolean newValue = !(Boolean) state.getValue();
+		state.setValue(newValue);
 
-        service.refreshElements(Activator.ORTO_COMMAND_ID, null);
-        return newValue;
-    }
+		service.refreshElements(Activator.ORTO_COMMAND_ID, null);
+		return newValue;
+	}
 
-    /*
-     * (non-Javadoc)
-     * @see org.eclipse.ui.commands.IElementUpdater#updateElement(org.eclipse.ui.menus.UIElement,
-     * java.util.Map)
-     */
-    @SuppressWarnings("unchecked")
-    public void updateElement (UIElement element, Map parameters) {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.ui.commands.IElementUpdater#updateElement(org.eclipse.ui.
+	 * menus.UIElement, java.util.Map)
+	 */
+	@SuppressWarnings("unchecked")
+	public void updateElement(UIElement element, Map parameters) {
 
-        element.setChecked(Utils.getWorkspace().isOrtoOn());
-    }
+		element.setChecked(Utils.getWorkspace().isOrtoOn());
+	}
 }

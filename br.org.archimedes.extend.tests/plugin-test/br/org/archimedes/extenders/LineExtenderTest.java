@@ -13,89 +13,94 @@
 
 package br.org.archimedes.extenders;
 
-import br.org.archimedes.Tester;
-import br.org.archimedes.line.Line;
-import br.org.archimedes.model.Element;
-import br.org.archimedes.model.Point;
+import java.util.Collection;
+import java.util.Vector;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Collection;
-import java.util.Vector;
+import br.org.archimedes.Tester;
+import br.org.archimedes.line.Line;
+import br.org.archimedes.model.Element;
+import br.org.archimedes.model.Point;
 
 public class LineExtenderTest extends Tester {
 
-    private static Collection<Element> referencesArray;
+	private static Collection<Element> referencesArray;
 
-    private static Line verticalWithIntersection;
+	private static Line verticalWithIntersection;
 
-    private static LineExtender extender;
+	private static LineExtender extender;
 
-    private static Line upReference;
+	private static Line upReference;
 
-    private static Line downReference;
+	private static Line downReference;
 
+	@Before
+	public void setUp() throws Exception {
 
-    @Before
-    public void setUp () throws Exception {
+		extender = new LineExtender();
+		referencesArray = new Vector<Element>(2);
+		verticalWithIntersection = new Line(1, 2, 1, 6);
+		upReference = new Line(0, 7, 2, 7);
+		downReference = new Line(0, 1, 2, 1);
+		referencesArray.add(upReference);
+		referencesArray.add(downReference);
 
-        extender = new LineExtender();
-        referencesArray = new Vector<Element>(2);
-        verticalWithIntersection = new Line(1, 2, 1, 6);
-        upReference = new Line(0, 7, 2, 7);
-        downReference = new Line(0, 1, 2, 1);
-        referencesArray.add(upReference);
-        referencesArray.add(downReference);
+	}
 
-    }
+	@Test
+	public void extendsUpperExtremeToUpperReference() throws Exception {
 
-    @Test
-    public void extendsUpperExtremeToUpperReference () throws Exception {
+		extender.extend(verticalWithIntersection, referencesArray, new Point(1,
+				6));
+		Assert.assertEquals(new Line(1, 2, 1, 7), verticalWithIntersection);
+	}
 
-        extender.extend(verticalWithIntersection, referencesArray, new Point(1, 6));
-        Assert.assertEquals(new Line(1, 2, 1, 7), verticalWithIntersection);
-    }
+	@Test
+	public void extendsLowerExtremeToLowerReference() throws Exception {
 
-    @Test
-    public void extendsLowerExtremeToLowerReference () throws Exception {
+		extender.extend(verticalWithIntersection, referencesArray, new Point(1,
+				2));
+		Assert.assertEquals(new Line(1, 1, 1, 6), verticalWithIntersection);
+	}
 
-        extender.extend(verticalWithIntersection, referencesArray, new Point(1, 2));
-        Assert.assertEquals(new Line(1, 1, 1, 6), verticalWithIntersection);
-    }
+	@Test
+	public void dontExtendsWithReference() throws Exception {
 
-    @Test
-    public void dontExtendsWithReference () throws Exception {
+		Line verticalWithoutIntersection = new Line(4, 1, 4, 6);
+		extender.extend(verticalWithoutIntersection, referencesArray,
+				new Point(4, 4));
+		Assert.assertEquals(new Line(4, 1, 4, 6), verticalWithoutIntersection);
+	}
 
-        Line verticalWithoutIntersection = new Line(4, 1, 4, 6);
-        extender.extend(verticalWithoutIntersection, referencesArray, new Point(4, 4));
-        Assert.assertEquals(new Line(4, 1, 4, 6), verticalWithoutIntersection);
-    }
+	@Test
+	public void extendsToTheOnlyPointAvailableThatIsAtTheOtherSide()
+			throws Exception {
 
-    @Test
-    public void extendsToTheOnlyPointAvailableThatIsAtTheOtherSide () throws Exception {
+		referencesArray.remove(upReference);
+		extender.extend(verticalWithIntersection, referencesArray, new Point(1,
+				5));
+		Assert.assertEquals(new Line(1, 1, 1, 6), verticalWithIntersection);
 
-        referencesArray.remove(upReference);
-        extender.extend(verticalWithIntersection, referencesArray, new Point(1, 5));
-        Assert.assertEquals(new Line(1, 1, 1, 6), verticalWithIntersection);
+	}
 
-    }
+	@Test
+	public void dontExtendsToIntersectionInsideLine() throws Exception {
 
-    @Test
-    public void dontExtendsToIntersectionInsideLine () throws Exception {
+		Line line = new Line(1, 2, 1, 9);
+		referencesArray.remove(downReference);
+		extender.extend(line, referencesArray, new Point(1, 6));
+		Assert.assertEquals(new Line(1, 2, 1, 9), line);
+	}
 
-        Line line = new Line(1, 2, 1, 9);
-        referencesArray.remove(downReference);
-        extender.extend(line, referencesArray, new Point(1, 6));
-        Assert.assertEquals(new Line(1, 2, 1, 9), line);
-    }
+	@Test
+	public void extendsClickingExtremePoint() throws Exception {
 
-    @Test
-    public void extendsClickingExtremePoint () throws Exception {
-
-        extender.extend(verticalWithIntersection, referencesArray, new Point(1, 6));
-        Assert.assertEquals(new Line(1, 2, 1, 7), verticalWithIntersection);
-    }
+		extender.extend(verticalWithIntersection, referencesArray, new Point(1,
+				6));
+		Assert.assertEquals(new Line(1, 2, 1, 7), verticalWithIntersection);
+	}
 
 }

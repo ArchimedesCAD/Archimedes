@@ -25,19 +25,20 @@ import br.org.archimedes.model.Point;
  */
 public interface Filleter {
 
-    /**
-     * Generates the list of commands necessary to perform the fillet of e1 and e2
-     * 
-     * @param e1
-     *            First element to be filleted
-     * @param e1Click
-     *            The click point that selected the first element
-     * @param e2
-     *            Second element to be filleted
-     * @param e2Click
-     *            The click point that selected the second element
-     * @return A list of commands to be executed in order to perform the fillet
-     */
-    public List<? extends UndoableCommand> fillet (Element e1, Point e1Click, Element e2,
-            Point e2Click);
+	/**
+	 * Generates the list of commands necessary to perform the fillet of e1 and
+	 * e2
+	 * 
+	 * @param e1
+	 *            First element to be filleted
+	 * @param e1Click
+	 *            The click point that selected the first element
+	 * @param e2
+	 *            Second element to be filleted
+	 * @param e2Click
+	 *            The click point that selected the second element
+	 * @return A list of commands to be executed in order to perform the fillet
+	 */
+	public List<? extends UndoableCommand> fillet(Element e1, Point e1Click,
+			Element e2, Point e2Click);
 }

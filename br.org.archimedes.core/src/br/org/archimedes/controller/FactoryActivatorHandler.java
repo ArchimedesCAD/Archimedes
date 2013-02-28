@@ -23,26 +23,33 @@ import org.eclipse.core.commands.IHandler;
  * 
  * @author "Hugo Corbucci"
  */
-public class FactoryActivatorHandler extends AbstractHandler implements IHandler {
+public class FactoryActivatorHandler extends AbstractHandler implements
+		IHandler {
 
-    /*
-     * (non-Javadoc)
-     * @see org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.ExecutionEvent)
-     */
-    public Object execute (ExecutionEvent event) throws ExecutionException {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.
+	 * ExecutionEvent)
+	 */
+	public Object execute(ExecutionEvent event) throws ExecutionException {
 
-        // TODO Have the InputController change something on environment
-        String factoryName = event.getParameter("br.org.archimedes.core.factoryactivator.name"); //$NON_NLS-1$ //$NON-NLS-1$
-        br.org.archimedes.Utils.getInputController().receiveText(factoryName);
-        
-        String parametersText = event.getParameter("br.org.archimedes.core.factoryactivator.furtherinputs"); //$NON_NLS-1$ //$NON-NLS-1$
-        if(parametersText != null) {
-            String[] parameters = parametersText.split("|"); //$NON-NLS-1$
-            for (String parameter : parameters) {
-                br.org.archimedes.Utils.getInputController().receiveText(parameter);   
-            }
-        }
-        
-        return null;
-    }
+		// TODO Have the InputController change something on environment
+		String factoryName = event
+				.getParameter("br.org.archimedes.core.factoryactivator.name"); //$NON_NLS-1$ //$NON-NLS-1$
+		br.org.archimedes.Utils.getInputController().receiveText(factoryName);
+
+		String parametersText = event
+				.getParameter("br.org.archimedes.core.factoryactivator.furtherinputs"); //$NON_NLS-1$ //$NON-NLS-1$
+		if (parametersText != null) {
+			String[] parameters = parametersText.split("|"); //$NON-NLS-1$
+			for (String parameter : parameters) {
+				br.org.archimedes.Utils.getInputController().receiveText(
+						parameter);
+			}
+		}
+
+		return null;
+	}
 }

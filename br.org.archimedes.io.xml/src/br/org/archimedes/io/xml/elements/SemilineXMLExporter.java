@@ -29,30 +29,33 @@ import br.org.archimedes.semiline.Semiline;
  */
 public class SemilineXMLExporter implements ElementExporter<Semiline> {
 
-    /*
-     * (non-Javadoc)
-     * @see
-     * br.org.archimedes.interfaces.ElementExporter#exportElement(br.org.archimedes.model.Element,
-     * java.lang.Object)
-     */
-    public void exportElement (Semiline element, Object outputObject) throws IOException {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.org.archimedes.interfaces.ElementExporter#exportElement(br.org.archimedes
+	 * .model.Element, java.lang.Object)
+	 */
+	public void exportElement(Semiline element, Object outputObject)
+			throws IOException {
 
-        OutputStream output = (OutputStream) outputObject;
+		OutputStream output = (OutputStream) outputObject;
 
-        StringBuilder sb = new StringBuilder();
-        sb.append("<semiline>"); //$NON-NLS-1$
+		StringBuilder sb = new StringBuilder();
+		sb.append("<semiline>"); //$NON-NLS-1$
 
-        sb.append(XMLExporterHelper.xmlFor("point", element.getInitialPoint())); //$NON-NLS-1$
-        sb.append(XMLExporterHelper.xmlFor("point", element.getDirectionPoint())); //$NON-NLS-1$
+		sb.append(XMLExporterHelper.xmlFor("point", element.getInitialPoint())); //$NON-NLS-1$
+		sb.append(XMLExporterHelper
+				.xmlFor("point", element.getDirectionPoint())); //$NON-NLS-1$
 
-        sb.append("</semiline>"); //$NON-NLS-1$
+		sb.append("</semiline>"); //$NON-NLS-1$
 
-        output.write(sb.toString().getBytes());
-    }
+		output.write(sb.toString().getBytes());
+	}
 
-    public void exportElement (Semiline element, Object outputObject, Rectangle boundingBox)
-            throws IOException, NotSupportedException {
+	public void exportElement(Semiline element, Object outputObject,
+			Rectangle boundingBox) throws IOException, NotSupportedException {
 
-        throw new NotSupportedException();
-    }
+		throw new NotSupportedException();
+	}
 }

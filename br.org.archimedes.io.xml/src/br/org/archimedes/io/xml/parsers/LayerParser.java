@@ -14,6 +14,14 @@
 
 package br.org.archimedes.io.xml.parsers;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
 import br.org.archimedes.Constant;
 import br.org.archimedes.exceptions.ElementCreationException;
 import br.org.archimedes.exceptions.IllegalActionException;
@@ -23,14 +31,6 @@ import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Layer;
 import br.org.archimedes.model.LineStyle;
 
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 /**
  * Belongs to package br.org.archimedes.xml.
  * 
@@ -38,125 +38,126 @@ import java.util.List;
  */
 public class LayerParser {
 
-    /**
-     * Builds a layer from the specified node
-     * 
-     * @param node
-     *            The node to be parsed
-     * @return The created layer
-     */
-    public Layer parse (Node node) {
+	/**
+	 * Builds a layer from the specified node
+	 * 
+	 * @param node
+	 *            The node to be parsed
+	 * @return The created layer
+	 */
+	public Layer parse(Node node) {
 
-        Layer layer = parseLayerProperties(node);
-        parseLayerColors(node.getChildNodes(), layer);
+		Layer layer = parseLayerProperties(node);
+		parseLayerColors(node.getChildNodes(), layer);
 
-        Collection<Element> elements = getElements(node.getChildNodes());
-        for (Element element : elements) {
-            try {
-                layer.putElement(element);
-            }
-            catch (NullArgumentException e) {
-                // This should never happen
-                e.printStackTrace();
-            }
-            catch (IllegalActionException e) {
-                // This can happen, but should be ignored
-            }
-        }
+		Collection<Element> elements = getElements(node.getChildNodes());
+		for (Element element : elements) {
+			try {
+				layer.putElement(element);
+			} catch (NullArgumentException e) {
+				// This should never happen
+				e.printStackTrace();
+			} catch (IllegalActionException e) {
+				// This can happen, but should be ignored
+			}
+		}
 
-        return layer;
-    }
+		return layer;
+	}
 
-    /**
-     * Reads the layer colors and sets them to the layer.
-     * 
-     * @param childNodes
-     *            The child nodes of the container tag
-     * @param layer
-     *            The layer that should be modified
-     */
-    private void parseLayerColors (NodeList childNodes, Layer layer) {
+	/**
+	 * Reads the layer colors and sets them to the layer.
+	 * 
+	 * @param childNodes
+	 *            The child nodes of the container tag
+	 * @param layer
+	 *            The layer that should be modified
+	 */
+	private void parseLayerColors(NodeList childNodes, Layer layer) {
 
-        NodeList nodesCollection = ((org.w3c.dom.Element) childNodes).getElementsByTagName("color"); //$NON-NLS-1$
-        List<org.w3c.dom.Element> colorList = XMLUtils.nodeListToList(nodesCollection);
-        Color screenColor = XMLUtils.nodeToColor(colorList.get(0));
-        layer.setColor(screenColor);
-        
-        Color printColor = screenColor;
-        if (colorList.size() > 1) {
-            printColor = XMLUtils.nodeToColor(colorList.get(1));
-        }
-        else if (screenColor.equals(Constant.WHITE)) {
-            printColor = Constant.BLACK;
-        }
-        layer.setPrintColor(printColor);
-    }
+		NodeList nodesCollection = ((org.w3c.dom.Element) childNodes)
+				.getElementsByTagName("color"); //$NON-NLS-1$
+		List<org.w3c.dom.Element> colorList = XMLUtils
+				.nodeListToList(nodesCollection);
+		Color screenColor = XMLUtils.nodeToColor(colorList.get(0));
+		layer.setColor(screenColor);
 
-    /**
-     * Extracts the attributes from a container node and create the corresponding layer.
-     * 
-     * @param parsingNode
-     *            The container node
-     * @return The layer extracted from this container
-     */
-    private Layer parseLayerProperties (Node parsingNode) {
+		Color printColor = screenColor;
+		if (colorList.size() > 1) {
+			printColor = XMLUtils.nodeToColor(colorList.get(1));
+		} else if (screenColor.equals(Constant.WHITE)) {
+			printColor = Constant.BLACK;
+		}
+		layer.setPrintColor(printColor);
+	}
 
-        NamedNodeMap attributes = parsingNode.getAttributes();
-        Node nameNode = attributes.getNamedItem("name"); //$NON-NLS-1$
-        String name = nameNode.getNodeValue();
+	/**
+	 * Extracts the attributes from a container node and create the
+	 * corresponding layer.
+	 * 
+	 * @param parsingNode
+	 *            The container node
+	 * @return The layer extracted from this container
+	 */
+	private Layer parseLayerProperties(Node parsingNode) {
 
-        Node lineStyleNode = attributes.getNamedItem("lineStyle"); //$NON-NLS-1$
-        int lineStyle = Integer.parseInt(lineStyleNode.getNodeValue());
+		NamedNodeMap attributes = parsingNode.getAttributes();
+		Node nameNode = attributes.getNamedItem("name"); //$NON-NLS-1$
+		String name = nameNode.getNodeValue();
 
-        Node thicknessNode = attributes.getNamedItem("thickness"); //$NON-NLS-1$
-        double thickness = XMLUtils.nodeToDouble(thicknessNode);
+		Node lineStyleNode = attributes.getNamedItem("lineStyle"); //$NON-NLS-1$
+		int lineStyle = Integer.parseInt(lineStyleNode.getNodeValue());
 
-        LineStyle[] styles = LineStyle.values();
-        Layer layer = new Layer(Constant.WHITE, name, styles[lineStyle], thickness);
+		Node thicknessNode = attributes.getNamedItem("thickness"); //$NON-NLS-1$
+		double thickness = XMLUtils.nodeToDouble(thicknessNode);
 
-        Node visibleNode = attributes.getNamedItem("visible"); //$NON-NLS-1$
-        if (visibleNode != null) {
-            boolean visible = Boolean.parseBoolean(visibleNode.getNodeValue());
-            layer.setVisible(visible);
-        }
+		LineStyle[] styles = LineStyle.values();
+		Layer layer = new Layer(Constant.WHITE, name, styles[lineStyle],
+				thickness);
 
-        Node lockedNode = attributes.getNamedItem("locked"); //$NON-NLS-1$
-        if (lockedNode != null) {
-            boolean locked = Boolean.parseBoolean(lockedNode.getNodeValue());
-            layer.setLocked(locked);
-        }
+		Node visibleNode = attributes.getNamedItem("visible"); //$NON-NLS-1$
+		if (visibleNode != null) {
+			boolean visible = Boolean.parseBoolean(visibleNode.getNodeValue());
+			layer.setVisible(visible);
+		}
 
-        return layer;
-    }
+		Node lockedNode = attributes.getNamedItem("locked"); //$NON-NLS-1$
+		if (lockedNode != null) {
+			boolean locked = Boolean.parseBoolean(lockedNode.getNodeValue());
+			layer.setLocked(locked);
+		}
 
-    /**
-     * Converts a NodeList into a Collection of Elements
-     * 
-     * @param containerNodeList
-     *            The list to be Converted
-     * @return The Element Collection
-     */
-    private Collection<Element> getElements (NodeList containerNodeList) {
+		return layer;
+	}
 
-        Collection<Element> elements = new ArrayList<Element>();
+	/**
+	 * Converts a NodeList into a Collection of Elements
+	 * 
+	 * @param containerNodeList
+	 *            The list to be Converted
+	 * @return The Element Collection
+	 */
+	private Collection<Element> getElements(NodeList containerNodeList) {
 
-        for (int i = 0; i < containerNodeList.getLength(); i++) {
-            Node childNode = containerNodeList.item(i);
+		Collection<Element> elements = new ArrayList<Element>();
 
-            ElementParser parser = ElementParser.getParser(childNode.getNodeName());
-            if (parser != null) {
-                Element archElement;
-                try {
-                    archElement = parser.parse(childNode);
-                    elements.add(archElement);
-                }
-                catch (ElementCreationException e) {
-                    // TODO Add the XML code to the layer to be saved later
-                    e.printStackTrace();
-                }
-            }
-        }
+		for (int i = 0; i < containerNodeList.getLength(); i++) {
+			Node childNode = containerNodeList.item(i);
 
-        return elements;
-    }
+			ElementParser parser = ElementParser.getParser(childNode
+					.getNodeName());
+			if (parser != null) {
+				Element archElement;
+				try {
+					archElement = parser.parse(childNode);
+					elements.add(archElement);
+				} catch (ElementCreationException e) {
+					// TODO Add the XML code to the layer to be saved later
+					e.printStackTrace();
+				}
+			}
+		}
+
+		return elements;
+	}
 }

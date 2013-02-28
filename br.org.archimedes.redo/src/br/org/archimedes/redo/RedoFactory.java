@@ -16,14 +16,14 @@ import br.org.archimedes.undo.UndoFactory;
 
 public class RedoFactory extends UndoFactory {
 
-    public String begin () {
+	public String begin() {
 
-        setCommand(new RedoCommand());
-        return Messages.RedoPerformed;
-    }
+		setCommand(new RedoCommand());
+		return Messages.RedoPerformed;
+	}
 
-    public String getName () {
+	public String getName() {
 
-        return "redo"; //$NON-NLS-1$
-    }
+		return "redo"; //$NON-NLS-1$
+	}
 }

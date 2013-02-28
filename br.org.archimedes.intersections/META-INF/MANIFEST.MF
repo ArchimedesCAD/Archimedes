@@ -15,7 +15,8 @@ Require-Bundle: br.org.archimedes.core;bundle-version="0.64.0",
  br.org.archimedes.polyline;bundle-version="0.58.0";resolution:=optional,
  br.org.archimedes.text;bundle-version="0.58.0";resolution:=optional,
  br.org.archimedes.dimension;bundle-version="0.58.0";resolution:=optional,
- br.org.archimedes.leader;bundle-version="0.58.0";resolution:=optional
+ br.org.archimedes.leader;bundle-version="0.58.0";resolution:=optional,
+ br.org.archimedes.ellipse;bundle-version="0.66.0"
 Export-Package: br.org.archimedes.intersections.interfaces,
  br.org.archimedes.intersectors;x-friends:="br.org.archimedes.intersections.tests"
 Import-Package: br.org.archimedes.ellipse

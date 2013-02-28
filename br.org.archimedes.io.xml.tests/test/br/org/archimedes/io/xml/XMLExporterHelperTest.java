@@ -14,15 +14,15 @@
 
 package br.org.archimedes.io.xml;
 
-import br.org.archimedes.model.Point;
-import br.org.archimedes.model.Vector;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import br.org.archimedes.model.Point;
+import br.org.archimedes.model.Vector;
 
 /**
  * XMLExporterHelper's tests
@@ -31,78 +31,80 @@ import java.io.OutputStream;
  */
 public class XMLExporterHelperTest {
 
-    // TODO Test the XML Exporting system
- 
-    /**
-     * Tests para the XMLExporterHelper to write a point
-     * 
-     * @throws IOException
-     *             If it can't write
-     */
-    @Test
-    public void testPoint () throws IOException {
+	// TODO Test the XML Exporting system
 
-        Point point = new Point(0, 0);
-        OutputStream output = new ByteArrayOutputStream();
+	/**
+	 * Tests para the XMLExporterHelper to write a point
+	 * 
+	 * @throws IOException
+	 *             If it can't write
+	 */
+	@Test
+	public void testPoint() throws IOException {
 
-        XMLExporterHelper.write(point, output);
-        String result = output.toString();
-        Assert.assertEquals("<point x=\"0.0\" y=\"0.0\" />", result);
-    }
+		Point point = new Point(0, 0);
+		OutputStream output = new ByteArrayOutputStream();
 
-    /**
-     * Testa para write(Point, String, OutputStream)
-     * 
-     * @throws IOException
-     *             Se fracassar...
-     */
-    @Test
-    public void testCustomPoint () throws IOException {
+		XMLExporterHelper.write(point, output);
+		String result = output.toString();
+		Assert.assertEquals("<point x=\"0.0\" y=\"0.0\" />", result);
+	}
 
-        Point point = new Point(0, 0);
-        OutputStream output = new ByteArrayOutputStream();
+	/**
+	 * Testa para write(Point, String, OutputStream)
+	 * 
+	 * @throws IOException
+	 *             Se fracassar...
+	 */
+	@Test
+	public void testCustomPoint() throws IOException {
 
-        XMLExporterHelper.write(point, "lalala", output);
-        String result = output.toString();
-        Assert.assertEquals("<lalala x=\"0.0\" y=\"0.0\" />", result);
-    }
+		Point point = new Point(0, 0);
+		OutputStream output = new ByteArrayOutputStream();
 
-    /**
-     * Testa para write(Vector, OutputStream)
-     * 
-     * @throws IOException
-     *             Se fracassar...
-     */
-    @Test
-    public void testVector () throws IOException {
+		XMLExporterHelper.write(point, "lalala", output);
+		String result = output.toString();
+		Assert.assertEquals("<lalala x=\"0.0\" y=\"0.0\" />", result);
+	}
 
-        Point point = new Point(1, 1);
-        Vector vector = new Vector(point);
+	/**
+	 * Testa para write(Vector, OutputStream)
+	 * 
+	 * @throws IOException
+	 *             Se fracassar...
+	 */
+	@Test
+	public void testVector() throws IOException {
 
-        OutputStream output = new ByteArrayOutputStream();
+		Point point = new Point(1, 1);
+		Vector vector = new Vector(point);
 
-        XMLExporterHelper.write(vector, output);
-        String result = output.toString();
-        Assert.assertEquals("<vector>\n\t<point x=\"1.0\" y=\"1.0\" />\n</vector>", result);
-    }
+		OutputStream output = new ByteArrayOutputStream();
 
-    /**
-     * Testa para write(Vector, String, OutputStream)
-     * 
-     * @throws IOException
-     *             Se fracassar...
-     */
-    @Test
-    public void testCustomVector () throws IOException {
+		XMLExporterHelper.write(vector, output);
+		String result = output.toString();
+		Assert.assertEquals(
+				"<vector>\n\t<point x=\"1.0\" y=\"1.0\" />\n</vector>", result);
+	}
 
-        Point point = new Point(1, 1);
-        Vector vector = new Vector(point);
+	/**
+	 * Testa para write(Vector, String, OutputStream)
+	 * 
+	 * @throws IOException
+	 *             Se fracassar...
+	 */
+	@Test
+	public void testCustomVector() throws IOException {
 
-        OutputStream output = new ByteArrayOutputStream();
+		Point point = new Point(1, 1);
+		Vector vector = new Vector(point);
 
-        XMLExporterHelper.write(vector, "lalala", output);
-        String result = output.toString();
-        Assert.assertEquals("<lalala>\n\t<point x=\"1.0\" y=\"1.0\" />\n</lalala>", result);
-    }
+		OutputStream output = new ByteArrayOutputStream();
+
+		XMLExporterHelper.write(vector, "lalala", output);
+		String result = output.toString();
+		Assert.assertEquals(
+				"<lalala>\n\t<point x=\"1.0\" y=\"1.0\" />\n</lalala>", result);
+	}
 
 }

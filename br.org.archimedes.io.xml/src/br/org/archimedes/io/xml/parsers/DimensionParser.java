@@ -29,49 +29,51 @@ import br.org.archimedes.model.Point;
  */
 public class DimensionParser extends NPointsParser {
 
-    private Double size;
+	private Double size;
 
+	/**
+	 * Default constructor
+	 */
+	public DimensionParser() {
 
-    /**
-     * Default constructor
-     */
-    public DimensionParser () {
+		super(3);
+	}
 
-        super(3);
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.org.archimedes.io.xml.parsers.ElementParser#parse(org.w3c.dom.Node)
+	 */
+	@Override
+	public Element parse(Node node) throws ElementCreationException {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.io.xml.parsers.ElementParser#parse(org.w3c.dom.Node)
-     */
-    @Override
-    public Element parse (Node node) throws ElementCreationException {
+		NodeList nodesCollection = ((org.w3c.dom.Element) node)
+				.getElementsByTagName("size"); //$NON-NLS-1$
 
-        NodeList nodesCollection = ((org.w3c.dom.Element) node)
-                .getElementsByTagName("size"); //$NON-NLS-1$
+		if (nodesCollection.getLength() == 1) {
+			Node childNode = nodesCollection.item(0);
+			this.size = XMLUtils.nodeToDouble(childNode);
 
-        if (nodesCollection.getLength() == 1) {
-            Node childNode = nodesCollection.item(0);
-            this.size = XMLUtils.nodeToDouble(childNode);
+			return super.parse(node);
+		}
 
-            return super.parse(node);
-        }
+		return null;
+	}
 
-        return null;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.org.archimedes.io.xml.parsers.NPointsParser#createElement(java.util
+	 * .List)
+	 */
+	@Override
+	protected Element createElement(List<Point> points)
+			throws ElementCreationException {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.io.xml.parsers.NPointsParser#createElement(java.util.List)
-     */
-    @Override
-    protected Element createElement (List<Point> points)
-            throws ElementCreationException {
-
-        ElementFactory elementFactory = getElementFactory();
-        return elementFactory.createElement("br.org.archimedes.dimension", //$NON-NLS-1$
-                points.get(0), points.get(1), points.get(2), size);
-    }
+		ElementFactory elementFactory = getElementFactory();
+		return elementFactory.createElement("br.org.archimedes.dimension", //$NON-NLS-1$
+				points.get(0), points.get(1), points.get(2), size);
+	}
 }

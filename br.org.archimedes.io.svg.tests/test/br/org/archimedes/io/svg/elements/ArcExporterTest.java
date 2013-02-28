@@ -13,58 +13,62 @@
 
 package br.org.archimedes.io.svg.elements;
 
-import br.org.archimedes.Tester;
-import br.org.archimedes.arc.Arc;
-import br.org.archimedes.model.Point;
-
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.Before;
+import org.junit.Test;
+
+import br.org.archimedes.Tester;
+import br.org.archimedes.arc.Arc;
+import br.org.archimedes.model.Point;
 
 /**
  * @author Luiz Real and Bruno Klava
  */
 public class ArcExporterTest extends Tester {
 
-    private ArcExporter exporter;
+	private ArcExporter exporter;
 
-    private ByteArrayOutputStream stream;
+	private ByteArrayOutputStream stream;
 
+	@Before
+	public void setUp() throws Exception {
 
-    @Before
-    public void setUp () throws Exception {
+		exporter = new ArcExporter();
+		stream = new ByteArrayOutputStream();
+	}
 
-        exporter = new ArcExporter();
-        stream = new ByteArrayOutputStream();
-    }
+	@Test
+	public void exportMidSizedArcAsSVG() throws Exception {
 
-    @Test
-    public void exportMidSizedArcAsSVG () throws Exception {
+		Arc arc = new Arc(new Point(2.0, 0.0), new Point(1.0, 1.0), new Point(
+				0.0, 0.0));
+		assertSVGExportMatch("<path d=\"M2,0 A1,1 0 1 0 0,0\"/>", arc);
+	}
 
-        Arc arc = new Arc(new Point(2.0, 0.0), new Point(1.0, 1.0), new Point(0.0, 0.0));
-        assertSVGExportMatch("<path d=\"M2,0 A1,1 0 1 0 0,0\"/>", arc);
-    }
+	/**
+	 * @param arc
+	 *            The arc to export
+	 * @throws IOException
+	 *             Throw if there is any problem writing the arc
+	 */
+	private void assertSVGExportMatch(String spacedExpected, Arc arc)
+			throws IOException {
 
-    /**
-     * @param arc The arc to export
-     * @throws IOException Throw if there is any problem writing the arc
-     */
-    private void assertSVGExportMatch (String spacedExpected, Arc arc) throws IOException {
+		exporter.exportElement(arc, stream);
+		String expected = spacedExpected.replaceAll("\\s", "");
+		String result = stream.toString().replaceAll("\\s", "");
+		assertEquals(expected, result);
+	}
 
-        exporter.exportElement(arc, stream);
-        String expected = spacedExpected.replaceAll("\\s", "");
-        String result = stream.toString().replaceAll("\\s", "");
-        assertEquals(expected, result);
-    }
-    
-    @Test
-    public void exportArcAsSVG () throws Exception {
+	@Test
+	public void exportArcAsSVG() throws Exception {
 
-        Arc arc = new Arc(new Point(2.0, 0.0), new Point(1.0, 1.0), new Point(1.0, -1.0));
-        assertSVGExportMatch("<path d=\"M2,0 A1,1 0 1 0 1,1\"/>", arc);
-    }
+		Arc arc = new Arc(new Point(2.0, 0.0), new Point(1.0, 1.0), new Point(
+				1.0, -1.0));
+		assertSVGExportMatch("<path d=\"M2,0 A1,1 0 1 0 1,1\"/>", arc);
+	}
 }

@@ -16,22 +16,20 @@ import org.eclipse.osgi.util.NLS;
 
 /**
  * Belongs to package br.org.archimedes.gui.rca.
- *
+ * 
  * @author night
- *
+ * 
  */
 public class Messages extends NLS {
 
-    private static final String BUNDLE_NAME = "br.org.archimedes.i18n.menu"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = "br.org.archimedes.i18n.menu"; //$NON-NLS-1$
 
+	static {
+		// initialize resource bundle
+		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
+	}
 
-    static {
-        // initialize resource bundle
-        NLS.initializeMessages(BUNDLE_NAME, Messages.class);
-    }
+	private Messages() {
 
-
-    private Messages () {
-
-    }
+	}
 }

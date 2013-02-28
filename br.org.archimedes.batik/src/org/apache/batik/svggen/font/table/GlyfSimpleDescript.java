@@ -25,124 +25,122 @@ import java.io.ByteArrayInputStream;
  */
 public class GlyfSimpleDescript extends GlyfDescript {
 
-    private int[] endPtsOfContours;
-    private byte[] flags;
-    private short[] xCoordinates;
-    private short[] yCoordinates;
-    private int count;
+	private int[] endPtsOfContours;
+	private byte[] flags;
+	private short[] xCoordinates;
+	private short[] yCoordinates;
+	private int count;
 
-    public GlyfSimpleDescript(GlyfTable parentTable, short numberOfContours, ByteArrayInputStream bais) {
+	public GlyfSimpleDescript(GlyfTable parentTable, short numberOfContours,
+			ByteArrayInputStream bais) {
 
-        super(parentTable, numberOfContours, bais);
-        
-        // Simple glyph description
-        endPtsOfContours = new int[numberOfContours];
-        for (int i = 0; i < numberOfContours; i++) {
-            endPtsOfContours[i] = (bais.read()<<8 | bais.read());
-        }
+		super(parentTable, numberOfContours, bais);
 
-        // The last end point index reveals the total number of points
-        count = endPtsOfContours[numberOfContours-1] + 1;
-        flags = new byte[count];
-        xCoordinates = new short[count];
-        yCoordinates = new short[count];
+		// Simple glyph description
+		endPtsOfContours = new int[numberOfContours];
+		for (int i = 0; i < numberOfContours; i++) {
+			endPtsOfContours[i] = (bais.read() << 8 | bais.read());
+		}
 
-        int instructionCount = (bais.read()<<8 | bais.read());
-        readInstructions(bais, instructionCount);
-        readFlags(count, bais);
-        readCoords(count, bais);
-    }
+		// The last end point index reveals the total number of points
+		count = endPtsOfContours[numberOfContours - 1] + 1;
+		flags = new byte[count];
+		xCoordinates = new short[count];
+		yCoordinates = new short[count];
 
-    public int getEndPtOfContours(int i) {
-        return endPtsOfContours[i];
-    }
+		int instructionCount = (bais.read() << 8 | bais.read());
+		readInstructions(bais, instructionCount);
+		readFlags(count, bais);
+		readCoords(count, bais);
+	}
 
-    public byte getFlags(int i) {
-        return flags[i];
-    }
+	public int getEndPtOfContours(int i) {
+		return endPtsOfContours[i];
+	}
 
-    public short getXCoordinate(int i) {
-        return xCoordinates[i];
-    }
+	public byte getFlags(int i) {
+		return flags[i];
+	}
 
-    public short getYCoordinate(int i) {
-        return yCoordinates[i];
-    }
+	public short getXCoordinate(int i) {
+		return xCoordinates[i];
+	}
 
-    public boolean isComposite() {
-        return false;
-    }
+	public short getYCoordinate(int i) {
+		return yCoordinates[i];
+	}
 
-    public int getPointCount() {
-        return count;
-    }
+	public boolean isComposite() {
+		return false;
+	}
 
-    public int getContourCount() {
-        return getNumberOfContours();
-    }
-    /*
-    public int getComponentIndex(int c) {
-    return 0;
-    }
+	public int getPointCount() {
+		return count;
+	}
 
-    public int getComponentCount() {
-    return 1;
-    }
-     */
-    /**
-     * The table is stored as relative values, but we'll store them as absolutes
-     */
-    private void readCoords(int count, ByteArrayInputStream bais) {
-        short x = 0;
-        short y = 0;
-        for (int i = 0; i < count; i++) {
-            if ((flags[i] & xDual) != 0) {
-                if ((flags[i] & xShortVector) != 0) {
-                    x += (short) bais.read();
-                }
-            } else {
-                if ((flags[i] & xShortVector) != 0) {
-                    x += (short) -((short) bais.read());
-                } else {
-                    x += (short)(bais.read()<<8 | bais.read());
-                }
-            }
-            xCoordinates[i] = x;
-        }
+	public int getContourCount() {
+		return getNumberOfContours();
+	}
 
-        for (int i = 0; i < count; i++) {
-            if ((flags[i] & yDual) != 0) {
-                if ((flags[i] & yShortVector) != 0) {
-                    y += (short) bais.read();
-                }
-            } else {
-                if ((flags[i] & yShortVector) != 0) {
-                    y += (short) -((short) bais.read());
-                } else {
-                    y += (short)(bais.read()<<8 | bais.read());
-                }
-            }
-            yCoordinates[i] = y;
-        }
-    }
+	/*
+	 * public int getComponentIndex(int c) { return 0; }
+	 * 
+	 * public int getComponentCount() { return 1; }
+	 */
+	/**
+	 * The table is stored as relative values, but we'll store them as absolutes
+	 */
+	private void readCoords(int count, ByteArrayInputStream bais) {
+		short x = 0;
+		short y = 0;
+		for (int i = 0; i < count; i++) {
+			if ((flags[i] & xDual) != 0) {
+				if ((flags[i] & xShortVector) != 0) {
+					x += (short) bais.read();
+				}
+			} else {
+				if ((flags[i] & xShortVector) != 0) {
+					x += (short) -((short) bais.read());
+				} else {
+					x += (short) (bais.read() << 8 | bais.read());
+				}
+			}
+			xCoordinates[i] = x;
+		}
 
-    /**
-     * The flags are run-length encoded
-     */
-    private void readFlags(int flagCount, ByteArrayInputStream bais) {
-        try {
-            for (int index = 0; index < flagCount; index++) {
-                flags[index] = (byte) bais.read();
-                if ((flags[index] & repeat) != 0) {
-                    int repeats = bais.read();
-                    for (int i = 1; i <= repeats; i++) {
-                        flags[index + i] = flags[index];
-                    }
-                    index += repeats;
-                }
-            }
-        } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println("error: array index out of bounds");
-        }
-    }
+		for (int i = 0; i < count; i++) {
+			if ((flags[i] & yDual) != 0) {
+				if ((flags[i] & yShortVector) != 0) {
+					y += (short) bais.read();
+				}
+			} else {
+				if ((flags[i] & yShortVector) != 0) {
+					y += (short) -((short) bais.read());
+				} else {
+					y += (short) (bais.read() << 8 | bais.read());
+				}
+			}
+			yCoordinates[i] = y;
+		}
+	}
+
+	/**
+	 * The flags are run-length encoded
+	 */
+	private void readFlags(int flagCount, ByteArrayInputStream bais) {
+		try {
+			for (int index = 0; index < flagCount; index++) {
+				flags[index] = (byte) bais.read();
+				if ((flags[index] & repeat) != 0) {
+					int repeats = bais.read();
+					for (int i = 1; i <= repeats; i++) {
+						flags[index + i] = flags[index];
+					}
+					index += repeats;
+				}
+			}
+		} catch (ArrayIndexOutOfBoundsException e) {
+			System.out.println("error: array index out of bounds");
+		}
+	}
 }

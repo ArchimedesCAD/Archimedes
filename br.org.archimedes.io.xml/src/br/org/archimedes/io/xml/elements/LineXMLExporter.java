@@ -29,29 +29,33 @@ import br.org.archimedes.model.Rectangle;
  */
 public class LineXMLExporter implements ElementExporter<Line> {
 
-    /*
-     * (non-Javadoc)
-     * @see br.org.archimedes.interfaces.ElementExporter#exportElement(br.org.archimedes
-     * .model.Element, java.io.OutputStream)
-     */
-    public void exportElement (Line line, Object outputObject) throws IOException {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.org.archimedes.interfaces.ElementExporter#exportElement(br.org.archimedes
+	 * .model.Element, java.io.OutputStream)
+	 */
+	public void exportElement(Line line, Object outputObject)
+			throws IOException {
 
-        OutputStream output = (OutputStream) outputObject;
+		OutputStream output = (OutputStream) outputObject;
 
-        StringBuilder lineTag = new StringBuilder();
-        lineTag.append("<line>"); //$NON-NLS-1$
+		StringBuilder lineTag = new StringBuilder();
+		lineTag.append("<line>"); //$NON-NLS-1$
 
-        lineTag.append(XMLExporterHelper.xmlFor("point", line.getInitialPoint())); //$NON-NLS-1$
-        lineTag.append(XMLExporterHelper.xmlFor("point", line.getEndingPoint())); //$NON-NLS-1$
+		lineTag.append(XMLExporterHelper
+				.xmlFor("point", line.getInitialPoint())); //$NON-NLS-1$
+		lineTag.append(XMLExporterHelper.xmlFor("point", line.getEndingPoint())); //$NON-NLS-1$
 
-        lineTag.append("</line>"); //$NON-NLS-1$
-        output.write(lineTag.toString().getBytes());
-    }
+		lineTag.append("</line>"); //$NON-NLS-1$
+		output.write(lineTag.toString().getBytes());
+	}
 
-    public void exportElement (Line element, Object outputObject, Rectangle boundingBox)
-            throws IOException, NotSupportedException {
+	public void exportElement(Line element, Object outputObject,
+			Rectangle boundingBox) throws IOException, NotSupportedException {
 
-        throw new NotSupportedException();
-    }
+		throw new NotSupportedException();
+	}
 
 }

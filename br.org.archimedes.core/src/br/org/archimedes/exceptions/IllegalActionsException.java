@@ -23,41 +23,41 @@ import java.util.List;
  */
 public class IllegalActionsException extends IllegalActionException {
 
-    private static final long serialVersionUID = 1243200304659700536L;
+	private static final long serialVersionUID = 1243200304659700536L;
 
-    private List<IllegalActionException> exceptions = new LinkedList<IllegalActionException>();
+	private List<IllegalActionException> exceptions = new LinkedList<IllegalActionException>();
 
+	/**
+	 * @param illegalActionException
+	 *            A part of me
+	 */
+	public void add(IllegalActionException illegalActionException) {
 
-    /**
-     * @param illegalActionException
-     *            A part of me
-     */
-    public void add (IllegalActionException illegalActionException) {
+		this.exceptions.add(illegalActionException);
+	}
 
-        this.exceptions.add(illegalActionException);
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Throwable#getMessage()
+	 */
+	@Override
+	public String getMessage() {
 
-    /*
-     * (non-Javadoc)
-     * @see java.lang.Throwable#getMessage()
-     */
-    @Override
-    public String getMessage () {
+		String message = "" + exceptions.size()
+				+ " IllegalActions have been caught. Here are the messages:\n";
+		for (IllegalActionException illegal : exceptions) {
+			message += "\t" + illegal.getMessage() + "\n";
+		}
 
-        String message = "" + exceptions.size()
-                + " IllegalActions have been caught. Here are the messages:\n";
-        for (IllegalActionException illegal : exceptions) {
-            message += "\t" + illegal.getMessage() + "\n";
-        }
+		return message;
+	}
 
-        return message;
-    }
+	/**
+	 * @return The amount of illegal actions I collected.
+	 */
+	public int size() {
 
-    /**
-     * @return The amount of illegal actions I collected.
-     */
-    public int size () {
-
-        return exceptions.size();
-    }
+		return exceptions.size();
+	}
 }

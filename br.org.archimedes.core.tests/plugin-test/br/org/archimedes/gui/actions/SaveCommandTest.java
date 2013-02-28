@@ -13,87 +13,89 @@
 
 package br.org.archimedes.gui.actions;
 
-import br.org.archimedes.Tester;
-import br.org.archimedes.model.Drawing;
-
-import org.eclipse.swt.widgets.Shell;
-import org.junit.Test;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import org.eclipse.swt.widgets.Shell;
+import org.junit.Test;
+
+import br.org.archimedes.Tester;
+import br.org.archimedes.model.Drawing;
 
 /**
  * @author Luiz Real
  */
 public class SaveCommandTest extends Tester {
 
-    Drawing drawing = new Drawing("Teste");
+	Drawing drawing = new Drawing("Teste");
 
-    boolean throwException = false;
+	boolean throwException = false;
 
+	private class MockedSaveCommand extends SaveCommand {
 
-    private class MockedSaveCommand extends SaveCommand {
+		/**
+		 * @param shell
+		 * @param showDialog
+		 * @param drawing
+		 */
+		public MockedSaveCommand(Shell shell, boolean showDialog,
+				Drawing drawing) {
 
-        /**
-         * @param shell
-         * @param showDialog
-         * @param drawing
-         */
-        public MockedSaveCommand (Shell shell, boolean showDialog, Drawing drawing) {
+			super(shell, showDialog, drawing);
+		}
 
-            super(shell, showDialog, drawing);
-        }
+		@Override
+		protected boolean writeFile(File file) throws IOException {
 
-        @Override
-        protected boolean writeFile (File file) throws IOException {
+			if (throwException) {
+				throw new IOException();
+			}
+			return true;
+		}
 
-            if (throwException) {
-                throw new IOException();
-            }
-            return true;
-        }
+		@Override
+		protected File showDialog() {
 
-        @Override
-        protected File showDialog () {
+			return new File("emptyDrawing.arc");
+		}
 
-            return new File("emptyDrawing.arc");
-        }
+	}
 
-    }
+	@Test
+	public void doesNotFailIfNameFileExists() throws Exception {
 
+		drawing.setFile(new File("emptyDrawing.arc"));
+		MockedSaveCommand command = new MockedSaveCommand(new Shell(), false,
+				drawing);
 
-    @Test
-    public void doesNotFailIfNameFileExists () throws Exception {
+		boolean result = command.execute();
+		assertTrue(result);
+	}
 
-        drawing.setFile(new File("emptyDrawing.arc"));
-        MockedSaveCommand command = new MockedSaveCommand(new Shell(), false, drawing);
+	@Test
+	public void doesNotFailIfFileNameDoesntExist() throws Exception {
 
-        boolean result = command.execute();
-        assertTrue(result);
-    }
+		drawing.setFile(null);
+		MockedSaveCommand command = new MockedSaveCommand(new Shell(), false,
+				drawing);
 
-    @Test
-    public void doesNotFailIfFileNameDoesntExist () throws Exception {
+		boolean result = command.execute();
+		assertTrue(result);
+	}
 
-        drawing.setFile(null);
-        MockedSaveCommand command = new MockedSaveCommand(new Shell(), false, drawing);
+	@Test
+	public void throwsExceptionIfFileNull() throws Exception {
 
-        boolean result = command.execute();
-        assertTrue(result);
-    }
+		throwException = true;
+		drawing.setFile(null);
+		MockedSaveCommand command = new MockedSaveCommand(new Shell(), false,
+				drawing);
 
-    @Test
-    public void throwsExceptionIfFileNull() throws Exception {
-
-        throwException = true;
-        drawing.setFile(null);
-        MockedSaveCommand command = new MockedSaveCommand(new Shell(), false, drawing);
-
-        boolean result = command.execute();
-        assertFalse(result);
-    }
+		boolean result = command.execute();
+		assertFalse(result);
+	}
 
 }

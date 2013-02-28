@@ -197,4 +197,28 @@
             otherElement="br.org.archimedes.leader"
             class="br.org.archimedes.intersectors.LineLeaderIntersector"/>
    </extension>
+   <extension
+         point="br.org.archimedes.intersections.elementsIntersector">
+         <elementsIntersector
+            id="br.org.archimedes.intersector.ellipsepolyline"
+            element="br.org.archimedes.ellipse"
+            otherElement="br.org.archimedes.polyline"
+            class="br.org.archimedes.intersectors.EllipsePolylineIntersector"/>
+   </extension>
+   <extension
+         point="br.org.archimedes.intersections.elementsIntersector">
+         <elementsIntersector
+            id="br.org.archimedes.intersector.ellipseline"
+            element="br.org.archimedes.ellipse"
+            otherElement="br.org.archimedes.line"
+            class="br.org.archimedes.intersectors.EllipseLineIntersector"/>
+   </extension>
+   <extension
+         point="br.org.archimedes.intersections.elementsIntersector">
+         <elementsIntersector
+            id="br.org.archimedes.intersector.ellipseinfiniteline"
+            element="br.org.archimedes.ellipse"
+            otherElement="br.org.archimedes.infiniteline"
+            class="br.org.archimedes.intersectors.EllipseInfiniteLineIntersector"/>
+   </extension>
 </plugin>

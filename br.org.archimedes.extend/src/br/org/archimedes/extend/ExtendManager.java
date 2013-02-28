@@ -14,47 +14,47 @@
 
 package br.org.archimedes.extend;
 
+import java.util.Collection;
+
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.extend.interfaces.Extender;
 import br.org.archimedes.extend.rcp.ExtenderEPLoader;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
 
-import java.util.Collection;
+public class ExtendManager implements
+		br.org.archimedes.interfaces.ExtendManager {
 
-public class ExtendManager implements br.org.archimedes.interfaces.ExtendManager {
+	private static final Extender NULL_EXTENDER = new NullExtender();
 
-    private static final Extender NULL_EXTENDER = new NullExtender();
+	private ExtenderEPLoader loader;
 
-    private ExtenderEPLoader loader;
+	public ExtendManager() {
 
+		loader = new ExtenderEPLoader();
+	}
 
-    public ExtendManager () {
+	public ExtendManager(ExtenderEPLoader loader) {
 
-        loader = new ExtenderEPLoader();
-    }
+		this.loader = loader;
+	}
 
-    public ExtendManager (ExtenderEPLoader loader) {
+	public Element extend(Element element, Collection<Element> references,
+			Point click) throws NullArgumentException {
 
-        this.loader = loader;
-    }
+		return getExtenderFor(element).extend(element, references, click);
+	}
 
-    public Element extend (Element element, Collection<Element> references, Point click)
-            throws NullArgumentException {
+	private Extender getExtenderFor(Element element) {
 
-        return getExtenderFor(element).extend(element, references, click);
-    }
+		Class<? extends Element> elementClass = element.getClass();
+		Extender extender = loader.get(elementClass);
+		return extender == null ? NULL_EXTENDER : extender;
+	}
 
-    private Extender getExtenderFor (Element element) {
+	public Collection<Element> getInfiniteExtensionElements(Element element) {
 
-        Class<? extends Element> elementClass = element.getClass();
-        Extender extender = loader.get(elementClass);
-        return extender == null ? NULL_EXTENDER : extender;
-    }
-
-    public Collection<Element> getInfiniteExtensionElements (Element element) {
-
-        return getExtenderFor(element).getInfiniteExtensionElements(element);
-    }
+		return getExtenderFor(element).getInfiniteExtensionElements(element);
+	}
 
 }

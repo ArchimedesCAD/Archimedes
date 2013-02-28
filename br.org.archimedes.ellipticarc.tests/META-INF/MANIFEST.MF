@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Elliptic Arc Tests
+Bundle-SymbolicName: br.org.archimedes.ellipticarc.tests
+Bundle-Version: 1.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Require-Bundle: org.junit,
+ br.org.archimedes.ellipticarc;bundle-version="1.0.0",
+ br.org.archimedes.core
+Import-Package: br.org.archimedes.exceptions,
+ br.org.archimedes.model

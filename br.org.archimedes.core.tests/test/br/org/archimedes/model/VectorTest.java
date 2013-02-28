@@ -23,48 +23,49 @@ import org.junit.Test;
  */
 public class VectorTest {
 
-    // TODO Test vector creation with 2 points
+	// TODO Test vector creation with 2 points
 
-    // TODO Test vector creation with a single point
+	// TODO Test vector creation with a single point
 
-    // TODO Test vector dot product result
+	// TODO Test vector dot product result
 
-    // TODO Test a vector can add to another
+	// TODO Test a vector can add to another
 
-    // TODO Test a vector can be multiplied with a double
+	// TODO Test a vector can be multiplied with a double
 
-    // TODO Test a vector knows its orthogonal vector
+	// TODO Test a vector knows its orthogonal vector
 
-    // TODO Test a vector knows its norm
+	// TODO Test a vector knows its norm
 
-    @Test
-    public void vectorFollowEqualsAndHashCodeContract () throws Exception {
+	@Test
+	public void vectorFollowEqualsAndHashCodeContract() throws Exception {
 
-        Point initialPoint = new Point(0, 0);
-        Point endingPoint = new Point(10, 10);
-        Vector vector = new Vector(initialPoint, endingPoint);
+		Point initialPoint = new Point(0, 0);
+		Point endingPoint = new Point(10, 10);
+		Vector vector = new Vector(initialPoint, endingPoint);
 
-        Assert.assertTrue(vector.equals(vector));
-        Assert.assertEquals(vector.hashCode(), vector.hashCode());
+		Assert.assertTrue(vector.equals(vector));
+		Assert.assertEquals(vector.hashCode(), vector.hashCode());
 
-        Assert.assertFalse(vector.equals(null));
-        Assert.assertFalse(vector.equals(new Object()));
-        
-        Assert.assertFalse(vector.equals(new Vector(new Point(1,1))));
-        Assert.assertFalse(vector.equals(new Vector(new Point(0.5, 1), new Point(1,1))));
+		Assert.assertFalse(vector.equals(null));
+		Assert.assertFalse(vector.equals(new Object()));
 
-        Vector other = new Vector(initialPoint, endingPoint);
-        Assert.assertTrue(vector.equals(other));
-        Assert.assertEquals(vector.hashCode(), other.hashCode());
+		Assert.assertFalse(vector.equals(new Vector(new Point(1, 1))));
+		Assert.assertFalse(vector.equals(new Vector(new Point(0.5, 1),
+				new Point(1, 1))));
 
-        other = new Vector(endingPoint);
-        Assert.assertTrue(vector.equals(other));
-        Assert.assertEquals(vector.hashCode(), other.hashCode());
+		Vector other = new Vector(initialPoint, endingPoint);
+		Assert.assertTrue(vector.equals(other));
+		Assert.assertEquals(vector.hashCode(), other.hashCode());
 
-        other = new Vector(endingPoint, new Point(20, 20));
-        Assert.assertTrue(vector.equals(other));
-        Assert.assertEquals(vector.hashCode(), other.hashCode());
-    }
+		other = new Vector(endingPoint);
+		Assert.assertTrue(vector.equals(other));
+		Assert.assertEquals(vector.hashCode(), other.hashCode());
 
-    // TODO Test clone returns an equal vector but a different instance
+		other = new Vector(endingPoint, new Point(20, 20));
+		Assert.assertTrue(vector.equals(other));
+		Assert.assertEquals(vector.hashCode(), other.hashCode());
+	}
+
+	// TODO Test clone returns an equal vector but a different instance
 }

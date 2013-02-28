@@ -28,27 +28,29 @@ import br.org.archimedes.model.Rectangle;
  */
 public class NullIntersector implements Intersector {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.model.Intersector#getIntersections(br.org.archimedes.model.Element,
-     *      br.org.archimedes.model.Element)
-     */
-    public Collection<Point> getIntersections (Element element,
-            Element otherElement) throws NullArgumentException {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.org.archimedes.model.Intersector#getIntersections(br.org.archimedes
+	 * .model.Element, br.org.archimedes.model.Element)
+	 */
+	public Collection<Point> getIntersections(Element element,
+			Element otherElement) throws NullArgumentException {
 
-        return Collections.emptyList();
-    }
+		return Collections.emptyList();
+	}
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.intersections.interfaces.Intersector#intersects(br.org.archimedes.model.Rectangle,
-     *      br.org.archimedes.model.Element)
-     */
-    public boolean intersects (Rectangle rectangle, Element element)
-            throws NullArgumentException {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.org.archimedes.intersections.interfaces.Intersector#intersects(br.
+	 * org.archimedes.model.Rectangle, br.org.archimedes.model.Element)
+	 */
+	public boolean intersects(Rectangle rectangle, Element element)
+			throws NullArgumentException {
 
-        return false;
-    }
+		return false;
+	}
 }

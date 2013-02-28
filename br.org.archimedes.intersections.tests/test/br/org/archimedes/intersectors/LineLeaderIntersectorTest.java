@@ -38,131 +38,127 @@ import br.org.archimedes.model.Point;
  */
 public class LineLeaderIntersectorTest extends Tester {
 
-    private LineLeaderIntersector intersector;
+	private LineLeaderIntersector intersector;
 
+	@Before
+	public void setUp() {
 
-    @Before
-    public void setUp () {
+		intersector = new LineLeaderIntersector();
+	}
 
-        intersector = new LineLeaderIntersector();
-    }
+	@Test
+	public void testLineIntersectsLeaderOnPointerReturnsOneIntersectionPoint()
+			throws InvalidArgumentException, NullArgumentException {
 
-    @Test
-    public void testLineIntersectsLeaderOnPointerReturnsOneIntersectionPoint ()
-            throws InvalidArgumentException, NullArgumentException {
+		Line line = new Line(0.0, 1.0, 0.0, -1.0);
+		Leader leader = new Leader(new Point(-1.0, -1.0), new Point(1.0, 1.0),
+				new Point(3.0, 1.0));
 
-        Line line = new Line(0.0, 1.0, 0.0, -1.0);
-        Leader leader = new Leader(new Point( -1.0, -1.0), new Point(1.0, 1.0),
-                new Point(3.0, 1.0));
+		Collection<Point> intersections = intersector.getIntersections(line,
+				leader);
+		Point point = new Point(0.0, 0.0);
 
-        Collection<Point> intersections = intersector.getIntersections(line,
-                leader);
-        Point point = new Point(0.0, 0.0);
+		assertCollectionTheSame(Collections.singleton(point), intersections);
+	}
 
-        assertCollectionTheSame(Collections.singleton(point), intersections);
-    }
+	@Test
+	public void testLineIntersectsLeaderOnTextBaseReturnsOneIntersectionPoint()
+			throws InvalidArgumentException, NullArgumentException {
 
-    @Test
-    public void testLineIntersectsLeaderOnTextBaseReturnsOneIntersectionPoint ()
-            throws InvalidArgumentException, NullArgumentException {
+		Line line = new Line(0.0, 1.0, 0.0, -1.0);
+		Leader leader = new Leader(new Point(-2.0, -1.0), new Point(-1.0, 0.0),
+				new Point(1.0, 0.0));
 
-        Line line = new Line(0.0, 1.0, 0.0, -1.0);
-        Leader leader = new Leader(new Point( -2.0, -1.0),
-                new Point( -1.0, 0.0), new Point(1.0, 0.0));
+		Collection<Point> intersections = intersector.getIntersections(line,
+				leader);
+		Point point = new Point(0.0, 0.0);
 
-        Collection<Point> intersections = intersector.getIntersections(line,
-                leader);
-        Point point = new Point(0.0, 0.0);
+		assertCollectionTheSame(Collections.singleton(point), intersections);
+	}
 
-        assertCollectionTheSame(Collections.singleton(point), intersections);
-    }
+	@Test
+	public void testLineIntersectsLeaderOnBothLinesReturnsManyIntersectionPoints()
+			throws InvalidArgumentException, NullArgumentException {
 
-    @Test
-    public void testLineIntersectsLeaderOnBothLinesReturnsManyIntersectionPoints ()
-            throws InvalidArgumentException, NullArgumentException {
+		Line line = new Line(-1.0, -0.5, 3.0, 1.5);
+		Leader leader = new Leader(new Point(-1.0, -1.0), new Point(1.0, 1.0),
+				new Point(3.0, 1.0));
 
-        Line line = new Line( -1.0, -0.5, 3.0, 1.5);
-        Leader leader = new Leader(new Point( -1.0, -1.0), new Point(1.0, 1.0),
-                new Point(3.0, 1.0));
+		Collection<Point> intersections = intersector.getIntersections(line,
+				leader);
 
-        Collection<Point> intersections = intersector.getIntersections(line,
-                leader);
+		List<Point> intersectionPoints = new ArrayList<Point>();
+		intersectionPoints.add(new Point(0.0, 0.0));
+		intersectionPoints.add(new Point(2.0, 1.0));
 
-        List<Point> intersectionPoints = new ArrayList<Point>();
-        intersectionPoints.add(new Point(0.0, 0.0));
-        intersectionPoints.add(new Point(2.0, 1.0));
+		assertCollectionTheSame(intersectionPoints, intersections);
+	}
 
-        assertCollectionTheSame(intersectionPoints, intersections);
-    }
+	@Test
+	public void testLeaderIncludesLineReturnsNoIntersectionPoints()
+			throws InvalidArgumentException, NullArgumentException {
 
-    @Test
-    public void testLeaderIncludesLineReturnsNoIntersectionPoints ()
-            throws InvalidArgumentException, NullArgumentException {
+		Line line = new Line(-2.0, -2.0, 2.0, 2.0);
 
-        Line line = new Line( -2.0, -2.0, 2.0, 2.0);
+		Leader leader = new Leader(new Point(-1.0, -1.0), new Point(1.0, 1.0),
+				new Point(3.0, 1.0));
 
-        Leader leader = new Leader(new Point( -1.0, -1.0), new Point(1.0, 1.0),
-                new Point(3.0, 1.0));
+		Collection<Point> intersections = intersector.getIntersections(line,
+				leader);
 
-        Collection<Point> intersections = intersector.getIntersections(line,
-                leader);
+		List<Point> intersectionPoints = new ArrayList<Point>();
+		intersectionPoints.add(new Point(1.0, 1.0));
 
-        List<Point> intersectionPoints = new ArrayList<Point>();
-        intersectionPoints.add(new Point(1.0, 1.0));
+		assertCollectionTheSame(intersectionPoints, intersections);
+	}
 
-        assertCollectionTheSame(intersectionPoints, intersections);
-    }
-    
-    @Test
-    public void testLeaderDoesNotIntersectLineReturnsNoIntersectionPoints ()
-            throws InvalidArgumentException, NullArgumentException {
+	@Test
+	public void testLeaderDoesNotIntersectLineReturnsNoIntersectionPoints()
+			throws InvalidArgumentException, NullArgumentException {
 
-        Line line = new Line( 10.0, 10.0, 15.0, 15.0);
+		Line line = new Line(10.0, 10.0, 15.0, 15.0);
 
-        Leader leader = new Leader(new Point( -1.0, -1.0), new Point(1.0, 1.0),
-                new Point(3.0, 1.0));
+		Leader leader = new Leader(new Point(-1.0, -1.0), new Point(1.0, 1.0),
+				new Point(3.0, 1.0));
 
-        Collection<Point> intersections = intersector.getIntersections(line,
-                leader);
+		Collection<Point> intersections = intersector.getIntersections(line,
+				leader);
 
-        assertTrue(intersections.isEmpty());
-    }
+		assertTrue(intersections.isEmpty());
+	}
 
-    @Test
-    public void testLineLeaderIntersectorNullArgument ()
-            throws NullArgumentException, InvalidArgumentException {
+	@Test
+	public void testLineLeaderIntersectorNullArgument()
+			throws NullArgumentException, InvalidArgumentException {
 
-        Line line = new Line(0.0, 1.0, 0.0, -1.0);
+		Line line = new Line(0.0, 1.0, 0.0, -1.0);
 
-        Leader leader = new Leader(new Point( -1.0, -1.0), new Point(1.0, 1.0),
-                new Point(3.0, 1.0));
+		Leader leader = new Leader(new Point(-1.0, -1.0), new Point(1.0, 1.0),
+				new Point(3.0, 1.0));
 
-        Intersector intersector = new LinePolylineIntersector();
+		Intersector intersector = new LinePolylineIntersector();
 
-        try {
-            intersector.getIntersections(line, null);
-            fail("Should throw exception because of null polyline argument");
-        }
-        catch (NullArgumentException e) {
-            // Passed
-        }
+		try {
+			intersector.getIntersections(line, null);
+			fail("Should throw exception because of null polyline argument");
+		} catch (NullArgumentException e) {
+			// Passed
+		}
 
-        try {
-            intersector.getIntersections(null, leader);
-            fail("Should throw exception because of null line argument");
-        }
-        catch (NullArgumentException e) {
-            // Passed
-        }
+		try {
+			intersector.getIntersections(null, leader);
+			fail("Should throw exception because of null line argument");
+		} catch (NullArgumentException e) {
+			// Passed
+		}
 
-        try {
-            intersector.getIntersections(null, null);
-            fail("Should throw exception because of null polyline and line argument");
-        }
-        catch (NullArgumentException e) {
-            // Passed
-        }
+		try {
+			intersector.getIntersections(null, null);
+			fail("Should throw exception because of null polyline and line argument");
+		} catch (NullArgumentException e) {
+			// Passed
+		}
 
-    }
+	}
 
 }

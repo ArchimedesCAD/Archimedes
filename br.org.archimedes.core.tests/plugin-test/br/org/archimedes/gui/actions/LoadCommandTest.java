@@ -13,18 +13,8 @@
 
 package br.org.archimedes.gui.actions;
 
-import br.org.archimedes.TestActivator;
-import br.org.archimedes.Tester;
-import br.org.archimedes.exceptions.InvalidFileFormatException;
-import br.org.archimedes.interfaces.Importer;
-import br.org.archimedes.model.Drawing;
-import br.org.archimedes.rcp.extensionpoints.NativeFormatEPLoader;
-
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.FileDialog;
-import org.eclipse.swt.widgets.MessageBox;
-import org.eclipse.ui.PlatformUI;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,160 +23,178 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.ui.PlatformUI;
+import org.junit.Test;
+
+import br.org.archimedes.TestActivator;
+import br.org.archimedes.Tester;
+import br.org.archimedes.exceptions.InvalidFileFormatException;
+import br.org.archimedes.interfaces.Importer;
+import br.org.archimedes.model.Drawing;
+import br.org.archimedes.rcp.extensionpoints.NativeFormatEPLoader;
 
 /**
  * @author Luiz Real
  */
 public class LoadCommandTest extends Tester {
 
-    Drawing drawing = new Drawing("Teste");
+	Drawing drawing = new Drawing("Teste");
 
+	private class MockedLoadCommand extends LoadCommand {
 
-    private class MockedLoadCommand extends LoadCommand {
+		int testCount = 0;
 
-        int testCount = 0;
+		boolean throwException = false;
 
-        boolean throwException = false;
+		boolean showedMessage = false;
 
-        boolean showedMessage = false;
+		public MockedLoadCommand() {
 
+			super(PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+					.getShell());
+		}
 
-        public MockedLoadCommand () {
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see br.org.archimedes.gui.actions.LoadCommand#createFileDialog()
+		 */
+		@Override
+		public FileDialog createFileDialog() {
 
-            super(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell());
-        }
+			return new FileDialog(parent) {
 
-        /*
-         * (non-Javadoc)
-         * @see br.org.archimedes.gui.actions.LoadCommand#createFileDialog()
-         */
-        @Override
-        public FileDialog createFileDialog () {
+				/*
+				 * (non-Javadoc) Overriden to allow us to mock this class
+				 * 
+				 * @see org.eclipse.swt.widgets.Dialog#checkSubclass()
+				 */
+				@Override
+				protected void checkSubclass() {
 
-            return new FileDialog(parent) {
+				}
 
-                /*
-                 * (non-Javadoc) Overriden to allow us to mock this class
-                 * @see org.eclipse.swt.widgets.Dialog#checkSubclass()
-                 */
-                @Override
-                protected void checkSubclass () {
+				@Override
+				public String open() {
 
-                }
+					File file;
+					try {
+						file = TestActivator.resolveFile("emptyDrawing.arc",
+								TestActivator.getDefault().getBundle());
+					} catch (IOException e) {
+						e.printStackTrace();
+						throw new AssertionError(
+								"The emptyDrawing.arc file couldn't be loaded");
+					}
+					return file.getAbsolutePath();
+				}
 
-                @Override
-                public String open () {
+			};
+		}
 
-                    File file;
-                    try {
-                        file = TestActivator.resolveFile("emptyDrawing.arc", TestActivator
-                                .getDefault().getBundle());
-                    }
-                    catch (IOException e) {
-                        e.printStackTrace();
-                        throw new AssertionError("The emptyDrawing.arc file couldn't be loaded");
-                    }
-                    return file.getAbsolutePath();
-                }
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see
+		 * br.org.archimedes.gui.actions.LoadCommand#getImporterFor(java.io.
+		 * File)
+		 */
+		@Override
+		protected Importer getImporterFor(File file) {
 
-            };
-        }
+			return new Importer() {
 
-        /*
-         * (non-Javadoc)
-         * @see br.org.archimedes.gui.actions.LoadCommand#getImporterFor(java.io.File)
-         */
-        @Override
-        protected Importer getImporterFor (File file) {
+				public Drawing importDrawing(InputStream input)
+						throws InvalidFileFormatException, IOException {
 
-            return new Importer() {
+					if (throwException) {
+						throwException = false;
+						throw new InvalidFileFormatException();
+					}
+					if (0 == testCount++)
+						return null;
+					return drawing;
+				}
 
-                public Drawing importDrawing (InputStream input) throws InvalidFileFormatException,
-                        IOException {
+			};
 
-                    if (throwException) {
-                        throwException = false;
-                        throw new InvalidFileFormatException();
-                    }
-                    if (0 == testCount++)
-                        return null;
-                    return drawing;
-                }
+		}
 
-            };
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see
+		 * br.org.archimedes.gui.actions.LoadCommand#createErrorMessageBox()
+		 */
+		@Override
+		protected MessageBox createErrorMessageBox() {
 
-        }
+			return new MessageBox(parent) {
 
-        /*
-         * (non-Javadoc)
-         * @see br.org.archimedes.gui.actions.LoadCommand#createErrorMessageBox()
-         */
-        @Override
-        protected MessageBox createErrorMessageBox () {
+				/*
+				 * (non-Javadoc) Overriden to allow us to mock this class
+				 * 
+				 * @see org.eclipse.swt.widgets.Dialog#checkSubclass()
+				 */
+				@Override
+				protected void checkSubclass() {
 
-            return new MessageBox(parent) {
+				}
 
-                /*
-                 * (non-Javadoc) Overriden to allow us to mock this class
-                 * @see org.eclipse.swt.widgets.Dialog#checkSubclass()
-                 */
-                @Override
-                protected void checkSubclass () {
+				/*
+				 * (non-Javadoc)
+				 * 
+				 * @see org.eclipse.swt.widgets.MessageBox#open()
+				 */
+				@Override
+				public int open() {
 
-                }
+					showedMessage = true;
+					return SWT.OK;
+				}
+			};
+		}
+	}
 
-                /*
-                 * (non-Javadoc)
-                 * @see org.eclipse.swt.widgets.MessageBox#open()
-                 */
-                @Override
-                public int open () {
+	@Test
+	public void doesNotFailIfImporterFailsAndReturnsImportedDrawingWhenSuccessful()
+			throws Exception {
 
-                    showedMessage = true;
-                    return SWT.OK;
-                }
-            };
-        }
-    }
+		MockedLoadCommand command = new MockedLoadCommand();
+		Drawing result = command.execute();
+		assertTrue(command.showedMessage);
+		assertEquals(drawing, result);
+		assertEquals("emptyDrawing.arc", result.getFile().getName());
+	}
 
+	@Test
+	public void doesNotFailIfFileHasInvalidFormat() throws Exception {
 
-    @Test
-    public void doesNotFailIfImporterFailsAndReturnsImportedDrawingWhenSuccessful ()
-            throws Exception {
+		MockedLoadCommand command = new MockedLoadCommand();
+		command.testCount = 1;
+		command.throwException = true;
+		command.execute();
+		assertTrue(command.showedMessage);
+	}
 
-        MockedLoadCommand command = new MockedLoadCommand();
-        Drawing result = command.execute();
-        assertTrue(command.showedMessage);
-        assertEquals(drawing, result);
-        assertEquals("emptyDrawing.arc", result.getFile().getName());
-    }
+	@Test
+	public void createdFileDialogFiltersCorrectExtensions() throws Exception {
 
-    @Test
-    public void doesNotFailIfFileHasInvalidFormat () throws Exception {
+		LoadCommand command = new LoadCommand(PlatformUI.getWorkbench()
+				.getActiveWorkbenchWindow().getShell());
+		FileDialog filedialog = command.createFileDialog();
+		String[] extensions = new NativeFormatEPLoader().getExtensionsArray();
 
-        MockedLoadCommand command = new MockedLoadCommand();
-        command.testCount = 1;
-        command.throwException = true;
-        command.execute();
-        assertTrue(command.showedMessage);
-    }
+		List<String> expected = new LinkedList<String>();
+		for (String extension : extensions) {
+			String filter = "*." + extension;
+			expected.add(filter);
+		}
 
-    @Test
-    public void createdFileDialogFiltersCorrectExtensions () throws Exception {
-
-        LoadCommand command = new LoadCommand(PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-                .getShell());
-        FileDialog filedialog = command.createFileDialog();
-        String[] extensions = new NativeFormatEPLoader().getExtensionsArray();
-
-        List<String> expected = new LinkedList<String>();
-        for (String extension : extensions) {
-            String filter = "*." + extension;
-            expected.add(filter);
-        }
-
-        assertCollectionTheSame(expected, Arrays.asList(filedialog.getFilterExtensions()));
-    }
+		assertCollectionTheSame(expected,
+				Arrays.asList(filedialog.getFilterExtensions()));
+	}
 }

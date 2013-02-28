@@ -25,28 +25,32 @@ public class Ellipse extends Element implements Offsetable {
 	private Point center;
 	private Point widthPoint;
 	private Point heightPoint;
-	private double fi;
+	private double phi;// rotation angle
 
-	public Ellipse(Point center, Point widthPoint, Point heightPoint) throws NullArgumentException, InvalidArgumentException {
+	public Ellipse(Point center, Point widthPoint, Point heightPoint)
+			throws NullArgumentException, InvalidArgumentException {
 
 		validateArguments(center, widthPoint, heightPoint);
 
 		this.center = center;
 		this.widthPoint = widthPoint;
 		this.heightPoint = calculateHeightPoint(center, widthPoint, heightPoint);
-		this.fi = calculateFi(center, widthPoint);
+		this.phi = Geometrics.calculatePhi(center, widthPoint);
 	}
 
-	public Ellipse(Point focus1, Point focus2, Double radius) throws NullArgumentException, InvalidArgumentException {
-		
+	public Ellipse(Point focus1, Point focus2, Double radius)
+			throws NullArgumentException, InvalidArgumentException {
+
 		validateArguments(focus1, focus2, radius);
 
-		this.center = new Point((focus1.getX() + focus2.getX()) / 2, (focus1.getY() + focus2.getY()) / 2);
+		this.center = new Point((focus1.getX() + focus2.getX()) / 2,
+				(focus1.getY() + focus2.getY()) / 2);
 		this.widthPoint = center.addVector(new Vector(focus1, focus2));
-		this.fi = calculateFi(center, widthPoint);
+		this.phi = Geometrics.calculatePhi(center, widthPoint);
 
-		double angle = this.fi + Math.PI / 2; //rotaciona 90 graus.
-		this.heightPoint = new Point(center.getX() + radius * Math.cos(angle), center.getY() + radius * Math.sin(angle));
+		double angle = this.phi + Math.PI / 2; // rotaciona 90 graus.
+		this.heightPoint = new Point(center.getX() + radius * Math.cos(angle),
+				center.getY() + radius * Math.sin(angle));
 
 	}
 
@@ -61,30 +65,32 @@ public class Ellipse extends Element implements Offsetable {
 	public Point getHeightPoint() {
 		return heightPoint;
 	}
-	
+
 	public double getFi() {
-		return fi;
+		return phi;
 	}
-	
+
 	public Vector getSemiMajorAxis() {
 		Vector widthVector = new Vector(center, widthPoint);
 		Vector heightVector = new Vector(center, heightPoint);
-		return (widthVector.getNorm() > heightVector.getNorm()) ? widthVector : heightVector;
+		return (widthVector.getNorm() > heightVector.getNorm()) ? widthVector
+				: heightVector;
 	}
 
 	public Vector getSemiMinorAxis() {
 		Vector widthVector = new Vector(center, widthPoint);
 		Vector heightVector = new Vector(center, heightPoint);
-		return (widthVector.getNorm() > heightVector.getNorm()) ? heightVector : widthVector;
+		return (widthVector.getNorm() > heightVector.getNorm()) ? heightVector
+				: widthVector;
 	}
 
-	
 	@Override
 	public Element clone() {
 		Ellipse ellipse = null;
 
 		try {
-			ellipse = new Ellipse(center.clone(), widthPoint.clone(), heightPoint.clone());
+			ellipse = new Ellipse(center.clone(), widthPoint.clone(),
+					heightPoint.clone());
 			ellipse.setLayer(getLayer());
 		} catch (NullArgumentException e) {
 			// Should never reach this block
@@ -101,8 +107,10 @@ public class Ellipse extends Element implements Offsetable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((center == null) ? 0 : center.hashCode());
-		result = prime * result + ((heightPoint == null) ? 0 : heightPoint.hashCode());
-		result = prime * result + ((widthPoint == null) ? 0 : widthPoint.hashCode());
+		result = prime * result
+				+ ((heightPoint == null) ? 0 : heightPoint.hashCode());
+		result = prime * result
+				+ ((widthPoint == null) ? 0 : widthPoint.hashCode());
 		return result;
 	}
 
@@ -112,8 +120,8 @@ public class Ellipse extends Element implements Offsetable {
 
 		if (ellipse == null) {
 			result = false;
-		} else if (!this.center.equals(ellipse.getCenter()) 
-				|| !this.widthPoint.equals(ellipse.getWidthPoint()) 
+		} else if (!this.center.equals(ellipse.getCenter())
+				|| !this.widthPoint.equals(ellipse.getWidthPoint())
 				|| !this.heightPoint.equals(ellipse.getHeightPoint())) {
 			result = false;
 		}
@@ -143,17 +151,17 @@ public class Ellipse extends Element implements Offsetable {
 
 		double a = (new Vector(center, widthPoint)).getNorm();
 		double b = (new Vector(center, heightPoint)).getNorm();
-		double f = a * Math.cos(this.fi);
-		double g = b * Math.sin(this.fi);
+		double f = a * Math.cos(this.phi);
+		double g = b * Math.sin(this.phi);
 
 		double t1 = Math.acos(f / Math.sqrt(f * f + g * g));
 		double t2 = Math.acos(-f / Math.sqrt(f * f + g * g));
 		double t3 = -Math.acos(f / Math.sqrt(f * f + g * g));
 		double t4 = -Math.acos(-f / Math.sqrt(f * f + g * g));
 
-		if (fi < 0) {
-			Point x1 = calculatePointFromAngle(t1, fi);
-			Point x4 = calculatePointFromAngle(t4, fi);
+		if (phi < 0) {
+			Point x1 = calculatePointFromAngle(t1, phi);
+			Point x4 = calculatePointFromAngle(t4, phi);
 			if (x1.getX() < x4.getX()) {
 				xmin = x1;
 				xmax = x4;
@@ -162,8 +170,8 @@ public class Ellipse extends Element implements Offsetable {
 				xmax = x1;
 			}
 		} else {
-			Point x2 = calculatePointFromAngle(t2, fi);
-			Point x3 = calculatePointFromAngle(t3, fi);
+			Point x2 = calculatePointFromAngle(t2, phi);
+			Point x3 = calculatePointFromAngle(t3, phi);
 			if (x2.getX() < x3.getX()) {
 				xmin = x2;
 				xmax = x3;
@@ -173,17 +181,17 @@ public class Ellipse extends Element implements Offsetable {
 			}
 		}
 
-		f = a * Math.sin(this.fi);
-		g = b * Math.cos(this.fi);
+		f = a * Math.sin(this.phi);
+		g = b * Math.cos(this.phi);
 
 		t1 = Math.acos(f / Math.sqrt(f * f + g * g));
 		t2 = Math.acos(-f / Math.sqrt(f * f + g * g));
 		t3 = -Math.acos(f / Math.sqrt(f * f + g * g));
 		t4 = -Math.acos(-f / Math.sqrt(f * f + g * g));
 
-		if ((fi > 0 && fi < Math.PI / 2) || (fi > -Math.PI / 2 && fi < 0)) {
-			Point y1 = calculatePointFromAngle(t1, fi);
-			Point y4 = calculatePointFromAngle(t4, fi);
+		if ((phi > 0 && phi < Math.PI / 2) || (phi > -Math.PI / 2 && phi < 0)) {
+			Point y1 = calculatePointFromAngle(t1, phi);
+			Point y4 = calculatePointFromAngle(t4, phi);
 			if (y1.getY() < y4.getY()) {
 				ymin = y1;
 				ymax = y4;
@@ -192,8 +200,8 @@ public class Ellipse extends Element implements Offsetable {
 				ymax = y1;
 			}
 		} else {
-			Point y2 = calculatePointFromAngle(t2, fi);
-			Point y3 = calculatePointFromAngle(t3, fi);
+			Point y2 = calculatePointFromAngle(t2, phi);
+			Point y3 = calculatePointFromAngle(t3, phi);
 			if (y2.getY() < y3.getY()) {
 				ymin = y2;
 				ymax = y3;
@@ -203,12 +211,14 @@ public class Ellipse extends Element implements Offsetable {
 			}
 		}
 
-		boundary = new Rectangle(xmin.getX(), ymin.getY(), xmax.getX(), ymax.getY());
+		boundary = new Rectangle(xmin.getX(), ymin.getY(), xmax.getX(),
+				ymax.getY());
 		return boundary;
 	}
 
 	@Override
-	public Collection<? extends ReferencePoint> getReferencePoints(Rectangle area) {
+	public Collection<? extends ReferencePoint> getReferencePoints(
+			Rectangle area) {
 
 		double initialAngle = 0.0;
 		double endingAngle = 2 * Math.PI;
@@ -221,7 +231,7 @@ public class Ellipse extends Element implements Offsetable {
 				references.add(reference);
 			}
 			for (double angle = initialAngle; angle < endingAngle; angle += increment) {
-				Point point = calculatePointFromAngle(angle, fi);
+				Point point = calculatePointFromAngle(angle, phi);
 				reference = new RhombusPoint(point);
 				if (reference.isInside(area)) {
 					references.add(reference);
@@ -234,43 +244,51 @@ public class Ellipse extends Element implements Offsetable {
 	}
 
 	@Override
-	public Point getProjectionOf (Point point) throws NullArgumentException {
+	public Point getProjectionOf(Point point) throws NullArgumentException {
 
-        if (point == null) {
-            throw new NullArgumentException();
-        }
+		if (point == null) {
+			throw new NullArgumentException();
+		}
 
-        Point projection = null;
-        
-        if (getCenter().equals(point)) {
-        	double widthToCenterDistance = this.widthPoint.calculateDistance(this.center);
-        	double heightToCenterDistance = this.heightPoint.calculateDistance(this.center);
-        	if(widthToCenterDistance < heightToCenterDistance) {
-        		return this.widthPoint;
-        	} else {
-        		return this.heightPoint;
-        	}
-        }
+		Point projection = null;
 
-        Collection<Point> intersectionWithLine = getEllipsePoints(point);
+		if (getCenter().equals(point)) {
+			double widthToCenterDistance = this.widthPoint
+					.calculateDistance(this.center);
+			double heightToCenterDistance = this.heightPoint
+					.calculateDistance(this.center);
+			if (widthToCenterDistance < heightToCenterDistance) {
+				return this.widthPoint;
+			} else {
+				return this.heightPoint;
+			}
+		}
 
-        double closestDist = Double.MAX_VALUE;
-        for (Point intersection : intersectionWithLine) {
-            double dist = Geometrics.calculateDistance(point, intersection);
-            if (dist < closestDist) {
-                projection = intersection;
-                closestDist = dist;
-            }
-        }
-        return projection;
-    }
+		Collection<Point> intersectionWithLine = getEllipsePoints(point);
+
+		double closestDist = Double.MAX_VALUE;
+		for (Point intersection : intersectionWithLine) {
+			double dist = Geometrics.calculateDistance(point, intersection);
+			if (dist < closestDist) {
+				projection = intersection;
+				closestDist = dist;
+			}
+		}
+		return projection;
+	}
 
 	@Override
 	public boolean contains(Point point) {
+		if ((Math.abs(canonicalEllipseEquation(point) - 1.0)) < Constant.EPSILON)
+			return true;
+		return false;
+	}
+
+	public double canonicalEllipseEquation(Point point) {
 		double x, y, dx, dy, a, b;
 		Point rotPoint = point.clone();
 		try {
-			rotPoint.rotate(center, -fi);
+			rotPoint.rotate(center, -phi);
 		} catch (NullArgumentException e) {
 			e.printStackTrace();
 		}
@@ -280,10 +298,8 @@ public class Ellipse extends Element implements Offsetable {
 		dy = y - getCenter().getY();
 		a = (new Vector(center, widthPoint)).getNorm();
 		b = (new Vector(center, heightPoint)).getNorm();
-		
-		if (Math.abs(((dx * dx) / (a * a) + (dy * dy) / (b * b)) - 1.0) < Constant.EPSILON)
-			return true;
-		return false;
+
+		return ((dx * dx) / (a * a) + (dy * dy) / (b * b));
 	}
 
 	public boolean isPositiveDirection(Point point) {
@@ -301,7 +317,8 @@ public class Ellipse extends Element implements Offsetable {
 		return points;
 	}
 
-	public void rotate(Point rotateReference, double angle) throws NullArgumentException {
+	public void rotate(Point rotateReference, double angle)
+			throws NullArgumentException {
 
 		verifyNotNull(rotateReference);
 
@@ -309,7 +326,7 @@ public class Ellipse extends Element implements Offsetable {
 		widthPoint.rotate(rotateReference, angle);
 		heightPoint.rotate(rotateReference, angle);
 
-		this.fi = calculateFi(center, widthPoint);
+		this.phi = Geometrics.calculatePhi(center, widthPoint);
 	}
 
 	public boolean isClosed() {
@@ -317,27 +334,30 @@ public class Ellipse extends Element implements Offsetable {
 	}
 
 	public String toString() {
-		return "Ellipse centered at " + this.getCenter().toString() 
-			+ " and width " + this.getWidthPoint().toString()
-			+ " with height " + this.getHeightPoint().toString();
+		return "Ellipse centered at " + this.getCenter().toString()
+				+ " and width " + this.getWidthPoint().toString()
+				+ " with height " + this.getHeightPoint().toString();
 	}
 
-	public Element cloneWithDistance(double distance) throws InvalidParameterException {
-		
-        if (distance < 0) {
-        	double minAxis = Math.min(center.calculateDistance(widthPoint), center.calculateDistance(heightPoint));
-            if (Math.abs(minAxis - distance) <= Constant.EPSILON
-                    || Math.abs(distance) > minAxis) {
-                throw new InvalidParameterException();
-            }
-        }
+	public Element cloneWithDistance(double distance)
+			throws InvalidParameterException {
+
+		if (distance < 0) {
+			double minAxis = Math.min(center.calculateDistance(widthPoint),
+					center.calculateDistance(heightPoint));
+			if (Math.abs(minAxis - distance) <= Constant.EPSILON
+					|| Math.abs(distance) > minAxis) {
+				throw new InvalidParameterException();
+			}
+		}
 
 		Point newWidthPoint = calculateOffsetPoint(distance, widthPoint);
 		Point newHeightPoint = calculateOffsetPoint(distance, heightPoint);
 
 		Ellipse newEllipse = null;
 		try {
-			newEllipse = new Ellipse(center.clone(), newWidthPoint, newHeightPoint);
+			newEllipse = new Ellipse(center.clone(), newWidthPoint,
+					newHeightPoint);
 		} catch (NullArgumentException e) {
 			e.printStackTrace();
 		} catch (InvalidArgumentException e) {
@@ -352,33 +372,34 @@ public class Ellipse extends Element implements Offsetable {
 		Point offsetPoint = point.clone().addVector(distanceVector);
 		return offsetPoint;
 	}
-	
-	private Collection<Point> getEllipsePoints(Point point) throws NullArgumentException {
-		if(point == null) throw new NullArgumentException();
+
+	private Collection<Point> getEllipsePoints(Point point)
+			throws NullArgumentException {
+		if (point == null)
+			throw new NullArgumentException();
 		Collection<Point> points = new ArrayList<Point>();
-		
+
 		Point rotPoint = point.clone();
-		rotPoint.rotate(center, -fi);
+		rotPoint.rotate(center, -phi);
 
 		Vector ray = new Vector(center, rotPoint);
 		Vector e1 = new Vector(new Point(0, 0), new Point(1, 0));
-		double angle = e1.dotProduct(ray)/ray.getNorm();
+		double angle = e1.dotProduct(ray) / ray.getNorm();
 		Point point1;
 		Point point2;
 		if (rotPoint.getY() < center.getY()) {
 			point1 = calculatePointFromAngle(-angle, 0);
-			point2 = calculatePointFromAngle(-angle+Math.PI, 0);
-		}
-		else{
+			point2 = calculatePointFromAngle(-angle + Math.PI, 0);
+		} else {
 			point1 = calculatePointFromAngle(angle, 0);
-			point2 = calculatePointFromAngle(Math.PI+angle, 0);
+			point2 = calculatePointFromAngle(Math.PI + angle, 0);
 		}
-		point1.rotate(point1, fi);
-		point2.rotate(point2, fi);		
-		
+		point1.rotate(point1, phi);
+		point2.rotate(point2, phi);
+
 		points.add(point1);
 		points.add(point2);
-		
+
 		return points;
 	}
 
@@ -391,9 +412,9 @@ public class Ellipse extends Element implements Offsetable {
 		ArrayList<Point> points = new ArrayList<Point>();
 
 		for (double angle = initialAngle; angle <= endingAngle; angle += increment) {
-			points.add(calculatePointFromAngle(angle, fi));
+			points.add(calculatePointFromAngle(angle, phi));
 		}
-		points.add(calculatePointFromAngle(endingAngle, fi));
+		points.add(calculatePointFromAngle(endingAngle, phi));
 
 		wrapper.setPrimitiveType(OpenGLWrapper.PRIMITIVE_LINE_STRIP);
 		try {
@@ -403,62 +424,63 @@ public class Ellipse extends Element implements Offsetable {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Override
-	public void mirror(Point p1, Point p2) throws NullArgumentException, IllegalActionException {
+	public void mirror(Point p1, Point p2) throws NullArgumentException,
+			IllegalActionException {
 		super.mirror(p1, p2);
-		this.fi = calculateFi(center, widthPoint);
+		this.phi = Geometrics.calculatePhi(center, widthPoint);
 	}
 
+	private Point calculatePointFromAngle(double angle, double phi) {
 
-	private Point calculatePointFromAngle(double angle, double fi) {
-		
 		Vector haxis = new Vector(center, widthPoint);
 		Vector vaxis = new Vector(center, heightPoint);
-		
-		double x = center.getX() + haxis.getNorm() * Math.cos(angle) * Math.cos(fi) - vaxis.getNorm() * Math.sin(angle) * Math.sin(fi);
-		double y = center.getY() + haxis.getNorm() * Math.cos(angle) * Math.sin(fi) + vaxis.getNorm() * Math.sin(angle) * Math.cos(fi);
+
+		double x = center.getX() + haxis.getNorm() * Math.cos(angle)
+				* Math.cos(phi) - vaxis.getNorm() * Math.sin(angle)
+				* Math.sin(phi);
+		double y = center.getY() + haxis.getNorm() * Math.cos(angle)
+				* Math.sin(phi) + vaxis.getNorm() * Math.sin(angle)
+				* Math.cos(phi);
 		return new Point(x, y);
 	}
-	
+
 	private void verifyNotNull(Point point) throws NullArgumentException {
-		if (point == null) throw new NullArgumentException();
+		if (point == null)
+			throw new NullArgumentException();
 	}
-	
-	private void verifyNotInvalid(Double radius) throws InvalidArgumentException {
+
+	private void verifyNotInvalid(Double radius)
+			throws InvalidArgumentException {
 		if (Math.abs(radius) <= Constant.EPSILON) {
 			throw new InvalidArgumentException();
 		}
 	}
-	
-	private void validateArguments(Point focus1, Point focus2, Double radius) throws NullArgumentException, InvalidArgumentException {
+
+	private void validateArguments(Point focus1, Point focus2, Double radius)
+			throws NullArgumentException, InvalidArgumentException {
 		verifyNotNull(focus1);
 		verifyNotNull(focus2);
-		
+
 		verifyNotInvalid(radius);
 	}
 
-	private void validateArguments(Point center, Point widthPoint, Point heightPoint) throws NullArgumentException, InvalidArgumentException {
+	private void validateArguments(Point center, Point widthPoint,
+			Point heightPoint) throws NullArgumentException,
+			InvalidArgumentException {
 		verifyNotNull(center);
 		verifyNotNull(widthPoint);
 		verifyNotNull(heightPoint);
-		
+
 		verifyNotInvalid(center.calculateDistance(widthPoint));
 		verifyNotInvalid(center.calculateDistance(heightPoint));
 	}
-	
-	
-	private double calculateFi(Point center, Point widthPoint) {
-		Vector xaxis = new Vector(new Point(1, 0));
-		Vector haxis = new Vector(center, widthPoint);
-		if (center.getY() < widthPoint.getY())
-			return Math.acos((xaxis.dotProduct(haxis)) / (xaxis.getNorm() * haxis.getNorm()));
-		else
-			return -Math.acos((xaxis.dotProduct(haxis)) / (xaxis.getNorm() * haxis.getNorm()));
-	}
 
-	private Point calculateHeightPoint(Point center, Point widthPoint, Point heightPoint) throws InvalidArgumentException {
-		Vector ortho = (new Vector(center, widthPoint)).getOrthogonalVector().normalized();
+	private Point calculateHeightPoint(Point center, Point widthPoint,
+			Point heightPoint) throws InvalidArgumentException {
+		Vector ortho = (new Vector(center, widthPoint)).getOrthogonalVector()
+				.normalized();
 		Vector axis = new Vector(center, heightPoint);
 		double height = ortho.dotProduct(axis);
 
@@ -466,32 +488,32 @@ public class Ellipse extends Element implements Offsetable {
 			throw new InvalidArgumentException();
 		}
 
-		if  (Math.abs(center.getX() - widthPoint.getX()) < Constant.EPSILON) {
+		if (Math.abs(center.getX() - widthPoint.getX()) < Constant.EPSILON) {
 			Vector e1 = new Vector(new Point(0, 0), new Point(1, 0));
 			if (center.getY() > widthPoint.getY())
 				return center.addVector(e1.multiply(axis.getNorm()));
-			else 
+			else
 				return center.addVector(e1.multiply(-axis.getNorm()));
-		}
-		else if (center.getX() < widthPoint.getX())
+		} else if (center.getX() < widthPoint.getX())
 			return center.addVector(ortho.multiply(height));
-		else// if (center.getX() > widthPoint.getX())
+		else
+			// if (center.getX() > widthPoint.getX())
 			return center.addVector(ortho.multiply(-height));
 
 	}
-	
+
 	public Collection<Point> calculateFocusPoints() {
-	    Collection<Point> focusPoints = new ArrayList<Point>();
-	    
-	    // Formulae reference:	http://www.mathopenref.com/ellipsefoci.html
-	    //						http://www.mathopenref.com/ellipsesemiaxes.html
-	    
-	    double widthDist = center.calculateDistance(widthPoint);
+		Collection<Point> focusPoints = new ArrayList<Point>();
+
+		// Formulae reference: http://www.mathopenref.com/ellipsefoci.html
+		// http://www.mathopenref.com/ellipsesemiaxes.html
+
+		double widthDist = center.calculateDistance(widthPoint);
 		double heightDist = center.calculateDistance(heightPoint);
-		
+
 		double F = 0.0;
 		Vector e1 = null;
-		if(widthDist > heightDist) {
+		if (widthDist > heightDist) {
 			// The semi-major axis is the horizontal one.
 			F = Math.sqrt(widthDist * widthDist - heightDist * heightDist);
 			e1 = new Vector(center, widthPoint).normalized();
@@ -499,13 +521,13 @@ public class Ellipse extends Element implements Offsetable {
 			F = Math.sqrt(heightDist * heightDist - widthDist * widthDist);
 			e1 = new Vector(center, heightPoint).normalized();
 		}
-	    
+
 		focusPoints.add(center.addVector(e1.multiply(F)));
 		focusPoints.add(center.addVector(e1.multiply(-F)));
-	    
-	    return focusPoints;
+
+		return focusPoints;
 	}
-	
+
 	public void translateToPoint(Point destiny) {
 		Vector dist = new Vector(destiny, center);
 		center.addVector(dist);

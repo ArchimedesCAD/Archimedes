@@ -29,11 +29,11 @@ public class InfiniteLineParserTests {
 		infiniteLineParser = new InfiniteLineParser();
 		file = new FileInputStream(new File("./files/infiniteLineTest.dxf"));
 	}
-	
+
 	@Test
 	public void shouldParseInfiniteLine() throws Exception {
 		DXFLayer layer = createDXFLayer();
-		
+
 		Collection<Element> parse = infiniteLineParser.parse(layer);
 		assertEquals(1, parse.size());
 		Element[] elements = parse.toArray(new Element[0]);
@@ -43,7 +43,7 @@ public class InfiniteLineParserTests {
 	private DXFLayer createDXFLayer() throws ParseException {
 		Parser kabejaParser = ParserBuilder.createDefaultParser();
 		kabejaParser.parse(file, DXFParser.DEFAULT_ENCODING);
-		
+
 		DXFLayer layer = kabejaParser.getDocument().getDXFLayer("0");
 		return layer;
 	}

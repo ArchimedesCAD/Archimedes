@@ -20,34 +20,33 @@ import org.eclipse.osgi.util.NLS;
  */
 public class Messages extends NLS {
 
-    private static final String BUNDLE_NAME = "br.org.archimedes.io.pdf.messages"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = "br.org.archimedes.io.pdf.messages"; //$NON-NLS-1$
 
-    public static String PDFFilePickerPage_BrowseButtonTooltip;
+	public static String PDFFilePickerPage_BrowseButtonTooltip;
 
-    public static String PDFFilePickerPage_BrowseButtonText;
+	public static String PDFFilePickerPage_BrowseButtonText;
 
-    public static String PDFFilePickerPage_ChooseWindowMessage;
+	public static String PDFFilePickerPage_ChooseWindowMessage;
 
-    public static String PDFFilePickerPage_Extension;
+	public static String PDFFilePickerPage_Extension;
 
-    public static String PDFFilePickerPage_ExtensionName;
+	public static String PDFFilePickerPage_ExtensionName;
 
-    public static String PDFFilePickerPage_WindowMessage;
+	public static String PDFFilePickerPage_WindowMessage;
 
-    public static String PDFFilePickerPage_WindowTitle;
+	public static String PDFFilePickerPage_WindowTitle;
 
-    public static String PDFWizardExporter_ErrorBoxMessage;
+	public static String PDFWizardExporter_ErrorBoxMessage;
 
-    public static String PDFWizardExporter_ErrorBoxTitle;
+	public static String PDFWizardExporter_ErrorBoxTitle;
 
-    public static String PDFWizardExporter_ExporterName;
-    static {
-        // initialize resource bundle
-        NLS.initializeMessages(BUNDLE_NAME, Messages.class);
-    }
+	public static String PDFWizardExporter_ExporterName;
+	static {
+		// initialize resource bundle
+		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
+	}
 
+	private Messages() {
 
-    private Messages () {
-
-    }
+	}
 }

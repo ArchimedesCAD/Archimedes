@@ -32,43 +32,41 @@ import br.org.archimedes.model.Element;
  */
 public class NPointParserTestHelper {
 
-    protected ElementParser parser;
+	protected ElementParser parser;
 
+	protected Node getNodeLine(String xmlSample) throws Exception {
 
-    protected Node getNodeLine (String xmlSample) throws Exception {
+		DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory
+				.newInstance();
+		DocumentBuilder docBuilder = null;
 
-        DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory
-                .newInstance();
-        DocumentBuilder docBuilder = null;
+		docBuilder = docBuilderFactory.newDocumentBuilder();
 
-        docBuilder = docBuilderFactory.newDocumentBuilder();
+		StringReader ir = new StringReader(xmlSample);
+		InputSource is = new InputSource(ir);
 
-        StringReader ir = new StringReader(xmlSample);
-        InputSource is = new InputSource(ir);
+		Document doc = docBuilder.parse(is);
+		doc.normalize();
 
-        Document doc = docBuilder.parse(is);
-        doc.normalize();
+		return doc.getFirstChild();
+	}
 
-        return doc.getFirstChild();
-    }
+	/**
+	 * @param xml_code
+	 *            The xml to be parsed
+	 * @throws Exception
+	 *             Thrown if something unexpected happens
+	 */
+	protected void testFail(final String xml_code) throws Exception {
 
-    /**
-     * @param xml_code
-     *            The xml to be parsed
-     * @throws Exception
-     *             Thrown if something unexpected happens
-     */
-    protected void testFail (final String xml_code) throws Exception {
+		Node nodeLine = this.getNodeLine(xml_code);
+		Element element = null;
+		try {
+			element = parser.parse(nodeLine);
+		} catch (ElementCreationException e) {
+			// OK
+		}
 
-        Node nodeLine = this.getNodeLine(xml_code);
-        Element element = null;
-        try {
-            element = parser.parse(nodeLine);
-        }
-        catch (ElementCreationException e) {
-            // OK
-        }
-
-        assertNull(element);
-    }
+		assertNull(element);
+	}
 }

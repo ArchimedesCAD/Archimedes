@@ -28,55 +28,55 @@ import br.org.archimedes.model.Point;
  */
 public abstract class ElementParser {
 
-    private static Map<String, ElementParser> parserMap = createParserMap();
+	private static Map<String, ElementParser> parserMap = createParserMap();
 
+	/**
+	 * Gets a parser to read a certain type of element
+	 * 
+	 * @param type
+	 *            The name of the type of element to be read
+	 * @return The corresponding parser
+	 */
+	public static ElementParser getParser(String type) {
 
-    /**
-     * Gets a parser to read a certain type of element
-     * 
-     * @param type
-     *            The name of the type of element to be read
-     * @return The corresponding parser
-     */
-    public static ElementParser getParser (String type) {
+		return parserMap.get(type);
+	}
 
-        return parserMap.get(type);
-    }
+	private static Map<String, ElementParser> createParserMap() {
 
-    private static Map<String, ElementParser> createParserMap () {
+		Map<String, ElementParser> map = new HashMap<String, ElementParser>();
 
-        Map<String, ElementParser> map = new HashMap<String, ElementParser>();
+		map.put("arc", new ArcParser());
+		map.put("circle", new CircleParser());
+		map.put("ellipse", new EllipseParser());
+		map.put("line", new LineParser());
+		map.put("infiniteLine", new InfiniteLineParser());
+		map.put("semiline", new SemilineParser());
+		map.put("polyline", new PolylineParser());
+		map.put("text", new TextParser());
 
-        map.put("arc", new ArcParser());
-        map.put("circle", new CircleParser());
-        map.put("ellipse", new EllipseParser());
-        map.put("line", new LineParser());
-        map.put("infiniteLine", new InfiniteLineParser());
-        map.put("semiline", new SemilineParser());
-        map.put("polyline", new PolylineParser());
-        map.put("text", new TextParser());
-                
-        return map;
-    }
-    
-    public static Map<String, ElementParser> getParserMap() {
+		return map;
+	}
+
+	public static Map<String, ElementParser> getParserMap() {
 		return parserMap;
 	}
 
-    /**
-     * Parses a node to an element
-     * 
-     * @param layer
-     *            The layer to be parsed
-     * @return A list of elements from this layer
-     * @throws ElementCreationException
-     *             Cannot
-     */
-    public abstract Collection<Element> parse (DXFLayer layer) throws NullArgumentException, InvalidArgumentException;
-    
-     
-    protected Point transformToArchimedesPoint (org.kabeja.dxf.helpers.Point dxfPoint) {
+	/**
+	 * Parses a node to an element
+	 * 
+	 * @param layer
+	 *            The layer to be parsed
+	 * @return A list of elements from this layer
+	 * @throws ElementCreationException
+	 *             Cannot
+	 */
+	public abstract Collection<Element> parse(DXFLayer layer)
+			throws NullArgumentException, InvalidArgumentException;
 
-        return new Point (dxfPoint.getX(), dxfPoint.getY());
-    }
+	protected Point transformToArchimedesPoint(
+			org.kabeja.dxf.helpers.Point dxfPoint) {
+
+		return new Point(dxfPoint.getX(), dxfPoint.getY());
+	}
 }

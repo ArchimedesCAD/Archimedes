@@ -26,35 +26,34 @@ import br.org.archimedes.polyline.Polyline;
 
 public class ArcPolylineIntersector implements Intersector {
 
-    public Collection<Point> getIntersections (Element element,
-            Element otherElement) throws NullArgumentException {
+	public Collection<Point> getIntersections(Element element,
+			Element otherElement) throws NullArgumentException {
 
-        Arc baseArc;
-        Polyline polyline;
+		Arc baseArc;
+		Polyline polyline;
 
-        if (element == null || otherElement == null)
-            throw new NullArgumentException();
+		if (element == null || otherElement == null)
+			throw new NullArgumentException();
 
-        if (element.getClass() == Arc.class) {
-            baseArc = (Arc) element;
-            polyline = (Polyline) otherElement;
-        }
-        else {
-            baseArc = (Arc) otherElement;
-            polyline = (Polyline) element;
-        }
+		if (element.getClass() == Arc.class) {
+			baseArc = (Arc) element;
+			polyline = (Polyline) otherElement;
+		} else {
+			baseArc = (Arc) otherElement;
+			polyline = (Polyline) element;
+		}
 
-        List<Line> lines = polyline.getLines();
-        Collection<Point> intersectionPoints = new ArrayList<Point>();
+		List<Line> lines = polyline.getLines();
+		Collection<Point> intersectionPoints = new ArrayList<Point>();
 
-        Collection<Point> intersection;
+		Collection<Point> intersection;
 
-        ArcLineIntersector arcLineIntersector = new ArcLineIntersector();
-        for (Line line : lines) {
-            intersection = arcLineIntersector.getIntersections(line, baseArc);
-            intersectionPoints.addAll(intersection);
-        }
-        return intersectionPoints;
-    }
+		ArcLineIntersector arcLineIntersector = new ArcLineIntersector();
+		for (Line line : lines) {
+			intersection = arcLineIntersector.getIntersections(line, baseArc);
+			intersectionPoints.addAll(intersection);
+		}
+		return intersectionPoints;
+	}
 
 }

@@ -25,6 +25,10 @@
 			element="br.org.archimedes.circle"
 			class="br.org.archimedes.trimmers.CircleTrimmer"/>
 		<elementTrimmer
+			id="br.org.archimedes.trim.ellipse"
+			element="br.org.archimedes.ellipse"
+			class="br.org.archimedes.trimmers.EllipseTrimmer"/>
+		<elementTrimmer
 			id="br.org.archimedes.trim.line"
 			element="br.org.archimedes.line"
 			class="br.org.archimedes.trimmers.LineTrimmer"/>

@@ -2,13 +2,12 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Ellipse Plug-in
 Bundle-SymbolicName: br.org.archimedes.ellipse;singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 0.66.0
 Bundle-Localization: plugin
-Require-Bundle: org.eclipse.ui,
- org.eclipse.core.runtime,
- br.org.archimedes.core;bundle-version="0.64.0"
+Require-Bundle: br.org.archimedes.core;bundle-version="0.64.0",
+ org.eclipse.ui,
+ org.eclipse.core.runtime
 Export-Package: br.org.archimedes.ellipse
 Eclipse-RegisterBuddy: br.org.archimedes.core
-Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Import-Package: br.org.archimedes.line

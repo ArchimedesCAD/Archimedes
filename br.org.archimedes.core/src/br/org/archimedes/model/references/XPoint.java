@@ -28,60 +28,60 @@ import br.org.archimedes.model.ReferencePoint;
  */
 public class XPoint extends ReferencePoint {
 
-    public XPoint (Point point) throws NullArgumentException {
+	public XPoint(Point point) throws NullArgumentException {
 
-        super(point);
-    }
+		super(point);
+	}
 
-    public XPoint (Point point, List<Point> pointsToMove)
-            throws NullArgumentException {
+	public XPoint(Point point, List<Point> pointsToMove)
+			throws NullArgumentException {
 
-        super(point, pointsToMove);
-    }
+		super(point, pointsToMove);
+	}
 
-    public XPoint (Point point, Point... pointsToMove)
-            throws NullArgumentException {
+	public XPoint(Point point, Point... pointsToMove)
+			throws NullArgumentException {
 
-        super(point, pointsToMove);
-    }
+		super(point, pointsToMove);
+	}
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.model.ReferencePoint#draw()
-     */
-    @Override
-    public void draw () {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.model.ReferencePoint#draw()
+	 */
+	@Override
+	public void draw() {
 
-        double size = br.org.archimedes.Utils.getWorkspace().getGripSize() / 2;
+		double size = br.org.archimedes.Utils.getWorkspace().getGripSize() / 2;
 
-        OpenGLWrapper openGLWrapper = br.org.archimedes.Utils.getOpenGLWrapper();
+		OpenGLWrapper openGLWrapper = br.org.archimedes.Utils
+				.getOpenGLWrapper();
 
-        Point point = null;
-        try {
-            point = br.org.archimedes.Utils.getWorkspace().modelToScreen(getPoint());
-        }
-        catch (NullArgumentException e) {
-            // Should never reach this block since an intersection point
-            // is created with a not null point
-            e.printStackTrace();
-        }
+		Point point = null;
+		try {
+			point = br.org.archimedes.Utils.getWorkspace().modelToScreen(
+					getPoint());
+		} catch (NullArgumentException e) {
+			// Should never reach this block since an intersection point
+			// is created with a not null point
+			e.printStackTrace();
+		}
 
-        try {
-            List<Point> cross = new ArrayList<Point>();
-            cross.add(new Point(point.getX() - size, point.getY() - size));
-            cross.add(new Point(point.getX() + size, point.getY() + size));
-            openGLWrapper.draw(cross);
+		try {
+			List<Point> cross = new ArrayList<Point>();
+			cross.add(new Point(point.getX() - size, point.getY() - size));
+			cross.add(new Point(point.getX() + size, point.getY() + size));
+			openGLWrapper.draw(cross);
 
-            cross = new ArrayList<Point>();
-            cross.add(new Point(point.getX() - size, point.getY() + size));
-            cross.add(new Point(point.getX() + size, point.getY() - size));
-            openGLWrapper.draw(cross);
-        }
-        catch (NullArgumentException e) {
-            // Should never reach this block since cross was initialized
-            e.printStackTrace();
-        }
-    }
+			cross = new ArrayList<Point>();
+			cross.add(new Point(point.getX() - size, point.getY() + size));
+			cross.add(new Point(point.getX() + size, point.getY() - size));
+			openGLWrapper.draw(cross);
+		} catch (NullArgumentException e) {
+			// Should never reach this block since cross was initialized
+			e.printStackTrace();
+		}
+	}
 
 }

@@ -12,7 +12,6 @@
  */
 package br.org.archimedes.exceptions;
 
-
 /**
  * Belongs to package br.org.archimedes.exceptions.
  * 
@@ -20,22 +19,21 @@ package br.org.archimedes.exceptions;
  */
 public class IllegalActionException extends Exception {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private static final String illegal = Messages.IllegalAction;
+	private static final String illegal = Messages.IllegalAction;
 
+	/**
+	 * @param message
+	 *            The message.
+	 */
+	public IllegalActionException(String message) {
 
-    /**
-     * @param message
-     *            The message.
-     */
-    public IllegalActionException (String message) {
+		super(message);
+	}
 
-        super(message);
-    }
+	public IllegalActionException() {
 
-    public IllegalActionException () {
-
-        super(illegal);
-    }
+		super(illegal);
+	}
 }

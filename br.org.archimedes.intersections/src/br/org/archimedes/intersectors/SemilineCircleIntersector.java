@@ -45,10 +45,10 @@ public class SemilineCircleIntersector implements Intersector {
 			semiline = (Semiline) otherElement;
 			circle = (Circle) element;
 		}
-		
+
 		Point projection = null;
 		double distance = 0.0;
-		
+
 		try {
 			projection = semiline.getProjectionOf(circle.getCenter());
 			distance = Geometrics.calculateDistance(circle.getCenter(),
@@ -59,8 +59,8 @@ public class SemilineCircleIntersector implements Intersector {
 
 		if ((distance - circle.getRadius()) <= Constant.EPSILON) {
 
-			Vector lineVector = new Vector(semiline.getInitialPoint(), semiline
-					.getDirectionPoint());
+			Vector lineVector = new Vector(semiline.getInitialPoint(),
+					semiline.getDirectionPoint());
 			lineVector = Geometrics.normalize(lineVector);
 
 			double semiCord = Math.sqrt(circle.getRadius() * circle.getRadius()
@@ -73,7 +73,8 @@ public class SemilineCircleIntersector implements Intersector {
 
 			if (semiline.contains(intersection1))
 				intersections.add(intersection1);
-			if (!intersection2.equals(intersection1) && semiline.contains(intersection2)) {
+			if (!intersection2.equals(intersection1)
+					&& semiline.contains(intersection2)) {
 				intersections.add(intersection2);
 			}
 		}

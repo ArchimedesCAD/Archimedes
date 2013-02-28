@@ -19,43 +19,42 @@ package br.org.archimedes.exceptions;
  */
 public class ElementCreationException extends Exception {
 
-    private static final long serialVersionUID = 4874114959834606439L;
+	private static final long serialVersionUID = 4874114959834606439L;
 
+	/**
+	 * @param origin
+	 *            The originating exception
+	 */
+	public ElementCreationException(Throwable origin) {
 
-    /**
-     * @param origin
-     *            The originating exception
-     */
-    public ElementCreationException (Throwable origin) {
+		super(origin);
+	}
 
-        super(origin);
-    }
+	/**
+	 * @param message
+	 *            The message to be shown on print
+	 */
+	public ElementCreationException(String message) {
 
-    /**
-     * @param message
-     *            The message to be shown on print
-     */
-    public ElementCreationException (String message) {
+		super(message);
+	}
 
-        super(message);
-    }
+	/**
+	 * @param message
+	 *            The message to be shown on print
+	 * @param origin
+	 *            The originating exception
+	 */
+	public ElementCreationException(String message, Throwable origin) {
 
-    /**
-     * @param message
-     *            The message to be shown on print
-     * @param origin
-     *            The originating exception
-     */
-    public ElementCreationException (String message, Throwable origin) {
+		super(message, origin);
+	}
 
-        super(message, origin);
-    }
+	/**
+	 * Default constructor.
+	 */
+	public ElementCreationException() {
 
-    /**
-     * Default constructor.
-     */
-    public ElementCreationException () {
-
-        super();
-    }
+		super();
+	}
 }

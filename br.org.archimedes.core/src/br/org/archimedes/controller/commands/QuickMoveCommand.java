@@ -30,75 +30,81 @@ import br.org.archimedes.model.Vector;
  */
 public class QuickMoveCommand implements UndoableCommand {
 
-    private Map<Element, Collection<Point>> pointsToMove;
+	private Map<Element, Collection<Point>> pointsToMove;
 
-    private Map<Element, Boolean> wasMoved;
+	private Map<Element, Boolean> wasMoved;
 
-    private Vector vector;
+	private Vector vector;
 
+	public QuickMoveCommand(Map<Element, Collection<Point>> pointsToMove,
+			Vector vector) throws NullArgumentException {
 
-    public QuickMoveCommand (Map<Element, Collection<Point>> pointsToMove,
-            Vector vector) throws NullArgumentException {
+		if (pointsToMove == null || vector == null) {
+			throw new NullArgumentException();
+		}
 
-        if (pointsToMove == null || vector == null) {
-            throw new NullArgumentException();
-        }
+		this.pointsToMove = pointsToMove;
+		this.wasMoved = new HashMap<Element, Boolean>();
+		this.vector = vector;
+	}
 
-        this.pointsToMove = pointsToMove;
-        this.wasMoved = new HashMap<Element, Boolean>();
-        this.vector = vector;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.org.archimedes.interfaces.Command#doIt(br.org.archimedes.model.Drawing
+	 * )
+	 */
+	public void doIt(Drawing drawing) throws IllegalActionException,
+			NullArgumentException {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.interfaces.Command#doIt(br.org.archimedes.model.Drawing)
-     */
-    public void doIt (Drawing drawing) throws IllegalActionException,
-            NullArgumentException {
+		if (drawing == null) {
+			throw new NullArgumentException();
+		}
 
-        if (drawing == null) {
-            throw new NullArgumentException();
-        }
+		for (Element element : pointsToMove.keySet()) {
+			if (drawing.getUnlockedContents().contains(element)) {
+				Collection<Point> points = pointsToMove.get(element);
+				element.move(points, vector);
+				wasMoved.put(element, true);
+			} else {
+				wasMoved.put(element, false);
+			}
+		}
+	}
 
-        for (Element element : pointsToMove.keySet()) {
-            if (drawing.getUnlockedContents().contains(element)) {
-                Collection<Point> points = pointsToMove.get(element);
-                element.move(points, vector);
-                wasMoved.put(element, true);
-            }
-            else {
-                wasMoved.put(element, false);
-            }
-        }
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.org.archimedes.interfaces.UndoableCommand#undoIt(br.org.archimedes
+	 * .model.Drawing)
+	 */
+	public void undoIt(Drawing drawing) throws IllegalActionException,
+			NullArgumentException {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.interfaces.UndoableCommand#undoIt(br.org.archimedes.model.Drawing)
-     */
-    public void undoIt (Drawing drawing) throws IllegalActionException,
-            NullArgumentException {
+		if (drawing == null) {
+			throw new NullArgumentException();
+		}
 
-        if (drawing == null) {
-            throw new NullArgumentException();
-        }
+		for (Element element : pointsToMove.keySet()) {
+			if (drawing.getUnlockedContents().contains(element)
+					&& wasMoved.get(element)) {
+				Collection<Point> points = pointsToMove.get(element);
+				element.move(points, vector.multiply(-1.0));
+			}
+		}
+	}
 
-        for (Element element : pointsToMove.keySet()) {
-            if (drawing.getUnlockedContents().contains(element)
-                    && wasMoved.get(element)) {
-                Collection<Point> points = pointsToMove.get(element);
-                element.move(points, vector.multiply( -1.0));
-            }
-        }
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.org.archimedes.interfaces.UndoableCommand#canMergeWith(br.org.archimedes
+	 * .interfaces.UndoableCommand)
+	 */
+	public boolean canMergeWith(UndoableCommand command) {
 
-    /* (non-Javadoc)
-     * @see br.org.archimedes.interfaces.UndoableCommand#canMergeWith(br.org.archimedes.interfaces.UndoableCommand)
-     */
-    public boolean canMergeWith (UndoableCommand command) {
-
-        return false;
-    }
+		return false;
+	}
 }

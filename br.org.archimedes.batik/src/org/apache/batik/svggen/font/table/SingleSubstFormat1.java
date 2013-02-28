@@ -21,35 +21,35 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 
 /**
- *
+ * 
  * @author <a href="mailto:david@steadystate.co.uk">David Schweinsberg</a>
  * @version $Id: SingleSubstFormat1.java,v 1.3 2004/08/18 07:15:22 vhardy Exp $
  */
 public class SingleSubstFormat1 extends SingleSubst {
 
-    private int coverageOffset;
-    private short deltaGlyphID;
-    private Coverage coverage;
+	private int coverageOffset;
+	private short deltaGlyphID;
+	private Coverage coverage;
 
-    /** Creates new SingleSubstFormat1 */
-    protected SingleSubstFormat1(RandomAccessFile raf, int offset) throws IOException {
-        coverageOffset = raf.readUnsignedShort();
-        deltaGlyphID = raf.readShort();
-        raf.seek(offset + coverageOffset);
-        coverage = Coverage.read(raf);
-    }
+	/** Creates new SingleSubstFormat1 */
+	protected SingleSubstFormat1(RandomAccessFile raf, int offset)
+			throws IOException {
+		coverageOffset = raf.readUnsignedShort();
+		deltaGlyphID = raf.readShort();
+		raf.seek(offset + coverageOffset);
+		coverage = Coverage.read(raf);
+	}
 
-    public int getFormat() {
-        return 1;
-    }
+	public int getFormat() {
+		return 1;
+	}
 
-    public int substitute(int glyphId) {
-        int i = coverage.findGlyph(glyphId);
-        if (i > -1) {
-            return glyphId + deltaGlyphID;
-        }
-        return glyphId;
-    }
+	public int substitute(int glyphId) {
+		int i = coverage.findGlyph(glyphId);
+		if (i > -1) {
+			return glyphId + deltaGlyphID;
+		}
+		return glyphId;
+	}
 
 }
-

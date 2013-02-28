@@ -23,73 +23,84 @@ import br.org.archimedes.model.Drawing;
  */
 public class StubState extends InputState {
 
-    /*
-     * (non-Javadoc)
-     * @see br.org.archimedes.controller.InputState#cancel()
-     */
-    @Override
-    public String cancel () {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.controller.InputState#cancel()
+	 */
+	@Override
+	public String cancel() {
 
-        return null;
-    }
+		return null;
+	}
 
-    /*
-     * (non-Javadoc)
-     * @see br.org.archimedes.controller.InputState#changedDrawing(br.org.archimedes.model.Drawing)
-     */
-    @Override
-    public InputState changedDrawing (Drawing currentDrawing) {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.org.archimedes.controller.InputState#changedDrawing(br.org.archimedes
+	 * .model.Drawing)
+	 */
+	@Override
+	public InputState changedDrawing(Drawing currentDrawing) {
 
-        return null;
-    }
+		return null;
+	}
 
-    /*
-     * (non-Javadoc)
-     * @see br.org.archimedes.controller.InputState#getNext()
-     */
-    @Override
-    public InputState getNext () {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.controller.InputState#getNext()
+	 */
+	@Override
+	public InputState getNext() {
 
-        return null;
-    }
+		return null;
+	}
 
-    /*
-     * (non-Javadoc)
-     * @see br.org.archimedes.controller.InputState#nextShouldHandle()
-     */
-    @Override
-    public boolean nextShouldHandle () {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.controller.InputState#nextShouldHandle()
+	 */
+	@Override
+	public boolean nextShouldHandle() {
 
-        return false;
-    }
+		return false;
+	}
 
-    /*
-     * (non-Javadoc)
-     * @see br.org.archimedes.controller.InputState#receiveText(java.lang.String)
-     */
-    @Override
-    public String receiveText (String text) {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.org.archimedes.controller.InputState#receiveText(java.lang.String)
+	 */
+	@Override
+	public String receiveText(String text) {
 
-        return null;
-    }
+		return null;
+	}
 
-    /*
-     * (non-Javadoc)
-     * @seebr.org.archimedes.controller.InputState#setCurrentFactory(br.org.archimedes.factories.
-     * CommandFactory)
-     */
-    @Override
-    protected String setCurrentFactory (CommandFactory factory) {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @seebr.org.archimedes.controller.InputState#setCurrentFactory(br.org.
+	 * archimedes.factories. CommandFactory)
+	 */
+	@Override
+	protected String setCurrentFactory(CommandFactory factory) {
 
-        return null;
-    }
+		return null;
+	}
 
-    /* (non-Javadoc)
-     * @see br.org.archimedes.controller.InputState#getContextId()
-     */
-    @Override
-    public String getContextId () {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.controller.InputState#getContextId()
+	 */
+	@Override
+	public String getContextId() {
 
-        return null;
-    }
+		return null;
+	}
 }

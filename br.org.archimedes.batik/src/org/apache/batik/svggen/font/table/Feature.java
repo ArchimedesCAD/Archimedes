@@ -21,33 +21,33 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 
 /**
- *
+ * 
  * @author <a href="mailto:david@steadystate.co.uk">David Schweinsberg</a>
  * @version $Id: Feature.java,v 1.3 2004/08/18 07:15:20 vhardy Exp $
  */
 public class Feature {
 
-    private int lookupCount;
-    private int[] lookupListIndex;
+	private int lookupCount;
+	private int[] lookupListIndex;
 
-    /** Creates new Feature */
-    @SuppressWarnings("unused")
-    protected Feature(RandomAccessFile raf, int offset) throws IOException {
-        raf.seek(offset);
-        int featureParams = raf.readUnsignedShort();
-        lookupCount = raf.readUnsignedShort();
-        lookupListIndex = new int[lookupCount];
-        for (int i = 0; i < lookupCount; i++) {
-            lookupListIndex[i] = raf.readUnsignedShort();
-        }
-    }
+	/** Creates new Feature */
+	@SuppressWarnings("unused")
+	protected Feature(RandomAccessFile raf, int offset) throws IOException {
+		raf.seek(offset);
+		int featureParams = raf.readUnsignedShort();
+		lookupCount = raf.readUnsignedShort();
+		lookupListIndex = new int[lookupCount];
+		for (int i = 0; i < lookupCount; i++) {
+			lookupListIndex[i] = raf.readUnsignedShort();
+		}
+	}
 
-    public int getLookupCount() {
-        return lookupCount;
-    }
+	public int getLookupCount() {
+		return lookupCount;
+	}
 
-    public int getLookupListIndex(int i) {
-        return lookupListIndex[i];
-    }
+	public int getLookupListIndex(int i) {
+		return lookupListIndex[i];
+	}
 
 }

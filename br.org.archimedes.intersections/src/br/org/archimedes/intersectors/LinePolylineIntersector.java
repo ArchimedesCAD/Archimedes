@@ -27,13 +27,13 @@ public class LinePolylineIntersector implements Intersector {
 
 	public Collection<Point> getIntersections(Element element,
 			Element otherElement) throws NullArgumentException {
-		
+
 		Line baseLine;
 		Polyline polyline;
-		
-		if(element == null || otherElement == null)
+
+		if (element == null || otherElement == null)
 			throw new NullArgumentException();
-		
+
 		if (element.getClass() == Line.class) {
 			baseLine = (Line) element;
 			polyline = (Polyline) otherElement;
@@ -41,7 +41,6 @@ public class LinePolylineIntersector implements Intersector {
 			baseLine = (Line) otherElement;
 			polyline = (Polyline) element;
 		}
-		
 
 		List<Line> lines = polyline.getLines();
 		Collection<Point> intersectionPoints = new ArrayList<Point>();
@@ -55,7 +54,5 @@ public class LinePolylineIntersector implements Intersector {
 		}
 		return intersectionPoints;
 	}
-	
 
-	
 }

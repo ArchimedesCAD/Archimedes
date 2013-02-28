@@ -25,19 +25,27 @@ import br.org.archimedes.model.Drawing;
  */
 public class StubUndoableCommand extends StubCommand implements UndoableCommand {
 
-    /*
-     * (non-Javadoc)
-     * @see br.org.archimedes.interfaces.UndoableCommand#undoIt(br.org.archimedes.model.Drawing)
-     */
-    public void undoIt (Drawing drawing) throws IllegalActionException, NullArgumentException {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.org.archimedes.interfaces.UndoableCommand#undoIt(br.org.archimedes
+	 * .model.Drawing)
+	 */
+	public void undoIt(Drawing drawing) throws IllegalActionException,
+			NullArgumentException {
 
-    }
+	}
 
-    /* (non-Javadoc)
-     * @see br.org.archimedes.interfaces.UndoableCommand#canMergeWith(br.org.archimedes.interfaces.UndoableCommand)
-     */
-    public boolean canMergeWith (UndoableCommand command) {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.org.archimedes.interfaces.UndoableCommand#canMergeWith(br.org.archimedes
+	 * .interfaces.UndoableCommand)
+	 */
+	public boolean canMergeWith(UndoableCommand command) {
 
-        return false;
-    }
+		return false;
+	}
 }

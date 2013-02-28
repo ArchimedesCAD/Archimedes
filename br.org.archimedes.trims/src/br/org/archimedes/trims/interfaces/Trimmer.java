@@ -20,20 +20,22 @@ import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
 
 public interface Trimmer {
-	
+
 	/**
-     * Returns the result of trimming the element (a collection of elements).
-     * 
-     * @param element
-     *            The element to be trimmed.
-     * @param cutPoints
-     *            Points defining where to cut the element
-     * @param click
-     * 			  Point where user clicked to choose which parts of the element shall be trimmed
-     * @return The collection of trimmed elements.
-     * @throws NullArgumentException
-     *             If element or references is null
-     */
+	 * Returns the result of trimming the element (a collection of elements).
+	 * 
+	 * @param element
+	 *            The element to be trimmed.
+	 * @param cutPoints
+	 *            Points defining where to cut the element
+	 * @param click
+	 *            Point where user clicked to choose which parts of the element
+	 *            shall be trimmed
+	 * @return The collection of trimmed elements.
+	 * @throws NullArgumentException
+	 *             If element or references is null
+	 */
 	public Collection<Element> trim(Element element,
-			Collection<Point> cutPoints, Point click) throws NullArgumentException;
+			Collection<Point> cutPoints, Point click)
+			throws NullArgumentException;
 }

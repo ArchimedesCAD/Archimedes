@@ -28,55 +28,54 @@ import br.org.archimedes.model.Point;
  */
 public class DimensionParserTest extends NPointParserTestHelper {
 
-    private static final Double FONT_SIZE = 18.0;
+	private static final Double FONT_SIZE = 18.0;
 
+	@Before
+	public void testGetLineParser() {
 
-    @Before
-    public void testGetLineParser () {
+		parser = new DimensionParser();
+	}
 
-        parser = new DimensionParser();
-    }
+	@Test
+	public void testInvalidDimensionPoints() throws Exception {
 
-    @Test
-    public void testInvalidDimensionPoints () throws Exception {
+		final String xml_line = "<dimension>"
+				+ "	<point x=\"-64\" y=\"198\" /><point x=\"-64\" y=\"198\" />"
+				+ "<point x=\"-118.5\" y=\"210\" /><size>18.0</size>"
+				+ "</dimension>";
+		testFail(xml_line);
+	}
 
-        final String xml_line = "<dimension>"
-                + "	<point x=\"-64\" y=\"198\" /><point x=\"-64\" y=\"198\" />"
-                + "<point x=\"-118.5\" y=\"210\" /><size>18.0</size>"
-                + "</dimension>";
-        testFail(xml_line);
-    }
+	@Test
+	public void testInvalidNumberOfPointsInADimension() throws Exception {
 
-    @Test
-    public void testInvalidNumberOfPointsInADimension () throws Exception {
+		final String xml_line = "<dimension>"
+				+ "	<point x=\"-64\" y=\"198\" />" + "</dimension>";
+		testFail(xml_line);
+	}
 
-        final String xml_line = "<dimension>"
-                + "	<point x=\"-64\" y=\"198\" />" + "</dimension>";
-        testFail(xml_line);
-    }
+	@Test
+	public void testParse() throws Exception {
 
-    @Test
-    public void testParse () throws Exception {
+		final String xml_line = "<dimension>"
+				+ "	<point x=\"-64\" y=\"198\" /><point x=\"-173\" y=\"88\" />"
+				+ "<point x=\"-118.5\" y=\"210\" /><size>18.0</size>"
+				+ "</dimension>";
 
-        final String xml_line = "<dimension>"
-                + "	<point x=\"-64\" y=\"198\" /><point x=\"-173\" y=\"88\" />"
-                + "<point x=\"-118.5\" y=\"210\" /><size>18.0</size>"
-                + "</dimension>";
+		Node nodeLine = this.getNodeLine(xml_line);
+		Element element = parser.parse(nodeLine);
+		Assert.assertNotNull(element);
+		Assert.assertEquals(Dimension.class, element.getClass());
 
-        Node nodeLine = this.getNodeLine(xml_line);
-        Element element = parser.parse(nodeLine);
-        Assert.assertNotNull(element);
-        Assert.assertEquals(Dimension.class, element.getClass());
+		Dimension dimension = (Dimension) element;
 
-        Dimension dimension = (Dimension) element;
+		Point p1 = new Point(-64, 198);
+		Point p2 = new Point(-173, 88);
+		Point p3 = new Point(-118.5, 210);
+		Dimension expected = new Dimension(p1, p2, p3, FONT_SIZE);
 
-        Point p1 = new Point( -64, 198);
-        Point p2 = new Point( -173, 88);
-        Point p3 = new Point( -118.5, 210);
-        Dimension expected = new Dimension(p1, p2, p3, FONT_SIZE);
-
-        Assert.assertEquals(
-                "The parsed dimension does not equal the expected one",
-                expected, dimension);
-    }
+		Assert.assertEquals(
+				"The parsed dimension does not equal the expected one",
+				expected, dimension);
+	}
 }

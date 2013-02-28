@@ -73,10 +73,9 @@ public class SemilineTrimTest extends Tester {
 		assertCollectionContains(collection, new Semiline(new Point(50.0, 2.0),
 				new Point(100.0, 2.0)));
 
-		Assert
-				.assertEquals(
-						"A trim between references should produce exactly 1 Line and 1 Semiline.",
-						2, collection.size());
+		Assert.assertEquals(
+				"A trim between references should produce exactly 1 Line and 1 Semiline.",
+				2, collection.size());
 	}
 
 	@Test

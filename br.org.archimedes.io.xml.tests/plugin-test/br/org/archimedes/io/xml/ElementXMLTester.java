@@ -36,9 +36,13 @@ public class ElementXMLTester extends Tester {
 
 	/**
 	 * Creates a DOM tree for the XML Element Exporter.
-	 * @param <T> Type for the element exporter. 
-	 * @param exporter the Element exporter.
-	 * @param element the Element.
+	 * 
+	 * @param <T>
+	 *            Type for the element exporter.
+	 * @param exporter
+	 *            the Element exporter.
+	 * @param element
+	 *            the Element.
 	 * @return The DOM tree for the XML Element Exporter.
 	 */
 	public <T extends br.org.archimedes.model.Element> Document getElementXML(

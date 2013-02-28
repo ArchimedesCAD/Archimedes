@@ -24,22 +24,23 @@ import br.org.archimedes.model.Drawing;
  */
 public interface UndoableCommand extends Command {
 
-    /**
-     * Undoes the action.
-     * 
-     * @param drawing
-     *            The drawing where this command should be undone.
-     * @throws IllegalActionException
-     *             Thrown if undoing this command is not allowed when called.
-     * @throws NullArgumentException
-     *             Thrown if the drawing is null.
-     */
-    public void undoIt (Drawing drawing) throws IllegalActionException, NullArgumentException;
+	/**
+	 * Undoes the action.
+	 * 
+	 * @param drawing
+	 *            The drawing where this command should be undone.
+	 * @throws IllegalActionException
+	 *             Thrown if undoing this command is not allowed when called.
+	 * @throws NullArgumentException
+	 *             Thrown if the drawing is null.
+	 */
+	public void undoIt(Drawing drawing) throws IllegalActionException,
+			NullArgumentException;
 
-    /**
-     * @param command
-     *            A command
-     * @return true if this command can be merged to the received one
-     */
-    public boolean canMergeWith (UndoableCommand command);
+	/**
+	 * @param command
+	 *            A command
+	 * @return true if this command can be merged to the received one
+	 */
+	public boolean canMergeWith(UndoableCommand command);
 }

@@ -19,10 +19,10 @@ package org.apache.batik.svggen.font.table;
 
 /**
  * Definition of Script tags
- *
+ * 
  * @version $Id: ScriptTags.java,v 1.3 2004/08/18 07:15:22 vhardy Exp $
  * @author <a href="mailto:vincent.hardy@eng.sun.com">Vincent Hardy</a>
  */
 public interface ScriptTags {
-    String SCRIPT_TAG_ARAB = "arab";
+	String SCRIPT_TAG_ARAB = "arab";
 }

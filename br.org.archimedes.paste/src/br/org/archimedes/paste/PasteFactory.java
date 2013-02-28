@@ -13,6 +13,10 @@
  */
 package br.org.archimedes.paste;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 import br.org.archimedes.Constant;
 import br.org.archimedes.controller.commands.PutOrRemoveElementCommand;
 import br.org.archimedes.exceptions.InvalidParameterException;
@@ -23,105 +27,101 @@ import br.org.archimedes.interfaces.Parser;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Layer;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 public class PasteFactory implements CommandFactory {
 
-    private Collection<Element> elements;
+	private Collection<Element> elements;
 
-    private Command command;
+	private Command command;
 
-    private boolean done = true;
+	private boolean done = true;
 
+	public String begin() {
 
-    public String begin () {
+		String result = Messages.ClipboardEmpty;
+		done = false;
+		elements = br.org.archimedes.Utils.getWorkspace().getClipboard();
+		try {
+			result = next(elements);
+		} catch (InvalidParameterException e) {
+			e.printStackTrace();
+		}
 
-        String result = Messages.ClipboardEmpty;
-        done = false;
-        elements = br.org.archimedes.Utils.getWorkspace().getClipboard();
-        try {
-            result = next(elements);
-        }
-        catch (InvalidParameterException e) {
-            e.printStackTrace();
-        }
+		return result;
+	}
 
-        return result;
-    }
+	public String cancel() {
 
-    public String cancel () {
+		return null;
+	}
 
-        return null;
-    }
+	public void drawVisualHelper() {
 
-    public void drawVisualHelper () {
+	}
 
-    }
+	public List<Command> getCommands() {
 
-    public List<Command> getCommands () {
+		List<Command> commands = new ArrayList<Command>();
+		if (command != null) {
+			commands.add(command);
+			command = null;
+		}
 
-        List<Command> commands = new ArrayList<Command>();
-        if (command != null) {
-            commands.add(command);
-            command = null;
-        }
+		return commands;
+	}
 
-        return commands;
-    }
+	public String getName() {
 
-    public String getName () {
+		return "paste"; //$NON-NLS-1$
+	}
 
-        return "paste"; //$NON-NLS-1$
-    }
+	public Parser getNextParser() {
 
-    public Parser getNextParser () {
+		return null;
+	}
 
-        return null;
-    }
+	public boolean isDone() {
 
-    public boolean isDone () {
+		return done;
+	}
 
-        return done;
-    }
+	@SuppressWarnings("unchecked")//$NON-NLS-1$
+	public String next(Object parameter) throws InvalidParameterException {
 
-    @SuppressWarnings("unchecked") //$NON-NLS-1$
-    public String next (Object parameter) throws InvalidParameterException {
+		String result;
 
-        String result;        
-        
-        if (parameter == null) {
-            throw new InvalidParameterException();
-        }
-        try {
-        	
-        	Collection<Element> parametersClone = new ArrayList<Element>();
-        	
-        	for (Element element : (Collection<Element>)parameter) {
-        		
-        		Element cloned = element.clone();
-    			Layer layerClone = element.getLayer().clone();
-    			cloned.setLayer(layerClone);
-    			
+		if (parameter == null) {
+			throw new InvalidParameterException();
+		}
+		try {
+
+			Collection<Element> parametersClone = new ArrayList<Element>();
+
+			for (Element element : (Collection<Element>) parameter) {
+
+				Element cloned = element.clone();
+				Layer layerClone = element.getLayer().clone();
+				cloned.setLayer(layerClone);
+
 				parametersClone.add(cloned);
 			}
-            command = new PutOrRemoveElementCommand(parametersClone, false);
-            result = Messages.CommandFinished;
-            done = true;
-        }
-        catch (NullArgumentException e) {
-            e.printStackTrace();
-            result = Messages.Failed + Constant.NEW_LINE + Messages.TargetExpected;
-        }
-        return result;
-    }
+			command = new PutOrRemoveElementCommand(parametersClone, false);
+			result = Messages.CommandFinished;
+			done = true;
+		} catch (NullArgumentException e) {
+			e.printStackTrace();
+			result = Messages.Failed + Constant.NEW_LINE
+					+ Messages.TargetExpected;
+		}
+		return result;
+	}
 
-    /* (non-Javadoc)
-     * @see br.org.archimedes.factories.CommandFactory#isTransformFactory()
-     */
-    public boolean isTransformFactory () {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.factories.CommandFactory#isTransformFactory()
+	 */
+	public boolean isTransformFactory() {
 
-        return true;
-    }
+		return true;
+	}
 }

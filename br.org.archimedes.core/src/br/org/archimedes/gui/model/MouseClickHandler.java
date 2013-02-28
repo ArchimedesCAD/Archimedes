@@ -43,209 +43,211 @@ import br.org.archimedes.model.Vector;
 import br.org.archimedes.rcp.extensionpoints.FactoryEPLoader;
 
 /**
- * This class manipulate mouse click related events, and send them to its observers.<br>
+ * This class manipulate mouse click related events, and send them to its
+ * observers.<br>
  * Belongs to package br.org.archimedes.gui.model.
  * 
  * @author gigante
  */
 public class MouseClickHandler extends Observable {
 
-    private static MouseClickHandler instance;
+	private static MouseClickHandler instance;
 
-    private Workspace workspace;
+	private Workspace workspace;
 
-    private FactoryEPLoader loader;
+	private FactoryEPLoader loader;
 
+	/**
+	 * Constructor.
+	 */
+	private MouseClickHandler() {
 
-    /**
-     * Constructor.
-     */
-    private MouseClickHandler () {
+		workspace = br.org.archimedes.Utils.getWorkspace();
+		loader = new FactoryEPLoader();
+	}
 
-        workspace = br.org.archimedes.Utils.getWorkspace();
-        loader = new FactoryEPLoader();
-    }
+	/**
+	 * This method receives the click from the current Canvas, and sends to the
+	 * observers the normalized point.
+	 * 
+	 * @param event
+	 *            The mouse event received.
+	 */
+	public void receiveClick(MouseEvent event) {
 
-    /**
-     * This method receives the click from the current Canvas, and sends to the observers the
-     * normalized point.
-     * 
-     * @param event
-     *            The mouse event received.
-     */
-    public void receiveClick (MouseEvent event) {
+		boolean isShiftSelected = event.stateMask == SWT.SHIFT;
+		SelectionCommand.setShiftSelected(isShiftSelected);
 
-        boolean isShiftSelected = event.stateMask == SWT.SHIFT;
-        SelectionCommand.setShiftSelected(isShiftSelected);
+		Point point = getNormalizedPoint(event);
+		workspace.setMousePosition(point);
+		point = workspace.getMousePosition();
+		setChanged();
+		notifyObservers(point);
+	}
 
-        Point point = getNormalizedPoint(event);
-        workspace.setMousePosition(point);
-        point = workspace.getMousePosition();
-        setChanged();
-        notifyObservers(point);
-    }
+	/**
+	 * @param event
+	 *            The mouse event received
+	 * @return The point in model coordinates.
+	 */
+	private Point getNormalizedPoint(MouseEvent event) {
 
-    /**
-     * @param event
-     *            The mouse event received
-     * @return The point in model coordinates.
-     */
-    private Point getNormalizedPoint (MouseEvent event) {
+		Point point;
 
-        Point point;
+		Canvas canvas = (Canvas) event.getSource();
 
-        Canvas canvas = (Canvas) event.getSource();
+		org.eclipse.swt.graphics.Rectangle rect = canvas.getClientArea();
 
-        org.eclipse.swt.graphics.Rectangle rect = canvas.getClientArea();
+		double x = (double) event.x;
+		double y = (double) event.y;
 
-        double x = (double) event.x;
-        double y = (double) event.y;
+		point = new Point(x - rect.width / 2, (rect.height - y) - rect.height
+				/ 2);
 
-        point = new Point(x - rect.width / 2, (rect.height - y) - rect.height / 2);
+		try {
+			point = workspace.screenToModel(point);
+		} catch (NullArgumentException e) {
+			// Should not happen.
+			e.printStackTrace();
+		}
 
-        try {
-            point = workspace.screenToModel(point);
-        }
-        catch (NullArgumentException e) {
-            // Should not happen.
-            e.printStackTrace();
-        }
+		return point;
+	}
 
-        return point;
-    }
+	/**
+	 * @return the unique instance of the MouseClickHandler.
+	 */
+	public static MouseClickHandler getInstance() {
 
-    /**
-     * @return the unique instance of the MouseClickHandler.
-     */
-    public static MouseClickHandler getInstance () {
+		if (instance == null) {
+			instance = new MouseClickHandler();
+		}
+		return instance;
+	}
 
-        if (instance == null) {
-            instance = new MouseClickHandler();
-        }
-        return instance;
-    }
+	/**
+	 * This method is called whenever the right mouse button is clicked over a
+	 * drawing.
+	 */
+	public void receiveRightClick() {
 
-    /**
-     * This method is called whenever the right mouse button is clicked over a drawing.
-     */
-    public void receiveRightClick () {
+		setChanged();
+		notifyObservers();
+	}
 
-        setChanged();
-        notifyObservers();
-    }
+	/**
+	 * This method is called whenever the mouse's wheel is rolled over a
+	 * drawing.
+	 * 
+	 * @param event
+	 *            The mouse wheel event.
+	 */
+	public void receiveMouseWheel(Event event) {
 
-    /**
-     * This method is called whenever the mouse's wheel is rolled over a drawing.
-     * 
-     * @param event
-     *            The mouse wheel event.
-     */
-    public void receiveMouseWheel (Event event) {
+		double ratio = 1.0 + event.count / 3 * Constant.ZOOM_RATE;
 
-        double ratio = 1.0 + event.count / 3 * Constant.ZOOM_RATE;
+		Rectangle rect = workspace.getWindowSize();
 
-        Rectangle rect = workspace.getWindowSize();
+		double x = (double) event.x;
+		double y = (double) event.y;
 
-        double x = (double) event.x;
-        double y = (double) event.y;
+		Point screenPoint = new Point(x - rect.getWidth() / 2,
+				((rect.getHeight() - y) - rect.getHeight() / 2));
 
-        Point screenPoint = new Point(x - rect.getWidth() / 2, ((rect.getHeight() - y) - rect
-                .getHeight() / 2));
+		Point modelPoint = null;
+		Controller controller = br.org.archimedes.Utils.getController();
+		try {
+			workspace.setMousePosition(workspace.screenToModel(screenPoint));
+			modelPoint = workspace.getMousePosition();
 
-        Point modelPoint = null;
-        Controller controller = br.org.archimedes.Utils.getController();
-        try {
-            workspace.setMousePosition(workspace.screenToModel(screenPoint));
-            modelPoint = workspace.getMousePosition();
+			Point viewport = workspace.getViewport();
+			double zoom = 1 / (workspace.getCurrentZoom() * ratio);
+			double xModel = zoom * screenPoint.getX() + viewport.getX();
+			double yModel = zoom * screenPoint.getY() + viewport.getY();
+			Point newModelPoint = new Point(xModel, yModel);
+			Vector modelVector = new Vector(newModelPoint, modelPoint);
 
-            Point viewport = workspace.getViewport();
-            double zoom = 1 / (workspace.getCurrentZoom() * ratio);
-            double xModel = zoom * screenPoint.getX() + viewport.getX();
-            double yModel = zoom * screenPoint.getY() + viewport.getY();
-            Point newModelPoint = new Point(xModel, yModel);
-            Vector modelVector = new Vector(newModelPoint, modelPoint);
+			List<UndoableCommand> commands = new ArrayList<UndoableCommand>();
+			commands.add(new RelativeZoomCommand(ratio));
+			if (!newModelPoint.equals(modelPoint)) {
+				commands.add(new PanCommand(viewport, viewport
+						.addVector(modelVector)));
+			}
+			MacroCommand macro = new MacroCommand(commands);
+			List<Command> list = new ArrayList<Command>();
+			list.add(macro);
 
-            List<UndoableCommand> commands = new ArrayList<UndoableCommand>();
-            commands.add(new RelativeZoomCommand(ratio));
-            if ( !newModelPoint.equals(modelPoint)) {
-                commands.add(new PanCommand(viewport, viewport.addVector(modelVector)));
-            }
-            MacroCommand macro = new MacroCommand(commands);
-            List<Command> list = new ArrayList<Command>();
-            list.add(macro);
+			controller.execute(list);
+		} catch (NullArgumentException e) {
+			// Should not reach this code.
+			e.printStackTrace();
+		} catch (NoActiveDrawingException e) {
+			// Ignores it because no drawing is open
+		} catch (IllegalActionException e) {
+			// Ignores it because it's a max zoom
+		}
+	}
 
-            controller.execute(list);
-        }
-        catch (NullArgumentException e) {
-            // Should not reach this code.
-            e.printStackTrace();
-        }
-        catch (NoActiveDrawingException e) {
-            // Ignores it because no drawing is open
-        }
-        catch (IllegalActionException e) {
-            // Ignores it because it's a max zoom
-        }
-    }
+	/**
+	 * Receives a middle click and if the mouse is down, starts a pan command,
+	 * otherwise cancels the current pan command.
+	 * 
+	 * @param event
+	 *            The event that triggered this method
+	 */
+	public void receiveMiddleClick(MouseEvent event) {
 
-    /**
-     * Receives a middle click and if the mouse is down, starts a pan command, otherwise cancels the
-     * current pan command.
-     * 
-     * @param event
-     *            The event that triggered this method
-     */
-    public void receiveMiddleClick (MouseEvent event) {
+		// TODO find a better way to refer to the pan command
+		String pan = "br.org.archimedes.pan";
+		if (!loader.getFatoryMap().containsKey(pan))
+			return;
 
-        // TODO find a better way to refer to the pan command
-        String pan = "br.org.archimedes.pan";
-        if ( !loader.getFatoryMap().containsKey(pan))
-            return;
+		boolean activatedPan = workspace.isMouseDown();
+		if (activatedPan) {
+			Utils.getInputController().receiveText(pan);
+			Point point = getNormalizedPoint(event);
+			Utils.getInputController().receiveText(
+					point.getX() + ";" + point.getY());
+		} else {
+			// TODO might have a concurrency issue here.
+			Utils.getInputController().cancelCurrentFactory();
+		}
+	}
 
-        boolean activatedPan = workspace.isMouseDown();
-        if (activatedPan) {
-            Utils.getInputController().receiveText(pan);
-            Point point = getNormalizedPoint(event);
-            Utils.getInputController().receiveText(point.getX() + ";" + point.getY());
-        }
-        else {
-            // TODO might have a concurrency issue here.
-            Utils.getInputController().cancelCurrentFactory();
-        }
-    }
+	/**
+	 * This method receives the double click from the current Canvas.
+	 * 
+	 * @param event
+	 *            The mouve event.
+	 */
+	public void receiveDoubleClick(MouseEvent event) {
 
-    /**
-     * This method receives the double click from the current Canvas.
-     * 
-     * @param event
-     *            The mouve event.
-     */
-    public void receiveDoubleClick (MouseEvent event) {
+		Controller controller = br.org.archimedes.Utils.getController();
 
-        Controller controller = br.org.archimedes.Utils.getController();
+		try {
+			// achar o elemento que está abaixo do duplo clique
+			Point normalizedPoint = getNormalizedPoint(event);
+			Element element = controller.getElementUnder(normalizedPoint,
+					Element.class);
 
-        try {
-            // achar o elemento que está abaixo do duplo clique
-            Point normalizedPoint = getNormalizedPoint(event);
-            Element element = controller.getElementUnder(normalizedPoint, Element.class);
+			if (element != null) {
+				// dado esse elemento, achar a factory que lida com
+				// duplo clique nesse elemento
+				SelectorFactory factory = loader
+						.getDoubleClickFactoryFor(element);
 
-            if (element != null) {
-                // dado esse elemento, achar a factory que lida com
-                // duplo clique nesse elemento
-                SelectorFactory factory = loader.getDoubleClickFactoryFor(element);
+				if (factory != null) {
+					// ativar a factory
+					InputController inputController = br.org.archimedes.Utils
+							.getInputController();
+					inputController.receiveText(factory.getName());
+				}
 
-                if (factory != null) {
-                    // ativar a factory
-                    InputController inputController = br.org.archimedes.Utils.getInputController();
-                    inputController.receiveText(factory.getName());
-                }
+			}
 
-            }
-
-        }
-        catch (NoActiveDrawingException e) {
-            e.printStackTrace();
-        }
-    }
+		} catch (NoActiveDrawingException e) {
+			e.printStackTrace();
+		}
+	}
 
 }

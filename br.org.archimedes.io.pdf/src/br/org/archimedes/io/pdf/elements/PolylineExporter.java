@@ -28,23 +28,27 @@ import br.org.archimedes.polyline.Polyline;
  */
 public class PolylineExporter implements ElementExporter<Polyline> {
 
-    /* (non-Javadoc)
-     * @see br.org.archimedes.interfaces.ElementExporter#exportElement(br.org.archimedes.model.Element, java.lang.Object)
-     */
-    public void exportElement (Polyline polyLine, Object outputObject)
-            throws IOException {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.org.archimedes.interfaces.ElementExporter#exportElement(br.org.archimedes
+	 * .model.Element, java.lang.Object)
+	 */
+	public void exportElement(Polyline polyLine, Object outputObject)
+			throws IOException {
 
-        LineExporter auxiliaryExporter = new LineExporter();
-        List<Line> lines = polyLine.getLines();
-        for (Line line : lines) {
-            auxiliaryExporter.exportElement(line, outputObject);
-        }
-    }
-    
-    public void exportElement (Polyline element, Object outputObject, Rectangle boundingBox)
-            throws IOException, NotSupportedException {
-    
-        throw new NotSupportedException();
-    }
+		LineExporter auxiliaryExporter = new LineExporter();
+		List<Line> lines = polyLine.getLines();
+		for (Line line : lines) {
+			auxiliaryExporter.exportElement(line, outputObject);
+		}
+	}
+
+	public void exportElement(Polyline element, Object outputObject,
+			Rectangle boundingBox) throws IOException, NotSupportedException {
+
+		throw new NotSupportedException();
+	}
 
 }

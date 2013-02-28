@@ -23,7 +23,6 @@ import br.org.archimedes.model.Element;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Vector;
 
-
 public class CircleCircleIntersector implements Intersector {
 
 	public Collection<Point> getIntersections(Element element,
@@ -47,25 +46,27 @@ public class CircleCircleIntersector implements Intersector {
 			if ((distance <= radius + otherRadius)
 					&& (distance >= Math.abs(radius - otherRadius))) {
 
-				Vector direction = new Vector(circle1.getCenter(), circle2
-						.getCenter());
+				Vector direction = new Vector(circle1.getCenter(),
+						circle2.getCenter());
 				direction = Geometrics.normalize(direction);
 
 				double otherDistance = (radius * radius)
 						- (otherRadius * otherRadius) + (distance * distance);
 				otherDistance /= 2 * distance;
-				
-				double h = Math.sqrt(radius*radius - otherDistance*otherDistance);
-				Point inTheMiddle = circle1.getCenter().addVector(direction.multiply(otherDistance));
-				
+
+				double h = Math.sqrt(radius * radius - otherDistance
+						* otherDistance);
+				Point inTheMiddle = circle1.getCenter().addVector(
+						direction.multiply(otherDistance));
+
 				Vector orthogonalVector = direction.getOrthogonalVector();
 
 				Point pa = inTheMiddle.addVector(orthogonalVector.multiply(h));
 				Point pb = inTheMiddle.addVector(orthogonalVector.multiply(-h));
-				
-				if(!pa.equals(pb))
+
+				if (!pa.equals(pb))
 					intersections.add(pa);
-				
+
 				intersections.add(pb);
 			}
 		}

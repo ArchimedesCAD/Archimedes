@@ -28,51 +28,53 @@ public class ArcArcIntersector implements Intersector {
 
 	public Collection<Point> getIntersections(Element element,
 			Element otherElement) throws NullArgumentException {
-		
+
 		if (element == null || otherElement == null)
 			throw new NullArgumentException();
-		
+
 		Arc arc = (Arc) element;
 		Arc arc2 = (Arc) otherElement;
 		Collection<Point> arcIntersections = new ArrayList<Point>();
-		
-		if(Math.abs(arc.getRadius() - arc2.getRadius()) < Constant.EPSILON && arc.getCenter().equals(arc2.getCenter())){
-			if(!arc.contains(arc2) && !arc2.contains(arc)){
-				if(arc.getEndingPoint().equals(arc2.getInitialPoint()) || arc.getEndingPoint().equals(arc2.getEndingPoint())){
-					if(isExtremePointOrIsOutside(arc.getInitialPoint(), arc2)){
+
+		if (Math.abs(arc.getRadius() - arc2.getRadius()) < Constant.EPSILON
+				&& arc.getCenterPoint().equals(arc2.getCenterPoint())) {
+			if (!arc.contains(arc2) && !arc2.contains(arc)) {
+				if (arc.getEndingPoint().equals(arc2.getInitialPoint())
+						|| arc.getEndingPoint().equals(arc2.getEndingPoint())) {
+					if (isExtremePointOrIsOutside(arc.getInitialPoint(), arc2)) {
 						arcIntersections.add(arc.getEndingPoint());
-					}
-					else{
+					} else {
 						return arcIntersections;
 					}
 				}
-				
-				if(arc.getInitialPoint().equals(arc2.getInitialPoint()) || arc.getInitialPoint().equals(arc2.getEndingPoint())){
-					if(isExtremePointOrIsOutside(arc.getEndingPoint(), arc2)){
+
+				if (arc.getInitialPoint().equals(arc2.getInitialPoint())
+						|| arc.getInitialPoint().equals(arc2.getEndingPoint())) {
+					if (isExtremePointOrIsOutside(arc.getEndingPoint(), arc2)) {
 						arcIntersections.add(arc.getInitialPoint());
-					}
-					else{
+					} else {
 						return arcIntersections;
 					}
 				}
 			}
-			
+
 			return arcIntersections;
 		}
-		
+
 		ArcCircleIntersector intersector = new ArcCircleIntersector();
 		Circle circle = null;
-		
+
 		try {
-			circle = new Circle(arc.getCenter(), arc.getRadius());
+			circle = new Circle(arc.getCenterPoint(), arc.getRadius());
 		} catch (InvalidArgumentException e) {
 			e.printStackTrace();
 		}
-		
-		Collection<Point> intersections = intersector.getIntersections(circle, arc2);
-		
-		for(Point p : intersections){
-			if(arc.contains(p)){
+
+		Collection<Point> intersections = intersector.getIntersections(circle,
+				arc2);
+
+		for (Point p : intersections) {
+			if (arc.contains(p)) {
 				arcIntersections.add(p);
 			}
 		}

@@ -14,6 +14,12 @@
 
 package br.org.archimedes.infiniteLine;
 
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
 import br.org.archimedes.exceptions.InvalidArgumentException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.gui.opengl.Color;
@@ -24,12 +30,6 @@ import br.org.archimedes.model.LineStyle;
 import br.org.archimedes.model.Point;
 import br.org.archimedes.model.Rectangle;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
-
 /**
  * Belongs to package br.org.archimedes.infiniteLine.
  * 
@@ -37,179 +37,188 @@ import static org.junit.Assert.assertEquals;
  */
 public abstract class InfiniteLineTestCase {
 
-    protected InfiniteLine testedLine;
+	protected InfiniteLine testedLine;
 
+	@Before
+	public void setUp() throws Exception {
 
-    @Before
-    public void setUp () throws Exception {
+		testedLine = makeLine();
+	}
 
-        testedLine = makeLine();
-    }
+	/**
+	 * @return The line test case.
+	 */
+	protected abstract InfiniteLine makeLine() throws Exception;
 
-    /**
-     * @return The line test case.
-     */
-    protected abstract InfiniteLine makeLine () throws Exception;
+	/**
+	 * Test method for
+	 * {@link br.org.archimedes.infiniteline.InfiniteLine#clone()}.
+	 * 
+	 * @throws Exception
+	 *             fails the test with an error
+	 */
+	@Test
+	public void testClone() throws Exception {
 
-    /**
-     * Test method for {@link br.org.archimedes.infiniteline.InfiniteLine#clone()}.
-     * 
-     * @throws Exception
-     *             fails the test with an error
-     */
-    @Test
-    public void testClone () throws Exception {
+		Element clone = testedLine.clone();
+		Assert.assertEquals("The clone should be the equal to the original",
+				testedLine, clone);
+		Assert.assertFalse(
+				"The clone reference should not be the same as the original",
+				clone == testedLine);
 
-        Element clone = testedLine.clone();
-        Assert.assertEquals("The clone should be the equal to the original", testedLine, clone);
-        Assert.assertFalse("The clone reference should not be the same as the original",
-                clone == testedLine);
+		clone.move(-12, 23);
+		Assert.assertTrue("The clone should NOT be the equal to the original",
+				!testedLine.equals(clone));
+	}
 
-        clone.move( -12, 23);
-        Assert.assertTrue("The clone should NOT be the equal to the original", !testedLine
-                .equals(clone));
-    }
-    
-    @Test
-    public void cloningShouldKeepSameLayer () throws Exception {
+	@Test
+	public void cloningShouldKeepSameLayer() throws Exception {
 
-        Layer layer = new Layer(new Color(0,0,200), "layer", LineStyle.CONTINUOUS, 1);
-        testedLine.setLayer(layer);
-        Element clone = testedLine.clone();
-        
-        assertEquals(layer, clone.getLayer());
-    }
+		Layer layer = new Layer(new Color(0, 0, 200), "layer",
+				LineStyle.CONTINUOUS, 1);
+		testedLine.setLayer(layer);
+		Element clone = testedLine.clone();
 
-    /**
-     * Test method for
-     * {@link br.org.archimedes.infiniteline.InfiniteLine#isInside(br.org.archimedes.model.Rectangle)}
-     * .
-     */
-    @Test
-    public void testIsInside () {
+		assertEquals(layer, clone.getLayer());
+	}
 
-        Assert.assertFalse(testedLine.isInside(new Rectangle(0, 0, 0, 0)));
-        Assert.assertFalse(testedLine.isInside(new Rectangle(348934, 3232423, 48754374, 9849283)));
-    }
+	/**
+	 * Test method for
+	 * {@link br.org.archimedes.infiniteline.InfiniteLine#isInside(br.org.archimedes.model.Rectangle)}
+	 * .
+	 */
+	@Test
+	public void testIsInside() {
 
-    /**
-     * Test method for {@link br.org.archimedes.infiniteline.InfiniteLine#equals(java.lang.Object)}.
-     * 
-     * @throws Exception
-     *             Thrown in case of error
-     */
-    @Test
-    public void testEqualsAndHashCode () throws Exception {
+		Assert.assertFalse(testedLine.isInside(new Rectangle(0, 0, 0, 0)));
+		Assert.assertFalse(testedLine.isInside(new Rectangle(348934, 3232423,
+				48754374, 9849283)));
+	}
 
-        Assert.assertTrue(testedLine.equals(testedLine));
-        Assert.assertEquals(testedLine.hashCode(), testedLine.hashCode());
+	/**
+	 * Test method for
+	 * {@link br.org.archimedes.infiniteline.InfiniteLine#equals(java.lang.Object)}
+	 * .
+	 * 
+	 * @throws Exception
+	 *             Thrown in case of error
+	 */
+	@Test
+	public void testEqualsAndHashCode() throws Exception {
 
-        Assert.assertFalse(testedLine.equals(null));
-        Assert.assertFalse(testedLine.equals(new Object()));
+		Assert.assertTrue(testedLine.equals(testedLine));
+		Assert.assertEquals(testedLine.hashCode(), testedLine.hashCode());
 
-        Assert.assertFalse(testedLine.equals(new InfiniteLine(39849384, 98239823, 24938439,
-                283928323)));
+		Assert.assertFalse(testedLine.equals(null));
+		Assert.assertFalse(testedLine.equals(new Object()));
 
-        Assert.assertTrue(testedLine.equals(testedLine.clone()));
-        Assert.assertEquals(testedLine.hashCode(), testedLine.clone().hashCode());
-    }
+		Assert.assertFalse(testedLine.equals(new InfiniteLine(39849384,
+				98239823, 24938439, 283928323)));
 
-    /**
-     * Test method for {@link br.org.archimedes.infiniteline.InfiniteLine#getBoundaryRectangle()}.
-     */
-    @Test
-    public void testGetBoundaryRectangle () {
+		Assert.assertTrue(testedLine.equals(testedLine.clone()));
+		Assert.assertEquals(testedLine.hashCode(), testedLine.clone()
+				.hashCode());
+	}
 
-        Assert.assertNull(testedLine.getBoundaryRectangle());
-    }
-    
-    // TODO Test creation boundary rectangle is correct
+	/**
+	 * Test method for
+	 * {@link br.org.archimedes.infiniteline.InfiniteLine#getBoundaryRectangle()}
+	 * .
+	 */
+	@Test
+	public void testGetBoundaryRectangle() {
 
-    // TODO Test the reference point for infinite lines
+		Assert.assertNull(testedLine.getBoundaryRectangle());
+	}
 
-    // TODO Test the project of a point for infinite lines
+	// TODO Test creation boundary rectangle is correct
 
-    // TODO Test an infinite line contains only points in itself
+	// TODO Test the reference point for infinite lines
 
-    // TODO Test the points of an infinite line
+	// TODO Test the project of a point for infinite lines
 
-    // TODO Test constructor of infinite line with 4 coordinates
+	// TODO Test an infinite line contains only points in itself
 
-    @Test(expected = InvalidArgumentException.class)
-    public void infiniteLineCantBeCreatedWith4CoordinatesOfSamePoint () throws Exception {
+	// TODO Test the points of an infinite line
 
-        new InfiniteLine(0, 0, 0, 0);
-    }
+	// TODO Test constructor of infinite line with 4 coordinates
 
-    // TODO Test constructor of infinite line with 2 points
+	@Test(expected = InvalidArgumentException.class)
+	public void infiniteLineCantBeCreatedWith4CoordinatesOfSamePoint()
+			throws Exception {
 
-    @Test(expected = NullArgumentException.class)
-    public void infiniteLineCantBeCreatedWithBothPointNull () throws Exception {
+		new InfiniteLine(0, 0, 0, 0);
+	}
 
-        new InfiniteLine(null, null);
-    }
+	// TODO Test constructor of infinite line with 2 points
 
-    @Test(expected = NullArgumentException.class)
-    public void infiniteLineCantBeCreatedWithFirstPointNull () throws Exception {
+	@Test(expected = NullArgumentException.class)
+	public void infiniteLineCantBeCreatedWithBothPointNull() throws Exception {
 
-        new InfiniteLine(null, new Point(1, 1));
-    }
+		new InfiniteLine(null, null);
+	}
 
-    @Test(expected = NullArgumentException.class)
-    public void infiniteLineCantBeCreatedWithSecondPointNull () throws Exception {
+	@Test(expected = NullArgumentException.class)
+	public void infiniteLineCantBeCreatedWithFirstPointNull() throws Exception {
 
-        new InfiniteLine(new Point(0, 0), null);
-    }
+		new InfiniteLine(null, new Point(1, 1));
+	}
 
-    @Test(expected = InvalidArgumentException.class)
-    public void infiniteLineCantBeCreatedWith2EqualPoints () throws Exception {
+	@Test(expected = NullArgumentException.class)
+	public void infiniteLineCantBeCreatedWithSecondPointNull() throws Exception {
 
-        new InfiniteLine(new Point(0, 0), new Point(0, 0));
-    }
+		new InfiniteLine(new Point(0, 0), null);
+	}
 
-    // TODO Test infinite line can calculate its angle
+	@Test(expected = InvalidArgumentException.class)
+	public void infiniteLineCantBeCreatedWith2EqualPoints() throws Exception {
 
-    // TODO Test infinite line know what points cross a rectangle
+		new InfiniteLine(new Point(0, 0), new Point(0, 0));
+	}
 
-    // TODO Test infinite line can offset
+	// TODO Test infinite line can calculate its angle
 
-    // TODO Test infinite line knows what is left of it
+	// TODO Test infinite line know what points cross a rectangle
 
-    // TODO Test infinite line can move itself
+	// TODO Test infinite line can offset
 
-    // TODO Test infinite line can rotate
+	// TODO Test infinite line knows what is left of it
 
-    // TODO Test infinite line can scale
+	// TODO Test infinite line can move itself
 
-    /**
-     * Test method for {@link br.org.archimedes.model.Element#isClosed()}.
-     */
-    @Test
-    public void testIsClosed () {
+	// TODO Test infinite line can rotate
 
-        Assert.assertFalse(testedLine.isClosed());
-    }
+	// TODO Test infinite line can scale
 
-    // TODO Test infinite line cant mirror itself
+	/**
+	 * Test method for {@link br.org.archimedes.model.Element#isClosed()}.
+	 */
+	@Test
+	public void testIsClosed() {
 
-    /**
-     * Safely rotates an infiniteLine around a reference point, by an angle. Fails if the operation
-     * throws any exception
-     * 
-     * @param element
-     *            The element to be rotated
-     * @param reference
-     *            The reference point
-     * @param angle
-     *            The angle
-     */
-    protected void safeRotate (Element element, Point reference, double angle) {
+		Assert.assertFalse(testedLine.isClosed());
+	}
 
-        try {
-            element.rotate(reference, angle);
-        }
-        catch (NullArgumentException e) {
-            Assert.fail("Should not throw NullArgumentException");
-        }
-    }
+	// TODO Test infinite line cant mirror itself
+
+	/**
+	 * Safely rotates an infiniteLine around a reference point, by an angle.
+	 * Fails if the operation throws any exception
+	 * 
+	 * @param element
+	 *            The element to be rotated
+	 * @param reference
+	 *            The reference point
+	 * @param angle
+	 *            The angle
+	 */
+	protected void safeRotate(Element element, Point reference, double angle) {
+
+		try {
+			element.rotate(reference, angle);
+		} catch (NullArgumentException e) {
+			Assert.fail("Should not throw NullArgumentException");
+		}
+	}
 }

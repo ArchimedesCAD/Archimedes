@@ -16,25 +16,26 @@ import br.org.archimedes.model.Drawing;
 import br.org.archimedes.model.Element;
 
 public class DXFImporterTests {
-	
+
 	private FileInputStream file;
 	private DXFImporter importer;
 
 	@Before
 	public void setUp() throws IOException {
-		//TODO colocar um arquivo dxf que contenha apenas um circulo (esse tem uma elipse tambem).
+		// TODO colocar um arquivo dxf que contenha apenas um circulo (esse tem
+		// uma elipse tambem).
 		file = new FileInputStream(new File("./files/circleTest.dxf"));
 		importer = new DXFImporter();
 	}
-	
+
 	@Test
 	public void shouldAddParsedCircleToAnArchimedesLayer() throws Exception {
 		Drawing drawing = importer.importDrawing(file);
 		Collection<Element> elements = drawing.getCurrentLayer().getElements();
-		
+
 		assertEquals(1, drawing.getLayerMap().values().size());
 		assertEquals(1, drawing.getCurrentLayer().getElements().size());
-		
+
 		for (Element element : elements) {
 			assertEquals(Circle.class, element.getClass());
 		}

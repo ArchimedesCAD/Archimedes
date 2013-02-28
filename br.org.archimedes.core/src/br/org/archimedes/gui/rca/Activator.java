@@ -27,104 +27,105 @@ import br.org.archimedes.rcp.AbstractFileLocatorActivator;
  */
 public class Activator extends AbstractFileLocatorActivator {
 
-    // The plug-in ID
-    public static final String PLUGIN_ID = "br.org.archimedes.core"; //$NON-NLS-1$
+	// The plug-in ID
+	public static final String PLUGIN_ID = "br.org.archimedes.core"; //$NON-NLS-1$
 
-    // The shared instance
-    private static Activator plugin;
+	// The shared instance
+	private static Activator plugin;
 
-    private Workspace workspace;
+	private Workspace workspace;
 
-    private InputController inputController;
+	private InputController inputController;
 
-    private Controller controller;
+	private Controller controller;
 
-    private OpenGLWrapper openGL;
+	private OpenGLWrapper openGL;
 
+	/**
+	 * The constructor
+	 */
+	public Activator() {
 
-    /**
-     * The constructor
-     */
-    public Activator () {
+		plugin = this;
+	}
 
-        plugin = this;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext
+	 * )
+	 */
+	public void start(BundleContext context) throws Exception {
 
-    /*
-     * (non-Javadoc)
-     * @see
-     * org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext
-     * )
-     */
-    public void start (BundleContext context) throws Exception {
+		super.start(context);
+	}
 
-        super.start(context);
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext
+	 * )
+	 */
+	public void stop(BundleContext context) throws Exception {
 
-    /*
-     * (non-Javadoc)
-     * @see
-     * org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext
-     * )
-     */
-    public void stop (BundleContext context) throws Exception {
+		plugin = null;
+		super.stop(context);
+	}
 
-        plugin = null;
-        super.stop(context);
-    }
+	/**
+	 * Returns the shared instance
+	 * 
+	 * @return the shared instance
+	 */
+	public static Activator getDefault() {
 
-    /**
-     * Returns the shared instance
-     * 
-     * @return the shared instance
-     */
-    public static Activator getDefault () {
+		return plugin;
+	}
 
-        return plugin;
-    }
-    
-    /**
-     * Returns an image descriptor for the image file at the given plug-in
-     * relative path
-     * 
-     * @param path
-     *            the path
-     * @return the image descriptor
-     */
-    public static ImageDescriptor getImageDescriptor (String path) {
+	/**
+	 * Returns an image descriptor for the image file at the given plug-in
+	 * relative path
+	 * 
+	 * @param path
+	 *            the path
+	 * @return the image descriptor
+	 */
+	public static ImageDescriptor getImageDescriptor(String path) {
 
-        return imageDescriptorFromPlugin(PLUGIN_ID, path);
-    }
+		return imageDescriptorFromPlugin(PLUGIN_ID, path);
+	}
 
-    public Workspace getWorkspace () {
+	public Workspace getWorkspace() {
 
-        if (workspace == null) {
-            workspace = new Workspace();
-        }
-        return workspace;
-    }
+		if (workspace == null) {
+			workspace = new Workspace();
+		}
+		return workspace;
+	}
 
-    public InputController getInputController () {
+	public InputController getInputController() {
 
-        if (inputController == null) {
-            inputController = new InputController();
-        }
-        return inputController;
-    }
+		if (inputController == null) {
+			inputController = new InputController();
+		}
+		return inputController;
+	}
 
-    public Controller getController () {
+	public Controller getController() {
 
-        if (controller == null) {
-            controller = new Controller();
-        }
-        return controller;
-    }
+		if (controller == null) {
+			controller = new Controller();
+		}
+		return controller;
+	}
 
-    public OpenGLWrapper getOpenGLWrapper () {
+	public OpenGLWrapper getOpenGLWrapper() {
 
-        if (openGL == null) {
-            openGL = new OpenGLWrapper();
-        }
-        return openGL;
-    }
+		if (openGL == null) {
+			openGL = new OpenGLWrapper();
+		}
+		return openGL;
+	}
 }

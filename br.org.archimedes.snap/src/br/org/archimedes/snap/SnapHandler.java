@@ -13,7 +13,7 @@
 
 package br.org.archimedes.snap;
 
-import br.org.archimedes.Utils;
+import java.util.Map;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -24,7 +24,7 @@ import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.ui.commands.IElementUpdater;
 import org.eclipse.ui.menus.UIElement;
 
-import java.util.Map;
+import br.org.archimedes.Utils;
 
 /**
  * Belongs to package br.org.archimedes.snap.
@@ -33,30 +33,33 @@ import java.util.Map;
  */
 public class SnapHandler extends AbstractHandler implements IElementUpdater {
 
-    /**
-     * @see org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.ExecutionEvent)
-     */
-    public Object execute (ExecutionEvent event) throws ExecutionException {
+	/**
+	 * @see org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.ExecutionEvent)
+	 */
+	public Object execute(ExecutionEvent event) throws ExecutionException {
 
-        ICommandService service = (ICommandService) PlatformUI.getWorkbench().getService(
-                ICommandService.class);
-        org.eclipse.core.commands.Command command = service.getCommand(Activator.SNAP_COMMAND_ID);
-        State state = command.getState(Activator.SNAP_STATE);
-        Boolean newValue = !(Boolean) state.getValue();
-        state.setValue(newValue);
+		ICommandService service = (ICommandService) PlatformUI.getWorkbench()
+				.getService(ICommandService.class);
+		org.eclipse.core.commands.Command command = service
+				.getCommand(Activator.SNAP_COMMAND_ID);
+		State state = command.getState(Activator.SNAP_STATE);
+		Boolean newValue = !(Boolean) state.getValue();
+		state.setValue(newValue);
 
-        service.refreshElements(Activator.SNAP_COMMAND_ID, null);
-        return newValue;
-    }
+		service.refreshElements(Activator.SNAP_COMMAND_ID, null);
+		return newValue;
+	}
 
-    /*
-     * (non-Javadoc)
-     * @see org.eclipse.ui.commands.IElementUpdater#updateElement(org.eclipse.ui.menus.UIElement,
-     * java.util.Map)
-     */
-    @SuppressWarnings("unchecked")
-    public void updateElement (UIElement element, Map parameters) {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.ui.commands.IElementUpdater#updateElement(org.eclipse.ui.
+	 * menus.UIElement, java.util.Map)
+	 */
+	@SuppressWarnings("unchecked")
+	public void updateElement(UIElement element, Map parameters) {
 
-        element.setChecked(Utils.getWorkspace().isSnapOn());
-    }
+		element.setChecked(Utils.getWorkspace().isSnapOn());
+	}
 }

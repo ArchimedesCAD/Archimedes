@@ -49,7 +49,7 @@ public class CircleLineIntersectorTest extends Tester {
 		} catch (NullArgumentException e) {
 			// Passed
 		}
-		
+
 		try {
 			intersector.getIntersections(null, testLine);
 			fail("The element is null and getIntersections should have thrown a NullArgumentException");
@@ -94,8 +94,8 @@ public class CircleLineIntersectorTest extends Tester {
 		Line testLine = new Line(new Point(5.0, -5.0), new Point(5.0, 5.0));
 		Collection<Point> expected = new ArrayList<Point>();
 		expected.add(new Point(5.0, 0.0));
-		assertCollectionTheSame(expected, intersector.getIntersections(
-				testCircle, testLine));
+		assertCollectionTheSame(expected,
+				intersector.getIntersections(testCircle, testLine));
 	}
 
 	@Test
@@ -105,36 +105,36 @@ public class CircleLineIntersectorTest extends Tester {
 		Collection<Point> expected = new ArrayList<Point>();
 		expected.add(new Point(-5.0, 0.0));
 		expected.add(new Point(5.0, 0.0));
-		assertCollectionTheSame(expected, intersector.getIntersections(
-				testCircle, testLine));
+		assertCollectionTheSame(expected,
+				intersector.getIntersections(testCircle, testLine));
 	}
-	
+
 	@Test
 	public void testPartiallyInside() throws NullArgumentException,
 			InvalidArgumentException {
 		Line testLine = new Line(new Point(0.0, 0.0), new Point(10.0, 0.0));
 		Collection<Point> expected = new ArrayList<Point>();
 		expected.add(new Point(5.0, 0.0));
-		assertCollectionTheSame(expected, intersector.getIntersections(
-				testCircle, testLine));
+		assertCollectionTheSame(expected,
+				intersector.getIntersections(testCircle, testLine));
 	}
-	
+
 	@Test
 	public void testOnePointAtCircle() throws NullArgumentException,
 			InvalidArgumentException {
 		Line testLine = new Line(new Point(5.0, 0.0), new Point(10.0, 0.0));
 		Collection<Point> expected = new ArrayList<Point>();
 		expected.add(new Point(5.0, 0.0));
-		assertCollectionTheSame(expected, intersector.getIntersections(
-				testCircle, testLine));
+		assertCollectionTheSame(expected,
+				intersector.getIntersections(testCircle, testLine));
 	}
-	
+
 	@Test
 	public void testInsideCircle() throws NullArgumentException,
 			InvalidArgumentException {
 		Line testLine = new Line(new Point(0.0, 0.0), new Point(2.0, 0.0));
 		Collection<Point> expected = new ArrayList<Point>();
-		assertCollectionTheSame(expected, intersector.getIntersections(
-				testCircle, testLine));
+		assertCollectionTheSame(expected,
+				intersector.getIntersections(testCircle, testLine));
 	}
 }

@@ -16,45 +16,44 @@ import org.eclipse.osgi.util.NLS;
 
 /**
  * Belongs to package br.org.archimedes.ellipse.
- *
+ * 
  * @author ttogores
- *
+ * 
  */
 public class Messages extends NLS {
 
-    private static final String BUNDLE_NAME = "br.org.archimedes.ellipse.messages"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = "br.org.archimedes.ellipse.messages"; //$NON-NLS-1$
 
 	public static String EllipseFactory_SelectFocus1;
 
 	public static String EllipseFactory_SelectFocus2;
-	
-    public static String Canceled;
 
-    public static String EllipseFactory_SelectWidthPoint;
+	public static String Canceled;
 
-    public static String EllipseFactory_SelectInitialPoint;
+	public static String EllipseFactory_SelectWidthPoint;
 
-    public static String EllipseFactory_SelectRadius;
-    
-    public static String EllipseFactory_SelectHeightPoint;
-    
-    public static String Created;
+	public static String EllipseFactory_SelectInitialPoint;
 
-    public static String NotCreatedBecauseInvalidArgument;
-    
-    public static String NotCreatedBecauseNullArgument;
+	public static String EllipseFactory_SelectRadius;
 
-    public static String NotCreated;
-    
-    public static String SelectCenter;
+	public static String EllipseFactory_SelectHeightPoint;
 
-    static {
-        // initialize resource bundle
-        NLS.initializeMessages(BUNDLE_NAME, Messages.class);
-    }
+	public static String Created;
 
+	public static String NotCreatedBecauseInvalidArgument;
 
-    private Messages () {
+	public static String NotCreatedBecauseNullArgument;
 
-    }
+	public static String NotCreated;
+
+	public static String SelectCenter;
+
+	static {
+		// initialize resource bundle
+		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
+	}
+
+	private Messages() {
+
+	}
 }

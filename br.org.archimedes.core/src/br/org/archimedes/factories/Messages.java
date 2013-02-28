@@ -21,56 +21,55 @@ import org.eclipse.osgi.util.NLS;
  */
 public class Messages extends NLS {
 
-    private static final String BUNDLE_NAME = "br.org.archimedes.i18n.messages"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = "br.org.archimedes.i18n.messages"; //$NON-NLS-1$
 
-    public static String TwoPointFactory_canceled;
+	public static String TwoPointFactory_canceled;
 
-    public static String TwoPointFactory_firstPoint;
+	public static String TwoPointFactory_firstPoint;
 
-    public static String TwoPointFactory_nextPoint;
+	public static String TwoPointFactory_nextPoint;
 
-    public static String SelectionPointVector_Cancel;
+	public static String SelectionPointVector_Cancel;
 
-    public static String ElementFactory_InvalidConstructor;
+	public static String ElementFactory_InvalidConstructor;
 
-    public static String ElementFactory_MissingPlugins;
+	public static String ElementFactory_MissingPlugins;
 
-    public static String ElementFactory_NoConstructor;
+	public static String ElementFactory_NoConstructor;
 
-    public static String ElementFactory_NonBuildableObject;
+	public static String ElementFactory_NonBuildableObject;
 
-    public static String ElementFactory_WrongArgument;
+	public static String ElementFactory_WrongArgument;
 
-    public static String ElementFactory_WrongNumberArguments;
+	public static String ElementFactory_WrongNumberArguments;
 
-    public static String ExpectedPoint;
+	public static String ExpectedPoint;
 
-    public static String SelectionPointVector_Iteration1;
+	public static String SelectionPointVector_Iteration1;
 
-    public static String SelectionPointVector_Iteration2;
+	public static String SelectionPointVector_Iteration2;
 
-    public static String SelectionPointVector_Iteration3;
+	public static String SelectionPointVector_Iteration3;
 
-    public static String QuickMoveFactory_ElementMoved;
+	public static String QuickMoveFactory_ElementMoved;
 
-    public static String ReferenceUndone;
+	public static String ReferenceUndone;
 
-    public static String SelectionExpected;
+	public static String SelectionExpected;
 
-    public static String SelectionUndone;
+	public static String SelectionUndone;
 
-    public static String SelectorFactory_Select;
+	public static String SelectorFactory_Select;
 
-    public static String TargetExpected;
+	public static String TargetExpected;
 
-    public static String undoInitial;
-    static {
-        // initialize resource bundle
-        NLS.initializeMessages(BUNDLE_NAME, Messages.class);
-    }
+	public static String undoInitial;
+	static {
+		// initialize resource bundle
+		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
+	}
 
+	private Messages() {
 
-    private Messages () {
-
-    }
+	}
 }

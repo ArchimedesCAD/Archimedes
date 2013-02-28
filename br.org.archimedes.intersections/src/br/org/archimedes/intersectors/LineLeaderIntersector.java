@@ -28,38 +28,40 @@ import br.org.archimedes.model.Point;
  */
 public class LineLeaderIntersector implements Intersector {
 
-    /*
-     * (non-Javadoc)
-     * @see
-     * br.org.archimedes.intersections.interfaces.Intersector#getIntersections
-     * (br.org.archimedes.model.Element, br.org.archimedes.model.Element)
-     */
-    public Collection<Point> getIntersections (Element element,
-            Element otherElement) throws NullArgumentException {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.org.archimedes.intersections.interfaces.Intersector#getIntersections
+	 * (br.org.archimedes.model.Element, br.org.archimedes.model.Element)
+	 */
+	public Collection<Point> getIntersections(Element element,
+			Element otherElement) throws NullArgumentException {
 
-        Leader leader;
-        Line line;
+		Leader leader;
+		Line line;
 
-        if (element == null || otherElement == null)
-            throw new NullArgumentException();
+		if (element == null || otherElement == null)
+			throw new NullArgumentException();
 
-        if (element.getClass() == Line.class) {
-            leader = (Leader) otherElement;
-            line = (Line) element;
-        }
-        else {
-            leader = (Leader) element;
-            line = (Line) otherElement;
-        }
+		if (element.getClass() == Line.class) {
+			leader = (Leader) otherElement;
+			line = (Line) element;
+		} else {
+			leader = (Leader) element;
+			line = (Line) otherElement;
+		}
 
-        if (element == null || otherElement == null)
-            throw new NullArgumentException();
+		if (element == null || otherElement == null)
+			throw new NullArgumentException();
 
-        LineLineIntersector lineLineIntersector = new LineLineIntersector();
-        Collection<Point> intersections = lineLineIntersector.getIntersections(line, leader.getPointer());
-        intersections.addAll(lineLineIntersector.getIntersections(line, leader.getTextBase()));
-        
-        return intersections;
-    }
+		LineLineIntersector lineLineIntersector = new LineLineIntersector();
+		Collection<Point> intersections = lineLineIntersector.getIntersections(
+				line, leader.getPointer());
+		intersections.addAll(lineLineIntersector.getIntersections(line,
+				leader.getTextBase()));
+
+		return intersections;
+	}
 
 }

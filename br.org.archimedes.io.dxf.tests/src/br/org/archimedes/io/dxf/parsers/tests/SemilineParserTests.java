@@ -16,14 +16,12 @@ import org.kabeja.parser.ParseException;
 import org.kabeja.parser.Parser;
 import org.kabeja.parser.ParserBuilder;
 
-import br.org.archimedes.circle.Circle;
-import br.org.archimedes.io.dxf.parsers.CircleParser;
 import br.org.archimedes.io.dxf.parsers.SemilineParser;
 import br.org.archimedes.model.Element;
 import br.org.archimedes.semiline.Semiline;
 
 public class SemilineParserTests {
-	
+
 	private SemilineParser semilineParser;
 	private FileInputStream file;
 
@@ -32,11 +30,11 @@ public class SemilineParserTests {
 		semilineParser = new SemilineParser();
 		file = new FileInputStream(new File("./files/semilineTest.dxf"));
 	}
-	
+
 	@Test
 	public void shouldParseCircle() throws Exception {
 		DXFLayer layer = createDXFLayer();
-		
+
 		Collection<Element> parse = semilineParser.parse(layer);
 		assertEquals(1, parse.size());
 		Element[] elements = parse.toArray(new Element[0]);
@@ -46,11 +44,9 @@ public class SemilineParserTests {
 	private DXFLayer createDXFLayer() throws ParseException {
 		Parser kabejaParser = ParserBuilder.createDefaultParser();
 		kabejaParser.parse(file, DXFParser.DEFAULT_ENCODING);
-		
+
 		DXFLayer layer = kabejaParser.getDocument().getDXFLayer("0");
 		return layer;
 	}
-	
-	
 
 }

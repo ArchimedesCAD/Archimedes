@@ -21,27 +21,27 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 
 /**
- *
+ * 
  * @author <a href="mailto:david@steadystate.co.uk">David Schweinsberg</a>
  * @version $Id: SingleSubst.java,v 1.3 2004/08/18 07:15:22 vhardy Exp $
  */
 public abstract class SingleSubst extends LookupSubtable {
 
-    public abstract int getFormat();
+	public abstract int getFormat();
 
-    public abstract int substitute(int glyphId);
-    
-    public static SingleSubst read(RandomAccessFile raf, int offset) throws IOException {
-        SingleSubst s = null;
-        raf.seek(offset);
-        int format = raf.readUnsignedShort();
-        if (format == 1) {
-            s = new SingleSubstFormat1(raf, offset);
-        } else if (format == 2) {
-            s = new SingleSubstFormat2(raf, offset);
-        }
-        return s;
-    }
+	public abstract int substitute(int glyphId);
+
+	public static SingleSubst read(RandomAccessFile raf, int offset)
+			throws IOException {
+		SingleSubst s = null;
+		raf.seek(offset);
+		int format = raf.readUnsignedShort();
+		if (format == 1) {
+			s = new SingleSubstFormat1(raf, offset);
+		} else if (format == 2) {
+			s = new SingleSubstFormat2(raf, offset);
+		}
+		return s;
+	}
 
 }
-

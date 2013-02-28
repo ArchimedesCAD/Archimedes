@@ -21,20 +21,21 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 
 /**
- *
+ * 
  * @author <a href="mailto:david@steadystate.co.uk">David Schweinsberg</a>
  * @version $Id: LigatureSubst.java,v 1.3 2004/08/18 07:15:21 vhardy Exp $
  */
 public abstract class LigatureSubst extends LookupSubtable {
 
-    public static LigatureSubst read(RandomAccessFile raf, int offset) throws IOException {
-        LigatureSubst ls = null;
-        raf.seek(offset);
-        int format = raf.readUnsignedShort();
-        if (format == 1) {
-            ls = new LigatureSubstFormat1(raf, offset);
-        }
-        return ls;
-    }
+	public static LigatureSubst read(RandomAccessFile raf, int offset)
+			throws IOException {
+		LigatureSubst ls = null;
+		raf.seek(offset);
+		int format = raf.readUnsignedShort();
+		if (format == 1) {
+			ls = new LigatureSubstFormat1(raf, offset);
+		}
+		return ls;
+	}
 
 }

@@ -28,46 +28,49 @@ import br.org.archimedes.rcp.ExtensionTagHandler;
  */
 public class ExtendManagerEPLoader implements ExtensionTagHandler {
 
-    private static final String CLASS_ATTRIBUTE_NAME = "class"; //$NON-NLS-1$
+	private static final String CLASS_ATTRIBUTE_NAME = "class"; //$NON-NLS-1$
 
-    private static final String EXTEND_MANAGER_EXTENSION_POINT_ID = "br.org.archimedes.core.extends"; //$NON-NLS-1$
+	private static final String EXTEND_MANAGER_EXTENSION_POINT_ID = "br.org.archimedes.core.extends"; //$NON-NLS-1$
 
-    private static final ExtendManager NULL_EXTEND_MANAGER = new NullExtendManager();
+	private static final ExtendManager NULL_EXTEND_MANAGER = new NullExtendManager();
 
-    private static ExtendManager manager = NULL_EXTEND_MANAGER;
+	private static ExtendManager manager = NULL_EXTEND_MANAGER;
 
+	/**
+	 * Default constructor.
+	 */
+	public ExtendManagerEPLoader() {
 
-    /**
-     * Default constructor.
-     */
-    public ExtendManagerEPLoader () {
+		if (manager == NULL_EXTEND_MANAGER) {
+			ExtensionLoader loader = new ExtensionLoader(
+					EXTEND_MANAGER_EXTENSION_POINT_ID);
+			loader.loadExtension(this);
+		}
+	}
 
-        if (manager == NULL_EXTEND_MANAGER) {
-            ExtensionLoader loader = new ExtensionLoader(
-                    EXTEND_MANAGER_EXTENSION_POINT_ID);
-            loader.loadExtension(this);
-        }
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.org.archimedes.rcp.ExtensionTagHandler#handleTag(org.eclipse.core.
+	 * runtime.IConfigurationElement)
+	 */
+	public void handleTag(IConfigurationElement tag) throws CoreException {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see br.org.archimedes.rcp.ExtensionTagHandler#handleTag(org.eclipse.core.runtime.IConfigurationElement)
-     */
-    public void handleTag (IConfigurationElement tag) throws CoreException {
+		ExtendManager loadedManager = (ExtendManager) tag
+				.createExecutableExtension(CLASS_ATTRIBUTE_NAME);
+		if (loadedManager != NULL_EXTEND_MANAGER
+				&& manager == NULL_EXTEND_MANAGER) {
+			manager = loadedManager;
+		}
+	}
 
-        ExtendManager loadedManager = (ExtendManager) tag
-                .createExecutableExtension(CLASS_ATTRIBUTE_NAME);
-        if (loadedManager != NULL_EXTEND_MANAGER && manager == NULL_EXTEND_MANAGER) {
-            manager = loadedManager;
-        }
-    }
+	/**
+	 * @return The loaded extend manager or an instance of the
+	 *         NullExtendManager.
+	 */
+	public ExtendManager getExtendManager() {
 
-    /**
-     * @return The loaded extend manager or an instance of the NullExtendManager.
-     */
-    public ExtendManager getExtendManager () {
-
-        return manager;
-    }
+		return manager;
+	}
 }

@@ -12,90 +12,107 @@
  */
 package br.org.archimedes.stub;
 
+import java.util.Collections;
+import java.util.List;
+
 import br.org.archimedes.exceptions.InvalidParameterException;
 import br.org.archimedes.factories.CommandFactory;
 import br.org.archimedes.interfaces.Command;
 import br.org.archimedes.interfaces.Parser;
 
-import java.util.Collections;
-import java.util.List;
-
-
 /**
  * Belongs to package br.org.archimedes.factories.
- *
+ * 
  * @author "Hugo Corbucci"
- *
+ * 
  */
 public class StubCommandFactory implements CommandFactory {
 
-    /* (non-Javadoc)
-     * @see br.org.archimedes.factories.CommandFactory#begin()
-     */
-    public String begin () {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.factories.CommandFactory#begin()
+	 */
+	public String begin() {
 
-        return "begin";
-    }
+		return "begin";
+	}
 
-    /* (non-Javadoc)
-     * @see br.org.archimedes.factories.CommandFactory#cancel()
-     */
-    public String cancel () {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.factories.CommandFactory#cancel()
+	 */
+	public String cancel() {
 
-        return "cancel";
-    }
+		return "cancel";
+	}
 
-    /* (non-Javadoc)
-     * @see br.org.archimedes.factories.CommandFactory#drawVisualHelper()
-     */
-    public void drawVisualHelper () {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.factories.CommandFactory#drawVisualHelper()
+	 */
+	public void drawVisualHelper() {
 
-    }
+	}
 
-    /* (non-Javadoc)
-     * @see br.org.archimedes.factories.CommandFactory#getCommands()
-     */
-    public List<Command> getCommands () {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.factories.CommandFactory#getCommands()
+	 */
+	public List<Command> getCommands() {
 
-        return Collections.emptyList();
-    }
+		return Collections.emptyList();
+	}
 
-    /* (non-Javadoc)
-     * @see br.org.archimedes.factories.CommandFactory#getName()
-     */
-    public String getName () {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.factories.CommandFactory#getName()
+	 */
+	public String getName() {
 
-        return "stub";
-    }
+		return "stub";
+	}
 
-    /* (non-Javadoc)
-     * @see br.org.archimedes.factories.CommandFactory#getNextParser()
-     */
-    public Parser getNextParser () {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.factories.CommandFactory#getNextParser()
+	 */
+	public Parser getNextParser() {
 
-        return null;
-    }
+		return null;
+	}
 
-    /* (non-Javadoc)
-     * @see br.org.archimedes.factories.CommandFactory#isDone()
-     */
-    public boolean isDone () {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.factories.CommandFactory#isDone()
+	 */
+	public boolean isDone() {
 
-        return true;
-    }
+		return true;
+	}
 
-    /* (non-Javadoc)
-     * @see br.org.archimedes.factories.CommandFactory#next(java.lang.Object)
-     */
-    public String next (Object parameter) throws InvalidParameterException {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.factories.CommandFactory#next(java.lang.Object)
+	 */
+	public String next(Object parameter) throws InvalidParameterException {
 
-        return null;
-    }
+		return null;
+	}
 
-    /* (non-Javadoc)
-     * @see br.org.archimedes.factories.CommandFactory#isTransformFactory()
-     */
-    public boolean isTransformFactory () {
-        return false;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.factories.CommandFactory#isTransformFactory()
+	 */
+	public boolean isTransformFactory() {
+		return false;
+	}
 }

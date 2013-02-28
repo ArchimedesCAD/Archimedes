@@ -22,33 +22,33 @@ import org.eclipse.ui.PlatformUI;
  */
 public class Archimedes implements IApplication {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.equinox.app.IApplication#start(org.eclipse.equinox.app.IApplicationContext)
-     */
-    public Object start (IApplicationContext context) throws Exception {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.equinox.app.IApplication#start(org.eclipse.equinox.app.
+	 * IApplicationContext)
+	 */
+	public Object start(IApplicationContext context) throws Exception {
 
-        Display display = PlatformUI.createDisplay();
-        try {
-            int returnCode = PlatformUI.createAndRunWorkbench(display,
-                    new ApplicationWorkbenchAdvisor());
-            if (returnCode == PlatformUI.RETURN_RESTART) {
-                return IApplication.EXIT_RESTART;
-            }
-            return IApplication.EXIT_OK;
-        }
-        finally {
-            display.dispose();
-        }
-    }
+		Display display = PlatformUI.createDisplay();
+		try {
+			int returnCode = PlatformUI.createAndRunWorkbench(display,
+					new ApplicationWorkbenchAdvisor());
+			if (returnCode == PlatformUI.RETURN_RESTART) {
+				return IApplication.EXIT_RESTART;
+			}
+			return IApplication.EXIT_OK;
+		} finally {
+			display.dispose();
+		}
+	}
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.equinox.app.IApplication#stop()
-     */
-    public void stop () {
-        
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.equinox.app.IApplication#stop()
+	 */
+	public void stop() {
+
+	}
 }

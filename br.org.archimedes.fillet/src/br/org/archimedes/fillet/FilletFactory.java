@@ -36,233 +36,234 @@ import br.org.archimedes.rcp.extensionpoints.IntersectionManagerEPLoader;
 
 public class FilletFactory implements CommandFactory {
 
-    private Element element1;
+	private Element element1;
 
-    private Point click1;
+	private Point click1;
 
-    private Element element2;
+	private Element element2;
 
-    private Point click2;
+	private Point click2;
 
-    private boolean active;
+	private boolean active;
 
-    private Command command;
+	private Command command;
 
-    private IntersectionManager intersectionManager;
-    
-    private double radius;
-    private boolean checkingRadius;
+	private IntersectionManager intersectionManager;
 
+	private double radius;
+	private boolean checkingRadius;
 
-    public FilletFactory () {    	
-        intersectionManager = new IntersectionManagerEPLoader().getIntersectionManager();
-        deactivate();
-    }
+	public FilletFactory() {
+		intersectionManager = new IntersectionManagerEPLoader()
+				.getIntersectionManager();
+		deactivate();
+	}
 
-    public String begin () {
+	public String begin() {
 
-        active = true;
-        command = null;
-        radius = 0;
-    	checkingRadius = true;
+		active = true;
+		command = null;
+		radius = 0;
+		checkingRadius = true;
 
-        br.org.archimedes.Utils.getController().deselectAll();
+		br.org.archimedes.Utils.getController().deselectAll();
 
-        return Messages.SelectRadiusOrElement;
-    }
+		return Messages.SelectRadiusOrElement;
+	}
 
-    public String next (Object parameter) throws InvalidParameterException {
+	public String next(Object parameter) throws InvalidParameterException {
 
-        String result = null;
-        
-        if (checkingRadius && parameter instanceof Double) {
-        	radius = ((Double) parameter).doubleValue();  
-        	result = Messages.SelectElement;
-        } else {        
-        	if ( !isDone()) {
-        		result = tryGetSelection(parameter);
-        	} else {
-        		throw new InvalidParameterException();
-        	}
-        }
-        checkingRadius = false;
-        return result;
-    }
+		String result = null;
 
-    /**
-     * Tries to get elements to be cut from the parameter.
-     * 
-     * @param parameter
-     *            The potential elements to be cut
-     * @return A message to the user.
-     * @throws InvalidParameterException
-     *             In case the parameter was not the elements to be cut.
-     */
-    private String tryGetSelection (Object parameter) throws InvalidParameterException {
+		if (checkingRadius && parameter instanceof Double) {
+			radius = ((Double) parameter).doubleValue();
+			result = Messages.SelectElement;
+		} else {
+			if (!isDone()) {
+				result = tryGetSelection(parameter);
+			} else {
+				throw new InvalidParameterException();
+			}
+		}
+		checkingRadius = false;
+		return result;
+	}
 
-        String result = null;
-        try {
-            if (parameter == null || !parameter.getClass().equals(Selection.class)) {
-                throw new InvalidParameterException(Messages.SelectElement);
-            }
-            Selection selection = (Selection) parameter;
+	/**
+	 * Tries to get elements to be cut from the parameter.
+	 * 
+	 * @param parameter
+	 *            The potential elements to be cut
+	 * @return A message to the user.
+	 * @throws InvalidParameterException
+	 *             In case the parameter was not the elements to be cut.
+	 */
+	private String tryGetSelection(Object parameter)
+			throws InvalidParameterException {
 
-            Set<Element> selectedElements = selection.getSelectedElements();
-            if (selectedElements.size() != 1) {
-                throw new InvalidParameterException(Messages.SelectElement);
-            }
-            for (Element e : selectedElements) {
-            	if (!(e instanceof Filletable)) {
-            		throw new InvalidParameterException(Messages.SelectElement);
-            	}
-            }
-            
-            if (element1 == null) {
-                calculatePoint(selection);
-                result = Messages.SelectOther;
-            }
-            else {
-            	calculatePoint(selection);
-            	if (element1 == element2) {
-            		throw new InvalidParameterException(Messages.SelectElement);
-            	}
-                command = new FilletCommand(element1, click1, element2, click2, radius);
-                result = Messages.Filleted;
-                deactivate();
-            }
-        }
-        catch (ClassCastException e) {
-            throw new InvalidParameterException(Messages.SelectElement);
-        }
-        catch (NullArgumentException e) {
-            e.printStackTrace();
-        }
-        catch (InvalidArgumentException e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
+		String result = null;
+		try {
+			if (parameter == null
+					|| !parameter.getClass().equals(Selection.class)) {
+				throw new InvalidParameterException(Messages.SelectElement);
+			}
+			Selection selection = (Selection) parameter;
 
-    /**
-     * Calculates the list of points on which to perform the extend.
-     * 
-     * @param selection
-     *            The selection to use.
-     * @throws InvalidArgumentException
-     * @throws NullArgumentException
-     */
-    private void calculatePoint (Selection selection) throws NullArgumentException,
-            InvalidArgumentException {
+			Set<Element> selectedElements = selection.getSelectedElements();
+			if (selectedElements.size() != 1) {
+				throw new InvalidParameterException(Messages.SelectElement);
+			}
+			for (Element e : selectedElements) {
+				if (!(e instanceof Filletable)) {
+					throw new InvalidParameterException(Messages.SelectElement);
+				}
+			}
 
-        Rectangle area = selection.getRectangle();
+			if (element1 == null) {
+				calculatePoint(selection);
+				result = Messages.SelectOther;
+			} else {
+				calculatePoint(selection);
+				if (element1 == element2) {
+					throw new InvalidParameterException(Messages.SelectElement);
+				}
+				command = new FilletCommand(element1, click1, element2, click2,
+						radius);
+				result = Messages.Filleted;
+				deactivate();
+			}
+		} catch (ClassCastException e) {
+			throw new InvalidParameterException(Messages.SelectElement);
+		} catch (NullArgumentException e) {
+			e.printStackTrace();
+		} catch (InvalidArgumentException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 
-        Element element = selection.getSelectedElements().iterator().next();
+	/**
+	 * Calculates the list of points on which to perform the extend.
+	 * 
+	 * @param selection
+	 *            The selection to use.
+	 * @throws InvalidArgumentException
+	 * @throws NullArgumentException
+	 */
+	private void calculatePoint(Selection selection)
+			throws NullArgumentException, InvalidArgumentException {
 
-        if (area != null) {
+		Rectangle area = selection.getRectangle();
 
-            for (Point extreme : element.getExtremePoints()) {
-                if (area.contains(extreme)) {
-                    storeParameters(element, extreme);
-                    return;
-                }
-            }
+		Element element = selection.getSelectedElements().iterator().next();
 
-            Collection<Point> intersections = new ArrayList<Point>();
-            try {
-                // TODO Shouldn't need Polyline to get the intersections in a rectangle
-                intersections = intersectionManager.getIntersectionsBetween(element, new Polyline(area));
-                storeParameters(element, intersections.iterator().next());
-            }
-            catch (NullArgumentException e) {
-                // Should not happen
-                e.printStackTrace();
-            }
-        }
-    }
+		if (area != null) {
 
-    private void storeParameters (Element element, Point point) {
+			for (Point extreme : element.getExtremePoints()) {
+				if (area.contains(extreme)) {
+					storeParameters(element, extreme);
+					return;
+				}
+			}
 
-        if (element1 == null) {
-            element1 = element;
-            click1 = point;
-        }
-        else {
-            element2 = element;
-            click2 = point;
-        }
-    }
+			Collection<Point> intersections = new ArrayList<Point>();
+			try {
+				// TODO Shouldn't need Polyline to get the intersections in a
+				// rectangle
+				intersections = intersectionManager.getIntersectionsBetween(
+						element, new Polyline(area));
+				storeParameters(element, intersections.iterator().next());
+			} catch (NullArgumentException e) {
+				// Should not happen
+				e.printStackTrace();
+			}
+		}
+	}
 
-    public boolean isDone () {
-        return (!active);
-    }
+	private void storeParameters(Element element, Point point) {
 
-    public String cancel () {
+		if (element1 == null) {
+			element1 = element;
+			click1 = point;
+		} else {
+			element2 = element;
+			click2 = point;
+		}
+	}
 
-        String returnMsg = null;
+	public boolean isDone() {
+		return (!active);
+	}
 
-        if ( !isDone()) {
-            returnMsg = Messages.FilletCancel;
-        }
+	public String cancel() {
 
-        deactivate();
-        return returnMsg;
-    }
+		String returnMsg = null;
 
-    /**
-     * Deactivates this factory.
-     */
-    private void deactivate () {
+		if (!isDone()) {
+			returnMsg = Messages.FilletCancel;
+		}
 
-        active = false;
-        radius = 0;
-        element1 = null;
-        element2 = null;
-        click1 = null;
-        click2 = null;    
-        checkingRadius = true;
-    }
+		deactivate();
+		return returnMsg;
+	}
 
-    /*
-     * (non-Javadoc)
-     * @see br.org.archimedes.commands.Command#getNextParser()
-     */
-    public Parser getNextParser () {
+	/**
+	 * Deactivates this factory.
+	 */
+	private void deactivate() {
 
-        Parser parser = null;
-        if (active) {
-        	return new SelectionOrDoubleParser();
-        }
-        return parser;
-    }
+		active = false;
+		radius = 0;
+		element1 = null;
+		element2 = null;
+		click1 = null;
+		click2 = null;
+		checkingRadius = true;
+	}
 
-    public List<Command> getCommands () {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.commands.Command#getNextParser()
+	 */
+	public Parser getNextParser() {
 
-        List<Command> cmds = new ArrayList<Command>();
+		Parser parser = null;
+		if (active) {
+			return new SelectionOrDoubleParser();
+		}
+		return parser;
+	}
 
-        if (command != null) {
-            cmds.add(command);
-            command = null;
-        }
-        else {
-            cmds = null;
-        }
-        return cmds;
-    }
+	public List<Command> getCommands() {
 
-    public void drawVisualHelper () {
+		List<Command> cmds = new ArrayList<Command>();
 
-    }
+		if (command != null) {
+			cmds.add(command);
+			command = null;
+		} else {
+			cmds = null;
+		}
+		return cmds;
+	}
 
-    public String getName () {
+	public void drawVisualHelper() {
 
-        return "fillet"; //$NON-NLS-1$
-    }
+	}
 
-    /* (non-Javadoc)
-     * @see br.org.archimedes.factories.CommandFactory#isTransformFactory()
-     */
-    public boolean isTransformFactory () {
+	public String getName() {
 
-        return true;
-    }
+		return "fillet"; //$NON-NLS-1$
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.org.archimedes.factories.CommandFactory#isTransformFactory()
+	 */
+	public boolean isTransformFactory() {
+
+		return true;
+	}
 }

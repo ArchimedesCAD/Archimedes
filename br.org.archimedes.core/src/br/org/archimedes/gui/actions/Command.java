@@ -19,10 +19,10 @@ package br.org.archimedes.gui.actions;
  */
 public interface Command {
 
-    /**
-     * Executes a gui command.
-     * 
-     * @return False if the command was canceled, true otherwise.
-     */
-    public boolean execute ();
+	/**
+	 * Executes a gui command.
+	 * 
+	 * @return False if the command was canceled, true otherwise.
+	 */
+	public boolean execute();
 }

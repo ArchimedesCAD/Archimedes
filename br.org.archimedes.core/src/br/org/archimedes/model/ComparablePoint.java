@@ -56,5 +56,10 @@ public class ComparablePoint implements Comparable<ComparablePoint> {
     public Point getPoint() {
         return point;
     }
+
+	@Override
+	public String toString() {
+		return "[" + point + ", key=" + key + "]";
+	}
     
 }

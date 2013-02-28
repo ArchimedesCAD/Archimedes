@@ -29,25 +29,28 @@ import br.org.archimedes.model.Rectangle;
  */
 public class DimensionExporter implements ElementExporter<Dimension> {
 
-    /*
-     * (non-Javadoc)
-     * @see br.org.archimedes.interfaces.ElementExporter#exportElement(br.org.archimedes
-     * .model.Element, java.io.OutputStream)
-     */
-    public void exportElement (Dimension dimension, Object outputObject) throws IOException {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.org.archimedes.interfaces.ElementExporter#exportElement(br.org.archimedes
+	 * .model.Element, java.io.OutputStream)
+	 */
+	public void exportElement(Dimension dimension, Object outputObject)
+			throws IOException {
 
-        Collection<Line> linesToDraw = dimension.getLinesToDraw();
-        LineExporter exporter = new LineExporter();
-        for (Line line : linesToDraw) {
-            exporter.exportElement(line, outputObject);
-        }
+		Collection<Line> linesToDraw = dimension.getLinesToDraw();
+		LineExporter exporter = new LineExporter();
+		for (Line line : linesToDraw) {
+			exporter.exportElement(line, outputObject);
+		}
 
-        new TextExporter().exportElement(dimension.getText(), outputObject);
-    }
+		new TextExporter().exportElement(dimension.getText(), outputObject);
+	}
 
-    public void exportElement (Dimension element, Object outputObject, Rectangle boundingBox)
-            throws IOException, NotSupportedException {
+	public void exportElement(Dimension element, Object outputObject,
+			Rectangle boundingBox) throws IOException, NotSupportedException {
 
-        throw new NotSupportedException();
-    }
+		throw new NotSupportedException();
+	}
 }
