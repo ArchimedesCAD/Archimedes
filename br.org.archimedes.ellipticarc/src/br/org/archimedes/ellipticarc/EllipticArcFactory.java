@@ -22,12 +22,21 @@ import br.org.archimedes.factories.CommandFactory;
 import br.org.archimedes.gui.model.Workspace;
 import br.org.archimedes.interfaces.Command;
 import br.org.archimedes.interfaces.Parser;
+import br.org.archimedes.model.Point;
 
 public class EllipticArcFactory implements CommandFactory {
 	private Workspace workspace;
 	private boolean active;
 	private Command command;
 	private boolean isCenterProtocol;
+	private Point center;
+	private Point widthPoint;
+	private Point heightPoint;
+	private Point focus1;
+	private Point focus2;
+	private Double radius;
+	private Point initialPoint;
+	private Point endPoint;
 
 	public EllipticArcFactory() {
 
@@ -37,8 +46,16 @@ public class EllipticArcFactory implements CommandFactory {
 	}
 
 	private void deactivate() {
-		// TODO Auto-generated method stub
-		
+		center = null;
+		widthPoint = null;
+		heightPoint = null;
+		focus1 = null;
+		focus2 = null;
+		initialPoint = null;
+		endPoint = null;
+		radius = 0.0;
+		active = false;
+		isCenterProtocol = false;
 	}
 
 	@Override
@@ -51,6 +68,66 @@ public class EllipticArcFactory implements CommandFactory {
 
 	@Override
 	public String next(final Object parameter) throws InvalidParameterException {
+		String result = null;
+
+		if (isDone()) {
+			throw new InvalidParameterException();
+		}
+
+		if (parameter != null) {
+			try {
+				if ("C".equals(parameter) || "c".equals(parameter)) {
+					this.isCenterProtocol = false;
+					result = Messages.EllipticArcFactory_SelectFocus1;
+				} else if ("A".equals(parameter) || "a".equals(parameter)) {
+					this.isCenterProtocol = true;
+					result = Messages.SelectCenter;
+				} else if (isCenterProtocol && center == null) {
+					center = (Point) parameter;
+					workspace.setPerpendicularGripReferencePoint(center);
+					result = Messages.EllipticArcFactory_SelectWidthPoint;
+				} else if (isCenterProtocol && widthPoint == null) {
+					widthPoint = (Point) parameter;
+					workspace.setPerpendicularGripReferencePoint(widthPoint);
+					result = Messages.EllipticArcFactory_SelectHeightPoint;
+				} else if (isCenterProtocol && heightPoint == null) {
+					heightPoint = (Point) parameter;
+					workspace.setPerpendicularGripReferencePoint(heightPoint);
+					result = Messages.EllipticArcFactory_SelectInitialPoint;
+				} else if (isCenterProtocol && initialPoint == null) {
+					initialPoint  = (Point) parameter;
+					workspace.setPerpendicularGripReferencePoint(initialPoint);
+					result = Messages.EllipticArcFactory_SelectEndPoint;
+				} else if (isCenterProtocol) {
+					endPoint  = (Point) parameter;
+					workspace.setPerpendicularGripReferencePoint(endPoint);
+					result = createEllipticArc();
+				} else if (!isCenterProtocol && focus1 == null) {
+					focus1 = (Point) parameter;
+					result = Messages.EllipticArcFactory_SelectFocus2;
+				} else if (!isCenterProtocol && focus2 == null) {
+					focus2 = (Point) parameter;
+					result = Messages.EllipticArcFactory_SelectRadius;
+				} else if (!isCenterProtocol && radius == null) {
+					radius = (Double) parameter;
+					result = Messages.EllipticArcFactory_SelectInitialPoint;
+				} else if (!isCenterProtocol && initialPoint == null) {
+					initialPoint  = (Point) parameter;
+					result = Messages.EllipticArcFactory_SelectEndPoint;
+				} else if (!isCenterProtocol) {
+					endPoint  = (Point) parameter;
+					result = createEllipticArc();
+				}
+			} catch (ClassCastException e) {
+				throw new InvalidParameterException();
+			}
+		} else {
+			throw new InvalidParameterException();
+		}
+		return result;
+	}
+
+	private String createEllipticArc() {
 		// TODO Auto-generated method stub
 		return null;
 	}

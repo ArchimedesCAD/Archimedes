@@ -47,7 +47,6 @@ public class EllipseFactory implements CommandFactory {
 		this.isCenterProtocol = false;
 	}
 
-	@Override
 	public String begin() {
 
 		active = true;
@@ -56,7 +55,6 @@ public class EllipseFactory implements CommandFactory {
 		return Messages.EllipseFactory_SelectInitialPoint;
 	}
 
-	@Override
 	public String cancel() {
 
 		deactivate();
@@ -64,7 +62,6 @@ public class EllipseFactory implements CommandFactory {
 		return Messages.Canceled;
 	}
 
-	@Override
 	public void drawVisualHelper() {
 
 		OpenGLWrapper opengl = br.org.archimedes.Utils.getOpenGLWrapper();
@@ -147,7 +144,6 @@ public class EllipseFactory implements CommandFactory {
 	 * 
 	 * @see br.org.archimedes.factories.CommandFactory#getCommands()
 	 */
-	@Override
 	public List<Command> getCommands() {
 
 		List<Command> cmds = null;
@@ -161,13 +157,11 @@ public class EllipseFactory implements CommandFactory {
 		return cmds;
 	}
 
-	@Override
 	public String getName() {
 
 		return "ellipse"; //$NON-NLS-1$;
 	}
 
-	@Override
 	public Parser getNextParser() {
 
 		Parser returnParser = null;
@@ -189,16 +183,13 @@ public class EllipseFactory implements CommandFactory {
 			}
 		}
 		return returnParser;
-
 	}
 
-	@Override
 	public boolean isDone() {
 
 		return !active;
 	}
 
-	@Override
 	public String next(final Object parameter) throws InvalidParameterException {
 
 		String result = null;
@@ -289,7 +280,6 @@ public class EllipseFactory implements CommandFactory {
 	 * 
 	 * @see br.org.archimedes.factories.CommandFactory#isTransformFactory()
 	 */
-	@Override
 	public boolean isTransformFactory() {
 
 		return false;
