@@ -20,14 +20,14 @@ public class Messages extends NLS {
 
 	public static final String Canceled = "Cancel";
 	public static final String EllipticArcFactory_SelectFocus1 = "Specify Focus 1";
-	public static final String SelectCenter = "Specify Center";
+	public static final String EllipticArcFactory_SelectCenter = "Specify Center";
 	public static final String EllipticArcFactory_SelectWidthPoint = "Specify Width Point";
 	public static final String EllipticArcFactory_SelectHeightPoint = "Specify Height Point";
 	public static final String EllipticArcFactory_SelectFocus2 = "Specify Focus 2";
 	public static final String EllipticArcFactory_SelectRadius = "Specify Radius";
 	public static final String EllipticArcFactory_SelectEndPoint = "Specify End Point";
 	public static final String EllipticArcFactory_SelectInitialPoint = "Specify Initial Point";
-	public static final String Created = null;
-	public static final String NotCreatedBecauseNullArgument = null;
-	public static final String NotCreatedBecauseInvalidArgument = null;
+	public static final String Created = "Created";
+	public static final String NotCreatedBecauseNullArgument = "Null Argument. Not created";
+	public static final String NotCreatedBecauseInvalidArgument = "Invalid Argument. Not created";
 }

@@ -23,21 +23,20 @@ import br.org.archimedes.exceptions.InvalidParameterException;
 import br.org.archimedes.exceptions.NullArgumentException;
 import br.org.archimedes.factories.CommandFactory;
 import br.org.archimedes.gui.model.Workspace;
+import br.org.archimedes.gui.opengl.OpenGLWrapper;
 import br.org.archimedes.interfaces.Command;
 import br.org.archimedes.interfaces.Parser;
+import br.org.archimedes.line.Line;
 import br.org.archimedes.model.Point;
+import br.org.archimedes.parser.PointParser;
 
 public class EllipticArcFactory implements CommandFactory {
 	private Workspace workspace;
 	private boolean active;
 	private Command command;
-	private boolean isCenterProtocol;
 	private Point center;
 	private Point widthPoint;
 	private Point heightPoint;
-	private Point focus1;
-	private Point focus2;
-	private Double radius;
 	private Point initialPoint;
 	private Point endPoint;
 
@@ -45,20 +44,15 @@ public class EllipticArcFactory implements CommandFactory {
 
 		workspace = br.org.archimedes.Utils.getWorkspace();
 		deactivate();
-		this.isCenterProtocol = false;
 	}
 
 	private void deactivate() {
 		center = null;
 		widthPoint = null;
 		heightPoint = null;
-		focus1 = null;
-		focus2 = null;
 		initialPoint = null;
 		endPoint = null;
-		radius = 0.0;
 		active = false;
-		isCenterProtocol = false;
 	}
 
 	@Override
@@ -66,7 +60,7 @@ public class EllipticArcFactory implements CommandFactory {
 		active = true;
 		br.org.archimedes.Utils.getController().deselectAll();
 
-		return Messages.EllipticArcFactory_SelectInitialPoint;
+		return Messages.EllipticArcFactory_SelectCenter;
 	}
 
 	@Override
@@ -79,46 +73,25 @@ public class EllipticArcFactory implements CommandFactory {
 
 		if (parameter != null) {
 			try {
-				if ("C".equals(parameter) || "c".equals(parameter)) {
-					this.isCenterProtocol = false;
-					result = Messages.EllipticArcFactory_SelectFocus1;
-				} else if ("A".equals(parameter) || "a".equals(parameter)) {
-					this.isCenterProtocol = true;
-					result = Messages.SelectCenter;
-				} else if (isCenterProtocol && center == null) {
+				if (center == null) {
 					center = (Point) parameter;
 					workspace.setPerpendicularGripReferencePoint(center);
 					result = Messages.EllipticArcFactory_SelectWidthPoint;
-				} else if (isCenterProtocol && widthPoint == null) {
+				} else if (widthPoint == null) {
 					widthPoint = (Point) parameter;
 					workspace.setPerpendicularGripReferencePoint(widthPoint);
 					result = Messages.EllipticArcFactory_SelectHeightPoint;
-				} else if (isCenterProtocol && heightPoint == null) {
+				} else if (heightPoint == null) {
 					heightPoint = (Point) parameter;
 					workspace.setPerpendicularGripReferencePoint(heightPoint);
 					result = Messages.EllipticArcFactory_SelectInitialPoint;
-				} else if (isCenterProtocol && initialPoint == null) {
+				} else if (initialPoint == null) {
 					initialPoint  = (Point) parameter;
 					workspace.setPerpendicularGripReferencePoint(initialPoint);
 					result = Messages.EllipticArcFactory_SelectEndPoint;
-				} else if (isCenterProtocol) {
+				} else {
 					endPoint  = (Point) parameter;
 					workspace.setPerpendicularGripReferencePoint(endPoint);
-					result = createEllipticArc();
-				} else if (!isCenterProtocol && focus1 == null) {
-					focus1 = (Point) parameter;
-					result = Messages.EllipticArcFactory_SelectFocus2;
-				} else if (!isCenterProtocol && focus2 == null) {
-					focus2 = (Point) parameter;
-					result = Messages.EllipticArcFactory_SelectRadius;
-				} else if (!isCenterProtocol && radius == null) {
-					radius = (Double) parameter;
-					result = Messages.EllipticArcFactory_SelectInitialPoint;
-				} else if (!isCenterProtocol && initialPoint == null) {
-					initialPoint  = (Point) parameter;
-					result = Messages.EllipticArcFactory_SelectEndPoint;
-				} else if (!isCenterProtocol) {
-					endPoint  = (Point) parameter;
 					result = createEllipticArc();
 				}
 			} catch (ClassCastException e) {
@@ -134,12 +107,7 @@ public class EllipticArcFactory implements CommandFactory {
 		String result = null;
 		EllipticArc newEllipticArc;
 		try {
-			if (isCenterProtocol) {
-				newEllipticArc = new EllipticArc(center, widthPoint, heightPoint, initialPoint, endPoint);
-			} else {
-				//newEllipticArc = new EllipticArc(focus1, focus2, radius);
-				newEllipticArc = new EllipticArc(center, widthPoint, heightPoint, initialPoint, endPoint);
-			}
+			newEllipticArc = new EllipticArc(center, widthPoint, heightPoint, initialPoint, endPoint);
 			command = new PutOrRemoveElementCommand(newEllipticArc, false);
 			result = Messages.Created;
 		} catch (NullArgumentException e) {
@@ -164,14 +132,16 @@ public class EllipticArcFactory implements CommandFactory {
 
 	@Override
 	public Parser getNextParser() {
-		// TODO Auto-generated method stub
-		return null;
+		Parser returnParser = null;
+		if (active) {
+			returnParser = new PointParser();
+		}
+		return returnParser;
 	}
 
 	@Override
 	public void drawVisualHelper() {
-		// TODO Auto-generated method stub
-
+		//TODO
 	}
 
 	@Override
