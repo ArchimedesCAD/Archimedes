@@ -32,7 +32,7 @@ public class EllipseFactory implements CommandFactory {
 
 	private double radius;
 
-	private Workspace workspace;
+	private final Workspace workspace;
 
 	private boolean active;
 
@@ -47,6 +47,7 @@ public class EllipseFactory implements CommandFactory {
 		this.isCenterProtocol = false;
 	}
 
+	@Override
 	public String begin() {
 
 		active = true;
@@ -55,6 +56,7 @@ public class EllipseFactory implements CommandFactory {
 		return Messages.EllipseFactory_SelectInitialPoint;
 	}
 
+	@Override
 	public String cancel() {
 
 		deactivate();
@@ -62,6 +64,7 @@ public class EllipseFactory implements CommandFactory {
 		return Messages.Canceled;
 	}
 
+	@Override
 	public void drawVisualHelper() {
 
 		OpenGLWrapper opengl = br.org.archimedes.Utils.getOpenGLWrapper();
@@ -124,9 +127,8 @@ public class EllipseFactory implements CommandFactory {
 				opengl.setLineStyle(OpenGLWrapper.STIPPLED_LINE);
 
 				try {
-					Ellipse ellipse = new Ellipse(f1, f2,
-							mouse.calculateDistance(new Point((f1.getX() + f2
-									.getX()) / 2, (f1.getY() + f2.getY()) / 2)));
+					Ellipse ellipse = new Ellipse(f1, f2, mouse.calculateDistance(new Point(
+							(f1.getX() + f2.getX()) / 2, (f1.getY() + f2.getY()) / 2)));
 					ellipse.draw(opengl);
 					Line line = new Line(f1, f2);
 					line.draw(opengl);
@@ -145,6 +147,7 @@ public class EllipseFactory implements CommandFactory {
 	 * 
 	 * @see br.org.archimedes.factories.CommandFactory#getCommands()
 	 */
+	@Override
 	public List<Command> getCommands() {
 
 		List<Command> cmds = null;
@@ -158,11 +161,13 @@ public class EllipseFactory implements CommandFactory {
 		return cmds;
 	}
 
+	@Override
 	public String getName() {
 
 		return "ellipse"; //$NON-NLS-1$;
 	}
 
+	@Override
 	public Parser getNextParser() {
 
 		Parser returnParser = null;
@@ -179,8 +184,7 @@ public class EllipseFactory implements CommandFactory {
 			} else if (focus2 == null && !isCenterProtocol) {
 				returnParser = new PointParser();
 			} else if (radius == 0 && !isCenterProtocol) {
-				returnParser = new DistanceParser(new Point(
-						(focus1.getX() + focus2.getX()) / 2,
+				returnParser = new DistanceParser(new Point((focus1.getX() + focus2.getX()) / 2,
 						(focus1.getY() + focus2.getY()) / 2));
 			}
 		}
@@ -188,12 +192,14 @@ public class EllipseFactory implements CommandFactory {
 
 	}
 
+	@Override
 	public boolean isDone() {
 
 		return !active;
 	}
 
-	public String next(Object parameter) throws InvalidParameterException {
+	@Override
+	public String next(final Object parameter) throws InvalidParameterException {
 
 		String result = null;
 
@@ -262,10 +268,11 @@ public class EllipseFactory implements CommandFactory {
 		String result = null;
 		Ellipse newEllipse;
 		try {
-			if (isCenterProtocol)
+			if (isCenterProtocol) {
 				newEllipse = new Ellipse(center, widthPoint, heightPoint);
-			else
+			} else {
 				newEllipse = new Ellipse(focus1, focus2, radius);
+			}
 			command = new PutOrRemoveElementCommand(newEllipse, false);
 			result = Messages.Created;
 		} catch (NullArgumentException e) {
@@ -282,6 +289,7 @@ public class EllipseFactory implements CommandFactory {
 	 * 
 	 * @see br.org.archimedes.factories.CommandFactory#isTransformFactory()
 	 */
+	@Override
 	public boolean isTransformFactory() {
 
 		return false;
