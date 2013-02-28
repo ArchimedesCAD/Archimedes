@@ -18,7 +18,14 @@ import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
 
-	public static final String Canceled = null;
-	public static String EllipticArcFactory_SelectInitialPoint = null;
+	public static final String Canceled = "Cancel";
+	public static final String EllipticArcFactory_SelectFocus1 = "Specify Focus 1";
+	public static final String SelectCenter = "Specify Center";
+	public static final String EllipticArcFactory_SelectWidthPoint = "Specify Width Point";
+	public static final String EllipticArcFactory_SelectHeightPoint = "Specify Height Point";
+	public static final String EllipticArcFactory_SelectFocus2 = "Specify Focus 2";
+	public static final String EllipticArcFactory_SelectRadius = "Specify Radius";
+	public static final String EllipticArcFactory_SelectEndPoint = "Specify End Point";
+	public static final String EllipticArcFactory_SelectInitialPoint = "Specify Initial Point";
 
 }
