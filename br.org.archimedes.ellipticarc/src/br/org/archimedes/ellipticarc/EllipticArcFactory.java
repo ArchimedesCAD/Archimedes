@@ -4,21 +4,29 @@ import org.eclipse.swt.widgets.List;
 
 import br.org.archimedes.exceptions.InvalidParameterException;
 import br.org.archimedes.factories.CommandFactory;
+import br.org.archimedes.gui.model.Workspace;
 import br.org.archimedes.interfaces.Command;
 import br.org.archimedes.interfaces.Parser;
 
 public class EllipticArcFactory implements CommandFactory {
+	private Workspace workspace;
+	private boolean active;
 
-	@Override
+	public EllipticArcFactory() {
+
+		workspace = br.org.archimedes.Utils.getWorkspace();
+		deactivate();
+		this.isCenterProtocol = false;
+	}
+
 	@Override
 	public String begin() {
 		active = true;
 		br.org.archimedes.Utils.getController().deselectAll();
 
-		return Messages.EllipseFactory_SelectInitialPoint;
+		return Messages.EllipticArcFactory_SelectInitialPoint;
 	}
 
-	@Override
 	@Override
 	public String next(final Object parameter) throws InvalidParameterException {
 		// TODO Auto-generated method stub
@@ -26,13 +34,10 @@ public class EllipticArcFactory implements CommandFactory {
 	}
 
 	@Override
-	@Override
 	public boolean isDone() {
-		// TODO Auto-generated method stub
-		return false;
+		return !active;
 	}
 
-	@Override
 	@Override
 	public String cancel() {
 		deactivate();
@@ -40,13 +45,11 @@ public class EllipticArcFactory implements CommandFactory {
 	}
 
 	@Override
-	@Override
 	public Parser getNextParser() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	@Override
 	public void drawVisualHelper() {
 		// TODO Auto-generated method stub
@@ -54,19 +57,23 @@ public class EllipticArcFactory implements CommandFactory {
 	}
 
 	@Override
-	@Override
 	public List<Command> getCommands() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Command> cmds = null;
+
+		if (command != null) {
+			cmds = new ArrayList<Command>();
+			cmds.add(command);
+			command = null;
+		}
+
+		return cmds;
 	}
 
-	@Override
 	@Override
 	public String getName() {
 		return "ellipticArc";
 	}
 
-	@Override
 	@Override
 	public boolean isTransformFactory() {
 		return false;
